@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	<main class="content">
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">主页</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">分类</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/about">关于我</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		面试题 08.03 魔术索引
+	</div>
+	
+	<div class="page-date">
+		2020-07-31
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/leetcode">leetcode</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>面试题 08.03 魔术索引，涉及算法：跳跃性遍历</p>
+<a id="more"></a>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>魔术索引。 在数组A[0…n-1]中，有所谓的魔术索引，满足条件A[i] = i。给定一个有序整数数组，编写一种方法找出魔术索引，若有的话，在数组A中找出一个魔术索引，如果没有，则返回-1。若有多个魔术索引，返回索引值最小的一个。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">示例1:<br> 输入：nums &#x3D; [0, 2, 3, 4, 5]<br> 输出：0<br> 说明: 0下标的元素为0<br><br>示例2:<br> 输入：nums &#x3D; [1, 1, 1]<br> 输出：1<br></code></pre></td></tr></table></figure>
+
+<p><strong>说明:</strong></p>
+<ol>
+<li>nums长度在[1, 1000000]之间</li>
+<li>此题为原书中的 Follow-up，即数组中可能包含重复元素的版本</li>
+</ol>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>官方题解提供的是二分递归，但实际上还是从左到右把数组遍历了一遍，二分每次能排除一半元素，但这个实际上先搜左边，左边搜不到搜右边，还是在做遍历。</p>
+<p>不如在直接遍历的基础上做一个跳跃性的优化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">findMagicIndex</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> len = nums.size();<br>        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(i &lt; len)&#123;<br>            <span class="hljs-keyword">if</span>(i == nums[i])<span class="hljs-keyword">return</span> i;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i &lt; nums[i])i = nums[i];<br>            <span class="hljs-keyword">else</span> ++i;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+
+	</div>
+</div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	<main class="content">
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">主页</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">分类</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/about">关于我</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		leetcode 99 恢复二叉搜索树
+	</div>
+	
+	<div class="page-date">
+		2020-08-08
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/leetcode">leetcode</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>leetcode 99 恢复二叉搜索树，涉及算法：Morris 中序遍历</p>
+<a id="more"></a>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>二叉搜索树中的两个节点被错误地交换。</p>
+<p>请在不改变其结构的情况下，恢复这棵树。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs plain">示例 1:<br><br>输入: [1,3,null,null,2]<br><br>   1<br>  &#x2F;<br> 3<br>  \<br>   2<br><br>输出: [3,1,null,null,2]<br><br>   3<br>  &#x2F;<br> 1<br>  \<br>   2<br><br>示例 2:<br><br>输入: [3,1,4,null,null,2]<br><br>  3<br> &#x2F; \<br>1   4<br>   &#x2F;<br>  2<br><br>输出: [2,1,4,null,null,3]<br><br>  2<br> &#x2F; \<br>1   4<br>   &#x2F;<br>  3<br></code></pre></td></tr></table></figure>
+
+<p><strong>进阶:</strong></p>
+<ul>
+<li>使用 O(<em>n</em>) 空间复杂度的解法很容易实现。</li>
+<li>你能想出一个只使用常数空间的解决方案吗？</li>
+</ul>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="方法一：显式中序遍历"><a href="#方法一：显式中序遍历" class="headerlink" title="方法一：显式中序遍历"></a>方法一：显式中序遍历</h3><ol>
+<li>找到二叉搜索树中序遍历得到值序列的不满足条件的位置。<ol>
+<li>如果有两个，我们记为 i和 j（$i&lt;j且 a_i&gt;a_{i+1}\ &amp;&amp;\ a_j&gt;a_{j+1}$，那么对应被错误交换的节点即为 $a_i$ 对应的节点和 $a_{j+1}$对应的节点，我们分别记为 x 和 y。</li>
+<li>如果有一个，我们记为 i，那么对应被错误交换的节点即为 $a_i$ 对应的节点和 $a_{i+1}$ 对应的节点，我们分别记为 x 和 y。</li>
+</ol>
+</li>
+<li>交换 x 和 y 两个节点即可。</li>
+</ol>
+<p>实现部分，本方法开辟一个新数组 nums 来记录中序遍历得到的值序列，然后线性遍历找到两个位置 i 和 j，并重新遍历原二叉搜索树修改对应节点的值完成修复</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for a binary tree node.</span><br><span class="hljs-comment"> * struct TreeNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     TreeNode *left;</span><br><span class="hljs-comment"> *     TreeNode *right;</span><br><span class="hljs-comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="hljs-comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) &#123;&#125;</span><br><span class="hljs-comment"> *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) &#123;&#125;</span><br><span class="hljs-comment"> * &#125;;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">inorder</span><span class="hljs-params">(TreeNode* root, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        inorder(root-&gt;left, nums);<br>        nums.push_back(root-&gt;val);<br>        inorder(root-&gt;right, nums);<br>    &#125;<br><br>    pair&lt;int,int&gt; findTwoSwapped(vector&lt;int&gt;&amp; nums) &#123;<br>        <span class="hljs-keyword">int</span> n = nums.size();<br>        <span class="hljs-keyword">int</span> x = <span class="hljs-number">-1</span>, y = <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n - <span class="hljs-number">1</span>; ++i) &#123;<br>            <span class="hljs-keyword">if</span> (nums[i + <span class="hljs-number">1</span>] &lt; nums[i]) &#123;<br>                y = nums[i + <span class="hljs-number">1</span>];<br>                <span class="hljs-keyword">if</span> (x == <span class="hljs-number">-1</span>) &#123;<br>                    x = nums[i];<br>                &#125;<br>                <span class="hljs-comment">//如果能找到第二个位置，就不用再找了</span><br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> &#123;x, y&#125;;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recover</span><span class="hljs-params">(TreeNode* r, <span class="hljs-keyword">int</span> count, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (r != <span class="hljs-literal">nullptr</span>) &#123;<br>            <span class="hljs-keyword">if</span> (r-&gt;val == x || r-&gt;val == y) &#123;<br>                r-&gt;val = r-&gt;val == x ? y : x;<br>                <span class="hljs-keyword">if</span> (--count == <span class="hljs-number">0</span>) &#123;<br>                    <span class="hljs-keyword">return</span>;<br>                &#125;<br>            &#125;<br>            recover(r-&gt;left, count, x, y);<br>            recover(r-&gt;right, count, x, y);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recoverTree</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; nums;<br>        inorder(root, nums);<br>        <span class="hljs-built_in">pair</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; swapped= findTwoSwapped(nums);<br>        recover(root, <span class="hljs-number">2</span>, swapped.first, swapped.second);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<ul>
+<li>时间复杂度：O(N)，其中 N 为二叉搜索树的节点数。中序遍历需要 O(N) 的时间，判断两个交换节点在最好的情况下是 O(1)，在最坏的情况下是 O(N)，因此总时间复杂度为 O(N)。</li>
+<li>空间复杂度：O(N)。我们需要用 nums 数组存储树的中序遍历列表。</li>
+</ul>
+<h3 id="隐式中序遍历"><a href="#隐式中序遍历" class="headerlink" title="隐式中序遍历"></a>隐式中序遍历</h3><p>方法一是显式地将中序遍历的值序列保存在一个 nums 数组中，然后再去寻找被错误交换的节点，但我们也可以隐式地在中序遍历的过程就找到被错误交换的节点 x 和 y。</p>
+<p>具体来说，由于我们只关心中序遍历的值序列中每个<strong>相邻的位置的大小关系是否满足条件</strong>，且错误交换后<strong>最多两个位置不满足条件</strong>，因此在中序遍历的过程我们只需要维护当前中序遍历到的最后一个节点 pred，然后在遍历到下一个节点的时候，看两个节点的值是否满足前者小于后者即可，如果不满足说明找到了一个交换的节点，且在找到两次以后就可以终止遍历。</p>
+<p>这样我们就可以在中序遍历中直接找到被错误交换的两个节点 x 和 y，不用显式建立 nums 数组。</p>
+<p>中序遍历的实现有迭代和递归两种等价的写法，在本方法中提供迭代实现的写法。使用迭代实现中序遍历需要手动维护栈。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//迭代，初看不好理解，只要牢记中序遍历即可理解</span><br><span class="hljs-comment">//先比较左和左父</span><br><span class="hljs-comment">//再比较父和父右</span><br><span class="hljs-comment">//父右若非叶子节点，重复以上两步</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recoverTree</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        <span class="hljs-built_in">stack</span>&lt;TreeNode*&gt; stk;<br>        TreeNode* x = <span class="hljs-literal">nullptr</span>;<br>        TreeNode* y = <span class="hljs-literal">nullptr</span>;<br>        TreeNode* pred = <span class="hljs-literal">nullptr</span>;<br><br>        <span class="hljs-keyword">while</span> (!stk.empty() || root != <span class="hljs-literal">nullptr</span>) &#123;<br>            <span class="hljs-keyword">while</span> (root != <span class="hljs-literal">nullptr</span>) &#123;<br>                stk.push(root);<br>                root = root-&gt;left;<br>            &#125;<br>            root = stk.top();<br>            stk.pop();<br>            <span class="hljs-keyword">if</span> (pred != <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;val &lt; pred-&gt;val) &#123;<br>                y = root;<br>                <span class="hljs-keyword">if</span> (x == <span class="hljs-literal">nullptr</span>) &#123;<br>                    x = pred;<br>                &#125;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">break</span>;<br>            &#125;<br>            pred = root;<br>            root = root-&gt;right;<br>        &#125;<br><br>        swap(x-&gt;val, y-&gt;val);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<ul>
+<li>时间复杂度：最坏情况下（即待交换节点为二叉搜索树最右侧的叶子节点）我们需要遍历整棵树，时间复杂度为 O(N)，其中 N 为二叉搜索树的节点个数。</li>
+<li>空间复杂度：O(H)，其中 H 为二叉搜索树的高度。中序遍历的时候栈的深度取决于二叉搜索树的高度。</li>
+</ul>
+<h3 id="方法三：Morris-中序遍历"><a href="#方法三：Morris-中序遍历" class="headerlink" title="方法三：Morris 中序遍历"></a>方法三：Morris 中序遍历</h3><p>不同于平常递归或迭代的遍历二叉树的方法：<strong>Morris 遍历算法</strong>，该算法能将非递归的中序遍历空间复杂度降为 O(1)。</p>
+<p>Morris 遍历算法整体步骤如下（假设当前遍历到的节点为 x）：</p>
+<ol>
+<li>如果 x 无左孩子，则访问 x 的右孩子，即 x=x.right</li>
+<li>如果 x 有左孩子，则找到 x 左子树上最右的节点记为 predecessor（即左子树中序遍历的最后一个节点，x 在中序遍历中的前驱节点我们。）根据 predecessor 的右孩子是否为空，进行如下操作：<ol>
+<li>如果 predecessor 的右孩子为空，则将其右孩子指向 x，然后访问 x 的左孩子，即 x=x.leftx </li>
+<li>如果 predecessor 的右孩子不为空，则此时其右孩子指向 x，说明我们已经遍历完 x 的左子树，我们将 predecessor的右孩子置空，然后访问 x 的右孩子，即 x=x.right</li>
+</ol>
+</li>
+<li>重复上述操作，直至访问完整棵树。</li>
+</ol>
+<p>其实整个过程我们就多做一步：将当前节点左子树中最右边的节点指向它，这样在左子树遍历完成后我们通过这个指向走回了 x，且能再通过这个知晓我们已经遍历完成了左子树，而不用再通过栈来维护，省去了栈的空间复杂度。</p>
+<p>对每个结点<code>node</code>访问两次：</p>
+<ul>
+<li>第一次：找到<code>node</code>结点在中序遍历中的前面的结点predecessor，该结点的右指针为空，我们将其指向<code>node</code>，使其暂时连续</li>
+<li>判断<code>node -&gt; left</code><ul>
+<li>如果指向不为空，则<code>node = node -&gt; left</code>，左递归，执行上面步骤</li>
+<li>如果指向为空<ul>
+<li>令<code>pre</code>指向回归前的节点</li>
+<li><code>node = node -&gt; right</code>，回归到当前<code>node</code>的父节点</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>第二次：找到<code>node</code>结点在中序遍历中的前面的结点predecessor，该结点的右指针执行<code>node</code>，使其重新指向空，并比较<code>node</code>和<code>pre</code>的值（pre和node是中序遍历中连续的两个点，pre在前，node在后）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">recoverTree</span><span class="hljs-params">(TreeNode* root)</span> </span>&#123;<br>        TreeNode *x = <span class="hljs-literal">nullptr</span>, *y = <span class="hljs-literal">nullptr</span>, *pred = <span class="hljs-literal">nullptr</span>, *predecessor = <span class="hljs-literal">nullptr</span>;<br><br>        <span class="hljs-keyword">while</span> (root != <span class="hljs-literal">nullptr</span>) &#123;<br>            <span class="hljs-keyword">if</span> (root-&gt;left != <span class="hljs-literal">nullptr</span>) &#123;<br>                <span class="hljs-comment">// predecessor 节点就是当前 root 节点向左走一步，然后一直向右走至无法走为止</span><br>                predecessor = root-&gt;left;<br>                <span class="hljs-keyword">while</span> (predecessor-&gt;right != <span class="hljs-literal">nullptr</span> &amp;&amp; predecessor-&gt;right != root) &#123;<br>                    predecessor = predecessor-&gt;right;<br>                &#125;<br>                <br>                <span class="hljs-comment">// 让 predecessor 的右指针指向 root，继续遍历左子树</span><br>                <span class="hljs-keyword">if</span> (predecessor-&gt;right == <span class="hljs-literal">nullptr</span>) &#123;<br>                    predecessor-&gt;right = root;<br>                    root = root-&gt;left;<br>                &#125;<br>                <span class="hljs-comment">// 说明左子树已经访问完了，我们需要断开链接</span><br>                <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">if</span> (pred != <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;val &lt; pred-&gt;val) &#123;<br>                        y = root;<br>                        <span class="hljs-keyword">if</span> (x == <span class="hljs-literal">nullptr</span>) &#123;<br>                            x = pred;<br>                        &#125;<br>                    &#125;<br>                    pred = root;<br><br>                    predecessor-&gt;right = <span class="hljs-literal">nullptr</span>;<br>                    root = root-&gt;right;<br>                &#125;<br>            &#125;<br>            <span class="hljs-comment">// 如果没有左孩子，则直接访问右孩子</span><br>            <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-keyword">if</span> (pred != <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;val &lt; pred-&gt;val) &#123;<br>                    y = root;<br>                    <span class="hljs-keyword">if</span> (x == <span class="hljs-literal">nullptr</span>) &#123;<br>                        x = pred;<br>                    &#125;<br>                &#125;<br>                pred = root;<br>                root = root-&gt;right;<br>            &#125;<br>        &#125;<br>        swap(x-&gt;val, y-&gt;val);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<ul>
+<li>时间复杂度：O(N)，其中 N为二叉搜索树的高度。Morris 遍历中每个节点会被访问两次，因此总时间复杂度为 O(2N)=O(N)</li>
+<li>空间复杂度：O(1)</li>
+</ul>
+
+	</div>
+</div>
+    </main>
+  </body>
+</html>

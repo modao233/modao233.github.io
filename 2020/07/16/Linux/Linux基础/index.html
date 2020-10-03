@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	<main class="content">
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">主页</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">分类</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/about">关于我</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		Linux基础-汇总记录
+	</div>
+	
+	<div class="page-date">
+		2020-07-16
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>介绍Linux常用命令工具。</p>
+<a id="more"></a>
+
+
+<h2 id="文档帮助"><a href="#文档帮助" class="headerlink" title="文档帮助"></a>文档帮助</h2><p>查看命令简要说明：<code>whatis</code></p>
+<ul>
+<li>参数-w开启正则匹配</li>
+</ul>
+<p>查看命令详细说明：<code>info</code></p>
+<p>查看命令说明文档：<code>man</code></p>
+<p>查看程序所在路径：<code>which</code></p>
+<p>查看程序搜索路径：<code>whereis</code>，常用于安装了程序有多个版本时</p>
+<h2 id="文件及目录管理"><a href="#文件及目录管理" class="headerlink" title="文件及目录管理"></a>文件及目录管理</h2><p>创建文件：<code>touch</code></p>
+<p>创建目录：<code>mkdir</code></p>
+<p>删除：<code>rm</code></p>
+<ul>
+<li>参数-r表递归子目录</li>
+<li>参数-f表示不询问</li>
+</ul>
+<p>移动：<code>mv</code></p>
+<p>复制：<code>cp</code></p>
+<ul>
+<li>参数-a表示保留链接和文件属性，并递归子目录</li>
+<li>参数-i表示覆盖之前询问</li>
+<li>参数-p表示复制修改时间和访问权限</li>
+</ul>
+<p>显示当前目录：<code>pwd</code></p>
+<p>切换目录：<code>cd</code></p>
+<p>列出目录项：<code>ls</code></p>
+<ul>
+<li>参数-l表示显示详细信息</li>
+<li>参数-a表示显示隐藏文件</li>
+</ul>
+<p>查找：</p>
+<ul>
+<li><code>find</code>：实时查找，速度较慢，<code>find . -name modao</code>：查找当前目录的modao文件</li>
+<li><code>locate</code>：索引查找，速度快，需要更新，查找结果是整个路径<ul>
+<li><code>locate modao</code>：查找路径，路径内容包含modao</li>
+<li><code>locate -b modao</code>：查找路径，路径基名内容包含modao</li>
+<li><code>locate modao modao_test</code>：查找路径，路径内容包含modao<strong>或</strong>modao_test</li>
+<li><code>locate -A modao modao_test</code>：查找路径，路径内容包含modao<strong>和</strong>modao_test</li>
+<li><code>locate - c modao</code>：查找路径，路径内容包含modao，显示匹配的条目数</li>
+</ul>
+</li>
+</ul>
+<p>查看文件内容：</p>
+<ul>
+<li><p><code>cat</code>：显示全部文件</p>
+</li>
+<li><p>参数-n表示显示行号</p>
+</li>
+<li><p><code>head</code> ：默认显示文件前10行</p>
+<ul>
+<li>参数-n 4表示显示前4行的内容</li>
+<li>参数-n -4表示显示除文件最后4行外的内容</li>
+<li>参数-c 2表示显示前2个字节的内容</li>
+<li>参数-c -2表示显示除文件最后2个字节外的内容</li>
+</ul>
+</li>
+<li><p><code>tail</code>：默认显示文件后10行</p>
+<ul>
+<li>参数-n 4表示显示后4行的内容</li>
+<li>参数-n -4表示显示除文件前面4行外的内容</li>
+<li>参数-c 2表示显示后2个字节的内容</li>
+<li>参数-c +2表示显示除文件前2个字节外的内容</li>
+</ul>
+<blockquote>
+<p>  <code>more</code> &amp; <code>less</code>的区别：</p>
+<ol>
+<li>less可以按键盘上下方向键显示上下内容,more不能通过上下方向键控制显示</li>
+<li>less不必读整个文件，加载速度会比more更快</li>
+<li>less退出后shell不会留下刚显示的内容,而more退出后会在shell上留下刚显示的内容</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>查找文件内容：<code>grep</code></p>
+<p>修改所有者：<code>chown</code></p>
+<ul>
+<li>参数-R表示递归处理</li>
+<li>使用示例：<code>chown -R modao:modaogroup *</code>，将当前目录下的所有文件及子目录的拥有者改<code>modao</code>，用户组为<code>modaogroup</code></li>
+</ul>
+<p>修改所属组：<code>chgrp</code></p>
+<ul>
+<li>参数-R表示递归处理</li>
+<li>使用示例：<code>chgrp -R modao /usr/modao_test</code>，将<code>/usr/modao_test</code>及其子目录下所有文件的用户组改为<code>modao</code></li>
+</ul>
+<p>修改权限：<code>chmod</code></p>
+<ul>
+<li>r ：读，权限值4</li>
+<li>w：写，权限值2</li>
+<li>x ：执行，权限值1</li>
+</ul>
+<p>创建链接：</p>
+<ul>
+<li><code>ln</code>：硬链接，相对独立</li>
+<li><code>ln -s</code>：软连接（符号链接），相当于快捷方式</li>
+</ul>
+<p>管道：<code>|</code>、<code>;</code>、<code>&amp;&amp;</code>、<code>||</code></p>
+<p>重定向：</p>
+<ul>
+<li><code>&gt;</code>：重定向输出，覆盖文件内容</li>
+<li><code>&gt;&gt;</code>：重定向输出，追加文件内容</li>
+</ul>
+<p>Bash快捷操作:</p>
+<ul>
+<li><code>C-u</code>：删除光标到行首的所有字符，在某些设置下，删除全行</li>
+<li><code>C-w</code>：删除当前光标到前边的最近一个空格之间的字符（保留空格后面的字符）</li>
+<li><code>C-H</code>：删除光标前边的字符，相当于退格键</li>
+</ul>
+<h2 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h2><p>【留空】</p>
+<p>sed和echo已经另外记录</p>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxODI5ODMwOA==&mid=2666545074&idx=1&sn=7a6f86ae45c5e7254b71da7fcbbdef8d&chksm=80dcfb19b7ab720ff5ffc78d77092b805c54b22839e02fbf4741f06be90845552172258ac978&scene=21#wechat_redirect">Linux 三剑客之 awk 详解</a></p>
+<h2 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h2><p>查看磁盘空间：<code>df</code>，默认以B为单位且不显示单位</p>
+<ul>
+<li>参数-h，易读方式显示，显示单位（M/G）</li>
+</ul>
+<p>查看当前目录所占空间：<code>du</code></p>
+<ul>
+<li><p>参数-h，易读方式显示</p>
+</li>
+<li><p>参数-s，递归整个目录的大小</p>
+</li>
+<li><p>查看当前目录下所有子文件夹排序后的大小：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> `ls`; <span class="hljs-keyword">do</span> du -sh <span class="hljs-variable">$i</span>; <span class="hljs-keyword">done</span> | sort<br><span class="hljs-comment">## 或者：</span><br>du -sh `ls` | sort<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>  在linux中打包和压缩和分两步来实现的</p>
+</blockquote>
+<p>打包文件：<code>tar</code></p>
+<ul>
+<li>参数-c：打包选项</li>
+<li>参数-v：显示进度</li>
+<li>参数-z：调用gzip程序进行压缩，生成tar.gz</li>
+<li>参数-j：调用bzip2程序进行压缩，生成tar.bz2</li>
+<li>参数-f：使用档案文件，后跟文件名</li>
+</ul>
+<p>解包文件：<code>tar</code></p>
+<ul>
+<li>参数-x：解包选项</li>
+<li>参数-v：显示进度</li>
+<li>参数-z：调用gzip程序进行解压</li>
+<li>参数-j：调用bzip2程序进行解压</li>
+<li>参数-f：使用档案文件，后跟文件名</li>
+</ul>
+<p>压缩文件 &amp; 解压文件：</p>
+<ul>
+<li><code>gzip</code>，压缩文件后缀为gz结尾<ul>
+<li>压缩后删除原文件，解压完后删除压缩文件</li>
+<li><code>zcat</code>：不解压查看gz压缩文件</li>
+<li><code>gunzip</code>：解压gz压缩文件</li>
+<li>参数-d：解压文件</li>
+<li>参数-#：压缩比，可选1-9，默认为6<em>（压缩比越大，压缩越慢，压缩文件越小）</em></li>
+</ul>
+</li>
+<li><code>bzip2</code>：压缩文件后缀为bz2结尾<em>（比gzip有着更大压缩比）</em><ul>
+<li>参数-k，压缩或解压后保留原文件</li>
+<li>参数-d，解压bz2压缩文件</li>
+<li>参数-#：压缩比</li>
+<li><code>bzcat</code>：不解压查看bz2压缩文件</li>
+<li><code>bgunzip2</code>：解压bz2压缩文件</li>
+</ul>
+</li>
+<li><code>xz</code>：压缩文件后缀为xz结尾<ul>
+<li>参数-d：解压</li>
+<li>参数-k：压缩或解压后保留原文件</li>
+<li>参数-#：压缩比</li>
+<li><code>unxz</code>：解压</li>
+<li><code>xzcat</code>：不解压查看</li>
+</ul>
+</li>
+<li><code>zip</code>：打包压缩工具，<strong>可以压缩目录</strong>，默认不删除原文件<ul>
+<li>参数-r：递归目录</li>
+<li>参数-d：删除压缩文件中的某个文件</li>
+<li>参数-m：添加某个文件到压缩文件中</li>
+</ul>
+</li>
+<li><code>unzip</code>：解压工具<ul>
+<li>参数-d：指定解压目录</li>
+<li>参数-o：不提示，直接覆盖</li>
+</ul>
+</li>
+</ul>
+<p><img src="/image-20200718152352629.png" alt="image-20200718152352629"></p>
+<h2 id="进程管理工具"><a href="#进程管理工具" class="headerlink" title="进程管理工具"></a>进程管理工具</h2><p>查询所有进程信息：<code>ps -ef</code></p>
+<p>完整格式显示所有的进程信息：<code>ps -ajx</code></p>
+<p>发送指定信号到相应进程：<code>kill</code>，默认信息是15，指正常停止，一般操作对象是PID，也可使用%jobs指定作业号</p>
+<ul>
+<li><p>参数-l，列出全部信号名称</p>
+</li>
+<li><p>参数-u，为指定用户的所有进程发送信号</p>
+</li>
+<li><p>参数-s #，指定信号，常缩写为**<code>-#</code>**</p>
+<p>常用信号：</p>
+<ul>
+<li>HUP，1，终端短线</li>
+<li>INT，2，中断（同C-c）</li>
+<li>QUIT，3，退出（同C-\）</li>
+<li>TERM，15，默认信号</li>
+<li>KILL，9，强制终止</li>
+<li>CONT，18，继续（与STOP相反，<code>fg/bg</code>命令）</li>
+<li>STOP，19，暂停（同C-z）</li>
+</ul>
+<blockquote>
+<ol>
+<li><p>当kill成功地发送了信号后，shell会在屏幕上显示出进程的终止信息。有时这个信息不会马上显示，只有当按下Enter键使shell的命令提示符再次出现时，才会显示出来。</p>
+</li>
+<li><p>应注意，信号使进程强行终止，这常会带来一些副作用，如数据丢失或者终端无法恢复到正常状态。发送信号时必须小心，只有在万不得已时，才用kill信号(9)，因为进程不能首先捕获它。</p>
+</li>
+<li><p>要撤销所有的后台作业，可以输入kill 0。因为有些在后台运行的命令会启动多个进程，跟踪并找到所有要杀掉的进程的PID是件很麻烦的事。这时，使用kill 0来终止所有由当前shell启动的进程，是个有效的方法。</p>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>实时进程监控：</p>
+<ul>
+<li><code>top</code>：查看系统中使用CPU、使用内存最多的进程，交互界面<ul>
+<li>P：根据CPU使用百分比大小进行排序</li>
+<li>M：根据驻留内存大小进行排序</li>
+<li>i：使top不显示任何闲置或者僵死进程</li>
+</ul>
+</li>
+<li><code>htop</code>：<ul>
+<li>上左区：显示了CPU、物理内存和交换分区的信息；</li>
+<li>上右区：显示了任务数量、平均负载和连接运行时间等信息</li>
+<li>进程区域：显示出当前系统中的所有进程</li>
+<li>操作提示区：显示了当前界面中F1-F10功能键中定义的快捷功能</li>
+</ul>
+</li>
+</ul>
+<p>分析线程堆栈：<code>pmap</code>，输出内存的状况</p>
+<p>列出当前系统打开文件的工具：<code>lsof</code><em>（Linux一切皆文件）</em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 列出所有打开的文件:</span><br>lsof<br><span class="hljs-comment"># 备注: 如果不加任何参数，就会打开所有被打开的文件，建议加上一下参数来具体定位</span><br><br><span class="hljs-comment"># 查看谁正在使用某个文件</span><br>lsof /filepath/file<br><br><span class="hljs-comment">#递归查看某个目录的文件信息</span><br>lsof +D /filepath/filepath2/<br>备注: 使用了+D，对应目录下的所有子目录和文件都会被列出<br><br><span class="hljs-comment"># 比使用+D选项，遍历查看某个目录的所有文件信息 的方法</span><br>lsof | grep ‘/filepath/filepath2/’<br><br><span class="hljs-comment"># 列出某个用户打开的文件信息</span><br>lsof  -u username<br>备注: -u 选项，u其实是user的缩写<br><br><span class="hljs-comment"># 列出某个程序所打开的文件信息</span><br>lsof -c mysql<br>备注: -c 选项将会列出所有以mysql开头的程序的文件，其实你也可以写成lsof | grep mysql,但是第一种方法明显比第二种方法要少打几个字符了<br><br><span class="hljs-comment"># 列出多个程序多打开的文件信息</span><br>lsof -c mysql -c apache<br><br><span class="hljs-comment"># 列出某个用户以及某个程序所打开的文件信息</span><br>lsof -u <span class="hljs-built_in">test</span> -c mysql<br><br><span class="hljs-comment"># 列出除了某个用户外的被打开的文件信息</span><br>lsof -u ^root<br>备注：^这个符号在用户名之前，将会把是root用户打开的进程不让显示<br><br><span class="hljs-comment"># 通过某个进程号显示该进行打开的文件</span><br>lsof -p 1<br><br><span class="hljs-comment"># 列出多个进程号对应的文件信息</span><br>lsof -p 123,456,789<br><br><span class="hljs-comment"># 列出除了某个进程号，其他进程号所打开的文件信息</span><br>lsof -p ^1<br><br><span class="hljs-comment"># 列出所有的网络连接</span><br>lsof -i<br><br><span class="hljs-comment"># 列出所有tcp 网络连接信息</span><br>lsof -i tcp<br><br><span class="hljs-comment"># 列出所有udp网络连接信息</span><br>lsof -i udp<br><br><span class="hljs-comment"># 列出谁在使用某个端口</span><br>lsof -i :3306<br><br><span class="hljs-comment"># 列出谁在使用某个特定的udp端口</span><br>lsof -i udp:55<br><br><span class="hljs-comment"># 特定的tcp端口</span><br>lsof -i tcp:80<br><br><span class="hljs-comment"># 列出某个用户的所有活跃的网络端口</span><br>lsof -a -u <span class="hljs-built_in">test</span> -i<br><br><span class="hljs-comment"># 列出所有网络文件系统</span><br>lsof -N<br><br><span class="hljs-comment">#域名socket文件</span><br>lsof -u<br><br><span class="hljs-comment">#某个用户组所打开的文件信息</span><br>lsof -g 5555<br><br><span class="hljs-comment"># 根据文件描述列出对应的文件信息</span><br>lsof -d description(like 2)<br><br><span class="hljs-comment"># 根据文件描述范围列出文件信息</span><br>lsof -d 2-3<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27870421/article/details/92803453">Linux lsof命令</a></p>
+<p>  <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a3aa6b01b2e1">Linux 命令神器：lsof</a></p>
+</blockquote>
+<h2 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h2><p>CPU监控：<code>top</code></p>
+<p>内存监控：<code>free</code></p>
+<ul>
+<li>参数-m，以MB为单位</li>
+<li>参数-k，以KB为单位</li>
+<li>参数-g，以GB为单位</li>
+</ul>
+<p>综合监控工具：<code>vmstat</code></p>
+<ul>
+<li>参数<ul>
+<li>参数1：刷新时间</li>
+<li>参数2：采集次数</li>
+</ul>
+</li>
+<li>字段<ul>
+<li>procs<ul>
+<li>r：等待执行的任务数</li>
+<li>B：等待IO的进程数量</li>
+</ul>
+</li>
+<li>memory<ul>
+<li>swpd：正在使用虚拟的内存大小，单位k</li>
+<li>free：空闲内存大小</li>
+<li>buff：已用的buff大小，对块设备的读写进行缓冲</li>
+<li>cache：已用的cache大小，文件系统的cache</li>
+</ul>
+</li>
+<li>swap<ul>
+<li>si：每秒从交换区写入内存的大小（单位：kb/s）</li>
+<li>so：每秒从内存写到交换区的大小</li>
+</ul>
+</li>
+<li>IO<ul>
+<li>bi：每秒读取的块数（读磁盘）</li>
+<li>bo：每秒写入的块数（写磁盘）</li>
+</ul>
+</li>
+<li>system<ul>
+<li>in：每秒中断数，包括时钟中断</li>
+<li>cs：每秒上下文切换数</li>
+</ul>
+</li>
+<li>CPU<ul>
+<li>us：用户进程执行消耗cpu时间(user time)</li>
+<li>sy：系统进程消耗cpu时间(system time)</li>
+<li>id：空闲时间(包括IO等待时间)</li>
+<li>wa：等待IO时间</li>
+<li>st：Time stolen from a virtual machine. Prior to Linux 2.6.11, unknown</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>超级监控工具：<code>dstat</code></p>
+<ul>
+<li>常用：<code>dstat -clmnsygdr</code></li>
+</ul>
+<h2 id="网络工具"><a href="#网络工具" class="headerlink" title="网络工具"></a>网络工具</h2><p>ss是Socket Statistics的缩写。顾名思义，ss命令可以用来获取socket统计信息，它可以显示和netstat类似的内容。ss的优势在于它能够显示更多更详细的有关TCP和连接状态的信息，而且比netstat更快速更高效。</p>
+<p>当服务器的socket连接数量变得非常大时，无论是使用netstat命令还是直接cat /proc/net/tcp，执行速度都会很慢。 </p>
+<p> ss快的秘诀在于，它利用到了TCP协议栈中tcp_diag。tcp_diag是一个用于分析统计的模块，可以获得Linux 内核中第一手的信息，这就确保了ss的快捷高效。 </p>
+<p>使用方式：</p>
+<ul>
+<li><code>ss [选项]</code></li>
+<li><code>ss [选项] [过滤条件]</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs plain">-h, --help           this message<br>-V, --version        output version information<br>-n, --numeric        don&#39;t resolve service names<br>-r, --resolve       	resolve host names<br>-a, --all            display all sockets<br>-l, --listening      display listening socket<br>-o, --options       	show timer information<br>-e, --extended     	show detailed socket information<br>-m, --memory        	show socket memory usage<br>-p, --processes      show process using socket<br>-i, --info           show internal TCP information<br>-s, --summary        show socket usage summary<br> <br>-4, --ipv4          	display only IP version 4 sockets<br>-6, --ipv6          	display only IP version 6 sockets<br>-0, --packet display PACKET sockets<br>-t, --tcp            display only TCP sockets<br>-u, --udp            display only UDP sockets<br>-d, --dccp           display only DCCP sockets<br>-w, --raw            display only RAW sockets<br>-x, --unix           display only Unix domain sockets<br>-f, --family&#x3D;FAMILY 	display sockets of type FAMILY<br> <br>-A, --query&#x3D;QUERY, --socket&#x3D;QUERY<br>    QUERY :&#x3D; &#123;all|inet|tcp|udp|raw|unix|packet|netlink&#125;[,QUERY]<br> <br>-D, --diag&#x3D;FILE      Dump raw information about TCP sockets to FILE<br>-F, --filter&#x3D;FILE   	read filter information from FILE<br>    FILTER :&#x3D; [ state TCP-STATE ] [ EXPRESSION ]<br></code></pre></td></tr></table></figure>
+
+<p>常用命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 显示所有TCP socket</span><br>ss -t -a<br><span class="hljs-comment"># 显示所有UDP socket</span><br>ss -u -a<br><span class="hljs-comment"># 列出所有打开的网络连接端口</span><br>ss -l<br><span class="hljs-comment"># 显示每个进程打开的socket</span><br>ss -pl<br><span class="hljs-comment"># 显示所有已建立的SMTP连接</span><br>ss -o state established <span class="hljs-string">&#x27;( dport = :smtp or sport = :smtp )&#x27;</span><br><span class="hljs-comment"># 显示所有已建立的HTTP连接</span><br>ss -o state established <span class="hljs-string">&#x27;( dport = :http or sport = :http )&#x27;</span><br><span class="hljs-comment"># 找出所有连接X服务器的进程</span><br>ss -X src /tmp/.X11-unix/*<br><span class="hljs-comment"># 列出当前socket(已连接、关闭、等待)详细信息</span><br>ss -s<br></code></pre></td></tr></table></figure>
+
+<p>ss常用的state状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plain">established<br>syn-sent<br>syn-recv<br>fin-wait-1<br>fin-wait-2<br>time-wait<br>closed<br>close-wait<br>last-ack<br>listen<br>closing<br>all : All of the above states<br>connected : All the states except for listen and closed<br>synchronized : All the connected states except for syn-sent<br>bucket : Show states, which are maintained as minisockets, i.e. time-wait and syn-recv.<br>big : Opposite to bucket state.<br></code></pre></td></tr></table></figure>
+
+<p>ss使用IP地址筛选：<code>ss src ADDRESS_PATTERN</code></p>
+<ul>
+<li><p>src：表示来源</p>
+</li>
+<li><p>ADDRESS_PATTERN：表示地址规则</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 列出来之20.33.31.1的连接</span><br>ss src 120.33.31.1<br><span class="hljs-comment"># 列出来至120.33.31.1,80端口的连接</span><br>ss src 120.33.31.1:http<br>ss src 120.33.31.1:80<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>ss使用端口筛选：<code>ss (dport | sport) OP PORT</code></p>
+<ul>
+<li><p>OP：运算符</p>
+<ul>
+<li><code>&lt;=</code> or <code>le</code>：小于等于</li>
+<li><code>&gt;=</code> or <code>ge</code>：大于等于</li>
+<li><code>==</code> or <code>eq</code>：等于</li>
+<li><code>!=</code> or <code>ne</code>：不等于</li>
+<li><code>&lt;</code>   or <code>lt</code>：小于</li>
+<li><code>&gt;</code>   or <code>gt</code>：大于</li>
+</ul>
+</li>
+<li><p>PORT：端口</p>
+</li>
+<li><p>过滤端口</p>
+<ul>
+<li><code>dport</code>：过滤目标端口</li>
+<li><code>sport</code>：过滤源端口</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">ss sport = :http 也可以是 ss sport = :80<br>ss dport = :http<br>ss dport \&gt; :1024<br>ss sport \&gt; :1024<br>ss sport \&lt; :32000<br>ss sport eq :22<br>ss dport != :22<br>ss state connected sport = :http<br>ss \( sport = :http or sport = :https \)<br>ss -o state fin-wait-1 \( sport = :http or sport = :https \) dst 192.168.1/24<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>  为什么ss比netstat快?<br>  netstat是遍历/proc下面每个PID目录，ss直接读/proc/net下面的统计信息。所以ss执行的时候消耗资源以及消耗的时间都比netstat少很多</p>
+</blockquote>
+<h2 id="用户管理工具"><a href="#用户管理工具" class="headerlink" title="用户管理工具"></a>用户管理工具</h2><p>添加用户：<code>useradd -m [username] -s [/bin/bash]</code></p>
+<p>设置密码：<code>passwd [username]</code></p>
+<p>删除用户：<code>userdel [username]</code></p>
+<ul>
+<li>参数-r，删除用户并删除用户信息</li>
+</ul>
+<p>切换用户：<code>su [username]</code></p>
+<p>查看当前用户所属组：<code>groups</code></p>
+<p>将用户添加到组：<code>usermod -G [groupname] [username]</code></p>
+<p>变更用户所在组：<code>usermod -g [groupname] [username]</code>，添加到新组，从旧组中删除</p>
+<p>查看所有用户及权限：<code>more /etc/passwd</code></p>
+<p>查看所有用户组及权限：<code>more /etc/group</code></p>
+<p>更改读写权限：<code>chmod [userMark](+|-)[PermissionsMark]</code></p>
+<ul>
+<li><code>userMark</code>取值：<ul>
+<li>u：拥有者</li>
+<li>g：拥有者所在组<strong>之内</strong>的其它用户</li>
+<li>o：拥有者所在组<strong>之外</strong>的其它用户</li>
+<li>a：所有用户</li>
+</ul>
+</li>
+<li><code>PermissionsMark</code>取值：<ul>
+<li>r： 读，4</li>
+<li>w：写，2</li>
+<li>x： 执行，1</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">chmod a+x main         对所有用户给文件main增加可执行权限<br>chmod g+w blogs        对组用户给文件blogs增加可写权限<br><span class="hljs-comment"># 数字方式</span><br>chmod 740 main     将main的用户权限设置为rwxr-----<br><span class="hljs-comment"># 更改文件拥有者</span><br>chown username dirOrFile<br><span class="hljs-comment"># 更改目录拥有者（-R选项递归更改）</span><br>chown -R weber server/<br></code></pre></td></tr></table></figure>
+
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>用户环境信息配置文件，保存于用户主目录：</p>
+<ul>
+<li><code>.bashrc</code>：用于交互式<code>non-loginshell</code></li>
+<li><code>.profile</code>：用于交互式<code>login shell</code></li>
+</ul>
+<blockquote>
+<p>  <code>~/.profile</code>与<code>~/.bashrc</code>的区别:</p>
+<ul>
+<li>这两者都具有个性化定制功能</li>
+<li><code>~/.profile</code>可以设定本用户专有的路径，环境变量，等，它只能登入的时候执行一次</li>
+<li><code>~/.bashrc</code>也是某用户专有设定文档，可以设定路径，命令别名，每次shell script的执行都会使用它一次</li>
+</ul>
+</blockquote>
+<p>系统全局环境信息配置文件，保存于<code>/etc</code>目录：</p>
+<ul>
+<li><code>/etc/profile</code></li>
+<li><code>/etc/bashrc</code></li>
+</ul>
+<blockquote>
+<p>  当登入系统获得一个shell进程时，其读取环境设置脚本分为三步:</p>
+<ol>
+<li>首先读入的是全局环境变量设置文件<code>/etc/profile</code>，然后根据其内容读取额外的文档，如<code>/etc/profile.d</code>和<code>/etc/inputrc</code></li>
+<li>读取当前登录用户Home目录下的文件<code>~/.bash_profile</code>，其次读取<code>~/.bash_login</code>，最后读取<code>~/.profile</code>，这三个文档设定基本上是一样的，读取有优先关系</li>
+<li>读取<code>~/.bashrc</code></li>
+</ol>
+</blockquote>
+<h2 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h2><p>查看Linux系统版本：</p>
+<ul>
+<li><code>uname -a</code></li>
+<li><code>lsb_release -a</code>，等价于<code>more /etc/lsb-release</code></li>
+<li><code>more /etc/os-release</code></li>
+</ul>
+<p>查看CPU信息：<code>cat /proc/cpuinfo</code></p>
+<p>查看CPU核心：<code>cat /proc/cpuinfo | grep processor | wc -l</code></p>
+<p>查看内存信息：<code>cat /proc/meminfo</code></p>
+<p>查看架构：<code>arch</code></p>
+<p>系统时间：<code>date</code></p>
+<ul>
+<li>参数-s，设置系统日期和时间（格式如：2000-12-30 13:02:00）</li>
+<li>格式化输出：<code>date +%Y%m%d.%H%M%S</code></li>
+</ul>
+<p>设置时区：<code>tzselect</code></p>
+<p>将系统时间写入CMOS：<code>clock -w</code></p>
+<h2 id="主要参考"><a href="#主要参考" class="headerlink" title="主要参考"></a>主要参考</h2><p><a target="_blank" rel="noopener" href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/index.html">Linux工具快速教程</a></p>
+<blockquote>
+<p>  本文命令测试环境：Ubuntu 18.04 x86_64</p>
+</blockquote>
+
+	</div>
+</div>
+    </main>
+  </body>
+</html>
