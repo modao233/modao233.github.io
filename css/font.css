@@ -12,3 +12,8 @@
     font-family: jinkaiFont;
     src: url("../fonts/jinkai.ttf") format("TrueType");
 }
+
+@font-face {
+    font-family: Monaco;
+    src: url("../fonts/Monaco.ttf") format("TrueType");
+}
