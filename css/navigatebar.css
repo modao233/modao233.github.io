@@ -46,6 +46,8 @@
 }
 
 .navigatebar-mine {
+	font-size: 30px;
+	font-family: Monaco;
     margin-left: 20px;
     flex: 1;
 }
