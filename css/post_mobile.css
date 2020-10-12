@@ -2,27 +2,26 @@ html,
 body {
     margin: 0;
     padding: 0;
+    font-size: 12px;
     width: 100%;
     background-color: #FFF;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-family: jinkaiFont;
 }
 
 .content-area {
     box-sizing: border-box;
     background-color: #FFF;
-    border-radius: 5px;
-    width: 80%;
+    width: 100%;
     margin: 20px;
     padding-top: 40px;
     padding-bottom: 40px;
-    padding-left: 40px;
-    padding-right: 40px;
-	
-	display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 ul {
@@ -42,13 +41,14 @@ a {
 
 .title {
     color: #000;
-    font-size: 26px;
+    font-size: 24px;
     margin-bottom: 10px;
     text-align: center;
     line-height: 40px;
 }
 
 .content {
+    font-size: 16px;
     line-height: 28px;
 }
 
@@ -70,16 +70,13 @@ p img {
     margin-bottom: 20px;
 }
 
-td.gutter{width: 20px;height: 0px;}
 pre {
     white-space: pre;
     overflow: auto;
-	margin-top: 0px;
-	margin-bottom: 0px;
 }
 
 div.highlighter-rouge {
-    margin: 0;
+    margin: 0
 }
 
 div.highlight,
@@ -88,7 +85,7 @@ pre.highlight {
 }
 
 figure.highlight pre {
-    padding: 0px;
+    padding: 10px;
 }
 
 div.highlight pre.highlight {
@@ -99,8 +96,8 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     border: 1px solid #AAA;
+
     width: 100%;
-	table-layout:fixed;word-break:break-all;
 }
 
 tbody tr:nth-child(even) {
@@ -136,7 +133,7 @@ td {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -152,20 +149,11 @@ td {
     justify-content: center;
 }
 
-.page-date {
-    display: flex;
-    justify-content: center;
-    color: #AAA;
-    font-size: 13px;
-    margin-top: 20px;
-    margin-bottom: 40px;
-}
-
 .char-counter {
     display: flex;
     justify-content: flex-end;
     color: #AAA;
-    font-size: 13px;
+    font-size: 11px;
     margin-top: 20px;
     margin-bottom: 40px;
 }
@@ -181,7 +169,6 @@ blockquote p {
     background-color: #F8F8F8;
     margin-top: 40px;
 }
-
 
 .line-quote {
     color: #FF6500;
