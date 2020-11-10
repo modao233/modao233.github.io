@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		nginx目录浏览（顺便美化）
+	</div>
+	
+	<div class="page-date">
+		2020-09-23
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/software">software</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>nginx开启目录浏览</p>
+<a id="more"></a>
+
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>本次在我的win10上安装，所以阅读的相关文档是win10系统下的。</p>
+<p>首先，<a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">下载</a>nginx/Windows的压缩包。</p>
+<p>接着，找个位置将其解压，并在cmd中cd到解压位置，将其运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入目录</span><br>D:\&gt;<span class="hljs-built_in">cd</span> nginx-1.19.2<br><span class="hljs-comment"># 启动运行</span><br>D:\nginx-1.19.2&gt;start nginx.exe<br><span class="hljs-comment"># 查看进程</span><br>D:\nginx-1.19.2&gt;tasklist /<span class="hljs-keyword">fi</span> <span class="hljs-string">&quot;imagename eq nginx.exe&quot;</span><br><br>映像名称                       PID 会话名              会话<span class="hljs-comment">#       内存使用</span><br>========================= ======== ================ =========== ============<br>nginx.exe                    22300 Console                   11     13,092 K<br>nginx.exe                    24444 Console                   11     13,428 K<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  启动失败看错误报告，详情见参考文章里的第一篇</p>
+</blockquote>
+<p>相关nginx操作指令：</p>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nginx -s stop</td>
+<td>fast shutdown</td>
+</tr>
+<tr>
+<td>nginx -s quit</td>
+<td>graceful shutdown</td>
+</tr>
+<tr>
+<td>nginx -s reload</td>
+<td>changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes</td>
+</tr>
+<tr>
+<td>nginx -s reopen</td>
+<td>re-opening log files</td>
+</tr>
+</tbody></table>
+<h2 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h2><p>编辑：<code>D:\nginx-1.19.2\conf\nginx.conf</code></p>
+<p>在http{}里的server{}里修改相关配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plain">listen       80;<br>server_name  localhost;<br>charset utf-8;<br>#access_log  logs&#x2F;host.access.log  main;<br>location &#x2F; &#123;<br>    #root   html;<br>    #index  index.html index.htm;<br>    # 设置要显示目录的路径<br>    root modao;<br>    # 开启目录浏览<br>    autoindex on;<br>    # 切换为 off 后，以可读的方式显示文件大小，单位为 KB、MB 或者 GB<br>    autoindex_exact_size off;<br>    # 以服务器的文件时间作为显示的时间<br>    autoindex_localtime on;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  每次修改配置后，都需要运行<code>nginx -s reload</code>才能看到修改。</p>
+</blockquote>
+<h2 id="显示美化"><a href="#显示美化" class="headerlink" title="显示美化"></a>显示美化</h2><p>这里介绍简单的美化，<a target="_blank" rel="noopener" href="https://github.com/Hzlarm/autoindex.git">下载插件</a>，将里面的<code>.autoindex</code>目录放到资源所在目录，修改相关配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs plain">listen       80;<br>server_name  localhost;<br>charset utf-8;<br>#access_log  logs&#x2F;host.access.log  main;<br>location &#x2F; &#123;<br>    #root   html;<br>    #index  index.html index.htm;<br>    # 设置要显示目录的路径<br>    root modao;<br>    # 开启目录浏览<br>    autoindex on;<br>    # 切换为 off 后，以可读的方式显示文件大小，单位为 KB、MB 或者 GB<br>    autoindex_exact_size off;<br>    # 以服务器的文件时间作为显示的时间<br>    autoindex_localtime on;<br>    <br>    add_before_body &#x2F;.autoindex&#x2F;header.html;<br>    add_after_body &#x2F;.autoindex&#x2F;footer.html;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>另一个美化方法可参考：<a target="_blank" rel="noopener" href="https://github.com/Naereen/Nginx-Fancyindex-Theme">https://github.com/Naereen/Nginx-Fancyindex-Theme</a></p>
+<p>设置为开机启动：</p>
+<p>这里采用一种简单方便的办法。新建一个nginx快捷方式放到<code>C:\Users\[用户名]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code>目录即可。</p>
+<blockquote>
+<p>  win10下，显示的目录里如果有中文，将会无法访问</p>
+</blockquote>
+<p>我的效果图：</p>
+<p><img src="image-20200923161915330.png" alt="image-20200923161915330"></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="http://nginx.org/en/docs/windows.html">nginx for Windows</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/hzlarm/article/details/103781416">windows环境nginx搭建文件服务器及美化</a></p>
+<h2 id="乱码探究"><a href="#乱码探究" class="headerlink" title="乱码探究"></a>乱码探究</h2><p>win10下，nginx中文乱码，设置：<code>charset utf-8,gb2312;</code></p>
+<p>解决了中文乱码，但是nginx无法访问中文文件名，目前无法解决，除非系统使用utf-8</p>
+<p>[win10的utf-8目前无法获得良好的体验]</p>
+<p>网上有人说在后端个别目录用APACHE代理了，APACHE支持中文码：</p>
+<p> location /~doc/ {<br>   proxy_pass <a target="_blank" rel="noopener" href="http://127.0.0.1:81/;#apache">http://127.0.0.1:81/;#apache</a> server<br> } </p>
+<p> ==Linux下两个工具convmv和iconv==</p>
+<p> convmv就是更改文件名编码方式的一个工具。比如 </p>
+<p> sudo convmv -f gbk -t utf-8 -r –notest /home </p>
+<p> 就是将/home目录下原来文件名是gbk编码方式的全部改为utf-8格式的。这里 -f 后面为原来的编码方式，-t  后面是要更改为的编码方式， -r 表示这个目录下面的所有文件， –notest  表示马上执行，而不是仅仅测试而已。另外这命令好像要root才能执行，因此要加上 sudo。 </p>
+<p> iconv是更改文件编码方式的一个工具： </p>
+<p> sudo iconv -f gbk -t utf-8 -o outfile infile </p>
+<p> -f为原来的编码方式，-t 为输出文件的编码方式， -o表示输出文件名，这利用outfile表示，最后跟上要更改编码方式的文件名sourcefile 。 </p>
+<p> 通过这两个工具，中文文件乱码的问题终于解决。 </p>
+
+	</div>
+</div>
+    
+  </body>
+</html>

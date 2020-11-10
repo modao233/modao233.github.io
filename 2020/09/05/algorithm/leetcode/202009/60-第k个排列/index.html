@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		leetcode 60 第k个排列
+	</div>
+	
+	<div class="page-date">
+		2020-09-05
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/leetcode">leetcode</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>leetcode 60 第k个排列</p>
+<a id="more"></a>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。</p>
+<p>按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：</p>
+<pre><code>&quot;123&quot;
+&quot;132&quot;
+&quot;213&quot;
+&quot;231&quot;
+&quot;312&quot;
+&quot;321&quot;</code></pre>
+<p>给定 n 和 k，返回第 k 个排列。</p>
+<p><strong>说明：</strong></p>
+<ul>
+<li>给定 <em>n</em> 的范围是 [1, 9]。</li>
+<li>给定 <em>k</em> 的范围是[1,  <em>n</em>!]。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plain">示例 1:<br><br>输入: n &#x3D; 3, k &#x3D; 3<br>输出: &quot;213&quot;<br><br>示例 2:<br><br>输入: n &#x3D; 4, k &#x3D; 9<br>输出: &quot;2314&quot;<br></code></pre></td></tr></table></figure>
+
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p><img src="image-20200905204653549.png" alt="image-20200905204653549"></p>
+<p>所求排列 一定在叶子结点处得到，进入每一个分支，可以根据已经选定的数的个数，进而计算还未选定的数的个数，然后计算阶乘，就知道这一个分支的 叶子结点 的个数：</p>
+<ul>
+<li>如果 k 大于这一个分支将要产生的叶子结点数，直接跳过这个分支，这个操作叫「剪枝」；</li>
+<li>如果 k 小于等于这一个分支将要产生的叶子结点数，那说明所求的全排列一定在这一个分支将要产生的叶子结点里，需要递归求解。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// 使用回溯法的思路思考，则每当选择一个数加入排列时，可以计算出剩下的数还有多少种排列的可能，</span><br>    <span class="hljs-comment">// 即可以计算出当前被选择的数的排列总数，设用 remain_fac 表示， remain_fac = 剩下的待选择的数的阶乘。</span><br>    <span class="hljs-comment">// 然后将 remain_fac 与 k 进行大小比较，</span><br>    <span class="hljs-comment">// 若小于 k ，则说明所要求的第 k 个排列不在以 当前选定的数 为开头的所有排列中，直接跳过</span><br>    <span class="hljs-comment">// 一次递归到底就能找到 第 k 个排列</span><br>    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">getPermutation</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> k)</span> </span>&#123;<br>        <span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt; <span class="hljs-title">isUsed</span><span class="hljs-params">(n + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>)</span></span>;          <span class="hljs-comment">// 用于标记每个数是否用过</span><br>        <span class="hljs-built_in">string</span> res = <span class="hljs-string">&quot;&quot;</span>;                            <span class="hljs-comment">// 用于返回的结果排列序列</span><br><br>        dfs(isUsed, res, n, k);<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-comment">// 递归实现</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt; &amp;isUsed, <span class="hljs-built_in">string</span> &amp;res, <span class="hljs-keyword">int</span> n, <span class="hljs-keyword">int</span> k)</span></span>&#123;<br>        <span class="hljs-keyword">int</span> res_len = res.size();<br>        <span class="hljs-keyword">if</span>(res_len == n)&#123;    <span class="hljs-comment">// 结束条件，当前排列已经结束</span><br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">int</span> remain_fac = factorial(n - res_len - <span class="hljs-number">1</span>);  <span class="hljs-comment">// 剩下的数的全排列的个数</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; ++i)&#123;                  <span class="hljs-comment">// 遍历 [1, n]</span><br>            <span class="hljs-keyword">if</span>(isUsed[i])&#123;                            <span class="hljs-comment">// 跳过已使用的数</span><br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(remain_fac &gt; <span class="hljs-number">0</span> &amp;&amp; remain_fac &lt; k)&#123;     <br>                <span class="hljs-comment">// 剩下的数的全排列个数小于当前 k ，说明第 k 个排列肯定不在当前的递归子树中，直接跳过该递归</span><br>                k -= remain_fac;                      <span class="hljs-comment">// 剪枝</span><br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            res = res + <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">char</span>&gt;(<span class="hljs-string">&#x27;0&#x27;</span> + i);<br>            isUsed[i] = <span class="hljs-literal">true</span>;<br>            dfs(isUsed, res, n, k);<br>                                                      <span class="hljs-comment">// 因为是一次递归直接到叶子，所以不需要还原状态</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">// 求 n 的阶乘 或者直接使用数组：factorial = &#123;1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880&#125;</span><br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">factorial</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span>&#123;<br>        <span class="hljs-keyword">int</span> res = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(n &gt; <span class="hljs-number">0</span>)&#123;<br>            res *= n;<br>            n--;<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度：递归n次，每次递归操作里有n次的循环，故为$O(n^2)$</li>
+<li>空间复杂度：递归栈n，状态数组n，$O(n)$</li>
+</ul>
+
+	</div>
+</div>
+    
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		leetcode 206 反转链表
+	</div>
+	
+	<div class="page-date">
+		2020-08-07
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/leetcode">leetcode</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>leetcode 206 反转链表，涉及算法：迭代、递归</p>
+<a id="more"></a>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>反转一个单链表。</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL<br>输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL<br></code></pre></td></tr></table></figure>
+
+<p>进阶:<br>你可以迭代或递归地反转链表。你能否用两种方法解决这道题？</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><p>双指针：每次反转cur节点</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * struct ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode *next;</span><br><span class="hljs-comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span><br><span class="hljs-comment"> * &#125;;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode* <span class="hljs-title">reverseList</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        ListNode *pre = <span class="hljs-literal">nullptr</span>;<br>        ListNode *cur = head;<br>        <span class="hljs-keyword">while</span>(cur)&#123;<br>            ListNode *temp = cur -&gt; next;<br>            cur -&gt; next = pre;<br>            pre = cur;<br>            cur = temp;<br>        &#125;<br>        <span class="hljs-keyword">return</span> pre;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<ul>
+<li>时间复杂度：O(n)，假设 n是列表的长度，时间复杂度是 O(n)</li>
+<li>空间复杂度：O(1)。使用了常量大小的空间。</li>
+</ul>
+<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>递归版本稍微复杂一些，其关键在于反向工作。假设列表的其余部分已经被反转，现在我该如何反转它前面的部分？</p>
+<p>假设列表为：</p>
+<p>$n_{1}\rightarrow … \rightarrow n_{k-1} \rightarrow n_{k} \rightarrow n_{k+1} \rightarrow … \rightarrow n_{m} \rightarrow \varnothing $$</p>
+<p>若从节点 $n_{k+1}$到 $n_m$已经被反转，而我们正处于 $n_k$。</p>
+<p>$n_{1}\rightarrow … \rightarrow n_{k-1} \rightarrow n_{k} \rightarrow n_{k+1} \leftarrow … \leftarrow n_{m}$</p>
+<p>我们希望$n_{k+1}$ 的下一个节点指向 $n_{k}$。</p>
+<p>要小心的是 $n_{1}$ 的下一个必须指向 Ø 。如果你忽略了这一点，你的链表中可能会产生循环。如果使用大小为 2 的链表测试代码，则可能会捕获此错误。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for singly-linked list.</span><br><span class="hljs-comment"> * struct ListNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     ListNode *next;</span><br><span class="hljs-comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span><br><span class="hljs-comment"> * &#125;;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">ListNode* <span class="hljs-title">reverseList</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(!head || !head-&gt;next)<span class="hljs-keyword">return</span> head;<br>        ListNode *p = reverseList(head -&gt; next);<br>        head -&gt; next -&gt; next = head;<br>        head -&gt; next = <span class="hljs-literal">nullptr</span>;<br>        <span class="hljs-keyword">return</span> p;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<ul>
+<li>时间复杂度：O(n)。假设 n是列表的长度，那么时间复杂度为 O(n)</li>
+<li>空间复杂度：O(n)。由于使用递归，将会使用隐式栈空间。递归深度可能会达到 n 层。</li>
+</ul>
+
+	</div>
+</div>
+    
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		Google命名规范
+	</div>
+	
+	<div class="page-date">
+		2020-07-15
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>命名的风格能让我们在不需要去查找类型声明的条件下快速地了解某个名字代表的含义: 类型, 变量, 函数, 常量, 宏, 等等, 甚至我们大脑中的模式匹配引擎非常依赖这些命名规则。</p>
+<a id="more"></a>
+
+<h2 id="通用命名规则"><a href="#通用命名规则" class="headerlink" title="通用命名规则"></a>通用命名规则</h2><p>函数命名, 变量命名, 文件命名要有描述性; <strong>少用缩写</strong></p>
+<p>一些特定的广为人知的缩写是允许的, 例如用 <code>i</code> 表示迭代变量和用 <code>T</code> 表示模板参数.</p>
+<p>模板参数的命名应当遵循对应的分类: 类型模板参数应当遵循<strong>类型命名</strong>的规则, 而非类型模板应当遵循<strong>变量命名</strong>的规则.</p>
+<h2 id="文件命名规则"><a href="#文件命名规则" class="headerlink" title="文件命名规则"></a>文件命名规则</h2><p>文件名要全部小写, 可以包含下划线 (<code>_</code>) 或连字符 (<code>-</code>), 依照项目的约定. 如果没有约定, 那么 “<code>_</code>” 更好</p>
+<p>C++ 文件要以 <code>.cc</code> 结尾, 头文件以 <code>.h</code> 结尾. 专门插入文本的文件则以 <code>.inc</code> 结尾</p>
+<p>不要使用已经存在于 <code>/usr/include</code> 下的文件名</p>
+<p>通常应尽量让文件名更加明确</p>
+<p>内联函数必须放在 <code>.h</code> 文件中. 如果内联函数比较短, 就直接放在 <code>.h</code> 中.</p>
+<p>定义类时文件名一般成对出现, 如 <code>foo_bar.h</code> 和 <code>foo_bar.cc</code>, 对应于类 <code>FooBar</code>.</p>
+<h2 id="类型命名规则"><a href="#类型命名规则" class="headerlink" title="类型命名规则"></a>类型命名规则</h2><p>类型名称的每个单词首字母均大写, 不包含下划线: <code>MyExcitingClass</code>, <code>MyExcitingEnum</code>.</p>
+<p>所有类型命名 —— 类, 结构体, 类型定义 (<code>typedef</code>), 枚举, 类型模板参数 —— 均使用相同约定, 即以大写字母开始, 每个单词首字母均大写, 不包含下划线. </p>
+<h2 id="变量命名规则"><a href="#变量命名规则" class="headerlink" title="变量命名规则"></a>变量命名规则</h2><p>变量 (包括函数参数) 和数据成员名一律小写, 单词之间用下划线连接. </p>
+<p>类的成员变量以下划线结尾, 但结构体的就不用, 如: <code>a_local_variable</code>, <code>a_struct_data_member</code>, <code>a_class_data_member_</code>.</p>
+<h2 id="常量命名规则"><a href="#常量命名规则" class="headerlink" title="常量命名规则"></a>常量命名规则</h2><p>声明为 <code>constexpr</code> 或 <code>const</code> 的变量, 或在程序运行期间其值始终保持不变的, 命名时以 “k” 开头, 大小写混合. </p>
+<h2 id="函数命名规则"><a href="#函数命名规则" class="headerlink" title="函数命名规则"></a>函数命名规则</h2><p>常规函数使用大小写混合,: <code>MyExcitingFunction()</code>, <code>MyExcitingMethod()</code></p>
+<p>取值和设值函数则要求与变量名匹配,：<code>my_exciting_member_variable()</code>, <code>set_my_exciting_member_variable()</code></p>
+<h2 id="命名空间命名"><a href="#命名空间命名" class="headerlink" title="命名空间命名"></a>命名空间命名</h2><p>命名空间以小写字母命名. 最高级命名空间的名字取决于项目名称. 要注意避免嵌套命名空间的名字之间和常见的顶级命名空间的名字之间发生冲突.</p>
+<p>顶级命名空间的名称应当是项目名或者是该命名空间中的代码所属的团队的名字. 命名空间中的代码, 应当存放于和命名空间的名字匹配的文件夹或其子文件夹中.</p>
+<p>注意<strong>不使用缩写作为名称</strong>的规则同样适用于命名空间. 命名空间中的代码极少需要涉及命名空间的名称, 因此没有必要在命名空间中使用缩写.</p>
+<p>要避免嵌套的命名空间与常见的顶级命名空间发生名称冲突. 由于名称查找规则的存在, 命名空间之间的冲突完全有可能导致编译失败. 尤其是, 不要创建嵌套的 <code>std</code> 命名空间. 建议使用更独特的项目标识符 (<code>websearch::index</code>, <code>websearch::index_util</code>) 而非常见的极易发生冲突的名称 (比如 <code>websearch::util</code>).</p>
+<p>对于 <code>internal</code> 命名空间, 要当心加入到同一 <code>internal</code> 命名空间的代码之间发生冲突 (由于内部维护人员通常来自同一团队, 因此常有可能导致冲突). 在这种情况下, 请使用文件名以使得内部名称独一无二 (例如对于 <code>frobber.h</code>, 使用 <code>websearch::index::frobber_internal</code>).</p>
+<h2 id="枚举命名"><a href="#枚举命名" class="headerlink" title="枚举命名"></a>枚举命名</h2><p>枚举的命名应当和常量 或宏 一致: <code>kEnumName</code> 或是 <code>ENUM_NAME</code>.</p>
+<h2 id="宏命名"><a href="#宏命名" class="headerlink" title="宏命名"></a>宏命名</h2><p>命名像枚举命名一样全部大写, 使用下划线:</p>
+<h2 id="命名规则特例"><a href="#命名规则特例" class="headerlink" title="命名规则特例"></a>命名规则特例</h2><p>如果你命名的实体与已有 C/C++ 实体相似, 可参考现有命名策略.</p>
+<p><code>bigopen()</code>: 函数名, 参照 <code>open()</code> 的形式</p>
+<p><code>uint</code> : <code>typedef</code></p>
+<p><code>bigpos</code> : <code>struct</code> 或 <code>class</code>, 参照 <code>pos</code> 的形式</p>
+<p><code>sparse_hash_map</code> : STL 型实体; 参照 STL 命名约定</p>
+<p><code>LONGLONG_MAX</code>: 常量, 如同 <code>INT_MAX</code></p>
+
+	</div>
+</div>
+    
+  </body>
+</html>

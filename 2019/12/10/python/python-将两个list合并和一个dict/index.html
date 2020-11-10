@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		将两个list合并和一个dict
+	</div>
+	
+	<div class="page-date">
+		2019-12-10
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>有时候需要将两个list合并成一个dict，python内置函数zip可以提供此功能</p>
+<a id="more"></a>
+
+<ol>
+<li><p>两个list长度相等，直接使用内置函数：zip()：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">l1 = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>l2 = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>];<br>d = dict(zip(l1, l2))<br>print(d)	//&#123;<span class="hljs-string">&#x27;1&#x27;</span>:<span class="hljs-string">&#x27;a&#x27;</span>, ...&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>当两个list的长度不一样</p>
+<ol>
+<li>可以截取长度长的list使其等于另一个list</li>
+<li>直接合并，自动匹配，省去多余部分</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">l1 = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>l2 = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>];<br>l3 = l2[<span class="hljs-number">0</span>:len(l1)]<br>d = dict(zip(l1, l3))<br>print(d)	//&#123;<span class="hljs-string">&#x27;1&#x27;</span>:<span class="hljs-string">&#x27;a&#x27;</span>, ...&#125;<br><br>d = dict(zip(l1, l2))<br>print(d)	//&#123;<span class="hljs-string">&#x27;1&#x27;</span>:<span class="hljs-string">&#x27;a&#x27;</span>, ...&#125;<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+	</div>
+</div>
+    
+  </body>
+</html>

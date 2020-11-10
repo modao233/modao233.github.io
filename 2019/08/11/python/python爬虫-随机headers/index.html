@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		python爬虫——使用随机headers
+	</div>
+	
+	<div class="page-date">
+		2019-08-11
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>使用python编写爬虫程序时，基本都需要对网页（或网站）发出请求，而发出的请求可以通过设置参数使用不同的headers，以绕过一些<strong>简单</strong>的反爬虫检测。</p>
+<a id="more"></a>
+
+<h2 id="安装说明"><a href="#安装说明" class="headerlink" title="安装说明"></a>安装说明</h2><p>随机请求头模块安装：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install fake-useragent<br></code></pre></td></tr></table></figure>
+
+<h2 id="使用简介"><a href="#使用简介" class="headerlink" title="使用简介"></a>使用简介</h2><ol>
+<li><p>随机获取headers</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):<br>    print(UserAgent().random)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>指定获取headers</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent<br><br>print(UserAgent().chrome)<br>print(UserAgent().ie)<br>print(UserAgent().firefox)<br>print(UserAgent().opera)<br>print(UserAgent().safari)<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="特殊作用"><a href="#特殊作用" class="headerlink" title="特殊作用"></a>特殊作用</h2><p>一般网页针对访问设备会有不同的网站布局：PC端、手机端，有时候手机端访问会少一些广告或者Flash动画之类的，而我们就可以通过设置headers获取到手机端的网页，可以方便信息采集。</p>
+
+	</div>
+</div>
+    
+  </body>
+</html>

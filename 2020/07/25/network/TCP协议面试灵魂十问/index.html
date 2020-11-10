@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		TCP协议面试灵魂十问
+	</div>
+	
+	<div class="page-date">
+		2020-07-25
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/network">network</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>原文来自：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/161970400">TCP 协议面试灵魂10问</a></p>
+<a id="more"></a>
+
+<h2 id="TCP-和-UDP-的区别"><a href="#TCP-和-UDP-的区别" class="headerlink" title="TCP 和 UDP 的区别"></a>TCP 和 UDP 的区别</h2><p>概述：</p>
+<ul>
+<li>TCP是一个面向连接的、可靠的、基于字节流的传输层协议</li>
+<li>UDP是一个面向无连接的、基于数据报的传输层协议</li>
+</ul>
+<p><strong>面向连接</strong>：客户端和服务器的连接，在双方互相通信之前，TCP 需要三次握手建立连接，而 UDP 没有相应建立连接的过程。</p>
+<p><strong>可靠性</strong>：TCP 会精准记录哪些数据发送了，哪些数据被对方接收了，哪些没有被接收到，而且保证数据包按序到达，不允许半点差错。这是有状态。</p>
+<p>当意识到丢包了或者网络环境不佳，TCP 会根据具体情况调整自己的行为，控制自己的发送速度或者重发。这是可控制。</p>
+<p>相应的，UDP 就是无状态, 不可控的。</p>
+<p><strong>面向字节流</strong>：UDP 的数据传输是基于数据报的，这是因为仅仅只是继承了 IP 层的特性，而 TCP 为了维护状态，将一个个 IP 包变成了字节流。</p>
+<p>[留空]</p>
+<h2 id="TCP建立连接为什么是三次握手"><a href="#TCP建立连接为什么是三次握手" class="headerlink" title="TCP建立连接为什么是三次握手"></a>TCP建立连接为什么是三次握手</h2><p>TCP 的三次握手，需要确认双方的两样能力: <code>发送的能力</code>和<code>接收的能力</code>。</p>
+<p>[留空]</p>
+<p><strong>为什么不是两次握手</strong></p>
+<h2 id="TCP-四次挥手的过程"><a href="#TCP-四次挥手的过程" class="headerlink" title="TCP 四次挥手的过程"></a>TCP 四次挥手的过程</h2>
+	</div>
+</div>
+    
+  </body>
+</html>

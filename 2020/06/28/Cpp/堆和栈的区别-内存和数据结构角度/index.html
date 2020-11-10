@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		堆和栈的区别-内存和数据结构角度
+	</div>
+	
+	<div class="page-date">
+		2020-06-28
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>堆和栈的概念在数据结构和内存空间上都存在，数据结构上的堆和栈是说明其数据的存储特性，而内存空间上的堆和栈是说明内存空间的使用特性。</p>
+<a id="more"></a>
+
+<h2 id="数据结构中的堆和栈"><a href="#数据结构中的堆和栈" class="headerlink" title="数据结构中的堆和栈"></a>数据结构中的堆和栈</h2><h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>在数据结构中，栈是一种实现为”先进后出“的存储结构，进栈的顺序与出栈顺序相反。</p>
+<p>栈的实现方式：</p>
+<ul>
+<li>数组形式：静态栈</li>
+<li>链表形式：动态栈</li>
+</ul>
+<p>只能对栈顶元素进行操作。</p>
+<h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>在数据结构中，堆是一种经过排序的树形数据结构，堆的特点是根节点的值最小（或最大），且根节点的两个子树也是堆。</p>
+<p>堆的特性常用来实现优先级队列，也可用于堆排序。</p>
+<p>堆的存取是随意的。</p>
+<h2 id="内存空间中的堆和栈"><a href="#内存空间中的堆和栈" class="headerlink" title="内存空间中的堆和栈"></a>内存空间中的堆和栈</h2><p>栈（操作系统）：由操作系统自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。</p>
+<p>堆（操作系统）： 一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收，分配方式倒是类似于链表。</p>
+<blockquote>
+<ul>
+<li>栈使用的是一级缓存， 他们通常都是被调用时处于存储空间中，调用完毕立即释放。</li>
+<li>堆则是存放在二级缓存中，生命周期由虚拟机的垃圾回收算法来决定（并不是一旦成为孤儿对象就能被回收）。所以调用这些对象的速度要相对来得低一些。</li>
+</ul>
+</blockquote>
+
+	</div>
+</div>
+    
+  </body>
+</html>

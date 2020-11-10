@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		序列式容器list的排序算法笔记
+	</div>
+	
+	<div class="page-date">
+		2020-05-28
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>序列式容器list的排序算法笔记</p>
+<a id="more"></a>
+
+<p>list 不能使用STL算法sort()，因为STL的sort函数要求random_access_iterator，而list的迭代器是bidirectional_iterator，所以必须使用自己的成员函数sort()。</p>
+<p>SGI STL的list_sort使用的是非递归的归并排序，先将前两个元素归并，再将后两个元素归并，归并这两个小子序列成为4个元素的有序子序列；重复这一过程，得到8个元素的有序子序列，16个的，32个的……，直到全部处理完。</p>
+<p>为何list不使用普通的merge_sort呢？这比较好理解，因为每次找到中间元素再一分为二的代价实在太大了，不适合list这种非random_access_iterator的容器。 </p>
+<p>该排序算法主要调用了swap()和merge()，而这些又依赖于内部实现的transfer()(其时间代价为O(1))。该算法时间代价亦为n*log(n)：分析代码可以发现，代码使用了64个list暂存部分有序list_node，将list总共分成n个有序list，第n个list存的node数量要么为0要么为$2^n$。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs plain">template &lt;class T, class Alloc&gt;<br>void list&lt;T, Alloc&gt;::sort()&#123;<br>    &#x2F;&#x2F;如果元素个数小于等于1，直接返回<br>    if(node-&gt;next &#x3D;&#x3D; node || link_type(node-&gt;next)-&gt;next &#x3D;&#x3D; node)<br>        return;<br>    &#x2F;&#x2F; 保存下层merge返回的结果<br>    list&lt;T, Alloc&gt; carry;<br>    &#x2F;&#x2F; 模拟merge sort使用的堆栈，保存部分有序的list<br>    &#x2F;&#x2F; 64应该写作sizeof(size_type) * 8，即最大的递归调用层次。<br>    list&lt;T, Alloc&gt; counter[64];<br>    &#x2F;&#x2F; 指示堆栈层次<br>    int fill &#x3D; 0;<br>    while(!empty())&#123;<br>        &#x2F;&#x2F; 将begin处的元素从list取下，insert到carry中<br>        carry.splice(carry.begin(), *this, begin());<br>        int i &#x3D; 0;<br>        while(i &lt; fill &amp;&amp; !counter[i].empty())&#123;<br>            &#x2F;&#x2F;将carry中的元素合并到counter[i]中,然后carry变为空的<br>            counter[i].merge(carry);<br>            &#x2F;&#x2F;交换之后counter[i-1]为空<br>            carry.swap(counter[i++]);<br>        &#125;<br>        &#x2F;&#x2F; carry将结果保存到堆栈<br>        carry.swap(counter[i]);<br>        &#x2F;&#x2F; 更新递归层次<br>        if(i &#x3D;&#x3D; fill) ++fill;<br>    &#125;<br><br>    for(int i&#x3D;1; i &lt; fill; ++i)&#123;<br>        counter[i].merge(counter[i-1]);<br>    swap(counter[fill -1]);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+	</div>
+</div>
+    
+  </body>
+</html>

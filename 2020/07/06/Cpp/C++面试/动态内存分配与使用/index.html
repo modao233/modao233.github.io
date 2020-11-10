@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		动态内存分配与使用
+	</div>
+	
+	<div class="page-date">
+		2020-07-06
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>一些内存动态分配的记录。</p>
+<a id="more"></a>
+
+<h2 id="1-malloc"><a href="#1-malloc" class="headerlink" title="1. malloc"></a>1. malloc</h2><p>定义于头文件<code>&lt;stdlib.h&gt;</code></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">malloc</span><span class="hljs-params">(<span class="hljs-keyword">size_t</span> size)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>分配 <code>size</code> 字节的未初始化内存。</p>
+<p>若分配成功，则返回指向分配内存块最低位（首位）字节的，为任何拥有基础对齐的对象类型对齐的指针。</p>
+<p>若 <code>size</code> 为零，则行为是实现定义的（可返回空指针，或返回不会用于访问存储但必须传递给 <code>free</code>的非空指针）。</p>
+<p>使用完后必须用 <code>free()</code>或 <code>realloc()</code> 解分配返回的指针</p>
+<p><code>malloc</code> 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。</p>
+<p>令 <a href="mk:@MSITStore:C:\Users\modao\Desktop\cppreference-zh-20191207.chm::/chmhelp/c-memory-free.html">free</a> 或 <a href="mk:@MSITStore:C:\Users\modao\Desktop\cppreference-zh-20191207.chm::/chmhelp/c-memory-realloc.html">realloc</a> 归还一块内存区域的先前调用，<em>同步于</em>令 <strong>malloc</strong> 分配相同或部分相同的内存区域的调用。此同步出现于任何通过解分配函数所作的内存访问后，和任何 <code>malloc</code> 所作的内存访问前。所有操作每块特定内存区域的分配和解分配函数有单独全序。</p>
+
+	</div>
+</div>
+    
+  </body>
+</html>

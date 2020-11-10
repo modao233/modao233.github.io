@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		C++ Primer 第15章 面向对象程序设计
+	</div>
+	
+	<div class="page-date">
+		2018-06-25
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++ Primer">C++ Primer</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>面向对象程序设计基于三个基本概念：数据抽象、继承和动态绑定。</p>
+<a id="more"></a>
+
+<h2 id="15-1-OOP：概述"><a href="#15-1-OOP：概述" class="headerlink" title="15.1 OOP：概述"></a>15.1 OOP：概述</h2><p><strong>面向对象程序设计</strong>的核心思想：</p>
+<ul>
+<li>数据抽象：可以将类的接口与实现分离</li>
+<li>继承：可以定义相似的类型并对其相似关系建模</li>
+<li>动态绑定：可以在一定程度上忽略相似的类型，以统一的方式使用它们的对象</li>
+</ul>
+<p>通过继承关系联系在疫情的类构成一种层次关系。通常在层次关系的根部有一个基类，其它类则直接或间接从基类继承而来，这些继承的类称为派生类。</p>
+<p>基类负责定义在层次关系中所有类共同拥有的成员，而每个派生类定义各自特有的成员。</p>
+<p>在C++语言中，基类将类型相关的函数与派生类不做改变直接继承的函数区分对待。对于某些函数，基类希望它的派生类各自定义适合自身的版本，此时基类就将这些函数声明为<strong>虚函数</strong>。</p>
+<p>派生类必须在其内部对所有重新定义的虚函数进行声明。派生类可以在这样的函数之前加上virtual关键字，但是并不是非得这么做。</p>
+<p>C++11新标准允许派生类显示地注他将使用哪个成员函数改写基类的虚函数，具体措施是在该函数的形参列表之后增加一个override关键字。</p>
+<p>派生类必须通过使用<strong>类派生列表</strong>明确指出从哪几个基类继承而来的，形式是：首先一个冒号，后面紧跟以逗号分隔的基类列表，其中每个基类前面可以有访问说明符。</p>
+<p>在C++语言中，当我们使用基类的引用（或指针）调用一个虚函数时将发生动态绑定，动态绑定又称为运行时绑定。</p>
+<h2 id="15-2-定义基类和派生类"><a href="#15-2-定义基类和派生类" class="headerlink" title="15.2 定义基类和派生类"></a>15.2 定义基类和派生类</h2><h3 id="15-2-1-定义基类"><a href="#15-2-1-定义基类" class="headerlink" title="15.2.1 定义基类"></a>15.2.1 定义基类</h3><p>基类通常都应该定义一个虚析构函数，即使该函数不执行任何实际操作也是如此。</p>
+<p>派生类可以继承基类的成员，但如果遇到类型相关的操作时（基类声明virtual），派生类必须对其重新定义，即派生类需要对这些操作提供自己的新定义以<strong>覆盖</strong>（override）从基类继承而来的旧定义。</p>
+<p>C++语言中，基类必须将它的两种成员函数区分开来：</p>
+<ol>
+<li>基类希望派生类进行覆盖的函数，通过将其定义为虚函数，使函数执行时动态绑定</li>
+<li>基类希望派生类直接继承而不要改变的函数</li>
+</ol>
+<p>任何构造函数之外的非静态函数都可以是虚函数，关键字virtual只能出现在类内部的声明语句之前，不能用于类外部的函数定义。</p>
+<p>如果基类把一个函数声明成虚函数，则该函数在派生类中隐式地也是虚函数。</p>
+<p>成员函数如果没有被声明成虚函数，则其解析过程发生在编译时而非运行时。</p>
+<h3 id="15-2-2-定义派生类"><a href="#15-2-2-定义派生类" class="headerlink" title="15.2.2 定义派生类"></a>15.2.2 定义派生类</h3><h3 id="15-2-3-类型转换与继承"><a href="#15-2-3-类型转换与继承" class="headerlink" title="15.2.3 类型转换与继承"></a>15.2.3 类型转换与继承</h3><h2 id="15-3-虚函数"><a href="#15-3-虚函数" class="headerlink" title="15.3 虚函数"></a>15.3 虚函数</h2><h2 id="15-4-抽象基类"><a href="#15-4-抽象基类" class="headerlink" title="15.4 抽象基类"></a>15.4 抽象基类</h2><h2 id="15-5-访问控制权限与继承"><a href="#15-5-访问控制权限与继承" class="headerlink" title="15.5 访问控制权限与继承"></a>15.5 访问控制权限与继承</h2><h2 id="15-6-继承中的类作用域"><a href="#15-6-继承中的类作用域" class="headerlink" title="15.6 继承中的类作用域"></a>15.6 继承中的类作用域</h2><h2 id="15-7-构造函数与拷贝控制"><a href="#15-7-构造函数与拷贝控制" class="headerlink" title="15.7 构造函数与拷贝控制"></a>15.7 构造函数与拷贝控制</h2><h3 id="15-7-1-虚析构函数"><a href="#15-7-1-虚析构函数" class="headerlink" title="15.7.1 虚析构函数"></a>15.7.1 虚析构函数</h3><h3 id="15-7-2-合成拷贝控制与继承"><a href="#15-7-2-合成拷贝控制与继承" class="headerlink" title="15.7.2 合成拷贝控制与继承"></a>15.7.2 合成拷贝控制与继承</h3><h3 id="15-7-3-派生类的拷贝控制成员"><a href="#15-7-3-派生类的拷贝控制成员" class="headerlink" title="15.7.3 派生类的拷贝控制成员"></a>15.7.3 派生类的拷贝控制成员</h3><h3 id="15-7-4-继承的构造函数"><a href="#15-7-4-继承的构造函数" class="headerlink" title="15.7.4 继承的构造函数"></a>15.7.4 继承的构造函数</h3><h2 id="15-8-容器与继承"><a href="#15-8-容器与继承" class="headerlink" title="15.8 容器与继承"></a>15.8 容器与继承</h2><h3 id="15-8-1-编写Basket类"><a href="#15-8-1-编写Basket类" class="headerlink" title="15.8.1 编写Basket类"></a>15.8.1 编写Basket类</h3><h2 id="15-9-文本查询程序再探"><a href="#15-9-文本查询程序再探" class="headerlink" title="15.9 文本查询程序再探"></a>15.9 文本查询程序再探</h2><h3 id="15-9-1-面向对象的解决方案"><a href="#15-9-1-面向对象的解决方案" class="headerlink" title="15.9.1 面向对象的解决方案"></a>15.9.1 面向对象的解决方案</h3><h3 id="15-9-2-Querry-base类和Query类"><a href="#15-9-2-Querry-base类和Query类" class="headerlink" title="15.9.2 Querry_base类和Query类"></a>15.9.2 Querry_base类和Query类</h3><h3 id="15-9-3-派生类"><a href="#15-9-3-派生类" class="headerlink" title="15.9.3 派生类"></a>15.9.3 派生类</h3><h3 id="15-9-4-eval函数"><a href="#15-9-4-eval函数" class="headerlink" title="15.9.4 eval函数"></a>15.9.4 eval函数</h3>
+	</div>
+</div>
+    
+  </body>
+</html>

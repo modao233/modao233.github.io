@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		leetcode 93 复原IP地址
+	</div>
+	
+	<div class="page-date">
+		2020-08-09
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/leetcode">leetcode</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>leetcode 93 复原IP地址，涉及算法：回溯法</p>
+<a id="more"></a>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。</p>
+<p>有效的 IP 地址正好由四个整数（每个整数位于 0 到 255 之间组成），整数之间用<code>.</code> 分隔。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">输入: &quot;25525511135&quot;<br>输出: [&quot;255.255.11.135&quot;, &quot;255.255.111.35&quot;]<br></code></pre></td></tr></table></figure>
+
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="方法一：递归-回溯-剪枝"><a href="#方法一：递归-回溯-剪枝" class="headerlink" title="方法一：递归-回溯-剪枝"></a>方法一：递归-回溯-剪枝</h3><p>回溯的要点1——选择</p>
+<ul>
+<li>做第一步时我们有几种 <strong>选择</strong> ？以 “25525511135” 为例：<ul>
+<li>选 “2” 作为第一个片段</li>
+<li>选 “25” 作为第一个片段</li>
+<li>选 “255” 作为第一个片段</li>
+</ul>
+</li>
+<li>每次有三种选择，做了选择后，又面临三种选择：切出一种长度的片段作为第二个片段。</li>
+<li>这会像树一样向下分支，我们用 DFS 去遍历所有选择，并且是回溯，<strong>为什么是回溯？</strong></li>
+<li>因为每一步选择可能会累积出一个错误结果，这时要撤销最后一个选择，去试探另一个选择。</li>
+<li>穷举出所有可能，才能找出所有组合。好，我们现在讲完 <strong>回溯的要点1——选择</strong>。</li>
+</ul>
+<p>回溯的要点2——约束</p>
+<ul>
+<li>这道题的约束条件是：<ul>
+<li>一个片段的长度是 1~3</li>
+<li>片段的值范围是 0~255</li>
+<li>不能是 “0x”、”0xx” 形式（这个是测试用例告诉我们的）</li>
+</ul>
+</li>
+<li>这些约束都将应用在我们的 DFS 函数中，达到剪枝的效果，避免进入不必要的递归。</li>
+</ul>
+<p>回溯的要点3——目标</p>
+<ul>
+<li>我们目标决定了我们的 DFS 在什么时候捕捉答案，什么时候砍掉死支（然后回溯）。</li>
+<li>我们目标是生成 4 个有效片段，并且要用光 IP 字符串的字符。</li>
+<li>当遍历的节点满足该条件时，说明生成了一个有效组合，推入结果数组。</li>
+<li>生成了4个有效片段，但没用光所有字符，则不往下递归，选择回溯。</li>
+</ul>
+<p>定义dfs函数</p>
+<ul>
+<li>dfs函数传什么，用什么代表不同节点的状态？</li>
+<li>选择切出一个长度的片段后，剩余的子串继续递归，我们可以用指向剩余子串起始位置的指针，加</li>
+<li>上当前已经生成的片段数组，作为状态，传入 dfs 函数。</li>
+<li>dfs 函数做的是「复原从指针 start 开始的子串」。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; res;<br>    <span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">restoreIpAddresses</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> n = s.size();<br>        <span class="hljs-built_in">string</span> cur = s;<br>        helper(n,<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>,cur,s);<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n,<span class="hljs-keyword">int</span> pointnum,<span class="hljs-keyword">int</span> lastpoint,<span class="hljs-built_in">string</span>&amp; cur,<span class="hljs-built_in">string</span>&amp; s)</span> </span>&#123;<br>        <span class="hljs-comment">//pointnum记录目前加了几个点了，lastpoint记录上一个点加的位置</span><br>        <span class="hljs-keyword">if</span> (pointnum == <span class="hljs-number">3</span>) &#123;<br>        <span class="hljs-comment">//如果已经加了三个点了，并且最后一个点的右边表示的数小于255，则是正确IP地址</span><br>            <span class="hljs-keyword">if</span> (valid(lastpoint + <span class="hljs-number">1</span>,n<span class="hljs-number">-1</span>,s))&#123;<br>                res.push_back(cur);<br>            &#125;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">//从上一个.号的下一个位置开始查找</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = lastpoint + <span class="hljs-number">1</span>;i &lt; n - <span class="hljs-number">1</span>;i++) &#123;<br>            <span class="hljs-comment">//如果字符串s从上一个.号到i位置表示的数小于等于255，则符合条件</span><br>            <span class="hljs-keyword">if</span> (valid(lastpoint + <span class="hljs-number">1</span>,i,s))&#123;<br>                <span class="hljs-comment">//正常回溯法，注意这里要+pointnum，因为已经加入的.号也会占位</span><br>                cur.insert(cur.begin() + i + pointnum + <span class="hljs-number">1</span>,<span class="hljs-string">&#x27;.&#x27;</span>);<br>                helper(n,pointnum + <span class="hljs-number">1</span>,i,cur,s);<br>                cur.erase(pointnum + i + <span class="hljs-number">1</span>,<span class="hljs-number">1</span>);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">valid</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left,<span class="hljs-keyword">int</span> right,<span class="hljs-built_in">string</span>&amp; s)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = left ;i &lt;= right; i++) &#123;<br>            <span class="hljs-comment">//处理0开头问题</span><br>            <span class="hljs-keyword">if</span> (left != right <span class="hljs-keyword">and</span> s[left] == <span class="hljs-string">&#x27;0&#x27;</span> ) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-comment">//计算字符串s中left到right位表示的数的大小</span><br>            sum = sum *<span class="hljs-number">10</span> + (s[i] - <span class="hljs-string">&#x27;0&#x27;</span>);<br>            <span class="hljs-keyword">if</span> (sum &gt; <span class="hljs-number">255</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="方法二：暴力解法——三层循环遍历求解"><a href="#方法二：暴力解法——三层循环遍历求解" class="headerlink" title="方法二：暴力解法——三层循环遍历求解"></a>方法二：暴力解法——三层循环遍历求解</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">restoreIpAddresses</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> s_len = s.length();<br>        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; res;<br>        <span class="hljs-comment">// 第一个字段，每个字段可以有1位~3位字符</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">1</span>; i&lt;=<span class="hljs-number">3</span>; ++i)&#123;<br>            <span class="hljs-comment">//剩下三个字段，每个字段的字符个数n：1&lt;=n&lt;=3，所以如果剩余字符长度不满足3*n，则无法构造正确的点分十进制</span><br>            <span class="hljs-keyword">if</span>(s_len-i&lt;<span class="hljs-number">3</span> || s_len-i&gt;<span class="hljs-number">9</span>) <span class="hljs-keyword">continue</span>; <br>            <span class="hljs-built_in">string</span> ip1 = s.substr(<span class="hljs-number">0</span>, i);  <span class="hljs-comment">// 取出第一个字段的字符串</span><br>            <span class="hljs-keyword">int</span> ip1_i = stoi(ip1);  <span class="hljs-comment">// 取出第一个字段的值</span><br>            <span class="hljs-keyword">if</span>(ip1_i&lt;<span class="hljs-number">0</span> || ip1_i&gt;<span class="hljs-number">255</span>) <span class="hljs-keyword">continue</span>;  <span class="hljs-comment">// 当前值不对</span><br>            <span class="hljs-keyword">if</span>(i==<span class="hljs-number">2</span> &amp;&amp; ip1_i&lt;<span class="hljs-number">10</span> || i==<span class="hljs-number">3</span> &amp;&amp; ip1_i&lt;<span class="hljs-number">100</span>) <span class="hljs-keyword">continue</span>;  <span class="hljs-comment">// 处理字段以0开头的情况，对0开头的情况进行剪枝</span><br>            <br>            <span class="hljs-comment">//第二个字段</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">1</span>; j&lt;=<span class="hljs-number">3</span>; ++j)&#123;<br>                <span class="hljs-keyword">if</span>(s_len-i-j&lt;<span class="hljs-number">2</span> || s_len-i-j&gt;<span class="hljs-number">6</span>) <span class="hljs-keyword">continue</span>;<br>                <span class="hljs-built_in">string</span> ip2 = s.substr(i, j);<br>                <span class="hljs-keyword">int</span> ip2_i = stoi(ip2);<br>                <span class="hljs-keyword">if</span>(ip2_i&lt;<span class="hljs-number">0</span> || ip2_i&gt;<span class="hljs-number">255</span>) <span class="hljs-keyword">continue</span>;<br>                <span class="hljs-keyword">if</span>(j==<span class="hljs-number">2</span> &amp;&amp; ip2_i&lt;<span class="hljs-number">10</span> || j==<span class="hljs-number">3</span> &amp;&amp; ip2_i&lt;<span class="hljs-number">100</span>) <span class="hljs-keyword">continue</span>;<br>                <br>                <span class="hljs-comment">//第三个字段</span><br>                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k=<span class="hljs-number">1</span>; k&lt;=<span class="hljs-number">3</span>; ++k)&#123;<br>                    <span class="hljs-keyword">if</span>(s_len-i-j-k&lt;<span class="hljs-number">1</span> || s_len-i-j-k&gt;<span class="hljs-number">3</span>) <span class="hljs-keyword">continue</span>;<br>                    <span class="hljs-built_in">string</span> ip3 = s.substr(i+j, k);<br>                    <span class="hljs-keyword">int</span> ip3_i = stoi(ip3);<br>                    <span class="hljs-keyword">if</span>(ip3_i&lt;<span class="hljs-number">0</span> || ip3_i&gt;<span class="hljs-number">255</span>) <span class="hljs-keyword">continue</span>;<br>                    <span class="hljs-keyword">if</span>(k==<span class="hljs-number">2</span> &amp;&amp; ip3_i&lt;<span class="hljs-number">10</span> || k==<span class="hljs-number">3</span> &amp;&amp; ip3_i&lt;<span class="hljs-number">100</span>) <span class="hljs-keyword">continue</span>;<br>                    <br>                    <span class="hljs-comment">//前三个字段确定后，剩下的就算第四个字段了</span><br>                    <span class="hljs-built_in">string</span> ip4 = s.substr(i+j+k, s_len-i-j-k);<br>                    <span class="hljs-keyword">int</span> ip4_i = stoi(ip4);<br>                    <span class="hljs-keyword">if</span>(ip4_i&lt;<span class="hljs-number">0</span> || ip4_i&gt;<span class="hljs-number">255</span>) <span class="hljs-keyword">continue</span>;<br>                    <span class="hljs-keyword">if</span>(s_len-i-j-k==<span class="hljs-number">2</span> &amp;&amp; ip4_i&lt;<span class="hljs-number">10</span> || s_len-i-j-k==<span class="hljs-number">3</span> &amp;&amp; ip4_i&lt;<span class="hljs-number">100</span>) <span class="hljs-keyword">continue</span>;<br>                    <br>                    <span class="hljs-comment">//满足格式的IP地址将被整合，存进res数组</span><br>                    <span class="hljs-built_in">string</span> valid_ip = ip1+<span class="hljs-string">&#x27;.&#x27;</span>+ip2+<span class="hljs-string">&#x27;.&#x27;</span>+ip3+<span class="hljs-string">&#x27;.&#x27;</span>+ip4;<br>                    res.push_back(valid_ip);<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><strong>回溯和暴力拥有相同的时间复杂度</strong></p>
+
+	</div>
+</div>
+    
+  </body>
+</html>

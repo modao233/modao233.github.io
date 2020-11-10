@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		python爬虫——BeautifulSoup返回结果
+	</div>
+	
+	<div class="page-date">
+		2019-10-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>编写爬虫程序时，使用BeautifulSoup对页面进行解析是常见操作，BeautifulSoup的select函数的返回结果可获得多种结果。</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">resp &#x3D; requests.get(url)<br>soup &#x3D; BeautifulSoup(resp.text)<br>for s in soup:<br>    print(p.string)<br>    print(p.strings)<br>    print(p.stripped_strings)<br>    print(p.get_text)<br>    print(p.text)<br></code></pre></td></tr></table></figure>
+<ol>
+<li>string：用来获取目标路径下第一个非标签字符串，得到的是个字符串</li>
+<li>strings：用来获取目标路径下所有的子孙非标签字符串，返回的是个生成器</li>
+<li>stripped_strings：用来获取目标路径下所有的子孙非标签字符串，会自动去掉<strong>空白字符串</strong>，返回的是一个生成器</li>
+<li>get_text：用来获取目标路径下的子孙字符串，返回的是字符串（包含HTML的格式内容）</li>
+<li>text：用来获取目标路径下的子孙非标签字符串，返回的是字符串</li>
+</ol>
+
+	</div>
+</div>
+    
+  </body>
+</html>

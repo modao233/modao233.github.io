@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		处理文件名
+	</div>
+	
+	<div class="page-date">
+		2020-03-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>使用python批量处理一些文件的命名问题</p>
+<a id="more"></a>
+
+<h2 id="分离文件名和扩展名——os-path-splitext"><a href="#分离文件名和扩展名——os-path-splitext" class="headerlink" title="分离文件名和扩展名——os.path.splitext()"></a>分离文件名和扩展名——os.path.splitext()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plain">#分离文件名和扩展名，默认返回（frame,fextension）元组<br>#可用作分片操作<br><br>import os<br><br>path_01&#x3D;&#39;E:\STH\Foobar2000\install.log&#39;<br>path_02&#x3D;&#39;E:\STH\Foobar2000&#39;<br>res_01&#x3D;os.path.splitext(path_01)<br>res_02&#x3D;os.path.splitext(path_02)<br>print(root_01) #(&#39;E:\\STH\\Foobar2000\\install&#39;, &#39;.log&#39;)<br>print(root_02) #(&#39;E:\\STH\\Foobar2000&#39;, &#39;&#39;)<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="python导入文件名-文件后的排序问题"><a href="#python导入文件名-文件后的排序问题" class="headerlink" title="python导入文件名/文件后的排序问题"></a>python导入文件名/文件后的排序问题</h2><p>用库函数sorted()对字符串排序，操作对象是字符</p>
+<p>用函数sort()对数字排序，操作对象是数字，如果处理文件名需处理后缀（字符串）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plain">#测试sorted()<br><br>import numpy as np<br>import os<br><br>img_path&#x3D;&#39;.&#x2F;img&#x2F;&#39;<br><br>img_list&#x3D;sorted(os.listdir(img_path))	#文件名按字母排序<br>img_nums&#x3D;len(img_list)<br>for i in range(img_nums):<br>    img_name&#x3D;img_path+img_list[i]<br>    print(img_name)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plain">#测试sort函数<br><br>import numpy as np<br>import os<br>img_path&#x3D;&#39;.&#x2F;img&#x2F;&#39;<br><br>img_list&#x3D;os.listdir(img_path)<br>img_list.sort()<br>img_list.sort(key &#x3D; lambda x: int(x[:-4])) ##文件名按数字排序<br>img_nums&#x3D;len(img_list)<br>for i in range(img_nums):<br>    img_name&#x3D;img_path+img_list[i]<br>    print(img_name)<br></code></pre></td></tr></table></figure>
+
+	</div>
+</div>
+    
+  </body>
+</html>
