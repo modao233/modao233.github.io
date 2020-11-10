@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		ArchLinux代理实践
+	</div>
+	
+	<div class="page-date">
+		2020-11-05
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Proxy">Proxy</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<h2 id="配置v2ray代理客户端"><a href="#配置v2ray代理客户端" class="headerlink" title="配置v2ray代理客户端"></a>配置v2ray代理客户端</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain"># 安装v2ray<br>pacman -S v2ray<br><br>#编辑代理配置文件<br>vim &#x2F;etc&#x2F;v2ray&#x2F;config.json<br><br>#启动v2ray<br>systemctl start v2ray<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置Privoxy"><a href="#配置Privoxy" class="headerlink" title="配置Privoxy"></a>配置Privoxy</h2><p><a target="_blank" rel="noopener" href="http://www.privoxy.org/">Privoxy</a> 是一个 HTTP 协议过滤代理，常结合 Tor 使用。Privoxy 是有着先进的过滤能力和保护隐私的代理工具，它可以过滤网页内容，管理cookies，控制访问，除广告、横幅、弹出窗口等等，它同时支持单系统和多用户网络。</p>
+<p>当用户直接使用 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SOCKS">SOCKS</a> 代理访问网络时，浏览器会泄漏 DNS 请求，降低匿名性，这时应该使用 Privoxy。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plain"># 安装privoxy<br>pacman -S privoxy<br><br># 配置转发规则<br>vim &#x2F;etc&#x2F;privoxy&#x2F;config<br><br># 找到 forward-socks5t 一行反注释<br># 更改其值为v2ray代理监听的地址<br># 注意最后面有一个空格和点号<br>forward-socks5t   &#x2F;               127.0.0.1:10808 .<br><br># 启动privoxy<br>systemctl start privoxy<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置终端代理"><a href="#配置终端代理" class="headerlink" title="配置终端代理"></a>配置终端代理</h2><p>写入配置文件，永久生效</p>
+<p>在命令行执行，临时生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> http_proxy=<span class="hljs-string">&quot;127.0.0.1:8118&quot;</span><br><span class="hljs-built_in">export</span> https_proxy=<span class="hljs-string">&quot;127.0.0.1:8118&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>通过<code>curl www.google.com</code>命令检查是否设置成功。</p>
+<p>取消代理设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">unset http_proxy<br>unset https_proxy<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置Git代理"><a href="#配置Git代理" class="headerlink" title="配置Git代理"></a>配置Git代理</h2><h3 id="Using-git-config"><a href="#Using-git-config" class="headerlink" title="Using git-config"></a>Using git-config</h3><p>Git reads its configuration from four INI-type configuration files:</p>
+<ul>
+<li><code>/etc/gitconfig</code> for system-wide defaults</li>
+<li><code>~/.gitconfig</code> and <code>~/.config/git/config</code> (since 1.7.12) for user-specific configuration</li>
+<li><code>.git/config</code> for repository-specific configuration</li>
+</ul>
+<h3 id="配置Git-http-https代理"><a href="#配置Git-http-https代理" class="headerlink" title="配置Git http/https代理"></a>配置Git http/https代理</h3><p>在<code>~/.config/git/config</code>文件中加入以下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">[http]<br>    proxy &#x3D; socks5:&#x2F;&#x2F;127.0.0.1:10808<br></code></pre></td></tr></table></figure>
+
+<p>注意，上明配置等同于命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">git config --global http.proxy &#39;socks5:&#x2F;&#x2F;127.0.0.1:10808&#39;<br></code></pre></td></tr></table></figure>
+
+<p>Git不认https.proxy，设置http.proxy就可以支持 https 了。</p>
+<h3 id="配置Git-SSH代理"><a href="#配置Git-SSH代理" class="headerlink" title="配置Git SSH代理"></a>配置Git SSH代理</h3><p>在 ~/.ssh/config 文件中加入以下配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">Host github.com<br>HostName github.com<br>User git<br>Port 22<br>ProxyCommand &#x2F;usr&#x2F;bin&#x2F;ncat --proxy 127.0.0.1:10808 --proxy-type socks5 %h %p<br></code></pre></td></tr></table></figure>
+
+
+	</div>
+</div>
+    
+  </body>
+</html>
