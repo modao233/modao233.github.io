@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		Git笔记
+	</div>
+	
+	<div class="page-date">
+		2020-11-10
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Git">Git</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>主要内容来自参考文章，以个人理解整理。</p>
+<a id="more"></a>
+
+<h2 id="git-add-和-git-add-的区别"><a href="#git-add-和-git-add-的区别" class="headerlink" title="git add . 和 git add * 的区别"></a>git add . 和 git add * 的区别</h2><p><code>git add .</code>：把本地所有untrack的文件都加入暂存区，并且会根据.gitignore做过滤</p>
+<p><code>git add *</code>：忽略.gitignore把任何文件都加入</p>
+<h2 id="删除-GitHub-上-repository-里的文件"><a href="#删除-GitHub-上-repository-里的文件" class="headerlink" title="删除 GitHub 上 repository 里的文件"></a>删除 GitHub 上 repository 里的文件</h2><p>代码 push 到 GitHub 上后，便 rm 了本地 repository 的某个文件，如何也删除掉 GitHub 上的这个文件呢</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">git add .<br>git commit -a -m &quot;&quot;<br>git push<br></code></pre></td></tr></table></figure>
+
+<p><code>git add</code> 只能加入原来没有被跟踪的文件,没有把删除这个行为也加入版本控制，-<code>commit</code>时添加 <code>-a</code> 选项。</p>
+<h2 id="撤销-git-commit-的内容"><a href="#撤销-git-commit-的内容" class="headerlink" title="撤销 git commit 的内容"></a>撤销 git commit 的内容</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">git reset --soft HEAD^<br></code></pre></td></tr></table></figure>
+
+<p><code>HEAD^</code>的意思是上一个版本，也可以写成<code>HEAD~1</code></p>
+<p>如果你进行了2次commit，想都撤回，可以使用<code>HEAD~2</code></p>
+<p>其他参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>意思</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–mixed</td>
+<td>不删除工作空间改动代码，撤销commit，并且撤销<code>git add . </code>操作。<br>这个为默认参数，git reset –mixed HEAD^ 和 git reset HEAD^ 效果是一样的。</td>
+</tr>
+<tr>
+<td>–soft</td>
+<td>不删除工作空间改动代码，撤销commit，不撤销<code>git add .</code></td>
+</tr>
+<tr>
+<td>–hard</td>
+<td>删除工作空间改动代码，撤销commit，撤销<code>git add .</code><br>注意完成这个操作后，就恢复到了上一次的commit状态。</td>
+</tr>
+</tbody></table>
+<p>如果commit注释写错了，只是想改一下注释，只需要：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">git commit --amend<br></code></pre></td></tr></table></figure>
+
+<p>此时会进入默认vim编辑器，修改注释完毕后保存就好了。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lfxiao/p/9378763.html">git commit之后，想撤销commit</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/removing-sensitive-data-from-a-repository">https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/removing-sensitive-data-from-a-repository</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36564655/article/details/89682393">git add .和git add *有什么区别</a></p>
+
+	</div>
+</div>
+    
+  </body>
+</html>

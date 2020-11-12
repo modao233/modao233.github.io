@@ -85,8 +85,6 @@
 </ul>
 <p>查看命令详细说明：<code>info</code></p>
 <p>查看命令说明文档：<code>man</code></p>
-<p>查看程序所在路径：<code>which</code></p>
-<p>查看程序搜索路径：<code>whereis</code>，常用于安装了程序有多个版本时</p>
 <h2 id="文件及目录管理"><a href="#文件及目录管理" class="headerlink" title="文件及目录管理"></a>文件及目录管理</h2><p>创建文件：<code>touch</code></p>
 <p>创建目录：<code>mkdir</code></p>
 <p>删除：<code>rm</code></p>
@@ -110,8 +108,16 @@
 </ul>
 <p>查找：</p>
 <ul>
-<li><code>find</code>：实时查找，速度较慢，<code>find . -name modao</code>：查找当前目录的modao文件</li>
-<li><code>locate</code>：索引查找，速度快，需要更新，查找结果是整个路径<ul>
+<li><p>按环境变量PATH路径查找：</p>
+<ul>
+<li>查看程序所在路径：<code>which</code></li>
+<li>查看程序搜索路径：<code>whereis</code>，常用于安装了程序有多个版本时</li>
+</ul>
+</li>
+<li><p><code>find</code>：从磁盘遍历查找文件或目录，实时查找，速度较慢，<code>find . -name modao</code>：查找当前目录的modao文件</p>
+</li>
+<li><p><code>locate</code>：从数据库 <code>(/var/lib/mlocate/mlocate.db) </code>查找命令，使用<code>updatedb</code>更新库。索引查找速度快，需要更新，查找结果是整个路径</p>
+<ul>
 <li><code>locate modao</code>：查找路径，路径内容包含modao</li>
 <li><code>locate -b modao</code>：查找路径，路径基名内容包含modao</li>
 <li><code>locate modao modao_test</code>：查找路径，路径内容包含modao<strong>或</strong>modao_test</li>
