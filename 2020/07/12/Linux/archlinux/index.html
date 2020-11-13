@@ -103,6 +103,28 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs plain">! .Xresources<br>! Xterm settings<br>! XTerm*vt100*reverseVideo: true<br><br>XTerm*vt100.background: black<br>XTerm*vt100.foreground: white<br><br>! copy &amp; paste <br>XTerm*VT100.translations: #override &lt;Btn1Up&gt;: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) <br><br>! English font <br>xterm*faceName: Monaco:antialias&#x3D;True:pixelsize&#x3D;15<br>! Chinese font <br>xterm*faceNameDoublesize:WenQuanYi Micro Hei:antialias&#x3D;True:pixelsize&#x3D;15<br><br>!input method <br>XTerm*inputMethod:fcitx <br><br>! scrollbar <br>XTerm*scrollBar: true <br>XTerm*rightScrollBar: true <br>XTerm*SaveLines: 4096<br><br>! Xterm*faceSize: 20<br>Xterm*VT100*geometry: 100x30<br></code></pre></td></tr></table></figure>
 
+<p>调整屏幕分辨率（可选）</p>
+<blockquote>
+<p>  <em>xrandr</em> 作出的改变只在本次会话中有效</p>
+<p>  分辨率后面带有一个*<strong>**号和一个</strong>+**号</p>
+</blockquote>
+<p>从已有分辨率中选择</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">xrandr --output HDMI-1 --mode 1920x1080<br>xrandr --output HDMI-1 --mode 1920x1080 --rate 60<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--ouput</code>：可用的显示输出设备</li>
+<li><code>--mode</code>：已有的分辨率</li>
+<li><code>--rate</code>：刷新速率</li>
+</ul>
+<p>添加未被检测到的有效分辨率</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plain"># 首先，运行gtf或者cvt，查询某分辨率的有效扫描频率。 <br>cvt 1280 1024<br>1280x1024 59.89 Hz (CVT 1.31M4) hsync: 63.67 kHz; pclk: 109.00 MHz <br>Modeline &quot;1280x1024_60.00&quot;  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync <br><br># 然后通过--newmode参数新建一种xrandr模式，输入上面所得到的查询结果，其中Modeline关键词自然需要被省略。<br>xrandr --newmode &quot;1280x1024_60.00&quot;  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync<br><br># 新建模式后，我们需要把这模式添加到当前的输出设备（假定为VGA1）上。由于一些参数已经事先设置，只需输入模式名称即可，即1280x1024_60.00。<br>xrandr --addmode VGA1 1280x1024_60.00<br><br># 最后，再把VGA1的分辨率指定为刚刚添加的新模式。<br>xrandr --output VGA1 --mode 1280x1024_60.00   <br></code></pre></td></tr></table></figure>
+
+<p>使xrandr定制永久生效的方案有：(详见Arch wiki)</p>
+<ul>
+<li><code>xorg.conf</code>（推荐）</li>
+<li><code>.xprofile</code></li>
+<li>kdm/gdm</li>
+</ul>
 
 	</div>
 </div>
@@ -110,6 +132,9 @@
 	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
 </div>
 <script src="/js/totop.js"></script>
+
+	<script src="/js/copyright.js"></script>
+
     
   </body>
 </html>
