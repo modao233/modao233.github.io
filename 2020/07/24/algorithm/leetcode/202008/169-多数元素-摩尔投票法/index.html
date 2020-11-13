@@ -99,6 +99,10 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">majorityElement</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-comment">//major为候选人，count计数</span><br>        <span class="hljs-comment">//当count为0时，产生候选人，非0时，进行票数对抗，最终票数对抗结果非0则证明超过一半</span><br>        <span class="hljs-keyword">int</span> major = <span class="hljs-number">0</span>, count = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i : nums)&#123;<br>            <span class="hljs-keyword">if</span>(!count)major = i;<br><br>            <span class="hljs-keyword">if</span>(i == major)++count;<br>            <span class="hljs-keyword">else</span> --count;<br>        &#125;<br>        <span class="hljs-keyword">return</span> major;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 	</div>
 </div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
     
   </body>
 </html>
