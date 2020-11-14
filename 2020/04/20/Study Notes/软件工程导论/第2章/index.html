@@ -299,9 +299,39 @@
 	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
 </div>
 <script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: http://yoursite.com/2020/04/20/Study%20Notes/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%AF%BC%E8%AE%BA/%E7%AC%AC2%E7%AB%A0/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
 
-	<script src="/js/copyright.js"></script>
-
+</script>
     
   </body>
 </html>
