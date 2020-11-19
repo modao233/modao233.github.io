@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/project">Project</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="content-area">
+	<div class="title">
+		shell编程基础语法
+	</div>
+	
+	<div class="page-date">
+		2020-11-19
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Shell">Shell</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>原文：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://my.oschina.net/FEEDFACF/blog/1789695">Shell入门看我吧</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/taiyang1987912/article/details/38869577">shell浅谈之一变量和引用</a></li>
+</ul>
+<a id="more"></a>
+
+<h2 id="1-语法"><a href="#1-语法" class="headerlink" title="1. 语法"></a>1. 语法</h2><h3 id="1-1-变量"><a href="#1-1-变量" class="headerlink" title="1.1 变量"></a>1.1 变量</h3><p>变量是脚本语言的核心，shell脚本又是无类型的。变量本质上存储数据的一个或多个计算机内存地址，分为</p>
+<ul>
+<li>本地变量（用户当前shell生命期使用，随shell进程的消亡而无效，类似局部变量）</li>
+<li>环境变量（适用于所有由登录进程所产生的子进程）</li>
+<li>位置参数（向shell脚本传递参数，只读）</li>
+</ul>
+<p>而shell使用变量就需要引用，它们密切相关。</p>
+<h4 id="变量的类型"><a href="#变量的类型" class="headerlink" title="变量的类型"></a><strong>变量的类型</strong></h4><p>shell是弱类型语言所以不需要使用类型限定，并且变量可以修改类型。</p>
+<p>下面的例子定义了一个字符串类型的str变量，之后修改为数值类型</p>
+<p>注意点：变量等号两边不能有空格出现</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ str=&quot;abc&quot;<br>modao@modao-hp:~$ echo $str<br>abc<br>modao@modao-hp:~$ echo $&#123;str&#125;<br>abc<br>modao@modao-hp:~$ str=123<br>modao@modao-hp:~$ echo $str<br>123<br>modao@modao-hp:~$ echo $&#123;str&#125;<br>123<br></code></pre></td></tr></table></figure>
+
+<h5 id="无类型变量"><a href="#无类型变量" class="headerlink" title="无类型变量"></a>无类型变量</h5><ol>
+<li><p>C中定义变量需要声明整型、浮点型、字符型等，而shell脚本变量却是无类型的。shell不支持浮点型只支持整型和字符型，同时字符型还具有一个整型值0（判断标准：变量中只包含数字是数值型其他是字符串）。</p>
+</li>
+<li><p>位置参数：从命令行向shell脚本传递参数，$0表示脚本的名字，$1代表第一个参数，以此类推。从​${10}开始参数号需要用花括号括起来。</p>
+<p>特殊的位置参数：</p>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$0</td>
+<td>当前脚本的名字</td>
+</tr>
+<tr>
+<td>$n</td>
+<td>传递给脚本或者函数的参数，n表示第几个参数</td>
+</tr>
+<tr>
+<td>$#</td>
+<td>传递给脚本或函数的参数个数</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>传递给脚本或函数的所有参数</td>
+</tr>
+<tr>
+<td>$@</td>
+<td>传递给脚本或者函数的所有参数</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>当前shell脚本进程的PID</td>
+</tr>
+<tr>
+<td>$?</td>
+<td>函数返回值，或者上个命令的退出状态</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>  $* 和 $@ 的区别</p>
+<p>  $* 和 $@ 都表示传递给函数或脚本的所有参数，不被双引号(“ “)包含时，都以”$1” “$2” … “$n” 的形式输出所有参数。<br>  但是当它们被双引号(“ “)包含时，”$*” 会将所有的参数作为一个整体，以”$1 $2 … $n”的形式输出所有参数；”$@” 会将各个参数分开，以”$1” “$2” … “$n” 的形式输出所有参数。</p>
+</blockquote>
+</li>
+<li><p>内部变量：指能够对bash shell脚本行为产生影响的变量，属于环境变量的范畴。</p>
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$BASH</td>
+<td>BASH记录了shell的路径，通常是/bin/bash。内部变量SHELL是通过BASH的值确定当前Shell的类型</td>
+</tr>
+<tr>
+<td>$BASH_ENV</td>
+<td>BASH的启动文件</td>
+</tr>
+<tr>
+<td>$BASH_VERSINFO</td>
+<td>是一个包含6个元素的数组，这些元素用于表示bash的版本信息。<br>BASH_VERSINFO[0]表示bash shell的主版本号，BASH_VERSINFO[1]表示shell的次版本号，BASH_VERSINFO[2]表示shell的补丁级别，BASH_VERSINFO[3]表示shell的编译版本，BASH_VERSINFO[4]表示shell的发行状态，BASH_VERSINFO[5]表示shell的硬件架构。</td>
+</tr>
+<tr>
+<td>$BASH_VERSION</td>
+<td>linux系统的bash shell版本包含主次版本、补丁级别、编译版本和发行状态，即BASH_VERSINFO数组取值为0~4。</td>
+</tr>
+<tr>
+<td>$EDITOR</td>
+<td>脚本所调用的默认编辑器</td>
+</tr>
+<tr>
+<td>$EUID</td>
+<td>当前有效的用户ID</td>
+</tr>
+<tr>
+<td>$FUNCNAME</td>
+<td>当前函数名</td>
+</tr>
+<tr>
+<td>$GROUPS</td>
+<td>当前用户所属组，linux的一个用户可同时包含在多个组内，GROUPS是一个数组记录了当前用户所属的所有群组号。管理用户组的文件是/etc/group，格式：群组名：加密后的组口令：群组号：组成员，组成员（组成员列表）。</td>
+</tr>
+<tr>
+<td>$HOME</td>
+<td>当前用户家目录</td>
+</tr>
+<tr>
+<td>$HOSTTYPE<br>$MACHTYPE</td>
+<td>都用于记录系统的硬件架构，它们与BASH_VERSINFO[5]等值</td>
+</tr>
+<tr>
+<td>$LINENO</td>
+<td>当前行号</td>
+</tr>
+<tr>
+<td>$OSTYPE</td>
+<td>记录操作系统类型，linux系统中，$OSTYPE=linux。</td>
+</tr>
+<tr>
+<td>$PATH</td>
+<td>PATH路径</td>
+</tr>
+<tr>
+<td>$PPID</td>
+<td>当前shell进程的父进程ID</td>
+</tr>
+<tr>
+<td>$PWD</td>
+<td>当前工作目录</td>
+</tr>
+<tr>
+<td>$SECONDS</td>
+<td>当前脚本运行秒数</td>
+</tr>
+<tr>
+<td>$TMOUT</td>
+<td>不为0时，超过指定的秒将退出shell</td>
+</tr>
+<tr>
+<td>$UID</td>
+<td>当前用户ID</td>
+</tr>
+<tr>
+<td>$DIRSTACK</td>
+<td>它显示目录栈的栈顶值。linux目录栈用于存放工作目录，便于程序员手动控制目录的切换，bash  shell定义了两个系统命令pushd（将某目录压入目录栈并将当前工作目录切换到入栈的目录）和popd（将栈顶目录弹出并将当前工作目录切换到栈顶目录）来维护目录栈。<br>DIRSTACK记录栈顶目录值，初值为空。linux还有一个命令dirs用于显示目录栈的所有内容。</td>
+</tr>
+<tr>
+<td>$GLOBIGNORE</td>
+<td>它是由冒号分隔的模式列表，表示通配时忽略的文件名集合。一旦GLOBIGNORE非空，shell会将通配得到的结果中符合GLOBIGNORE模式中的目录去掉。例如ls a*列出当前目录以a开头的文件，设置GLOBIGNORE=“ar*”，再次执行ls a*将剔除以ar开头的文件。</td>
+</tr>
+<tr>
+<td>$HOSTNAME</td>
+<td>HOSTNAME记录了主机名，linux主机名是网络配置时必须要设置的参数，可在/etc/sysconfig/network文件中设置主机名。/etc/hosts文件用于设定IP地址和主机名之间的对应关系，可快速从主机名查找IP地址。</td>
+</tr>
+<tr>
+<td>$REPLY</td>
+<td>REPLY变量与read和select命令有关。read用于读取标准输入（stdin）的变量值，read variable将标准输入存储到variable变量中，而select将读到的标准输入存储到REPLY变量中。</td>
+</tr>
+<tr>
+<td>$SECONDS</td>
+<td>SECONDS记录脚本从开始执行到结束所耗费的时间（单位为秒）。调试性能时比较有用。</td>
+</tr>
+<tr>
+<td>$SHELLOPTS</td>
+<td>它记录了处于开状态的shell选项列表，它是一个只读变量。Shell选项用于改变Shell的行为，Shell选项有开和关两种状态，set命令用于打开或关闭选项。set -o optionname（打开名为optionname选项），set +o  optionname（关闭名为optionname选项）。比如打开interactive（交互模式运行）可以使用set -o  interactive或set -i等价。Shell选项有很多。</td>
+</tr>
+<tr>
+<td>$SHLVL</td>
+<td>记录Shell嵌套的层次，启动第一个shell时，$SHLVL=1，若在这个Shell中执行脚本，脚本中的SHLVL为2，脚本中再执行子脚本，SHLVL就会递增。</td>
+</tr>
+<tr>
+<td>$TMOUT</td>
+<td>用于设置Shell的过期时间，TMOUT不为0时，shell会在TMOUT秒后将自动注销，TMOUT放在脚本中可以规定脚本的执行时间。</td>
+</tr>
+</tbody></table>
+<p> select脚本：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br># ”#?<span class="hljs-string">&quot;提示符由shell提示符变量PS3进行设置（#?是其默认值）。</span><br><span class="hljs-string"># 修改export PS3=&quot;</span>your choice:<span class="hljs-string">&quot;。</span><br><span class="hljs-string"># REPLY变量值为用户选择的序号，var变量为REPLY序号所对应的字符串。 </span><br><span class="hljs-string">echo &quot;</span>Pls. choose your profession?<span class="hljs-string">&quot;</span><br><span class="hljs-string">select var in &quot;</span>Worker<span class="hljs-string">&quot; &quot;</span>Doctor<span class="hljs-string">&quot; &quot;</span>Teacher<span class="hljs-string">&quot; &quot;</span>Student<span class="hljs-string">&quot; &quot;</span>Other<span class="hljs-string">&quot;</span><br><span class="hljs-string">do</span><br><span class="hljs-string">   echo &quot;</span>The \$REPLY is $REPLY.<span class="hljs-string">&quot;  </span><br><span class="hljs-string">   echo &quot;</span>Your preofession is $var.<span class="hljs-string">&quot;</span><br><span class="hljs-string">break</span><br><span class="hljs-string">done</span><br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h5 id="有类型变量"><a href="#有类型变量" class="headerlink" title="有类型变量"></a>有类型变量</h5><p>Shell变量一般是无类型的，bash shell提供了declare和typeset两个命令用于指定变量的类型（它们完全等价）。declare [选项] 变量名，有6个选项。</p>
+<table>
+<thead>
+<tr>
+<th>选项名</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r</td>
+<td>将变量设置为只读属性</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>将变量定义为整形数</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>将变量定义为数组</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>显示此脚本前定义过的所有函数名及其内容</td>
+</tr>
+<tr>
+<td>-F</td>
+<td>仅显示此脚本前定义过的所有函数名</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>将变量声明为环境变量</td>
+</tr>
+</tbody></table>
+<p>declare命令-r选项将变量设置成只读属性，与readonly命令一样，变量值不允许修改。</p>
+<p>declare命令-x选项将变量声明为环境变量，相当于export，但declare -x允许声明环境变量同时给变量赋值，而export不支持。</p>
+<p>declare -i将变量定义为整型数，不能再按字符串形式处理改变量（和let命令进行算术运算一样，expr命令可以替换let命令）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>variable1=2009<br>variable2=<span class="hljs-variable">$variable1</span>+1<br><span class="hljs-built_in">echo</span>  <span class="hljs-string">&quot;variable2=<span class="hljs-variable">$variable2</span>&quot;</span><br><span class="hljs-built_in">let</span> variable3=<span class="hljs-variable">$variable1</span>+1<br><span class="hljs-built_in">echo</span>  <span class="hljs-string">&quot;variable3=<span class="hljs-variable">$variable3</span>&quot;</span><br><span class="hljs-built_in">declare</span> -i variable4<br>variable4=<span class="hljs-variable">$variable1</span>+1<br><span class="hljs-built_in">echo</span>  <span class="hljs-string">&quot;variable4=<span class="hljs-variable">$variable4</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a><strong>变量赋值</strong></h4><ul>
+<li><p>变量赋值规则：等号两边不能有空格、value值包括空格必须用双引号、变量名只能包括字母数字和下画杠，并变量名不能以数字开头。</p>
+</li>
+<li><p>如果value值中有空格，需要用双引号引以来。variable=”hello world”。</p>
+</li>
+<li><p>unset命令清除变量的值。</p>
+</li>
+<li><p>变量赋值模式</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>variable=value</td>
+<td>将value的值赋给变量variable</td>
+</tr>
+<tr>
+<td>variable+value</td>
+<td>对已赋值的variable，重设其值</td>
+</tr>
+<tr>
+<td>variable?value 或 variable:?value</td>
+<td>对未赋值的variable，显示系统错误信息</td>
+</tr>
+<tr>
+<td>variable:=value</td>
+<td>对未赋值的variable，将value值赋给它</td>
+</tr>
+<tr>
+<td>variable:-value</td>
+<td>对未赋值的variable，将value值赋给它，<br>但value值不存储到variable对应的地址空间</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>readonly将变量设置为只读，只读变量不能再次进行赋值操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">modao@modao-hp:~$ color=red<br>modao@modao-hp:~$ <span class="hljs-built_in">readonly</span> color<br>modao@modao-hp:~$ color=blue<br>-bash: color: <span class="hljs-built_in">readonly</span> variable<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="变量使用"><a href="#变量使用" class="headerlink" title="变量使用"></a><strong>变量使用</strong></h4><p>变量的赋值：</p>
+<ul>
+<li>可以用变量的值给变量赋值<ul>
+<li>在变量名称前面加上<code>$</code>符号，如<code>str1=$str2</code></li>
+<li>把变量名放在<code>$&#123;&#125;</code>括号中使用，如<code>str1=$&#123;str2&#125;</code></li>
+</ul>
+</li>
+<li>可以把命令执行结果作为右值赋值给变量<ul>
+<li>将命令放在<code>$()</code>括号中使用，如<code>dir1=$(pwd)</code></li>
+<li>将命令放在` `上引号中使用，如dir2=`pwd`</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ dir1=$(pwd)<br>modao@modao-hp:~$ echo $dir1<br>/home/modao<br>modao@modao-hp:~$ dir2=`pwd`<br>modao@modao-hp:~$ echo $dir2<br>/home/modao<br></code></pre></td></tr></table></figure>
+
+<h4 id="间接变量引用"><a href="#间接变量引用" class="headerlink" title="间接变量引用"></a>间接变量引用</h4><p>  该引用不是将变量引起来，而是理解为：如果第一个变量的值是第二个变量的名字，从第一个变量引用第二个变量的值就称为间接变量引用。</p>
+<p>bash  shell提供了两种格式实现间接变量引用：</p>
+<ul>
+<li><code>eval  tempvar=\$$variable</code>，其中eval是关键字，用<code>\$$</code>形式得到variable的间接引用</li>
+<li>``tempvar=${!variable}<code>，用</code>${!…}`得到variable的间接引用</li>
+</ul>
+<p>使用间接变量引用实现数据库表格的查找： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br> <br>S01_name=<span class="hljs-string">&quot;Li Hao&quot;</span><br>S01_dept=Computer<br>S01_phone=025-83481010<br>S01_rank=5<br> <br>S02_name=<span class="hljs-string">&quot;Zhang Ju&quot;</span><br>S02_dept=English<br>S02_phone=025-83466524<br>S02_rank=8<br> <br>S03_name=<span class="hljs-string">&quot;Zhu Lin&quot;</span><br>S03_dept=Physics<br>S03_phone=025-83680010<br>S03_rank=3<br> <br>PS3=<span class="hljs-string">&#x27;Pls. select the number of student:&#x27;</span><br>select stunum <span class="hljs-keyword">in</span> <span class="hljs-string">&quot;S01&quot;</span> <span class="hljs-string">&quot;S02&quot;</span> <span class="hljs-string">&quot;S03&quot;</span><br><span class="hljs-keyword">do</span><br>  name=<span class="hljs-variable">$&#123;stunum&#125;</span>_name<br>  dept=<span class="hljs-variable">$&#123;stunum&#125;</span>_dept<br>  phone=<span class="hljs-variable">$&#123;stunum&#125;</span>_phone<br>  rank=<span class="hljs-variable">$&#123;stunum&#125;</span>_rank<br> <br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;BASIC INFORMATION OF NO.<span class="hljs-variable">$stunum</span> STUDENT:&quot;</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;NAME:<span class="hljs-variable">$&#123;!name&#125;</span>&quot;</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;DEPARTMENT:<span class="hljs-variable">$&#123;!dept&#125;</span>&quot;</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;PHONE:<span class="hljs-variable">$&#123;!phone&#125;</span>&quot;</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;RANK:<span class="hljs-variable">$&#123;!rank&#125;</span>&quot;</span><br>  <span class="hljs-built_in">break</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p>引用指将字符串用引用符号引起来，以防止特殊字符被shell脚本重解释为其他意义。shell中定义了四种引用符号。</p>
+<ol>
+<li><p>双引号：引用除美圆符号($)、反引号(`)和反斜线(\)之外的所有字符，即$和`及\在双引号中仍被解释为特殊意义，利用双引号引用变量能防止字符串分割，而保留变量中的空格。因此双引号的引用方式称为部分引用。</p>
+</li>
+<li><p>单引号：中字符除单引号本身之外都解释为字面意义，不再具备引用变量的功能，单引号的引用方式称为全引用。</p>
+</li>
+<li><p>反引号：反引号进行命令替换（将命令的标准输出作为值赋给某个变量），等价于$()，同时$()形式的命令替换是可以嵌套的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 当前工作目录</span><br>`<span class="hljs-built_in">pwd</span>`<br>$(<span class="hljs-built_in">pwd</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  反引号与$()在处理双反斜线时存在区别</p>
+<ul>
+<li><p>反引号将反斜线符号处理为空格</p>
+</li>
+<li><p>$()符号将其处理为单斜线符。</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p>反斜线：表示转义，将屏蔽下一个字符的特殊意义，而以字面意义解析它。转义符除了屏蔽特殊字符的特殊意义外，加上一些字母能够表达特殊的含义（转义字符）。</p>
+</li>
+</ol>
+<h3 id="1-2-打印"><a href="#1-2-打印" class="headerlink" title="1.2 打印"></a>1.2 打印</h3><p>因为shell没有单步调试和其他功能强大的IDE，所以打印功能就经常使用到，此外打印功能还可以当做函数的返回值，比return作为函数的返回值功能更强大</p>
+<p>shell 使用echo打印，内容默认输出到控制台中，echo可以打印字符串、变量、以及字符串中嵌入变量的混合内容</p>
+<p>echo常见的参数选项[更多选项见echo详解]：</p>
+<ul>
+<li>-e 转义字符处理，比如\t显示为制表符而不是显示输出\t</li>
+<li>-n 把文本字符串和命令输出显示在同一行中</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ str=&quot;abcd&quot;<br>modao@modao-hp:~$ echo $str<br>abcd<br>modao@modao-hp:~$ echo &quot;the str = $str&quot;<br>the str = abcd<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-运算"><a href="#1-3-运算" class="headerlink" title="1.3 运算"></a>1.3 运算</h3><p><strong>使用expr执行算术运算</strong></p>
+<p>注意点：*乘法运算符号需要转义</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ ans=$(expr 3 + 8)<br>modao@modao-hp:~$ echo $ans<br>11<br>modao@modao-hp:~$ ans=$(expr 3 - 8)<br>modao@modao-hp:~$ echo $ans<br>-5<br>modao@modao-hp:~$ ans=$(expr 3 \* 8)<br>modao@modao-hp:~$ echo $ans<br>24<br>modao@modao-hp:~$ ans=$(expr 24 / 8)<br>modao@modao-hp:~$ echo $ans<br>3<br></code></pre></td></tr></table></figure>
+
+<p><strong>使用[]执行算术</strong></p>
+<p>[]执行算术比expr简单多了，并且*乘法运算符号不需要转义</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ ans=$[3 + 8]<br>modao@modao-hp:~$ echo $ans<br>11<br>modao@modao-hp:~$ ans=$[3 - 8]<br>modao@modao-hp:~$ echo $ans<br>-5<br>modao@modao-hp:~$ ans=$[3 * 8]<br>modao@modao-hp:~$ echo $ans<br>24<br>modao@modao-hp:~$ ans=$[24 / 8]<br>modao@modao-hp:~$ echo $ans<br>3<br></code></pre></td></tr></table></figure>
+
+<p><strong>双圆括号执行算术运输</strong></p>
+<p>双圆括号即((…))格式。result=$((var1*var2));var1和var2执行乘法运算。双圆括号也可以使shell实现C语言风格的变量操作。 </p>
+<p>双圆括号实现五种C语言风格的运算，自增自减是shell算术运算符中未曾定义过的，是C语言中的相关内容。a = 2014,C语言允许赋值两端有空格但shell不允许。双圆括号还可以实现更加复杂的C语言的运算如逻辑判断、三元操作等。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>((a = 2014))<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;The initial value of a is:<span class="hljs-variable">$a</span>&quot;</span><br>((a++))<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;After a++,the value of a is:<span class="hljs-variable">$a</span>&quot;</span><br>((++a))<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;After ++a,the value of a is:<span class="hljs-variable">$a</span>&quot;</span><br>((a--))<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;After a--,the value of a is:<span class="hljs-variable">$a</span>&quot;</span><br>((--a))<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;After --a,the value of a is:<span class="hljs-variable">$a</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="1-4-控制"><a href="#1-4-控制" class="headerlink" title="1.4 控制"></a>1.4 控制</h3><p><strong>数值比较</strong></p>
+<p>控制使用<code>if</code>/<code>else</code>/<code>fi</code>语法，典型的数值比较如下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ if [[ 3 &gt; 7 ]];then echo &quot;yes&quot;; else echo &quot;no&quot;; fi<br>no<br>modao@modao-hp:~$ if [ 3 &gt; 7 ];then echo &quot;yes&quot;; else echo &quot;no&quot;; fi<br>yes<br>modao@modao-hp:~$ if [[ 3 -gt 7 ]];then echo &quot;yes&quot;; else echo &quot;no&quot;; fi<br>no<br>modao@modao-hp:~$ if [ 3 -gt 7 ];then echo &quot;yes&quot;; else echo &quot;no&quot;; fi<br>no<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://www.cnblogs.com/z977690557/p/10688856.html">shell if条件判断中：双中括号与单中括号的区别</a></p>
+<p>  单中括号的情况：当使用<code>if [ $1 = 1]</code>时，如果变量“参数”的值为空，那么就if语句就变成了<code>if [ = 1 ]</code>,这不是一个合法的条件。为了避免出现这种情况，必须给变量加上引号<code>if [ &quot;$1&quot; == &quot;1&quot; ]</code>，这样即使是空变量也提供了合法的测试条件<code>if [ &quot; &quot; == &quot;1&quot; ]</code></p>
+<p>  关于双中括号：</p>
+<ul>
+<li><p>双方括号提供了字符串比较的高级特性</p>
+</li>
+<li><p>括号中可以定义一些正则表达式来匹配字符串</p>
+</li>
+<li><p>注意不是所有的shell都支持双方括号！</p>
+<p>单中括号是比较基本的变量计算及数值比较的方法，一般情况下已经足够使用；双中括号是扩展的数值比较方法，里面的数值计算也相对来说复杂些。</p>
+<p>引申：</p>
+</li>
+</ul>
+<ol>
+<li>单括号和双括号的区别</li>
+<li>单引号和双引号的区别</li>
+</ol>
+</blockquote>
+<p>还可以使用下面的比较符号:</p>
+<table>
+<thead>
+<tr>
+<th>比较符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>n1 -eq n2</td>
+<td>检查n1是否与n2相等</td>
+</tr>
+<tr>
+<td>n1 -ge n2</td>
+<td>检查n1是否大于或等于n2</td>
+</tr>
+<tr>
+<td>n1 -gt n2</td>
+<td>检查n1是否大于n2</td>
+</tr>
+<tr>
+<td>n1 -le n2</td>
+<td>检查n1是否小于或等于n2</td>
+</tr>
+<tr>
+<td>n1 -lt n2</td>
+<td>检查n1是否小于n2</td>
+</tr>
+<tr>
+<td>n1 -ne n2</td>
+<td>检查n1是否不等于n2</td>
+</tr>
+</tbody></table>
+<p><strong>字符串比较</strong></p>
+<table>
+<thead>
+<tr>
+<th>比较符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>str1 = str2</td>
+<td>检查str1是否和str2相同</td>
+</tr>
+<tr>
+<td>str1 != str2</td>
+<td>检查str1是否和str2不同</td>
+</tr>
+<tr>
+<td>str1 &lt; str2</td>
+<td>检查str1是否比str2小</td>
+</tr>
+<tr>
+<td>str1 &gt; str2</td>
+<td>检查str1是否比str2大</td>
+</tr>
+<tr>
+<td>-n str1</td>
+<td>检查str1的长度是否非0</td>
+</tr>
+<tr>
+<td>-z str1</td>
+<td>检查str1的长度是否为0</td>
+</tr>
+</tbody></table>
+<p><strong>文件比较</strong></p>
+<table>
+<thead>
+<tr>
+<th>比较符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d file</td>
+<td>检查file是否存在并是一个目录</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>检查file是否存在</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>检查file是否存在并是一个文件</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>检查file是否存在并可读</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>检查file是否存在并非空</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>检查file是否存在并可写</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>检查file是否存在并可执行</td>
+</tr>
+<tr>
+<td>-O file</td>
+<td>检查file是否存在并属当前用户所有</td>
+</tr>
+<tr>
+<td>-G file</td>
+<td>检查file是否存在并且默认组与当前用户相同</td>
+</tr>
+<tr>
+<td>file1 -nt file2</td>
+<td>检查file1是否比file2新</td>
+</tr>
+<tr>
+<td>file1 -ot file2</td>
+<td>检查file1是否比file2旧</td>
+</tr>
+</tbody></table>
+<h3 id="1-5-循环"><a href="#1-5-循环" class="headerlink" title="1.5 循环"></a>1.5 循环</h3><p><strong>C语言格式的for循环</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell">num=0<br>for (( i = 0; i &lt; 10; i++ )); do<br>    num=$[$num + $i]<br>done<br>echo &quot;result = $&#123;num&#125;&quot;<br><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># output</span></span><br>result = 45<br></code></pre></td></tr></table></figure>
+
+<p><strong>for in 循环处理文件</strong></p>
+<p>data文件内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;=======循环for in=======&quot;<br><br>file=&quot;data&quot;<br>IFS_OLD=$IFS<br>IFS=$&#x27;\n&#x27;<br>for line in $(cat $file)<br>do<br>    echo &quot;$&#123;line&#125;&quot;<br>done<br>IFS=$&#123;IFS_OLD&#125;<br><br><span class="hljs-meta">#</span><span class="bash"> 输出：=======循环<span class="hljs-keyword">for</span> <span class="hljs-keyword">in</span>=======</span><br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br></code></pre></td></tr></table></figure>
+
+<p><strong>while 循环</strong></p>
+<p>while表示条件满足执行循环</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">i=1<br>while [[ i -lt 10 ]]; do<br>    i=$(expr $i + 1)<br>done<br></code></pre></td></tr></table></figure>
+
+<p><strong>until 循环</strong></p>
+<p>until和<code>while</code>相反，表示条件不满足执行循环</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">j=1<br>line=&quot;&quot;<br>until [[ j -eq 10 ]]; do<br>    if [[ j -le i ]]; then<br>        result=$(expr $i \* $j)<br>        resultStr=&quot;$j X $i = $result&quot;<br>        line=$&#123;line&#125;$&#123;resultStr&#125;&quot;\t&quot;<br>    fi<br>    j=$(expr $j + 1)<br>done<br>echo -e $&#123;line&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-6-容器"><a href="#1-6-容器" class="headerlink" title="1.6 容器"></a>1.6 容器</h3><p>数组的定义如下<code>declare -a array_name</code></p>
+<blockquote>
+<p>  osx系统因为bash的版本太低，只能定义索引数组</p>
+<p>  在bash版本高于4.1的版本可以使用<code>declare -A array_name</code>定义关联数组</p>
+</blockquote>
+<p>以下的代码片定义一个数组，用于保存配置文件中的内容，然后使用for循环遍历数组内容输出到控制台。</p>
+<ul>
+<li><code>config_content_array[$cfg_line_count]=$line</code>把内容保存到数组</li>
+<li><code>$&#123;#config_content_array[@]&#125;</code> 获取数组的元素个数</li>
+<li><code>config_content=$&#123;config_content_array[i]&#125;</code>读取数组第i个元素</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">###### 数据定义</span></span><br><span class="hljs-meta">#</span><span class="bash"> 定义保存类名称的数组</span><br>declare -a config_content_array<br>cfg_line_count=0<br><br><span class="hljs-meta">#</span><span class="bash"> 1、读取配置文件内容保存到数组中</span><br>read_config_content_to_array() &#123;<br><span class="hljs-meta">	#</span><span class="bash"> 读取配置文件</span><br>    echo &quot;开始读取配置文件...&quot;<br><span class="hljs-meta">	#</span><span class="bash"> mark: p291</span><br>    IFS_OLD=$IFS<br>    IFS=$&#x27;\n&#x27;<br><span class="hljs-meta">	#</span><span class="bash"> 删除文件行首的空白字符 http://www.jb51.net/article/57972.htm</span><br>    for line in $(cat $cfg_file | sed &#x27;s/^[ \t]*//g&#x27;)<br>    do<br>        is_comment=$(expr &quot;$line&quot; : &#x27;^#.*&#x27;)<br>        echo &quot;line=$&#123;line&#125; is_common=$&#123;is_comment&#125;&quot;<br>        if [[ $&#123;#line&#125; -eq 0 ]] || [[ $(expr &quot;$line&quot; : &#x27;^#.*&#x27;) -gt 0 ]]; then<br>            echo &quot;blank line or comment line&quot;<br>        else<br><span class="hljs-meta">			config_content_array[$</span><span class="bash">cfg_line_count]=<span class="hljs-variable">$line</span></span><br>            cfg_line_count=$[ $cfg_line_count + 1 ]<br>            echo &quot;line&gt;&gt;&gt;&gt;$&#123;line&#125;&quot;<br>        fi	<br>    done<br>    IFS=$&#123;IFS_OLD&#125;<br><br>    for (( i = 0; i &lt; $&#123;#config_content_array[@]&#125;; i++ )); do<br>        config_content=$&#123;config_content_array[i]&#125;;<br>        echo &quot;config_content&gt;&gt;&gt;&gt;&gt;&gt;$&#123;config_content&#125;&quot;<br>    done<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-7-方法"><a href="#1-7-方法" class="headerlink" title="1.7 方法"></a>1.7 方法</h3><p>方法的定义有两种方式</p>
+<ul>
+<li>function func1 { #这里定义方法体 }</li>
+<li>func2() { #这里定义方法体 }</li>
+</ul>
+<p>方法返回值的处理有三种方式</p>
+<ul>
+<li>return 最大返回256，表示结果码，有特殊含义，并且只能返回数值</li>
+<li>echo 返回</li>
+<li>保存在全局变量中</li>
+</ul>
+<p>方法的参数</p>
+<ul>
+<li>参数的传递添加在方法之后，多个使用空格分割</li>
+<li>参数的获取<ul>
+<li>使用<code>$1</code>、<code>$2</code>以此类推</li>
+<li>特别地<code>$0</code>表示文件名</li>
+<li><code>$#</code>表示参数的个数</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;=======方法=======&quot;<br><br>function func1 &#123;<br>    echo &quot;func1 invoked&quot;<br><span class="hljs-meta">	#</span><span class="bash"> 最大的返回值为256，超过了256取模的结果，280%256=24,最终返回24</span><br>    return 280;<br>&#125;<br><br>func2() &#123;<br>    echo &quot;return value&quot;<br>&#125;<br><br><span class="hljs-meta">#</span><span class="bash"> 检测文件夹存在的方法，结果保存在全局变量`CheckInputDestDirRecursiveReturnValue`中</span><br><span class="hljs-meta">#</span><span class="bash"> 参数一：检测的文件夹路径</span><br><span class="hljs-meta">#</span><span class="bash"> 参数二：提示消息字符串</span><br><span class="hljs-meta">#</span><span class="bash"> 使用方式如下，去掉注释</span><br><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-comment"># 导入工具脚本</span></span><br><span class="hljs-meta">#</span><span class="bash"> . ./FileUtil.sh</span><br><span class="hljs-meta">#</span><span class="bash"> <span class="hljs-comment"># 检测class_search_dir</span></span><br><span class="hljs-meta">#</span><span class="bash"> checkDirCore <span class="hljs-variable">$class_search_dir</span> <span class="hljs-string">&quot;指定类的查找目录不存在&quot;</span></span><br><span class="hljs-meta">#</span><span class="bash"> class_search_dir=<span class="hljs-variable">$&#123;CheckInputDestDirRecursiveReturnValue&#125;</span></span><br>checkDirCore() &#123;<br>    to_process_dir=$1<br>    message=$2<br>    echo &quot;scriptName=$&#123;0&#125; paramsCount=$&#123;#&#125;&quot;<br><span class="hljs-meta">	#</span><span class="bash"> 需处理源码目录检查</span><br>    if [[ -d $to_process_dir ]]; then<br>        echo &quot;目录存在 $to_process_dir&quot;<br>        CheckInputDestDirRecursiveReturnValue=$to_process_dir<br>        return 1<br>    else<br>        echo &quot;$&#123;message&#125; $&#123;to_process_dir&#125;&quot;<br>        checkInputDestDirRecursive $&#123;to_process_dir&#125;<br>    fi<br>&#125;<br><br>echo `func1`<br>echo `func2`<br><br>func1<br>retValue=$?<br>echo &quot;func1 retValue=$retValue&quot;<br><br>retValue=`func2`<br>echo &quot;func2 retValue=$retValue&quot;<br><br>checkDirCore $(pwd) &quot;指定类的查找目录不存在&quot;<br>dir=$&#123;CheckInputDestDirRecursiveReturnValue&#125;<br>echo &quot;dir = $&#123;dir&#125;&quot;<br><br><span class="hljs-meta">#</span><span class="bash"> 输出：</span><br>=======方法=======<br>func1 invoked<br>return value<br>func1 invoked<br>func1 retValue=24<br>func2 retValue=return value<br>scriptName=./syntax.sh paramsCount=2<br>目录存在 /Users/aron/git-repo/ShellLearning/helloshell<br>dir = /Users/aron/git-repo/ShellLearning/helloshell<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-文件"><a href="#2-文件" class="headerlink" title="2. 文件"></a>2. 文件</h2><h3 id="2-1-文件读取"><a href="#2-1-文件读取" class="headerlink" title="2.1 文件读取"></a>2.1 文件读取</h3><p>文件的读取可以使用<code>cat</code>命令结合<code>for in</code>循环处理</p>
+<blockquote>
+<p>   注意：<code>$IFS</code>是文件循环处理的分隔符，按按行处理数据需要把该值设置为<code>$&#39;\n&#39;</code>，处理完成之后恢复旧值</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;=======文件=======&quot;<br>file=&quot;data&quot;<br>IFS_OLD=$IFS<br>IFS=$&#x27;\n&#x27;<br>for line in $(cat $file)<br>do<br>    echo &quot;$&#123;line&#125;&quot;<br>done<br>IFS=$&#123;IFS_OLD&#125;<br><br>输出：<br>=======文件=======<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-目录的读取"><a href="#2-2-目录的读取" class="headerlink" title="2.2 目录的读取"></a>2.2 目录的读取</h3><p>文件的读取可以使用<code>ls</code>命令结合<code>for in</code>循环处理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;=======文件目录=======&quot;<br>function read_implement_file_recursively &#123;<br>    if [[ -d $1 ]]; then<br>        for item in $(ls $1); do<br>            itemPath=&quot;$1/$&#123;item&#125;&quot;<br>            if [[ -d $itemPath ]]; then<br>                # 目录<br>                echo &quot;处理目录 $&#123;itemPath&#125;&quot;<br>                read_implement_file_recursively $itemPath<br>            else <br>                # 文件<br>                echo &quot;处理文件 $&#123;itemPath&#125;&quot;<br>            fi<br>        done<br>    else<br>        echo &quot;err:不是一个目录&quot;<br>    fi<br>&#125;<br><br>read_implement_file_recursively $(pwd)<br><br>输出：<br>=======文件目录=======<br>处理文件 /Users/aron/git-repo/ShellLearning/helloshell/data<br>处理目录 /Users/aron/git-repo/ShellLearning/helloshell/subfolder<br>处理文件 /Users/aron/git-repo/ShellLearning/helloshell/subfolder/data2<br>处理文件 /Users/aron/git-repo/ShellLearning/helloshell/syntax.sh<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-文件写入"><a href="#2-3-文件写入" class="headerlink" title="2.3 文件写入"></a>2.3 文件写入</h3><p>使用输出重定向把内容输出到文件</p>
+<ul>
+<li><code>&gt;</code>输出重定向符号先清空文件然后把内容写入到文件中</li>
+<li><code>&gt;&gt;</code>输出重定向符号把内容追加写入到文件中</li>
+</ul>
+<p>此外可以结合其他命令实现排序、去重功能</p>
+<ul>
+<li><code>sort</code>命令对文件内容以行作为单位排序</li>
+<li><code>uniq</code>命令对文件内容进行去重，以行为单位，一般需要结合<code>sort</code>命令使用</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">file=&quot;subfolder/data2&quot;<br>destfile=&quot;subfolder/data2-p&quot;<br>sort $&#123;file&#125; | uniq &gt; $&#123;destfile&#125;<br><br>结果：<br>➜  helloshell git:(master) ✗ cat subfolder/data2<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown<br>fox<br>jumps over the lazy dog.%                                                                                          <br>➜  helloshell git:(master) ✗ cat subfolder/data2-p <br>The quick brown<br>The quick brown fox jumps over the lazy dog.<br>fox<br>jumps over the lazy dog.<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-sed流编辑"><a href="#3-sed流编辑" class="headerlink" title="3. sed流编辑"></a>3. sed流编辑</h2><p>Sed流编辑结合正则表达式可以方便的对文本文件进行查询、修改、删除、增加等操作</p>
+<p>注意：osx系统自带的sed命令和标准的gnu-sed使用方式上有些差别，所以以下篇幅所谈论到的sed都是标准的gnu-sed，下面的这个脚本用于判断系统是否安装了gnu-sed，如果没有会自动进行安装，完成之后需要用户执行显示的命令配置下即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 检测是否安装gnu sed，mac 内置的sed会有些问题，所以需要安装gnu sed</span><br>gnuSedInstallCheck() &#123;<br><span class="hljs-meta">	#</span><span class="bash"> 检查是否安装gnused</span><br><span class="hljs-meta">	#</span><span class="bash"> mac安装gnuSed  http://blog.csdn.net/sun_wangdong/article/details/71078083</span><br>    which_sed=`which sed`<br>    echo $which_sed<br>    echo &quot;testresult = $(expr &quot;$which_sed&quot; : &#x27;.*/gnu-sed/&#x27;)&quot;<br>    which_sed=`ls -al $&#123;which_sed&#125;`<br>    echo $which_sed<br>    echo &quot;testresult = $(expr &quot;$which_sed&quot; : &#x27;.*/gnu-sed/&#x27;)&quot;<br>    if [[ $(expr &quot;$which_sed&quot; : &#x27;.*/gnu-sed/&#x27;) -gt 0 ]]; then<br>        echo &quot;检测到使用gnu sed&quot;<br>    else<br>        if [ ! `which brew` ]<br>        then<br>            echo &#x27;Homebrew not found. Trying to install...&#x27;<br>                        ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot; \<br>                || exit 1<br>        fi<br>        echo &#x27;Trying to install gnu sed...&#x27;<br>        brew install gnu-sed --with-default-names || exit 1<br><span class="hljs-meta">		#</span><span class="bash"> 设置局部环境变量</span><br>        echo &quot;set PATH....&quot;<br>        source ./set-gnu-sed-path.sh<br>        echo &quot;set PATH done&quot;<br><br>        echo &quot;请手动执行命令,然后重新执行&quot;<br>        command=&quot;PATH=\&quot;/usr/local/Cellar/gnu-sed/4.4/bin:\$PATH\&quot;&quot;<br>        echo $command<br>        echo &quot;&quot;<br>        exit 1<br>    fi<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>sed</code>命令功能繁多，所以这里只讲讲我在实战中使用到的，首先了解<code>sed</code>命令的结构</p>
+<p><code>sed -param operation/pattern/replacement/flags</code></p>
+<p><code>sed param</code></p>
+<ul>
+<li>-e script 在处理输入时，将script中指定的命令添加到已有的命令中</li>
+<li>-f file 在处理输入时，将file中指定的命令添加到已有的命令中</li>
+<li>-n 不产生命令输出，使用print命令来完成输出</li>
+<li>-i 把修改写入到原文件中</li>
+</ul>
+<p><code>sed operation</code></p>
+<ul>
+<li>s 替换</li>
+<li>a 追加</li>
+<li>d 删除</li>
+</ul>
+<p><code>sed pattern/replacement</code></p>
+<p>查找对应的模式和匹配模式的替换内容</p>
+<p><code>sed flag</code></p>
+<p>有4种可用的替换标记：</p>
+<ul>
+<li>数字，表明新文本将替换第几处模式匹配的地方；</li>
+<li>g，表明新文本将会替换所有匹配的文本；</li>
+<li>p，表明原先行的内容要打印出来；</li>
+<li>w file，将替换的结果写到文件中。</li>
+</ul>
+<h3 id="3-1-sed添加内容"><a href="#3-1-sed添加内容" class="headerlink" title="3.1 sed添加内容"></a>3.1 sed添加内容</h3><p>以下是injectContentShell#<code>injectedContentShell.sh</code>脚本文件中的代码片段，使用<code>a</code>操作吧内容添加到方法的开头</p>
+<ul>
+<li><code>/^- \(.*\)&#123;$/</code>这部分是<code>pattern</code>，匹配OC中方法的开始</li>
+<li><code>a\ &#39;&quot;$injected_content&quot;&#39;</code>这部分是<code>operation</code>，注意其中插入内容的变量要使用双引号和单引号包含处理</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 在匹配的行下面添加插入内容</span><br>sed -i &#x27;/^- \(.*\)&#123;$/&#123;<br>    a\ &#x27;&quot;$injected_content&quot;&#x27;<br>&#125;&#x27; $&#123;file&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-sed删除内容"><a href="#3-2-sed删除内容" class="headerlink" title="3.2 sed删除内容"></a>3.2 sed删除内容</h3><p>以下是<a target="_blank" rel="noopener" href="https://gitee.com/dhar/YTTInjectedContentKit/tree/master/DevPods/InjectedContentKit/Example/injectContentShell">injectContentShell</a>#<code>injectedContentShell.sh</code>脚本文件中的代码片段，使用<code>d</code>操作删除内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -i &#x27;/&#x27;&quot;$pattern_str&quot;&#x27;/ &#123;<br>    d<br>&#125;&#x27; $&#123;file&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-sed修改替换内容"><a href="#3-3-sed修改替换内容" class="headerlink" title="3.3 sed修改替换内容"></a>3.3 sed修改替换内容</h3><p>以下是<a target="_blank" rel="noopener" href="https://gitee.com/dhar/YTTInjectedContentKit/tree/master/DevPods/InjectedContentKit/Example/injectContentShell">injectContentShell</a>#<code>RenameClasses.sh</code>脚本文件中的代码片段，使用<code>s</code>操作替换内容，有以下几个要点</p>
+<ul>
+<li><code>s/&#39;&quot;$&#123;original_class_name&#125;&quot;&#39;/&#39;&quot;$&#123;result_class_name&#125;&quot;&#39;/g</code>，使用<code>s</code>操作，注意<code>pattern</code>和<code>replacement</code>中变量的处理方式，使用双引号、单引号双重包含，使用<code>flag</code>为<code>g</code>表示全部替换</li>
+<li><code>grep $&#123;original_class_name&#125; -rl $&#123;pbxproj_dir&#125;</code>，<code>grep</code>命令查找<code>$&#123;pbxproj_dir&#125;</code>文件夹下所有出现<code>$&#123;original_class_name&#125;</code>内容的文件，<code>-r</code>选项表示递归查找，<code>-l</code>选项表示只显示匹配到的文件，返回的结果可能是多个的。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">sed -i &#x27;&#123;<br>    s/&#x27;&quot;$&#123;original_class_name&#125;&quot;&#x27;/&#x27;&quot;$&#123;result_class_name&#125;&quot;&#x27;/g<br>&#125;&#x27; `grep $&#123;original_class_name&#125; -rl $&#123;pbxproj_dir&#125;`<br>sed -i &#x27;&#123;<br>    s/&#x27;&quot;$&#123;original_class_name&#125;&quot;&#x27;/&#x27;&quot;$&#123;result_class_name&#125;&quot;&#x27;/g<br>&#125;&#x27; `grep $&#123;original_class_name&#125; -rl $&#123;class_name_replace_dir&#125;`<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-模块"><a href="#4-模块" class="headerlink" title="4. 模块"></a>4. 模块</h2><p>shell是面向过程的语言，不具备面向对象的特性，shell可以把部分功能独立分离出来，放在单独的脚本文件中，其他模块可以导入该脚本文件，使用其中的功能，这就是shell的伪面向对象</p>
+<h3 id="4-1-工具模块"><a href="#4-1-工具模块" class="headerlink" title="4.1 工具模块"></a>4.1 工具模块</h3><p>工具模块是包含了工具方法的模块，比如数学计算可以放在一个单独的文件中独立为一个模块，其他需要使用到的地方引入这个模块，使用其中定义的方法即可</p>
+<p><code>Math.sh</code>保存了一些数学计算函数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/bash</span><br><br>power()&#123;<br>    base=$1<br>    exp=$2<br>    result=1<br>    for (( i = 0; i &lt; $exp; i++ )); do<br>        result=$[ $result * $base ];<br>    done<br>    echo $result<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其他模块使用<code>. ./Math.sh</code>包含这个模块，可以调用其中定义的power方法</p>
+<p>注意：<code>. ./Math.sh</code>中<code>.</code>是<code>source</code>的简写，这里也可以写成<code>source ./Math.sh</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs shell">echo &quot;=======模块=======&quot;<br><br>. ./Math.sh<br><br>result=$(power 3 5)<br>echo &quot;3^5 = $&#123;result&#125;&quot;<br><br>输出：<br>=======模块=======<br>3^5 = 243<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-流程模块"><a href="#4-2-流程模块" class="headerlink" title="4.2 流程模块"></a>4.2 流程模块</h3><p>流程模块是包含了一些列操作的模块，可以向该模块传递参数，也可以有返回值。流程模块中有两个地方比较特别，一个是流程模块本身参数的处理方式和外部调用流程模块传入参数的方式</p>
+<p><strong>流程模块处理参数</strong></p>
+<p>流程模块处理参数使用<code>getopts</code>命令实现，<code>getopts optionstring opt</code>其中<code>optionstring</code>格式<code>:i:o:</code>，<code>i</code>和<code>o</code>之后的<code>:</code>表示指定<code>i</code>选项和<code>o</code>选项需要有参数，第一个<code>:</code>表示忽略错误，使用case分支处理参数选项对应的参数值。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">### 参数解析</span></span><br>echo &quot;参数&gt;&gt;$&#123;@&#125;&quot;<br>while getopts :i:o: opt<br>do<br>    case &quot;$opt&quot; in<br>        i) param_input_dir=$OPTARG<br>            echo &quot;Found the -i option, with parameter value $OPTARG&quot;<br>            ;;<br>        o) param_output_file=$OPTARG<br>            echo &quot;Found the -o option, with parameter value $OPTARG&quot;<br>            ;;<br>        *) echo &quot;Unknown option: $opt&quot;;;<br>    esac<br>done<br>echo &quot;param_input_dir = $&#123;param_input_dir&#125;&quot;<br>echo &quot;param_output_file = $&#123;param_output_file&#125;&quot;<br></code></pre></td></tr></table></figure>
+
+<p><strong>参数的传递</strong></p>
+<p>参数的传递和使用命令行的选项类似，可以在选项后面添加该选项的参数值</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">./GetAndStoreClasses.sh\<br>    -i $&#123;class_search_dir&#125;\	<br>    -o $&#123;cfg_file&#125;<br></code></pre></td></tr></table></figure>
+
+<p>下面定义的是一个流程模块的脚本文件，是<a target="_blank" rel="noopener" href="https://gitee.com/dhar/YTTInjectedContentKit/tree/master/DevPods/InjectedContentKit/Example/injectContentShell">injectContentShell</a>#<code>GetAndStoreClasses.sh</code>脚本文件中的代码片段，实现了<code>生成重命名的类的配置脚本</code>功能，可以传递两个参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash">!/bin/bash</span><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">#######################</span></span><br><span class="hljs-meta">#</span><span class="bash"> 脚本功能：生成重命名的类的配置脚本</span><br><span class="hljs-meta">#</span><span class="bash"> 输入参数 -i 输入的文件夹</span><br><span class="hljs-meta">#</span><span class="bash"> 输入参数 -o 保存的文件</span><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">#######################</span></span><br><br><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">###### 参数定义</span></span><br>param_input_dir=&quot;&quot;<br>param_output_file=&quot;&quot;<br><br><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">###### 参数解析</span></span><br>echo &quot;参数&gt;&gt;$&#123;@&#125;&quot;<br>while getopts :i:o: opt<br>do<br>    case &quot;$opt&quot; in<br>        i) param_input_dir=$OPTARG<br>            echo &quot;Found the -i option, with parameter value $OPTARG&quot;<br>            ;;<br>        o) param_output_file=$OPTARG<br>            echo &quot;Found the -o option, with parameter value $OPTARG&quot;<br>            ;;<br>        *) echo &quot;Unknown option: $opt&quot;;;<br>    esac<br>done<br>echo &quot;param_input_dir = $&#123;param_input_dir&#125;&quot;<br>echo &quot;param_output_file = $&#123;param_output_file&#125;&quot;<br><br><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">###### 配置</span></span><br><br><span class="hljs-meta">#</span><span class="bash"> 属性黑名单配置文件</span><br>blacklist_cfg_file=&quot;$(pwd)/DefaultClassesBlackListConfig.cfg&quot;<br><br><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">###### 数据定义</span></span><br><br><span class="hljs-meta">#</span><span class="bash"> 定义保存需要处理目标文件的数组</span><br>declare -a implement_source_file_array<br>declare -a implement_source_file_name_array<br>implement_source_file_count=0<br><br><span class="hljs-meta">#</span><span class="bash"> mark: p384</span><br><span class="hljs-meta">#</span><span class="bash"> 递归函数读取目录下的所有.m文件</span><br>function read_implement_file_recursively &#123;<br>    echo &quot;read_implement_file_recursively&quot;<br>    if [[ -d $1 ]]; then<br>        for item in $(ls $1); do<br>            itemPath=&quot;$1/$&#123;item&#125;&quot;<br>            if [[ -d $itemPath ]]; then<br>                # 目录<br>                echo &quot;处理目录 $&#123;itemPath&#125;&quot;<br>                read_implement_file_recursively $itemPath<br>                echo &quot;处理目录结束=====&quot;<br>            else <br>                # 文件<br>                echo &quot;处理文件 $&#123;itemPath&#125;&quot;<br>                if [[ $(expr &quot;$item&quot; : &#x27;.*\.m&#x27;) -gt 0 ]]; then<br>                    echo &quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;mmmmmmm&quot;<br>                    implement_source_file_array[$implement_source_file_count]=$&#123;itemPath&#125;<br>                    class_name=$&#123;item//&quot;.m&quot;/&quot;&quot;&#125;;<br>                    implement_source_file_name_array[$implement_source_file_count]=$&#123;class_name&#125;<br>                    implement_source_file_count=$[ implement_source_file_count + 1 ];<br>                fi<br>                echo &quot;&quot;<br>            fi<br>        done<br>    else<br>        echo &quot;err:不是一个目录&quot;<br>    fi<br>&#125;<br><br>post_implement_file_handle() &#123;<br>    local wirte_to_file=$1<br><span class="hljs-meta">	#</span><span class="bash"> 写入文件中</span><br>    echo &quot;# 需要处理的类配置文件&quot; &gt; $&#123;wirte_to_file&#125;<br>    for(( i=0;i&lt;$&#123;#implement_source_file_name_array[@]&#125;;i++)) <br>    do <br>        class_file_name=$&#123;implement_source_file_name_array[i]&#125;; <br>        echo $&#123;class_file_name&#125; &gt;&gt; $&#123;wirte_to_file&#125;<br>    done;<br><br><span class="hljs-meta">	#</span><span class="bash"> 去重</span><br>    wirte_to_file_bak=&quot;$&#123;wirte_to_file&#125;.bak&quot;<br>    mv $&#123;wirte_to_file&#125; $&#123;wirte_to_file_bak&#125;<br>    sort $&#123;wirte_to_file_bak&#125; | uniq &gt; $&#123;wirte_to_file&#125;<br><br><span class="hljs-meta">	#</span><span class="bash"> 过滤</span><br>    mv $&#123;wirte_to_file&#125; $&#123;wirte_to_file_bak&#125;<br>    echo &quot;# Properties Configs Filtered&quot; &gt; $&#123;wirte_to_file&#125;<br>    IFS_OLD=$IFS<br>    IFS=$&#x27;\n&#x27;<br><span class="hljs-meta">	#</span><span class="bash"> 上一行的内容</span><br>    lastLine=&quot;&quot;;<br>    for line in $(cat $&#123;wirte_to_file_bak&#125; | sed &#x27;s/^[ \t]*//g&#x27;)<br>    do<br>        grep_result=$(grep $&#123;line&#125; $&#123;blacklist_cfg_file&#125;)<br>        category_judge_substring=&quot;\+&quot;<br>        if [[ $&#123;#line&#125; -le 6 ]] || [[ $(expr &quot;$line&quot; : &#x27;^#.*&#x27;) -gt 0 ]] || [[ -n $&#123;grep_result&#125; ]] || [[ $&#123;line&#125; =~ $&#123;category_judge_substring&#125; ]]; then<br><span class="hljs-meta">			#</span><span class="bash"> 长度小于等于6、注释内容的行、在黑名单中的内容、分类文件不处理</span><br>            echo &quot;less then 6 char line or comment line&quot;<br>        else<br>            if [[ -n $&#123;lastLine&#125; ]]; then<br>                # 上一行是非空白行<br>                # 比较上一行内容是否是当前行的一部分，不是添加上一行<br>                if [[ $&#123;line&#125; =~ $&#123;lastLine&#125; ]]; then<br>                    echo &quot;$&#123;line&#125; 和 $&#123;lastLine&#125; 有交集&quot;<br>                else<br>                    echo $&#123;lastLine&#125; &gt;&gt; $&#123;wirte_to_file&#125;<br>                fi<br>            fi<br><span class="hljs-meta">			#</span><span class="bash"> 更新上一行</span><br>            lastLine=$&#123;line&#125;<br>        fi	<br>    done<br>    IFS=$&#123;IFS_OLD&#125;<br><br><span class="hljs-meta">	#</span><span class="bash"> 删除临时文件</span><br>    rm -f $&#123;wirte_to_file_bak&#125;<br>&#125;<br><br>read_implement_file_recursively $&#123;param_input_dir&#125;<br>post_implement_file_handle $&#123;param_output_file&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在另一个模块中使用流程模块</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 获取需要重命名的类名称，保存到配置文件中</span><br>./GetAndStoreClasses.sh\<br>    -i $&#123;class_search_dir&#125;\	<br>    -o $&#123;cfg_file&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-输入和菜单"><a href="#5-输入和菜单" class="headerlink" title="5. 输入和菜单"></a>5. 输入和菜单</h2><h3 id="5-1-获取输入"><a href="#5-1-获取输入" class="headerlink" title="5.1 获取输入"></a>5.1 获取输入</h3><p>下面是一个循环的输入和检测输入是否是合法目录的例子，是<a target="_blank" rel="noopener" href="https://gitee.com/dhar/YTTInjectedContentKit/tree/master/DevPods/InjectedContentKit/Example/injectContentShell">injectContentShell</a>#<code>FileUtil.sh</code>脚本文件中的代码片段</p>
+<ul>
+<li><code>echo -n &quot;请输入目录: &quot;</code>是输入的提示，<code>-n</code>表示不换行，用户的输入跟随在提示后面</li>
+<li><code>read path</code>把用户的输入内容保存在变量path中</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 循环检测输入的文件夹</span><br>checkInputDestDirRecursive() &#123;<br>    echo -n &quot;请输入目录: &quot;<br>    read path<br>    if [[ -d $path ]]; then<br>        CheckInputDestDirRecursiveReturnValue=$path<br>    else<br>        echo -n &quot;输入的目录无效，&quot;<br>        checkInputDestDirRecursive<br>    fi<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-2-菜单"><a href="#5-2-菜单" class="headerlink" title="5.2 菜单"></a>5.2 菜单</h3><p>在脚本中可能会有使用菜单选项进行交互的场景，有以下几个要点</p>
+<ul>
+<li><code>read -n 1 option</code>命令中用了-n选项来限制只读取一个字符。这样用户只需要输入一个数字，也不用按回车键，输入的内容保存在<code>option</code>变量中</li>
+<li><code>clear</code>命令是用来清空命令行的屏幕的</li>
+<li><code>echo -e</code> -e 选项用来处理转义字符</li>
+<li><code>echo -en</code> -n 选项让光标处于同一行，用户的输入会显示在同一行</li>
+<li>使用<code>while</code>循环获取用户的输入，在<code>while</code>循环中使用<code>case</code>分支处理不同的操作</li>
+</ul>
+<p>以下脚本是<a target="_blank" rel="noopener" href="https://gitee.com/dhar/YTTInjectedContentKit/tree/master/DevPods/InjectedContentKit/Example/injectContentShell">injectContentShell</a>#<code>injectedContentShell.sh</code>文件中的一部分</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs shell">function genMunu &#123;<br>    clear<br>    echo<br>    echo -e &quot;\t\t\t选项菜单\n&quot;<br>    echo -e &quot;\t1. 删除注入内容&quot;<br>    echo -e &quot;\t2. 添加注入内容&quot;<br>    echo -e &quot;\t0. Exit menu\n\n&quot;<br>    echo -en &quot;\t\tEnter option: &quot;<br>    read -n 1 option<br>&#125;<br><br><br>while [[ 1 ]]; do<br>    genMunu<br>    case $option in<br>    0 )<br>        echo &quot;&quot;<br>        echo &quot;Bye&quot;<br>        exit 0<br>    ;;<br>    1 )<br><span class="hljs-meta">		#</span><span class="bash"> 删除配置文件中注入的内容</span><br>        removeInjectedContent<br>    ;;<br>    2 )<br><span class="hljs-meta">		#</span><span class="bash"> 添加配置文件中注入的内容</span><br>        addInjectedContent<br>    ;;<br>    h )<br>        genMunu<br>    ;;<br>    * )<br>        echo &quot;Wrong!!&quot;<br>    ;;<br>    esac<br><br>    echo<br>    echo -en &quot;\n\n\tHit any key to continue&quot;<br>    read -n 1 line<br><br>done<br></code></pre></td></tr></table></figure>
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao233.github.io/2020/11/19/shell/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

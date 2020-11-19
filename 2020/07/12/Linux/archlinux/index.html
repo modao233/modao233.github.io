@@ -96,15 +96,13 @@
 <p>更新系统</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">pacman -Syu<br></code></pre></td></tr></table></figure>
 
-<h2 id="配置桌面"><a href="#配置桌面" class="headerlink" title="配置桌面"></a>配置桌面</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacman -S xorg<br>pacman -S xorg-xinit<br>cp /etc/X11/xinit/xinitrc ~/.xinitrc<br>pacman -S awesome<br>pacman -S xterm<br></code></pre></td></tr></table></figure>
+<h2 id="配置桌面"><a href="#配置桌面" class="headerlink" title="配置桌面"></a>配置桌面</h2><h3 id="安装xorg"><a href="#安装xorg" class="headerlink" title="安装xorg"></a>安装xorg</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacman -S xorg<br>pacman -S xorg-xinit<br>cp /etc/X11/xinit/xinitrc ~/.xinitrc<br>pacman -S awesome<br>pacman -S xterm<br></code></pre></td></tr></table></figure>
 
-<p>配置zsh</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacman -S zsh<br>chsh -s /bin/zsh<br>pacman -S oh-my-zsh-git<br>cp /usr/share/oh-my-zsh/zshrc ~/.zshrc<br><span class="hljs-comment">## 修改主题后，重新加载</span><br><span class="hljs-built_in">source</span> ~/.zshrc<br><span class="hljs-comment">## 安装字体</span><br>pacman -S ttf-monaco<br>pacman -S wqy-microhei<br></code></pre></td></tr></table></figure>
+<h3 id="配置zsh"><a href="#配置zsh" class="headerlink" title="配置zsh"></a>配置zsh</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">pacman -S zsh<br>chsh -s /bin/zsh<br>pacman -S oh-my-zsh-git<br>cp /usr/share/oh-my-zsh/zshrc ~/.zshrc<br><span class="hljs-comment">## 修改主题后，重新加载</span><br><span class="hljs-built_in">source</span> ~/.zshrc<br><span class="hljs-comment">## 安装字体</span><br>pacman -S ttf-monaco<br>pacman -S wqy-microhei<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs plain">! .Xresources<br>! Xterm settings<br>! XTerm*vt100*reverseVideo: true<br><br>XTerm*vt100.background: black<br>XTerm*vt100.foreground: white<br><br>! copy &amp; paste <br>XTerm*VT100.translations: #override &lt;Btn1Up&gt;: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) <br><br>! English font <br>xterm*faceName: Monaco:antialias&#x3D;True:pixelsize&#x3D;15<br>! Chinese font <br>xterm*faceNameDoublesize:WenQuanYi Micro Hei:antialias&#x3D;True:pixelsize&#x3D;15<br><br>!input method <br>XTerm*inputMethod:fcitx <br><br>! scrollbar <br>XTerm*scrollBar: true <br>XTerm*rightScrollBar: true <br>XTerm*SaveLines: 4096<br><br>! Xterm*faceSize: 20<br>Xterm*VT100*geometry: 100x30<br></code></pre></td></tr></table></figure>
 
-<p>调整屏幕分辨率（可选）</p>
-<blockquote>
+<h3 id="调整屏幕分辨率（可选）"><a href="#调整屏幕分辨率（可选）" class="headerlink" title="调整屏幕分辨率（可选）"></a>调整屏幕分辨率（可选）</h3><blockquote>
 <p>  <em>xrandr</em> 作出的改变只在本次会话中有效</p>
 <p>  分辨率后面带有一个*<strong>**号和一个</strong>+**号</p>
 </blockquote>
@@ -125,6 +123,26 @@
 <li><code>.xprofile</code></li>
 <li>kdm/gdm</li>
 </ul>
+<h3 id="通过feh设置壁纸"><a href="#通过feh设置壁纸" class="headerlink" title="通过feh设置壁纸"></a>通过feh设置壁纸</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">pacman -S feh<br>feh --bg-fill master.jpg<br></code></pre></td></tr></table></figure>
+
+<h3 id="通过picom设置窗口透明"><a href="#通过picom设置窗口透明" class="headerlink" title="通过picom设置窗口透明"></a>通过picom设置窗口透明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">pacman -S picom<br>cp &#x2F;etc&#x2F;xdg&#x2F;picom.conf ~&#x2F;.config&#x2F;<br>vim ~&#x2F;.config&#x2F;picom.conf<br>picom&amp;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plain"># 修改配置，添加规则<br># picom.conf<br><br># 非活跃窗口透明度（非当前窗口）<br>inactive-opacity &#x3D; 0.5;<br># 框体透明度，窗口的标题栏等<br>frame-opacity &#x3D; 0.6;<br># 默认<br>inactive-opacity-override &#x3D; false;<br># 活跃窗口透明度（当前窗口）<br>active-opacity &#x3D; 0.7<br><br>opacity-rule &#x3D; [<br>    &quot;100:class_g &#x3D; &#39;Xterm&#39;&quot;,<br>    &quot;100:class_g &#x3D; &#39;feh&#39;&quot;<br>];<br></code></pre></td></tr></table></figure>
+
+<h3 id="禁止beep声音（可选）"><a href="#禁止beep声音（可选）" class="headerlink" title="禁止beep声音（可选）"></a>禁止beep声音（可选）</h3><p><code>/etc/modprobe.d</code>中加入<code>no-beep.conf</code> 文件，内容为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">blacklist pcspkr<br></code></pre></td></tr></table></figure>
+
+<p>禁掉该模块就不会发出 beep 的声音了。</p>
+<h3 id="多线程下载工具-axel"><a href="#多线程下载工具-axel" class="headerlink" title="多线程下载工具 axel"></a>多线程下载工具 axel</h3><p>more</p>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>proxychains    privxy</p>
+<h3 id="系统监控工具-conky（可选"><a href="#系统监控工具-conky（可选" class="headerlink" title="系统监控工具 conky（可选)"></a>系统监控工具 conky（可选)</h3><p>more</p>
+<h3 id="终端文件管理器ranger"><a href="#终端文件管理器ranger" class="headerlink" title="终端文件管理器ranger"></a>终端文件管理器ranger</h3><h2 id="杂碎记录"><a href="#杂碎记录" class="headerlink" title="杂碎记录"></a>杂碎记录</h2><h3 id="挂载相关"><a href="#挂载相关" class="headerlink" title="挂载相关"></a>挂载相关</h3><p>Linux和手机传输文件：<br>mtpfs手动挂载<br>jmtpfs<br>df -iT查看能否识别</p>
+<h3 id="分区相关"><a href="#分区相关" class="headerlink" title="分区相关"></a>分区相关</h3><p>从性能角度考虑，/var/home 比较科学<br>把配置文件放在 /var 分区，速度更快<br>/home 单独分区，读写配置文件会比较慢<br>/var 如果没单独分区，那就在根分区，也不必如此操作</p>
+<p>所以一般情况建议 /var /home 都还是留在根分区。<br>如果根分区在固态硬盘，则 /var 分到机械硬盘，/home 挪进 /var 分区。<br>我是根分区和 /boot 分区在固态，平时是只读挂载，提高安全性。/var 在机械硬盘，/home 挪入 /var。<br>第一，离根分区较远，磁头摆动大。<br>第二，单独的分区，不能和根分区集中进行布局优化。<br>第三，单独的主分区，必然会放一些七七八八的数据，磁盘碎片化严重。</p>
+<p>软连接部分文件，配置文件和home都该放到根分区<br>较大的文件可以移走 然后软连接回来</p>
+<h3 id="依赖相关"><a href="#依赖相关" class="headerlink" title="依赖相关"></a>依赖相关</h3><p>先安装该包还是先安装其依赖？<br>直接apt install ./deb，可以自动装依赖</p>
+<p>dpkg -i xxx.deb<br>aptitude install<br>dpkg 安装时缺少依赖就是返回非 0 值的<br>apt 只在 dpkg 失败时才补充</p>
+<p>dpkg最差，pkg其次（arch属于pkg），rpm最舒服<br>dpkg主要问题是推荐和依赖分不清</p>
 
 	</div>
 </div>
