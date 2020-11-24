@@ -885,6 +885,81 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br> <br>MAXARGS=3<br>ERROR=68<br><span class="hljs-built_in">test</span> <span class="hljs-variable">$#</span> -eq <span class="hljs-variable">$MAXARGS</span>  || (<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Usage: `basename <span class="hljs-variable">$0</span>` <span class="hljs-variable">$MAXARGS</span> arguments&quot;</span> &amp;&amp; <span class="hljs-literal">false</span>) || <span class="hljs-built_in">exit</span> <span class="hljs-variable">$ERROR</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Correct arguments are passed to this script.&quot;</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
 
 <p>由于echo命令总是返回TRUE，要将echo和false进行与运算从而返回FALSE值</p>
+<h3 id="1-10-字符串"><a href="#1-10-字符串" class="headerlink" title="1.10 字符串"></a>1.10 字符串</h3><p>expr引出通用求值表达式，可以实现算术操作、比较操作、字符串操作和逻辑操作等功能。</p>
+<p>字符串长度：</p>
+<ul>
+<li><code>expr length &amp;string</code></li>
+<li><code>$&#123;#string&#125;</code></li>
+<li>若string包括空格，<code>&amp;string</code>需用双引号引起来（expr length后面只能跟一个参数，string有空格会当作多个参数处理）。</li>
+</ul>
+<p>子串匹配索引：</p>
+<ul>
+<li><code>expr index $string $substring</code></li>
+<li>在字符串<code>$string</code>上匹配<code>$substring</code>中字符（即子串非有序）第一次出现的位置，匹配不到，expr index返回0。</li>
+</ul>
+<p>子串匹配的长度：</p>
+<ul>
+<li><code>expr match $string $substring</code></li>
+<li>在string的开头匹配substring字符串，返回匹配到的substring字符串的长度，<strong>若string开头匹配不到则返回0</strong>，其中substring可以是字符串也可以是正则表达式。</li>
+</ul>
+<p>抽取子串：</p>
+<ul>
+<li>#{…}<ul>
+<li><code>#&#123;string:position&#125;</code>从名称为<code>$string</code>的字符串的第<code>$position</code>个位置开始抽取子串，从0开始标号。</li>
+<li><code>#&#123;string:position:length&#125;</code>增加<code>$length</code>变量，表示从<code>$string</code>字符串的第<code>$position</code>个位置开始抽取长度为<code>$length</code>的子串。</li>
+<li>从string右边开始计数抽取子串<ul>
+<li><code>#&#123;string: -position&#125;</code>，冒号与横杠间有一个空格</li>
+<li><code>#&#123;string:(position)&#125;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>expr<ul>
+<li><code>expr substr $string $position $length</code>：从1开始进行标号</li>
+<li>使用正则表达式抽取子串的命令，但只能抽取string开头处或结尾处的子串<ul>
+<li>抽取字符串开头处的子串<ul>
+<li><code>expr match $string &#39;$substring&#39;</code></li>
+<li><code>expr $string : &#39;$substring&#39;</code>，冒号前后都有一个空格。</li>
+</ul>
+</li>
+<li>抽取字符串结尾处的子串<ul>
+<li><code>expr match $string &#39;.*$substring&#39;</code></li>
+<li><code>expr $string : &#39;.*$substring&#39;</code></li>
+<li><code>.*</code>表示任意字符的任意重复</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>删除子串：</p>
+<p>删除字串是指将原字符串中符合条件的子串删除，命令只有${…}格式。substring并非是正则表达式而是通配符。</p>
+<ul>
+<li><p>从string开头处删除子串</p>
+<ul>
+<li><code>$&#123;string#substring&#125;</code>，删除开头处与substring匹配的最短子串。</li>
+<li><code>$&#123;string##substring&#125;</code>，删除开头处与substring匹配的最长子串。</li>
+</ul>
+</li>
+<li><p>从string结尾处开始删除</p>
+<ul>
+<li><code>$&#123;string%substring&#125;</code>，删除结尾处与substring匹配的最短子串。</li>
+<li><code>$&#123;string%%substring&#125;</code>，删除结尾处与substring匹配的最长子串。</li>
+</ul>
+</li>
+</ul>
+<p>替换子串：</p>
+<p>替换子串命令都是${…}，可以在任意处、开头处、结尾处替换满足条件的子串。其中的substring都不是正则表达式而是通配符。</p>
+<ul>
+<li>任意处替换<ul>
+<li><code>$&#123;string/substring/replacement&#125;</code>，仅替换第一次与substring相匹配的子串。</li>
+<li><code>$&#123;string//substring/replacement&#125;</code>，替换所有与substring相匹配的子串。</li>
+</ul>
+</li>
+<li>开头处替换：<code>$&#123;string/#substring/replacement&#125;</code></li>
+<li>结尾处替换：<code>$&#123;string/%substring/replacement&#125;</code></li>
+</ul>
 <h2 id="2-文件"><a href="#2-文件" class="headerlink" title="2. 文件"></a>2. 文件</h2><h3 id="2-1-文件读取"><a href="#2-1-文件读取" class="headerlink" title="2.1 文件读取"></a>2.1 文件读取</h3><p>文件的读取可以使用<code>cat</code>命令结合<code>for in</code>循环处理</p>
 <blockquote>
 <p>   注意：<code>$IFS</code>是文件循环处理的分隔符，按按行处理数据需要把该值设置为<code>$&#39;\n&#39;</code>，处理完成之后恢复旧值</p>
@@ -906,6 +981,61 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">file=&quot;subfolder/data2&quot;<br>destfile=&quot;subfolder/data2-p&quot;<br>sort $&#123;file&#125; | uniq &gt; $&#123;destfile&#125;<br><br>结果：<br>➜  helloshell git:(master) ✗ cat subfolder/data2<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown fox jumps over the lazy dog.<br>The quick brown<br>fox<br>jumps over the lazy dog.%                                                                                          <br>➜  helloshell git:(master) ✗ cat subfolder/data2-p <br>The quick brown<br>The quick brown fox jumps over the lazy dog.<br>fox<br>jumps over the lazy dog.<br></code></pre></td></tr></table></figure>
 
+<h3 id="2-4-对文件的排序、合并和分割"><a href="#2-4-对文件的排序、合并和分割" class="headerlink" title="2.4 对文件的排序、合并和分割"></a>2.4 对文件的排序、合并和分割</h3><p>文本处理命令包括sort命令、uniq命令、join命令、cut命令、paste命令、split命令、tr命令和tar命令，它们实现对文件记录排序、统计、合并、提取、粘贴、分割、过滤、压缩和解压缩等功能，它们与sed和awk构成了linux文本处理的所有命令和工具。</p>
+<h4 id="sort命令"><a href="#sort命令" class="headerlink" title="sort命令"></a>sort命令</h4><p>sort命令是一种对文本排序的工具，它将输入文件看做由多条记录组成的数据流，而记录由可变宽度的字段组成，以换行符作为定界符。</p>
+<p>sort命令格式：<code>sort [选项] [输入文件]</code></p>
+<p><img src="20140910181702875" alt="img"></p>
+<p>sort命令默认的域分隔符是空格符，-t选项可用于设置分隔符。<code>sort -t:指定的分隔符</code>  test中-t与”:”之间是没有空格的。</p>
+<p>未指定-t分隔符是空格符，这时记录内开头与结尾的空格都将被忽略，如（空格）:root:（空格）则只有一个域，-t:指定冒号则这条记录就包含了三个域。</p>
+<p>sort命令默认是按第1个域进行排序的，也可以通过-k选项指定某个域进行排序。例如：sort -t: -k3 test。</p>
+<p>sort命令-n选项可以指定根据数字大小进行排序（不按字母顺序排序）。</p>
+<p>sort命令-r选项用于将排序结果逆向显示，如使用-n按数字从小到大排序后，使用-r选项将结果逆向显示。</p>
+<p>sort命令-u选项去掉排序结果中的重复行。</p>
+<p>sort命令-o选项加上文件名将结果保存到另一个文件中（sort默认将排序后的结果输出到屏幕上）。</p>
+<p>sort命令-m选项将两个排好序的文件合并成一个排好序的文件，在文件合并前它们必须已经排好序。-m选项对未排序的文件合并是没有任何意义的。</p>
+<p>sort和awk都是分域处理文件的工具，两者结合起来可以有效地对文本块进行排序。</p>
+<h4 id="uniq命令"><a href="#uniq命令" class="headerlink" title="uniq命令"></a>uniq命令</h4><p>uniq命令用于去除文本文件中的重复行，类似sort -u，但uniq命令去除的重复行必须是连续重复出现的行，中间不能夹杂任何其他文本行，而sort -u命令使所有的重复记录都被去掉。</p>
+<p>uniq命令有3个选项：</p>
+<p><img src="20140910193114758" alt="img"></p>
+<h4 id="join命令"><a href="#join命令" class="headerlink" title="join命令"></a>join命令</h4><p>join命令用于实现两个文件中记录的连接操作，将两个文件中具有相通域的记录选择出来，再将这些记录所有的域放在一行（包含来自两个文件的所有域）。如join -t: a.txt b.txt，将a.txt和b.txt具有共同域的记录连接到一起。</p>
+<p><img src="20140910194940941" alt="img"></p>
+<p>join命令的结果默认是不显示这些未进行连接的记录，-a和-v选项用于显示这些未进行连接的记录，-a1和-v1指显示文件1中未连接的记录，而-a2和-v2指显示文件2中的未连接记录。</p>
+<p>-a与-v的区别是：-a显示以共同域进行连接的结果和未进行连接的记录，而-v则不显示以共同域进行连接的记录。</p>
+<p>join命令默认显示连接记录在两个文件中的所有域，而且按顺序。-o选项用于改变结果显示的格式，可以指定显示哪几个域、按什么顺序显示这些域。</p>
+<p>例如：</p>
+<ul>
+<li><p><code>join -t: -o1.1 2.2 1.2 a.txt b.txt</code>，其中<code>-o1.1 2.2 1.2</code>表示显示格式依次显示第1个文件中的第1个域、第2个文件中的第2个域、第1个文件中的第2个域，结果显示三个域。</p>
+</li>
+<li><p><code>join -t: -i -1 3 -2 1 a.txt b.txt</code>，文件1的第3个域和文件2的第1个域进行连接，-i忽略大小写。join命令在对两个文件进行连接时，两个文件必须都是按照连接域排好序的。</p>
+</li>
+</ul>
+<h4 id="cut命令"><a href="#cut命令" class="headerlink" title="cut命令"></a>cut命令</h4><p>cut命令用于从标准输入或文本文件中按域或行提取文本，<code>cut [选项] 文件</code>，cut的选项如下：</p>
+<p><img src="20140910200705187" alt="img"></p>
+<p>cut -c1-5  a.txt，提取a.txt的第1～5个字符。-c有三种表示方式：-cn表示第n个字符、-cn,m表示第n个字符和第m个字符、-cn-m表示第n个字符到第m个字符。-c是按字符提取文本的，无须使用-d改变域分隔符，-f按域提取文本时就需要使用-d设置域分隔符了。-f同样也可以用三种方式指定域数或域范围。</p>
+<p>cut可以灵活提取文本文件中的内容，默认将提取内容放在标准输出上，也可以使用文件重定向来将内容保存到文件。</p>
+<h4 id="paste命令"><a href="#paste命令" class="headerlink" title="paste命令"></a>paste命令</h4><p>paste命令用于将文本文件或标准输出中的内容粘贴到新的文件，它可以将来自不同文件的数据粘贴到一起，形成新的文件。paste命令格式：<code>paste [选项] file1 file2</code>，其选项如下：</p>
+<p><img src="20140910202107249" alt="img"></p>
+<p>paste FILE1 FILE2，粘贴FILE1和FILE2，FILE1在前，将FILE1的内容作为每行记录的第1域、FILE2的内容作为第2域。可以使用-d设置域分隔符paste -d: FILE1 FILE2。</p>
+<p>paste命令默认是将一个文件按列粘贴的，-s选项可以实现将一个文件按行粘贴。</p>
+<p>ls | paste -d” “ - - - -，从标准输入中读取数据时”-“选项才起作用，”-“表示读取1次标准输入数据即读取到标准输入数据中的一个域，- - - - 每行显示4个文件名。</p>
+<h4 id="split命令"><a href="#split命令" class="headerlink" title="split命令"></a>split命令</h4><p>split命令用于将大文件切割成小文件，split可以按照文件的行数、字节数切割文件，并能在输出的多个小文件中自动加上编号。split命令格式：<code>splite [选项] 待切割的大文件 输出的小文件</code>。</p>
+<p><img src="20140910204135159" alt="img"></p>
+<p>split -2 a.txt final.txt，按2行对a.txt进行切割，每2行记录切割成1个文件。split命令在final.txt后面自动加上编号以区分不同的小文件，编号为aa~zz。</p>
+<p>split -b100 a.txt，-b选项在切割文件时仅考虑了文件大小并未考虑记录的完整性。</p>
+<p>split -C100 a.txt，按100B切割a.txt，按-C并不严格按照100B的大小进行切割，而是在切割时尽量维持每行的完整性。</p>
+<h4 id="tr命令"><a href="#tr命令" class="headerlink" title="tr命令"></a>tr命令</h4><p>tr命令实现字符转换功能，类似于sed命令，tr能实现的功能sed命令都可以实现。<code>tr [选项] buffer1 buffer2 &lt; outputfile</code>，其选项有三个，它只能从标准输入读取数据。</p>
+<p><img src="20140910205313734" alt="img"></p>
+<p>tr -d A-Z &lt; a.txt，删除a.txt文件中所有的大写字母。</p>
+<p>tr -d “[\n]” &lt; a.txt，删除a.txt文件中所有的换行符。</p>
+<p>tr -s “[\n]” &lt; a.txt，将重复出现的换行符压缩成一个换行符。</p>
+<p>tr命令也可以加上buffer1和buffer2，将buffer1用buffer2来替换，tr “[a-z]” “[A-Z]” &lt; a.txt，将a.txt中的小写字母替换成大写字母。</p>
+<h4 id="tar命令"><a href="#tar命令" class="headerlink" title="tar命令"></a>tar命令</h4><p>tar命令是linux的归档命令，实现linux系统文件的打包和解包。<code>tar [选项] 文件名或目录名</code>，tar的常用选项如下：</p>
+<p><img src="20140910211505250" alt="img"></p>
+<p>tar -cf a.tar *.txt，将所有的.txt结尾的文件放入压缩包a.tar。-c表示创建新的包，-f通常是必选选项。</p>
+<p>tar -tf a.tar，查看a.tar压缩包的内容。-t列出包内容。</p>
+<p>tar -rf a.tar log*，将以log开头的文件添加到a.tar中，-u选项也可用于为包添加新的文件，-u选项完全能代替-r选项。</p>
+<p>解压非gzip格式的压缩包：tar -xvf 压缩包名称</p>
+<p>解压gzip格式的压缩包：tar -zxvf 压缩包名称</p>
 <h2 id="3-sed流编辑"><a href="#3-sed流编辑" class="headerlink" title="3. sed流编辑"></a>3. sed流编辑</h2><p>Sed流编辑结合正则表达式可以方便的对文本文件进行查询、修改、删除、增加等操作</p>
 <p>注意：osx系统自带的sed命令和标准的gnu-sed使用方式上有些差别，所以以下篇幅所谈论到的sed都是标准的gnu-sed，下面的这个脚本用于判断系统是否安装了gnu-sed，如果没有会自动进行安装，完成之后需要用户执行显示的命令配置下即可。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 检测是否安装gnu sed，mac 内置的sed会有些问题，所以需要安装gnu sed</span><br>gnuSedInstallCheck() &#123;<br><span class="hljs-meta">	#</span><span class="bash"> 检查是否安装gnused</span><br><span class="hljs-meta">	#</span><span class="bash"> mac安装gnuSed  http://blog.csdn.net/sun_wangdong/article/details/71078083</span><br>    which_sed=`which sed`<br>    echo $which_sed<br>    echo &quot;testresult = $(expr &quot;$which_sed&quot; : &#x27;.*/gnu-sed/&#x27;)&quot;<br>    which_sed=`ls -al $&#123;which_sed&#125;`<br>    echo $which_sed<br>    echo &quot;testresult = $(expr &quot;$which_sed&quot; : &#x27;.*/gnu-sed/&#x27;)&quot;<br>    if [[ $(expr &quot;$which_sed&quot; : &#x27;.*/gnu-sed/&#x27;) -gt 0 ]]; then<br>        echo &quot;检测到使用gnu sed&quot;<br>    else<br>        if [ ! `which brew` ]<br>        then<br>            echo &#x27;Homebrew not found. Trying to install...&#x27;<br>                        ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot; \<br>                || exit 1<br>        fi<br>        echo &#x27;Trying to install gnu sed...&#x27;<br>        brew install gnu-sed --with-default-names || exit 1<br><span class="hljs-meta">		#</span><span class="bash"> 设置局部环境变量</span><br>        echo &quot;set PATH....&quot;<br>        source ./set-gnu-sed-path.sh<br>        echo &quot;set PATH done&quot;<br><br>        echo &quot;请手动执行命令,然后重新执行&quot;<br>        command=&quot;PATH=\&quot;/usr/local/Cellar/gnu-sed/4.4/bin:\$PATH\&quot;&quot;<br>        echo $command<br>        echo &quot;&quot;<br>        exit 1<br>    fi<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -1018,7 +1148,7 @@
             + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
             + '\n作者: modao'
             + '\n邮箱: rustacean@aliyun.com'
-            + '\n原文地址: https://modao233.github.io/2020/11/19/shell/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/'
+            + '\n原文地址: https://modao233.github.io/2020/11/19/shell/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/'
 			
             clipboardData.setData('text/plain', text + copyright);
     
