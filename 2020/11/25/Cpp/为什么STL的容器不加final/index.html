@@ -72,7 +72,7 @@
 		<h1 id="为什么STL的容器不加final？"><a href="#为什么STL的容器不加final？" class="headerlink" title="为什么STL的容器不加final？"></a>为什么STL的容器不加final？</h1><p>大部分STL容器的析构函数都是非虚的，如果被自定义容器继承了的话在多态下会内存泄漏吧，那为什么不加final呢？</p>
 <h2 id="1"><a href="#1" class="headerlink" title="1"></a>1</h2><p>析构函数非虚的基类并不是说不应该继承，而是说不应该在继承了以后拿父类指针去释放，否则对象就会被撕裂。</p>
 <p>何况，并不是所有继承都是为了多态。如果干脆拿不到父类指针也行，比如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">class Buffer : private std::vector&lt;uint8_t&gt; &#123;<br>    &#x2F;&#x2F; ... <br>&#125;; <br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">class Buffer : private std::vector&lt;uint8_t&gt; &#123;<br>    &#x2F;&#x2F; ... <br>&#125;; <br></code></pre></td></tr></table></figure>
 
 <p>LWG issue <a target="_blank" rel="noopener" href="http://cplusplus.github.io/LWG/lwg-closed.html#2113">2113</a> 就有人提出「实现 STL 时是不是可以自行给非多态容器加 final？」。详细的讨论内容可以点链接进去看，总之讨论结果是 NAD（非缺陷），只要是标准中未注明 final 的，用户就有权去继承，所以标准库实现不能自行添加 final。</p>
 <p>于是，从 C++17 标准开始就多了一句：All types specified in the C++ standard library shall be non-<code>final</code>types unless otherwise specified.</p>

@@ -97,27 +97,27 @@
 <li><p>gcc在编译C程序时，可使用的预定义宏是比较少的</p>
 </li>
 <li><p>gcc在编译C++程序时、g++在编译C程序和C++程序时，会加入一些额外的宏：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __GXX_WEAK__ 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __cplusplus 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __DEPRECATED 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __GNUG__ 4</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __EXCEPTIONS 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __private_extern__ extern</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __GXX_WEAK__ 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __cplusplus 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __DEPRECATED 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __GNUG__ 4</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __EXCEPTIONS 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __private_extern__ extern</span><br></code></pre></td></tr></table></figure>
 
 <p>gcc/g++ 在执行编译时，需要4步：</p>
 </li>
 </ul>
 <ol>
 <li><p>预处理（.i文件）（-E参数：仅作预处理，不进行编译、汇编或链接）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -E hello.cpp -o hello.i<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -E hello.cpp -o hello.i<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>编译生成汇编文件（.s文件）（-S参数：编译到汇编语言，不进行汇编和链接）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -S hello.i<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -S hello.i<br></code></pre></td></tr></table></figure>
 
 <p>不用指定输出文件，生成同名.s文件</p>
 </li>
 <li><p>汇编生成目标代码文件（.o文件）（-c参数：编译、汇编到目标代码，不进行链接）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -c hello.s<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -c hello.s<br></code></pre></td></tr></table></figure>
 
 <p>不用指定输出文件，生成同名.s文件</p>
 </li>
 <li><p>链接生成可执行文件（.out文件）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ hello.o<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ hello.o<br></code></pre></td></tr></table></figure>
 
 <p>若不指定输出文件，则默认生成a.out，多次生成会覆盖</p>
 <p><strong>链接可分为动态链接和静态链接：</strong></p>
@@ -132,14 +132,14 @@
 </ol>
 <p>gcc 默认是动态链接，加上-static 参数则采用静态链接。</p>
 <p>查看链接过程：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -v -o hello hello.o<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -v -o hello hello.o<br></code></pre></td></tr></table></figure>
 
 <p>不链接系统标准启动文件和标准库文件：</p>
 <p>(常用于裸机/bootloader、linux内核等程序，因为它们不需要启动文件、标准库文件)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -v -nostdlib -o hello hello.o<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -v -nostdlib -o hello hello.o<br></code></pre></td></tr></table></figure>
 
 <p>不链接系统标准启动文件，而标准库文件仍然正常使用：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">g++ -v -nostartfiles -o hello hello.o<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -v -nostartfiles -o hello hello.o<br></code></pre></td></tr></table></figure>
 
 </li>
 </ol>

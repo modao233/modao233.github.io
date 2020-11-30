@@ -87,7 +87,7 @@
 <a id="more"></a>
 
 <p>题目：如下为类型CMyString的声明，为该类型添加赋值运算符函数。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CMyString</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    CMyString(<span class="hljs-keyword">char</span> *pData = <span class="hljs-literal">nullptr</span>);<br>    CMyString(<span class="hljs-keyword">const</span> CMyString &amp;str);<br>    ~CMyString();<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">char</span>* m_pData;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CMyString</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    CMyString(<span class="hljs-keyword">char</span> *pData = <span class="hljs-literal">nullptr</span>);<br>    CMyString(<span class="hljs-keyword">const</span> CMyString &amp;str);<br>    ~CMyString();<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">char</span>* m_pData;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>返回值的类型声明为该类型的引用，才能连续赋值</li>
@@ -96,7 +96,7 @@
 <li>判断参数与当前实例（<code>*this</code>）是否同一个</li>
 <li>先new再delete可以保证函数执行失败也不会改变原来的内容</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++">CMyString&amp; CMyString::<span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> CMyString &amp;str)&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span> != &amp;str)&#123;<br>        CMyString strTemp(str);<br>        <br>        <span class="hljs-keyword">char</span> *pTemp = strTemp.m_pData;<br>        strTemp.m_pData = m_pData;<br>        m_pData = pTemp;<br>    &#125;<br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++">CMyString&amp; CMyString::<span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> CMyString &amp;str)&#123;<br>    <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span> != &amp;str)&#123;<br>        CMyString strTemp(str);<br>        <br>        <span class="hljs-keyword">char</span> *pTemp = strTemp.m_pData;<br>        strTemp.m_pData = m_pData;<br>        m_pData = pTemp;<br>    &#125;<br>    <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>先创建一个临时实例，交换m_pData，函数执行完后临时实例会被析构，把strTemp.m_pData所指向的内存释放掉。</p>
 

@@ -344,7 +344,7 @@
 <p>松弛度 = 必须完成时间 - 其本身的运行时间 - 当前时间</p>
 <p>该算法主要用于可抢占调度方式。</p>
 <h3 id="3-4-5-优先级倒置"><a href="#3-4-5-优先级倒置" class="headerlink" title="3.4.5 优先级倒置"></a>3.4.5 优先级倒置</h3><p>当前OS广泛采用优先级调度和抢占方式，然而系统中存在着影响进程运行的资源而可能产生”优先级倒置“的现象，即<strong>高优先级进程（或线程）被低优先级进程（或线程）延迟或阻塞</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">假设有三个完全独立的进程 P1、P2、P3，优先级大小P1&gt;P2&gt;p3<br>P1和P3通过共享的一个临界资源进行交互<br><br>P1:	...P(mutex);	CS-1;	V(mutex);<br>P2:	...program2...;<br>P3:	...P(mutex);	CS-3;	V(mutex);<br><br>假如P3最先执行，执行P操作后进入临界区，接着P2就绪，抢占了处理机，再接着P1就绪，抢占了处理机，而当P1执行P操作时，因为临界资源被P3占用，故P1被阻塞，P2继续运行，P2运行完后P3接着运行，直到P3执行V操作后才轮到P1执行。<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">假设有三个完全独立的进程 P1、P2、P3，优先级大小P1&gt;P2&gt;p3<br>P1和P3通过共享的一个临界资源进行交互<br><br>P1:	...P(mutex);	CS-1;	V(mutex);<br>P2:	...program2...;<br>P3:	...P(mutex);	CS-3;	V(mutex);<br><br>假如P3最先执行，执行P操作后进入临界区，接着P2就绪，抢占了处理机，再接着P1就绪，抢占了处理机，而当P1执行P操作时，因为临界资源被P3占用，故P1被阻塞，P2继续运行，P2运行完后P3接着运行，直到P3执行V操作后才轮到P1执行。<br></code></pre></td></tr></table></figure>
 
 <p>根据优先级原则，高优先级进程应当能优先执行，但在此例中，P1和P3共享”临界资源“，而出现了不合常理的现象，高优先级进程P1因P3进程被阻塞，又因为P2进程的存在延长了P1被阻塞的时间，而且被延长的时间是不可预知和无法限定的。由此产生的”优先级倒置“是非常有害的，不应该出现在实时系统中。</p>
 <p>优先级倒置的解决方法：</p>
@@ -389,12 +389,12 @@
 <h3 id="3-5-2-计算机系统中的死锁"><a href="#3-5-2-计算机系统中的死锁" class="headerlink" title="3.5.2 计算机系统中的死锁"></a>3.5.2 计算机系统中的死锁</h3><p>死锁的起因，通常是源于多个进程对资源的争夺，不仅对不可抢占性资源进行争夺时会引起死锁，而且对可消耗性资源进行争夺时，也会引起死锁。</p>
 <ol>
 <li><p><strong>竞争不可抢占性资源引起死锁</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">P1: ...		P(f1);	P(f2);	...<br>P2:	...		P(f2);	P(f1);	...<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">P1: ...		P(f1);	P(f2);	...<br>P2:	...		P(f2);	P(f1);	...<br></code></pre></td></tr></table></figure>
 
 <p>两个进程P1和P2并发执行时，如果P1先打开f1，同时P2打开f2，此时P1试图打开f2而P2试图打开f1，因此这两个进程都将会无限期待地等待下去，形成死锁。</p>
 </li>
 <li><p><strong>竞争可消耗性资源引起死锁</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">P1:	...send(p2,m1);	receive(p3,m3);	...<br>P2:	...send(p3,m2);	receive(p1,m1);	...<br>P3:	...send(p1,m3);	receive(p2,m2);	...<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">P1:	...send(p2,m1);	receive(p3,m3);	...<br>P2:	...send(p3,m2);	receive(p1,m1);	...<br>P3:	...send(p1,m3);	receive(p2,m2);	...<br></code></pre></td></tr></table></figure>
 
 <p>三个进程都先发送信息，再接受信息，则可以顺利执行。</p>
 <p>三个进程都先接受信息，再发送信息，则三个进程会永远阻塞在它们的receive操作。</p>

@@ -70,7 +70,18 @@ p img {
     margin-bottom: 20px;
 }
 
-td.gutter{width: 20px;height: 0px;}
+/*代码块行号
+td.gutter {
+	width: 20px;
+	height: 0px;
+	overflow-x: auto;
+    padding: 0 12px;
+    background: #fbf1c7;
+	
+	display: block
+	white-space: nowrap;
+}
+*/
 
 pre {
     white-space: pre;

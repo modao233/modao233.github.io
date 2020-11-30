@@ -102,7 +102,7 @@
 <p>GNU C库（英语：GNU C  Library，常简称为glibc）是一种按照LGPL许可协议发布的，自由的，公开源代码的，方便从网络下载的C的编译程序。GNU  C运行期库，是一种C函数库，是程序运行时使用到的一些API集合，它们一般是已预先编译好，以二进制代码形式存在Linux类系统中，GNU  C运行期库通常作为GNU  C编译程序的一个部分发布。Glibc最初是自由软件基金会（FSF）为其GNU操作系统所写，但当前最主要的应用是配合Linux内核，成为GNU/Linux操作系统一个重要的组成部分。 </p>
 <p>glibc在/lib(64)目录下的.so文件为libc.so.6。</p>
 <p>查看当前系统的glibc版本的两种方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">ls -lh &#x2F;lib64&#x2F;libc.so.6<br><br>ldd --version<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">ls -lh &#x2F;lib64&#x2F;libc.so.6<br><br>ldd --version<br></code></pre></td></tr></table></figure>
 
 <h2 id="glib"><a href="#glib" class="headerlink" title="glib"></a>glib</h2><p><strong>glib是GTK+的基础库</strong>，它由<strong>基础类型、对核心应用的支持、实用功能、数据类型和对象系统</strong>五个部分组成，可以在<a target="_blank" rel="noopener" href="http://www.gtk.org/">gtk官网</a> gtk网站]下载其源代码。是一个<strong>综合用途的实用的轻量级的C程序库</strong>，它提供C语言的常用的数据结构的定义、<strong>相关的处理函数，有趣而实用的宏，可移植的封装和一些运行时机能，如事件循环、线程、动态调用、对象系统等的API</strong>。</p>
 <p>glib是用C写的一些工具，即C的工具库，和libc/glibc没有关系。</p>

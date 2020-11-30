@@ -89,7 +89,7 @@
 <h2 id="4-1-概述"><a href="#4-1-概述" class="headerlink" title="4.1 概述"></a>4.1 概述</h2><p><strong>TCP客户与服务器进程之间发生的一些典型事件的时间表</strong>:</p>
 <p><img src="4.1.png" alt="1579936030580"></p>
 <h2 id="4-2-socket函数"><a href="#4-2-socket函数" class="headerlink" title="4.2 socket函数"></a>4.2 socket函数</h2><p>为了执行网络I/O，一个进程必须做的第一件事就是：<strong>调用socket函数，指定期望的通信协议类型</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回一个小的非负整数值，即套接字描述符（sockfd），若出错返回-1<br>int socket(int family, int type, int protocol);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回一个小的非负整数值，即套接字描述符（sockfd），若出错返回-1<br>int socket(int family, int type, int protocol);<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>family参数指明协议族（该参数又被称为协议域），是一个常值。</li>
@@ -103,12 +103,12 @@
 <li>protocol参数设置为对应协议类型的常值。</li>
 </ul>
 <p><img src="4.2_4.png" alt="1579936706600"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">并非所有套接字family和type的组合都是有效的。<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">并非所有套接字family和type的组合都是有效的。<br></code></pre></td></tr></table></figure>
 
 <p><img src="4.3_5.png" alt="1579937354376"></p>
 <p>AF_前缀表示地址族，PF_前缀表示协议族。<em>历史想法：单个协议族可以支持多个地址族，PF_值用来创建套接字，而AF_值用于套接字地址结构。实际上，支持多个地址族的协议族从来就未实现过，头文件&lt;sys/socket.h&gt;中为一给定协议定义的PF_值总是与此协议的AF_值相等。</em></p>
 <h2 id="4-3-connect函数"><a href="#4-3-connect函数" class="headerlink" title="4.3 connect函数"></a>4.3 connect函数</h2><p>TCP客户用connect函数来建立与TCP服务器的连接。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int connect(int sockfd, const struct sockaddr *servaddr, socklen_t addrlen);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int connect(int sockfd, const struct sockaddr *servaddr, socklen_t addrlen);<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>参数1：由socket函数返回的_套接字描述符_。</li>
@@ -122,7 +122,7 @@
 <li><p>ETIMEDOUT错误，未收到SYN分节的响应（超时重传后）。</p>
 </li>
 <li><p>ECONNREFUSED错误，客户的SYN响应是RST（复位），表明服务器主机在指定的端口上没有进程在等待与之连接。这是一种<strong>硬错误</strong>。客户收到RST后立马返回错误。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">产生RST的三个条件：<br>1. 目的地为某端口的SYN到达，然而该端口上没有正在监听的服务器<br>2. TCP想取消一个已有的连接<br>3. TCP接收到一个根本不存在的连接上的分节<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">产生RST的三个条件：<br>1. 目的地为某端口的SYN到达，然而该端口上没有正在监听的服务器<br>2. TCP想取消一个已有的连接<br>3. TCP接收到一个根本不存在的连接上的分节<br></code></pre></td></tr></table></figure>
 
 
 
@@ -130,14 +130,14 @@
 </ol>
 <ol start="3">
 <li><p>EHOSTUNREACH<del>或ENETUNREACH</del>错误，客户发出的SYN在发生的过程中遇到“destination unreachable”（目的地不可到达）ICMP错误。这是一种<strong>软错误</strong>。重传后仍未被响应则返回错误给进程。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">产生EHOSTUNREACH错误的其他可能情况：<br>1. 按照本地系统的转发表，根本没有到达远程系统的路径<br>2. connect调用根本不等待就返回<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">产生EHOSTUNREACH错误的其他可能情况：<br>1. 按照本地系统的转发表，根本没有到达远程系统的路径<br>2. connect调用根本不等待就返回<br></code></pre></td></tr></table></figure>
 
 </li>
 </ol>
 <p>按照TCP状态转换图，connect函数导致当前套接字从CLOSED状态（该套接字自从由socket函数创建以来一直所在的状态）转移到SYN_SENT状态，若成功再转移到ESTABLISHED状态。</p>
 <p>若connect函数返回失败后，当前套接字必须close不可以再使用，当重新connect之前必须重新调用socket函数。</p>
 <h2 id="4-4-bind函数"><a href="#4-4-bind函数" class="headerlink" title="4.4 bind函数"></a>4.4 bind函数</h2><p>把一个本地协议地址赋予一个套接字。对于网际网协议，协议地址是32位的IPv4地址或128位的IPv6地址与16位的TCP或UDP端口号的组合。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int bind(int sockfd, const struct sockaddr *myaddr, socklen_t addrlen);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int bind(int sockfd, const struct sockaddr *myaddr, socklen_t addrlen);<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>参数1：由socket函数返回的_套接字描述符_。</li>
@@ -157,10 +157,10 @@
 <p><img src="4.4_2.png" alt="1579959335440"></p>
 <p>IPv4：设置sin_addr和sin_port</p>
 <p>通配地址由常值INADDR_ANY来指定，其值一般为0，无论主机字节序还是网络字节序值为0都一样，因此使用htonl并非必需。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">struct sockaddr_in servaddr;<br>servaddr.sin_addr.s_addr &#x3D; htonl(INADDR_ANY);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">struct sockaddr_in servaddr;<br>servaddr.sin_addr.s_addr &#x3D; htonl(INADDR_ANY);<br></code></pre></td></tr></table></figure>
 
 <p>IPv6：设置sin6_addr和sin6_port</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">struct sockaddr_in6 serv;<br>serv.sin6_addr &#x3D; in6addr_any;<br>&#x2F;&#x2F;系统预先分配in6addr_any变量并将其初始化为常值IN6ADDR_ANY_INIT<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">struct sockaddr_in6 serv;<br>serv.sin6_addr &#x3D; in6addr_any;<br>&#x2F;&#x2F;系统预先分配in6addr_any变量并将其初始化为常值IN6ADDR_ANY_INIT<br></code></pre></td></tr></table></figure>
 
 <p>_内核为套接字选择临时端口号_：调用函数getsockname返回协议地址。</p>
 <p>进程捆绑非通配IP地址：一个主机提供多个服务，根据IP地址访问相对应的服务页面</p>
@@ -170,7 +170,7 @@
 <li>函数的第二个参数规定内核应该为相应套接字排队的<strong>最大连接个数</strong>。</li>
 <li>根据TCP转换图，调用listen导致套接字从CLOSED状态转换到LISTEN状态。</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int listen(int sockfd, int backlog);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int listen(int sockfd, int backlog);<br></code></pre></td></tr></table></figure>
 
 <p>内核为每个监听套接字维护两个队列：</p>
 <ol>
@@ -198,14 +198,14 @@
 <li><p><del>手册和书本历来称：将固定数目的未处理连接排成队列是为了处理服务器进程在相继的accept调用之间处于忙状态的情况。这隐含的意思是：已完成队列通常比未完成队列有更多的项。</del>繁忙的服务器表明这是不对的，指定较大的backlog值的理由在于：随着客户SYN分节的到达，未完成连接队列中的项数可能增长，它们等着三次握手的完成。</p>
 </li>
 <li><p>当客户SYN到达时，若这些队列是满的，TCP就忽略这分节而不发送RST，让客户进行重传</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">客户无法区别响应SYN的RST究竟意味什么，可能情况是：<br>1. 该端口没有服务器在监听<br>2. 该端口有服务器在监听，不过队列满了<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">客户无法区别响应SYN的RST究竟意味什么，可能情况是：<br>1. 该端口没有服务器在监听<br>2. 该端口有服务器在监听，不过队列满了<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>三次握手完成后，调用accept之前，到达的数据由服务器TCP排队，最大数据量为相应已连接套接字的接收缓冲区大小</p>
 </li>
 </ul>
 <p><strong>回味listen的backlog参数的确切含义：它应该指定某个给定套接字上内核为之排队的最大已完成连接数</strong>。对已完成连接数作出限制的目的在于：在监听某个给定套接字的应用进程（不论什么原因）停止<strong>接受</strong>连接的时候，防止内核在该套接字上继续接受新的连接请求（客户的connect）。</p>
 <h2 id="4-6-accept函数"><a href="#4-6-accept函数" class="headerlink" title="4.6 accept函数"></a>4.6 accept函数</h2><p>accept函数由TCP服务器调用，用于从已完成连接队列队头返回下一个已完成连接。如果队列为空，那么进程被投入睡眠（假定套接字为默认的阻塞方式）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;成功返回非负描述符，出错返回-1<br>int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br>&#x2F;成功返回非负描述符，出错返回-1<br>int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);<br></code></pre></td></tr></table></figure>
 
 <p>参数cliaddr和addrlen用来返回已连接的对端进程（客户）的协议地址。addrlen是值-结果参数。</p>
 <p>accept成功返回一个由内核自动生成的_已连接套接字描述符_，代表与所返回客户的TCP连接。当服务器完成对某个给定的客户的服务时，相应的已连接套接字就被关闭。</p>
@@ -216,7 +216,7 @@
 <li>在子进程中返回一次，返回值为0，告知当前进程是子进程还是父进程</li>
 </ol>
 <p><strong>这样设计的原因是：任何子进程只有一个父进程，子进程可以通过getppid获取父进程ID。而父进程可以有多个子进程，而无法获取各个子进程的进程ID。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;unistd.h&gt;<br>&#x2F;&#x2F;在子进程中返回0，在父进程中返回子进程ID，出错返回-1<br>pid_t fork(void);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;unistd.h&gt;<br>&#x2F;&#x2F;在子进程中返回0，在父进程中返回子进程ID，出错返回-1<br>pid_t fork(void);<br></code></pre></td></tr></table></figure>
 
 <p>父进程中调用的fork之前打开的所有描述符在fork返回之后由子进程分享。网络服务器利用此特性：父进程accept之后调用fork，所接受的已连接套接字在父进程和子进程之间共享，通常情况下，子进程接着读写这个已连接套接字，父进程则关闭这个已连接套接字。</p>
 <p>fork有两个典型用法：</p>
@@ -232,7 +232,7 @@
 <li>新程序的参数是一一列出还是由一个指针数组来引用</li>
 <li>把调用进程的环境传递给新程序还是给新程序指定新的环境</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;unistd.h&gt;<br><br>&#x2F;&#x2F;成功均不返回，出错返回-1<br><br>int execl(const char *pathname, const char *arg0, ...&#x2F;* (char *) 0 *&#x2F;);<br><br>int execv(const char *pathname, char *const *argv[]);<br><br>int execle(const char *pathname, const char *arg0, ... &#x2F;* (char *) 0, char *const envp[] *&#x2F;);<br><br>int execve(const char *pathname, char *const argv[], char *const envp[]);<br><br>int execlp(const char *filename, const char *arg0, ... &#x2F;* (char *) 0 *&#x2F;);<br><br>int execvp(const char *filename, char *const argv[]);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;unistd.h&gt;<br><br>&#x2F;&#x2F;成功均不返回，出错返回-1<br><br>int execl(const char *pathname, const char *arg0, ...&#x2F;* (char *) 0 *&#x2F;);<br><br>int execv(const char *pathname, char *const *argv[]);<br><br>int execle(const char *pathname, const char *arg0, ... &#x2F;* (char *) 0, char *const envp[] *&#x2F;);<br><br>int execve(const char *pathname, char *const argv[], char *const envp[]);<br><br>int execlp(const char *filename, const char *arg0, ... &#x2F;* (char *) 0 *&#x2F;);<br><br>int execvp(const char *filename, char *const argv[]);<br></code></pre></td></tr></table></figure>
 
 <p>这些函数只在出错时才返回到调用者，否在，控制将被传递给新程序的起始点，通常是main函数。</p>
 <p>execve是内核中的系统调用，其他5个都是调用execve的库函数。</p>
@@ -243,11 +243,11 @@
 <li>左边2列4个函数不显示指定一个环境指针，使用外部变量environ的当前值来构造一个传递给新程序的环境列表。右列2个函数显示指定一个环境列表，其envp指针数组必须以一个空指针结束</li>
 </ul>
 <h2 id="4-8-并发服务器"><a href="#4-8-并发服务器" class="headerlink" title="4.8 并发服务器"></a>4.8 并发服务器</h2><p>目的：子进程处理与客户的连接，父进程则可以在监听套接字上再次调用accept来处理下一个客户连接。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs plain">&#x2F;&#x2F;典型的并发服务器程序轮廓<br><br>pid_t pid;<br>int   listenfd, connfd;<br>listenfd &#x3D; Socket( ... );<br><br>Bind(listenfd, ...);<br>Listen(listenfd, LISTENQ);<br>for( ; ; ) &#123;<br>    connfd &#x3D; Accept(listenfd, ... );<br>    if ( (pid &#x3D; Fork()) &#x3D;&#x3D; 0)&#123;<br>        Close(listenfd);    &#x2F;&#x2F;子进程里关闭监听套接字<br>        doit(connfd);<br>        Close(connfd);<br>        &#x2F;&#x2F;调用exit，执行进程终止处理，会关闭所有由内核打开的描述符<br>        exit(0);<br>    &#125;<br>    Close(connfd);          &#x2F;&#x2F;子进程为客户提供服务，父进程里则关闭已连接套接字<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&#x2F;&#x2F;典型的并发服务器程序轮廓<br><br>pid_t pid;<br>int   listenfd, connfd;<br>listenfd &#x3D; Socket( ... );<br><br>Bind(listenfd, ...);<br>Listen(listenfd, LISTENQ);<br>for( ; ; ) &#123;<br>    connfd &#x3D; Accept(listenfd, ... );<br>    if ( (pid &#x3D; Fork()) &#x3D;&#x3D; 0)&#123;<br>        Close(listenfd);    &#x2F;&#x2F;子进程里关闭监听套接字<br>        doit(connfd);<br>        Close(connfd);<br>        &#x2F;&#x2F;调用exit，执行进程终止处理，会关闭所有由内核打开的描述符<br>        exit(0);<br>    &#125;<br>    Close(connfd);          &#x2F;&#x2F;子进程为客户提供服务，父进程里则关闭已连接套接字<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>对一个TCP套接字调用close会导致发送一个FIN分节，随后进行正常的TCP连接终止序列。而程序中父进程对connfd调用close并没有终止它与客户的连接，原因是：每个文件或套接字都有一个引用计数，引用计算在文件表项中维护，它是当前打开着的引用该文件或套接字的描述符的个数。程序中fork后子进程共享了父进程的套接字描述符，使得套接字的引用计数加一均变为2，这样父进程close时，只是将引用计数从2减为1。该套接字真正的清理和资源释放要等到引用计数值变为0时才发生。</p>
 <h2 id="4-9-close函数"><a href="#4-9-close函数" class="headerlink" title="4.9 close函数"></a>4.9 close函数</h2><p>通常的Unix close函数也用来关闭套接字，并终止TCP连接。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;unistd.h&gt;<br>int close(int sockfd);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;unistd.h&gt;<br>int close(int sockfd);<br></code></pre></td></tr></table></figure>
 
 <p>close一个TCP套接字的默认行为是把该套接字标记为已关闭，然后立即返回调用进程，被关闭的套接字不能再由调用进程使用，也就是它不能再作为read或write的第一个参数。然后TCP将尝试发送已排队等待发送到对端的任何数据，发送完毕后发生正常的TCP连接终止序列。</p>
 <h3 id="描述符引用计数"><a href="#描述符引用计数" class="headerlink" title="描述符引用计数"></a>描述符引用计数</h3><p>close将导致相应描述符引用计数值减1，只要引用计数值仍大于0则不会引发TCP连接终止序列。</p>
@@ -255,7 +255,7 @@
 <p><strong>任何进程在任何时刻可拥有的打开着的描述符数通常是有限制的</strong>。如果父进程对每个accept返回的已连接套接字都不调用close，首先父进程最终将耗尽可用描述符，接着没有一个客户连接会被终止，TCP连接终止序列也不会发生。</p>
 <h2 id="4-10-getsockname和getpeername函数"><a href="#4-10-getsockname和getpeername函数" class="headerlink" title="4.10 getsockname和getpeername函数"></a>4.10 getsockname和getpeername函数</h2><p>getsockname函数：返回与某个套接字关联的本地协议地址</p>
 <p>getpeername函数：返回与某个套接字关联的外地协议地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br><br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int getsockname(int sockfd, struct sockaddr *localaddr, socklen_t *addrlen);<br>int getpeername(int sockfd, struct sockaddr *peeraddr , socklen_t *addrlen);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;socket.h&gt;<br><br>&#x2F;&#x2F;成功返回0，出错返回-1<br>int getsockname(int sockfd, struct sockaddr *localaddr, socklen_t *addrlen);<br>int getpeername(int sockfd, struct sockaddr *peeraddr , socklen_t *addrlen);<br></code></pre></td></tr></table></figure>
 
 <p>两个函数的最后一个参数都是<strong>值-结果参数</strong>，说明两个函数都要装填由localaddr或peeraddr指针所指的套接字地址结构。</p>
 <p>使用情况：</p>

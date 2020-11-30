@@ -80,14 +80,14 @@
 <a id="more"></a>
 
 <h2 id="安装说明"><a href="#安装说明" class="headerlink" title="安装说明"></a>安装说明</h2><p>随机请求头模块安装：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install fake-useragent<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">pip install fake-useragent<br></code></pre></td></tr></table></figure>
 
 <h2 id="使用简介"><a href="#使用简介" class="headerlink" title="使用简介"></a>使用简介</h2><ol>
 <li><p>随机获取headers</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):<br>    print(UserAgent().random)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">5</span>):<br>    print(UserAgent().random)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>指定获取headers</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent<br><br>print(UserAgent().chrome)<br>print(UserAgent().ie)<br>print(UserAgent().firefox)<br>print(UserAgent().opera)<br>print(UserAgent().safari)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fake_useragent <span class="hljs-keyword">import</span> UserAgent<br><br>print(UserAgent().chrome)<br>print(UserAgent().ie)<br>print(UserAgent().firefox)<br>print(UserAgent().opera)<br>print(UserAgent().safari)<br></code></pre></td></tr></table></figure>
 
 </li>
 </ol>

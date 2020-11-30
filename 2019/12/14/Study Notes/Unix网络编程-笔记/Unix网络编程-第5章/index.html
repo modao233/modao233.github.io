@@ -118,7 +118,7 @@
 <p>每个信号都有一个与之关联的<strong>处置（disposition）</strong> ，也称为<strong>行为（action）</strong>，我们通常通过调用sigaction函数来设定一个信号的处置，并有三种选择：</p>
 <ol>
 <li><p>提供一个函数，只要有特定信号发生就被调用，这样的函数称为<strong>信号处理函数（signal handler）</strong>，这种行为称为<strong>捕获（catching）</strong>信号。有两个信号不能被捕获：SIGKILL 和 SIGSTOP。信号处理函数由信号值这个单一的整数参数来调用，没有返回值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">void handler(int signo);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">void handler(int signo);<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把某个信号的处置设置为SIG_IGN来忽略它，SIGKILL 和 SIGSTOP不能被忽略。</p>
 </li>
@@ -141,7 +141,7 @@
 <p>如果一个进程终止，而该进程有子进程处于僵死状态，那么它的所有僵死子进程的父进程ID将重置为1（init进程）。继承这些子进程的init进程将清理它们。</p>
 <h3 id="处理僵死进程"><a href="#处理僵死进程" class="headerlink" title="处理僵死进程"></a>处理僵死进程</h3><p>僵死进程占用内核中的空间，可能导致耗尽进程资源。</p>
 <p>无论何时我们fork子进程都得wait它们，防止它们变成僵死进程，为此我们建立一个捕获SIGCHLD信号的信号处理函数，在函数体中调用wait。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plain">Signal(SIGCHLD, sig_chld);<br><br>void sig_child(int signo)&#123;<br>    pid_t    pid;<br>    int      stat;<br>    <br>    pid &#x3D; wait(&amp;stat);<br>    &#x2F;&#x2F;在信号处理函数中调用诸如printf这样的标准I&#x2F;O函数是不合适的<br>    printf(&quot;child %d terminated\n&quot;, pid);<br>    return;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Signal(SIGCHLD, sig_chld);<br><br>void sig_child(int signo)&#123;<br>    pid_t    pid;<br>    int      stat;<br>    <br>    pid &#x3D; wait(&amp;stat);<br>    &#x2F;&#x2F;在信号处理函数中调用诸如printf这样的标准I&#x2F;O函数是不合适的<br>    printf(&quot;child %d terminated\n&quot;, pid);<br>    return;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="处理被中断的系统调用"><a href="#处理被中断的系统调用" class="headerlink" title="处理被中断的系统调用"></a>处理被中断的系统调用</h3><p>慢系统调用适用于那些可能永远阻塞的系统调用，永远阻塞的系统调用是指调用有可能永远无法返回，多数网络支持函数都属于这一类。</p>
 <p>适用于慢系统调用的基本规则：当阻塞于某个慢系统调用的一个进程捕获某个信号且相应信号处理函数返回时，该系统调用<strong>可能</strong>返回一个EINTR错误（被中断的系统调用）。<strong>有些</strong>内核自动重启某些被中断的系统调用。</p>
@@ -149,7 +149,7 @@
 <p><img src="5.9_1.png" alt="image-20200213102820118"></p>
 <p>我们可以编写函数，自己重启被中断的系统调用，如accept、read、write、select和open之类的函数，</p>
 <p>但是connect函数我们不能重启：如果该函数返回EINTR，我们就不能再次调用它，否则将立即返回一个错误，当connect被一个捕获的信号中断而且不自动重启时，我们必须调用select来等待连接完成。</p>
-<h2 id="5-10-wait和waitpid"><a href="#5-10-wait和waitpid" class="headerlink" title="5.10 wait和waitpid"></a>5.10 wait和waitpid</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;wait.h&gt;<br><br>&#x2F;&#x2F;成功返回进程ID，出错返回0或-1<br>pid_t wait(int *statloc);<br>pid_t waitpid(pid_t pid, int *statloc, int options);<br></code></pre></td></tr></table></figure>
+<h2 id="5-10-wait和waitpid"><a href="#5-10-wait和waitpid" class="headerlink" title="5.10 wait和waitpid"></a>5.10 wait和waitpid</h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;wait.h&gt;<br><br>&#x2F;&#x2F;成功返回进程ID，出错返回0或-1<br>pid_t wait(int *statloc);<br>pid_t waitpid(pid_t pid, int *statloc, int options);<br></code></pre></td></tr></table></figure>
 
 <p>函数wait和waitpid均返回两个指：</p>
 <ol>
@@ -184,7 +184,7 @@
 <li><p>客户接受到FIN并响应ACK的时候，正阻塞在fgets调用上，等待终端接收一个文本</p>
 </li>
 <li><p>当客户在终端上输入文本时，将调用writen，客户TCP将把数据发送给服务器，当服务器接收到数据后，由于先前打开的描述符已经终止，于是响应一个RST</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">客户TCP接收到FIN只是表示服务器进程已关闭了连接的服务器端，从而（服务器）不再往其发送任何数据。FIN的接收并没有告知客户TCP服务器进程已经终止。<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">客户TCP接收到FIN只是表示服务器进程已关闭了连接的服务器端，从而（服务器）不再往其发送任何数据。FIN的接收并没有告知客户TCP服务器进程已经终止。<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>而客户进程看不到这个RST，因为调用writen后立即调用readline，并由于步骤2接收的FIN，readline立即返回0（EOF）。客户此时未预期收到EOF，于是返回出错信息“server terminated prematurely”（服务器过早终止）退出</p>
 </li>

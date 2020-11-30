@@ -79,7 +79,7 @@
 		<p>编写爬虫程序时，使用requests进行获取页面是常见操作，requsets返回的结果包含一些headers信息，我们通常只需要主体部分，所以需要进行提取。</p>
 <a id="more"></a>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">resp &#x3D; requests.get(url)<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">resp &#x3D; requests.get(url)<br></code></pre></td></tr></table></figure>
 <ol>
 <li>resp.text：返回的是Unicode型的数据。(str)</li>
 <li>resp.content：返回的是bytes型也就是二进制的数据。(str)</li>
@@ -91,7 +91,7 @@
 <li>如果想取图片，文件：resp.content</li>
 </ol>
 <p>一些相关的转换：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">x = eval(resp.text)<br>y = resp.json()<br>x == y	//true<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">x = eval(resp.text)<br>y = resp.json()<br>x == y	//true<br></code></pre></td></tr></table></figure>
 	</div>
 </div>
 <div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">

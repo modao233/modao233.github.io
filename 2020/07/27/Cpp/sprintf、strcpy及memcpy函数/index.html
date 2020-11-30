@@ -79,7 +79,7 @@
 		<p>sprintf、snprintf、strcpy、strncpy、memcpy 函数</p>
 <a id="more"></a>
 
-<h2 id="sprintf函数"><a href="#sprintf函数" class="headerlink" title="sprintf函数"></a>sprintf函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sprintf</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *buffer, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, [argument] ... )</span></span>;<br></code></pre></td></tr></table></figure>
+<h2 id="sprintf函数"><a href="#sprintf函数" class="headerlink" title="sprintf函数"></a>sprintf函数</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sprintf</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *buffer, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, [argument] ... )</span></span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>功能：将格式化的数据写入某个字符串缓冲区</li>
@@ -89,7 +89,7 @@
 <li>返回值：返回写入buffer的字符数，出错则返回-1</li>
 </ul>
 <h2 id="snprintf函数"><a href="#snprintf函数" class="headerlink" title="snprintf函数"></a>snprintf函数</h2><p>snprintf是sprintf的安全版本</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">snprintf</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *buffer, <span class="hljs-keyword">size_t</span> size, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, [argument] ... )</span></span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">snprintf</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *buffer, <span class="hljs-keyword">size_t</span> size, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, [argument] ... )</span></span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>功能：有长度限制地，把格式化的数据写入某个字符串缓冲区</li>
@@ -102,21 +102,21 @@
 </ul>
 </li>
 </ul>
-<h2 id="strcpy函数"><a href="#strcpy函数" class="headerlink" title="strcpy函数"></a>strcpy函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c+++">char *strcpy(char *dest, const char *src);<br></code></pre></td></tr></table></figure>
+<h2 id="strcpy函数"><a href="#strcpy函数" class="headerlink" title="strcpy函数"></a>strcpy函数</h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs c+++">char *strcpy(char *dest, const char *src);<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>功能：将参数src字符串拷贝至参数dest所指的地址，会自动给dest字符串补结束符’\0’；</li>
 <li>返回值：返回dest的字符串的起始地址；</li>
 <li>说明：如果参数dest所指向的内存空间不够大，可能会造成缓冲溢出的错误情况（同sprintf）。</li>
 </ul>
-<h2 id="strncpy函数"><a href="#strncpy函数" class="headerlink" title="strncpy函数"></a>strncpy函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">strncpy</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *dest, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * src, <span class="hljs-keyword">size_t</span> n)</span></span>;<br></code></pre></td></tr></table></figure>
+<h2 id="strncpy函数"><a href="#strncpy函数" class="headerlink" title="strncpy函数"></a>strncpy函数</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">strncpy</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *dest, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> * src, <span class="hljs-keyword">size_t</span> n)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>函数说明：strncpy()会将字符串src的前n个字符拷贝到字符串dest;</li>
 <li>返回值：返回字符串dest</li>
 <li>注意：strncpy()不会像strcpy那样向dest追加结束符，但是它可以拷贝结束符，结束符之后的字符不能够拷贝，src和dest所指向的内存区域不能重叠，且dest必须由足够大的空间放置n个字符</li>
 </ul>
-<h2 id="memcpy函数"><a href="#memcpy函数" class="headerlink" title="memcpy函数"></a>memcpy函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">memcpy</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *dest, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *src, <span class="hljs-keyword">size_t</span> n)</span></span>;<br></code></pre></td></tr></table></figure>
+<h2 id="memcpy函数"><a href="#memcpy函数" class="headerlink" title="memcpy函数"></a>memcpy函数</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">memcpy</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *dest, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *src, <span class="hljs-keyword">size_t</span> n)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>功能：将src指向地址为起始地址的连续n个字节的数据复制到以dest指向地址为起始地址的空间内</li>
