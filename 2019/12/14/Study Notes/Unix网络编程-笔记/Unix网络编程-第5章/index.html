@@ -86,7 +86,7 @@
 		<p>Unix网络编程-第5章 TCP客户/服务器程序示例</p>
 <a id="more"></a>
 
-<h2 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h2><p><img src="5.1.png" alt="image-20200212163819379"></p>
+<h2 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h2><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.1.png" alt="image-20200212163819379"></p>
 <h2 id="5-6-正常启动"><a href="#5-6-正常启动" class="headerlink" title="5.6 正常启动"></a>5.6 正常启动</h2><p>使用<em>netstat -a</em>检查服务器套接字的状态</p>
 <p>在目前众多较新的 Linux 发行版中，已经移除了 net-tools 套件，ifconfig、route、netstat、arp 等一系列工具均无法使用。</p>
 <p>新的工具<em>ss</em> 代替了 netstat。</p>
@@ -129,8 +129,8 @@
 <p>signal函数是早于POSIX出现的历史悠久的函数，不同的实现提供不同的信号语义以达成后向兼容。</p>
 <p>POSIX则明确规定了调用sigaction时的信号语义。</p>
 <p>我们定义了自己的signal函数，它只是调用POSIX的sigaction函数，这就以所期望的POSIX语义提供一个简答的接口。</p>
-<p><img src="5.8.png" alt="image-20200212205315625"></p>
-<p><img src="5.8_2.png" alt="image-20200212210809188"></p>
+<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8.png" alt="image-20200212205315625"></p>
+<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8_2.png" alt="image-20200212210809188"></p>
 <h3 id="POSIX信号语义"><a href="#POSIX信号语义" class="headerlink" title="POSIX信号语义"></a>POSIX信号语义</h3><ul>
 <li>一旦安装了信号处理函数，便一直安装着（早期系统执行一次便拆除）</li>
 <li>在一个信号处理函数运行期间，正被递交的信号是阻塞的，而且sa_mask信号集中指定的任何额外信号也被阻塞</li>
@@ -146,7 +146,7 @@
 <h3 id="处理被中断的系统调用"><a href="#处理被中断的系统调用" class="headerlink" title="处理被中断的系统调用"></a>处理被中断的系统调用</h3><p>慢系统调用适用于那些可能永远阻塞的系统调用，永远阻塞的系统调用是指调用有可能永远无法返回，多数网络支持函数都属于这一类。</p>
 <p>适用于慢系统调用的基本规则：当阻塞于某个慢系统调用的一个进程捕获某个信号且相应信号处理函数返回时，该系统调用<strong>可能</strong>返回一个EINTR错误（被中断的系统调用）。<strong>有些</strong>内核自动重启某些被中断的系统调用。</p>
 <p>由于“可能”、“有些”以及对POSIX的SA_RESTART标志的支持是可选的，我们必须考虑可移植性问题。为了便于移植，我们编写捕获信号的程序时（多数并发服务器捕获SIGCHLD），我们必须对慢系统调用返回EINTR有所准备。</p>
-<p><img src="5.9_1.png" alt="image-20200213102820118"></p>
+<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.9_1.png" alt="image-20200213102820118"></p>
 <p>我们可以编写函数，自己重启被中断的系统调用，如accept、read、write、select和open之类的函数，</p>
 <p>但是connect函数我们不能重启：如果该函数返回EINTR，我们就不能再次调用它，否则将立即返回一个错误，当connect被一个捕获的信号中断而且不自动重启时，我们必须调用select来等待连接完成。</p>
 <h2 id="5-10-wait和waitpid"><a href="#5-10-wait和waitpid" class="headerlink" title="5.10 wait和waitpid"></a>5.10 wait和waitpid</h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;sys&#x2F;wait.h&gt;<br><br>&#x2F;&#x2F;成功返回进程ID，出错返回0或-1<br>pid_t wait(int *statloc);<br>pid_t waitpid(pid_t pid, int *statloc, int options);<br></code></pre></td></tr></table></figure>
@@ -169,9 +169,9 @@
 <li>当捕获信号时，必须处理被中断的系统调用</li>
 <li>SIGCHLD的信号处理函数必须正确编写，应使用waitpid函数以免留下僵死进程</li>
 </ol>
-<p><img src="5.10.3.png" alt="image-20200213110240525"></p>
+<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.10.3.png" alt="image-20200213110240525"></p>
 <h2 id="5-11-accept返回前连接中止"><a href="#5-11-accept返回前连接中止" class="headerlink" title="5.11 accept返回前连接中止"></a>5.11 accept返回前连接中止</h2><p>三次握手完成建立连接后，客户TCP却发送RST，服务器端该连接已由TCP排队，在等待accept时RST到达，稍后服务器进程调用accept。</p>
-<p><img src="5.11.png" alt="image-20200213115625378"></p>
+<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.11.png" alt="image-20200213115625378"></p>
 <p>处理连接中止依赖于不同的实现，大多数返回一个错误给服务器，作为accept的返回结果，POSIX指出返回的errno指必须是ECONNABORTED（“software caused connection abort”，软件引起的连接中止）。遇到此错误，服务器可以选择忽略它，再次调用accept函数。</p>
 <h2 id="5-12-服务器进程终止"><a href="#5-12-服务器进程终止" class="headerlink" title="5.12 服务器进程终止"></a>5.12 服务器进程终止</h2><p>启动客户/服务器，然后杀死服务器子进程，模拟服务器进程崩溃时的情况：</p>
 <ol>
@@ -212,8 +212,8 @@
 <li>如果我们忽略SIGTERM信号，我们的服务器将由SIGKILL信号终止</li>
 <li>如果我们不捕获也不忽略SIGTERM信号，那么起作用的是SIGTERM的默认处置（终止进程），那么服务器将被SIGTERM信号终止，SIGKILL信号不可能再发送给服务器</li>
 </ul>
-<h2 id="5-17-TCP程序例子小结"><a href="#5-17-TCP程序例子小结" class="headerlink" title="5.17 TCP程序例子小结"></a>5.17 TCP程序例子小结</h2><h3 id="从客户角度总结TCP客户-服务器"><a href="#从客户角度总结TCP客户-服务器" class="headerlink" title="从客户角度总结TCP客户/服务器"></a>从客户角度总结TCP客户/服务器</h3><p><img src="5.17.1.png" alt="image-20200218171852426"></p>
-<h3 id="从服务器角度总结TCP客户-服务器"><a href="#从服务器角度总结TCP客户-服务器" class="headerlink" title="从服务器角度总结TCP客户/服务器"></a>从服务器角度总结TCP客户/服务器</h3><p><img src="5.17.2.png" alt="image-20200218172026706"></p>
+<h2 id="5-17-TCP程序例子小结"><a href="#5-17-TCP程序例子小结" class="headerlink" title="5.17 TCP程序例子小结"></a>5.17 TCP程序例子小结</h2><h3 id="从客户角度总结TCP客户-服务器"><a href="#从客户角度总结TCP客户-服务器" class="headerlink" title="从客户角度总结TCP客户/服务器"></a>从客户角度总结TCP客户/服务器</h3><p><img src="/..%5CUnix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/5.17.1.png" alt="image-20200218171852426"></p>
+<h3 id="从服务器角度总结TCP客户-服务器"><a href="#从服务器角度总结TCP客户-服务器" class="headerlink" title="从服务器角度总结TCP客户/服务器"></a>从服务器角度总结TCP客户/服务器</h3><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.17.2.png" alt="image-20200218172026706"></p>
 <h2 id="5-18-数据格式"><a href="#5-18-数据格式" class="headerlink" title="5.18 数据格式"></a>5.18 数据格式</h2><p>传递二进制数据可能存在的问题：</p>
 <ol>
 <li>不同的实现以不同的格式存储二进制数，大端字节序和小端字节序</li>
