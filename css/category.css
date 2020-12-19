@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: #FFF;
+    background-color: #282c35;
     color: #333;
     display: flex;
     flex-direction: column;
@@ -72,7 +72,7 @@ a:hover {
 
 .archive-group {
     box-sizing: border-box;
-    background-color: #FFF;
+    background-color: #282c35;
     border-radius: 5px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -84,7 +84,7 @@ a:hover {
 
 .category-head {
     font-size: 30px;
-    color: #333;
+    color: #f8dfe7;
     margin-bottom: 20px;
 }
 
@@ -96,7 +96,7 @@ a:hover {
 }
 
 .archive-item a {
-    color: #666;
+    color: #ffa7c4;
 }
 
 .archive-item a:hover {
