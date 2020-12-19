@@ -125,7 +125,7 @@
 <h3 id="新的通用套接字地址结构"><a href="#新的通用套接字地址结构" class="headerlink" title="新的通用套接字地址结构"></a>新的通用套接字地址结构</h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">struct sockaddr_storage&#123;<br>    uint8_t        ss_len;<br>    sa_family_t    ss_family;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>套接字地址结构比较：</strong></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E7%BB%93%E6%9E%84.png" alt="1579573720073"></p>
+<p><img src="%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E7%BB%93%E6%9E%84.png" alt="1579573720073"></p>
 <h2 id="3-3-值-结果参数"><a href="#3-3-值-结果参数" class="headerlink" title="3.3 值-结果参数"></a>3.3 值-结果参数</h2><p>套接字的地址结构总是以引用形式传递给套接字函数的。</p>
 <p>套接字的长度作为一个参数传递给套接字函数时，其传递方式取决于该结构的传递方向。</p>
 <p>套接字地址结构可以在两个方向上传递：</p>
@@ -145,7 +145,7 @@
 <li>小端字节序：将低序字节存储在起始地址</li>
 <li>大端字节序：将高序字节存储在起始地址</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F.png" alt="1579582483045"></p>
+<p><img src="%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F.png" alt="1579582483045"></p>
 <p>最高有效位：MSB：most significant bit</p>
 <p>最低有效位：LSB：least significant bit</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">术语“小端”和“大端”表示：多个字节值的哪一端（小端或大端）存储在该值的起始地址（低地址）。<br></code></pre></td></tr></table></figure>
@@ -161,7 +161,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;netinet&#x2F;in.h&gt;<br><br>&#x2F;&#x2F;返回网络字节序的值<br>uint16_t htons(uint16_t host16bitvalue);<br>uint32_t htonl(uint32_t host32bitvalue);<br><br>&#x2F;&#x2F;返回主机字节序的值<br>uint16_t ntons(uint16_t net16bitvalue);<br>uint32_t ntonl(uint32_t net32bitvalue);<br></code></pre></td></tr></table></figure>
 
 <p>因特网另一个重要的约定是<strong>位序</strong>，IPv4首部前32位的位序如下：</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E4%BD%8D%E5%BA%8F.png" alt="1579584598760"></p>
+<p><img src="%E4%BD%8D%E5%BA%8F.png" alt="1579584598760"></p>
 <h2 id="3-5-字节操作函数"><a href="#3-5-字节操作函数" class="headerlink" title="3.5 字节操作函数"></a>3.5 字节操作函数</h2><p>操作多字节段的函数有<strong>两组</strong>，它们既不对数据作解释，也不假设数据是以空字节符结束的C字符串。</p>
 <ul>
 <li><p>第一组函数源于4.2BSD，名字以b（表示字节）开头</p>
@@ -180,13 +180,13 @@
 <h2 id="3-7-inet-pton和inet-ntop函数"><a href="#3-7-inet-pton和inet-ntop函数" class="headerlink" title="3.7 inet_pton和inet_ntop函数"></a>3.7 inet_pton和inet_ntop函数</h2><p>这两个函数对于IPv4地址和IPv6地址都适用。函数名中p和n分别代表<strong>表达（presentation）</strong>和<strong>数值（numeric）</strong>。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#include &lt;arpa&#x2F;inet.h&gt;<br><br>&#x2F;&#x2F;函数执行成功返回1，表达的格式无效返回0，出错返回-1<br>int inet_pton(int family, const char *strptr, void *addptr);<br><br>&#x2F;&#x2F;函数执行成功返回指向结果的指针，出错返回NULL<br>const char *inet_ntop(int family, const void *addptr, char *strptr, size_t len);<br><br>&#x2F;&#x2F;family参数可以是AF_INET，也可以是AF_INET6，如果以不被支持的地址族作为family参数，两个函数就都返回一个错误，并将errno置为EAFNOSUPPORT<br></code></pre></td></tr></table></figure>
 
-<h3 id="总结5个函数"><a href="#总结5个函数" class="headerlink" title="总结5个函数"></a>总结5个函数</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/3.7%E6%80%BB%E7%BB%93.png" alt="1579590914742"></p>
+<h3 id="总结5个函数"><a href="#总结5个函数" class="headerlink" title="总结5个函数"></a>总结5个函数</h3><p><img src="3.7%E6%80%BB%E7%BB%93.png" alt="1579590914742"></p>
 <h2 id="3-8-sock-ntop和相关函数"><a href="#3-8-sock-ntop和相关函数" class="headerlink" title="3.8 sock_ntop和相关函数"></a>3.8 sock_ntop和相关函数</h2><p>本书编写的协议无关性函数。函数名以sock_开头。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/3.8_1.png" alt="1579608760390"></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/3.8_2.png" alt="1579608805451"></p>
+<p><img src="3.8_1.png" alt="1579608760390"></p>
+<p><img src="3.8_2.png" alt="1579608805451"></p>
 <h2 id="3-9-readn、writen和readline函数"><a href="#3-9-readn、writen和readline函数" class="headerlink" title="3.9 readn、writen和readline函数"></a>3.9 readn、writen和readline函数</h2><p>字节流套接字上的read和write函数所表现的行为不同于通常文件的I/O。字节流套接字上调用read或write输入或输出的字节数可能比请求的数量少，然而这不是出错状态。原因在于：内核中用于套接字的缓冲区可能已经达到极限。此时需要的是调用者再次调用read或write函数，输入或输出剩余的字节。</p>
 <p>为了预防万一，不让返回的字节计数值不足，编写了三个函数。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/3.9.png" alt="1579609128287"></p>
+<p><img src="3.9.png" alt="1579609128287"></p>
 
 	</div>
 </div>

@@ -90,14 +90,14 @@
 <p>示例：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">输入：<br>s1 &#x3D;&quot;acb&quot;,n1 &#x3D; 4<br>s2 &#x3D;&quot;ab&quot;,n2 &#x3D; 2<br><br>返回：<br>2<br></code></pre></td></tr></table></figure>
 
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="方法一：找出循环节"><a href="#方法一：找出循环节" class="headerlink" title="方法一：找出循环节"></a>方法一：找出循环节</h3><p><img src="/466-%E7%BB%9F%E8%AE%A1%E9%87%8D%E5%A4%8D%E4%B8%AA%E6%95%B0-%E5%BE%AA%E7%8E%AF%E8%8A%82%E4%BC%98%E5%8C%96/image-20200724232042144.png" alt="image-20200724232042144"></p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="方法一：找出循环节"><a href="#方法一：找出循环节" class="headerlink" title="方法一：找出循环节"></a>方法一：找出循环节</h3><p><img src="image-20200724232042144.png" alt="image-20200724232042144"></p>
 <p>理解循环节图示：</p>
 <ol>
 <li><p>进行原始匹配</p>
-<p><img src="/466-%E7%BB%9F%E8%AE%A1%E9%87%8D%E5%A4%8D%E4%B8%AA%E6%95%B0-%E5%BE%AA%E7%8E%AF%E8%8A%82%E4%BC%98%E5%8C%96/image-20200724232331561.png" alt="image-20200724232331561"></p>
+<p><img src="image-20200724232331561.png" alt="image-20200724232331561"></p>
 </li>
 <li><p>从匹配队列中找循环节</p>
-<p><img src="/466-%E7%BB%9F%E8%AE%A1%E9%87%8D%E5%A4%8D%E4%B8%AA%E6%95%B0-%E5%BE%AA%E7%8E%AF%E8%8A%82%E4%BC%98%E5%8C%96/image-20200724232408820.png" alt="image-20200724232408820"></p>
+<p><img src="image-20200724232408820.png" alt="image-20200724232408820"></p>
 </li>
 </ol>
 <p>循环节中一定数量的s1都固定匹配一定数量的s2，可进行批量处理。</p>

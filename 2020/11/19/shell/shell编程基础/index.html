@@ -400,7 +400,7 @@
 <p>expr一般用于<strong>整数值计算和字符串</strong>的操作。</p>
 <p>若expr的操作符是元字符（不是普通字符），需要用转义符将操作符的特殊含义屏蔽，进行数学运算，如expr 2014 * 2。<strong>expr操作符</strong>的两端必须有空格，否则不会执行数学运算expr 2014 - 2008。</p>
 <p>注意：*乘法运算符号需要转义</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140909091436484" alt="img"></p>
+<p><img src="20140909091436484" alt="img"></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ ans=$(expr 3 + 8)<br>modao@modao-hp:~$ echo $ans<br>11<br>modao@modao-hp:~$ ans=$(expr 3 - 8)<br>modao@modao-hp:~$ echo $ans<br>-5<br>modao@modao-hp:~$ ans=$(expr 3 \* 8)<br>modao@modao-hp:~$ echo $ans<br>24<br>modao@modao-hp:~$ ans=$(expr 24 / 8)<br>modao@modao-hp:~$ echo $ans<br>3<br></code></pre></td></tr></table></figure>
 
 <p><strong>使用[]执行算术</strong></p>
@@ -415,9 +415,9 @@
 <p><strong>bc运算器</strong></p>
 <p>bc是一种内建的运算器，是bash shell中最常用的浮点数运算工具，包括整型数和浮点数、数组变量、表达式、复杂程序结构和函数。</p>
 <p>bc运算器支持的数学运算符号如下表：</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140909092840734" alt="img"></p>
+<p><img src="20140909092840734" alt="img"></p>
 <p>bc运算器定义了内建变量scale用于设定除法运算的精度（默认scale=0）。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140909093437872" alt="img"></p>
+<p><img src="20140909093437872" alt="img"></p>
 <p>scale设为4后，除法结果小数点后保留4位。bc -q可以使bc运算器不输出版本信息。</p>
 <p>在shell中用bc运算器进行浮点数运算需要使用命令替换的方式。脚本中调用bc运算器一般格式：variable=<code>echo &quot;options; expression&quot; | bc</code>。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br> <br>var1=20<br>var2=3.14159<br>var3=`<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;scale=5; <span class="hljs-variable">$var1</span> ^ 2&quot;</span> | bc`<br>var4=`<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;scale=5; <span class="hljs-variable">$var3</span> * <span class="hljs-variable">$var2</span>&quot;</span> | bc`<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;The area of this circle is:<span class="hljs-variable">$var4</span>&quot;</span><br></code></pre></td></tr></table></figure>
@@ -631,9 +631,9 @@
 <p>算术运算符与赋值运算符”=”联用，称为算术复合赋值运算符：<code>+=</code>、<code>-=</code>、<code>*=</code>、<code>/=</code>、<code>%=</code>。</p>
 <p><strong>位运算符：</strong></p>
 <p>用于整数间的运算，按位与运算只有两个二进制都为1，结果才为1；按位或运算只要有一个二进制位为1，则结果为1；按位异或运算两个二进制位数相同时，结果为0，否则为1。按位取反运算符将二进制中的0修改成1，1修改成0。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140828143826259" alt="img"></p>
+<p><img src="20140828143826259" alt="img"></p>
 <p>位运算符同样可以同赋值运算符联用，组成复合赋值运算符。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140828143844246" alt="img"></p>
+<p><img src="20140828143844246" alt="img"></p>
 <p><strong>自增自减运算符</strong></p>
 <p>自增自减运算符包括前置自增、前置自减、后置自增和后置自减。自增自减操作符的操作元只能是变量，不能是常数或表达式，且该变量值必须为整数型。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br> <br> num1=5<br> <br> <span class="hljs-built_in">let</span> <span class="hljs-string">&quot;a=5+(++num1) &quot;</span><br> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;a=<span class="hljs-variable">$a</span>&quot;</span><br> <br> num2=5<br> <br> <span class="hljs-built_in">let</span>  <span class="hljs-string">&quot;b=5+(num2++) &quot;</span><br> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;b=<span class="hljs-variable">$b</span>&quot;</span><br></code></pre></td></tr></table></figure>
@@ -988,7 +988,7 @@
 <h3 id="2-4-对文件的排序、合并和分割"><a href="#2-4-对文件的排序、合并和分割" class="headerlink" title="2.4 对文件的排序、合并和分割"></a>2.4 对文件的排序、合并和分割</h3><p>文本处理命令包括sort命令、uniq命令、join命令、cut命令、paste命令、split命令、tr命令和tar命令，它们实现对文件记录排序、统计、合并、提取、粘贴、分割、过滤、压缩和解压缩等功能，它们与sed和awk构成了linux文本处理的所有命令和工具。</p>
 <h4 id="sort命令"><a href="#sort命令" class="headerlink" title="sort命令"></a>sort命令</h4><p>sort命令是一种对文本排序的工具，它将输入文件看做由多条记录组成的数据流，而记录由可变宽度的字段组成，以换行符作为定界符。</p>
 <p>sort命令格式：<code>sort [选项] [输入文件]</code></p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910181702875" alt="img"></p>
+<p><img src="20140910181702875" alt="img"></p>
 <p>sort命令默认的域分隔符是空格符，-t选项可用于设置分隔符。<code>sort -t:指定的分隔符</code>  test中-t与”:”之间是没有空格的。</p>
 <p>未指定-t分隔符是空格符，这时记录内开头与结尾的空格都将被忽略，如（空格）:root:（空格）则只有一个域，-t:指定冒号则这条记录就包含了三个域。</p>
 <p>sort命令默认是按第1个域进行排序的，也可以通过-k选项指定某个域进行排序。例如：sort -t: -k3 test。</p>
@@ -1000,9 +1000,9 @@
 <p>sort和awk都是分域处理文件的工具，两者结合起来可以有效地对文本块进行排序。</p>
 <h4 id="uniq命令"><a href="#uniq命令" class="headerlink" title="uniq命令"></a>uniq命令</h4><p>uniq命令用于去除文本文件中的重复行，类似sort -u，但uniq命令去除的重复行必须是连续重复出现的行，中间不能夹杂任何其他文本行，而sort -u命令使所有的重复记录都被去掉。</p>
 <p>uniq命令有3个选项：</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910193114758" alt="img"></p>
+<p><img src="20140910193114758" alt="img"></p>
 <h4 id="join命令"><a href="#join命令" class="headerlink" title="join命令"></a>join命令</h4><p>join命令用于实现两个文件中记录的连接操作，将两个文件中具有相通域的记录选择出来，再将这些记录所有的域放在一行（包含来自两个文件的所有域）。如join -t: a.txt b.txt，将a.txt和b.txt具有共同域的记录连接到一起。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910194940941" alt="img"></p>
+<p><img src="20140910194940941" alt="img"></p>
 <p>join命令的结果默认是不显示这些未进行连接的记录，-a和-v选项用于显示这些未进行连接的记录，-a1和-v1指显示文件1中未连接的记录，而-a2和-v2指显示文件2中的未连接记录。</p>
 <p>-a与-v的区别是：-a显示以共同域进行连接的结果和未进行连接的记录，而-v则不显示以共同域进行连接的记录。</p>
 <p>join命令默认显示连接记录在两个文件中的所有域，而且按顺序。-o选项用于改变结果显示的格式，可以指定显示哪几个域、按什么顺序显示这些域。</p>
@@ -1014,27 +1014,27 @@
 </li>
 </ul>
 <h4 id="cut命令"><a href="#cut命令" class="headerlink" title="cut命令"></a>cut命令</h4><p>cut命令用于从标准输入或文本文件中按域或行提取文本，<code>cut [选项] 文件</code>，cut的选项如下：</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910200705187" alt="img"></p>
+<p><img src="20140910200705187" alt="img"></p>
 <p>cut -c1-5  a.txt，提取a.txt的第1～5个字符。-c有三种表示方式：-cn表示第n个字符、-cn,m表示第n个字符和第m个字符、-cn-m表示第n个字符到第m个字符。-c是按字符提取文本的，无须使用-d改变域分隔符，-f按域提取文本时就需要使用-d设置域分隔符了。-f同样也可以用三种方式指定域数或域范围。</p>
 <p>cut可以灵活提取文本文件中的内容，默认将提取内容放在标准输出上，也可以使用文件重定向来将内容保存到文件。</p>
 <h4 id="paste命令"><a href="#paste命令" class="headerlink" title="paste命令"></a>paste命令</h4><p>paste命令用于将文本文件或标准输出中的内容粘贴到新的文件，它可以将来自不同文件的数据粘贴到一起，形成新的文件。paste命令格式：<code>paste [选项] file1 file2</code>，其选项如下：</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910202107249" alt="img"></p>
+<p><img src="20140910202107249" alt="img"></p>
 <p>paste FILE1 FILE2，粘贴FILE1和FILE2，FILE1在前，将FILE1的内容作为每行记录的第1域、FILE2的内容作为第2域。可以使用-d设置域分隔符paste -d: FILE1 FILE2。</p>
 <p>paste命令默认是将一个文件按列粘贴的，-s选项可以实现将一个文件按行粘贴。</p>
 <p>ls | paste -d” “ - - - -，从标准输入中读取数据时”-“选项才起作用，”-“表示读取1次标准输入数据即读取到标准输入数据中的一个域，- - - - 每行显示4个文件名。</p>
 <h4 id="split命令"><a href="#split命令" class="headerlink" title="split命令"></a>split命令</h4><p>split命令用于将大文件切割成小文件，split可以按照文件的行数、字节数切割文件，并能在输出的多个小文件中自动加上编号。split命令格式：<code>splite [选项] 待切割的大文件 输出的小文件</code>。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910204135159" alt="img"></p>
+<p><img src="20140910204135159" alt="img"></p>
 <p>split -2 a.txt final.txt，按2行对a.txt进行切割，每2行记录切割成1个文件。split命令在final.txt后面自动加上编号以区分不同的小文件，编号为aa~zz。</p>
 <p>split -b100 a.txt，-b选项在切割文件时仅考虑了文件大小并未考虑记录的完整性。</p>
 <p>split -C100 a.txt，按100B切割a.txt，按-C并不严格按照100B的大小进行切割，而是在切割时尽量维持每行的完整性。</p>
 <h4 id="tr命令"><a href="#tr命令" class="headerlink" title="tr命令"></a>tr命令</h4><p>tr命令实现字符转换功能，类似于sed命令，tr能实现的功能sed命令都可以实现。<code>tr [选项] buffer1 buffer2 &lt; outputfile</code>，其选项有三个，它只能从标准输入读取数据。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910205313734" alt="img"></p>
+<p><img src="20140910205313734" alt="img"></p>
 <p>tr -d A-Z &lt; a.txt，删除a.txt文件中所有的大写字母。</p>
 <p>tr -d “[\n]” &lt; a.txt，删除a.txt文件中所有的换行符。</p>
 <p>tr -s “[\n]” &lt; a.txt，将重复出现的换行符压缩成一个换行符。</p>
 <p>tr命令也可以加上buffer1和buffer2，将buffer1用buffer2来替换，tr “[a-z]” “[A-Z]” &lt; a.txt，将a.txt中的小写字母替换成大写字母。</p>
 <h4 id="tar命令"><a href="#tar命令" class="headerlink" title="tar命令"></a>tar命令</h4><p>tar命令是linux的归档命令，实现linux系统文件的打包和解包。<code>tar [选项] 文件名或目录名</code>，tar的常用选项如下：</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20140910211505250" alt="img"></p>
+<p><img src="20140910211505250" alt="img"></p>
 <p>tar -cf a.tar *.txt，将所有的.txt结尾的文件放入压缩包a.tar。-c表示创建新的包，-f通常是必选选项。</p>
 <p>tar -tf a.tar，查看a.tar压缩包的内容。-t列出包内容。</p>
 <p>tar -rf a.tar log*，将以log开头的文件添加到a.tar中，-u选项也可用于为包添加新的文件，-u选项完全能代替-r选项。</p>
