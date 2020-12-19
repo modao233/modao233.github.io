@@ -19,7 +19,7 @@ body {
 }
 
 a {
-    color: #57BF7D;
+    color: #e1f861;
     text-decoration: none;
 }
 
@@ -44,6 +44,13 @@ a {
     overflow-y: scroll;
     padding-left: 10px;
     padding-right: 10px;
+	background: #282c35;
+	
+	display: flex;
+    flex-direction: row;
+    padding-left: 200px;
+	padding-right: 300px;
+
 }
 
 .post-line {
@@ -57,7 +64,7 @@ a {
 .post-title {
     text-decoration: none;
     font-size: 22px;
-    color: #333;
+    color: #ffa7c4;
 }
 
 .post-summary {
@@ -66,7 +73,7 @@ a {
     margin-right: 10px;
     line-height: 26px;
     font-size: 14px;
-    color: #666;
+    color: #ffa7c4;
 }
 
 .post-date {
@@ -77,39 +84,48 @@ a {
 
 .topbar {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
+	
+	position: fixed;
+    left: 0; 
+    top: 0; 
 }
 
 .topbar-button {
     margin-left: 5px;
     margin-right: 5px;
     color: #888;
-    font-size: 22px;
+    font-size: 32px;
     font-family: angelinaFont;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
 .topbar-mine {
-    font-size: 30px;
+    font-size: 18px;
     font-weight: bold;
     color: #666;
     flex: 1;
-    font-family: Monaco;
+    font-family: angelinaFont;
 }
 
 .slogan {
-    font-size: 26px;
-    color: #B4B4B4;
-	flex-direction: row;
+	display: flex;
+    flex-direction: column;
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
+	
+	
+    font-size: 26px;
+    color: #B4B4B4;
 }
 
 .topbar-button a {
@@ -140,7 +156,7 @@ a {
     font-size: 16px;
     height: 18px;
     position: relative;
-    background: #EFEFEF;
+    background: #5a7067;
     margin-right: 5px;
     padding-left: 10px;
     padding-right: 10px;
