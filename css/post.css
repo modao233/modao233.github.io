@@ -116,13 +116,13 @@ table {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #FAFAFA;
+    background-color: #282c35;
 }
 
 th {
     border: 1px solid #AAA;
     padding: 5px;
-    background-color: #F8F8F8;
+    background-color: #282c35;
 }
 
 td {
