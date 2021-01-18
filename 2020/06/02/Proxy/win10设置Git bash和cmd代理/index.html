@@ -83,7 +83,9 @@
 		<p>win10设置Git bash和cmd代理</p>
 <a id="more"></a>
 
-<h2 id="Git-bash设置代理"><a href="#Git-bash设置代理" class="headerlink" title="Git bash设置代理"></a>Git bash设置代理</h2><h3 id="临时代理"><a href="#临时代理" class="headerlink" title="临时代理"></a>临时代理</h3><p><strong>临时代理是在当前窗口有效，关闭后就失效，适合偶尔使用，个人觉得比较方便</strong></p>
+<h2 id="Git-bash设置代理"><a href="#Git-bash设置代理" class="headerlink" title="Git bash设置代理"></a>Git bash设置代理</h2><h3 id="临时代理"><a href="#临时代理" class="headerlink" title="临时代理"></a>临时代理</h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">export all_proxy&#x3D;127.0.0.1:10809<br></code></pre></td></tr></table></figure>
+
+<p><strong>临时代理是在当前窗口有效，关闭后就失效，适合偶尔使用，个人觉得比较方便</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"># 1080是我个人使用的代理端口，不是默认配置，需要按照实际情况修改，以下同此<br>export http_proxy&#x3D;http:&#x2F;&#x2F;127.0.0.1:1080<br>export https_proxy&#x3D;https:&#x2F;&#x2F;127.0.0.1:1080<br><br>export http_proxy&#x3D;socks5:&#x2F;&#x2F;127.0.0.1:1080<br>export https_proxy&#x3D;socks5:&#x2F;&#x2F;127.0.0.1:1080<br></code></pre></td></tr></table></figure>
 
 <h3 id="永久代理"><a href="#永久代理" class="headerlink" title="永久代理"></a>永久代理</h3><p><strong>永久代理的原理是修改配置文件，Git bash启动时读取配置文件并生效</strong></p>
