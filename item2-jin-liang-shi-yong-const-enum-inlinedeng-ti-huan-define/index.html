@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Zola Terminimal theme</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://codecraft.top/style.css">
+    <link rel="stylesheet" href="https://codecraft.top/color/pink.css">
+
+        <link rel="stylesheet" href="https://codecraft.top/color/background_blue.css">
+    
+    <link rel="stylesheet" href="https://codecraft.top/font-hack-subset.css">
+
+    </head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://codecraft.top" style="text-decoration: none;">
+                    <div class="logo">
+                            Terminimal theme
+                        </div>
+                </a>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <ul class="menu__inner">
+                
+                <li class="active"><a href="https://codecraft.top">blog</a></li>
+            
+                <li><a href="https://codecraft.top/tags">tags</a></li>
+            
+                <li><a href="https://codecraft.top/archive">archive</a></li>
+            
+                <li><a href="https://codecraft.top/about">about me</a></li>
+            </ul>
+        </nav>
+    
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://codecraft.top/item2-jin-liang-shi-yong-const-enum-inlinedeng-ti-huan-define/">Item2</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2019-02-02
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://codecraft.top/tags/c/">#C++</a>&nbsp;
+                <a class="post-tag" href="https://codecraft.top/tags/item/">#Item</a></span>
+    
+
+        
+        <div class="post-content">
+            <p>Item 2: 尽量使用 const、enum、inline替换 #define</p>
+<span id="continue-reading"></span>
+<p>这个 Item 改名为 用 <strong>编译器</strong> 取代 <strong>预处理器</strong> 也许更好一些，因为 #define 或许不被视为语言的一部分。这正是问题所在。</p>
+<h2 id="const-chang-liang-dai-ti-define">const 常量代替 #define</h2>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#8fbfdc;">#define </span><span style="color:#ffb964;">ASPECT_RATIO </span><span style="color:#cf6a4c;">1.653
+</span></code></pre>
+<p>记号名称<code>ASPECT_RATIO</code>在编译器开始处理代码之前就被预处理器替换掉了，导致编译器没看见<code>ASPECT_RATIO</code>这个记号名称，从而<code>ASPECT_RATIO</code>没进入记号表（symbol table）。</p>
+<p>当运用此变量出现编译错误时，错误信息只会提到<code>1.653</code>而不是<code>ASPECT_RATIO</code>，如果<code>ASPECT_RATIO</code>定义在一个非你所写的头文件内，则很难追踪。</p>
+<p>该问题也可能出现在记号式调试（symbolic debugger）中，原因相同：名称可能并未进入到记号表。</p>
+<p>解决办法是使用一个常量替换宏：</p>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#8fbfdc;">const double</span><span style="color:#e8e8d3;"> AspectRatio = </span><span style="color:#cf6a4c;">1.653</span><span style="color:#e8e8d3;">;
+</span></code></pre>
+<p>使用常量替换 #define 的好处：</p>
+<ul>
+<li>语言常量一定会被编译器看到，因此能够进入记号表内</li>
+<li>使用常量可能会比用 #define 使用更少的空间，原因是预处理器执行的是宏替换，可能导致目标码（object code）出现多份<code>1.653</code></li>
+</ul>
+<p>使用常量替换 #define 的两种特殊情况：</p>
+<ul>
+<li>定义常量指针，若要指针所指内容不变则需要两次使用 const</li>
+<li>class专属常量：
+<ul>
+<li>为了将常量的作用域限制于class内，必须让它成为class的一个成员</li>
+<li>为了确保此常量只有一份实体，必须让它成为一个static成员</li>
+</ul>
+</li>
+</ul>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#888888;">//常量指针
+</span><span style="color:#8fbfdc;">const char</span><span style="color:#e8e8d3;">* </span><span style="color:#8fbfdc;">const</span><span style="color:#e8e8d3;"> authorName = </span><span style="color:#556633;">&quot;</span><span style="color:#99ad6a;">Scott Meyers</span><span style="color:#556633;">&quot;</span><span style="color:#e8e8d3;">;
+
+</span><span style="color:#888888;">//类专属常量
+</span><span style="color:#8fbfdc;">class </span><span style="color:#ffb964;">GamePlayer </span><span style="color:#e8e8d3;">{
+</span><span style="color:#8fbfdc;">private</span><span style="color:#e8e8d3;">:
+  </span><span style="color:#8fbfdc;">static const int</span><span style="color:#e8e8d3;"> NumTurns = </span><span style="color:#cf6a4c;">5</span><span style="color:#e8e8d3;">;      </span><span style="color:#888888;">//常量声明
+  </span><span style="color:#8fbfdc;">int</span><span style="color:#e8e8d3;"> scores[NumTurns];               </span><span style="color:#888888;">//常量使用
+  </span><span style="color:#e8e8d3;">...
+};
+</span></code></pre>
+<p>NumTurns 是 declaration（声明），而不是 definition（定义）</p>
+<p>通常，C++ 要求你为你使用的任何东西都提供一个定义，但是一个  static 整型（例如：int，char，bool）的类专属常量是一个例外。只要你不去取得它们的地址，你可以只声明并使用它，而不提供它的定义。如果你要取得一个类专属常量的地址，或者你使用的编译器在你没有取得地址时也要求定义的话（该行为不是正确的），就必须单独提供定义：</p>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#8fbfdc;">const int</span><span style="color:#e8e8d3;"> GamePlayer::NumTurns;
+</span></code></pre>
+<ul>
+<li>应该把它放在一个实现文件而非头文件中。</li>
+<li>因为类专属常量的初始值在声明时已经提供初值，定义时不可以再设初值</li>
+<li>定义时不需要 static 关键字。</li>
+</ul>
+<p>没有办法使用 #define 来创建一个类专属常量，因为 #defines 不考虑作用域。一旦一个宏被定义，它就在其后的编译过程有效（除非在某处被 #undef）。除此之外，#define 不能够提供任何封装性，没有 private #define。</p>
+<h2 id="the-enum-hack">the enum hack</h2>
+<p>旧式编译器也许不支持staitc成员在声明时获得初值，且“<code>in-class</code> 初值设定”也只允许对整数常量进行。</p>
+<p>编译器必须在编译期间知道数组大小，若编译器不允许“static整数型class常量”完成“in class初值设定”，则可改用“the enum hack”补偿做法。</p>
+<p>一个属于枚举类型的数值可充当 int 被使用。</p>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#8fbfdc;">class </span><span style="color:#ffb964;">GamePlayer </span><span style="color:#e8e8d3;">{
+</span><span style="color:#8fbfdc;">private</span><span style="color:#e8e8d3;">:
+  </span><span style="color:#8fbfdc;">enum </span><span style="color:#e8e8d3;">{ NumTurns = </span><span style="color:#cf6a4c;">5 </span><span style="color:#e8e8d3;">};</span><span style="color:#888888;">//&quot;the enmu hack&quot; —— 令NumTurns成为5的一个记号名称
+  </span><span style="color:#8fbfdc;">int</span><span style="color:#e8e8d3;"> scores[NumTurns];
+  ...
+};
+</span></code></pre>
+<p>enum hack 的行为某方面说比较像 #define 而不像 const ，事实上 enum hack 是模板元编程的基础技术。</p>
+<p>可以合法地取得一个 const 的地址，但不能合法地取得一个 enum 的地址，这正像同样不能合法地取得一个 #define 的地址。如果你不希望人们得到你的整数常量的指针或引用，枚举就是强制约束这一点的好方法。</p>
+<h2 id="inline-han-shu-dai-ti-define">inline 函数代替 #define</h2>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#888888;">//以 a 和 b 的较大值调用函数 f
+</span><span style="color:#8fbfdc;">#define </span><span style="color:#fad07a;">CALL_WITH_MAX</span><span style="color:#e8e8d3;">(</span><span style="color:#ffb964;">a</span><span style="color:#e8e8d3;">, </span><span style="color:#ffb964;">b</span><span style="color:#e8e8d3;">) </span><span style="color:#ffb964;">f</span><span style="color:#e8e8d3;">((a) &gt; (b) ? (a) : (b))
+</span></code></pre>
+<p>当写出这种宏时，必须为每一个实参加上小括号，否则可能在表达式调用这个宏时可能遇到麻烦。</p>
+<p>即使加上了小括号，仍有不可思议的事情发生：</p>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#8fbfdc;">int</span><span style="color:#e8e8d3;"> a = </span><span style="color:#cf6a4c;">5</span><span style="color:#e8e8d3;">, b = </span><span style="color:#cf6a4c;">0</span><span style="color:#e8e8d3;">;
+</span><span style="color:#ffb964;">CALL_WITH_MAX</span><span style="color:#e8e8d3;">(++a, b); 		</span><span style="color:#888888;">//a 被累加了2次
+</span><span style="color:#ffb964;">CALL_WITH_MAX</span><span style="color:#e8e8d3;">(++a, b+</span><span style="color:#cf6a4c;">10</span><span style="color:#e8e8d3;">); 	</span><span style="color:#888888;">//a 被累加了1次
+</span></code></pre>
+<p>可以通过模板内联函数获得宏的效率以及一般函数的所有可预料行为和类型安全性：</p>
+<pre style="background-color:#151515;">
+<code class="language-cpp" data-lang="cpp"><span style="color:#8fbfdc;">template</span><span style="color:#e8e8d3;">&lt;</span><span style="color:#8fbfdc;">typename</span><span style="color:#e8e8d3;"> T&gt;    
+</span><span style="color:#8fbfdc;">inline void </span><span style="color:#fad07a;">callWithMax</span><span style="color:#e8e8d3;">(</span><span style="color:#8fbfdc;">const</span><span style="color:#e8e8d3;"> T&amp; </span><span style="color:#ffb964;">a</span><span style="color:#e8e8d3;">, </span><span style="color:#8fbfdc;">const</span><span style="color:#e8e8d3;"> T&amp; </span><span style="color:#ffb964;">b</span><span style="color:#e8e8d3;">) 
+{                                       
+	</span><span style="color:#ffb964;">f</span><span style="color:#e8e8d3;">(a &gt; b ? a : b);                        
+}
+</span></code></pre>
+<p>因为 callWithMax 是一个真正的函数，它遵循函数的作用域和访问规则。例如绝对可以写出一个类内的私有内联函数，而宏一般无法做到。</p>
+<h2 id="zong-jie">总结</h2>
+<ul>
+<li>
+<p>有了const、enum 和 inline ，对预处理器的需求降低了，但并非完全消除，#include、#ifdef/#ifndef 仍然很重要</p>
+</li>
+<li>
+<p>对于简单常量，使用 const 代替宏定义，其优点：</p>
+<ul>
+<li>const 常量能够出现在符号表中，方便调试</li>
+<li>宏定义因为进行的宏替换，有时候会造成代码冗余，const 常量能够很好的避免这个问题</li>
+<li>const 常量可以作为类专属成员，#define 则毫无封装性</li>
+<li>整型的类专属常量可以在类中声明时直接初始化</li>
+</ul>
+</li>
+<li>
+<p>enum 也可以作为整型常量使用，并且无法取得其地址</p>
+</li>
+<li>
+<p>使用内联函数代替宏定义的函数将会在不损失效率的情况下降低发生错误的可能性</p>
+</li>
+</ul>
+
+        </div>
+
+        
+        <div class="pagination">
+            <div class="pagination__title">
+                <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                <hr />
+            </div>
+            <div class="pagination__buttons">
+                    <span class="button previous">
+                        <a href="https://codecraft.top/item1-shi-c-wei-yi-ge-yu-yan-lian-bang/">
+                            <span class="button__icon">←</span>&nbsp;
+                            <span class="button__text">Item1</span>
+                        </a>
+                    </span>
+                
+                
+                    <span class="button next">
+                        <a href="https://codecraft.top/item3-jin-ke-neng-shi-yong-const/">
+                            <span class="button__text">Item3</span>&nbsp;
+                            <span class="button__icon">→</span>
+                        </a>
+                    </span>
+                </div>
+        </div>
+    
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2021
+ Powered by <a href="https://www.getzola.org/">Zola</a></span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
