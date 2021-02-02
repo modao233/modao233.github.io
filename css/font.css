@@ -21,3 +21,9 @@
     src: url("../fonts/Monaco.ttf") format("TrueType");
 	font-display: swap;
 }
+
+@font-face {
+    font-family: Sarasa Mono SC Nerd;
+    src: url("../fonts/sarasa-mono-sc-nerd-regular.ttf") format("TrueType");
+	font-display: swap;
+}

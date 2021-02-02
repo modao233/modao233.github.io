@@ -34,10 +34,6 @@
           <a href="/sites">Sites</a>
         </div>
 	
-        <div class="navigatebar-button">
-          <a href="/project">Project</a>
-        </div>
-	
 </div>
 
 
@@ -122,7 +118,7 @@
 <p><img src="6.1.1.png" alt="image-20200220142525476"></p>
 <h3 id="6-2-2-非阻塞式I-O模型"><a href="#6-2-2-非阻塞式I-O模型" class="headerlink" title="6.2.2 非阻塞式I/O模型"></a>6.2.2 非阻塞式I/O模型</h3><p>进程把一个套接字设置为非阻塞是在通知内核：当所请求的I/O操作非把本进程投入睡眠才能完成时，不要把本进程投入睡眠，而是返回一个错误。</p>
 <p><img src="6.2.2.png" alt="image-20200220143123892"></p>
-<p>轮询（polling)：应用进程持续轮询内核，以查看某个操作是否就绪，这样做往往耗费大量CPU时间。</p>
+<p>**轮询（polling)**：应用进程持续轮询内核，以查看某个操作是否就绪，这样做往往耗费大量CPU时间。</p>
 <h3 id="6-2-3-I-O复用模型"><a href="#6-2-3-I-O复用模型" class="headerlink" title="6.2.3 I/O复用模型"></a>6.2.3 I/O复用模型</h3><p>通过调用select或poll，阻塞在这两个系统调用中的某一个之上，而不是阻塞在真正的I/O调用上</p>
 <p><img src="6.2.3.png" alt="image-20200220211237813"></p>
 <p>I/O复用需要两个系统调用</p>
@@ -147,7 +143,7 @@
 <p>前4种模型都是同步I/O模型，因为其中真正的I/O操作（recvfrom）将进程阻塞。只有异步I/O模型与POSIX定义的异步I/O相匹配。</p>
 <h2 id="6-3-select函数"><a href="#6-3-select函数" class="headerlink" title="6.3 select函数"></a>6.3 select函数</h2><p>该函数允许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒它。</p>
 <p>select函数告知内核对哪些描述符（就读、写或异常条件）感兴趣以及等待多长时间。描述符不局限于套接字，任何描述符都可以使用select来测试。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/select.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/time.h&gt;</span></span><br><br><span class="hljs-comment">//若有就绪描述符则返回其数目，若超时则返回0，若出错则返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">select</span><span class="hljs-params">(<span class="hljs-keyword">int</span> maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset, <span class="hljs-keyword">const</span> struct timeval *timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/select.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/time.h&gt;</span></span><br><br><span class="hljs-comment">//若有就绪描述符则返回其数目，若超时则返回0，若出错则返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">select</span><span class="hljs-params">(<span class="hljs-keyword">int</span> maxfdp1, fd_set *readset, fd_set *writeset, </span></span><br><span class="hljs-function"><span class="hljs-params">           fd_set *exceptset, <span class="hljs-keyword">const</span> struct timeval *timeout)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <p>参数解析：</p>
 <ol>
@@ -188,21 +184,21 @@
 </ol>
 <h3 id="6-3-1-描述符就绪条件"><a href="#6-3-1-描述符就绪条件" class="headerlink" title="6.3.1 描述符就绪条件"></a>6.3.1 描述符就绪条件</h3><p>满足下列条件之一，则套接字准备好读：</p>
 <ol>
-<li>该套接字的接收缓冲区中的数据字节数大于等于套接字接收缓冲区低水位标记的当前大小，对该套接字读操作不阻塞并返回一个大于0的值</li>
-<li>该连接的读半部关闭（也就是接收了FIN的TCP连接），不阻塞并返回0</li>
+<li>该套接字的接收缓冲区中的数据字节数大于等于套接字接收缓冲区低水位标记SO_RCVLOWAT的当前大小，对该套接字读操作不阻塞并返回一个大于0的值</li>
+<li>该连接的读半部关闭（也就是接收了FIN的TCP连接），读操作不阻塞并返回0</li>
 <li>该套接字是一个监听套接字，且已完成的连接数不为0，不阻塞</li>
-<li>其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件</li>
+<li>其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件。此时可以使用getsockopt来读取和清除该错误</li>
 </ol>
 <p>满足下列条件之一，则套接字准备好写：</p>
 <ol>
 <li>该套接字的发送缓冲区中的可用空间字节数大于等于套接字发送缓冲区低水位标记的当前大小，并且该套接字已经连接或者不需要连接（如UDP套接字），对该套接字写操作不阻塞并返回一个大于0的值</li>
 <li>该连接的写半部关闭，对这样的套接字的写操作将产生SIGPIPE信号</li>
-<li>使用非阻塞式connect的套接字已简历连接，或者connect已经以失败告终</li>
+<li>使用非阻塞式connect的套接字已建立连接，或者connect已经以失败告终</li>
 <li>其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件</li>
 </ol>
 <p>如果一个套接字存在带外数据或者仍处于带外标记，那么它有异常条件待处理。当某个套接字上发生错误时，它将由select标记为既可读又可写。</p>
 <blockquote>
-<p>  接收低水位标记和发生低水位标记的目的在于：允许应用进程控制在select返回可读或可写条件之前有多少数据可读或有多大空间可用于写。</p>
+<p>  接收低水位标记和发送低水位标记的目的在于：允许应用进程控制在select返回可读或可写条件之前有多少数据可读或有多大空间可用于写。</p>
 <p>  举例：当数据少于64字节时，应用程序没有任何有效工作可做，则把接收低水位标记设置为64，以防少于64字节的数据准备好时select唤醒程序。</p>
 <p>  任何UDP套接字只要其发送低水位标记小于等于发送缓冲区大小（默认关系）就总是可写的，这是因为UDP套接字不需要连接。</p>
 </blockquote>
@@ -275,7 +271,7 @@
 </ul>
 </blockquote>
 <h2 id="6-9-pselect函数"><a href="#6-9-pselect函数" class="headerlink" title="6.9 pselect函数"></a>6.9 pselect函数</h2><p>pselect函数是由POSIX发明的，如今许多Unix变种支持它</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/select.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-comment">//若有就绪描述符则返回其数目，超时返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pselect</span><span class="hljs-params">(<span class="hljs-keyword">int</span> maxfdpl, fd_set *readset, fd_set *writeset, fd_set *exceptset,</span></span><br><span class="hljs-function"><span class="hljs-params">           <span class="hljs-keyword">const</span> struct timespec *timeout, <span class="hljs-keyword">const</span> <span class="hljs-keyword">sigset_t</span> *sigmark)</span></span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/select.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-comment">//若有就绪描述符则返回其数目，超时返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pselect</span><span class="hljs-params">(<span class="hljs-keyword">int</span> maxfdpl, fd_set *readset, </span></span><br><span class="hljs-function"><span class="hljs-params">            fd_set *writeset, fd_set *exceptset,</span></span><br><span class="hljs-function"><span class="hljs-params">            <span class="hljs-keyword">const</span> struct timespec *timeout, <span class="hljs-keyword">const</span> <span class="hljs-keyword">sigset_t</span> *sigmark)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <p>pselect相对于通常的select有两个变化：</p>
 <ul>
@@ -289,7 +285,7 @@
 <p>poll提供的功能与select类似，不过在处理流设备时，它能够提供额外的信息。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;poll.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pollfd</span>&#123;</span><br>    <span class="hljs-keyword">int</span>		fd;<br>    <span class="hljs-keyword">short</span>	events;	<span class="hljs-comment">//指定要测试的条件</span><br>    <span class="hljs-keyword">short</span>	revents;<span class="hljs-comment">//返回描述符的状态</span><br>&#125;<br><span class="hljs-comment">//若有就绪描述符返回其数目，超时返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">poll</span><span class="hljs-params">(struct pollfd *fdarray, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> nfds, <span class="hljs-keyword">int</span> timeout)</span></span>;<br></code></pre></td></tr></table></figure>
 
-<p><img src="image-20200806151928718.png" alt="image-20200806151928718"></p>
+<p><img src="image-20210122225638690.png" alt="image-20210122225638690"></p>
 <p>图分为三个部分：</p>
 <ul>
 <li>第一部分：处理输入的四个常值</li>
@@ -311,7 +307,11 @@
 <blockquote>
 <p>  INFTIM常值被定义为一个负值，如果系统不能提供毫秒级精度的定时器，该值就向上舍入到最接近的支持值。</p>
 </blockquote>
-<p>如果不再关心某个特定描述符，那么可以把与它对应的pollfd结构的fd成员设置成一个负值，poll函数将忽略这样的pollfd结构的events成员，返回时将它的revents成员的值设置为0。</p>
+<p>两种方法用来（也许只是暂时的）关闭对单个文件描述符的检查，而不需要重新建立整个fds列表：</p>
+<ul>
+<li>将events设为0</li>
+<li>如果不再关心某个特定描述符，那么可以把与它对应的pollfd结构的fd成员设置成一个负值，poll函数将忽略这样的pollfd结构的events成员，返回时将它的revents成员的值设置为0。</li>
+</ul>
 <h2 id="6-11-TCP回射服务器程序（再修订版）"><a href="#6-11-TCP回射服务器程序（再修订版）" class="headerlink" title="6.11 TCP回射服务器程序（再修订版）"></a>6.11 TCP回射服务器程序（再修订版）</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits.h&gt;	//for OPEN_MAX</span></span><br><br><span class="hljs-keyword">int</span><br>main(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)&#123;<br>    <span class="hljs-keyword">int</span>		i, maxi, listenfd, connfd, sockfd;<br>    <span class="hljs-keyword">int</span>		nready;<br>    <span class="hljs-keyword">ssize_t</span>	n;<br>    <span class="hljs-keyword">char</span>	buf[MAXLINE];<br>    <span class="hljs-keyword">socklen_t</span>	clilen;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pollfd</span> <span class="hljs-title">client</span>[<span class="hljs-title">OPEN_MAX</span>];</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">cliaddr</span>, <span class="hljs-title">servaddr</span>;</span><br>    <br>    listenfd = Socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br>    <br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port = htons(SERV_PORT);<br>    <br>    Bind(listenfd, (SA*)&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    <br>    Listen(listenfd, LISTENQ);<br>    <br>    client[<span class="hljs-number">0</span>].fd = listenfd;<br>    client[<span class="hljs-number">1</span>].events = POLLRDNORM;<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">1</span>; i &lt; OPEN_MAX; i++)<br>        client[i].fd = <span class="hljs-number">-1</span>;<br>    maxi = <span class="hljs-number">0</span>;	<span class="hljs-comment">//含义client数组当前正在使用的最大下标值</span><br>    <br>    <span class="hljs-keyword">for</span>( ; ; )&#123;<br>        nready = Poll(client, maxi + <span class="hljs-number">1</span>, INFTIM);<br>        <br>        <span class="hljs-keyword">if</span>(client[<span class="hljs-number">0</span>].revents &amp; POLLRDNORM)&#123;<br>            clilen = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>            connfd = Accept(listenfd, (SA*) &amp;cliaddr, &amp;clilen);<br>            <br>            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">1</span>; i &lt; OPEN_MAX; i++)&#123;<br>                <span class="hljs-keyword">if</span>(client[i].fd &lt; <span class="hljs-number">0</span>)&#123;<br>                    client[i].fd = connfd;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(i == OPEN_MAX)<br>                err_quit(<span class="hljs-string">&quot;too many clients&quot;</span>);<br>            client[i].events = POLLRDNORM;<br>            <span class="hljs-keyword">if</span>(i &gt; maxfi)<br>                maxfi = i;<br>            <span class="hljs-keyword">if</span>(i &gt; maxi)<br>                maxi = i;<br>            <span class="hljs-keyword">if</span>(--nready &lt;= <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">1</span>; i &lt;= maxi; i++)&#123;<br>            <span class="hljs-keyword">if</span>((sockfd = client[i].fd) &lt; <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-keyword">if</span>(client[i].revents &amp; (POLLRDNORM | POLLERR))&#123;<br>                <span class="hljs-keyword">if</span>((n = Read(sockfd, buf, MAXLINE)) &lt; <span class="hljs-number">0</span>)&#123;<br>                    <span class="hljs-keyword">if</span>(errno == ECONNRESET)&#123;<br>                        Close(sockfd);<br>                        client[i].fd = <span class="hljs-number">-1</span>;<br>                    &#125;<span class="hljs-keyword">else</span><br>                        err_SYS(<span class="hljs-string">&quot;read error&quot;</span>);<br>                &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>)&#123;<br>                    Close(sockfd);<br>                    client[i].fd = <span class="hljs-number">-1</span>;<br>                &#125;<span class="hljs-keyword">else</span><br>                    Writen(sockfd, buf, n);<br>                <span class="hljs-keyword">if</span>(--nready &lt;= <span class="hljs-number">0</span>)<br>                    <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 

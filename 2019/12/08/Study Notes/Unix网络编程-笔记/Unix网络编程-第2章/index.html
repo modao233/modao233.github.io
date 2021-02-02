@@ -34,10 +34,6 @@
           <a href="/sites">Sites</a>
         </div>
 	
-        <div class="navigatebar-button">
-          <a href="/project">Project</a>
-        </div>
-	
 </div>
 
 
@@ -183,7 +179,7 @@
 <p>在关联的有效期内，验证标记Ta、Tz必须出现在对端发送的每个分组中出现。</p>
 <p>cookie包含设置本SCTP关联所需的所有状态，服务器的SCTP栈就不必保存所关联客户的有关信息。</p>
 <h3 id="关联终止"><a href="#关联终止" class="headerlink" title="关联终止"></a>关联终止</h3><p>SCTP不像TCP那样允许“半关闭”的关联，当一端关闭某个关联时，另一端必须停止发送新的数据，如果另一端有已经排队的数据，则发送完后完成关联关闭。</p>
-<p>SCTP没有TIME_WAIT状态，因为SCTP使用了验证标记。</p>
+<p><strong>SCTP没有TIME_WAIT状态，因为SCTP使用了验证标记。</strong></p>
 <p><img src="2-7.jpg" alt="image-20200603152055341"></p>
 <h3 id="SCTP状态转换图"><a href="#SCTP状态转换图" class="headerlink" title="SCTP状态转换图"></a>SCTP状态转换图</h3><p><img src="image-20200806231816959.png" alt="image-20200806231816959"></p>
 <p><img src="2-8.jpg" alt="image-20200603152253351"></p>
@@ -204,7 +200,7 @@
 <li>有些系统的临时端口范围可能更大</li>
 <li>少数客户需要一个保留端口用户客户/服务器的认证</li>
 </ol>
-<h3 id="套接字对"><a href="#套接字对" class="headerlink" title="套接字对"></a>套接字对</h3><p>一个TCP连接的套接字对是一个定义该连接的两个端点的四元组：本地IP地址、本地TCP端口号、外地IP地址、外地TCP端口号。</p>
+<h3 id="套接字对"><a href="#套接字对" class="headerlink" title="套接字对"></a>套接字对</h3><p>一个TCP连接的<strong>套接字对</strong>是一个定义该连接的两个端点的四元组：本地IP地址、本地TCP端口号、外地IP地址、外地TCP端口号。</p>
 <p>套接字对唯一标识一个网络上的每个TCP连接。</p>
 <p>标识每个端点的两个值（IP地址和TCP端口号）通常称为一个<em>套接字</em></p>
 <h2 id="2-10-TCP端口号与并发服务器"><a href="#2-10-TCP端口号与并发服务器" class="headerlink" title="2.10 TCP端口号与并发服务器"></a>2.10 TCP端口号与并发服务器</h2><p>TCP无法仅仅通过查看目的端口号来分离外来的分节到不同的端点，必须查看套接字对的所有四个元素才能确定由哪个端点来接收某个到达的分节。</p>
@@ -220,9 +216,9 @@
 </ul>
 </li>
 <li>IPv4首部的“不分片”位（DF）如果被设置，则发送数据报的主机和转发它们的路由器都不允许对它们分片</li>
-<li>IPv4和IPv6都定义了最小重组缓冲区大小，它是IPv4或IPv6的任何实现都必须保证支持的最小数据报大小。其值对于IPv4来说是576字节，对于IPv6为1500字节。</li>
+<li>IPv4和IPv6都定义了<strong>最小重组缓冲区大小</strong>，它是IPv4或IPv6的任何实现都必须保证支持的最小数据报大小。其值对于IPv4来说是576字节，对于IPv6为1500字节。</li>
 <li>TCP有一个最大分节大小（MSS），用于向对端TCP通过对端在每个分节中能够发送的最大TCP数据量。<ul>
-<li>MSS的目的是告诉对端其重组缓冲区大小的实际值，从而识图避免分片</li>
+<li>MSS的目的是告诉对端其重组缓冲区大小的实际值，从而试图避免分片</li>
 <li>SYN分节上的MSS选项占16位，最大值为65535，IPv4数据报中的最大TCP数据量为65495（65535减去IPv4首部20字节和TCP首部20字节）</li>
 <li>MSS经常设置为：$MSS=MTU-IP首部固定长度-TCP首部固定长度$</li>
 <li>以太网中使用IPv4的MSS值为1460，使用IPv6的MSS值为1440</li>
