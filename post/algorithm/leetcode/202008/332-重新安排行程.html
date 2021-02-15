@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text">解题思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hierholzer-%E7%AE%97%E6%B3%95"><span class="toc-text">Hierholzer 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%A7%E6%8B%89%E5%9B%BE%E7%9A%84%E4%B8%80%E4%BA%9B%E8%A7%A3%E9%87%8A"><span class="toc-text">欧拉图的一些解释</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		leetcode 332 重新安排行程
+	</div>
+	
+	<div class="page-date">
+		2020-08-27
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/leetcode">leetcode</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>leetcode 332 重新安排行程，涉及：欧拉图、DFS、回溯</p>
+<a id="more"></a>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个机票的字符串二维数组 [from, to]，子数组中的两个成员分别表示飞机出发和降落的机场地点，对该行程进行重新规划排序。所有这些机票都属于一个从 JFK（肯尼迪国际机场）出发的先生，所以该行程必须从 JFK 开始。</p>
+<p>说明:</p>
+<ol>
+<li>如果存在多种有效的行程，你可以按字符自然排序返回最小的行程组合。例如，行程 [“JFK”, “LGA”] 与 [“JFK”, “LGB”] 相比就更小，排序更靠前</li>
+<li>所有的机场都用三个大写字母表示（机场代码）。</li>
+<li>假定所有机票至少存在一种合理的行程。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">示例 1:<br><br>输入: [[&quot;MUC&quot;, &quot;LHR&quot;], [&quot;JFK&quot;, &quot;MUC&quot;], [&quot;SFO&quot;, &quot;SJC&quot;], [&quot;LHR&quot;, &quot;SFO&quot;]]<br>输出: [&quot;JFK&quot;, &quot;MUC&quot;, &quot;LHR&quot;, &quot;SFO&quot;, &quot;SJC&quot;]<br><br>示例 2:<br><br>输入: [[&quot;JFK&quot;,&quot;SFO&quot;],[&quot;JFK&quot;,&quot;ATL&quot;],[&quot;SFO&quot;,&quot;ATL&quot;],[&quot;ATL&quot;,&quot;JFK&quot;],[&quot;ATL&quot;,&quot;SFO&quot;]]<br>输出: [&quot;JFK&quot;,&quot;ATL&quot;,&quot;JFK&quot;,&quot;SFO&quot;,&quot;ATL&quot;,&quot;SFO&quot;]<br>解释: 另一种有效的行程是 [&quot;JFK&quot;,&quot;SFO&quot;,&quot;ATL&quot;,&quot;JFK&quot;,&quot;ATL&quot;,&quot;SFO&quot;]。但是它自然排序更大更靠后。<br></code></pre></td></tr></table></figure>
+
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="Hierholzer-算法"><a href="#Hierholzer-算法" class="headerlink" title="Hierholzer 算法"></a>Hierholzer 算法</h3><p>Hierholzer 算法用于在连通图中寻找欧拉路径，其流程如下：</p>
+<ul>
+<li>从起点出发，进行深度优先搜索。</li>
+<li>每次沿着某条边从某个顶点移动到另外一个顶点的时候，都需要删除这条边。</li>
+<li>如果没有可移动的路径，则将所在节点加入到栈中，并返回。</li>
+</ul>
+<p><strong>直接看代码更好理解，所以把欧拉图的解释放后面了</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">priority_queue</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;, <span class="hljs-built_in">std</span>::greater&lt;<span class="hljs-built_in">string</span>&gt;&gt;&gt; vec;<br><br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; stk;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; curr)</span> </span>&#123;<br>        <span class="hljs-keyword">while</span> (vec.count(curr) &amp;&amp; vec[curr].size() &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-built_in">string</span> tmp = vec[curr].top();<br>            vec[curr].pop();<br>            dfs(move(tmp));<br>        &#125;<br>        stk.emplace_back(curr);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">findItinerary</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;&amp; tickets)</span> </span>&#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; it : tickets) &#123;<br>            vec[it[<span class="hljs-number">0</span>]].emplace(it[<span class="hljs-number">1</span>]);<br>        &#125;<br>        dfs(<span class="hljs-string">&quot;JFK&quot;</span>);<br><br>        reverse(stk.begin(), stk.end());<br>        <span class="hljs-keyword">return</span> stk;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="欧拉图的一些解释"><a href="#欧拉图的一些解释" class="headerlink" title="欧拉图的一些解释"></a>欧拉图的一些解释</h3><p>我们化简本题题意：给定一个 n 个点 m 条边的图，要求从指定的顶点出发，经过所有的边恰好一次（可以理解为给定起点的「一笔画」问题），使得路径的字典序最小。</p>
+<p>这种「一笔画」问题与欧拉图或者半欧拉图有着紧密的联系，下面给出定义：</p>
+<ul>
+<li>通过图中所有边恰好一次且行遍所有顶点的通路称为欧拉通路。</li>
+<li>通过图中所有边恰好一次且行遍所有顶点的回路称为欧拉回路。</li>
+<li>具有欧拉回路的无向图称为欧拉图。</li>
+<li>具有欧拉通路但不具有欧拉回路的无向图称为半欧拉图。</li>
+</ul>
+<p>因为本题保证至少存在一种合理的路径，也就告诉了我们，这张图是一个欧拉图或者半欧拉图。我们只需要输出这条欧拉通路的路径即可。</p>
+<blockquote>
+<p>  如果没有保证至少存在一种合理的路径，我们需要判别这张图是否是欧拉图或者半欧拉图，具体地：</p>
+<ul>
+<li>对于无向图 G，G 是欧拉图当且仅当 G 是连通的且没有奇度顶点。</li>
+<li>对于无向图 G，G 是半欧拉图当且仅当 G 是连通的且 G 中恰有 2 个奇度顶点。</li>
+<li>对于有向图 G，G 是欧拉图当且仅当 G 的所有顶点属于同一个强连通分量且每个顶点的入度和出度相同。</li>
+<li>对于有向图 G，G 是半欧拉图当且仅当 G 的所有顶点属于同一个强连通分量且<ul>
+<li>恰有一个顶点的出度与入度差为 1；</li>
+<li>恰有一个顶点的入度与出度差为 1；</li>
+<li>所有其他顶点的入度和出度相同。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/post/algorithm/leetcode/202008/332-%E9%87%8D%E6%96%B0%E5%AE%89%E6%8E%92%E8%A1%8C%E7%A8%8B.html'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

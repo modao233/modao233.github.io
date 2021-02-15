@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Links</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="toc-text">题目描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text">解题思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="toc-text">方法一：深度优先搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2"><span class="toc-text">方法二：广度优先搜索</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		leetcode 130 被围绕的区域
+	</div>
+	
+	<div class="page-date">
+		2020-08-11
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/leetcode">leetcode</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>leetcode 130 被围绕的区域，涉及算法：图的BFS、DFS</p>
+<a id="more"></a>
+
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个二维的矩阵，包含 <code>&#39;X&#39;</code> 和 <code>&#39;O&#39;</code>（<strong>字母 O</strong>）。</p>
+<p>找到所有被 <code>&#39;X&#39;</code> 围绕的区域，并将这些区域里所有的 <code>&#39;O&#39;</code> 用 <code>&#39;X&#39;</code> 填充。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">示例:<br><br>X X X X<br>X O O X<br>X X O X<br>X O X X<br><br>运行你的函数后，矩阵变为：<br><br>X X X X<br>X X X X<br>X X X X<br>X O X X<br></code></pre></td></tr></table></figure>
+
+<p>解释:</p>
+<p>被围绕的区间不会存在于边界上，换句话说，任何边界上的 ‘O’ 都不会被填充为 ‘X’。 任何不在边界上，或不与边界上的 ‘O’ 相连的 ‘O’ 最终都会被填充为 ‘X’。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>本题给定的矩阵中有三种元素：</p>
+<ul>
+<li>字母 X；</li>
+<li>被字母 X 包围的字母 O；</li>
+<li>没有被字母 X 包围的字母 O。</li>
+</ul>
+<p>本题要求将所有被字母 X 包围的字母 O都变为字母 X ，但很难判断哪些 O 是被包围的，哪些 O 不是被包围的。</p>
+<p>注意到题目解释中提到：任何边界上的 O 都不会被填充为 X。 我们可以想到，所有的不被包围的 O 都直接或间接与边界上的 O 相连。我们可以利用这个性质判断 O 是否在边界上，具体地说：</p>
+<ul>
+<li>对于每一个边界上的 O，我们以它为起点，标记所有与它直接或间接相连的字母 O；</li>
+<li>最后我们遍历这个矩阵，对于每一个字母：<ul>
+<li>如果该字母被标记过，则该字母为没有被字母 X 包围的字母 O，我们将其还原为字母 O；</li>
+<li>该字母没有被标记过，则该字母为被字母 X 包围的字母 O，我们将其修改为字母 X。</li>
+</ul>
+</li>
+</ul>
+<h3 id="方法一：深度优先搜索"><a href="#方法一：深度优先搜索" class="headerlink" title="方法一：深度优先搜索"></a>方法一：深度优先搜索</h3><p><strong>思路及解法</strong></p>
+<p>我们可以使用深度优先搜索实现标记操作。在下面的代码中，我们把标记过的字母 <code>O</code> 修改为字母 <code>A</code>。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> n, m;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board, <span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>&#123;<br>        <span class="hljs-comment">//dfs是先对行首和行尾递归，再对列首和列尾递归，但第一次dfs可能已经递归了别的列首，所以添加是否已经标记为&#x27;A&#x27;的判断</span><br>        <span class="hljs-comment">//理解错误：上述要求已经包含在board[x][y] != &#x27;O&#x27;中</span><br>        <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span> || x &gt;= n || y &lt; <span class="hljs-number">0</span> || y &gt;= m || board[x][y] != <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        board[x][y] = <span class="hljs-string">&#x27;A&#x27;</span>;<br>        dfs(board, x + <span class="hljs-number">1</span>, y);<br>        dfs(board, x - <span class="hljs-number">1</span>, y);<br>        dfs(board, x, y + <span class="hljs-number">1</span>);<br>        dfs(board, x, y - <span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;<br>        n = board.size();<br>        <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        m = board[<span class="hljs-number">0</span>].size();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            dfs(board, i, <span class="hljs-number">0</span>);<br>            dfs(board, i, m - <span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; m - <span class="hljs-number">1</span>; i++) &#123;<br>            dfs(board, <span class="hljs-number">0</span>, i);<br>            dfs(board, n - <span class="hljs-number">1</span>, i);<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++) &#123;<br>                <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">&#x27;A&#x27;</span>) &#123;<br>                    board[i][j] = <span class="hljs-string">&#x27;O&#x27;</span>;<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>                    board[i][j] = <span class="hljs-string">&#x27;X&#x27;</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<ul>
+<li>时间复杂度：O(n×m)，其中 n和 m分别为矩阵的行数和列数。深度优先搜索过程中，每一个点至多只会被标记一次。</li>
+<li>空间复杂度：O(n×m)，其中 n 和 m 分别为矩阵的行数和列数。主要为深度优先搜索的栈的开销。</li>
+</ul>
+<h3 id="方法二：广度优先搜索"><a href="#方法二：广度优先搜索" class="headerlink" title="方法二：广度优先搜索"></a>方法二：广度优先搜索</h3><p><strong>思路及解法</strong></p>
+<p>我们可以使用广度优先搜索实现标记操作。在下面的代码中，我们把标记过的字母 <code>O</code> 修改为字母 <code>A</code>。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> dx[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;;<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> dy[<span class="hljs-number">4</span>] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>&#125;;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">solve</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> n = board.size();<br>        <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">int</span> m = board[<span class="hljs-number">0</span>].size();<br>        <span class="hljs-built_in">queue</span>&lt;<span class="hljs-built_in">pair</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt;&gt; que;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">if</span> (board[i][<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>                que.emplace(i, <span class="hljs-number">0</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span> (board[i][m - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>                que.emplace(i, m - <span class="hljs-number">1</span>);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; m - <span class="hljs-number">1</span>; i++) &#123;<br>            <span class="hljs-keyword">if</span> (board[<span class="hljs-number">0</span>][i] == <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>                que.emplace(<span class="hljs-number">0</span>, i);   <br>            &#125;<br>            <span class="hljs-keyword">if</span> (board[n - <span class="hljs-number">1</span>][i] == <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>                que.emplace(n - <span class="hljs-number">1</span>, i);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">while</span> (!que.empty()) &#123;<br>            <span class="hljs-keyword">int</span> x = que.front().first, y = que.front().second;<br>            que.pop();<br>            board[x][y] = <span class="hljs-string">&#x27;A&#x27;</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) &#123;<br>                <span class="hljs-keyword">int</span> mx = x + dx[i], my = y + dy[i];<br>                <span class="hljs-keyword">if</span> (mx &lt; <span class="hljs-number">0</span> || my &lt; <span class="hljs-number">0</span> || mx &gt;= n || my &gt;= m || board[mx][my] != <span class="hljs-string">&#x27;O&#x27;</span>)&#123;<br>                    <span class="hljs-keyword">continue</span>;<br>                &#125;<br>                que.emplace(mx, my);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; m; j++) &#123;<br>                <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">&#x27;A&#x27;</span>) &#123;<br>                    board[i][j] = <span class="hljs-string">&#x27;O&#x27;</span>;<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (board[i][j] == <span class="hljs-string">&#x27;O&#x27;</span>) &#123;<br>                    board[i][j] = <span class="hljs-string">&#x27;X&#x27;</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>复杂度分析</p>
+<ul>
+<li><p>时间复杂度：O(n×m)，其中 n和 m分别为矩阵的行数和列数。广度优先搜索过程中，每一个点至多只会被标记一次。</p>
+</li>
+<li><p>空间复杂度：O(n×m)，其中 n和 m分别为矩阵的行数和列数。主要为广度优先搜索的队列的开销。</p>
+</li>
+</ul>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/post/algorithm/leetcode/202008/130-%E8%A2%AB%E5%9B%B4%E7%BB%95%E7%9A%84%E5%8C%BA%E5%9F%9F.html'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>
