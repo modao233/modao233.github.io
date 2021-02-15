@@ -66,7 +66,7 @@
 
 <div class="content-area">
 	<div class="title">
-		
+		C语言标准库常用函数
 	</div>
 	
 	<div class="page-date">
@@ -75,12 +75,22 @@
 	
 	<div class="category-area">
 		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C">C</a>
+				
+				</div>
+				」
 			
 		
 	</div>
 	
 	<div class="content">
-		<h2 id="输入输出：-lt-stdio-h-gt"><a href="#输入输出：-lt-stdio-h-gt" class="headerlink" title="输入输出：&lt;stdio.h&gt;"></a>输入输出：&lt;stdio.h&gt;</h2><p><strong>文件操作</strong></p>
+		<p>C语言标准库常用函数</p>
+<a id="more"></a>
+
+<h2 id="输入输出：-lt-stdio-h-gt"><a href="#输入输出：-lt-stdio-h-gt" class="headerlink" title="输入输出：&lt;stdio.h&gt;"></a>输入输出：&lt;stdio.h&gt;</h2><p><strong>文件操作</strong></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function">FILE *<span class="hljs-title">fopen</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *mode)</span></span>;<br><span class="hljs-function">FILE *<span class="hljs-title">freopen</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *mode, FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fflush</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fclose</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rename</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *oldname, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *newname)</span></span>;<br><span class="hljs-function">FILE *<span class="hljs-title">tmpfile</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">tmpnam</span><span class="hljs-params">(<span class="hljs-keyword">char</span> s[L_tmpnam])</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">setvbuf</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">char</span> *buf, <span class="hljs-keyword">int</span> mode, <span class="hljs-keyword">size_t</span> size)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setbuf</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">char</span> *buf)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <p><strong>格式化输出</strong></p>
