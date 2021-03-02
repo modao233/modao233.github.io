@@ -260,6 +260,6 @@ div.toc {
 	line-height: 38px;
 	overflow: auto;
     max-width: 200px;
-    max-height: 700px;
+    max-height: 500px;
     white-space: nowrap;
 }
