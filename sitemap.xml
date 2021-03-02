@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://modao.site/links/index.html</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://modao.site/Linux/archlinux/</loc>
     
     <lastmod>2021-02-27</lastmod>
@@ -159,13 +166,6 @@
     <loc>https://modao.site/Linux/SUSE%E8%AF%BB%E9%9F%B3%E7%BA%A0%E6%AD%A3/</loc>
     
     <lastmod>2021-02-05</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://modao.site/links/index.html</loc>
-    
-    <lastmod>2021-02-01</lastmod>
     
   </url>
   

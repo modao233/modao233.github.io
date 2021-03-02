@@ -242,7 +242,7 @@ h1, h2, h3, h4, h5, h6, h7, h8, h9, h10 {
 }
 
 div.toc {
-	position: fixed;
+	position: absolute;
     top: 130px;
     left: 20px;
 	border-top: 5px solid #ffa7c4;
