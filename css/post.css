@@ -242,7 +242,7 @@ h1, h2, h3, h4, h5, h6, h7, h8, h9, h10 {
 }
 
 div.toc {
-	position: absolute;
+	position: flex;
     top: 130px;
     left: 20px;
 	border-top: 5px solid #ffa7c4;
@@ -257,5 +257,9 @@ div.toc {
     margin-top: 10px;
     margin-bottom: 10px;
 	font-size: 14px;
-	line-height: 38px
+	line-height: 38px;
+	overflow: auto;
+    max-width: 200px;
+    max-height: 700px;
+    white-space: nowrap;
 }

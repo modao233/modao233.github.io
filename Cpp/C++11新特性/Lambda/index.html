@@ -45,6 +45,10 @@
           <a href="/sites">Sites</a>
         </div>
 	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
 </div>
 
 
@@ -61,7 +65,7 @@
 
 
 <div class="toc">
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="toc-text">用法示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E7%9B%B8%E5%85%B3"><span class="toc-text">记录相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lazy-evaluation-%EF%BC%88%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC%EF%BC%89"><span class="toc-text">lazy evaluation （惰性求值）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91lambda%E5%86%99%E6%B3%95"><span class="toc-text">斐波那契lambda写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#auto%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-text">auto类型的参数</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="toc-text">用法示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E7%9B%B8%E5%85%B3"><span class="toc-text">记录相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lazy-evaluation-%EF%BC%88%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC%EF%BC%89"><span class="toc-text">lazy evaluation （惰性求值）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91lambda%E5%86%99%E6%B3%95"><span class="toc-text">斐波那契lambda写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#auto%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-text">auto类型的参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lambda%E6%8D%95%E8%8E%B7"><span class="toc-text">lambda捕获</span></a></li></ol>
 </div>
 
 <div class="content-area">
@@ -100,6 +104,39 @@
 
 <h3 id="auto类型的参数"><a href="#auto类型的参数" class="headerlink" title="auto类型的参数"></a>auto类型的参数</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//lambda对auto类型的参数可识别出其类型</span><br>    <span class="hljs-keyword">auto</span> fn = [](<span class="hljs-keyword">auto</span> val)&#123;<br>        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-keyword">typeid</span>(val).name() &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;<br>    &#125;;<br><br>    fn(<span class="hljs-number">123</span>);<br>    fn(<span class="hljs-number">123.f</span>);<br>    fn(<span class="hljs-string">&quot;123&quot;</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h2 id="lambda捕获"><a href="#lambda捕获" class="headerlink" title="lambda捕获"></a>lambda捕获</h2><p>声明捕获的几种形式：</p>
+<p>lambda-capture：</p>
+<ul>
+<li>capture-default：隐式捕获<ul>
+<li>&amp;：捕获引用</li>
+<li>=：捕获值</li>
+</ul>
+</li>
+<li>capture-list：显示声明捕获列表<ul>
+<li><strong>capture</strong>…opt</li>
+<li>capture-list, capture…opt</li>
+</ul>
+</li>
+<li>capture-default, capture-list：声明隐式捕获方式，并显示声明捕获列表，捕获列表的捕获方式同隐式捕获方式相反</li>
+</ul>
+<blockquote>
+<p>  capture：</p>
+<ul>
+<li>simple-capture<ul>
+<li>identifier</li>
+<li>&amp;identifier</li>
+<li>this：捕获<code>this</code>意味着<strong>通过引用</strong>捕获<code>*this</code>（它是对象的左值），<strong>而不是通过值</strong>捕获指针</li>
+<li><code>*this</code>：捕获本地实体的值</li>
+</ul>
+</li>
+<li>init-capture<ul>
+<li>identifier initializer</li>
+<li>&amp;identifier initializer</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16323032/why-cant-i-capture-this-by-reference-this-in-lambda">https://stackoverflow.com/questions/16323032/why-cant-i-capture-this-by-reference-this-in-lambda</a></p>
 
 	</div>
 </div>
