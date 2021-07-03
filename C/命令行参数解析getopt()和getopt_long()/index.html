@@ -70,21 +70,31 @@
 
 <div class="content-area">
 	<div class="title">
-		
+		命令行参数解析getopt()和getopt_long()
 	</div>
 	
 	<div class="page-date">
-		2021-02-25
+		2021-03-14
 	</div>
 	
 	<div class="category-area">
 		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C">C</a>
+				
+				</div>
+				」
 			
 		
 	</div>
 	
 	<div class="content">
-		<p>getopt或getopt_long 是一个Linux下面的库函数，作用就是解析命令行的输入。其目的就是减轻程序员自己的负担，可以直接使用系统提供的库函数，方便、高效和更安全地解析命令行的输入。</p>
+		<p>命令行参数解析getopt()和getopt_long()</p>
+<a id="more"></a>
+
+<p>getopt或getopt_long 是一个Linux下面的库函数，作用就是解析命令行的输入。其目的就是减轻程序员自己的负担，可以直接使用系统提供的库函数，方便、高效和更安全地解析命令行的输入。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getopt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> argv[], <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* optstring)</span></span>;<br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">char</span> *optarg;<br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">int</span> optind, opterr, optopt;<br></code></pre></td></tr></table></figure>
 
 <p>getopt() 所设置的全局变量包括：<br>optarg——指向当前选项参数（如果有）的指针。<br>optind——再次调用 getopt() 时的下一个 argv 指针的索引。<br>optopt——最后一个未知选项。</p>

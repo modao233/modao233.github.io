@@ -200,6 +200,7 @@
 <li>参数-l表示显示详细信息</li>
 <li>参数-a表示显示隐藏文件</li>
 <li>参数-R表示递归</li>
+<li>参数-h以易读方式显示</li>
 </ul>
 <p>查看文件内容：</p>
 <ul>
@@ -343,7 +344,35 @@
 <p><code>&gt;</code>：将命令的输出重定向到文件，覆盖型。为了防止重定向时覆盖文件：<code>set -o noclobber</code>，从现在起，如果要使用重定向并覆盖文件，应该用<code>&gt;|</code>代替<code>&gt;</code>。关闭noclobber：<code>set +o noclobber</code>。要一直开着<code>noclobber</code>选项，需要在<code>.bashrc</code>文件中增加一行<code>set -o noclobber</code>。</p>
 <p><code>&gt;&gt;</code>：将命令的输出追加到文件的底部，追加型（如果文件不存在，就会创建它）</p>
 <p><code>&lt;</code>：将文件作为命令的输入</p>
-<h2 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h2><p>【留空】</p>
+<h2 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h2><p>sort命令：对文本内容排序</p>
+<ul>
+<li>-d：按字典序升序排列，空行在前（默认）；</li>
+<li>-r：降序</li>
+<li>-b：忽略每行前面开始的空格字符，空格数量不固定时，该选项几乎是必须要使用的；</li>
+<li>-f：忽略大小写进行排列</li>
+<li>-h：使用易读性数字（例如：2K、1G）</li>
+<li>按行中的某个字段排序：<ul>
+<li>-k [n]：n从1开始计数，字段间默认使用空格隔开，默认-k 1</li>
+<li>+[n]：n从0开始计算，默认+0</li>
+</ul>
+</li>
+<li>-n：按照<strong>数值</strong>的大小排序（升序）</li>
+<li>-o &lt;输出文件&gt;：将排序后的结果存入指定的文件</li>
+<li>-u：忽略相同行</li>
+<li>-c：选项检查文件是否已经排好序</li>
+<li>-t &lt;分割字符&gt;：指定分隔符，默认的分隔符为空白字符和非空白字符之间的空字符</li>
+<li>–help：显示帮助</li>
+<li>–version：显示版本信息</li>
+</ul>
+<p>uniq命令：比较相邻的行并去掉重复的行，对不相邻的行无效</p>
+<ul>
+<li>-c：去掉相邻重复的行，并在每列旁边重复该行出现的次数</li>
+<li>-u：仅显示出现一次的行</li>
+<li>-d：只显示重复的行</li>
+<li>[输入文件]：指定已经排好序的文本文件，如果不指定此项，则从标准读取数据</li>
+<li>[输出文件]：指定输出的文件，如果不指定此选项，则将内容显示到标准输出设备（显示终端）</li>
+</ul>
+<p>【留空】</p>
 <p>sed和echo已经另外记录</p>
 <p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzAxODI5ODMwOA==&mid=2666545074&idx=1&sn=7a6f86ae45c5e7254b71da7fcbbdef8d&chksm=80dcfb19b7ab720ff5ffc78d77092b805c54b22839e02fbf4741f06be90845552172258ac978&scene=21#wechat_redirect">Linux 三剑客之 awk 详解</a></p>
 <h2 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a>磁盘管理</h2><p>查看磁盘空间：<code>df</code>，默认以B为单位且不显示单位</p>
