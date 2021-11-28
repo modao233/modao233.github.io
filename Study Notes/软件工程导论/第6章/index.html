@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80"><span class="toc-text">6.1 程序设计语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E7%BC%96%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="toc-text">6.2 编码风格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%86%85%E9%83%A8%E7%9A%84%E6%96%87%E6%A1%A3"><span class="toc-text">程序内部的文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%AF%B4%E6%98%8E"><span class="toc-text">数据说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E5%8F%A5%E6%9E%84%E9%80%A0"><span class="toc-text">语句构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-text">输入输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%88%E7%8E%87"><span class="toc-text">效率</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		第6章 软件编码
+	</div>
+	
+	<div class="page-date">
+		2020-04-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/软件工程导论">软件工程导论</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>第6章 软件编码</p>
+<span id="more"></span>
+
+<p>编码和测试统称为实现。</p>
+<p>所谓编码，就是把软件设计结果翻译成用某种程序设计语言书写的程序。作为软件工程过程的一个阶段，编码是对设计的进一步具体化，因此，程序的质量主要取决于软件设计的质量。</p>
+<h2 id="6-1-程序设计语言"><a href="#6-1-程序设计语言" class="headerlink" title="6.1 程序设计语言"></a>6.1 程序设计语言</h2><p>程序设计语言：</p>
+<ol>
+<li><p> 机器语言，几乎不使用。</p>
+</li>
+<li><p> 汇编语言，特殊场合使用。</p>
+</li>
+<li><p> 高级语言，明显优于汇编语言。 </p>
+</li>
+</ol>
+<p><strong>程序设计语言的划代：</strong></p>
+<p><img src="/%E7%AC%AC6%E7%AB%A0/a1.png" alt="img"></p>
+<p><strong>选择语言的理想标准：</strong></p>
+<ol>
+<li> 为了使程序容易测试和维护以减少软件的总成本，所选用的高级语言应该有理想的模块化机制，以及可读性好的控制结构和数据结构；</li>
+<li> 为了便于调试和提高软件可靠性，语言特点应该使编译程序能够尽可能多地发现程序中的错误；</li>
+<li> 为了降低软件开发和维护的成本，选用的高级语言应该有良好的独立编译机制。 </li>
+</ol>
+<p><strong>主要的实用标准：</strong></p>
+<ol>
+<li><p> 系统用户的要求</p>
+</li>
+<li><p> 可以使用的编译程序</p>
+</li>
+<li><p> 可以得到的软件工具</p>
+</li>
+<li><p> 工程规模</p>
+</li>
+<li><p> 程序员的知识</p>
+</li>
+<li><p> 软件可移植性要求</p>
+</li>
+<li><p> 软件的应用领域</p>
+</li>
+</ol>
+<h2 id="6-2-编码风格"><a href="#6-2-编码风格" class="headerlink" title="6.2 编码风格"></a>6.2 编码风格</h2><p>源程序代码的逻辑简明清晰、易读易懂是好程序的一个重要标准。</p>
+<h3 id="程序内部的文档"><a href="#程序内部的文档" class="headerlink" title="程序内部的文档"></a>程序内部的文档</h3><ol>
+<li><p> 恰当的标识符</p>
+</li>
+<li><p> 适当的注解</p>
+</li>
+<li><p> 程序的视觉组织</p>
+</li>
+</ol>
+<h3 id="数据说明"><a href="#数据说明" class="headerlink" title="数据说明"></a>数据说明</h3><ol>
+<li><p> 数据说明的次序应该标准化。</p>
+</li>
+<li><p> 当多个变量名在一个语句中说明时，应该按字母顺序排列这些变量。</p>
+</li>
+<li><p> 如果设计时使用了一个复杂的数据结构，则应该用注解说明用程序设计语言实现这个数据结构的方法和特点。 </p>
+</li>
+</ol>
+<h3 id="语句构造"><a href="#语句构造" class="headerlink" title="语句构造"></a>语句构造</h3><ol>
+<li><p> 不要为了节省空间而把多个语句写在同一行；</p>
+</li>
+<li><p> 尽量避免复杂的条件测试；</p>
+</li>
+<li><p> 尽量减少对“非”条件的测试；</p>
+</li>
+<li><p> 避免大量使用循环嵌套和条件嵌套；</p>
+</li>
+<li><p> 利用括号使逻辑表达式或算术表达式的运算次序清晰直观。 </p>
+</li>
+</ol>
+<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><ol>
+<li><p> 对所有输入数据都进行检验；</p>
+</li>
+<li><p> 检查输入项重要组合的合法性；</p>
+</li>
+<li><p> 保持输入格式简单；</p>
+</li>
+<li><p> 使用数据结束标记，不要要求用户指定数据的数目；</p>
+</li>
+<li><p> 明确提示交互式输入的请求，详细说明可用的选择或边界数值；</p>
+</li>
+<li><p> 当程序设计语言对格式有严格要求时，应保持输入格式一致；</p>
+</li>
+<li><p> 设计良好的输出报表；</p>
+</li>
+<li><p> 给所有输出数据加标志。 </p>
+</li>
+</ol>
+<h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><ol>
+<li><p> 效率主要指处理机时间和存储器容量两个方面。</p>
+</li>
+<li><p> 效率是性能要求，因此应该在需求分析阶段确定效率方面的要求。</p>
+</li>
+<li><p> 效率是靠好设计来提高的。</p>
+</li>
+<li><p> 程序的效率和程序的简单程度是一致的，不要牺牲程序的清晰性和可读性来不必要地提高效率。 </p>
+</li>
+</ol>
+<p><strong>效率问题</strong></p>
+<ol>
+<li><p>程序运行时间</p>
+<ul>
+<li>  写程序之前先简化算术的和逻辑的表达式</li>
+<li>  仔细研究嵌套的循环，以确定是否有语句可以从内层往外移</li>
+<li>  尽量避免使用多维数组</li>
+<li>  尽量避免使用指针和复杂的表</li>
+<li>  使用执行时间短的算术运算</li>
+<li>  不要混合使用不同的数据类型</li>
+<li>  尽量使用整数运算和布尔表达式</li>
+</ul>
+</li>
+<li><p>存储器效率</p>
+<ul>
+<li>  使用能保持功能域的结构化控制结构，是提高效率的好方法</li>
+<li>  在微处理机中如果要求使用最少的存储单元，则应选用有紧缩存储器特性的编译程序，在非常必要时可以使用汇编语言。</li>
+<li>  提高执行效率的技术通常也能提高存储器效率。提高存储器效率的关键同样是“简单”。</li>
+</ul>
+</li>
+<li><p>输入输出的效率</p>
+<p> 如果用户为了给计算机提供输入信息或为了理解计算机输出的信息，所需花费的脑力劳动是经济的，那么人和计算机之间通信的效率就高。因此，简单清晰同样是提高人机通信效率的关键。 </p>
+</li>
+</ol>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

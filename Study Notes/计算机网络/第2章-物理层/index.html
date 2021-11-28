@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">物理层基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">数据通信的基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%8B%E9%9D%A2%E7%9A%84%E4%BC%A0%E8%BE%93%E5%AA%92%E4%BD%93"><span class="toc-text">物理层下面的传输媒体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E9%81%93%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="toc-text">信道复用技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%BD%E5%B8%A6%E6%8E%A5%E5%85%A5%E6%8A%80%E6%9C%AF"><span class="toc-text">宽带接入技术</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		第2章 物理层
+	</div>
+	
+	<div class="page-date">
+		2018-07-23
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/计算机网络">计算机网络</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>物理层的任务，信道复用技术，宽带接入技术。</p>
+<span id="more"></span>
+
+<h2 id="物理层基本概念"><a href="#物理层基本概念" class="headerlink" title="物理层基本概念"></a>物理层基本概念</h2><p>物理层考虑的是传输数据比特流，而不是传输媒体。</p>
+<p>物理层的作用：屏蔽掉传输媒体和通信手段的差异，使物理层上面的数据链路层感觉不到这些差异。</p>
+<p>物理层的主要任务：确定与传输媒体的接口有关的一些特性：</p>
+<ul>
+<li>  机械特性：接口所用接线器形状、尺寸、引脚数目等</li>
+<li>  电气特性：接口电缆的各条线上的电压范围</li>
+<li>  功能特性：指明某一电平的电压的意义</li>
+<li>  过程特性：指明对于不同功能的各种可能事件的出现顺序</li>
+</ul>
+<p>数据在计算机内部多采用并行传输方式，而在通信线路（传输媒体）上的传输方式一般是串行传输，因此物理层还要完成传输方式的转换。</p>
+<h2 id="数据通信的基础知识"><a href="#数据通信的基础知识" class="headerlink" title="数据通信的基础知识"></a>数据通信的基础知识</h2><p>数据通信系统分为三部分：</p>
+<ul>
+<li>源系统（或发送端、发送方）<ul>
+<li>  源点：又称源站、信源，源点设备产生要传输的数据</li>
+<li>  发送器：源点产生的数字比特流通过发送器编码后在传输系统中传输，典型的发送器是调制器</li>
+</ul>
+</li>
+<li>  传输系统（或传输网络）</li>
+<li>目的系统（或接收端、接收方）<ul>
+<li>  接收器：接收传输系统传送过来的信号并转换为能被目的设备处理的信息，典型的接收器是解调器</li>
+<li>  终点：又称目的站、信宿，终点设备从接收器获取传送来的数字比特流，然后把信息输出</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724102825213.png" alt="image-20200724102825213"></p>
+<p>通信的目的是传送<strong>消息</strong>。<strong>数据</strong> 是运送消息的实体。<strong>信号</strong>是数据的电气或电磁的表现。</p>
+<p>信号可分为两大类：</p>
+<ul>
+<li>  <strong>模拟信号</strong>或<strong>连续信号</strong>：代表消息的参数的取值是连续的</li>
+<li>  <strong>数字信号</strong>或<strong>离散信号</strong>：代表消息的参数的取值是离散的</li>
+</ul>
+<p>通信有三种基本方式：</p>
+<ul>
+<li>  <strong>单向通信</strong>：又称<strong>单工通信</strong>，只能有一个方向的通信而没有反方向的交互</li>
+<li>  <strong>双向交替通信</strong>：又称<strong>半双工通信</strong>，通信的双方都可以发送（或接收）消息，但不能双方同时发送（或接收）</li>
+<li>  <strong>双向同时通信</strong>：又称<strong>全双工通信</strong>，通信的双方可以同时发送和接收消息。</li>
+</ul>
+<p>来自信源的信号称为<strong>基带信号</strong>，需要进行调制，调制分为两大类：</p>
+<ul>
+<li><p><strong>基带调制</strong>：仅仅对基带信号的波形进行转换，使它能够与信道特性相适应，调制后仍为<strong>基带信号</strong>，这种过程常称为<strong>编码</strong></p>
+<p>  常用的编码方式：</p>
+<ul>
+<li><p>  不归零制：正电平代表1，负电平代表0</p>
+</li>
+<li><p>  归零制：正脉冲代表1，负脉冲代表0</p>
+</li>
+<li><p>  曼彻斯特编码：位周期中心的向上跳变代表0，位周期中心的向下跳变代表1，可反过来定义</p>
+</li>
+<li><p>差分曼彻斯特编码：在每一位的中心始终都有跳变，位开始边界有跳变代表0，没有代表1</p>
+<p>  <img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724105305561.png" alt="image-20200724105305561"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>带通调制</strong>：使用载波进行调制，把基带信号的频率范围搬移到较高的频段，并转换成模拟信号，调制后的信号称为<strong>带通信号</strong></p>
+<p>  基本的带通调制方法：</p>
+<ul>
+<li>  <strong>调幅（AM）</strong>：载波的振幅随基带数字信号而变化</li>
+<li>  <strong>调频（FM）</strong>：载波的频率随基带数字信号而变化</li>
+<li>  <strong>调相（PM）</strong>：载波的初始相位随基带数字信号而变化</li>
+</ul>
+<p>  <img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724105520922.png" alt="image-20200724105520922"></p>
+</li>
+</ul>
+<p>限制码元在信道上的传输速率的因素有两个：</p>
+<ul>
+<li><p>信道能够通过的频率范围：信道的频带越宽，能够通过的信号高频分量越多，就可以用更高的速率传送码元而不出现码间串码。</p>
+<p>  在任何信道中，码元传输的速率是有上限的，传输速率超过此上限，就会出现严重的码间串扰问题，使接收端对码元的判决（即识别）成为不可能</p>
+</li>
+<li><p>  信噪比：信道的带宽或信道中的信噪比越大，信息的极限传输速率越高</p>
+</li>
+</ul>
+<h2 id="物理层下面的传输媒体"><a href="#物理层下面的传输媒体" class="headerlink" title="物理层下面的传输媒体"></a>物理层下面的传输媒体</h2><p>传输媒体也称为传输介质或传输媒介，可分为两大类：</p>
+<ul>
+<li><p>导引型传输媒体</p>
+<ul>
+<li><p>双绞线</p>
+<ul>
+<li>  屏蔽双绞线STP</li>
+<li>  无屏蔽双绞线UTP</li>
+</ul>
+<p>  <img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724111113085.png" alt="image-20200724111113085"></p>
+</li>
+<li><p>同轴电缆</p>
+<p>  <img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724111141937.png" alt="image-20200724111141937"></p>
+</li>
+<li><p>光缆：光纤通信就是利用光导纤维（简称光纤）传递光脉冲来进行通信</p>
+<ul>
+<li>  多模光纤：适合近距离传输</li>
+<li>  单模光纤：适合远距离传输，成本高</li>
+</ul>
+<p>  <img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724111455192.png" alt="image-20200724111455192"></p>
+</li>
+</ul>
+</li>
+<li><p>非导引型传输媒体</p>
+<ul>
+<li>  短波通信（即高频通信）：主要靠电离层的反射</li>
+<li>微博通信<ul>
+<li>  地面微波通信</li>
+<li>  卫星通信</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="信道复用技术"><a href="#信道复用技术" class="headerlink" title="信道复用技术"></a>信道复用技术</h2><p><img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724142316235.png" alt="image-20200724142316235"></p>
+<p>在进行通信时，复用器和分用器成对地使用。</p>
+<p><strong>频分复用FDM</strong>：所有用户在同样的时间占用不同的带宽（指频率宽度）资源</p>
+<p><strong>时分复用TDM</strong>：所有用户在不同的时间占用同样的频带宽度</p>
+<p><img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724142237614.png" alt="image-20200724142237614"></p>
+<p>时分复用可能造成线路资源的浪费，统计时分复用STDM是一种改进的时分复用技术，能明显提高信道的利用率。集中器常使用STDM，使用STDM的集中器也叫做<strong>智能复用器</strong>，有存储转发能力。</p>
+<p><img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724142800590.png" alt="image-20200724142800590"><img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724142811630.png" alt="image-20200724142811630"></p>
+<p>统计时分复用又称<strong>异步时分复用</strong>，因为其STDM帧中一个用户所占的时隙并不是周期性出现的，而是按需动态分配时隙。</p>
+<p>普通时分复用又称<strong>同步时分复用</strong>。</p>
+<p>TDM帧和STDM帧都是物理层传送比特流中所划分的帧，与数据链路层的帧是完全不同的概念。</p>
+<p><strong>波分复用WDM</strong>：光的频分复用</p>
+<p><img src="/%E7%AC%AC2%E7%AB%A0-%E7%89%A9%E7%90%86%E5%B1%82/image-20200724145414706.png" alt="image-20200724145414706"></p>
+<p><strong>码分复用CDM</strong>：可以在同样的时间使用同样的频带进行通信，因为用户使用经过特殊挑选的不同码型，所以不会造成干扰。常用名词是<strong>码分多址CDMA</strong>。</p>
+<h2 id="宽带接入技术"><a href="#宽带接入技术" class="headerlink" title="宽带接入技术"></a>宽带接入技术</h2><p>从接入媒体看可分为两大类：</p>
+<ul>
+<li>有线宽带接入<ul>
+<li>  非对称数字用户线ADSL技术</li>
+<li>  光纤同轴混合网</li>
+<li>  FTTx技术</li>
+</ul>
+</li>
+<li>  无线宽带接入</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

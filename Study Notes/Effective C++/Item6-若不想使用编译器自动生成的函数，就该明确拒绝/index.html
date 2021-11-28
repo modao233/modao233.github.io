@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%92%E7%BB%9D%E7%BC%96%E8%AF%91%E5%99%A8%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BE%9B%E7%9A%84%E6%9C%BA%E5%88%B6"><span class="toc-text">拒绝编译器自动提供的机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Item6-若不想使用编译器自动生成的函数，就该明确拒绝
+	</div>
+	
+	<div class="page-date">
+		2021-01-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Effective C++">Effective C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>Item6-若不想使用编译器自动生成的函数，就该明确拒绝</p>
+<span id="more"></span>
+
+<h2 id="拒绝编译器自动提供的机制"><a href="#拒绝编译器自动提供的机制" class="headerlink" title="拒绝编译器自动提供的机制"></a>拒绝编译器自动提供的机制</h2><p>不想要编译器自动生成拷贝构造函数和拷贝赋值运算符，你就必须自己声明，如果你不想要拷贝操作被使用，那你可以将它们声明为 private 。</p>
+<p>将拷贝构造函数和拷贝赋值运算符声明为私有的。通过显式声明一个成员函数，可以防止编译器生成它自己的版本，而且将这个函数声明为私有的，可以防止别人调用它。</p>
+<p>一般而言这个做法并不绝对安全，因为member 函数和友元函数还是能够调用你的 private  函数。除非你十分聪明地不定义它们，那么，当有人不小心地调用了它们，在  link-time（链接时）会出现一个连接错误（linkage error）。</p>
+<p>“将成员函数声明为 private 而且故意不实现它们”这一伎俩被大多数人接受，因而被用在 C++ iostream 程序库中阻止 copying 行为。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeForSale</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  ...<br><span class="hljs-keyword">private</span>:<br>  ...<br>  <span class="hljs-comment">//@ declarations only</span><br>  <span class="hljs-built_in">HomeForSale</span>(<span class="hljs-keyword">const</span> HomeForSale&amp;);	<span class="hljs-comment">//参数名称并非必要，当这个函数不实现了也就没必要写出来了</span><br>  HomeForSale&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> HomeForSale&amp;);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>对于上面的类定义，编译器将阻止客户拷贝对象的企图，如果你不小心在成员或友元函数中这样做了，连接程序会提出抗议。</p>
+<p>通常会专门设计一个阻止 copying 动作的 base class 内：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Uncopyable</span> &#123;</span><br><span class="hljs-keyword">protected</span>:                                  <br>  <span class="hljs-built_in">Uncopyable</span>() &#123;&#125;                           <br>  ~<span class="hljs-built_in">Uncopyable</span>() &#123;&#125;                          <br><br><span class="hljs-keyword">private</span>:<br> <span class="hljs-comment">//@but prevent copying</span><br>  <span class="hljs-built_in">Uncopyable</span>(<span class="hljs-keyword">const</span> Uncopyable&amp;);             <br>  Uncopyable&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Uncopyable&amp;);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>为求阻止 HomeForSale 对象被拷贝，唯一需要做的就是继承 Uncopyable：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomeForSale</span>:</span> <span class="hljs-keyword">private</span> Uncopyable &#123;      <br>  ...                                        <br>&#125;;  <br></code></pre></td></tr></table></figure>
+
+<p>这样行得通，因为只要任何人（包括member 函数或 friend 函数）尝试拷贝 HomeForSale 对象，编译器便尝试着生成一个 copy 构造函数和一个 copy assignment 操作符，这些编译器生成的函数会尝试调用基类的对应函数，而这些调用将被拒绝，因为基类的拷贝函数是 private的。</p>
+<p>Uncopyable 的实现和使用颇为微妙：</p>
+<ul>
+<li>  从 Uncopyable 继承不必是 public的</li>
+<li>  Uncopyable 的 析构函数不必是 virtual 的。因为 Uncopyable 不包含数据</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>  为了驳回编译器自动（暗自）提供的机能，将相应的成员函数声明为 private 并且不予实现</p>
+</li>
+<li><p>  使用像 Uncopyable 这样的基类也是一种做法</p>
+</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

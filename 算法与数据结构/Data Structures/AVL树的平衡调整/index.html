@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#AVL%E7%AE%80%E4%BB%8B"><span class="toc-text">AVL简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AVL%E8%87%AA%E6%97%8B"><span class="toc-text">AVL自旋</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E6%97%8B%E8%AF%A6%E8%A7%A3"><span class="toc-text">自旋详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A6%E5%B7%A6LL"><span class="toc-text">左左LL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%B3%E5%8F%B3RR"><span class="toc-text">右右RR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A6%E5%8F%B3LR"><span class="toc-text">左右LR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%B3%E5%B7%A6RL"><span class="toc-text">右左RL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E4%BB%A3%E7%A0%81"><span class="toc-text">总体代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-text">参考文章</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		AVL树的平衡调整
+	</div>
+	
+	<div class="page-date">
+		2018-07-10
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Data Structures">Data Structures</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>AVL树的全称是平衡搜索二叉树，本质上也是一个二叉搜索树（BST），满足BST树的所有性质。</p>
+<span id="more"></span>
+
+<h2 id="AVL简介"><a href="#AVL简介" class="headerlink" title="AVL简介"></a>AVL简介</h2><p>在BST中搜索一个结点的平均时间复杂度是<code>O(lgn)</code>，最坏情况会出现<code>O(n)</code>，即出现连续的左/右子树：</p>
+<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722110541352.png" alt="image-20200722110541352"></p>
+<p>这种情况其实就已经是链式存储，无法将树的优势体现出来。为了避免这种情况，我们就要保证这个树随时都是平衡的。当然要求不能那么严格，不需要保证它完全平衡（每个节点的左右子树高度差的绝对值都为0），AVL树就要求的是只要每个节点的左右子树高度差的绝对值不超过1，就可以称作平衡。</p>
+<h2 id="AVL自旋"><a href="#AVL自旋" class="headerlink" title="AVL自旋"></a>AVL自旋</h2><p>**平衡因子(BF)**：每个节点的左右子树的高度差的绝对值</p>
+<p>在AVL树中，插入一个节点之后都会判断是否打破了这个平衡。如果打破了，就需要对树进行调整，让它仍然满足平衡的定义，并且不改变中序遍历的正确性。这步操作就叫做旋转。即，是否需要旋转以及具体的旋转实现都要包含在插入函数里。</p>
+<p>根据插入的位置不同，旋转的类型也分为4种：LL，LR，RL，RR：</p>
+<ul>
+<li>  左左LL：插入点位于x的左孩子的左子树中，右旋。</li>
+<li>  左右LR：插入点位于x的左孩子的右子树中，较低的先左旋，转换为LL问题，再右旋。</li>
+<li>  右左RL：插入点位于x的右孩子的左子树中，较低的先右旋，转化为RR问题。再左旋。</li>
+<li>  右右RR：插入点威武x的右孩子的右子树中，左旋。</li>
+</ul>
+<h2 id="自旋详解"><a href="#自旋详解" class="headerlink" title="自旋详解"></a>自旋详解</h2><p>AVL树定义以及前置函数定义：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLTree</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> height;                <span class="hljs-comment">//当前节点的高度。</span><br>    <span class="hljs-keyword">int</span> data;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLTree</span>* <span class="hljs-title">lchild</span>;</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLTree</span>* <span class="hljs-title">rchild</span>;</span><br>&#125;Tree,*pTree;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">GetHeight</span><span class="hljs-params">(pTree tree)</span>            <span class="hljs-comment">//获取当前节点的高度。</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(tree == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">return</span> tree-&gt;height;<br>&#125;<br> <br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">IsBalanced</span><span class="hljs-params">(pTree tree)</span>            <span class="hljs-comment">//判断是否平衡。</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> BF = <span class="hljs-built_in">GetHeight</span>(tree-&gt;lchild) - <span class="hljs-built_in">GetHeight</span>(tree-&gt;rchild);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(BF) &lt; <span class="hljs-number">2</span>;<br>&#125;<br> <br></code></pre></td></tr></table></figure>
+
+<h3 id="左左LL"><a href="#左左LL" class="headerlink" title="左左LL"></a>左左LL</h3><p>导致失衡的节点node(1)是节点node(3)的左子树的左孩子，即为LL情况。</p>
+<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722111715724.png" alt="image-20200722111715724"></p>
+<p>算法步骤：</p>
+<ol>
+<li> 对于节点node(3)，先取它的左孩子node(2)作为临时节点temp；</li>
+<li> 将temp的右孩子作为node的左孩子；</li>
+<li> 再将node作为temp的右孩子；</li>
+<li> 更新height</li>
+<li> node = temp。此时，temp就成为了原来node一样的存在。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function">pTree <span class="hljs-title">Rotate_LL</span><span class="hljs-params">(pTree tree)</span></span><br><span class="hljs-function"></span>&#123;<br>    pTree temp = tree-&gt;lchild;<br>    tree-&gt;lchild = temp-&gt;rchild;<br>    temp-&gt;rchild = tree;<br> <br>    <span class="hljs-comment">//更新高度,先更新node再更新temp。</span><br>    tree-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(tree-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(tree-&gt;rchild))+<span class="hljs-number">1</span>;<br>    temp-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(temp-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(temp-&gt;rchild))+<span class="hljs-number">1</span>;<br> <br>    <span class="hljs-keyword">return</span> temp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>调整结果：</p>
+<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722111910017.png" alt="image-20200722111910017"></p>
+<h3 id="右右RR"><a href="#右右RR" class="headerlink" title="右右RR"></a>右右RR</h3><p>RR型由于和LL型是对称的，所以只需要将LL中的所有左右互换就可以了。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function">pTree <span class="hljs-title">Rotate_RR</span><span class="hljs-params">(pTree tree)</span></span><br><span class="hljs-function"></span>&#123;<br>    pTree temp = tree-&gt;rchild;<br>    tree-&gt;rchild = temp-&gt;lchild;<br>    temp-&gt;lchild = tree;<br> <br>    <span class="hljs-comment">//更新高度,先更新node再更新temp。</span><br>    tree-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(tree-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(tree-&gt;rchild))+<span class="hljs-number">1</span>;<br>    temp-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(temp-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(temp-&gt;rchild))+<span class="hljs-number">1</span>;<br> <br>    <span class="hljs-keyword">return</span> temp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="左右LR"><a href="#左右LR" class="headerlink" title="左右LR"></a>左右LR</h3><p>引起失衡的是node节点的左子树的右孩子。</p>
+<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722113201966.png" alt="image-20200722113201966"></p>
+<p>在节点值为4的节点插入5，是4的右孩子。此时已经失衡。即为LR问题。</p>
+<p>算法步骤：</p>
+<ol>
+<li><p> 先获取node（值为10的节点）的左孩子节点，记为temp。</p>
+</li>
+<li><p> 对temp进行RR。</p>
+</li>
+<li><p> 对node进行LL。</p>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function">pTree <span class="hljs-title">Rotate_LR</span><span class="hljs-params">(pTree tree)</span></span><br><span class="hljs-function"></span>&#123;<br>    pTree temp = tree-&gt;lchild;<br>    tree-&gt;lchild = <span class="hljs-built_in">Rotate_RR</span>(temp);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Rotate_LL</span>(tree);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="右左RL"><a href="#右左RL" class="headerlink" title="右左RL"></a>右左RL</h3><p>RL型由于和LR型是对称的，所以只需要将LR中的所有左右互换就可以了。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function">pTree <span class="hljs-title">Rotate_RL</span><span class="hljs-params">(pTree tree)</span></span><br><span class="hljs-function"></span>&#123;<br>    pTree temp = tree-&gt;rchild;<br>    tree-&gt;rchild = <span class="hljs-built_in">Rotate_LL</span>(temp);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Rotate_RR</span>(tree);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="总体代码"><a href="#总体代码" class="headerlink" title="总体代码"></a>总体代码</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;cstdio&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;stack&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLNode</span> *<span class="hljs-title">position</span>;</span><br><span class="hljs-keyword">typedef</span> position AVLTree;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLNode</span>&#123;</span><br>    <span class="hljs-keyword">int</span> data;<br>    AVLTree left;<br>    AVLTree right;<br>    <span class="hljs-keyword">int</span> h;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">GetHight</span><span class="hljs-params">(AVLTree A)</span></span>&#123;<br>    <span class="hljs-keyword">if</span>(A == <span class="hljs-literal">NULL</span>)	<span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">return</span> A-&gt;h;<br>&#125;<br><span class="hljs-comment">//左单旋</span><br><span class="hljs-function">AVLTree <span class="hljs-title">SLR</span><span class="hljs-params">(AVLTree A)</span></span>&#123;<br>    AVLTree B = A-&gt;left;<br>    A-&gt;left = B-&gt;right;<br>    B-&gt;right = A;<br>    A-&gt;h = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHight</span>(A-&gt;left),<span class="hljs-built_in">GetHight</span>(A-&gt;right))+<span class="hljs-number">1</span>;<br>    B-&gt;h = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHight</span>(B-&gt;left),<span class="hljs-built_in">GetHight</span>(B-&gt;right))+<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> B;<br>&#125; <br><span class="hljs-comment">//右单旋</span><br><span class="hljs-function">AVLTree <span class="hljs-title">SRR</span><span class="hljs-params">(AVLTree A)</span></span>&#123;<br>    AVLTree B = A-&gt;right;<br>    A-&gt; right = B-&gt;left;<br>    B-&gt;left = A;<br>    A-&gt;h = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHight</span>(A-&gt;left),<span class="hljs-built_in">GetHight</span>(A-&gt;right))+<span class="hljs-number">1</span>;<br>    B-&gt;h = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHight</span>(B-&gt;left),<span class="hljs-built_in">GetHight</span>(B-&gt;right))+<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> B;<br>&#125;<br><span class="hljs-comment">//左右双旋</span><br><span class="hljs-function">AVLTree <span class="hljs-title">DLRR</span><span class="hljs-params">(AVLTree A)</span></span>&#123;<br>    AVLTree B = A-&gt;left;<br>    A-&gt;left = <span class="hljs-built_in">SRR</span>(B);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">SLR</span>(A);<br>&#125;<br><span class="hljs-comment">//右左双旋 </span><br><span class="hljs-function">AVLTree <span class="hljs-title">DRLR</span><span class="hljs-params">(AVLTree A)</span></span>&#123;<br>    AVLTree B = A-&gt;right;<br>    A-&gt;right = <span class="hljs-built_in">SLR</span>(B);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">SRR</span>(A);<br>&#125;<br><span class="hljs-function">AVLTree <span class="hljs-title">Insert</span><span class="hljs-params">(AVLTree T,<span class="hljs-keyword">int</span> x)</span></span>&#123;<br>    <span class="hljs-keyword">if</span>(T == <span class="hljs-literal">NULL</span>)&#123;<br>        T = <span class="hljs-keyword">new</span> <span class="hljs-built_in">AVLNode</span>();<br>        T-&gt;data = x;<br>        T-&gt;left = <span class="hljs-literal">NULL</span>;<br>        T-&gt;right = <span class="hljs-literal">NULL</span>;<br>        T-&gt;h = <span class="hljs-number">0</span>;<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(x &lt; T-&gt;data)&#123;<br>        T-&gt;left = <span class="hljs-built_in">Insert</span>(T-&gt;left,x);<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">GetHight</span>(T-&gt;left) - <span class="hljs-built_in">GetHight</span>(T-&gt;right) == <span class="hljs-number">2</span>)<br>            <span class="hljs-keyword">if</span>(x &lt; T-&gt;left-&gt;data)	T = <span class="hljs-built_in">SLR</span>(T);<br>            <span class="hljs-keyword">else</span> T = <span class="hljs-built_in">DLRR</span>(T);<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(x &gt; T-&gt;data)&#123;<br>        T-&gt;right = <span class="hljs-built_in">Insert</span>(T-&gt;right,x);<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">GetHight</span>(T-&gt;left)-<span class="hljs-built_in">GetHight</span>(T-&gt;right) == <span class="hljs-number">-2</span>)<br>            <span class="hljs-keyword">if</span>(x &gt; T-&gt;right-&gt;data)	T = <span class="hljs-built_in">SRR</span>(T);<br>            <span class="hljs-keyword">else</span>	T = <span class="hljs-built_in">DRLR</span>(T);<br>    &#125;<br>    T-&gt;h = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHight</span>(T-&gt;left),<span class="hljs-built_in">GetHight</span>(T-&gt;right))+<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> T;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/czc1997/article/details/82846830">数据结构：AVL树的平衡调整——LL，LR，RL，RR</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41162823/article/details/82466517">AVL树的调整（笔记）</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

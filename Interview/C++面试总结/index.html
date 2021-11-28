@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#day01"><span class="toc-text">day01</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E5%BA%8F"><span class="toc-text">字节序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%81%BF%E5%85%8Dtime-wait%E7%8A%B6%E6%80%81"><span class="toc-text">避免time_wait状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4%E3%80%81%E5%83%B5%E5%B0%B8%E3%80%81%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%E6%A6%82%E5%BF%B5"><span class="toc-text">守护、僵尸、孤儿进程概念</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4"><span class="toc-text">守护</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day02"><span class="toc-text">day02</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E7%B1%BB%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E9%87%8D%E8%BD%BD%E3%80%81%E8%A6%86%E7%9B%96%E3%80%81%E9%9A%90%E8%97%8F"><span class="toc-text">C++类成员函数的重载、覆盖、隐藏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#epoll%E4%B8%ADET%E5%92%8CLT%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">epoll中ET和LT的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E4%B8%8E%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">动态链接与静态链接的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E5%A5%BD%E7%9A%84%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0"><span class="toc-text">如何设计好的散列函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%8A%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">哈希表解决冲突的方法及优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day03"><span class="toc-text">day03</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day04"><span class="toc-text">day04</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="toc-text">虚函数实现机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">进程和线程的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E5%A4%9A%E6%80%81%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0"><span class="toc-text">C++多态及其实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86%E5%92%8C%E6%A0%88%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">堆和栈的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%90%8D%E7%AE%A1%E9%81%93%E5%92%8C%E6%97%A0%E5%90%8D%E7%AE%A1%E9%81%93%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">有名管道和无名管道的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%AA%E4%BA%9B%E5%87%BD%E6%95%B0%E4%B8%8D%E8%83%BD%E5%AE%9A%E4%B9%89%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">哪些函数不能定义为虚函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day05"><span class="toc-text">day05</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E4%B8%8E%E9%80%92%E5%BD%92%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">循环与递归的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E7%9A%84%E4%BC%98%E7%82%B9%E4%BB%A5%E5%8F%8A%E5%92%8C%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">内联函数的优点以及和宏定义的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#strcpy-%E5%92%8Cstrncpy-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">strcpy 和strncpy 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#strcpy-%E5%87%BD%E6%95%B0%E7%94%A8%E6%9D%A5%E5%A4%8D%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%85%B6%E5%8E%9F%E5%9E%8B%E4%B8%BA%EF%BC%9A"><span class="toc-text">strcpy()函数用来复制字符串，其原型为：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#strncpy-%E7%94%A8%E6%9D%A5%E5%A4%8D%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%89%8Dn%E4%B8%AA%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%85%B6%E5%8E%9F%E5%9E%8B%E4%B8%BA%EF%BC%9A"><span class="toc-text">strncpy()用来复制字符串的前n个字符，其原型为：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E5%8F%8A%E5%85%B6%E5%8E%9F%E5%9B%A0"><span class="toc-text">内存对齐及其原因</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%AE%9A%E4%B9%89%EF%BC%8C%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%8C%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%AD%BB%E9%94%81%EF%BC%8C%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%EF%BC%9F"><span class="toc-text">死锁的定义，死锁的四个必要条件，如何避免死锁，如何解决死锁？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day06"><span class="toc-text">day06</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E6%A8%A1%E7%89%88%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84"><span class="toc-text">C++模版是怎么实现的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%B8%AAC-%E7%A8%8B%E5%BA%8F%E4%BB%8E%E7%BC%96%E8%AF%91%E5%88%B0%E8%BF%90%E8%A1%8C%E9%83%BD%E7%BB%8F%E5%8E%86%E4%BA%86%E5%93%AA%E4%BA%9B%E9%98%B6%E6%AE%B5"><span class="toc-text">一个C++程序从编译到运行都经历了哪些阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#select-poll-epoll%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">select&#x2F;poll&#x2F;epoll的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">进程间调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%94%81%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="toc-text">多线程锁的种类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E6%97%8B%E9%94%81%E4%B8%8E%E4%BA%92%E6%96%A5%E9%94%81%E5%8C%BA%E5%88%AB"><span class="toc-text">自旋锁与互斥锁区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day07"><span class="toc-text">day07</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%80%9A%E8%AE%AF%E6%96%B9%E5%BC%8F"><span class="toc-text">进程的通讯方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reactor%E5%92%8Cproactor%E6%A8%A1%E5%BC%8F"><span class="toc-text">reactor和proactor模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get%E4%B8%8Epost%E5%8C%BA%E5%88%AB"><span class="toc-text">get与post区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E4%B8%8D%E8%83%BD%E5%A3%B0%E6%98%8E%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0%EF%BC%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E5%8F%AF%E4%BB%A5"><span class="toc-text">为什么构造函数不能声明为虚函数，析构函数可以</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%8D%8F%E8%AE%AE%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">滑动窗口协议的概念</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day08"><span class="toc-text">day08</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#vector%E4%B8%8Elist%E5%8C%BA%E5%88%AB"><span class="toc-text">vector与list区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#epoll-ET%E4%B8%8B%E9%9D%9E%E9%98%BB%E5%A1%9E%E8%AF%BB%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E6%98%AF%E9%98%BB%E5%A1%9E"><span class="toc-text">epoll ET下非阻塞读，为什么不能是阻塞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#extern-C%E4%BD%9C%E7%94%A8%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%EF%BC%9F"><span class="toc-text">extern C作用，为什么需要？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E5%92%8C%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB"><span class="toc-text">内存泄漏和内存溢出的区别和联系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%EF%BC%88%E5%9B%9B%E7%A7%8D%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%EF%BC%8C%E5%88%86%E5%88%AB%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E%EF%BC%89"><span class="toc-text">类型转换有哪些？（四种类型转换，分别举例说明）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day09"><span class="toc-text">day09</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP%E8%B7%9FHTTPS%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">HTTP跟HTTPS的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#struct%E8%B7%9Fclass%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">struct跟class的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85%EF%BC%8C%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="toc-text">生产者，消费者模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84%EF%BC%9F"><span class="toc-text">虚拟地址空间有什么好处？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day10"><span class="toc-text">day10</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94vector%E5%92%8Clist%E5%92%8Cdeque"><span class="toc-text">对比vector和list和deque</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#vector%EF%BC%9A%E7%9B%B8%E5%BD%93%E4%BA%8E%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84"><span class="toc-text">vector：相当于一个数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#List%EF%BC%9A%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8"><span class="toc-text">List：双向链表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Deque%EF%BC%9A%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97"><span class="toc-text">Deque：双端队列</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%8C%BA%E5%88%AB"><span class="toc-text">使用区别</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E4%B8%8E%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-text">局部变量与全局变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5"><span class="toc-text">进程同步与互斥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E4%B8%80%E4%B8%AA%E7%BD%91%E7%AB%99%EF%BC%8C%E5%88%B0%E6%98%BE%E7%A4%BA%E9%A1%B5%E9%9D%A2%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">输入一个网站，到显示页面的过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#URL%E7%9A%84%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-text">URL的解析过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8TCP%E8%80%8C%E4%B8%8D%E7%94%A8UDP"><span class="toc-text">HTTP 为什么要用TCP而不用UDP?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day11"><span class="toc-text">day11</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%B8%89%E4%B8%AA%E7%89%B9%E6%80%A7"><span class="toc-text">C++面向对象的三个特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8CARP%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">DNS是什么，ARP是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket%E9%98%BB%E5%A1%9E%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9E%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84recv%E3%80%81send%E3%80%81read%E3%80%81write%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-text">socket阻塞与非阻塞情况下的recv、send、read、write返回值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#http%E6%8A%A5%E6%96%87%E7%9A%84%E6%A0%BC%E5%BC%8F%EF%BC%8C%E5%A4%B4%E9%83%A8%E5%8C%85%E5%90%AB%E5%93%AA%E4%BA%9B"><span class="toc-text">http报文的格式，头部包含哪些</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day12"><span class="toc-text">day12</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#const%E3%80%81typedef%E3%80%81define%E3%80%81inline%E5%8C%BA%E5%88%AB"><span class="toc-text">const、typedef、define、inline区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E5%92%8C%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F%E6%9C%89%E4%BB%80%E4%B9%88%E6%84%8F%E4%B9%89%EF%BC%9F"><span class="toc-text">静态成员函数和静态成员变量有什么意义？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E7%9A%84%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">迭代器删除元素的会发生什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BF%85%E9%A1%BB%E5%9C%A8%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%BC%8F%E9%87%8C%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-text">必须在构造函数初始化式里进行初始化的数据成员有哪些？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E7%89%88%E7%89%B9%E5%8C%96%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E7%89%B9%E5%8C%96%EF%BC%9F"><span class="toc-text">模版特化的概念，为什么特化？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day13"><span class="toc-text">day13</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E8%BF%9B%E7%A8%8B%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%E5%88%86%E5%B8%83"><span class="toc-text">C++进程内存空间分布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tcp-%E5%A6%82%E4%BD%95%E5%AE%9E%E6%97%B6%E7%9B%91%E6%B5%8B%E6%96%AD%E7%BA%BF%E6%83%85%E5%86%B5%EF%BC%9F"><span class="toc-text">tcp 如何实时监测断线情况？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E4%B8%8Bps%E5%91%BD%E4%BB%A4%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%9F%A5%E7%9C%8B%E5%86%85%E5%AD%98%E5%BD%93%E5%89%8D%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%80%81%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="toc-text">Linux下ps命令，以及查看内存当前使用状态的命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E5%B8%B8%E9%97%AE%E5%91%BD%E4%BB%A4"><span class="toc-text">四个常问命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day14"><span class="toc-text">day14</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">什么时候使用多进程和什么时候使用多线程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9A%E4%BD%8D%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="toc-text">如何定位内存泄露?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">Linux 读写锁的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E5%88%86%E5%B8%83%EF%BC%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">虚拟内存的分布，虚拟内存存在的原因</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day15"><span class="toc-text">day15</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%BB%A7%E6%89%BF%E4%BA%86%E7%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%93%AA%E4%BA%9B%E4%B8%9C%E8%A5%BF"><span class="toc-text">子进程继承了父进程的哪些东西</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vector%E5%A6%82%E4%BD%95%E6%89%A9%E5%AE%B9"><span class="toc-text">vector如何扩容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="toc-text">怎么理解线程安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8F%AF%E9%9D%A0%E5%9C%B0UDP%E4%BC%A0%E8%BE%93"><span class="toc-text">如何实现可靠地UDP传输</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8B%A5%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0%E4%B8%8D%E5%A3%B0%E6%98%8E%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0%EF%BC%8C%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E5%90%8E%E6%9E%9C%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">若析构函数不声明为虚函数，会有什么后果？为什么？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day16"><span class="toc-text">day16</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cookie%E8%B7%9Fsession%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">cookie跟session的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="toc-text">深拷贝浅拷贝</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E6%80%A7%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-text">多态性都有哪些？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#STL%E4%B8%AD%E4%BB%BF%E5%87%BD%E6%95%B0%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%8C%E5%92%8C%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C%EF%BC%8C%E5%93%AA%E4%B8%AA%E6%95%88%E7%8E%87%E9%AB%98"><span class="toc-text">STL中仿函数有什么用，和函数指针有什么不同，哪个效率高</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Ping%E7%9A%84%E5%8E%9F%E7%90%86%E4%B8%8E%E5%B7%A5%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-text">Ping的原理与工作过程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day17"><span class="toc-text">day17</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E3%80%81%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">虚函数、纯虚函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#i-%E6%98%AF%E5%90%A6%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C-%E5%B9%B6%E8%A7%A3%E9%87%8A%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="toc-text">i++是否原子操作?并解释为什么?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP%E3%80%81UDP%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">TCP、UDP端口扫描的实现方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%9F%E5%86%99%E4%B8%80%E4%B8%AA%E6%A8%A1%E6%9D%BF%E7%9A%84%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-text">什么是智能指针？写一个模板的智能指针</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day18"><span class="toc-text">day18</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E5%90%84%E4%B8%AA%E5%AE%B9%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-text">C++各个容器的实现原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B2%E8%A7%A3%E4%B8%80%E4%B8%8B%E9%87%8E%E6%8C%87%E9%92%88"><span class="toc-text">讲解一下野指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E5%AE%9E%E7%8E%B0%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-text">共享内存为什么可以实现进程通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B1%A0-%E6%A0%B9%E6%8D%AE%E9%A1%B9%E7%9B%AE%E6%9D%A5%E9%97%AE-%EF%BC%9F"><span class="toc-text">什么时候使用线程池(根据项目来问)？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#http1-0%E5%92%8C1-1%E5%92%8C2-0%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">http1.0和1.1和2.0的区别？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day19"><span class="toc-text">day19</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E6%80%81%E4%B8%8E%E7%94%A8%E6%88%B7%E6%80%81%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F%E4%BB%8E%E7%94%A8%E6%88%B7%E6%80%81%E5%88%87%E6%8D%A2%E5%88%B0%E5%86%85%E6%A0%B8%E6%80%81%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-text">内核态与用户态的区别？从用户态切换到内核态有哪几种方式？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#volatile%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">volatile关键字</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">C++对象的生命周期</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#day20"><span class="toc-text">day20</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#connect%E5%8F%AF%E8%83%BD%E4%BC%9A%E9%95%BF%E6%97%B6%E9%97%B4%E9%98%BB%E5%A1%9E%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3"><span class="toc-text">connect可能会长时间阻塞，怎么解决?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#keepalive-%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF%EF%BC%9F%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-text">keepalive 是什么东西？如何使用？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E5%8F%AF%E8%AF%BB%EF%BC%9F"><span class="toc-text">socket什么情况下可读？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#udp%E8%B0%83%E7%94%A8connect%E6%9C%89%E4%BB%80%E4%B9%88%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="toc-text">udp调用connect有什么作用？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#socket%E7%BC%96%E7%A8%8B%EF%BC%8C%E5%A6%82%E6%9E%9Cclient%E6%96%AD%E7%94%B5%E4%BA%86%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E7%9F%A5%E9%81%93%EF%BC%9F"><span class="toc-text">socket编程，如果client断电了，服务器如何快速知道？</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		
+	</div>
+	
+	<div class="page-date">
+		2021-11-07
+	</div>
+	
+	<div class="category-area">
+		
+			
+		
+	</div>
+	
+	<div class="content">
+		<h3 id="day01"><a href="#day01" class="headerlink" title="day01"></a>day01</h3><h4 id="字节序"><a href="#字节序" class="headerlink" title="字节序"></a>字节序</h4><p>机器字节序：内存地址存储由低到高，根据数据是先存高位还是低位到内存地址</p>
+<ul>
+<li>  大端字节序（Big-Endian）：高位字节先存到内存的低地址端</li>
+<li>  小端字节序（Little-Endian）：低位字节先存到内存的低地址端</li>
+</ul>
+<p>网络字节序：大端字节序（Big-Endian）</p>
+<h4 id="避免time-wait状态"><a href="#避免time-wait状态" class="headerlink" title="避免time_wait状态"></a>避免time_wait状态</h4><p>TCP主动关闭端的time_wait状态如何避免：首先服务器可以设置SO_REUSEADDR套接字选项（端口复用）来通知内核，如果端口忙，但TCP连接位于TIME_WAIT状态时可以重用端口。在一个非常有用的场景就是，如果你的服务器程序停止后想立即重启，而新的套接字依旧希望使用同一端口，此时SO_REUSEADDR选项就可以避免TIME_WAIT状态。</p>
+<h4 id="守护、僵尸、孤儿进程概念"><a href="#守护、僵尸、孤儿进程概念" class="headerlink" title="守护、僵尸、孤儿进程概念"></a>守护、僵尸、孤儿进程概念</h4><h5 id="守护"><a href="#守护" class="headerlink" title="守护"></a>守护</h5><p><strong>孤儿进程：</strong></p>
+<p>父进程由于某种原因结束了，但其子进程仍在运行，这些子进程就成了孤儿进程。</p>
+<p>由init进程收养系统的孤儿进程，并在孤儿进程结束时进行回收资源。</p>
+<p><strong>作用：</strong><br>在现实中用户可能刻意使进程成为孤儿进程，这样就可以让它与父进程会话脱钩，成为后面会介绍的守护进程。</p>
+<p><strong>僵尸进程：</strong></p>
+<p>什么是僵尸进程？</p>
+<p>一个子进程的进程描述符在子进程退出时不会释放，只有当父进程通过 wait() 或 waitpid() 获取了子进程信息后才会释放。如果子进程退出，而父进程并没有调用 wait() 或  waitpid()，那么子进程的进程描述符仍然保存在系统中，这种进程称之为僵尸进程。</p>
+<p>僵尸进程通过 ps 命令显示出来的状态为 Z（zombie）。</p>
+<p>系统所能使用的进程号是有限的，如果产生大量僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程。</p>
+<p>要消灭系统中大量的僵尸进程，只需要将其父进程杀死，此时僵尸进程就会变成孤儿进程，从而被 init 所收养，这样 init 就会释放所有的僵尸进程所占有的资源，从而结束僵尸进程</p>
+<p><strong>守护进程概念：</strong></p>
+<p>守护进程（daemon）是生存期长的一种进程，没有控制终端。它们常常在系统引导装入时启动，仅在系统关闭时才终止。UNIX系统有很多守护进程，守护进程程序的名称通常以字母“d”结尾。</p>
+<p>守护进程是在后台运行不受终端控制的进程（如输入、输出等），一般的网络服务都是以守护进程的方式运行。守护进程脱离终端的主要原因有两点：（1）用来启动守护进程的终端在启动守护进程之后，需要执行其他任务。（2）（如其他用户登录该终端后，以前的守护进程的错误信息不应出现）由终端上的一些键所产生的信号（如中断信号），不应对以前从该终端上启动的任何守护进程造成影响。要注意守护进程与后台运行程序（即加＆启动的程序）的区别。</p>
+<p>需要注意的是，用户层守护进程的父进程是 init进程（进程ID为1），从上面的输出<code>PPID</code>一列也可以看出，内核守护进程的父进程并非是 init进程。对于用户层守护进程， 因为它真正的父进程在 fork 出子进程后就先于子进程 exit 退出了，所以它是一个由 init 继承的孤儿进程。</p>
+<p>在创建守护进程之前，需要了解一些基础概念：</p>
+<p>进程组 ：</p>
+<ul>
+<li>  每个进程除了有一个进程ID之外，还属于一个进程组</li>
+<li>  进程组是一个或多个进程的集合，同一进程组中的各进程接收来自同一终端的各种信号</li>
+<li>  每个进程组有一个组长进程。组长进程的进程组ID等于其进程ID</li>
+</ul>
+<p>会话：会话（session）是一个或多个进程组的集合，进程调用 setsid 函数（原型：<code>pid_t setsid(void)</code> ）建立一个会话。</p>
+<p>进程调用 setsid 函数建立一个新会话，如果调用此函数的进程不是一个进程组的组长，则此函数创建一个新会话。具体会发生以下3件事：</p>
+<ul>
+<li>  该进程变成新会话的会话首进程（session leader，会话首进程是创建该会话的进程）。此时，该进程是新会话的唯一进程。</li>
+<li>  该进程成为一个新进程组的组长进程。新进程组ID是该调用进程的进程ID</li>
+<li>  该进程没有控制终端。如果调用setsid之前该进程有一个控制终端，那么这种联系也被切断</li>
+</ul>
+<p>如果该调用进程已经是一个进程组的组长，则此函数返回出错。为了保证不处于这种情况，通常先调用fork，然后使其父进程终止，而子进程则继续。因为子进程继承了父进程的进程组ID，而其进程ID是重新分配的，两者不可能相等，这就保证了子进程不是一个进程组的组长。</p>
+<p><strong>创建守护进程的过程：</strong>  </p>
+<ol>
+<li><p> 调用fork创建子进程。父进程终止，让子进程在后台继续执行。</p>
+</li>
+<li><p> 子进程调用setsid产生新会话期并失去控制终端调用setsid()使子进程进程成为新会话组长和新的进程组长，同时失去控制终端。</p>
+</li>
+<li><p> 忽略SIGHUP信号。会话组长进程终止会向其他进程发该信号，造成其他进程终止。</p>
+</li>
+<li><p> 调用fork再创建子进程。子进程终止，子子进程继续执行，由于子子进程不再是会话组长，从而禁止进程重新打开控制终端。</p>
+</li>
+<li><p> 改变当前工作目录为根目录。一般将工作目录改变到根目录，这样进程的启动目录也可以被卸掉。</p>
+</li>
+<li><p> 关闭打开的文件描述符，打开一个空设备，并复制到标准输出和标准错误上。 避免调用的一些库函数依然向屏幕输出信息。</p>
+</li>
+<li><p> 重设文件创建掩码清除从父进程那里继承来的文件创建掩码，设为0。</p>
+</li>
+<li><p> 用openlog函数建立与syslogd的连接。</p>
+</li>
+</ol>
+<p>对于守护进程，需要遵守一些编写规则：</p>
+<ul>
+<li><p>在后台运行：为避免挂起控制终端，将守护进程放入后台运行。方法亦即在进程中调用 fork 后使父进程终止，子进程则继续在后台运行</p>
+  <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> ((pid = fork()) != <span class="hljs-number">0</span>) <span class="hljs-comment">/* parent */</span><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure></li>
+<li><p>  脱离控制终端，登陆会话和进程组：调用 setsid 后会发生的3件事上面已经阐述：（a）成为新会话的首进程，（b）成为一个新进程组的组长进程、（c）没有控制终端</p>
+</li>
+<li><p>禁止进程重新打开控制终端：进程已经成为无终端的会话组长。但它可以重新申请打开一个控制终端。可以通过使进程不再成为会话组长来禁止进程重新打开控制终端</p>
+  <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> ( (pid = fork()) != <span class="hljs-number">0</span>)<span class="hljs-comment">/* parent */</span><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure></li>
+<li><p>  当前目录更改为根目录：从父进程处继承过来的当前工作目录可能在一个挂载的文件系统，所以如果守护进程的当前工作目录在一个挂载文件中，那么该文件系统就不能被卸载</p>
+</li>
+<li><p>  关闭不再需要的文件描述符：这使守护进程不再持有从其父进程继承来的任何文件描述符</p>
+</li>
+</ul>
+<p>具体可参考以下代码（来自《APUE》一书）：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">作者：Zyoung<br>链接：https:<span class="hljs-comment">//www.zhihu.com/question/38609004/answer/529315259</span><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">daemonize</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *cmd)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>					i, fd0, fd1, fd2;<br>    <span class="hljs-keyword">pid_t</span>				pid;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">rlimit</span>		<span class="hljs-title">rl</span>;</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sigaction</span>	<span class="hljs-title">sa</span>;</span><br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Clear file creation mask.</span><br><span class="hljs-comment">	 */</span><br>    umask(<span class="hljs-number">0</span>);<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Get maximum number of file descriptors.</span><br><span class="hljs-comment">	 */</span><br>    <span class="hljs-keyword">if</span> (getrlimit(RLIMIT_NOFILE, &amp;rl) &lt; <span class="hljs-number">0</span>)<br>        err_quit(<span class="hljs-string">&quot;%s: can&#x27;t get file limit&quot;</span>, cmd);<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Become a session leader to lose controlling TTY.</span><br><span class="hljs-comment">	 */</span><br>    <span class="hljs-keyword">if</span> ((pid = fork()) &lt; <span class="hljs-number">0</span>)<br>        err_quit(<span class="hljs-string">&quot;%s: can&#x27;t fork&quot;</span>, cmd);<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pid != <span class="hljs-number">0</span>) <span class="hljs-comment">/* parent */</span><br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    setsid();<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Ensure future opens won&#x27;t allocate controlling TTYs.</span><br><span class="hljs-comment">	 */</span><br>    sa.sa_handler = SIG_IGN;<br>    sigemptyset(&amp;sa.sa_mask);<br>    sa.sa_flags = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span> (sigaction(SIGHUP, &amp;sa, <span class="hljs-literal">NULL</span>) &lt; <span class="hljs-number">0</span>)<br>        err_quit(<span class="hljs-string">&quot;%s: can&#x27;t ignore SIGHUP&quot;</span>, cmd);<br>    <span class="hljs-keyword">if</span> ((pid = fork()) &lt; <span class="hljs-number">0</span>)<br>        err_quit(<span class="hljs-string">&quot;%s: can&#x27;t fork&quot;</span>, cmd);<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pid != <span class="hljs-number">0</span>) <span class="hljs-comment">/* parent */</span><br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Change the current working directory to the root so</span><br><span class="hljs-comment">	 * we won&#x27;t prevent file systems from being unmounted.</span><br><span class="hljs-comment">	 */</span><br>    <span class="hljs-keyword">if</span> (chdir(<span class="hljs-string">&quot;/&quot;</span>) &lt; <span class="hljs-number">0</span>)<br>        err_quit(<span class="hljs-string">&quot;%s: can&#x27;t change directory to /&quot;</span>, cmd);<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Close all open file descriptors.</span><br><span class="hljs-comment">	 */</span><br>    <span class="hljs-keyword">if</span> (rl.rlim_max == RLIM_INFINITY)<br>        rl.rlim_max = <span class="hljs-number">1024</span>;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; rl.rlim_max; i++)<br>        close(i);<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Attach file descriptors 0, 1, and 2 to /dev/null.</span><br><span class="hljs-comment">	 */</span><br>    fd0 = open(<span class="hljs-string">&quot;/dev/null&quot;</span>, O_RDWR);<br>    fd1 = dup(<span class="hljs-number">0</span>);<br>    fd2 = dup(<span class="hljs-number">0</span>);<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Initialize the log file.</span><br><span class="hljs-comment">	 */</span><br>    openlog(cmd, LOG_CONS, LOG_DAEMON);<br>    <span class="hljs-keyword">if</span> (fd0 != <span class="hljs-number">0</span> || fd1 != <span class="hljs-number">1</span> || fd2 != <span class="hljs-number">2</span>) &#123;<br>        syslog(LOG_ERR, <span class="hljs-string">&quot;unexpected file descriptors %d %d %d&quot;</span>,<br>          fd0, fd1, fd2);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38609004/answer/529315259">https://www.zhihu.com/question/38609004/answer/529315259</a></p>
+<p>  <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/38609004/answer/77190522">https://www.zhihu.com/question/38609004/answer/77190522</a></p>
+<p>  《APUE》一书第13章</p>
+</blockquote>
+<h3 id="day02"><a href="#day02" class="headerlink" title="day02"></a>day02</h3><h4 id="C-类成员函数的重载、覆盖、隐藏"><a href="#C-类成员函数的重载、覆盖、隐藏" class="headerlink" title="C++类成员函数的重载、覆盖、隐藏"></a>C++类成员函数的重载、覆盖、隐藏</h4><ol>
+<li><p>成员函数被<strong>重载</strong>的特征：</p>
+<ul>
+<li>  相同的范围（在同一个类中）；</li>
+<li>  函数名字相同；</li>
+<li>  参数不同；</li>
+<li>  virtual 关键字可有可无。</li>
+</ul>
+</li>
+<li><p><strong>覆盖</strong>是指派生类函数覆盖基类函数，特征是：</p>
+<ul>
+<li>  不同的范围（分别位于派生类与基类）；</li>
+<li>  函数名字相同；</li>
+<li>  参数相同；</li>
+<li>  基类函数必须有virtual 关键字。</li>
+</ul>
+</li>
+<li><p><strong>隐藏</strong>是指派生类的函数屏蔽了与其同名的基类函数，规则如下：</p>
+<ul>
+<li>  如果派生类的函数与基类的函数同名，但是参数不同。此时，不论有无virtual关键字，基类的函数将被隐藏（注意别与重载混淆）。</li>
+<li>  如果派生类的函数与基类的函数同名，并且参数也相同，但是基类函数没有virtual 关键字。此时，基类的函数被隐藏（注意别与覆盖混淆）。</li>
+</ul>
+</li>
+</ol>
+<p><img src="/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/v2-bf6c191ade5ece460f165a226a3559f9_r.jpg" alt="preview"></p>
+<h4 id="epoll中ET和LT的区别"><a href="#epoll中ET和LT的区别" class="headerlink" title="epoll中ET和LT的区别"></a>epoll中ET和LT的区别</h4><p>epoll有EPOLLLT和EPOLLET两种触发模式，LT是默认的模式，ET是“高速”模式。</p>
+<p>LT（水平触发）模式下，只要这个文件描述符还有数据可读，每次 epoll_wait都会返回它的事件，提醒用户程序去操作；</p>
+<p>ET（边缘触发）模式下，在它检测到有 I/O 事件时，通过 epoll_wait  调用会得到有事件通知的文件描述符，对于每一个被通知的文件描述符，如可读，则必须将该文件描述符一直读到空，让 errno 返回 EAGAIN  为止，否则下次的 epoll_wait 不会返回余下的数据，会丢掉事件。如果ET模式不是非阻塞的，那这个一直读或一直写势必会在最后一次阻塞。</p>
+<h4 id="动态链接与静态链接的区别"><a href="#动态链接与静态链接的区别" class="headerlink" title="动态链接与静态链接的区别"></a>动态链接与静态链接的区别</h4><p>静态链接和动态链接两者最大的区别就在于链接的时机不一样，静态链接是在形成可执行程序前，而动态链接的进行则是在程序执行时</p>
+<p>静态链接的优缺点：</p>
+<ul>
+<li><p>缺点很明显：</p>
+<ul>
+<li>  一是浪费空间，因为每个可执行程序中对所有需要的目标文件都要有一份副本，所以如果多个程序对同一个目标文件都有依赖，如多个程序中都调用了printf()函数，则这多个程序中都含有printf.o，所以同一个目标文件都在内存存在多个副本；</li>
+<li>  另一方面就是更新比较困难，因为每当库函数的代码修改了，这个时候就需要重新进行编译链接形成可执行程序。</li>
+</ul>
+</li>
+<li><p>  优点是：在可执行程序中已经具备了所有执行程序所需要的任何东西，在执行的时候运行速度快。</p>
+</li>
+</ul>
+<p>动态链接的优缺点：</p>
+<ul>
+<li><p>优点显而易见：</p>
+<ul>
+<li>  当每个程序都依赖同一个库，该库不会像静态链接那样在内存中存在多分，副本，而是这多个程序在执行时共享同一份副本；</li>
+<li>  另一个优点是，更新也比较方便，更新时只需要替换原来的目标文件，而无需将所有的程序再重新链接一遍。当程序下一次运行时，新版本的目标文件会被自动加载到内存并且链接起来，程序就完成了升级的目标。</li>
+</ul>
+</li>
+<li><p>  但是动态链接也是有缺点的，因为把链接推迟到了程序运行时，所以每次执行程序都需要进行链接，所以性能会有一定损失。</p>
+</li>
+</ul>
+<h4 id="如何设计好的散列函数"><a href="#如何设计好的散列函数" class="headerlink" title="如何设计好的散列函数"></a>如何设计好的散列函数</h4><p>一个好的散列函数应该满足简单均匀散列</p>
+<p><strong>直接定址法</strong></p>
+<p>关键码本身和地址之间存在某个线性函数关系时，散列函数取为关键码的线性函数，即：</p>
+<p>$f(key)=a*key+b$，a、b均为常数。</p>
+<p>优点：简单、均匀，也不会产生冲突</p>
+<p>不足：需要事先知道关键字的分布情况，适合査找表较小且连续的情况。由于这样的限制，在现实应用中，直接定址法虽然简单，但却并不常用。</p>
+<p><strong>数字分析法</strong></p>
+<p>假设关键码完全已知，且每个关键码都是以某个数r为基数（例以10为基数的十进制数）的值，则关键码中若干位恰能构成分布比较均匀的散列地址空间时，可取关键码的若干位的组合作为散列地址。</p>
+<p><strong>平方取中法</strong></p>
+<p>将关键码key平方，取$key^2$中间几位作为其散列地址f(key)的值。</p>
+<p>假如有以下关键字序列{421，423，436}，平方之后的结果为{177241，178929，190096}，那么可以取{72，89，00}作为Hash地址。</p>
+<p>适合于不知道关键字分布，而位数不是很大的情况</p>
+<p><strong>折叠法</strong></p>
+<p>折叠法是将关键字从左到右分割成位数相等的几部分（注意组后一部分位数不够的可以短些）</p>
+<p>适用于事先不知道关键字分布，关键字位数较多的情况</p>
+<p><strong>除留余数法（最常用）</strong></p>
+<p>通过选择适当的正整数p，按计算公式$f(key)=key%p$来计算关键码key的散列地址。</p>
+<p>若关键码个数为n，散列表表长为m（一般m&gt;=n），通常选p为小于或等于表长m的最大素数或不包含小于20的质因子的合数，一般也要求p&gt;=n。</p>
+<p>这种方法计算最简单，也不需根据全部关键码的分布情况研究如何从中析取数据，最常用。</p>
+<p><strong>随机数法</strong></p>
+<p>选择一个随机数，取关键字的随机函数值为它的散列地址：$f(key)=random(key)$。</p>
+<p>这里random是随机函数。当关键字长度不等时，采用这个方法构造散列函数比较合适。</p>
+<h4 id="哈希表解决冲突的方法及优缺点"><a href="#哈希表解决冲突的方法及优缺点" class="headerlink" title="哈希表解决冲突的方法及优缺点"></a>哈希表解决冲突的方法及优缺点</h4><p><strong>1、开放定址法</strong></p>
+<p>开放定址：散列表的地址对任何记录数据都是开放的，即可存储使用。但散列表长度一旦确定，总的可用地址是有限的。闭散列表表长不小于所需存储的记录数，发生冲突总能找到空的散列地址将其存入。查找时，按照一种固定的顺序检索散列表中的相应项，直到找到一个关键字等于k或找到一个空单元将k插入，故是动态查找结构。</p>
+<p>1）线性探测法</p>
+<p>从发生冲突位置的下一个位置开始寻找空的散列地址。发生冲突时，线性探测下一个散列地址是：</p>
+<p>$Hi=(H(key)+di)%m$，di=1,2,3…,m-1，闭散列表长度为m。它实际是按照H(key)+1，H(key)+2,…,<strong>m-1</strong>,<strong>0</strong>,1,H(key)-1的顺序探测，一旦探测到空的散列地址，就将关键码记录存入。</p>
+<p>该方法会<strong>产生堆积现象</strong>，即使是同义词也可能会争夺同一个地址空间，今后在其上的查找效率会降低。</p>
+<p>2）二次探测法</p>
+<p>发生冲突时，下一位置的探测采用公式：</p>
+<p>$Hi=(H(key)+di)%m$，($di=1^2,-1^2,2^2,-2^2,…..,q^2,-q^2,q&lt;=\sqrt{m}$)</p>
+<p>在一定程度上可解决线性探测中的堆积现象。</p>
+<p>3）随机探测法</p>
+<p>di为{1,2,3,…,m-1}中的数构成的一个<strong>随机数列</strong>中顺序取的一个数</p>
+<p>4）再散列函数法</p>
+<p>除基本散列函数外，事先设计一个散列函数序列，RH1,RH2,…,RHk，k为某个正整数。RHi均为不同的散列函数。对任一关键码，若在某一散列函数上发生冲突，则再用下一个散列函数，直到不发生冲突为止。</p>
+<p>5）建立公共溢出区（单链表或顺序表实现）</p>
+<p>另外开辟一个存储空间，当发生冲突时，把同义词均顺序放入该空间。若把散列表看成主表或父表，则公共的同义词表就是一个次表或子表。查找时，现在散列表中查，找不到时再去公共同义词子表顺序查找。</p>
+<p><strong>2、链地址法</strong></p>
+<p>将所有散列地址相同的记录存储在同一个单链表中，该单链表为同义词单链表，或同义词子表。该单链表头指针存储在散列表中。散列表就是个指针数组，下标就是由关键码用散列函数计算出的散列地址。初始，指针数组每个元素为空指针，相当于所有单链表头指针为空，以后每扫描到一条记录，按其关键码的散列地址，在相应的单链表中加入含该记录的节点。</p>
+<p>开散列表容量可很大，仅受内存容量的限制。</p>
+<h3 id="day03"><a href="#day03" class="headerlink" title="day03"></a>day03</h3><p>C++语法基础。</p>
+<p>【C++技术面试基础知识总结.md】</p>
+<h3 id="day04"><a href="#day04" class="headerlink" title="day04"></a>day04</h3><h4 id="虚函数实现机制"><a href="#虚函数实现机制" class="headerlink" title="虚函数实现机制"></a>虚函数实现机制</h4><ol>
+<li><p> 当类中存在虚函数，则编译器会在编译期自动的给该类生成一个虚函数表，并在所有该类的对象中放入一个隐式变量vptr，该变量是一个指针变量，它的值指向那个类中的由编译器生成的虚函数表</p>
+</li>
+<li><p> 每个类的虚函数的入口都在这张表中维护，调用方法的时候会隐式的传入一个this指针，然后系统会根据this指针找到对应的vptr，进而找到对应的虚函数表，找到真正方法的地址，然后才去调用这个方法，这可以叫动态绑定。</p>
+</li>
+<li><p> 如果派生类实现了基类的某个虚函数，则在虚表中覆盖原本基类的那个虚函数指针。当基类的指针指向派生类的对象时，调用虚函数时都会根据vptr来选择虚函数，而基类的虚函数在派生类里已经被改写或者说已经不存在了，所以也就只能调用派生类的虚函数版本了</p>
+</li>
+</ol>
+<h4 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h4><p><strong>根本区别</strong>：进程是操作系统资源分配的基本单位，而线程是任务调度和执行的基本单位</p>
+<p><strong>在开销方面</strong>：每个进程都有独立的代码和数据空间（程序上下文），程序之间的切换会有较大的开销；线程可以看做轻量级的进程，同一类线程共享代码和数据空间，每个线程都有自己独立的运行栈和程序计数器（PC），线程之间切换的开销小。</p>
+<p><strong>所处环境</strong>：在操作系统中能同时运行多个进程（程序）；而在同一个进程（程序）中有多个线程同时执行（通过CPU调度，在每个时间片中只有一个线程执行）</p>
+<p><strong>内存分配方面</strong>：系统在运行的时候会为每个进程分配不同的内存空间；而对线程而言，除了CPU外，系统不会为线程分配内存（线程所使用的资源来自其所属进程的资源），线程组之间只能共享资源。</p>
+<p><strong>数据共享</strong>：进程数据是分开的，共享复杂，需要用IPC，同步简单；多线程共享进程数据，共享简单，同步复杂</p>
+<p><strong>包含关系</strong>：没有线程的进程可以看做是单线程的，如果一个进程内有多个线程，则执行过程不是一条线的，而是多条线（线程）共同完成的；线程是进程的一部分，所以线程也被称为轻权进程或者轻量级进程。</p>
+<p><strong>其它（杂乱）</strong>：</p>
+<ul>
+<li><p>  进程创建销毁、切换复杂，速度慢 ；线程创建销毁、切换简单，速度快</p>
+</li>
+<li><p>  进程占用内存多， CPU利用率低；线程占用内存少， CPU利用率高</p>
+</li>
+<li><p>  进程编程简单，调试简单；线程 编程复杂，调试复杂</p>
+</li>
+<li><p>  进程间不会相互影响 ；线程一个线程挂掉将导致整个进程挂掉</p>
+</li>
+<li><p>  进程适应于多核、多机分布；线程适用于多核</p>
+</li>
+<li><p>线程所私有的：</p>
+<p>  线程id、程序计数器、栈、线程的优先级和调度策略、线程的私有数据、信号屏蔽字、errno变量</p>
+</li>
+</ul>
+<h4 id="C-多态及其实现"><a href="#C-多态及其实现" class="headerlink" title="C++多态及其实现"></a>C++多态及其实现</h4><p>c++的多态性就是通过<strong>晚绑定</strong>（动态多态）技术来实现的。</p>
+<p><strong>多态定义的构成条件</strong></p>
+<p>多态是不同继承关系的类对象去调同一函数，产生了不同的行为。就是说，有一对继承关系的两个类，这两个类里面都有一个函数且名字、参数、返回值均相同，然后我们通过调用函数来实现不同类对象完成不同的事件。</p>
+<p>从虚函数的实现机制可以看到要想在子类中实现多态需要满足<strong>三个重要的条件：</strong></p>
+<p>(1)在基类中函数声明为虚函数。</p>
+<p>(2)在子类中，对基类的虚函数进行了重写。</p>
+<p>(3)基类的指针指向了子类的对象。</p>
+<p><strong>每个类用了一个虚表，每个类的对象用了一个虚指针。具体的用法如下：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">int</span> a<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span> :</span> <span class="hljs-keyword">public</span> A<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">int</span> b;<br>&#125;;<br><span class="hljs-comment">//A，B的实现省略</span><br></code></pre></td></tr></table></figure>
+
+<p>因为A有virtual void f（）和g（），所以编译器为A类准备了一个虚表vtableA，内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>A::f 的地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A::g 的地址</td>
+</tr>
+</tbody></table>
+<p>B因为继承了A，所以编译器也为B准备了一个虚表vtableB，内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>A::f 的地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B::g 的地址</td>
+</tr>
+</tbody></table>
+<p><strong>注意：</strong>因为B::ｇ是重写了的，所以B的虚表的g放的是B::g的入口地址，但是f是从上面的A继承下来的，所以f的地址是A::f的入口地址。<br>然后某处有语句 B bB;的时候，编译器分配空间时，除了A的int a，B的成员int b；以外，还分配了一个虚指针vptr，指向B的虚表vtableB，bB的布局如下：</p>
+<table>
+<thead>
+<tr>
+<th>vptr ： 指向B的虚表vtableB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>int a： 继承A的成员</td>
+</tr>
+<tr>
+<td>int b： B成员</td>
+</tr>
+</tbody></table>
+<p>当如下语句的时候：<br>A *pa = &bB;<br>pa的结构就是A的布局（就是说用pa只能访问的到bB对象的前两项，访问不到第三项int b）<br>那么pa-&gt;g()中，编译器知道的是，g是一个声明为virtual的成员函数，而且其入口地址放在表格（无论是vtalbeA表还是vtalbeB表）的第2项，那么编译器编译这条语句的时候就如是转换：call *(pa-&gt;vptr)[1]（C语言的数组索引从0开始哈~）。</p>
+<h4 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h4><p>管理方式不同：</p>
+<ul>
+<li>  栈由操作系统自动分配释放，无需我们手动控制</li>
+<li>  堆的申请和释放工作由程序员控制，容易产生内存泄漏</li>
+</ul>
+<p>空间大小不同：</p>
+<ul>
+<li>  每个进程拥有的栈的大小要远远小于堆的大小</li>
+<li>  理论上，程序员可申请的堆大小为虚拟内存的大小</li>
+<li>  进程栈的大小：64bits的Windows默认1M，64bits的Linux默认10M</li>
+</ul>
+<p>生长方向不同：</p>
+<ul>
+<li>  堆的生长方向向上，内存地址由低到高</li>
+<li>  栈的生长方向向下，内存地址由高到低</li>
+</ul>
+<p>分配方式不同：</p>
+<ul>
+<li>  堆都是动态分配的，没有静态分配的堆</li>
+<li>栈有2种分配方式：静态分配和动态分配<ul>
+<li>  静态分配是由操作系统完成的，比如局部变量的分配。</li>
+<li>  动态分配由alloca函数进行分配，但是栈的动态分配和堆是不同的，他的动态分配是由操作系统进行释放，无需我们手工实现</li>
+</ul>
+</li>
+</ul>
+<p>分配效率不同：</p>
+<ul>
+<li>  栈由操作系统自动分配，会在硬件层级对栈提供支持：分配专门的寄存器存放栈的地址，压栈出栈都有专门的指令执行，这就决定了栈的效率比较高</li>
+<li>  堆则是由C/C++提供的库函数或运算符来完成申请与管理，实现机制较为复杂，频繁的内存申请容易产生内存碎片。显然，堆的效率比栈要低得多</li>
+</ul>
+<p>存放内容不同：</p>
+<ul>
+<li>  栈存放的内容：函数返回地址、相关参数、局部变量和寄存器内容等</li>
+<li>  堆一般情况堆顶使用一个字节的空间来存放堆的大小，而堆中具体存放内容是由程序员来填充的</li>
+</ul>
+<h4 id="有名管道和无名管道的区别"><a href="#有名管道和无名管道的区别" class="headerlink" title="有名管道和无名管道的区别"></a>有名管道和无名管道的区别</h4><p><strong>相同点</strong></p>
+<p>open打开管道文件以后，在内存中开辟了一块空间，管道的内容在内存中存放，有两个指针—头指针（指向写的位置）和尾指针（指向读的位置）指向它。读写数据都是在给内存的操作，并且都是半双工通讯。</p>
+<p><strong>区别</strong></p>
+<p>有名在任意进程之间使用，无名在父子进程之间使用。</p>
+<h4 id="哪些函数不能定义为虚函数"><a href="#哪些函数不能定义为虚函数" class="headerlink" title="哪些函数不能定义为虚函数"></a>哪些函数不能定义为虚函数</h4><ol>
+<li> 友元函数：它不是类的成员函数</li>
+<li> 全局函数</li>
+<li> 静态成员函数：它没有this指针</li>
+<li> 构造函数，拷贝构造函数：对象未创建完成前没有虚表</li>
+<li> 赋值运算符重载（可以但是一般不建议作为虚函数）</li>
+</ol>
+<h3 id="day05"><a href="#day05" class="headerlink" title="day05"></a>day05</h3><h4 id="循环与递归的区别"><a href="#循环与递归的区别" class="headerlink" title="循环与递归的区别"></a>循环与递归的区别</h4><p><strong>递归</strong>：在一个函数（或者方法）体内调用这个函数自身，直到某个条件满足（否则会一直执行下去，直到栈内存溢出）。</p>
+<p><strong>循环</strong>：通过设置一个初始值和终止条件，并在这个范围内重复计算。</p>
+<p>在编程中经常会遇到重复计算相同的问题，此时一般会采用递归或者循环来解决。无论是采用递归还是循环，都需要经历如下三步：</p>
+<ol>
+<li><p> 首先需要找出计算问题的规律，用数学计算公式表达出来；</p>
+</li>
+<li><p> 然后再用代码编程来实现这个数学计算公式；</p>
+</li>
+<li><p> 最后采用递归或者循环的方式多次运行这个数学计算公式，从而得出计算结果（为了保证程序的健壮性，往往还需要进行一些边界值处理）</p>
+</li>
+</ol>
+<h4 id="内联函数的优点以及和宏定义的区别"><a href="#内联函数的优点以及和宏定义的区别" class="headerlink" title="内联函数的优点以及和宏定义的区别"></a>内联函数的优点以及和宏定义的区别</h4><p>内联函数是指用inline关键字修饰的函数。在类内定义的函数被默认成内联函数。内联函数不是在调用时发生控制转移，而是在编译时将函数体嵌入在每一个调用处。编译时，类似宏替换，使用函数体替换调用处的函数名。一般在代码中用inline修饰，但是能否形成内联函数，需要看编译器对该函数定义的具体处理。</p>
+<blockquote>
+<p>  <strong>C++17 起：由于关键词 inline 对于函数的含义已经变为“<em>容许多次定义</em>”而不是“<em>优先内联</em>”，因此这个含义也扩展到了变量。</strong></p>
+</blockquote>
+<p>inline函数的<strong>优点</strong>：</p>
+<ul>
+<li><p>  inline定义的内联函数，函数代码被放入符号表中，在使用时进行替换（像宏一样展开），效率很高。</p>
+</li>
+<li><p>  类的内联函数也是函数。编绎器在调用一个内联函数，首先会检查参数问题，保证调用正确，像对待真正函数一样，消除了隐患及局限性。</p>
+</li>
+<li><p>  inline可以作为类的成员函数，可以使用所在类的保护成员及私有成员。</p>
+</li>
+</ul>
+<p>inline函数的<strong>缺点</strong>：</p>
+<ul>
+<li>  如果函数的代码较长，使用内联将消耗过多内存， 这种情况编译器可能会自动把它作为非内联函数处理</li>
+<li>  如果函数体内有循环，那么执行函数代码时间比调用开销大</li>
+</ul>
+<p><strong>inline与宏的区别</strong></p>
+<ul>
+<li><p>  展开的时间不同：内联在编绎时展开，宏在预编译时展开。</p>
+</li>
+<li><p>  编译内联函数可以嵌入到目标代码，宏只是简单文本替换。</p>
+</li>
+<li><p>  内联会做类型，语法检查，而宏不具这样功能。</p>
+</li>
+<li><p>  宏不是函数，inline函数是函数</p>
+</li>
+<li><p>  宏定义小心处理宏参数（一般参数要括号起来），否则易出现二义性，而内联定义不会出现。</p>
+</li>
+</ul>
+<h4 id="strcpy-和strncpy-的区别"><a href="#strcpy-和strncpy-的区别" class="headerlink" title="strcpy 和strncpy 的区别"></a>strcpy 和strncpy 的区别</h4><p><strong>本质区别</strong>：strcpy不安全，有可能copy越界</p>
+<h5 id="strcpy-函数用来复制字符串，其原型为："><a href="#strcpy-函数用来复制字符串，其原型为：" class="headerlink" title="strcpy()函数用来复制字符串，其原型为："></a><code>strcpy()</code>函数用来复制字符串，其原型为：</h5><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">strcpy</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *dest, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *src)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>dest 为目标字符串指针，src 为源字符串指针。</p>
+<p>成功执行后返回目标数组指针 dest。</p>
+<p>strcpy() 把src所指的由NULL结束的字符串复制到dest 所指的数组中，返回指向 dest 字符串的起始地址。</p>
+<p><strong>注意：</strong>src 和 dest 所指的<strong>内存区域不能重叠</strong>，且dest 必须有足够的空间放置 src 所包含的字符串（包含结束符NULL）。如果参数 dest 所指的内存空间不够大，可能会造成缓冲溢出(buffer Overflow)的错误情况，在编写程序时请特别留意，或者用strncpy()来取代。</p>
+<h5 id="strncpy-用来复制字符串的前n个字符，其原型为："><a href="#strncpy-用来复制字符串的前n个字符，其原型为：" class="headerlink" title="strncpy()用来复制字符串的前n个字符，其原型为："></a><code>strncpy()</code>用来复制字符串的前n个字符，其原型为：</h5><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">char</span> * <span class="hljs-title">strncpy</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *dest, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *src, <span class="hljs-keyword">size_t</span> n)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>dest 为目标字符串指针，src 为源字符串指针。</p>
+<p>返回指向dest的指针（指向dest的最后一个元素） </p>
+<p>strncpy()会将字符串src前n个字符拷贝到字符串dest。</p>
+<p>不像strcpy()，strncpy()不会向dest追加结束标记’\0’，如果src的前n个字节不含NULL字符，则结果不会以NULL字符结束。</p>
+<p>如果src的长度小于n个字节，则以NULL填充dest直到复制完n个字节。 </p>
+<p><strong>注意</strong>：src 和 dest 所指的内存区域不能重叠，且dest 必须有足够的空间放置n个字符。</p>
+<h4 id="内存对齐及其原因"><a href="#内存对齐及其原因" class="headerlink" title="内存对齐及其原因"></a>内存对齐及其原因</h4><p><strong>数据成员对齐规则</strong></p>
+<p>结构体(struct)(或联合(union))的数据成员，第一个数据成员放在offset为0的地方，以后每个数据成员存储的起始位置要从该成员大小或者成员的子成员大小（只要该成员有子成员，比如说是数组，结构体等）的整数倍开始(比如int在32位机为４字节,则要从４的整数倍地址开始存储。</p>
+<p><strong>结构体作为成员</strong></p>
+<p>如果一个结构体里有结构体成员,则结构体成员要从其内部最大元素大小的整数倍地址开始存储(struct a里存有struct b,b里有char,int ,double等元素,那b应该从8的整数倍开始存储)</p>
+<p>结构体的总大小,也就是sizeof的结果：必须是其内部最大成员的整数倍.不足的要补齐</p>
+<p><strong>为什么要内存对齐？</strong></p>
+<ol>
+<li><p> 平台原因(移植原因)：不是所有的硬件平台都能访问任意地址上的任意数据的；某些硬件平台只能在某些地址处取某些特定类型的数据，否则抛出硬件异常。</p>
+</li>
+<li><p> 性能原因：数据结构(尤其是栈)应该尽可能地在自然边界上对齐。原因在于，为了访问未对齐的内存，处理器需要作两次内存访问；而对齐的内存访问仅需要一次访问。</p>
+</li>
+</ol>
+<h4 id="死锁的定义，死锁的四个必要条件，如何避免死锁，如何解决死锁？"><a href="#死锁的定义，死锁的四个必要条件，如何避免死锁，如何解决死锁？" class="headerlink" title="死锁的定义，死锁的四个必要条件，如何避免死锁，如何解决死锁？"></a>死锁的定义，死锁的四个必要条件，如何避免死锁，如何解决死锁？</h4><p><strong>死锁</strong>：如果一组进程中的每一个进程都在等待仅由该组进程中的其它进程才能引发的事件，那么该组进程是死锁的。</p>
+<p><strong>产生死锁的原因</strong>：</p>
+<ul>
+<li><p>  竞争不可抢占性资源。</p>
+</li>
+<li><p>竞争可消耗资源。</p>
+<p>  当系统中供多个进程共享的资源如打印机，公用队列等，其数目不足以满足诸进程的需要时，会引起诸进程对资源的竞争而产生死锁。</p>
+</li>
+<li><p>进程推进顺序不当。</p>
+<p>  进程在运行过程中，请求和释放资源的顺序不当，也同样会导致产生进程死锁。</p>
+</li>
+</ul>
+<p>如果系统资源充足，进程的资源请求都能够得到满足，死锁出现的可能性就很低，否则就会因争夺有限的资源而陷入死锁。其次，进程运行推进顺序与速度不同，也可能产生死锁。</p>
+<p><strong>产生死锁的四个必要条件</strong>：</p>
+<ul>
+<li><p>  互斥条件：一个资源每次只能被一个进程使用。</p>
+</li>
+<li><p>  请求和保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</p>
+</li>
+<li><p>  不可抢占条件:进程已获得的资源，在末使用完之前，不能强行剥夺，只能在进程使用完时由自己释放。</p>
+</li>
+<li><p>  循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。</p>
+</li>
+</ul>
+<p>这四个条件是死锁的必要条件，只要系统发生死锁，这些条件必然成立，而只要上述条件之一不满足，就不会发生死锁。因此可以写下如下的预防死锁的方法。</p>
+<p><strong>死锁避免的基本思想（安全性检查）</strong>：系统对进程发出的每一个系统能够满足的资源申请进行动态检查，并根据检查结果决定是否分配资源，如果分配后系统可能发生死锁，则不予分配，否则予以分配，这是一种保证系统不进入死锁状态的动态策略。</p>
+<p><strong>处理死锁的方法</strong></p>
+<ul>
+<li>  预防死锁。该方法是通过设置某些限制条件，去破坏产生死锁的四个必要条件中的一个或几个来预防产生死锁。</li>
+<li>  避免死锁。在资源的动态分配过程中，用某种方法防止系统进入不安全状态，从而可以避免产生死锁。</li>
+<li>  检测死锁。通过检测机构及时地检测出死锁的发生，然后采取适当的措施，把进程从思索中解脱出来。</li>
+<li>  解除死锁。当检测到系统中已发生死锁时，就采取相应的措施，将进程从死锁状态中解脱出来。常用方法是撤销一些进程，回收他们的资源，将他们分配给已处于阻塞状态的进程，使其能继续运行。</li>
+</ul>
+<h3 id="day06"><a href="#day06" class="headerlink" title="day06"></a>day06</h3><h4 id="C-模版是怎么实现的"><a href="#C-模版是怎么实现的" class="headerlink" title="C++模版是怎么实现的"></a>C++模版是怎么实现的</h4><p>C++中提供了两种模板机制，分别是函数模板和类模板。</p>
+<p><strong>函数模板</strong>，实际上是建立一个通用函数，其函数类型和形参类型不具体指定，用一个虚拟的类型来代表。这个通用函数就称函数模板。凡是函数体相同的函数都可用这个模板来代替，不必定义多个函数，只需在模板中定义一次即可。在调用函数时系统会根据实参类型来取代模板中的虚拟内型，从而实现不同函数功能的调用。</p>
+<p><strong>类模板</strong>，使程序（算法）可以使逻辑上抽象，把处理的对象类型作为参数传递，凡是类体内的对象相同时可用这个类模板来代替，不必重复定义多个类。</p>
+<h4 id="一个C-程序从编译到运行都经历了哪些阶段"><a href="#一个C-程序从编译到运行都经历了哪些阶段" class="headerlink" title="一个C++程序从编译到运行都经历了哪些阶段"></a>一个C++程序从编译到运行都经历了哪些阶段</h4><p>对于C/C++编写的程序，从源代码到可执行文件，一般经过下面四个步骤：</p>
+<ol>
+<li> 预处理：条件编译，头文件包含，宏替换的处理，生成.i文件。</li>
+<li> 编译：将预处理后的文件转换成汇编语言，生成.s文件</li>
+<li> 汇编：汇编变为目标代码(机器代码)生成.o的文件</li>
+<li> 链接：连接目标代码,生成可执行程序</li>
+</ol>
+<h4 id="select-poll-epoll的区别"><a href="#select-poll-epoll的区别" class="headerlink" title="select/poll/epoll的区别"></a>select/poll/epoll的区别</h4><p><strong>1、支持一个进程所能打开的最大连接数</strong></p>
+<p><strong>select：</strong>单个进程所能打开的最大连接数有FD_SETSIZE宏定义，其大小是32个整数的大小（在32位的机器上，大小就是3232，同理64位机器上FD_SETSIZE为3264），当然我们可以对进行修改，然后重新编译内核，但是性能可能会受到影响，这需要进一步的测试。</p>
+<p><strong>poll：</strong>poll本质上和select没有区别，但是它没有最大连接数的限制，原因是它是基于链表来存储的。</p>
+<p><strong>epoll：</strong>虽然连接数有上限，但是很大，1G内存的机器上可以打开10万左右的连接，2G内存的机器可以打开20万左右的连接</p>
+<p><strong>2、FD剧增后带来的IO效率问题</strong></p>
+<p><strong>select：</strong>因为每次调用时都会对连接进行线性遍历，所以随着FD的增加会造成遍历速度慢的“线性下降性能问题”。</p>
+<p><strong>poll：</strong>同上</p>
+<p><strong>epoll：</strong>因为epoll内核中实现是根据每个fd上的callback函数来实现的，只有活跃的socket才会主动调用callback，所以在活跃socket较少的情况下，使用epoll没有前面两者的线性下降的性能问题，但是所有socket都很活跃的情况下，可能会有性能问题。</p>
+<p><strong>3、 消息传递方式</strong></p>
+<p><strong>select：</strong>内核需要将消息传递到用户空间，都需要内核拷贝动作</p>
+<p><strong>poll：</strong>同上</p>
+<p><strong>epoll：</strong>epoll通过内核和用户空间共享一块内存来实现的。</p>
+<h4 id="进程间调度算法"><a href="#进程间调度算法" class="headerlink" title="进程间调度算法"></a>进程间调度算法</h4><p>调度算法是指：根据系统的资源分配策略所规定的资源分配算法</p>
+<p><strong>先来先服务调度算法</strong></p>
+<p>来先服务调度算法是一种最简单的调度算法，也称为先进先出或严格排队方案。当每个进程就绪后，它加入就绪队列。当前正运行的进程停止执行，选择在就绪队列中存在时间最长的进程运行。该算法既可以用于作业调度，也可以用于进程调度。先来先去服务比较适合于常作业（进程），而不利于段作业（进程）。在进程调度中，FCFS调度算法每次从就绪队列中选择最先进入该队列的进程，将处理机分配给它，使之投入运行，直到完成或因某种原因而阻塞时才释放处理机。</p>
+<p><strong>时间片轮转调度算法</strong></p>
+<p>片轮转调度算法主要适用于分时系统。在这种算法中，系统将所有就绪进程按到达时间的先后次序排成一个队列，进程调度程序总是选择就绪队列中第一个进程执行，即先来先服务的原则，但仅能运行一个时间片，如100ms。在使用完一个时间片后，即使进程并未完成其运行，它也必须释放出（被剥夺）处理机给下一个就绪的进程，而被剥夺的进程返回到就绪队列的末尾重新排队，等候再次运行。</p>
+<p><strong>短作业(SJF)优先调度算法</strong></p>
+<p>作业（进程）优先调度算法是指对短作业（进程）优先调度的算法。短作业优先(SJF)调度算法是从后备队列中选择一个或若干个估计运行时间最短的作业，将它们调入内存运行。而短进程优先(SPF)调度算法，则是从就绪队列中选择一个估计运行时间最短的进程，将处理机分配给它，使之立即执行，直到完成或发生某事件而阻塞时，才释放处理机。</p>
+<p><strong>最短剩余时间优先</strong></p>
+<p>剩余时间是针对最短进程优先增加了抢占机制的版本。在这种情况下，进程调度总是选择预期剩余时间最短的进程。当一个进程加入到就绪队列时，他可能比当前运行的进程具有更短的剩余时间，因此只要新进程就绪，调度程序就能可能抢占当前正在运行的进程。像最短进程优先一样，调度程序正在执行选择函数是必须有关于处理时间的估计，并且存在长进程饥饿的危险。</p>
+<h4 id="多线程锁的种类"><a href="#多线程锁的种类" class="headerlink" title="多线程锁的种类"></a>多线程锁的种类</h4><ul>
+<li>  互斥锁</li>
+<li>  递归锁</li>
+<li>  自旋锁</li>
+<li>  读写锁</li>
+</ul>
+<h4 id="自旋锁与互斥锁区别"><a href="#自旋锁与互斥锁区别" class="headerlink" title="自旋锁与互斥锁区别"></a>自旋锁与互斥锁区别</h4><p><strong>互斥锁(mutexlock)：</strong></p>
+<p>最常使用于线程同步的锁；标记用来保证在任一时刻，只能有一个线程访问该对象，同一线程多次加锁操作会造成死锁；临界区和互斥量都可用来实现此锁，通常情况下锁操作失败会将该线程<strong>睡眠等待</strong>锁释放时被唤醒</p>
+<p><strong>自旋锁(spinlock)：</strong></p>
+<p>同样用来标记只能有一个线程访问该对象，在同一线程多次加锁操作会造成死锁；使用硬件提供的swap指令或test_and_set指令实现；同互斥锁<strong>不同的</strong>是在锁操作需要等待的时候并不是睡眠等待唤醒，而是循环检测保持者已经释放了锁，这样做的好处是节省了线程从睡眠状态到唤醒之间内核会产生的消耗，<strong>在加锁时间短暂的环境下</strong>这点会提高很大效率（轮询获取锁）</p>
+<h3 id="day07"><a href="#day07" class="headerlink" title="day07"></a>day07</h3><h4 id="进程的通讯方式"><a href="#进程的通讯方式" class="headerlink" title="进程的通讯方式"></a>进程的通讯方式</h4><p><strong>1. 管道，通常指无名管道，是 UNIX 系统IPC最古老的形式。</strong></p>
+<ul>
+<li>  它是半双工的（即数据只能在一个方向上流动），具有固定的读端和写端。</li>
+<li>  它只能用于具有亲缘关系的进程之间的通信（也是父子进程或者兄弟进程之间）。</li>
+<li>  它可以看成是一种特殊的文件，对于它的读写也可以使用普通的read、write 等函数。但是它不是普通的文件，并不属于其他任何文件系统，并且只存在于内存中。</li>
+</ul>
+<p><strong>2.FIFO，也称为命名管道，它是一种文件类型。</strong></p>
+<ul>
+<li>  FIFO可以在无关的进程之间交换数据，与无名管道不同。</li>
+<li>  FIFO有路径名与之相关联，它以一种特殊设备文件形式存在于文件系统中。</li>
+</ul>
+<p><strong>3.消息队列，是消息的链接表，存放在内核中。一个消息队列由一个标识符（即队列ID）来标识。</strong></p>
+<ul>
+<li>  消息队列是面向记录的，其中的消息具有特定的格式以及特定的优先级。</li>
+<li>  消息队列独立于发送与接收进程。进程终止时，消息队列及其内容并不会被删除。</li>
+<li>  消息队列可以实现消息的随机查询,消息不一定要以先进先出的次序读取,也可以按消息的类型读取。</li>
+</ul>
+<p><strong>4.信号量（semaphore）与已经介绍过的 IPC 结构不同，它是一个计数器。信号量用于实现进程间的互斥与同步，而不是用于存储进程间通信数据。</strong></p>
+<ul>
+<li>  信号量用于进程间同步，若要在进程间传递数据需要结合共享内存。</li>
+<li>  信号量基于操作系统的 PV 操作，程序对信号量的操作都是原子操作。</li>
+<li>  每次对信号量的 PV 操作不仅限于对信号量值加 1 或减 1，而且可以加减任意正整数。</li>
+<li>  支持信号量组。</li>
+</ul>
+<p><strong>5.共享内存（Shared Memory），指两个或多个进程共享一个给定的存储区。</strong></p>
+<ul>
+<li>  共享内存是最快的一种 IPC，因为进程是直接对内存进行存取。</li>
+<li>  因为多个进程可以同时操作，所以需要进行同步。</li>
+<li>  信号量+共享内存通常结合在一起使用，信号量用来同步对共享内存的访问。</li>
+</ul>
+<p><strong>6.套接字</strong></p>
+<p><strong>7.条件变量</strong></p>
+<h4 id="reactor和proactor模式"><a href="#reactor和proactor模式" class="headerlink" title="reactor和proactor模式"></a>reactor和proactor模式</h4><p><strong>Reactor模式</strong></p>
+<p>要求主线程（I/O处理单元）只负责监听文件描述符上是否有事件发生，有的话就立即将事件通知工作线程（逻辑单元）数据的读写，接受新的连接以及处理客户请求均在工作线程中完成；除此之外，逻辑线程不作任何工作。</p>
+<ol>
+<li> 主线程往epoll内核事件表中注册socket上的<strong>读就绪事件</strong></li>
+<li> 主线程调用epoll_wait等待socket上有数据可读</li>
+<li> 当socket上有数据可读时，epoll_wait通知主线程，主线程则将socket可读事件放入请求队列。</li>
+<li> 睡眠在请求队列上的某个工作线程被唤醒，它从socket读取数据，并处理客户请求，然后往epoll内核事件表中注册该socket上的写就绪事件。</li>
+<li> 主线程调用epoll_wait等待socket可写</li>
+<li> 当socket可写时，epoll_wait通知主线程，主线程将socket可写事件放入请求队列</li>
+<li> 睡眠在请求队列上的某个工作线程（工作线程从请求队列读取事件后，根据事件的类型来决定如何处理它，没有必要区分读工作线程和写工作线程）被唤醒，它往socket上写入服务器处理客户请求的结果</li>
+</ol>
+<p><img src="/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/image-20210311170716000.png" alt="image-20210311170716000"></p>
+<p><strong>proactor模式</strong></p>
+<p>Proactor将所有I/O操作都交给主线程和内核来处理，工作线程仅仅负责业务逻辑。使用异步I/O模型（aio_read和aio_write）来实现Proactor模式的工作流程是：</p>
+<ol>
+<li> 主线程调用aio_read向内核注册socket上的<strong>读完成事件</strong>，并告诉内核用户缓冲区的位置，以及读操作完成时如何通知应用程序（可以用信号）</li>
+<li> 主线程继续处理其他逻辑</li>
+<li> 当socket上的读数据被读入用户缓冲区后，内核向应用进程发送一个信号，已通知应用程序数据已经可用</li>
+<li> 应用进程预先定义好的信号处理函数选择一个工作线程来处理处理客户请求，工作线程处理完客户请求之后，调用aio_write向内核注册socket的完成写事件，并告诉内核用户写缓冲区的位置，以及操作完成时如何通知应用程序（可以用信号）</li>
+<li> 主线程继续处理其他逻辑</li>
+<li> 当用户缓冲区的数据被写入socket之后，内核将向应用程序发送一个信号，已通知应用程序数据已经发送完毕</li>
+<li> 应用程序预先定义好的信号处理函数选择一个工作线程来做善后处理，比如决定是否关闭socket</li>
+</ol>
+<p><img src="/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/image-20210311173141404.png" alt="image-20210311173141404"></p>
+<h4 id="get与post区别"><a href="#get与post区别" class="headerlink" title="get与post区别"></a>get与post区别</h4><ol>
+<li> url可见性：get传参方式是通过地址栏URL传递，是可以直接看到get传递的参数，post传参方式参数URL不可见，get把请求的数据在URL后通过？连接，通过&amp;进行参数分割。psot将从参数存放在HTTP的包体内</li>
+<li> 传输数据大小：get传递数据是通过URL进行传递，对传递的数据长度是受到URL大小的限制，URL最大长度是2048个字符。post没有长度限制</li>
+<li> 后退页面：get后退不会有影响，post后退会重新进行提交</li>
+<li> 缓存：get请求可以被缓存，post不可以被缓存</li>
+<li> 编码方式：get请求只有URL编码，post支持多种编码方式</li>
+<li> 历史记录：get请求的记录会留在历史记录中，post请求不会留在历史记录</li>
+<li> 字符类型：get只支持ASCII字符，post没有字符类型限制</li>
+</ol>
+<h4 id="为什么构造函数不能声明为虚函数，析构函数可以"><a href="#为什么构造函数不能声明为虚函数，析构函数可以" class="headerlink" title="为什么构造函数不能声明为虚函数，析构函数可以"></a>为什么构造函数不能声明为虚函数，析构函数可以</h4><p><strong>构造函数不能声明为虚函数的原因是:</strong></p>
+<ul>
+<li>  构造一个对象的时候，必须知道对象的实际类型，而虚函数行为是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功。编译器无法知道对象的实际类型，是该类本身，还是该类的一个派生类，或是更深层次的派生类。</li>
+<li>  虚函数的执行依赖于虚函数表。而虚函数表在构造函数中进行初始化工作，即初始化vptr，让他指向正确的虚函数表。而在构造对象期间，虚函数表还没有被初始化，将无法进行。</li>
+</ul>
+<p><strong>析构函数设为虚函数的作用:</strong></p>
+<ul>
+<li>  在类的继承中，如果有基类指针指向派生类，那么用基类指针delete时，如果不定义成虚函数，派生类中派生的那部分无法析构。</li>
+</ul>
+<h4 id="滑动窗口协议的概念"><a href="#滑动窗口协议的概念" class="headerlink" title="滑动窗口协议的概念"></a>滑动窗口协议的概念</h4><p>滑动窗口协议属于TCP协议的一种应用，用于网络数据传输时的流量控制，以避免拥塞的发生。该协议允许发送方在停止并等待确认前发送多个数据分组。由于发送方不必每发一个分组就停下来等待确认。因此该协议可以加速数据的传输，提高网络吞吐量。</p>
+<p>TCP利用一个滑动的窗口来告诉发送端对它所发送的数据能够提供多大的缓冲区，由16位定义，最大为65535个字节。<strong>滑动窗口本质</strong>上是描述<strong>接收方的数据报缓冲区大小</strong>的数据，发送方根据这个数据来计算自己最多能发送多长的数据。这个窗口大小为0时，发送方将停止发送数据。启动坚持定时器，等待这个窗口变成非0。</p>
+<h3 id="day08"><a href="#day08" class="headerlink" title="day08"></a>day08</h3><h4 id="vector与list区别"><a href="#vector与list区别" class="headerlink" title="vector与list区别"></a>vector与list区别</h4><ul>
+<li>  vector底层实现是数组；list是双向链表。</li>
+<li>  vector支持随机访问，list不支持。</li>
+<li>  vector是顺序内存，list不是。</li>
+<li>  vector在中间节点进行插入删除会导致内存拷贝，list不会。</li>
+<li>  vector一次性分配好内存，不够时才进行2倍扩容；list每次插入新节点都会进行内存申请。</li>
+<li>  vector随机访问性能好，插入删除性能差；list随机访问性能差，插入删除性能好。</li>
+</ul>
+<h4 id="epoll-ET下非阻塞读，为什么不能是阻塞"><a href="#epoll-ET下非阻塞读，为什么不能是阻塞" class="headerlink" title="epoll ET下非阻塞读，为什么不能是阻塞"></a>epoll ET下非阻塞读，为什么不能是阻塞</h4><p>ET 模式是一种边沿触发模型，在它检测到有 I/O  事件时，通过 epoll_wait 调用会得到有事件通知的文件描述符，对于每一个被通知的文件描述符，如可读，则必须将该文件描述符一直读到空，让 errno 返回 EAGAIN 为止，否则下次的 epoll_wait  不会返回余下的数据，会丢掉事件。而如果你的文件描述符如果不是非阻塞的，那这个一直读或一直写势必会在最后一次阻塞。</p>
+<h4 id="extern-C作用，为什么需要？"><a href="#extern-C作用，为什么需要？" class="headerlink" title="extern C作用，为什么需要？"></a>extern C作用，为什么需要？</h4><p><strong>作用</strong>：实现c++代码能够调用其他c语言代码，加上extern “C”后，这部分代码编译器以c语言的方式进行编译和链接，而不是按c++方式。</p>
+<p><strong>原因</strong>：c和c++对同一个函数经过编译后生成的函数名是不同的，由于C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而C语言并不支持函数重载，因此编译C语言代码的函数时不会带上函数的参数类型，一般只包括函数名。如果在c++中调用一个使用c语言编写的模块中的某个函数，那么c++是根据c++的名称修饰方式来查找并链接这个函数，那么就会发生链接错误。</p>
+<h4 id="内存泄漏和内存溢出的区别和联系"><a href="#内存泄漏和内存溢出的区别和联系" class="headerlink" title="内存泄漏和内存溢出的区别和联系"></a>内存泄漏和内存溢出的区别和联系</h4><p>内存泄漏(memory leak):是指程序在申请内存后，无法释放已申请的内存空间，一次内存泄漏似乎不会有大的影响，但内存泄漏堆积后的后果就是内存溢出。</p>
+<p>内存溢出(out of memory): OOM,即所谓的内存溢出。指程序申请内存时，没有足够的内存供申请者使用，或者说，给了你一块存储int类型数据的存储空间，但是你却存储long类型的数据，那么结果就是内存不够用，此时就会报错。</p>
+<p><strong>二者的关系</strong></p>
+<ul>
+<li>  内存泄漏的堆积最终会导致内存溢出</li>
+<li>  内存溢出就是你要的内存空间超过了系统实际分配给你的空间，此时系统相当于没法满足你的需求，就会报内存溢出的错误。</li>
+<li>  <strong>内存泄漏</strong>是指你向系统申请分配内存进行使用(new)，可是使用完了以后却不归还(delete)，结果你申请到的那块内存你自己也不能再访问（也许你把它的地址给弄丢了），而系统也不能再次将它分配给需要的程序。就相当于你租了个带钥匙的柜子，你存完东西之后把柜子锁上之后，把钥匙丢了或者没有将钥匙还回去，那么结果就是这个柜子将无法供给任何人使用，也无法被垃圾回收器回收，因为找不到他的任何信息。</li>
+<li>  <strong>内存溢出</strong>：一个盘子用尽各种方法只能装4个果子，你装了5个，结果掉倒地上不能吃了。这就是溢出。比方说栈，栈满时再做进栈必定产生空间溢出，叫上溢，栈空时再做退栈也产生空间溢出，称为下溢。就是分配的内存不足以放下数据项序列,称为内存溢出。</li>
+</ul>
+<h4 id="类型转换有哪些？（四种类型转换，分别举例说明）"><a href="#类型转换有哪些？（四种类型转换，分别举例说明）" class="headerlink" title="类型转换有哪些？（四种类型转换，分别举例说明）"></a>类型转换有哪些？（四种类型转换，分别举例说明）</h4><p><strong>reinterpret_cast</strong></p>
+<ol>
+<li> 该函数将一个类型的指针转换为另一个类型的指针</li>
+<li> 这种转换不用修改指针变量值存放格式(不改变指针变量值),只需在<strong>编译时重新解释</strong>指针的类型就可做到. </li>
+<li> reinterpret_cast可以将指针值转换为一个整型数,但不能用于非指针类型的转换。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//基本类型指针的类型转换 </span><br><span class="hljs-keyword">double</span> d=<span class="hljs-number">9.2</span>; <br><span class="hljs-keyword">double</span>* pd = &amp;d; <br><span class="hljs-keyword">int</span> *pi = <span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">int</span>*&gt;(pd); <span class="hljs-comment">//相当于int *pi = (int*)pd; </span><br><span class="hljs-comment">//不相关的类的指针的类型转换 </span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span>&#123;</span>&#125;; <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">B</span>&#123;</span>&#125;; <br>A* pa = <span class="hljs-keyword">new</span> A; <br>B* pb = <span class="hljs-keyword">reinterpret_cast</span>&lt;B*&gt;(pa); <span class="hljs-comment">//相当于B* pb = (B*)pa; </span><br><span class="hljs-comment">//指针转换为整数 </span><br><span class="hljs-keyword">long</span> l = <span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">long</span>&gt;(pi); <span class="hljs-comment">//相当于long l = (long)pi; </span><br></code></pre></td></tr></table></figure>
+
+<p><strong>const_cast</strong> </p>
+<ol>
+<li> 该函数用于去除指针变量的常量属性，将它转换为一个对应指针类型的普通变量。反过来，也可以将一个非常量的指针变量转换为一个常指针变量。 </li>
+<li> 这种转换是在<strong>编译期间</strong>做出的类型更改。 </li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>* pci = <span class="hljs-number">0</span>; <br><span class="hljs-keyword">int</span>* pk = <span class="hljs-keyword">const_cast</span>&lt;<span class="hljs-keyword">int</span>*&gt;(pci); <span class="hljs-comment">//相当于int* pk = (int*)pci; </span><br> <br><span class="hljs-keyword">const</span> A* pca = <span class="hljs-keyword">new</span> A; <br>A* pa = <span class="hljs-keyword">const_cast</span>&lt;A*&gt;(pca); <span class="hljs-comment">//相当于A* pa = (A*)pca; </span><br></code></pre></td></tr></table></figure>
+
+<p><em><strong>出于安全性考虑，const_cast无法将非指针的常量转换为普通变量。</strong></em> </p>
+<p><strong>static_cast</strong> </p>
+<ol>
+<li> 该函数主要用于基本类型之间和具有继承关系的类型之间的转换。 </li>
+<li> 这种转换一般会更改变量的内部表示方式，因此，static_cast应用于指针类型转换没有太大意义。 </li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//基本类型转换 </span><br><span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; <br><span class="hljs-keyword">double</span> d = <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">double</span>&gt;(i); <span class="hljs-comment">//相当于 double d = (double)i; </span><br><span class="hljs-comment">//转换继承类的对象为基类对象 </span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span>&#123;</span>&#125;; <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span> :</span> <span class="hljs-keyword">public</span> Base&#123;&#125;; <br>Derived d; <br>Base b = <span class="hljs-keyword">static_cast</span>&lt;Base&gt;(d); <span class="hljs-comment">//相当于 Base b = (Base)d; </span><br></code></pre></td></tr></table></figure>
+
+<p><strong>dynamic_cast</strong> </p>
+<ol>
+<li> 它与static_cast相对，是动态转换。 </li>
+<li> 这种转换是在运行时进行转换分析的，并非在编译时进行，明显区别于上面三个类型转换操作。 </li>
+<li> 该函数只能在继承类对象的指针之间或引用之间进行类型转换。进行转换时，会根据当前运行时类型信息，判断类型对象之间的转换是否合法。dynamic_cast的指针转换失败，可通过是否为null检测，引用转换失败则抛出一个bad_cast异常。 </li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">例： <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span>&#123;</span>&#125;; <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span> :</span> <span class="hljs-keyword">public</span> Base&#123;&#125;; <br><span class="hljs-comment">//派生类指针转换为基类指针 </span><br>Derived *pd = <span class="hljs-keyword">new</span> Derived; <br>Base *pb = <span class="hljs-keyword">dynamic_cast</span>&lt;Base*&gt;(pd); <br> <span class="hljs-keyword">if</span> (!pb) <br>cout &lt;&lt; <span class="hljs-string">&quot;类型转换失败&quot;</span> &lt;&lt; endl; <br> <br><span class="hljs-comment">//没有继承关系，但被转换类有虚函数 </span><br><span class="hljs-function">class <span class="hljs-title">A</span><span class="hljs-params">(<span class="hljs-keyword">virtual</span> ~A();)</span> <span class="hljs-comment">//有虚函数 </span></span><br><span class="hljs-function">class B</span>&#123;&#125;: <br>A* pa = <span class="hljs-keyword">new</span> A; <br>B* pb = <span class="hljs-keyword">dynamic_cast</span>&lt;B*&gt;(pa); <br></code></pre></td></tr></table></figure>
+
+<p><em><strong>如果对无继承关系或者没有虚函数的对象指针进行转换、基本类型指针转换以及基类指针转换为派生类指针，都不能通过编译。</strong></em></p>
+<h3 id="day09"><a href="#day09" class="headerlink" title="day09"></a>day09</h3><h4 id="HTTP跟HTTPS的区别"><a href="#HTTP跟HTTPS的区别" class="headerlink" title="HTTP跟HTTPS的区别"></a>HTTP跟HTTPS的区别</h4><p><strong>HTTP：</strong>是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。</p>
+<p><strong>HTTPS：</strong>是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。HTTPS协议的主要作用可以分为两种：一种是建立一个信息安全通道，来保证数据传输的安全；另一种就是确认网站的真实性。</p>
+<p><strong>区别：</strong></p>
+<ul>
+<li>  HTTPS 协议需要到 CA （Certificate Authority，证书颁发机构）申请证书，一般免费证书较少，因而需要一定费用。</li>
+<li>  HTTP 是超文本传输协议，信息是明文传输，HTTPS 则是具有安全性的 SSL 加密传输协议。</li>
+<li>  HTTP 和 HTTPS 使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</li>
+<li>  HTTP 的连接很简单，是无状态的。HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 HTTP  协议安全。(无状态的意思是其数据包的发送、传输和接收都是相互独立的。无连接的意思是指通信双方都不长久的维持对方的任何信息。)</li>
+</ul>
+<h4 id="struct跟class的区别"><a href="#struct跟class的区别" class="headerlink" title="struct跟class的区别"></a>struct跟class的区别</h4><ol>
+<li><p> <strong>内部成员变量及成员函数的默认防控属性</strong>：struct默认防控属性是public的，而class默认的防控属性是private的</p>
+</li>
+<li><p> <strong>继承关系中默认防控属性的区别</strong>：在继承关系，struct默认是public的，而class是private</p>
+</li>
+<li><p> <strong>模板中的使用</strong>：class这个关键字还可用于定义模板参数，就像typename。但是strcut不用与定义模板参数</p>
+</li>
+</ol>
+<h4 id="生产者，消费者模式"><a href="#生产者，消费者模式" class="headerlink" title="生产者，消费者模式"></a>生产者，消费者模式</h4><p>生产者消费者模式是Controlnet网络中特有的一种传输数据的模式，设置方便，使用安全快捷。</p>
+<ul>
+<li>  生产者生产数据到缓冲区中，消费者从缓冲区中取数据。</li>
+<li>  如果缓冲区已经满了，则生产者线程阻塞；</li>
+<li>  如果缓冲区为空，那么消费者线程阻塞。</li>
+</ul>
+<p>生产者消费者模式为信息传输开辟了一个崭新的概念，因为它的优先级最高，所以即使网络发生堵塞时它也会最先通过，最大程度的保证了设备的安全。也有缺点，就是在网络中的个数是有限制的。生产者消费者模式在设置时比较简单，使用方便安全。</p>
+<h4 id="虚拟地址空间有什么好处？"><a href="#虚拟地址空间有什么好处？" class="headerlink" title="虚拟地址空间有什么好处？"></a>虚拟地址空间有什么好处？</h4><ol>
+<li> 扩大地址空间；</li>
+<li> 内存保护：每个进程运行在各自的虚拟内存地址空间，互相不能干扰对方。虚存还对特定的内存地址提供写保护，可以防止代码或数据被恶意篡改。</li>
+<li> 公平内存分配。采用了虚存之后，每个进程都相当于有同样大小的虚存空间。</li>
+<li> 当进程通信时，可采用虚存共享的方式实现。</li>
+<li> 当不同的进程使用同样的代码时，比如库文件中的代码，物理内存中可以只存储一份这样的代码，不同的进程只需要把自己的虚拟内存映射过去就可以了，节省内存</li>
+<li> 虚拟内存很适合在多道程序设计系统中使用，许多程序的片段同时保存在内存中。当一个程序等待它的一部分读入内存时，可以把CPU交给另一个进程使用。在内存中可以保留多个进程，系统并发度提高</li>
+<li> 在程序需要分配连续的内存空间的时候，只需要在虚拟内存空间分配连续空间，而不需要实际物理内存的连续空间，可以利用碎片</li>
+</ol>
+<h3 id="day10"><a href="#day10" class="headerlink" title="day10"></a>day10</h3><h4 id="对比vector和list和deque"><a href="#对比vector和list和deque" class="headerlink" title="对比vector和list和deque"></a>对比vector和list和deque</h4><h5 id="vector：相当于一个数组"><a href="#vector：相当于一个数组" class="headerlink" title="vector：相当于一个数组"></a>vector：相当于一个数组</h5><p>在内存中分配一块连续的内存空间进行存储。支持不指定vector大小的存储。STL内部实现时，首先分配一个非常大的内存空间预备进行存储，即capacity（）函数返回的大小，当超过此分配的空间时再整体重新放分配一块内存存储，这给人以vector可以不指定vector即一个连续内存的大小的感觉。通常此默认的内存分配能完成大部分情况下的存储。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>  不指定一块内存大小的数组的连续存储，即可以像数组一样操作，但可以对此数组进行动态操作。通常体现在push_back() pop_back()</li>
+<li>  随机访问方便，即支持[]操作符和vector.at()</li>
+<li>  节省空间</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>  在内部进行插入删除操作效率低</li>
+<li>  只能在vector的最后进行push和pop，不能在vector的头进行push和pop。</li>
+<li>  当动态添加数据超过vector默认分配的大小时，要进行整体的重新分配、拷贝与释放 </li>
+</ul>
+<h5 id="List：双向链表"><a href="#List：双向链表" class="headerlink" title="List：双向链表"></a>List：双向链表</h5><p>每一个结点都包括一个信息块Info、一个前驱指针Pre、一个后驱指针Next。可以不分配必须的内存大小方便的进行添加和删除操作。使用的是非连续的内存空间进行存储。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>  不使用连续内存完成动态操作。</li>
+<li>  在内部方便的进行插入和删除操作</li>
+<li>  可在两端进行push、pop</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>  不能进行内部的随机访问，即不支持[]操作符和vector.at()</li>
+<li>  相对于verctor占用内存多</li>
+</ul>
+<h5 id="Deque：双端队列"><a href="#Deque：双端队列" class="headerlink" title="Deque：双端队列"></a>Deque：双端队列</h5><p><em>deque是在功能上合并了vector和list。</em></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>  随机访问方便，即支持[]操作符和vector.at()</li>
+<li>  在内部方便的进行插入和删除操作</li>
+<li>  可在两端进行push、pop</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>  占用内存多</li>
+</ul>
+<h5 id="使用区别"><a href="#使用区别" class="headerlink" title="使用区别"></a>使用区别</h5><ul>
+<li>  如果你需要高效的随即存取，而不在乎插入和删除的效率，使用vector </li>
+<li>  如果你需要大量的插入和删除，而不关心随即存取，则应使用list </li>
+<li>  如果你需要随即存取，而且关心两端数据的插入和删除，则应使用deque</li>
+</ul>
+<h4 id="局部变量与全局变量"><a href="#局部变量与全局变量" class="headerlink" title="局部变量与全局变量"></a>局部变量与全局变量</h4><p><strong>局部变量</strong></p>
+<p><strong>局部变量出现在三种地方</strong></p>
+<ol>
+<li> 在函数内定义的变量</li>
+<li> 在复合语句内定义的变量</li>
+<li> 形式参数</li>
+</ol>
+<p>局部变量的作用域在其所定义的语句块中（即花括号包含）</p>
+<p><strong>全局变量</strong></p>
+<p>一个源文件可以包含若干个函数，在函数之外定义的变量称为全局变量。全局变量可以为本文件中其它的函数所共用，他的有效范围从定义变量的开始位置到本源文件结束。</p>
+<ol>
+<li> 全局变量在程序的全部执行过程中都占用存储单元，而不是仅在需要时才开辟单元。</li>
+<li> 它使函数的通用性降低，如果在函数中引用了全局变量，那么执行情况会受到有关的外部变量的影响。如果将一个函数移到另一个文件中，还要考虑把有关的外部变量及其值一起弄过去。</li>
+</ol>
+<p>*<strong>总体来说，定义在函数内部的变量为局部变量，定义在函数外部的变量为全局变量。*</strong></p>
+<h4 id="进程同步与互斥"><a href="#进程同步与互斥" class="headerlink" title="进程同步与互斥"></a>进程同步与互斥</h4><p><strong>同步</strong></p>
+<p>同步亦称<strong>直接制约关系</strong>，它是指为完成某种任务而建立的两个或多个进程，这些进程因为需要在某些位置上协调它们的工作次序而等待、传递信息所产生的制约关系。进程间的直接制约关系就是源于它们之间的<strong>相互合作</strong>。</p>
+<p>例如，输入进程A通过单缓冲向进程B提供数据。当该缓冲区空时，进程B不能获得所需数据而阻塞，一旦进程A将数据送入缓冲区，进程B被唤醒。反之，当缓冲区满时，进程A被阻塞，仅当进程B取走缓冲数据时，才唤醒进程A。</p>
+<p><strong>互斥</strong></p>
+<p>互斥亦称<strong>间接制约关系</strong>。当一个进程进入临界区使用临界资源时，另一个进程必须等待, 当占用临界资源的进程退出临界区后，另一进程才允许去访问此临界资源。</p>
+<p>例如，在仅有一台打印机的系统中，有两个进程A和进程B，如果进程A需要打印时, 系统已将打印机分配给进程B,则进程A必须阻塞。一旦进程B将打印机释放，系统便将进程A唤醒，并将其由阻塞状态变为就绪状态。</p>
+<p><strong>为禁止两个进程同时进入临界区，同步机制应遵循以下准则：</strong></p>
+<ul>
+<li>  空闲让进。临界区空闲时，可以允许一个请求进入临界区的进程立即进入临界区。</li>
+<li>  忙则等待。当已有进程进入临界区时，其他试图进入临界区的进程必须等待。</li>
+<li>  有限等待。对请求访问的进程，应保证能在有限时间内进入临界区。</li>
+<li>  让权等待。当进程不能进入临界区时，应立即释放处理器，防止进程忙等待。</li>
+</ul>
+<h4 id="输入一个网站，到显示页面的过程"><a href="#输入一个网站，到显示页面的过程" class="headerlink" title="输入一个网站，到显示页面的过程"></a>输入一个网站，到显示页面的过程</h4><ul>
+<li>  输入地址</li>
+<li>  浏览器查找域名的 IP 地址　　</li>
+<li>  浏览器向 web 服务器发送一个 HTTP 请求</li>
+<li>  服务器的永久重定向响应</li>
+<li>  浏览器跟踪重定向地址</li>
+<li>  服务器处理请求</li>
+<li>  服务器返回一个 HTTP 响应　</li>
+<li>  浏览器显示 HTML</li>
+<li>  浏览器发送请求获取嵌入在 HTML 中的资源（如图片、音频、视频、CSS、JS等等）</li>
+</ul>
+<h4 id="URL的解析过程"><a href="#URL的解析过程" class="headerlink" title="URL的解析过程"></a>URL的解析过程</h4><ol>
+<li> 在浏览器地址栏输入url地址，按下回车键</li>
+<li> 浏览器获取url进行域名解析，首先从本地DNS缓存查找，如果本地没有则去DNS服务器查找，如果都没有找到，则浏览器返回请求失败</li>
+<li> DNS解析出请求地址，浏览器想这个地址发送请求</li>
+<li> 进行tcp三次握手建立连接</li>
+<li> tcp/ip连接建立后，浏览器向服务器发送http请求，服务处理请求并返回相应的资源（如果有缓存就在缓存中去）</li>
+<li> 客户端下载资源，浏览器将内容展示到窗口</li>
+</ol>
+<h4 id="HTTP-为什么要用TCP而不用UDP"><a href="#HTTP-为什么要用TCP而不用UDP" class="headerlink" title="HTTP 为什么要用TCP而不用UDP?"></a>HTTP 为什么要用TCP而不用UDP?</h4><ol>
+<li> udp链接不安全，不可靠，主要应用在不安全性要求不高，效率要求比较高的应用程序，比如聊天程序</li>
+<li> http协议只定义了应用层的东西，下层的可靠性要传输层来保证，但是没有说一定要用tcp，只要是可以保证可靠性传输层协议都可以承载http，比如有基于sctp的http实现。</li>
+<li> 再分析一下TCP/UDP之间的区别</li>
+</ol>
+<h3 id="day11"><a href="#day11" class="headerlink" title="day11"></a>day11</h3><h4 id="C-面向对象的三个特性"><a href="#C-面向对象的三个特性" class="headerlink" title="C++面向对象的三个特性"></a>C++面向对象的三个特性</h4><p>面向对象的三个基本特征是：</p>
+<ul>
+<li>  <strong>封装</strong>：封装可以隐藏实现细节，使得代码模块化；</li>
+<li>  <strong>继承</strong>：继承可以扩展已存在的代码模块（类）；它们的目的都是为了代码重用。</li>
+<li>  <strong>多态</strong>：多态是为了实现的目的是为了接口重用</li>
+</ul>
+<h4 id="DNS是什么，ARP是什么"><a href="#DNS是什么，ARP是什么" class="headerlink" title="DNS是什么，ARP是什么"></a>DNS是什么，ARP是什么</h4><p><strong>DNS</strong>(Domain Name  System，域名系统)，因特网上作为域名和IP地址相互映射的一个分布式数据库，能够使用户更方便的访问互联网，而不用去记住能够被机器直接读取的IP数串。通过主机名，最终得到该主机名对应的IP地址的过程叫做域名解析(或主机名解析)。</p>
+<p>DNS协议运行在UDP协议之上，使用端口号53。</p>
+<p><strong>DNS解析过程涉及将主机名转换为计算机友好的IP地址</strong></p>
+<p><strong>ARP</strong>即地址解析协议，实现通过IP地址得知其物理地址。在TCP/IP网络环境下，每个主机都分配了一个32位的IP地址，这种互联网地址是在网络范围标识主机的一种逻辑地址。为了让报文在物理网路上传送，必须知道对方目的主机的物理地址。这样就存在把IP地址变换成物理地址的地址转换问题。以以太网环境为例，为了正确地向目的主机传送报文，必须把目的主机的32位IP地址转换成为48位以太网的地址。这就需要在互连层有一组服务将IP地址转换为相应物理地址，这组协议就是ARP协议。</p>
+<h4 id="socket阻塞与非阻塞情况下的recv、send、read、write返回值"><a href="#socket阻塞与非阻塞情况下的recv、send、read、write返回值" class="headerlink" title="socket阻塞与非阻塞情况下的recv、send、read、write返回值"></a>socket阻塞与非阻塞情况下的recv、send、read、write返回值</h4><p><strong>recv：</strong></p>
+<p>阻塞与非阻塞recv返回值没有区分，都是&lt;0出错，=0连接关闭，&gt;0接收数据大小</p>
+<p>特别：非阻塞模式下返回值&lt;0时并且(errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN)的情况下认为连接是正常的，继续接收。</p>
+<p>阻塞模式下recv会阻塞着接收数据，非阻塞模式下如果没有数据会返回，不会阻塞着读，因此需要循环读取。</p>
+<p><strong>send：</strong></p>
+<p>阻塞与非阻塞send返回值没有区分，都是&lt;0出错，=0连接关闭，&gt;0发送数据大小</p>
+<p>特别：非阻塞模式下返回值&lt;0时并且 (errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN)的情况下认为连接是正常的，继续发送。</p>
+<p>阻塞模式下send会阻塞着发送数据，非阻塞模式下如果暂时无法发送数据会返回，不会阻塞着 send，因此需要循环发送。</p>
+<p><strong>read：</strong></p>
+<p>阻塞与非阻塞read返回值没有区分，都是&lt;0出错，=0连接关闭，&gt;0接收数据大小</p>
+<p>特别：非阻塞模式下返回值&lt;0时并且 (errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN)的情况下认为连接是正常的，继续接收。</p>
+<p>阻塞模式下read会阻塞着接收数据，非阻塞模式下如果没有数据会返回，不会阻塞着读，因此需要循环读取。</p>
+<p><strong>write：</strong></p>
+<p>阻塞与非阻塞write返回值没有区分，都是&lt;0出错，=0连接关闭，&gt;0发送数据大小</p>
+<p>特别：非阻塞模式下返回值&lt;0时并且 (errno == EINTR || errno == EWOULDBLOCK || errno == EAGAIN)的情况下认为连接是正常的，继续发送。</p>
+<p>阻塞模式下write会阻塞着发送数据，非阻塞模式下如果暂时无法发送数据会返回，不会阻塞着 write，因此需要循环发送。</p>
+<h4 id="http报文的格式，头部包含哪些"><a href="#http报文的格式，头部包含哪些" class="headerlink" title="http报文的格式，头部包含哪些"></a>http报文的格式，头部包含哪些</h4><p>一个http请求报文由<strong>四部分</strong>组成：请求行（request line)、消息头部（header)、空行、请求正文。　</p>
+<p><img src="/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/image-20210312102919610.png" alt="image-20210312102919610"></p>
+<p>首部行由key/value键值对组成，每行一对，key和value用冒号”:”分隔，请求头部通知服务器有关于client端的请求信息，典型的请求头：</p>
+<ul>
+<li><p>  <strong>User-Agent：</strong>产生请求的浏览器类型</p>
+</li>
+<li><p>  <strong>Accept：</strong>client端可识别的内容类型列表</p>
+</li>
+<li><p>  <strong>Host：</strong>请求的主机名，允许多个域名同处一个ip地址，即虚拟主机　</p>
+</li>
+</ul>
+<h3 id="day12"><a href="#day12" class="headerlink" title="day12"></a>day12</h3><h4 id="const、typedef、define、inline区别"><a href="#const、typedef、define、inline区别" class="headerlink" title="const、typedef、define、inline区别"></a>const、typedef、define、inline区别</h4><p><strong>typedef</strong></p>
+<ul>
+<li>  类型重命名可以写在函数外部，同样也可以函数内部，它们的作用域不同，可以提高代码的可读性</li>
+<li>  typedef 可以分别为基本类型重命名、指针类型重命名、结构体类型重命名和函数指针类型重命名</li>
+</ul>
+<p><strong>define</strong></p>
+<ul>
+<li>  宏的本质是替换，它不进行计算，只在编译时进行单纯的文本替换，因为宏定义是<strong>预编译指令</strong>(前面带#号的)<strong>不是语句</strong>，所以后面不加 “;” 分号</li>
+<li>  enum给int型常量起名字，typedef给数据类型起名字，宏定义也可以看做一种重命名</li>
+</ul>
+<p><strong>C++ 中推荐使用 const 代替 #define 声明常量</strong></p>
+<ul>
+<li>  const 能够明确指定常量类型</li>
+<li>  const 能够用于更复杂的数据类型(如：数组，结构体和类)</li>
+<li>  const 标识符遵循变量的作用域规则，可以创建作用域为全局(仅在本文件中使用)、命名空间、函数或数据块的常量</li>
+</ul>
+<p><strong>C++ 中推荐使用 inline 代替 #define 声明函数</strong></p>
+<ul>
+<li>  C++ 中使用 inline 定义内联函数(C 语言中一般是使用 #define 定义宏函数)</li>
+<li>  宏函数是简单的文本替换，不是真正的传参数，如果不注意运算顺序很容易出错，C++ 使用 inline 定义内联函数，比定义宏函数可靠，inline 定义的内联函数是真正的传递参数，C++ 中 inline 可用于常规函数也可用于类方法</li>
+<li>  宏函数的一个优点是无类型，可用于任意类型，运算都是有意义的，在 C++ 中可创建<strong>内联函数模板</strong>实现这个功能</li>
+</ul>
+<h4 id="静态成员函数和静态成员变量有什么意义？"><a href="#静态成员函数和静态成员变量有什么意义？" class="headerlink" title="静态成员函数和静态成员变量有什么意义？"></a>静态成员函数和静态成员变量有什么意义？</h4><p><strong>静态成员变量</strong></p>
+<ul>
+<li>  静态成员变量属于整个类所有</li>
+<li>  静态成员变量的生命期不依赖于任何对象，为程序的生命周期</li>
+<li>  可以通过类名直接访问公有静态成员变量</li>
+<li>  可以通过对象名访问公有静态成员变量</li>
+<li>  所有对象共享类的静态成员变量</li>
+<li>  静态成员变量需要在类外单独分配空间</li>
+<li>  静态成员变量在程序内部位于全局数据区 (Type className::VarName = value)</li>
+</ul>
+<p><strong>静态成员函数</strong></p>
+<ul>
+<li>  静态成员函数是类的一个特殊的成员函数</li>
+<li>  静态成员函数属于整个类所有，<strong>没有this指针</strong></li>
+<li>  静态成员函数只能直接访问静态成员变量和静态成员函数</li>
+<li>  可以通过类名直接访问类的公有静态成员函数</li>
+<li>  可以通过对象名访问类的公有静态成员函数</li>
+<li>  定义静态成员函数，直接使用static关键字修饰即可</li>
+</ul>
+<h4 id="迭代器删除元素的会发生什么？"><a href="#迭代器删除元素的会发生什么？" class="headerlink" title="迭代器删除元素的会发生什么？"></a>迭代器删除元素的会发生什么？</h4><p><strong>关联容器</strong></p>
+<p>对于<strong>关联容器</strong>（如map，set，multimap，multiset），删除当前的iterator，仅仅会使当前的iterator失效，只要在erase时，递增当前的iterator即可。这是因为map之类的容器，使用了红黑树来实现，插入，删除一个结点不会对其他结点造成影响。使用方式如下例子：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">set&lt;<span class="hljs-keyword">int</span>&gt; valset = &#123; <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span> &#125;;<br>set&lt;<span class="hljs-keyword">int</span>&gt;::iterator iter;<br><span class="hljs-keyword">for</span> (iter = valset.<span class="hljs-built_in">begin</span>(); iter != valset.<span class="hljs-built_in">end</span>(); )<br>&#123;<br> <span class="hljs-keyword">if</span> (<span class="hljs-number">3</span> == *iter)<br> valset.<span class="hljs-built_in">erase</span>(iter++);<br> <span class="hljs-keyword">else</span><br> ++iter;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>因为传给erase的是iter的一个副本，iter++是下一个有效的迭代器。</strong></p>
+<p><strong>序列式容器</strong></p>
+<p>对于<strong>序列式容器</strong>（如vector，deque，list等），删除当前的iterator会使后面所有元素的iterator都失效。这是因为vector，deque使用了连续分配的内存，删除一个元素导致后面所有的元素会向前移动一个位置。不过erase方法可以返回下一个有效的iterator。使用方式如下,例如：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-keyword">int</span>&gt; val = &#123; <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span> &#125;;<br>vector&lt;<span class="hljs-keyword">int</span>&gt;::iterator iter;<br><span class="hljs-keyword">for</span> (iter = val.<span class="hljs-built_in">begin</span>(); iter != val.<span class="hljs-built_in">end</span>(); )<br>&#123;<br> <span class="hljs-keyword">if</span> (<span class="hljs-number">3</span> == *iter)<br> iter = val.<span class="hljs-built_in">erase</span>(iter); <span class="hljs-comment">//返回下一个有效的迭代器，无需+1</span><br> <span class="hljs-keyword">else</span><br> ++iter;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="必须在构造函数初始化式里进行初始化的数据成员有哪些？"><a href="#必须在构造函数初始化式里进行初始化的数据成员有哪些？" class="headerlink" title="必须在构造函数初始化式里进行初始化的数据成员有哪些？"></a>必须在构造函数初始化式里进行初始化的数据成员有哪些？</h4><ol>
+<li> 常量成员，const修饰的成员变量，因为常量只能初始化不能赋值，所以也要写在初始化列表里面；</li>
+<li> 引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面；</li>
+<li> 没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化，而是直接调用拷贝构造函数初始化。</li>
+</ol>
+<h4 id="模版特化的概念，为什么特化？"><a href="#模版特化的概念，为什么特化？" class="headerlink" title="模版特化的概念，为什么特化？"></a>模版特化的概念，为什么特化？</h4><p>C++中经常为了避免重复的编码而需要使用到模板，这是C++泛型编程不可或缺的利器。然而通常又有一些特殊的情况，不能直接使用泛型模板展开实现，这时就需要针对某个特殊的类型或者是某一类特殊的类型，而实现一个特例模板——即模板特化。通常会使用到模板特化的有类模板和函数模板。</p>
+<h3 id="day13"><a href="#day13" class="headerlink" title="day13"></a>day13</h3><h4 id="C-进程内存空间分布"><a href="#C-进程内存空间分布" class="headerlink" title="C++进程内存空间分布"></a>C++进程内存空间分布</h4><p><img src="/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/20181030224208240.PNG" alt="img"></p>
+<ul>
+<li>  栈区（stack）： 由编译器自动分配释放，存放函数的参数值，局部变量的值等。 </li>
+<li>  堆区（heap） ： 一般由程序员分配释放，若程序员不释放，在程序结束时，操作系统回收。</li>
+<li>全局区（静态区）：全局变量和静态变量的存储是放在一块的<ul>
+<li>  BSS段（Block Started by Symbol）：存放未初始化的全局变量和静态变量。该区在编译好的目标文件中不被分配内存，只是记录所需要的大小。</li>
+<li>  DATA区：初始化的全局变量和静态变量放在DATA区</li>
+</ul>
+</li>
+<li>  常量区 ：存放常量字符串，程序结束后由系统释放 </li>
+<li>  代码区（TXT）：存放函数体的二进制代码</li>
+</ul>
+<blockquote>
+<p>  <strong>栈从高到低分配，堆从低到高分配</strong></p>
+</blockquote>
+<blockquote>
+<p>  <strong>为什么要将初始化和未初始化的变量分别存放在两个区：</strong></p>
+<ul>
+<li>  内存是否被分配的区别</li>
+<li>  未初始化的放在bss区，在程序启动时可以统一调用memset。</li>
+</ul>
+</blockquote>
+<h4 id="tcp-如何实时监测断线情况？"><a href="#tcp-如何实时监测断线情况？" class="headerlink" title="tcp 如何实时监测断线情况？"></a>tcp 如何实时监测断线情况？</h4><p>TCP正常的断开，通信双方（服务端和客户端）都是能知道的。但是非正常的断开，比如直接拔掉了网线，就只能靠如下<strong>两种方法</strong>，实现短时间内的检测。</p>
+<p><strong>1、心跳包机制</strong></p>
+<p>心跳包机制，是网游设计中的常用机制。从用户层面，自己发包去判断对方连线状态。可以根据情况，很灵活的使用。比如，20秒发送一个最小的数据包（也可以根据实际情况稍带一些其他数据）。如果发送没有回应，就判断对方掉线了。断开后立即关闭socket。</p>
+<p><strong>2、利用tcp_keepalive机制</strong></p>
+<p>利用TCP的机制，通过设置系统参数，从系统层面，监测tcp的连接状态。在配置socket属性时，使用 keepalive option，一旦有此配置，这些长时间无数据的链接会根据tcp的keepalive内核属性，在大于(tcp_keepalive_time)所对应的时间（单位为秒）之后，断开这些链接。</p>
+<p>关于keep alive无论windows，还是linux，keepalive就<strong>三个参数</strong>：</p>
+<ul>
+<li>  keepalive_probes: 探测次数</li>
+<li>  keepalive_time: 探测的超时</li>
+<li>  keepalive_intvl: 探测间隔</li>
+</ul>
+<p>对于一个已经建立的tcp连接，如果在keepalive_time时间内双方没有任何的数据包传输，则开启keepalive功能的一端将发送  keepalive数据包，若没有收到应答，则每隔keepalive_intvl时间再发送该数据包，发送keepalive_probes次。一直没有收到应答，则发送rst包关闭连接。若收到应答，则将计时器清零。</p>
+<h4 id="Linux下ps命令，以及查看内存当前使用状态的命令"><a href="#Linux下ps命令，以及查看内存当前使用状态的命令" class="headerlink" title="Linux下ps命令，以及查看内存当前使用状态的命令"></a>Linux下ps命令，以及查看内存当前使用状态的命令</h4><p>ps命令就是最基本进程查看命令。使用该命令可以确定有哪些进程正在运行和运行的状态、进程是否结束、进程有没有僵尸、哪些进程占用了过多的资源等等。总之大部分信息都是可以通过执行该命令得到。ps是显示瞬间进程的状态，并不动态连续；如果想对进程进行实时监控应该用top命令。</p>
+<p><strong>ps参数</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">-A ：所有的进程均显示出来，与 -e 具有同样的效用；<br>-a ：显示现行终端机下的所有进程，包括其他用户的进程；<br>-u ：以用户为主的进程状态 ；<br>-x ：可与 -a，-e参数一起使用，可列出较完整信息。<br></code></pre></td></tr></table></figure>
+
+<p><em><strong>查看内存当前使用状态的命令</strong></em></p>
+<p><strong>1. free</strong></p>
+<ul>
+<li>  free命令用于显示内存状态。</li>
+<li>  free指令会显示内存的使用情况，包括实体内存，虚拟的交换文件内存，共享内存区段，以及系统核心使用的缓冲区等。</li>
+<li>  语法： free [-bkmotV][-s &lt;间隔秒数&gt;]</li>
+<li>  参数：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">-b 　以Byte为单位显示内存使用情况。<br>-k 　以KB为单位显示内存使用情况。<br>-m 　以MB为单位显示内存使用情况。<br>-o 　不显示缓冲区调节列。<br>-s&lt;间隔秒数&gt; 　持续观察内存使用状况。<br>-t 　显示内存总和列。<br>-V 　显示版本信息。<br>-h 人性化方式显示数值：单位取 M、G等（这是一个通用参数，很多命令都可以带这个参数。)<br></code></pre></td></tr></table></figure>
+
+<p><strong>2. df</strong></p>
+<ul>
+<li>  df：列出文件系统的整体磁盘使用量。检查文件系统的磁盘空间占用情况。可用来获取硬盘被占用了多少空间，目前还剩下多少空间等信息。</li>
+<li>  语法： df [-ahikHTm] [目录或文件名]</li>
+<li>  参数：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">-a ：列出所有的文件系统，包括系统特有的 /proc 等文件系统；<br>-k ：以 KBytes 的容量显示各文件系统；<br>-m ：以 MBytes 的容量显示各文件系统；<br>-h ：以人们较易阅读的 GBytes, MBytes, KBytes 等格式自行显示；<br>-H ：以 M=<span class="hljs-number">1000</span>K 取代 M=<span class="hljs-number">1024</span>K 的进位方式；<br>-T ：显示文件系统类型, 连同该 partition 的 filesystem 名称 (例如 ext3) 也列出；<br>-i ：不用硬盘容量，而以 inode 的数量来显示<br></code></pre></td></tr></table></figure>
+
+<p><strong>3.du</strong></p>
+<ul>
+<li>  du 对文件和目录磁盘使用的空间的查看。</li>
+<li>  语法： du [-ahskm] 文件或目录名称 </li>
+<li>  参数：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">-a ：列出所有的文件与目录容量，因为默认仅统计目录底下的文件量而已。<br>-h ：以人们较易读的容量格式 (G/M) 显示；<br>-s ：列出总量而已，而不列出每个各别的目录占用容量；<br>-S ：不包括子目录下的总计，与 -s 有点差别。<br>-k ：以 KBytes 列出容量显示；<br>-m ：以 MBytes 列出容量显示；<br></code></pre></td></tr></table></figure>
+
+<h4 id="四个常问命令"><a href="#四个常问命令" class="headerlink" title="四个常问命令"></a>四个常问命令</h4><ol>
+<li> netstat ：显示网络状态</li>
+<li> tcpdump：主要是截获通过本机网络接口的数据，用以分析。能够截获当前所有通过本机网卡的数据包。它拥有灵活的过滤机制，可以确保得到想要的数据。</li>
+<li> ipcs：检查系统上共享内存的分配</li>
+<li> ipcrm：手动解除系统上共享内存的分配</li>
+</ol>
+<h3 id="day14"><a href="#day14" class="headerlink" title="day14"></a>day14</h3><h4 id="什么时候使用多进程和什么时候使用多线程"><a href="#什么时候使用多进程和什么时候使用多线程" class="headerlink" title="什么时候使用多进程和什么时候使用多线程"></a>什么时候使用多进程和什么时候使用多线程</h4><ul>
+<li>  需要频繁创建销毁的优先使用线程；因为对进程来说创建和销毁一个进程代价是很大的</li>
+<li>  线程的切换速度快，所以在需要大量计算，切换频繁时用线程，还有耗时的操作使用线程可提高应用程序的响应</li>
+<li>  因为对CPU系统的效率使用上线程更占优，所以可能要发展到多机分布的用进程，多核分布用线程；</li>
+<li>  并行操作时使用线程，如C/S架构的服务器端并发线程响应用户的请求；</li>
+<li>  需要更稳定安全时，适合选择进程；需要速度时，选择线程更好。</li>
+</ul>
+<h4 id="如何定位内存泄露"><a href="#如何定位内存泄露" class="headerlink" title="如何定位内存泄露?"></a>如何定位内存泄露?</h4><p>内存泄漏是指堆内存的泄漏。堆内存是指程序从堆中分配的、大小任意的(内存块的大小可以在程序运行期决定)、使用完后必须显示释放的内存。应用程序一般使用malloc、realloc、new等函数从堆中分配到一块内存，使用完后，程序必须负责相应的调用free或delete释放该内存块。否则，这块内存就不能被再次使用，我们就说这块内存泄漏了。</p>
+<p><strong>C++程序缺乏相应的手段来检测内存信息</strong>，只能使用<strong>top指令</strong>观察进程的动态内存总额。而且程序退出时，我们无法获知任何内存泄漏信息。</p>
+<h4 id="Linux-读写锁的作用"><a href="#Linux-读写锁的作用" class="headerlink" title="Linux 读写锁的作用"></a>Linux 读写锁的作用</h4><p>读写锁其实还是一种锁，是给一段临界区代码加锁，但是此加锁是在进行<strong>写操作</strong>的时候才会互斥，而在进行读的时候是可以共享的进行访问临界区的。</p>
+<p>读写锁和互斥量（互斥锁）很类似，是另一种线程同步机制，但不属于POSIX标准，可以用来同步同一进程中的各个线程。</p>
+<p><strong>读写锁的使用规则</strong>：</p>
+<ul>
+<li>  只要没有写模式下的加锁，任意线程都可以进行读模式下的加锁；</li>
+<li>  只有读写锁处于不加锁状态时，才能进行写模式下的加锁；</li>
+<li>  读写锁也称为共享-独占（shared-exclusive）锁，<strong>当读写锁以读模式加锁时，它是以共享模式锁住，当以写模式加锁时，它是以独占模式锁住。</strong>读写锁非常适合读数据的频率远大于写数据的频率从的应用中。这样可以在任何时刻运行多个读线程并发的执行，给程序带来了更高的并发度。</li>
+</ul>
+<blockquote>
+<p>  <strong>读写锁本质上是一种自旋锁</strong></p>
+</blockquote>
+<p><strong>互斥锁与读写锁的区别：</strong></p>
+<ol>
+<li> 当访问临界区的资源时（访问的含义包括所有的操作），需要上互斥锁；</li>
+<li> 当对数据（互斥锁中的临界区资源）进行读取时，需要上读取锁，当对数据进行写入时，需要上写入锁。</li>
+</ol>
+<p><strong>读写锁的优点：</strong></p>
+<p>对于读数据较修改数据频繁的应用，用读写锁代替互斥锁可以提高效率。因为使用互斥锁时，即使是读出数据（相当于操作临界区资源）都需要上互斥锁；而采用读写锁则允许在任一时刻多个读出者存在，提高了并发性。</p>
+<p><strong>为什么需要读写锁？</strong></p>
+<p>有时候，在多线程中，有一些公共数据修改的机会比较少，而读的机会却是非常多的，此公共数据的操作基本都是读，如果每次操作都给此段代码加锁，太浪费时间了而且也很浪费资源，降低程序的效率，因为读操作不会修改数据，只是做一些查询，所以在读的时候不用给此段代码加锁，可以共享的访问，只有涉及到写的时候，互斥的访问就好了</p>
+<h4 id="虚拟内存的分布，虚拟内存存在的原因"><a href="#虚拟内存的分布，虚拟内存存在的原因" class="headerlink" title="虚拟内存的分布，虚拟内存存在的原因"></a>虚拟内存的分布，虚拟内存存在的原因</h4><p>32位系统中，虚拟内存分布：</p>
+<ul>
+<li>  虚拟地址空间0~3G用于应用层，即用户空间</li>
+<li>虚拟地址空间3~4G用于内核层，即内核空间，内核空间分为<strong>3部分</strong><ul>
+<li>  ZONE_DMA，0-16M，直接内存访问。该区域的物理页面专门供I/O设备的DMA使用。</li>
+<li>  ZONR_NORMAL，16M-896M，内核最重要的部分，该区域的物理页面是内核能够直接使用的。</li>
+<li>  ZONE_HIGHMEM，896M-结束，共128M，高端内存。主要用于32位Linux系统中，映射高于1G的物理内存。64位不需要高端内存。</li>
+</ul>
+</li>
+</ul>
+<p><strong>虚拟内存存在的原因</strong></p>
+<p>在系统中所有的进程之间是共享CPU和主存这些内存资源的。当进程数量变多时，所需要的内存资源就会相应的增加。可能会导致部分程序没有主存空间可用。此外，由于资源是共享的，那么就有可能导致某个进程不小心写了另一个进程所使用的内存，进而导致程序运行不符合正常逻辑。</p>
+<p>虚拟内存提供了三个重要的能力： <strong>缓存，内存管理，内存保护</strong></p>
+<ol>
+<li> 将主存视为一个存储在磁盘上的地址空间的高速缓存，在主存中只保存活动区域，并根据需要在磁盘和主存之间来回传送数据</li>
+<li> 为每个进程提供了一致的地址空间，简化内存管理</li>
+<li> 保护了每个进程的地址空间不被其他进程破坏</li>
+</ol>
+<h3 id="day15"><a href="#day15" class="headerlink" title="day15"></a>day15</h3><h4 id="子进程继承了父进程的哪些东西"><a href="#子进程继承了父进程的哪些东西" class="headerlink" title="子进程继承了父进程的哪些东西"></a>子进程继承了父进程的哪些东西</h4><p><strong>子进程继承父进程：</strong></p>
+<ul>
+<li>  用户号UID和用户组号GID</li>
+<li>  环境Environment</li>
+<li>  堆栈</li>
+<li>  共享内存</li>
+<li>  打开文件的描述符</li>
+<li>  执行时关闭（Close-on-exec）标志</li>
+<li>  信号（Signal）控制设定</li>
+<li>  进程组号</li>
+<li>  当前工作目录</li>
+<li>  根目录</li>
+<li>  文件方式创建屏蔽字</li>
+<li>  资源限制</li>
+<li>  控制终端</li>
+</ul>
+<p><strong>子进程独有</strong></p>
+<ul>
+<li>  进程号PID</li>
+<li>  不同的父进程号PPID</li>
+<li>  自己的文件描述符和目录流的拷贝</li>
+<li>  子进程不继承父进程的进程正文（text），数据和其他锁定内存（memory locks）</li>
+<li>  不继承异步输入和输出</li>
+</ul>
+<p><strong>父进程和子进程拥有独立的地址空间和PID参数。</strong></p>
+<h4 id="vector如何扩容"><a href="#vector如何扩容" class="headerlink" title="vector如何扩容"></a>vector如何扩容</h4><ul>
+<li>  新增元素：Vector通过一个连续的数组存放元素，如果集合已满，在新增数据的时候，就要分配一块更大的内存，将原来的数据复制过来，释放之前的内存，在插入新增的元素；</li>
+<li>  对vector的任何操作，一旦引起空间重新配置，指向原vector的所有迭代器就都失效了；</li>
+<li>  初始时刻vector的capacity为0，塞入第一个元素后capacity增加为1；</li>
+<li>  不同的编译器实现的扩容方式不一样，VS2015中以1.5倍扩容，GCC以2倍扩容。</li>
+</ul>
+<p><strong>总结</strong></p>
+<ol>
+<li> vector在push_back以成倍增长可以在均摊后达到O(1)的事件复杂度，相对于增长指定大小的O(n)时间复杂度更好。</li>
+<li> 为了防止申请内存的浪费，现在使用较多的有2倍与1.5倍的增长方式，而1.5倍的增长方式可以更好的实现对内存的重复利用，因而更好。</li>
+</ol>
+<h4 id="怎么理解线程安全"><a href="#怎么理解线程安全" class="headerlink" title="怎么理解线程安全"></a>怎么理解线程安全</h4><p>当多个线程访问一个对象时，如果不用进行额外的同步控制或其他的协调操作，调用这个对象的行为都可以获得正确的结果，我们就说这个对象是线程安全的</p>
+<p><strong>通过同步和互斥可以来保证线程的安全</strong></p>
+<p><strong>互斥：</strong>通过保证同一时间只有一个执行流可以对临界资源进行访问（一个执行流访问期间，其它执行流不能访问），来保证数据访问的安全性。通过互斥锁实现互斥。</p>
+<p><strong>同步：</strong>通过一些条件判断来实现多个执行流对临界资源访问的合理性（有资源则访问，没有资源则等待，等有了资源再被唤醒）。条件变量：一个pcb等待队列 + 向外提供一个使pcb等待以及唤醒的接口。条件变量可以通过提供的<strong>等待队列和等待唤醒接口</strong>实现线程间的同步。</p>
+<h4 id="如何实现可靠地UDP传输"><a href="#如何实现可靠地UDP传输" class="headerlink" title="如何实现可靠地UDP传输"></a>如何实现可靠地UDP传输</h4><p>UDP不属于连接协议，具有资源消耗少，处理速度快的优点，所以通常音频，视频和普通数据在传送时，使用UDP较多，因为即使丢失少量的包，也不会对接受结果产生较大的影响。</p>
+<p>传输层无法保证数据的可靠传输，只能通过应用层来实现了。实现的方式可以参照tcp可靠性传输的方式，只是实现不在传输层，实现转移到了应用层。最简单的方式是在应用层模仿传输层TCP的可靠性传输。</p>
+<p>下面<strong>不考虑拥塞处理</strong>，可靠UDP的简单设计。</p>
+<ol>
+<li> 添加seq/ack机制，确保数据发送到对端</li>
+<li> 添加发送和接收缓冲区，主要是用户超时重传</li>
+<li> 添加超时重传机制</li>
+</ol>
+<p><strong>详细说明</strong>：</p>
+<ul>
+<li>  发送端发送数据时，生成一个随机seq=x，然后每一片按照数据大小分配seq。</li>
+<li>  数据到达接收端后接收端放入缓存，并发送一个ack=x的包，表示对方已经收到了数据。</li>
+<li>  发送端收到了ack包后，删除缓冲区对应的数据。</li>
+<li>  时间到后，定时任务检查是否需要重传数据。</li>
+</ul>
+<h4 id="若析构函数不声明为虚函数，会有什么后果？为什么？"><a href="#若析构函数不声明为虚函数，会有什么后果？为什么？" class="headerlink" title="若析构函数不声明为虚函数，会有什么后果？为什么？"></a>若析构函数不声明为虚函数，会有什么后果？为什么？</h4><p>如果基类的析构函数不是虚函数，在特定情况下会导致派生类无法被析构。</p>
+<ul>
+<li>  情况1：用派生类类型指针绑定派生类实例，析构的时候，不管基类析构函数是不是虚函数，都会正常析构</li>
+<li>  情况2：用基类类型指针绑定派生类实例，析构的时候，如果基类析构函数不是虚函数，则只会析构基类，不会析构派生类对象，从而造成内存泄漏。</li>
+</ul>
+<h3 id="day16"><a href="#day16" class="headerlink" title="day16"></a>day16</h3><h4 id="cookie跟session的区别"><a href="#cookie跟session的区别" class="headerlink" title="cookie跟session的区别"></a>cookie跟session的区别</h4><ul>
+<li>  <strong>session</strong>是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中；</li>
+<li>  <strong>cookie</strong>是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现session的一种方式。</li>
+</ul>
+<p><strong>区别：</strong></p>
+<ol>
+<li> cookie数据存放在客户的浏览器上，session数据放在服务器上。</li>
+<li> cookie不是很安全，别人可以分析存放在本地的cookie并进行cookie欺骗。考虑到安全应当使用session。</li>
+<li> session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能。考虑到减轻服务器性能方面，应当使用cookie。</li>
+<li> 单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。</li>
+</ol>
+<h4 id="深拷贝浅拷贝"><a href="#深拷贝浅拷贝" class="headerlink" title="深拷贝浅拷贝"></a>深拷贝浅拷贝</h4><p><strong>深浅拷贝区别：</strong></p>
+<ul>
+<li>  浅拷贝只拷贝指针，但拷贝后两个指针指向同一个内存空间</li>
+<li>  深拷贝不但对指针进行拷贝，而且对指针指向的内容进行拷贝</li>
+<li>  调用拷贝构造函数后，浅拷贝还有联系，深拷贝的两个对象完全独立</li>
+<li>  浅拷贝类似于文件创建快捷方式，而深拷贝好比文件复制</li>
+<li>  编译器默认提供的<strong>默认拷贝构造函数</strong>是<strong>浅拷贝</strong>，深拷贝的构造函数需自己实现</li>
+</ul>
+<p><strong>注意：</strong>浅拷贝多个对象共用一个资源，当一个对象销毁时，资源就会释放。如果对另一个对象进行销毁，会因为资源重复释放造成程序崩溃！</p>
+<h4 id="多态性都有哪些？"><a href="#多态性都有哪些？" class="headerlink" title="多态性都有哪些？"></a>多态性都有哪些？</h4><p>多态是指同样的消息被不同类型的对象接受时导致不同的行为。所谓消息是指对类的成员函数的调用，不同的行为是指不同的实现，也就调用不同的函数。换言之，多态指的就是用同样的接口访问功能不同的函数，从而实现“一个接口，多种方法”。</p>
+<p>多态性分类：</p>
+<ul>
+<li><p>专用多态</p>
+<ul>
+<li><p>  重载多态：普通函数及类的成员函数的重载还有运算符的重载。</p>
+</li>
+<li><p>强制多态：是指讲一个变元的类型加以变化，以符合一个函数或者操作的要求</p>
+  <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> a=<span class="hljs-number">1</span>;<br><span class="hljs-keyword">float</span> b=<span class="hljs-number">2.4f</span>;<br><span class="hljs-keyword">float</span> re=a+b;<br></code></pre></td></tr></table></figure>
+
+<p>  这里的加法运算符在进行浮点数和整形数相加时，首先进行类型强制转换，把整形数变为浮点数再相加的情况就是强制多态的实例。</p>
+</li>
+</ul>
+</li>
+<li><p>通用多态</p>
+<ul>
+<li><p>包含多态：指的是类族中定义于不同类中的同名函数的多态的行为，主要是通过虚函数来实现。</p>
+<p>  包含多态的<strong>条件</strong>：</p>
+<ul>
+<li>  基类中必须包含虚函数，并且派生类中一定要对基类中的虚函数进行重写，即<strong>覆盖</strong>。</li>
+<li>  通过基类对象的指针或者引用调用虚函数。</li>
+</ul>
+</li>
+<li><p>  参数多态：采用函数模板，它可以用来创建一个通用的函数，以支持多种不同形参，避免重载函数的函数体重复设计，通过给出不同类型的参数，使得一个结构有多种类型。以实现参数多态。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="STL中仿函数有什么用，和函数指针有什么不同，哪个效率高"><a href="#STL中仿函数有什么用，和函数指针有什么不同，哪个效率高" class="headerlink" title="STL中仿函数有什么用，和函数指针有什么不同，哪个效率高"></a>STL中仿函数有什么用，和函数指针有什么不同，哪个效率高</h4><ul>
+<li>  仿函数：在C++标准中采用的名称是函数对象（function objects）。对于重载了()操作符的类，可以实现类似函数调用的过程，所以叫做仿函数，实际上仿函数对象仅仅占用1字节，因为内部没有数据成员，仅仅是一个重载的方法而已。</li>
+<li>  函数指针：函数指针是指向函数的指针变量。在C编译时，每一个函数都有一个入口地址，那么这个指向这个函数的函数指针便指向这个地址。函数指针主要有两个作用：用作回调函数和做函数的参数。</li>
+</ul>
+<p>在函数对象的方式中，内联inline有效，而作为函数指针时，一般编译器都不会内联函数指针指向的函数，即使指定了inline，使用函数对象一般是裸函数的1.5倍，最多能快2倍多</p>
+<h4 id="Ping的原理与工作过程"><a href="#Ping的原理与工作过程" class="headerlink" title="Ping的原理与工作过程"></a>Ping的原理与工作过程</h4><p><strong>ping 的原理</strong></p>
+<p>ping 程序是用来探测主机到主机之间是否可通信，如果不能 ping到某台主机，表明不能和这台主机建立连接。ping 使用的是ICMP协议，它发送icmp回送请求消息给目的主机。</p>
+<p>ICMP协议规定：目的主机必须返回ICMP回送应答消息给源主机。如果源主机在一定时间内收到应答，则认为主机可达。 </p>
+<p><strong>Ping工作过程</strong></p>
+<p>假定主机A的IP地址是192.168.1.1，主机B的IP地址是192.168.1.2，都在同一子网内，则当你在主机A上运行“ Ping 192.168.1.2”后，都发生了些什么呢?</p>
+<p>首先， Ping命令会构建一个固定格式的ICMP请求数据包，然后由ICMP协议将这个数据包连同地址“192.168.1.2”一起交给 IP层协议（和ICMP一样，实际上是一组后台运行的进程），IP层协议将以地址“192.168.1.2”作为目的地址，本机IP地址作为源地址，加上一些其他的控制信息，构建一个IP数据包，并在一个映射表中查找出IP地址192.168.1.2所对应的 物理地址（也叫MAC地址，这是数据链路层协议构建数据链路层的传输单元——帧所必需的），一并交给数据链路层。后者构建一个数据帧，目的地址是IP层传过来的物理地址，源地址则是本机的物理地址，还要附加上一些控制信息，依据以太网的介质访问规则，将它们传送出去。</p>
+<p>其中映射表由ARP实现。ARP(Address Resolution  Protocol)是地址解析协议,是一种将IP地址转化成物理地址的协议。ARP具体说来就是将网络层（IP层，也就是相当于OSI的第三层）地址解析为数据连接层（MAC层，也就是相当于OSI的第二层）的MAC地址。</p>
+<p>主机B收到这个数据帧后，先检查它的目的地址，并和本机的物理地址对比，如符合，则接收；否则丢弃。接收后检查该数据帧，将IP数据包从帧中提取出来，交给本机的IP层协议。同样，IP层检查后，将有用的信息提取后交给ICMP协议，后者处理后，马上构建一个ICMP应答包，发送给主机A，其过程和主机A发送ICMP请求包到主机B一模一样。即先由IP地址，在网络层传输，然后再根据mac地址由数据链路层传送到目的主机</p>
+<h3 id="day17"><a href="#day17" class="headerlink" title="day17"></a>day17</h3><h4 id="虚函数、纯虚函数"><a href="#虚函数、纯虚函数" class="headerlink" title="虚函数、纯虚函数"></a>虚函数、纯虚函数</h4><ol>
+<li><p> 虚函数和纯虚函数可以定义在同一个类中，含有纯虚函数的类被称为抽象类，而只含有虚函数的类不能被称为抽象类。</p>
+</li>
+<li><p> 虚函数可以被直接使用，也可以被子类重载以后以多态的形式调用，而纯虚函数必须在子类中实现该函数才可以使用，因为纯虚函数在基类只有声明而没有定义。</p>
+</li>
+<li><p> 虚函数和纯虚函数都可以在子类中被重载，以多态的形式被调用。</p>
+</li>
+<li><p> 虚函数和纯虚函数通常存在于抽象基类之中，被继承的子类重载，目的是提供一个统一的接口。</p>
+</li>
+<li><p>虚函数的定义形式：virtual {method body}</p>
+<p> 纯虚函数的定义形式：virtual { } = 0;</p>
+</li>
+<li><p> 虚函数必须实现，如果不实现，编译器将报错。</p>
+</li>
+<li><p> 对于虚函数来说，父类和子类都有各自的版本。由多态方式调用的时候动态绑定。</p>
+</li>
+<li><p> 实现了纯虚函数的子类，该纯虚函数在子类中就变成了虚函数，子类的子类即孙子类可以覆盖该虚函数，由多态方式调用的时候动态绑定。</p>
+</li>
+<li><p> 虚函数是C++中用于实现多态的机制。核心理念就是通过基类访问派生类定义的函数</p>
+</li>
+<li><p>多态性指相同对象收到不同消息或不同对象收到相同消息时产生不同的实现动作。C++支持两种多态性：编译时多态性，运行时多态性。</p>
+<ul>
+<li>  编译时多态性：通过重载函数实现</li>
+<li>  运行时多态性：通过虚函数实现。</li>
+</ul>
+</li>
+<li><p> 如果一个类中含有纯虚函数，那么任何试图对该类进行实例化的语句都将导致错误的产生，因为抽象基类(ABC)是不能被直接调用的。必须被子类继承重载以后，根据要求调用其子类的方法。</p>
+</li>
+<li><p> 在虚函数和纯虚函数的定义中不能有static标识符，原因很简单，被static修饰的函数在编译时候要求前期bind,然而虚函数却是动态绑定，而且被两者修饰的函数生命周期也不一样。</p>
+</li>
+</ol>
+<h4 id="i-是否原子操作-并解释为什么"><a href="#i-是否原子操作-并解释为什么" class="headerlink" title="i++是否原子操作?并解释为什么?"></a>i++是否原子操作?并解释为什么?</h4><p>i++的操作分三步：</p>
+<ol>
+<li> 栈中取出i</li>
+<li> i自增1</li>
+<li> 将i存到栈</li>
+</ol>
+<p>所以i++不是原子操作，上面的三个步骤中任何一个步骤同时操作，都可能导致i的值不正确自增</p>
+<h4 id="TCP、UDP端口扫描的实现方式"><a href="#TCP、UDP端口扫描的实现方式" class="headerlink" title="TCP、UDP端口扫描的实现方式"></a>TCP、UDP端口扫描的实现方式</h4><p><strong>TCP</strong></p>
+<ul>
+<li><p>  端口扫描：端口扫描时主动连接到目标系统的TCP和UDP端口，以确定在目标系统上哪些服务正在运行，或者哪些服务处于监听状态的过程</p>
+</li>
+<li><p>SYN扫描：双方并没有建立起一条完整的连接，而是扫描着先向被扫描的目的端口发出一个SYN包，如果从目标端口返回一个syn/ack包，就可以断定该端口处于监听状态（即端口是开放的），如果返回rst包，则表明端口不在监听状态，是关闭的。</p>
+<ul>
+<li><p>  <strong>优点</strong>：速度快，如果不被防火墙过滤的话，基本都能收到应答包</p>
+</li>
+<li><p>  <strong>缺点</strong>：扫描行为容易被发现，并且它是不可靠的，容易丢包</p>
+</li>
+</ul>
+</li>
+<li><p>FIN扫描：主动结束的一方发送FIN包，当我们发送一个FIN包给一个非监听的端口时，会有RST应答，反之，发给一个正在监听的端口时，不会有任何回应。</p>
+<ul>
+<li>  <strong>优点</strong>：隐蔽性好，速度快</li>
+<li>  <strong>缺点</strong>：只能用于Linux系统，Windows系统下无效</li>
+</ul>
+</li>
+</ul>
+<p><strong>UDP</strong> </p>
+<ul>
+<li>  recvfrom扫描</li>
+<li>  UDP ICMP端口不可达扫描：给一个端口发送UDP报文，如果端口是开放的，则没有相应，如果端口是关闭的，对方会回复一个ICMP端口不可达报文。</li>
+</ul>
+<h4 id="什么是智能指针？写一个模板的智能指针"><a href="#什么是智能指针？写一个模板的智能指针" class="headerlink" title="什么是智能指针？写一个模板的智能指针"></a>什么是智能指针？写一个模板的智能指针</h4><p>智能指针：实际指行为类似于指针的类对象 ，它的一种通用实现方法是采用引用计数的方法。</p>
+<ul>
+<li>  智能指针将一个计数器与类指向的对象相关联，引用计数跟踪共有多少个类对象共享同一指针。</li>
+<li>  每次创建类的新对象时，初始化指针并将引用计数置为1；</li>
+<li>  当对象作为另一对象的副本而创建时，拷贝构造函数拷贝指针并增加与之相应的引用计数；</li>
+<li>  对一个对象进行赋值时，赋值操作符减少左操作数所指对象的引用计数（如果引用计数为减至0，则删除对象），并增加右操作数所指对象的引用计数；这是因为左侧的指针指向了右侧指针所指向的对象，因此右指针所指向的对象的引用计数+1；</li>
+<li>  调用析构函数时，构造函数减少引用计数（如果引用计数减至0，则删除基础对象）。</li>
+<li>实现智能指针有两种经典策略：<ul>
+<li>  一是引入辅助类</li>
+<li>  二是使用句柄类</li>
+</ul>
+</li>
+</ul>
+<p>引入辅助类示例</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//基础对象类，要做一个对Point类的智能指针</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Point</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br> <span class="hljs-built_in">Point</span>(<span class="hljs-keyword">int</span> xVal = <span class="hljs-number">0</span>, <span class="hljs-keyword">int</span> yVal = <span class="hljs-number">0</span>):<span class="hljs-built_in">x</span>(xVal),<span class="hljs-built_in">y</span>(yVal) &#123; &#125;<br> <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getX</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>&#123; <span class="hljs-keyword">return</span> x; &#125;<br> <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getY</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>&#123; <span class="hljs-keyword">return</span> y; &#125;<br> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setX</span><span class="hljs-params">(<span class="hljs-keyword">int</span> xVal)</span> </span>&#123; x = xVal; &#125;<br> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setY</span><span class="hljs-params">(<span class="hljs-keyword">int</span> yVal)</span> </span>&#123; y = yVal; &#125;<br><span class="hljs-keyword">private</span>:<br> <span class="hljs-keyword">int</span> x,y;<br>&#125;;<br> <br><span class="hljs-comment">//辅助类，该类成员访问权限全部为private，因为不想让用户直接使用该类</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RefPtr</span> </span><br><span class="hljs-class">&#123;</span><br> <span class="hljs-keyword">friend</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SmartPtr</span>;</span><span class="hljs-comment">//定义智能指针类为友元，因为智能指针类需要直接操纵辅助类</span><br> <span class="hljs-built_in">RefPtr</span>(Point *ptr):<span class="hljs-built_in">p</span>(ptr), <span class="hljs-built_in">count</span>(<span class="hljs-number">1</span>) &#123; &#125;<br> ~<span class="hljs-built_in">RefPtr</span>() &#123; <span class="hljs-keyword">delete</span> p; &#125;<br> <br> <span class="hljs-keyword">int</span> count; <span class="hljs-comment">//引用计数</span><br> Point *p; <span class="hljs-comment">//基础对象指针</span><br>&#125;;<br> <br><span class="hljs-comment">//智能指针类</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SmartPtr</span> </span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br> <span class="hljs-built_in">SmartPtr</span>(Point *ptr):<span class="hljs-built_in">rp</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">RefPtr</span>(ptr)) &#123; &#125;  <span class="hljs-comment">//构造函数</span><br> <span class="hljs-built_in">SmartPtr</span>(<span class="hljs-keyword">const</span> SmartPtr &amp;sp):<span class="hljs-built_in">rp</span>(sp.rp) &#123; ++rp-&gt;count; &#125; <span class="hljs-comment">//复制构造函数</span><br> SmartPtr&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> SmartPtr&amp; rhs) &#123; <span class="hljs-comment">//重载赋值操作符</span><br>   ++rhs.rp-&gt;count; <span class="hljs-comment">//首先将右操作数引用计数加1，</span><br>   <span class="hljs-keyword">if</span>(--rp-&gt;count == <span class="hljs-number">0</span>) <span class="hljs-comment">//然后将引用计数减1，可以应对自赋值</span><br>     <span class="hljs-keyword">delete</span> rp;<br>   rp = rhs.rp;<br>   <span class="hljs-keyword">return</span> *<span class="hljs-keyword">this</span>;<br> &#125;<br> ~<span class="hljs-built_in">SmartPtr</span>() &#123; <span class="hljs-comment">//析构函数</span><br>   <span class="hljs-keyword">if</span>(--rp-&gt;count == <span class="hljs-number">0</span>) <span class="hljs-comment">//当引用计数减为0时，删除辅助类对象指针，从而删除基础对象</span><br>   <span class="hljs-keyword">delete</span> rp;<br> &#125;<br> <br><span class="hljs-keyword">private</span>:<br> RefPtr *rp; <span class="hljs-comment">//辅助类对象指针</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="day18"><a href="#day18" class="headerlink" title="day18"></a>day18</h3><h4 id="C-各个容器的实现原理"><a href="#C-各个容器的实现原理" class="headerlink" title="C++各个容器的实现原理"></a>C++各个容器的实现原理</h4><ul>
+<li>  vector 拥有一段连续的内存空间</li>
+<li>  list 就是数据结构中的双向链表</li>
+<li>  deque 的动态数组首尾都开放</li>
+<li>  set 有序的容器，红黑树的平衡二叉检索树的数据结构</li>
+<li>  multiset 红黑树实现的，set插入的元素不能相同，但是multiset可以相同。</li>
+<li>  map 键不能重复，红黑树实现的，</li>
+<li>  mtltimap 红黑树实现的，允许键有重复</li>
+</ul>
+<h4 id="讲解一下野指针"><a href="#讲解一下野指针" class="headerlink" title="讲解一下野指针"></a>讲解一下野指针</h4><p><strong>1.野指针与垂悬指针的区别：</strong></p>
+<ul>
+<li>  野指针：访问一个已销毁或者访问受限的内存区域的指针，野指针不能判断是否为NULL来避免</li>
+<li>  垂悬指针：指针正常初始化，曾指向一个对象，该对象被销毁了，但是指针未没有置空，那么就成了悬空指针。</li>
+</ul>
+<p><strong>2.概念</strong></p>
+<p>指针指向了一块随机的空间，不受程序控制。</p>
+<p><strong>3.野指针产生的原因：</strong></p>
+<ol>
+<li> 指针定义时<strong>未被初始化</strong>：指针在被定义的时候，如果程序不对其进行初始化的话，它会随机指向一个区域，因为任意指针变量（除了static修饰的指针）它的默认值都是随机的</li>
+<li> 指针被释放时<strong>没有置空</strong>：我们在用malloc（）开辟空间的时候，要检查返回值是否为空，如果为空，则开辟失败；如果不为空，则指针指向的是开辟的内存空间的首地址。指针指向的内存空间在用free()和delete释放后，如果程序员没有对其进行置空或者其他赋值操作的话，就会成为一个野指针</li>
+<li> 指针操作<strong>超越变量作用域</strong>：不要返回指向栈内存的指针或者引用，因为栈内存在函数结束的时候会被释放。</li>
+</ol>
+<p><strong>4.野指针的危害</strong>：</p>
+<p>问题：指针指向的内容已经无效了，而指针没有被置空，解引用一个非空的无效指针是一个未被定义的行为，也就是说不一定导致错误，<strong>野指针被定位到是哪里出现问题，在哪里指针就失效了</strong>，不好查找错误的原因。</p>
+<p><strong>5.规避方法：</strong></p>
+<ul>
+<li>  初始化指针的时候将其置为nullptr，之后对其操作。</li>
+<li>  释放指针的时候将其置为nullptr。</li>
+</ul>
+<h4 id="共享内存为什么可以实现进程通信"><a href="#共享内存为什么可以实现进程通信" class="headerlink" title="共享内存为什么可以实现进程通信"></a>共享内存为什么可以实现进程通信</h4><p>共享内存，顾名思义就是允许两个不相关的进程访问同一个<strong>逻辑内存</strong>，共享内存是两个正在运行的进程之间共享和传递数据的一种非常有效的方式。不同进程之间共享的内存通常为<strong>同一段物理内存</strong>。进程可以将同一段物理内存连接到他们自己的地址空间中，所有的进程都可以访问共享内存中的地址。如果某个进程向共享内存写入数据，所做的改动将立即影响到可以访问同一段共享内存的任何其他进程。</p>
+<p><strong>特别提醒：</strong>共享内存并未提供同步机制，也就是说，在第一个进程结束对共享内存的写操作之前，并无自动机制可以阻止第二个进程开始对它进行读取，所以我们通常需要用其他的机制来同步对共享内存的访问，例如信号量。</p>
+<p>在Linux中，每个进程都有属于自己的进程控制块（PCB）和地址空间（Addr Space），并且都有一个与之对应的页表，负责将进程的虚拟地址与物理地址进行映射，通过内存管理单元（MMU）进行管理。两个不同的虚拟地址通过页表映射到物理空间的同一区域，它们所指向的这块区域即共享内存。</p>
+<p><img src="/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/20180416112848158" alt="img"></p>
+<p>当两个进程通过页表将虚拟地址映射到物理地址时，在物理地址中有一块共同的内存区，即共享内存，这块内存可以被两个进程同时看到。这样当一个进程进行写操作，另一个进程读操作就可以实现进程间通信。但是，我们要确保一个进程在写的时候不能被读，因此我们使用信号量来实现同步与互斥。对于一个共享内存，实现采用的是引用计数的原理，当进程脱离共享存储区后，计数器减一，挂架成功时，计数器加一，只有当计数器变为零时，才能被删除。当进程终止时，它所附加的共享存储区都会自动脱离。</p>
+<h4 id="什么时候使用线程池-根据项目来问-？"><a href="#什么时候使用线程池-根据项目来问-？" class="headerlink" title="什么时候使用线程池(根据项目来问)？"></a>什么时候使用线程池(根据项目来问)？</h4><ol>
+<li> 当服务端处理单个任务时间较短且所需处理任务量较大时。因为线程频繁地创建和销毁会造成服务器性能损耗。</li>
+<li> 每一个任务是无状态的，前后请求没有关联。</li>
+</ol>
+<h4 id="http1-0和1-1和2-0的区别？"><a href="#http1-0和1-1和2-0的区别？" class="headerlink" title="http1.0和1.1和2.0的区别？"></a>http1.0和1.1和2.0的区别？</h4><p><strong>http1.0和1.1的区别</strong></p>
+<ul>
+<li>  <strong>缓存处理</strong>：在HTTP1.0中主要使用header里的If-Modified-Since,Expires来做为缓存判断的标准，HTTP1.1则引入了更多的缓存控制策略例如Entity tag，If-Unmodified-Since, If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略。</li>
+<li>  <strong>带宽优化及网络连接的使用</strong>：HTTP1.0中，存在一些浪费带宽的现象，例如客户端只是需要某个对象的一部分，而服务器却将整个对象送过来了，并且不支持断点续传功能，HTTP1.1则在请求头引入了range头域，它允许只请求资源的某个部分，即返回码是206（Partial Content），这样就方便了开发者自由的选择以便于充分利用带宽和连接。</li>
+<li>  <strong>错误通知的管理</strong>：在HTTP1.1中新增了24个错误状态响应码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除。</li>
+<li>  <strong>Host头处理</strong>：在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web  Servers），并且它们共享一个IP地址。HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。</li>
+<li>  <strong>长连接</strong>：HTTP1.1支持长连接（PersistentConnection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启Connection： keep-alive，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点。</li>
+</ul>
+<p><strong>HTTP2.0和HTTP1.X相比的新特性</strong></p>
+<ul>
+<li>  新的二进制格式（Binary  Format），HTTP1.x的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑HTTP2.0的协议解析决定采用二进制格式，实现方便且健壮。</li>
+<li>  多路复用（MultiPlexing），即连接共享，即每一个request都是是用作连接共享机制的。一个request对应一个id，这样一个连接上可以有多个request，每个连接的request可以随机的混杂在一起，接收方可以根据request的 id将request再归属到各自不同的服务端请求里面。</li>
+<li>  header压缩，如上文中所言，对前面提到过HTTP1.x的header带有大量信息，而且每次都要重复发送，HTTP2.0使用encoder来减少需要传输的header大小，通讯双方各自cache一份header fields表，既避免了重复header的传输，又减小了需要传输的大小。</li>
+<li>  服务端推送（server push），同SPDY一样，HTTP2.0也具有server push功能。</li>
+</ul>
+<h3 id="day19"><a href="#day19" class="headerlink" title="day19"></a>day19</h3><h4 id="内核态与用户态的区别？从用户态切换到内核态有哪几种方式？"><a href="#内核态与用户态的区别？从用户态切换到内核态有哪几种方式？" class="headerlink" title="内核态与用户态的区别？从用户态切换到内核态有哪几种方式？"></a>内核态与用户态的区别？从用户态切换到内核态有哪几种方式？</h4><p><strong>内核态和用户态的区别</strong> </p>
+<p>当一个任务(进程)执行系统调用而陷入内核代码中执行时，我们就称进程处于内核状态。此时处理器处于特权级最高的(0级)内核代码。当进程处于内核态时，执行的内核代码会使用当前的内核栈。每个进程都有自己的内核栈。</p>
+<p>当进程在执行用户自己的代码时，则称其处于用户态。即此时处理器在特权级最低的用户代码中运行。当正在执行用户程序而突然中断时，此时用户程序也可以象征性地处于进程的内核态。因为中断处理程序将使用当前进程的内核态。</p>
+<p><strong>用户态切换到内核态的3种方式</strong> </p>
+<p><strong>a.系统调用</strong> </p>
+<p>这是用户进程主动要求切换到内核态的一种方式，用户进程通过系统调用申请操作系统提供的服务程序完成工作。而系统调用的机制其核心还是使用了操作系统为用户特别开放的一个中断来实现，例如Linux的ine 80h中断。</p>
+<p><strong>b.异常</strong> </p>
+<p>当CPU在执行运行在用户态的程序时，发现了某些事件不可知的异常，这是会触发由当前运行进程切换到处理此异常的内核相关程序中，也就到了内核态，比如缺页异常。 </p>
+<p><strong>c.外围设备的中断</strong> </p>
+<p>当外围设备完成用户请求的操作之后，会向CPU发出相应的中断信号，这时CPU会暂停执行下一条将要执行的指令转而去执行中断信号的处理程序，如果先执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了有用户态到内核态的切换。比如硬盘读写操作完成，系统会切换到硬盘读写的中断处理程序中执行后续操作等。</p>
+<h4 id="volatile关键字"><a href="#volatile关键字" class="headerlink" title="volatile关键字"></a>volatile关键字</h4><ul>
+<li>  volatile 关键字是一种类型修饰符，用它声明的类型变量表示可以被某些编译器未知的因素（操作系统、硬件、其它线程等）更改。所以使用 volatile 告诉编译器不应对这样的对象进行优化。</li>
+<li>  volatile 关键字声明的变量，每次访问时都必须从内存中取出值（没有被 volatile 修饰的变量，可能由于编译器的优化，从 CPU 寄存器中取值）</li>
+<li>  const 可以是 volatile （如只读的状态寄存器）</li>
+<li>  指针可以是 volatile</li>
+</ul>
+<h4 id="C-对象的生命周期"><a href="#C-对象的生命周期" class="headerlink" title="C++对象的生命周期"></a>C++对象的生命周期</h4><ul>
+<li>  对于全局对象，程序一开始，其构造函数就先被执行（比程序进入点更早）；程序即将结束前其析构函数将被执行。</li>
+<li>  对于局部对象，当对象诞生时，其构造函数被执行；当程序流程将离开该对象的声明周期时，其析构函数被执行。</li>
+<li>  对于静态（static）对象，当对象诞生时其构造函数被执行；当程序将结束时其析构函数才被执行，但比全局对象的析构函数早一步执行。</li>
+<li>  对于以new方式产生出来的局部对象，当对象诞生时其构造函数被执行，析构函数则在对象被delete时执行。</li>
+</ul>
+<h3 id="day20"><a href="#day20" class="headerlink" title="day20"></a>day20</h3><h4 id="connect可能会长时间阻塞，怎么解决"><a href="#connect可能会长时间阻塞，怎么解决" class="headerlink" title="connect可能会长时间阻塞，怎么解决?"></a>connect可能会长时间阻塞，怎么解决?</h4><ol>
+<li><p> 使用定时器；（最常用也最有效的一种方法）</p>
+</li>
+<li><p> 采用非阻塞模式：设置非阻塞，返回之后用select检测状态。</p>
+</li>
+</ol>
+<h4 id="keepalive-是什么东西？如何使用？"><a href="#keepalive-是什么东西？如何使用？" class="headerlink" title="keepalive 是什么东西？如何使用？"></a>keepalive 是什么东西？如何使用？</h4><p>keepalive，是在TCP中一个可以检测死连接的机制。</p>
+<ol>
+<li> 如果主机可达，对方就会响应ACK应答，就认为是存活的。</li>
+<li> 如果可达，但应用程序退出，对方就发RST应答，发送TCP撤消连接。</li>
+<li> 如果可达，但应用程序崩溃，对方就发FIN消息。</li>
+<li> 如果对方主机不响应ack, rst，继续发送直到超时，就撤消连接。默认二个小时。</li>
+</ol>
+<h4 id="socket什么情况下可读？"><a href="#socket什么情况下可读？" class="headerlink" title="socket什么情况下可读？"></a>socket什么情况下可读？</h4><ol>
+<li><p> socket接收缓冲区中已经接收的数据的字节数大于等于socket接收缓冲区低潮限度的当前值;对这样的socket的读操作不会阻塞,并返回一个大于0的值(准备好读入的数据的字节数).</p>
+</li>
+<li><p> 连接的读一半关闭(即:接收到对方发过来的FIN的TCP连接),并且返回0; </p>
+</li>
+<li><p> socket收到了对方的connect请求已经完成的连接数为非0，这样的soocket处于可读状态；</p>
+</li>
+<li><p> 异常的情况下socket的读操作将不会阻塞,并且返回一个错误(-1)。</p>
+</li>
+</ol>
+<h4 id="udp调用connect有什么作用？"><a href="#udp调用connect有什么作用？" class="headerlink" title="udp调用connect有什么作用？"></a>udp调用connect有什么作用？</h4><ol>
+<li><p> 因为UDP可以是一对一，多对一，一对多，或者多对多的通信，所以每次调用sendto()/recvfrom()时都必须指定目标IP和端口号。通过调用connect()建立一个端到端的连接，就可以和TCP一样使用send()/recv()传递数据，而不需要每次都指定目标IP和端口号。但是它和TCP不同的是它没有三次握手的过程。</p>
+</li>
+<li><p> 可以通过在已建立连接的UDP套接字上，调用connect()实现指定新的IP地址和端口号以及断开连接。</p>
+</li>
+</ol>
+<h4 id="socket编程，如果client断电了，服务器如何快速知道？"><a href="#socket编程，如果client断电了，服务器如何快速知道？" class="headerlink" title="socket编程，如果client断电了，服务器如何快速知道？"></a>socket编程，如果client断电了，服务器如何快速知道？</h4><p>使用定时器（适合有数据流动的情况）；</p>
+<p>使用socket选项SO_KEEPALIVE（适合没有数据流动的情况）; </p>
+<p>自己编写心跳包程序,简单的说就是自己的程序加入一条线程,定时向对端发送数据包,查看是否有ACK,根据ACK的返回情况来管理连接。此方法比较通用,一般使用业务层心跳处理,灵活可控,但改变了现有的协议;</p>
+<p>使用TCP的keepalive机制,UNIX网络编程不推荐使用SO_KEEPALIVE来做心）跳检测。</p>
+<p>keepalive原理:TCP内嵌有心跳包,以服务端为例,当server检测到超过一定时间(/proc/sys/net/ipv4/tcp_keepalive_time 7200 即2小时)没有数据传输,那么会向client端发送一个keepalive packet。</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

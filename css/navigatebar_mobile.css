@@ -1,0 +1,42 @@
+.navigatebar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #EEE;
+
+    box-shadow: 0 2px 10px -1px rgba(0,0,0,0.05);
+}
+
+.navigatebar-button {
+    margin-right: 10px;
+    color: #888;
+    font-size: 20px;
+    font-family: angelinaFont;
+}
+
+.navigatebar-button a {
+    color: #888;
+    text-decoration: none;
+}
+
+.navigatebar-button a:hover {
+    color: #73BC83;
+}
+
+.navigatebar-slogan {
+    display: none;
+}
+
+.navigatebar-mine {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.navigatebar-about {
+    margin-right: 10px;
+}

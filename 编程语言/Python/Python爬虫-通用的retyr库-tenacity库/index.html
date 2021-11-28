@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95"><span class="toc-text">用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-text">其他</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		python爬虫——一个通用的retry库：Tenacity
+	</div>
+	
+	<div class="page-date">
+		2019-10-10
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>一个健壮的爬虫程序需要捕获并处理程序在运行过程中的异常，其中网络连接相关的错误是很令人烦恼的，出现网络连接问题的原因是多样的，很多时候无法明确判断是不是程序真的无法执行下去了，从而重试操作是最先考虑的方法。Tenacity库提供重试装饰器，很是方便。</p>
+<span id="more"></span>
+
+<p><strong><a target="_blank" rel="noopener" href="https://www.cnblogs.com/thomaszdxsn/p/amadtenacity--python-zhong-yi-ge-zhuan-men-yong-la.html">原文链接</a></strong></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>Tenacity</code><sup><a target="_blank" rel="noopener" href="https://www.cnblogs.com/thomaszdxsn/p/amadtenacity--python-zhong-yi-ge-zhuan-men-yong-la.html#fn1">1</a></sup>是一个通用的retry库，简化为任何任务加入重试的功能。</p>
+<p>它还包含如下特性:</p>
+<ul>
+<li>  通用的装饰器API</li>
+<li>  可以设定重试停止的条件（比如设定尝试次数）</li>
+<li>  可以设定重试间的等待时间（比如在尝试之间使用幂数级增长的wait等待）</li>
+<li>  自定义在哪些Exception进行重试</li>
+<li>  自定义在哪些返回值的情况进行重试</li>
+<li>  协程的重试</li>
+</ul>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><ol>
+<li><p>简单用法</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> tenacity <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment"># 基础的用法，会一直重试下去，直到函数没有抛出异常，正常返回值</span><br><span class="hljs-meta">@retry</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">never_give_up_never_surrender</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;一直重试，忽略exceptions，重试间没有等待时间&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure></li>
+<li><p>设置停止条件</p>
+<p> 在达到尝试次数后停下来:</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">stop=stop_after_attempt(<span class="hljs-params"><span class="hljs-number">7</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stop_after_7_attempts</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;尝试7次后停下&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure>
+<p> 10秒后仍然没有成功则停下:</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">stop=stop_after_delay(<span class="hljs-params"><span class="hljs-number">10</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stop_after_10_s</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;10秒后停止&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure>
+<p> 使用|操作符组合多种条件:</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">stop=(<span class="hljs-params">stop_after_delay(<span class="hljs-params"><span class="hljs-number">10</span></span>) | stop_after_attempt(<span class="hljs-params"><span class="hljs-number">5</span></span>)</span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stop_after_10_s_or_5_retries</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;10秒后，或者尝试5次后，停下来&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure></li>
+<li><p>设置重试间隔</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">wait=wait_fixed(<span class="hljs-params"><span class="hljs-number">2</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wait_2_s</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;每次重试间都有2秒间隔&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure>
+<p> 随机间隔时间:</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">wait=wait_random(<span class="hljs-params"><span class="hljs-built_in">min</span>=<span class="hljs-number">1</span>, <span class="hljs-built_in">max</span>=<span class="hljs-number">2</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wait_random_1_to_2_s</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;重试间隔1-2秒&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure>
+<p> 指数曲线间隔时间:</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">wait=wait_exponential(<span class="hljs-params">multiplier=<span class="hljs-number">1</span>, <span class="hljs-built_in">min</span>=<span class="hljs-number">4</span>, <span class="hljs-built_in">max</span>=<span class="hljs-number">10</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wait_exponential_1</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;开始的时候等待 2^x * 1 秒，最少等待4秒，最多10秒，之后都是等待10秒&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure>
+<p> 指数间隔时间：</p>
+<p> 多核在竞争一个共享的资源，使用指数间隔可以将冲突最小化</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">wait=wait_random_exponential(<span class="hljs-params">multiplier=<span class="hljs-number">1</span>, <span class="hljs-built_in">max</span>=<span class="hljs-number">60</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wait_exponential_jitter</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;随机等待 2^x * 1 秒，最多60秒，之后都是等待60秒&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure>
+<p> 可以自定义每次等待时长:</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">```<br><span class="hljs-meta">@retry(<span class="hljs-params">wait=wait_chain(<span class="hljs-params">*[wait_fixed(<span class="hljs-params"><span class="hljs-number">3</span></span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-params"><span class="hljs-number">3</span></span>)] +</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">                           [wait_fixed(<span class="hljs-params"><span class="hljs-number">7</span></span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-params"><span class="hljs-number">2</span></span>)] +</span></span></span><br><span class="hljs-params"><span class="hljs-params"><span class="hljs-meta">                           [wait_fixed(<span class="hljs-params"><span class="hljs-number">9</span></span>)]</span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wait_fixed_chained</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;前三次等待3秒，后两次等待7秒，最后一次等待9秒&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br>```<br></code></pre></td></tr></table></figure></li>
+<li><p>设置retry条件</p>
+<p> 默认情况下，只有函数抛出异常时才会retry。</p>
+<p> 可以设置在制定的异常才进行retry：</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">retry=retry_if_exception_type(<span class="hljs-params">IOError</span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">might_io_error</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;只有在IOError的时候进行retry，其它时候照常抛出错误&quot;</span>)<br>    <span class="hljs-keyword">raise</span> Exception<br></code></pre></td></tr></table></figure>
+
+<p> 可以在判断返回值是否是需要的情况下进行retry：</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_none_p</span>(<span class="hljs-params">value</span>):</span><br>        <span class="hljs-keyword">return</span> value <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span><br><br><span class="hljs-meta">@retry(<span class="hljs-params">retry=retry_if_result(<span class="hljs-params">is_none_p</span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">might_return_none</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;因为返回值是None，所以这个函数会一直retry&quot;</span>)<br>        <br><span class="hljs-comment"># 这样写也是可以的，不用修改原来的代码</span><br>retry_version_func = retry(retry=retry_if_result(is_none_p))(might_return_none)    <br></code></pre></td></tr></table></figure>
+
+<p> 组合多个条件:</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_none_p</span>(<span class="hljs-params">value</span>):</span><br>    <span class="hljs-keyword">return</span> value <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span><br><br><span class="hljs-meta">@retry(<span class="hljs-params">retry=(<span class="hljs-params">retry_if_result(<span class="hljs-params">is_none_p</span>) | retry_if_exception_type(<span class="hljs-params"></span>)</span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">might_return_none</span>():</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;在抛出任何异常，或者返回值是None的情况下，进行retry&quot;</span>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>在函数体内，可以手动抛出TryAgain错误，然后进行重试:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_something</span>():</span><br>   result = something_else()<br>   <span class="hljs-keyword">if</span> result == <span class="hljs-number">23</span>:<br>      <span class="hljs-keyword">raise</span> TryAgain<br></code></pre></td></tr></table></figure>
+<p>通过参数reraise=True，可以抛出函数最后一次抛出的异常。如果没有设定，会抛出RetryError:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">reraise=<span class="hljs-literal">True</span>, stop=stop_after_attempt(<span class="hljs-params"><span class="hljs-number">3</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">raise_my_exception</span>():</span><br>    <span class="hljs-keyword">raise</span> MyException(<span class="hljs-string">&quot;Fail&quot;</span>)<br><br><span class="hljs-keyword">try</span>:<br>    raise_my_exception()<br><span class="hljs-keyword">except</span> MyException:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;MyException会被抛出&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>在重试的前后，记录日志:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><br>logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)<br><br>logger = logging.getLogger(__name__)<br><br><span class="hljs-comment"># 重试前记录</span><br><span class="hljs-meta">@retry(<span class="hljs-params">stop=stop_after_attempt(<span class="hljs-params"><span class="hljs-number">3</span></span>), before=before_log(<span class="hljs-params">logger, logging.DEBUG</span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">raise_my_exception</span>():</span><br>    <span class="hljs-keyword">raise</span> MyException(<span class="hljs-string">&quot;Fail&quot;</span>)<br>    <br><span class="hljs-comment"># 重试后记录</span><br><span class="hljs-meta">@retry(<span class="hljs-params">stop=stop_after_attempt(<span class="hljs-params"><span class="hljs-number">3</span></span>), after=after_log(<span class="hljs-params">logger, logging.DEBUG</span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">raise_my_exception</span>():</span><br>    <span class="hljs-keyword">raise</span> MyException(<span class="hljs-string">&quot;Fail&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>获取retry的相关统计数据:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@retry(<span class="hljs-params">stop=stop_after_attempt(<span class="hljs-params"><span class="hljs-number">3</span></span>)</span>)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">raise_my_exception</span>():</span><br>    <span class="hljs-keyword">raise</span> MyException(<span class="hljs-string">&quot;Fail&quot;</span>)<br><br><span class="hljs-keyword">try</span>:<br>    raise_my_exception()<br><span class="hljs-keyword">except</span> Exception:<br>    <span class="hljs-keyword">pass</span><br><br><span class="hljs-built_in">print</span>(raise_my_exception.retry.statistics)<br></code></pre></td></tr></table></figure>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

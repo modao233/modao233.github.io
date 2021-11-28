@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">2.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E6%80%BB%E5%9B%BE"><span class="toc-text">2.2 总图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%8D%8F%E8%AE%AE%EF%BC%88UDP%EF%BC%89"><span class="toc-text">2.3 用户数据报协议（UDP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE%EF%BC%88TCP%EF%BC%89"><span class="toc-text">2.4  传输控制协议（TCP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E6%B5%81%E6%8E%A7%E5%88%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE%EF%BC%88SCTP%EF%BC%89"><span class="toc-text">2.5 流控制传输协议（SCTP）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6-TCP%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%BB%BA%E7%AB%8B%E5%92%8C%E7%BB%88%E6%AD%A2"><span class="toc-text">2.6 TCP连接的建立和终止</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%EF%BC%9A%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="toc-text">连接：三次握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E9%80%89%E9%A1%B9"><span class="toc-text">TCP选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E8%BF%9E%E6%8E%A5%E7%BB%88%E6%AD%A2"><span class="toc-text">TCP连接终止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE"><span class="toc-text">TCP状态转换图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E5%9B%BE"><span class="toc-text">分组交换图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-7-TIME-WAIT%E7%8A%B6%E6%80%81"><span class="toc-text">2.7 TIME_WAIT状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-8-SCTP%E5%85%B3%E8%81%94%E7%9A%84%E5%BB%BA%E7%AB%8B%E5%92%8C%E7%BB%88%E6%AD%A2"><span class="toc-text">2.8 SCTP关联的建立和终止</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E8%B7%AF%E6%8F%A1%E6%89%8B%EF%BC%9A"><span class="toc-text">四路握手：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E7%BB%88%E6%AD%A2"><span class="toc-text">关联终止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCTP%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE"><span class="toc-text">SCTP状态转换图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">分组交换过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-9-%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="toc-text">2.9 端口号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E5%8F%B7%E5%88%86%E4%B8%BA%E4%B8%89%E6%AE%B5"><span class="toc-text">端口号分为三段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97%E5%AF%B9"><span class="toc-text">套接字对</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-10-TCP%E7%AB%AF%E5%8F%A3%E5%8F%B7%E4%B8%8E%E5%B9%B6%E5%8F%91%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">2.10 TCP端口号与并发服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-11-%E7%BC%93%E5%86%B2%E5%8C%BA%E5%A4%A7%E5%B0%8F%E5%8F%8A%E9%99%90%E5%88%B6"><span class="toc-text">2.11 缓冲区大小及限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E8%BE%93%E5%87%BA"><span class="toc-text">TCP输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP%E8%BE%93%E5%87%BA"><span class="toc-text">UDP输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SCTP%E8%BE%93%E5%87%BA"><span class="toc-text">SCTP输出</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Unix网络编程-第2章 传输层：TCP、UDP和SCTP
+	</div>
+	
+	<div class="page-date">
+		2019-12-08
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Unix网络编程">Unix网络编程</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>Unix网络编程-第2章 传输层：TCP、UDP和SCTP</p>
+<span id="more"></span>
+
+<h2 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h2><p><strong>本章的目的</strong>：从网络编程角度提供足够的细节以理解如何使用这些协议，同时提供有关这些协议的实际设计、实现及历史的具体描述的参考点。</p>
+<p>UDP：一个简单、不可靠的数据报协议</p>
+<p>TCP：一个复杂、可靠的字节流协议</p>
+<p>SCTP：一个可靠的传输协议，提供消息边界、传输级别多宿支持以及将头端阻塞减少到最小的一种方法</p>
+<h2 id="2-2-总图"><a href="#2-2-总图" class="headerlink" title="2.2 总图"></a>2.2 总图</h2><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.1.jpg" alt="2.1"></p>
+<p>IPv4：网际协议版本4，使用32位ip地址</p>
+<p>IPv6：网际协议版本6，使用128位ip地址</p>
+<p>TCP：传输控制协议，是一个面向连接的协议，为用户提供可靠的全双工字节流。TCP套接字是一种流套接字</p>
+<p>UDP：用户数据报协议，是一个无连接协议。UDP套接字是一种数据报套接字</p>
+<p>SCTP：流控制传输协议，提供可靠全双工关联的面向连接的协议</p>
+<p>ICMP：网际控制消息协议，处理在路由器和主机之间流通的错误和控制信息</p>
+<p>IGMP：网际组管理协议，用于多播</p>
+<p>ARP：地址解析协议，把一个IPv4地址映射成一个硬件地址</p>
+<p>RARP：反向地址解析协议，把一个硬件地址映射成一个IPv4地址</p>
+<p>ICMPv6：网际控制消息协议版本6，综合了ICMPv4、IGMP和ARP的功能</p>
+<p>BPF：BSD分组过滤器，该接口提供对于数据链路层的访问能力</p>
+<p>DLPI：数据链路提供者接口，该接口提供对于数据链路层的访问能力</p>
+<h2 id="2-3-用户数据报协议（UDP）"><a href="#2-3-用户数据报协议（UDP）" class="headerlink" title="2.3 用户数据报协议（UDP）"></a>2.3 用户数据报协议（UDP）</h2><p>每个UDP数据报都有一个长度。如果一个数据报正确地到达其目的地，那么该数据报的长度将随数据一道传递给接收端应用进程。</p>
+<p>UDP可以是全双工的。</p>
+<h2 id="2-4-传输控制协议（TCP）"><a href="#2-4-传输控制协议（TCP）" class="headerlink" title="2.4  传输控制协议（TCP）"></a>2.4  传输控制协议（TCP）</h2><p>TCP客户先与某个给定服务器建立一个连接，再跨该连接与那个服务器交换数据，然后终止这个连接。</p>
+<p>TCP提供了可靠性：接收确认、超时、重传等机制</p>
+<p>TCP含有动态估算客户和服务器之间的往返时间的算法（RTT），以便知道等待一个确认需要多长时间。</p>
+<p>TCP通过给每个字节关联一个序列号对所发送的数据进行排序。</p>
+<p>TCP提供流量控制，告知对端它一次能够从对端接收多少字节的数据，称为<code>通告窗口</code>。</p>
+<p>TCP连接是全双工的，TCP必须为每个数据流方向跟踪状态信息（序列号、通告窗口大小等）。</p>
+<h2 id="2-5-流控制传输协议（SCTP）"><a href="#2-5-流控制传输协议（SCTP）" class="headerlink" title="2.5 流控制传输协议（SCTP）"></a>2.5 流控制传输协议（SCTP）</h2><p>SCTP在客户和服务器之间提供<em>关联</em>，并向TCP那样提供可靠性、排序、流量控制以及全双工的数据传送。</p>
+<p><strong>关联与连接</strong>：</p>
+<ol>
+<li> 一个连接只涉及两个IP地址之间的通信</li>
+<li> 一个关联指代两个系统之间的一次通信</li>
+</ol>
+<p>SCTP因为支持多宿而涉及不止两个地址，因而使用关联。</p>
+<p>SCTP是面向消息的，提供各个记录的按序递送服务，由发送端写入的每条记录的长度随数据一道传递给接收端应用。</p>
+<p>SCTP能够在所连接的端点之间提供多个流，每个流各自可靠地按序递送消息，一个流上的某个消息的丢失不会阻塞同一关联其他流上消息的投递。</p>
+<p>TCP在单一字节流中任何位置的字节丢失都将阻塞该连接上其后所有数据的递送，直到该丢失被修复为止。</p>
+<p>SCTP提供多宿特性，使得单个SCTP端点能够支持多个IP地址。该特性可以增强应对网络故障的健壮性。</p>
+<h2 id="2-6-TCP连接的建立和终止"><a href="#2-6-TCP连接的建立和终止" class="headerlink" title="2.6 TCP连接的建立和终止"></a>2.6 TCP连接的建立和终止</h2><h3 id="连接：三次握手"><a href="#连接：三次握手" class="headerlink" title="连接：三次握手"></a>连接：三次握手</h3><ol>
+<li><p> 服务器准备好接受外来的连接。通常调用socket、bind和listen这3个函数完成，称为<strong>被动打开</strong></p>
+</li>
+<li><p> 客户通过connect发起<strong>主动打开</strong>，导致客户TCP发送一个SYN（同步）分节（包含客户发送数据的初始序列号）</p>
+</li>
+<li><p> 服务器确认（ACK）客户的SYN，同时发送一个SYN分节（包含服务器发送数据的初始序列号）。服务器在单个分节中发送SYN和ACK</p>
+</li>
+<li><p> 客户确认服务器的SYN</p>
+</li>
+</ol>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.2.jpg" alt="image-20200603104007120"></p>
+<p>客户的初始序列号为<code>J</code>，服务器的初始序列号为<code>K</code></p>
+<h3 id="TCP选项"><a href="#TCP选项" class="headerlink" title="TCP选项"></a>TCP选项</h3><p>每个SYN可以含有多个TCP选项，常用选项如下：</p>
+<ol>
+<li> MSS选项，发送SYN的TCP一端使用本选项通告它的<strong>最大分节大小（MSS）</strong>，表示在本连接每个TCP分节中愿意接受的最大数据量。发送端TCP使用接收端的MSS值作为发送分节的最大大小。</li>
+<li> 窗口规模选项，即窗口扩大选项，TCP连接任何一端能够通告对端的最大窗口大小是65535，因为在TCP首部中相应的字段占16位。这个新选项指定TCP首部中的通告窗口必须扩大（即左移）的位数（0~14），因此提供的最大窗口接近1GB（65535 $\times$ $2^{14}$）。【必须两个端系统都支持才能使用】</li>
+<li> 时间戳选项，可以防止由失而复现的分组可能造成的数据损坏。【必须两个端系统都支持才能使用】</li>
+</ol>
+<h3 id="TCP连接终止"><a href="#TCP连接终止" class="headerlink" title="TCP连接终止"></a>TCP连接终止</h3><ol>
+<li> 某个应用进程首先调用close，执行<strong>主动关闭</strong>，该端的TCP发送一个FIN分节，表示数据发送完毕</li>
+<li> 接收到FIN的对端执行<strong>被动关闭</strong>，FIN由TCP确认（ACK），它的接收也作为一个文件结束符（EOF）传递给接收端应用进程</li>
+<li> 一段时间后，接收到EOF的应用进程将调用close关闭套接字，TCP也发送一个FIN</li>
+<li> 接收最终FIN的原发送端TCP确认这个FIN（ACK）</li>
+</ol>
+<p><em>步骤2和3发送都出自被动关闭一端，可能被合并成一个分节</em></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.3.jpg" alt="image-20200603110023257"></p>
+<h3 id="TCP状态转换图"><a href="#TCP状态转换图" class="headerlink" title="TCP状态转换图"></a>TCP状态转换图</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231516055.png" alt="image-20200806231516055"></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.4.jpg" alt="image-20200603110518695"></p>
+<h3 id="分组交换图"><a href="#分组交换图" class="headerlink" title="分组交换图"></a>分组交换图</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231656389.png" alt="image-20200806231656389"></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.5.jpg" alt="image-20200603110704379"></p>
+<p>服务器对客户请求的确认是伴随其应答发送的，这种做法称为<em>捎带</em>，通常在服务器处理请求并产生应答的时间少于200ms时发生。</p>
+<h2 id="2-7-TIME-WAIT状态"><a href="#2-7-TIME-WAIT状态" class="headerlink" title="2.7 TIME_WAIT状态"></a>2.7 TIME_WAIT状态</h2><p>执行主动关闭的端点需要经历TIME_WAIT状态，该端点停留在这个状态的持续时间是最长分节生命期（MSL）的2倍，有时候称为<code>2MSL</code>。</p>
+<p>任何TCP实现都必须为MSL选择一个值，MSL是任何IP数据报能够在因特网中存活的最长时间。</p>
+<p>每个数据报含有一个称为跳限的8位字段，最大值为255。</p>
+<p>具有最大跳限（255）的分组在网络中存在的时间不可能超过MSL秒。</p>
+<p>TIME_WAIT状态有两个存在的理由：</p>
+<ol>
+<li><p>可靠地实现TCP全双工连接的终止</p>
+<p> 最终的ACK可能丢失，有足够时间重传FIN+ACK，接收到重传后刷新TIME_WAIT的计数器</p>
+</li>
+<li><p>允许老的重复分节在网络中消逝</p>
+<p> 防止旧连接的重复分组被新连接接收</p>
+</li>
+</ol>
+<h2 id="2-8-SCTP关联的建立和终止"><a href="#2-8-SCTP关联的建立和终止" class="headerlink" title="2.8 SCTP关联的建立和终止"></a>2.8 SCTP关联的建立和终止</h2><h3 id="四路握手："><a href="#四路握手：" class="headerlink" title="四路握手："></a>四路握手：</h3><ol>
+<li> 服务器准备好接受外来的关联，通过调用socket、bind和listen函数完成，称为<strong>被动打开</strong></li>
+<li> 客户通过调用connect或者发送一个隐式打开该关联的消息进行<strong>主动打开</strong>，使得客户SCTP发送一个INIT消息（初始化），该消息告诉服务器客户的IP地址清单、初始序列号、用于标识本关联中所有分组的起始标记、客户请求的外出流的数目以及客户能够支持的外来流的数目。</li>
+<li> 服务器以一个INIT ACK消息确认客户的INIT消息，其中含有和客户INIT一样的属性消息以及一个状态cookie</li>
+<li> 客户以一个COOKIE ECHO消息回射服务器的状态cookie</li>
+<li> 服务器以一个COOKIE ACK消息确认客户回射的cookie是正确的，本关联于是建立</li>
+</ol>
+<p><em>步骤4和5可能捆绑了用户数据</em></p>
+<p>四路握手过程结束时，两端各自选择一个<strong>主目的地址</strong>，当不存在网络故障时，主目的地址将用作数据要发送到的默认目的地址。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.6.jpg" alt="image-20200603115544233"></p>
+<p>在关联的有效期内，验证标记Ta、Tz必须出现在对端发送的每个分组中出现。</p>
+<p>cookie包含设置本SCTP关联所需的所有状态，服务器的SCTP栈就不必保存所关联客户的有关信息。</p>
+<h3 id="关联终止"><a href="#关联终止" class="headerlink" title="关联终止"></a>关联终止</h3><p>SCTP不像TCP那样允许“半关闭”的关联，当一端关闭某个关联时，另一端必须停止发送新的数据，如果另一端有已经排队的数据，则发送完后完成关联关闭。</p>
+<p><strong>SCTP没有TIME_WAIT状态，因为SCTP使用了验证标记。</strong></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-7.jpg" alt="image-20200603152055341"></p>
+<h3 id="SCTP状态转换图"><a href="#SCTP状态转换图" class="headerlink" title="SCTP状态转换图"></a>SCTP状态转换图</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231816959.png" alt="image-20200806231816959"></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-8.jpg" alt="image-20200603152253351"></p>
+<h3 id="分组交换过程"><a href="#分组交换过程" class="headerlink" title="分组交换过程"></a>分组交换过程</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231945414.png" alt="image-20200806231945414"></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-9.jpg" alt="image-20200603152326277"></p>
+<p><em>SCTP分组中信息的单位称为块（chunk）</em></p>
+<h2 id="2-9-端口号"><a href="#2-9-端口号" class="headerlink" title="2.9 端口号"></a>2.9 端口号</h2><p>TCP、UDP和SCTP都使用16位整数的端口号来区分进程。</p>
+<p>TCP、UDP和SCTP定义了一组众所周知的端口，用于标识众所周知的服务</p>
+<p>客户通常使用短期存活的临时端口，通常由传输层协议赋予客户，传输协议确保端口的唯一性。</p>
+<h3 id="端口号分为三段"><a href="#端口号分为三段" class="headerlink" title="端口号分为三段"></a>端口号分为三段</h3><ol>
+<li> 众所周知的端口为0~1023，由IANA分配和控制</li>
+<li> 已登记的端口为1024~49151，不受IANA控制，不过由IANA登记并提供它们的使用情况清单</li>
+<li> 49152~65535是动态的或私用的端口，即临时端口，IANA不管。</li>
+</ol>
+<p>注意事项：</p>
+<ol>
+<li> Unix系统有保留端口的概念，指的是小于1024的任何端口，使用这些端口需要root特权启动</li>
+<li> 有些系统的临时端口范围可能更大</li>
+<li> 少数客户需要一个保留端口用户客户/服务器的认证</li>
+</ol>
+<h3 id="套接字对"><a href="#套接字对" class="headerlink" title="套接字对"></a>套接字对</h3><p>一个TCP连接的<strong>套接字对</strong>是一个定义该连接的两个端点的四元组：本地IP地址、本地TCP端口号、外地IP地址、外地TCP端口号。</p>
+<p>套接字对唯一标识一个网络上的每个TCP连接。</p>
+<p>标识每个端点的两个值（IP地址和TCP端口号）通常称为一个<em>套接字</em></p>
+<h2 id="2-10-TCP端口号与并发服务器"><a href="#2-10-TCP端口号与并发服务器" class="headerlink" title="2.10 TCP端口号与并发服务器"></a>2.10 TCP端口号与并发服务器</h2><p>TCP无法仅仅通过查看目的端口号来分离外来的分节到不同的端点，必须查看套接字对的所有四个元素才能确定由哪个端点来接收某个到达的分节。</p>
+<h2 id="2-11-缓冲区大小及限制"><a href="#2-11-缓冲区大小及限制" class="headerlink" title="2.11 缓冲区大小及限制"></a>2.11 缓冲区大小及限制</h2><ul>
+<li>  IPv4数据报的最大大小是65535字节，包括20字节的IPv4首部。</li>
+<li>  IPv6数据报的最大大小是65575字节，包括40字节的Ipv6首部。</li>
+<li>  许多网络有一个由硬件规定的MTU。以太网的MTU为1500字节。</li>
+<li>  在两个主机之间的路径中最小的MTU称为路径MTU。</li>
+<li>当一个IP数据报大小超过相应链路的MTU，IPv4和IPv6都将执行分片。<ul>
+<li>  IPv4：主机对其产生的数据报执行分片，路由器对其转发的数据报执行分片</li>
+<li>  IPv6：主机对其产生的数据报执行分片，路由器不对<strong>转发</strong>的数据报执行分片</li>
+<li>  分片到达最终目的地之前通常不会被重组</li>
+</ul>
+</li>
+<li>  IPv4首部的“不分片”位（DF）如果被设置，则发送数据报的主机和转发它们的路由器都不允许对它们分片</li>
+<li>  IPv4和IPv6都定义了<strong>最小重组缓冲区大小</strong>，它是IPv4或IPv6的任何实现都必须保证支持的最小数据报大小。其值对于IPv4来说是576字节，对于IPv6为1500字节。</li>
+<li>TCP有一个最大分节大小（MSS），用于向对端TCP通过对端在每个分节中能够发送的最大TCP数据量。<ul>
+<li>  MSS的目的是告诉对端其重组缓冲区大小的实际值，从而试图避免分片</li>
+<li>  SYN分节上的MSS选项占16位，最大值为65535，IPv4数据报中的最大TCP数据量为65495（65535减去IPv4首部20字节和TCP首部20字节）</li>
+<li>  MSS经常设置为：$MSS=MTU-IP首部固定长度-TCP首部固定长度$</li>
+<li>  以太网中使用IPv4的MSS值为1460，使用IPv6的MSS值为1440</li>
+</ul>
+</li>
+<li>  SCTP基于到对端所有地址发现的最小路径MTU保持一个分片点</li>
+</ul>
+<h3 id="TCP输出"><a href="#TCP输出" class="headerlink" title="TCP输出"></a>TCP输出</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-15.jpg" alt="image-20200603171709141"></p>
+<h3 id="UDP输出"><a href="#UDP输出" class="headerlink" title="UDP输出"></a>UDP输出</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-16.jpg" alt="image-20200603171727856"></p>
+<h3 id="SCTP输出"><a href="#SCTP输出" class="headerlink" title="SCTP输出"></a>SCTP输出</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-17.jpg" alt="image-20200603171751011"></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

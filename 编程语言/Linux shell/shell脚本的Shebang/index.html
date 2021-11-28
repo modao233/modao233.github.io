@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-text">例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E9%80%94"><span class="toc-text">用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bin-bash"><span class="toc-text">#!&#x2F;bin&#x2F;bash</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Shebang
+	</div>
+	
+	<div class="page-date">
+		2021-01-08
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Shell">Shell</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Shebang">Shebang</a></p>
+<span id="more"></span>
+
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在计算领域中，<strong>Shebang</strong>（也称为Hashbang）是一个由井号和叹号构成的字符序列<code>#!</code>，其出现在文本文件的第一行的前两个字符。 </p>
+<p>在文件中存在Shebang的情况下，类Unix操作系统的<strong>程序加载器</strong>会分析Shebang后的内容，将这些内容作为<strong>解释器指令</strong>，并调用该指令，并将载有Shebang的文件路径作为该解释器的参数。</p>
+<p>例如，以指令<code>#!/bin/sh</code>开头的文件在执行时会实际调用<code>/bin/sh</code>程序（通常是Bourne shell或兼容的shell，例如bash、dash等）来执行。这行内容也是shell脚本的标准起始行。</p>
+<p>由于#符号在许多脚本语言中都是<strong>注释标识符</strong>，Shebang的内容会被这些脚本解释器自动忽略。 在#字符不是注释标识符的语言中，例如Scheme，解释器也可能忽略以#!开头的首行内容，以提供与Shebang的兼容性。</p>
+<p>“Shebang”或者说”Hashbang”的名字有时也被当做Ajax应用程序中的分段标识符，用于浏览器的状态保存；Google网站站长中心提到，以叹号开头的分段标识符（即…url#!state…）会为Google的网页爬虫所索引。</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>Shebang这一语法特性由<code>#!</code>开头，即井号和叹号。 在开头字符之后，可以有一个或数个空白字符，后接解释器的绝对路径，用于调用解释器。 </p>
+<p>在直接调用脚本时，调用者会利用Shebang提供的信息调用相应的解释器，从而使得脚本文件的调用方式与普通的可执行文件类似。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>下面列出了一些典型的 shebang 解释器指令：</p>
+<ul>
+<li>  <code>#!/bin/sh</code>—使用<code>sh</code>，即Bourne shell或其它兼容shell执行脚本</li>
+<li>  <code>#!/bin/csh</code>—使用<code>csh</code>，即C shell执行</li>
+<li>  <code>#!/usr/bin/perl -w</code>—使用带警告的Perl执行</li>
+<li>  <code>#!/usr/bin/python -O</code>—使用具有代码优化的Python执行</li>
+<li>  <code>#!/usr/bin/php</code>—使用PHP的命令行解释器执行</li>
+</ul>
+<p>在许多系统上，/bin/sh软链接或硬链接到Bash，而/bin/csh则链接到tcsh，因此设定前面的解释器实际上是运行的与之兼容的，或改进的版本。</p>
+<p>Shebang行也可以包含需要传递到解释器的特定选项（见下文的Perl例子）。然而，选项传递的方式随实现的不同而不同。</p>
+<h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>解释器指令允许脚本和数据文件充当系统命令，无需在调用时由用户指定解释器，从而对用户和其它程序隐藏其实现细节。</p>
+<p>假设<code>/usr/local/bin/foo</code>中有一以下行开头的Bourne shell脚本 <code>#!/bin/sh -x</code> 而它被如此调用（”$”是命令提示符） $ <code>foo bar</code> 该命令的输出等同于 $ <code>/bin/sh -x /usr/local/bin/foo bar</code> 除了argv[0]被设定为脚本的文件名，而非解释器的文件名外。</p>
+<p>由于<code>sh</code>从其命令行指定的文件中读取命令，上面的命令就会执行<code>/usr/local/bin/foo</code>中的命令，同时，将<code>bar</code>作为<code>foo</code>命令的参数<code>$1</code>。</p>
+<p>由于shebang开头的井号也是Bourne shell和许多其它解释性语言的注释符，因此在这些语言中，解释器指令本身会被解释器认为是单纯的注释而跳过。 然而，并不是每一种解释器都会自动忽略shebang行，例如对于下面的脚本，<code>cat</code>会把文件中的两行都输出到标准输出中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/cat<br>Hello world!<br></code></pre></td></tr></table></figure>
+
+<p>使用<code>#!/usr/bin/env 脚本解释器名称</code>是一种常见的在不同平台上都能正确找到解释器的办法。</p>
+<p>Linux的操作系统的文件一般是UTF-8编码。如果脚本文件是以UTF-8的<code>BOM（0xEF 0xBB 0xBF）</code>开头的，那么exec函数将不会启动shebang指定的解释器来执行该脚本。因此，Linux的脚本文件不应在文件开头包含UTF-8的BOM。</p>
+<h2 id="bin-bash"><a href="#bin-bash" class="headerlink" title="#!/bin/bash"></a>#!/bin/bash</h2><p><code>#!/bin/bash</code>是指此脚本使用<code>/bin/bash</code>来解释执行。</p>
+<p>在脚本中，只有第一行的<code>#!/bin/bash</code>才起声明解释器作用，其余位置均为注释</p>
+<p>脚本第一行的解释器路径一定要正确，不正确会报错（未验证）</p>
+<p>常用的解释器注释</p>
+<ul>
+<li>  <code>#!/bin/bash</code></li>
+<li>  <code>#!/bin/sh</code></li>
+<li>  不写：脚本会默认当前用户登录的shell，为脚本解释器</li>
+<li>  其他</li>
+</ul>
+<p>脚本里声明解释器类型和运行时指定解释器效果相同</p>
+<p><code>#!/bin/sh</code>一般设成<code>#!/bin/bash</code>的软链接，在一般的linux系统当中（如redhat），使用sh调用执行脚本相当于打开了bash的POSIX标准模式，也就是说 /bin/sh 相当于 /bin/bash –posix</p>
+<p><code>#!/bin/bash</code>和<code>#!/bin/bash --posix</code>的区别</p>
+<ul>
+<li>  不开启posix时，运行出错会报错，但继续执行后续</li>
+<li>  开启posix时，运行出错会报错，不继续执行后续</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

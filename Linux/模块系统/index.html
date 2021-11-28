@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+
+</div>
+
+<div class="content-area">
+	<div class="title">
+		rust模块系统
+	</div>
+	
+	<div class="page-date">
+		2021-11-07
+	</div>
+	
+	<div class="category-area">
+		
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>crate是一个二进制项或者库。</p>
+<p>crate root是一个源文件，Rust编译器以其为起始点构造crate的根模块。</p>
+<p>包是提供一系列功能的一个或者多个crate。</p>
+<p>一个包会包含一个Cargo.toml文件去描述如何构建这些crate。</p>
+<p>包中包含内容的规则：</p>
+<ul>
+<li>一个包至少包含一个crate</li>
+<li>一个包至多只能包含一个库crate</li>
+<li>一个包可以包含任意多个二进制crate，通过将文件放在 src/bin 目录下，每个 src/bin 下的文件都会被编译成一个独立的二进制crate</li>
+</ul>
+<p>Cargo遵循的约定：</p>
+<ul>
+<li>src/main.rs 就是一个与包同名的二进制crate的crate根</li>
+<li>src/lib.rs 就是一个与包同名的库crate的crate根</li>
+<li>crate根文件由Cargo传递给rustc来实际构建库或者二进制项目</li>
+<li>如果一个包同时含有 src/main.rs 和 src/lib.rs，则它有两个与包同名的crate，一个库一个二进制项</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+
+</div>
+
+<div class="content-area">
+	<div class="title">
+		拼接成字符串string
+	</div>
+	
+	<div class="page-date">
+		2020-05-28
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>拼接成字符串string</p>
+<span id="more"></span>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdlib&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span> </span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-comment">//C风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">char</span> *s = <span class="hljs-string">&quot;dong&quot;</span>;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">52</span>;<br>    <span class="hljs-keyword">float</span> b = <span class="hljs-number">.1314</span>;<br>    <span class="hljs-keyword">char</span> *buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-built_in">strlen</span>(s) + <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(a) + <span class="hljs-number">1</span>];<br>    <span class="hljs-built_in">sprintf</span>(buf, <span class="hljs-string">&quot;%s%d%.4f&quot;</span>, s, a, b);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, buf);<br>&#125;<br><span class="hljs-comment">//半C半C++风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test1</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string s = <span class="hljs-string">&quot;dong&quot;</span>;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">520</span>;<br>    <span class="hljs-keyword">char</span> *buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-number">10</span>];<span class="hljs-comment">//2147483647 int最大值</span><br>    _itoa(a, buf, <span class="hljs-number">10</span>);      <span class="hljs-comment">//itoa虽然可以转化为各种进制，但是注意不能是float或者double</span><br>    cout &lt;&lt; s + buf &lt;&lt; <span class="hljs-string">&quot; | &quot;</span>;<br>    _itoa(a, buf, <span class="hljs-number">16</span>);<br>    cout &lt;&lt; s + buf &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">//纯C++风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test2</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string s = <span class="hljs-string">&quot;陈明东&quot;</span>;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">52</span>;<br>    <span class="hljs-keyword">double</span> b = <span class="hljs-number">.1314</span>;<br>    ostringstream oss;<br>    oss &lt;&lt; s &lt;&lt; a &lt;&lt; b;<br>    cout &lt;&lt; oss.<span class="hljs-built_in">str</span>() &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">//C++11新特性</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test3</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">520</span>;<br>    <span class="hljs-keyword">float</span> b = <span class="hljs-number">5.20</span>;<br>    string str = <span class="hljs-string">&quot;dong&quot;</span>;<br>    string res = str + <span class="hljs-built_in">to_string</span>(a);<br>    cout &lt;&lt; res &lt;&lt; endl;<br>    res = str + <span class="hljs-built_in">to_string</span>(b);<br>    res.<span class="hljs-built_in">resize</span>(<span class="hljs-number">8</span>);<br>    cout &lt;&lt; res &lt;&lt; endl;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">test</span>();<br>    <span class="hljs-built_in">test1</span>();<br>    <span class="hljs-built_in">test2</span>();<br>    <span class="hljs-built_in">test3</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">dong520.1314</span><br><span class="hljs-comment">dong520 | dong208</span><br><span class="hljs-comment">陈明东520.1314</span><br><span class="hljs-comment">dong520</span><br><span class="hljs-comment">dong5.20</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/program_anywhere/article/details/63720261">C++中4种方式把字符串和数字连接起来</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-1-%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9"><span class="toc-text">Part 1 基础内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%EF%BC%88Tables%EF%BC%89"><span class="toc-text">表（Tables）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE-%EF%BC%88Chains%EF%BC%89"><span class="toc-text">链 （Chains）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99-%EF%BC%88Rules%EF%BC%89"><span class="toc-text">规则 （Rules）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-2-%E8%A7%84%E5%88%99"><span class="toc-text">Part 2 规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E8%A7%84%E5%88%99"><span class="toc-text">新增规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E8%A7%84%E5%88%99"><span class="toc-text">删除规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E8%A7%84%E5%88%99"><span class="toc-text">查看规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E8%A7%84%E5%88%99"><span class="toc-text">修改规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E9%99%A4%E6%89%80%E6%9C%89%E9%93%BE-%E6%8C%87%E5%AE%9A%E9%93%BE-%E6%8C%87%E5%AE%9A%E8%A7%84%E5%88%99%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%9F%E8%AE%A1"><span class="toc-text">清除所有链&#x2F;指定链&#x2F;指定规则的数据包统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part2-5-%E8%A7%84%E5%88%99%E7%BC%96%E5%86%99"><span class="toc-text">Part2.5 规则编写</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8C%B9%E9%85%8D%E6%9D%A1%E4%BB%B6"><span class="toc-text">基本匹配条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95%E5%8C%B9%E9%85%8D%E6%9D%A1%E4%BB%B6"><span class="toc-text">拓展匹配条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9C"><span class="toc-text">动作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9CREJECT"><span class="toc-text">动作REJECT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9CLOG"><span class="toc-text">动作LOG</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9CSNAT"><span class="toc-text">动作SNAT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9CDNAT"><span class="toc-text">动作DNAT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9CMASQUERADE"><span class="toc-text">动作MASQUERADE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E4%BD%9CREDIRECT"><span class="toc-text">动作REDIRECT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E5%A5%97%E8%B7%AF"><span class="toc-text">规则套路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part3-%E9%85%8D%E7%BD%AE%E5%86%85%E5%AE%B9"><span class="toc-text">Part3 配置内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part4-%E5%85%B6%E4%BB%96%E5%86%85%E5%AE%B9"><span class="toc-text">Part4 其他内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%AD%A2SYN-Flood%E6%94%BB%E5%87%BB"><span class="toc-text">防止SYN Flood攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#iptabes-%E5%85%B6%E4%BB%96%E9%99%90%E5%88%B6%E8%A7%84%E5%88%99%EF%BC%9A"><span class="toc-text">iptabes 其他限制规则：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#iptables%E4%B8%AD%E7%9A%84return"><span class="toc-text">iptables中的return</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		
+	</div>
+	
+	<div class="page-date">
+		2021-11-07
+	</div>
+	
+	<div class="category-area">
+		
+			
+		
+	</div>
+	
+	<div class="content">
+		<h2 id="Part-1-基础内容"><a href="#Part-1-基础内容" class="headerlink" title="Part 1 基础内容"></a>Part 1 基础内容</h2><p>iptables 可以检测、修改、转发、重定向和丢弃 IPv4 数据包。</p>
+<p>过滤 IPv4 数据包的代码已经内置于内核中，并且按照不同的目的被组织成 <strong>表</strong> 的集合。<strong>表</strong> 由一组预先定义的 <strong>链</strong> 组成，<strong>链</strong> 包含遍历顺序规则。iptables 是用户工具，允许用户使用 <strong>链</strong> 和 <strong>规则</strong>。</p>
+<blockquote>
+<p>表、链、规则理解：</p>
+<p>链充当报文关卡，对报文进行检查，符合条件后才能放行；规则就是预定的条件；而表则是将相似的规则放在一起。</p>
+</blockquote>
+<p>下图简要描述了网络数据包通过 <strong>iptables</strong> 的过程：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">                               XXXXXXXXXXXXXXXXXX<br>                             XXX     Network    XXX<br>                               XXXXXXXXXXXXXXXXXX<br>                                       +<br>                                       |<br>                                       v<br> +-------------+              +------------------+<br> |table: filter| &lt;---+        | table: nat       |<br> |chain: INPUT |     |        | chain: PREROUTING|<br> +-----+-------+     |        +--------+---------+<br>       |             |                 |<br>       v             |                 v<br> [local process]     |           ****************          +--------------+<br>       |             +---------+ Routing decision +------&gt; |table: filter |<br>       v                         ****************          |chain: FORWARD|<br>****************                                           +------+-------+<br>Routing decision                                                  |<br>****************                                                  |<br>       |                                                          |<br>       v                        ****************                  |<br>+-------------+       +------&gt;  Routing decision  &lt;---------------+<br>|table: nat   |       |         ****************<br>|chain: OUTPUT|       |               +<br>+-----+-------+       |               |<br>      |               |               v<br>      v               |      +-------------------+<br>+--------------+      |      | table: nat        |<br>|table: filter | +----+      | chain: POSTROUTING|<br>|chain: OUTPUT |             +--------+----------+<br>+--------------+                      |<br>                                      v<br>                               XXXXXXXXXXXXXXXXXX<br>                             XXX    Network     XXX<br>                               XXXXXXXXXXXXXXXXXX<br></code></pre></td></tr></table></figure>
+
+<p><strong>从任何网络端口</strong> 进来的每一个 IP 数据包都要从上到下的穿过这张图。iptabales 对从任何端口进入的数据包都会采取相同的处理方式。</p>
+<h3 id="表（Tables）"><a href="#表（Tables）" class="headerlink" title="表（Tables）"></a>表（Tables）</h3><p>iptables 包含 5 张表（tables）:</p>
+<ol>
+<li> <code>raw</code> 用于配置数据包，<code>raw</code> 中的数据包不会被系统跟踪。</li>
+<li> <code>filter</code> 是用于存放所有与防火墙相关操作的默认表。</li>
+<li> <code>nat</code> 用于网络地址转换（例如：端口转发）。</li>
+<li> <code>mangle</code> 用于对特定数据包的修改。</li>
+<li> <code>security</code> 用于强制访问控制网络规则（例如： SELinux – 详细信息参考 <a target="_blank" rel="noopener" href="https://lwn.net/Articles/267140/">该文章</a>）。</li>
+</ol>
+<p>大部分情况仅需要使用 <strong>filter</strong> 和 <strong>nat</strong>。其他表用于更复杂的情况——包括多路由和路由判定——已经超出了本文介绍的范围。</p>
+<h3 id="链-（Chains）"><a href="#链-（Chains）" class="headerlink" title="链 （Chains）"></a>链 （Chains）</h3><p>表由链组成，链是一些按顺序排列的规则的列表。</p>
+<p>规则链共有五种：<code>prerouting</code>,<code>input</code>,<code>forward</code>,<code>output</code>,<code>postrouting</code></p>
+<p>表中存放着许多规则,我们把这些规则分个类,这些类就是链。而每张表的功能又不一样,所以每张表中的链也就不一样：</p>
+<ul>
+<li>  nat表:<strong><code>prerouting,input,output,postrouting</code></strong></li>
+<li>  filter表:<strong><code>input,forward,output</code></strong></li>
+<li>  mangle:<strong><code>prerouting,iniput,forward,output,postrouting</code></strong></li>
+<li>  raw表:<strong><code>prerouting,output</code></strong></li>
+<li>  security表:<strong><code>input,forward,output</code></strong></li>
+</ul>
+<p>默认的 <code>filter</code> 表包含 <code>INPUT</code>， <code>OUTPUT</code> 和 <code>FORWARD</code> 3条内建的链，这3条链作用于数据包过滤过程中的不同时间点，如该<a target="_blank" rel="noopener" href="https://www.frozentux.net/iptables-tutorial/chunkyhtml/images/tables_traverse.jpg">流程图</a>所示。</p>
+<p><img src="/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE_pic/tables_traverse.jpg" alt="image-20210531162801258"></p>
+<p>默认情况下，任何链中都没有规则。可以向链中添加自己想用的规则。链的默认规则通常设置为 <code>ACCEPT</code>，如果想确保任何包都不能通过规则集，那么可以重置为 <code>DROP</code>。默认的规则总是在一条链的最后生效，所以在默认规则生效前数据包需要通过所有存在的规则。</p>
+<p>用户可以加入自己定义的链，从而使规则集更有效并且易于修改。</p>
+<h3 id="规则-（Rules）"><a href="#规则-（Rules）" class="headerlink" title="规则 （Rules）"></a>规则 （Rules）</h3><p>数据包的过滤基于 <strong>规则</strong>。<strong>规则</strong>由一个<em>目标</em>（数据包包匹配所有条件后的动作）和很多<em>匹配</em>（导致该规则可以应用的数据包所满足的条件）指定。</p>
+<p><strong>iptables的规则书写是有大小写区别的</strong></p>
+<p><code>iptables -t [表名] -增加/删除/修改 [链名] (数字) -p 协议 -s 目标地址 -j 丢弃/接收</code></p>
+<p>简单示例:</p>
+<p>增加规则：<code>iptables -t filter -I INPUT -p tcp -j DROP</code></p>
+<p>删除规则：<code>iptables -t filter -D INPUT 1</code></p>
+<h2 id="Part-2-规则"><a href="#Part-2-规则" class="headerlink" title="Part 2 规则"></a>Part 2 规则</h2><h3 id="新增规则"><a href="#新增规则" class="headerlink" title="新增规则"></a>新增规则</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables [-t table] -A chain rule-specification <br>iptables [-t table] -I chain rulenum rule-specification<br>iptables [-t table] -N chain<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>  <code>[-t table]</code>指定表，不写默认为filter表</p>
+</li>
+<li><p>  <code>-A</code>表示append/add,新增或在已有规则后面添加</p>
+</li>
+<li><p>  <code>-I</code>表示insert,插入到指定位置,可以将规则写入到表中的任意位置,这个位置就是后面的rulenum决定的</p>
+</li>
+<li><p>  <code>-N</code>表示添加用户自定义的链</p>
+</li>
+<li><p>rule-specification表示指定规则，比如说指定ip、协议、行为</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">rule-specification = [matches...] [target]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>match = <code>-m matchname [per-match-options]</code><br>  举个例子:match为-p tcp 或者 -s 192.168.0.12</li>
+<li>target = <code>-j targetname [per-target-options]</code><br>  举个例子:target为-j DROP 或者 -j ACCEPT<ul>
+<li>  targetname表示对规则的处理,有accept接收/drop丢弃/return暂存</li>
+</ul>
+</li>
+</ul>
+<p>  rule-specification是用来指定符合条件的规则,包含了对这个规则的处理<br>   <strong><code>有些参数是支持取反的，写规则时可通过tab补全帮助</code></strong></p>
+<ul>
+<li>  -4, –ipv4 指定使用ipv4</li>
+<li>  -6, –ipv6 指定使用ipv6</li>
+<li>[!] -p, –protocol protocol 指定使用的协议,这个参数就支持取反,如果我想写除tcp之外的协议:<code>!  -p tcp</code><br>  例如我写这个的时候不知道有那些协议啊?tab一下就出来了<br>  [!] -s, –source address[/mask][,…] 指定源主机地址,包含a network name, a hostname, a network IP address </li>
+<li>  [!] -d, –destination address[/mask][,…]与上面的参数一样,指定目标主机地址</li>
+<li>-m, –match match 匹配模块,可以调用模块的扩展功能.<br>  举个例子:使用 -p tcp参数的时候,就是指定匹配tcp协议.而使用-m tcp参数的时候,是调用tcp模块.不过我真不知道这有啥用,恕我孤陋寡闻了</li>
+<li>  -j, –jump target 动作,包含<code>ACCEPT</code>、<code>ECN</code>、<code>MARK</code>、<code>MIRROR</code>、<code>REDIRECT</code>、<code>RETURN</code>、<code>TCPMSS</code>、<code>ULOG、</code> <code>DNAT</code>、<code>DSCP</code>、<code>LOG</code>、<code>MASQUERADE</code> 、<code>QUEUE</code>、<code>REJECT</code>、<code>SNAT</code>、<code>TOS</code></li>
+<li>  -g, –goto chain指定跳转用户自定义的链</li>
+<li>  [!] -i, –in-interface name 指定数据进来的网络接口</li>
+<li>  [!] -o, –out-interface name 指定数据出去的网络接口</li>
+<li>  [!] -f, –fragment 只能是ipv4起作用,类似于模糊匹配,通过数据包片段来匹配</li>
+<li>  -c, –set-counters packets bytes 允许root初始化链的数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="删除规则"><a href="#删除规则" class="headerlink" title="删除规则"></a>删除规则</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables [-t table] -D chain rulenum<br>iptables [-t table] -F<br>iptables [-t table] -X<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  <code>-D</code>删除rulenum所指的规则</li>
+<li>  <code>-F</code>删除指定的整个表的规则</li>
+<li>  <code>-X</code>删除用户自定义的表</li>
+</ul>
+<h3 id="查看规则"><a href="#查看规则" class="headerlink" title="查看规则"></a>查看规则</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables [-t table] -C chain rule-specification<br>iptables [-t table] -L [chain [rulenum]]<br>iptables [-t table] -S [chain [rulenum]]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  <code>-C</code>：表示check，检查是否存在规则，存在不给提示，不存在给出提示</li>
+<li>  <code>-L</code>：显示详细信息</li>
+<li>  <code>-S</code>：显示简略信息</li>
+</ul>
+<p>常用的查看规则(显示排序数字):   <code>sudo iptables -nvL --line-numbers</code></p>
+<ul>
+<li><code>-v</code>：查看更多、更详细的信息</li>
+<li><code>-n</code>：不对IP地址进行名称反解，直接显示IP地址</li>
+<li><code>--line-numbers</code>：显示规则的编号</li>
+<li><code>-x</code>：显示计数器的精确值，”计数器”只会在使用<code>-v</code>选项时，才会显示出来<ul>
+<li><strong>packets</strong>表示当前链（上例为INPUT链）默认策略匹配到的包的数量，0 packets表示默认策略匹配到0个包。</li>
+<li><strong>bytes</strong>表示当前链默认策略匹配到的所有包的大小总和。</li>
+</ul>
+</li>
+</ul>
+<h3 id="修改规则"><a href="#修改规则" class="headerlink" title="修改规则"></a>修改规则</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables [-t table] -R chain rulenum rule-specification<br>iptables [-t table] -E old-chain-name new-chain-name<br>iptables [-t table] -P chain target<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  <code>-R</code>：replace替代rulenum指定的规则</li>
+<li>  <code>-E</code>：rename修改用户自定义链的名字</li>
+<li>  <code>-P</code>：policy修改iptables默认链的规则，target只有drop和accept这两种情况</li>
+</ul>
+<p>举个例子：我们的个人电脑一般是不会用来做路由的吧，路由转发这种事是服务器和路由器做的，所以forward这条链对我们的作用几乎为零，那我们就可以将链的规则修改为丢弃</p>
+<pre><code>sudo iptables -P FORWARD -j DROP
+</code></pre>
+<h3 id="清除所有链-指定链-指定规则的数据包统计"><a href="#清除所有链-指定链-指定规则的数据包统计" class="headerlink" title="清除所有链/指定链/指定规则的数据包统计"></a>清除所有链/指定链/指定规则的数据包统计</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables [-t table] -Z [chain [rulenum]]<br></code></pre></td></tr></table></figure>
+
+<h2 id="Part2-5-规则编写"><a href="#Part2-5-规则编写" class="headerlink" title="Part2.5 规则编写"></a>Part2.5 规则编写</h2><p>指定表，指定链后，便书写规则。</p>
+<p><strong>当一条规则中存在多个匹配条件时，报文必须同时满足这些条件，才算做被规则匹配</strong></p>
+<h3 id="基本匹配条件"><a href="#基本匹配条件" class="headerlink" title="基本匹配条件"></a>基本匹配条件</h3><ul>
+<li>源IP地址：<code>-s</code><ul>
+<li>指定单个IP：<code>-s 192.168.1.2</code></li>
+<li>指定多个IP，逗号隔开，逗号两边无空格：<code>-s 192.168.1.2,192.168.1.3</code></li>
+<li>指定某个网段：<code>-s 192.168.1.0/24</code></li>
+<li>匹配条件取反：<code>! -s 192.168.1.2</code>，取反后的规则只指定除了该IP地址对应的操作，并未指定该IP地址的操作（即使用默认操作）</li>
+</ul>
+</li>
+<li>目标IP地址：<code>-d</code><ul>
+<li>使用与源IP地址类似</li>
+</ul>
+</li>
+<li>协议类型：<code>-p</code><ul>
+<li>支持类型：tcp, udp, udplite, icmp, icmpv6,esp, ah, sctp, mh</li>
+<li>all关键字：指定所有类型</li>
+<li>不使用-p指定协议类型时，默认表示所有类型的协议都会被匹配到，与使用<code>-p all</code>的效果相同</li>
+</ul>
+</li>
+<li>网卡接口<ul>
+<li>数据流入：<code>-i</code>，匹配报文是通过哪块网卡流入本机<ul>
+<li>只能用于PREROUTING链、INPUT链、FORWARD链</li>
+</ul>
+</li>
+<li>数据流出：<code>-o</code>，匹配报文是通过哪块网卡流出本机<ul>
+<li>只能用于FORWARD链、OUTPUT链、POSTROUTING链</li>
+</ul>
+</li>
+<li>FORWARD链属于”中立国”，它能同时使用-i选项与-o选项</li>
+</ul>
+</li>
+</ul>
+<h3 id="拓展匹配条件"><a href="#拓展匹配条件" class="headerlink" title="拓展匹配条件"></a>拓展匹配条件</h3><p>基本匹配条件可以直接使用，而如果想要使用扩展匹配条件，则需要依赖一些扩展模块，或者说，在使用扩展匹配条件之前，需要指定相应的扩展模块才行。</p>
+<ul>
+<li><p>tcp拓展模块：<code>-m tcp</code></p>
+<ul>
+<li>端口匹配<ul>
+<li>使用–dport可以匹配报文的目标端口，–dport意为destination-port，即表示目标端口</li>
+<li>使用–sport可以匹配报文的源端口，–sport表示source-port，即表示源端口</li>
+<li>使用–dport选项时，必须事先指定了使用哪种协议，即必须先使用-p选项</li>
+<li>“隐式”指定扩展模块：当使用-p选项指定了报文的协议时，如果在没有使用-m指定对应的扩展模块名称的情况下，使用了扩展匹配条件，iptables默认会调用与-p选项对应的协议名称相同的模块</li>
+<li>扩展匹配条件取反：同样是使用<code>!</code>进行取反</li>
+<li>指定端口范围：<code>--dport 22:26</code></li>
+<li>指定端口起始：<ul>
+<li><code>--dport :22</code></li>
+<li><code>--dport 80:</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>--tcp-flags</code>：匹配tcp报文的头部的标识位，然后根据标识位的实际情况实现访问控制的功能<ul>
+<li>使用示例：<code>-m tcp --tcp-flags SYN,ACK,FIN,RST,URG,PSH SYN</code></li>
+<li>上例中的”SYN,ACK,FIN,RST,URG,PSH SYN”表示，需要匹配报文tcp头中的”SYN、ACK、FIN、RST、URG、PSH”这些标志位，其中SYN标志位必须为1，其他的5个标志位必须为0</li>
+<li>可以用ALL表示”SYN,ACK,FIN,RST,URG,PSH”</li>
+<li>tcp扩展模块还为我们专门提供了一个选项，可以匹配上文中提到的”第一次握手”，那就是–syn选项。使用”–syn”选项相当于使用”–tcp-flags SYN,RST,ACK,FIN  SYN”，也就是说，可以使用”–syn”选项去匹配tcp新建连接的请求报文。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>multiport拓展模块：同时指定多个离散的端口，逗号分隔</p>
+<ul>
+<li>使用multiport模块的–sports扩展条件同时指定多个离散的源端口</li>
+<li>使用multiport模块的–dports扩展条件同时指定多个离散的目标端口</li>
+<li>multiport模块的–sports与–dpors时，也可以指定连续的端口范围，并且能够在指定连续的端口范围的同时，指定离散的端口号：<code>--dports 22,80:88</code></li>
+<li>multiport扩展<strong>只能用于</strong>tcp协议与udp协议，即配合-p tcp或者-p udp使用</li>
+</ul>
+</li>
+<li><p>iprange扩展模块：可以指定”一段连续的IP地址范围”，用于匹配报文的源地址或者目标地址</p>
+<ul>
+<li>–src-range：指定连续的源地址范围</li>
+<li>–dst-range：指定连续的目标地址范围</li>
+<li>IP段的始末IP使用”横杠”连接</li>
+<li><code>-m iprange --src-range 192.168.1.12-192.168.1.25</code></li>
+</ul>
+</li>
+<li><p>string扩展模块：可以指定要匹配的字符串，如果报文中包含对应的字符串，则符合匹配条件</p>
+<ul>
+<li>–algo：用于指定匹配算法，可选的算法有bm与kmp，此选项为必须选项</li>
+<li>–string：用于指定需要匹配的字符串</li>
+</ul>
+</li>
+<li><p>time扩展模块：可以根据时间段区匹配报文，如果报文到达的时间在指定的时间范围以内，则符合匹配条件</p>
+<ul>
+<li>–timestart：用于指定时间范围的开始时间，不可取反<ul>
+<li><code>--timestart 09:00:00</code></li>
+</ul>
+</li>
+<li>–timestop：用于指定时间范围的结束时间，不可取反</li>
+<li>–weekdays：用于指定”星期几”，可取反<ul>
+<li>可以同时指定多个，用逗号隔开</li>
+<li>能够数字表示”星期几”,还能用缩写表示，例如：Mon, Tue, Wed, Thu, Fri, Sat, Sun</li>
+</ul>
+</li>
+<li>–monthdays：用于指定”几号”，可取反</li>
+<li>–datestart：用于指定日期范围的开始日期，不可取反<ul>
+<li><code>--datestart 2017-12-1</code></li>
+</ul>
+</li>
+<li>–datestop：用于指定日期范围的结束时间，不可取反</li>
+</ul>
+</li>
+<li><p>connlimit扩展模块：限制<strong>每个IP地址</strong>同时链接到server端的链接数量</p>
+<ul>
+<li>–connlimit-above：单独使用此选项时，表示限制每个IP的链接数量</li>
+<li>–connlimit-mask：此选项不能单独使用，在使用–connlimit-above选项时，配合此选项，则可以针对”某类IP段内的一定数量的IP”进行连接数量的限制</li>
+</ul>
+</li>
+<li><p>limit模块：限制单位时间内流入的包的数量</p>
+<ul>
+<li>–limit-burst：类比”令牌桶”算法，此选项用于指定令牌桶中令牌的最大数量</li>
+<li>–limit：类比”令牌桶”算法，此选项用于指定令牌桶中生成新令牌的频率，可用时间单位有second、minute 、hour、day</li>
+</ul>
+<blockquote>
+<p>令牌桶算法</p>
+<p>我们可以这样想象，有一个木桶，木桶里面放了5块令牌，而且这个木桶最多也只能放下5块令牌，所有报文如果想要出关入关，都必须要持有木桶中的令牌才行，这个木桶有一个神奇的功能，就是每隔6秒钟会生成一块新的令牌，如果此时，木桶中的令牌不足5块，那么新生成的令牌就存放在木桶中，如果木桶中已经存在5块令牌，新生成的令牌就无处安放了，只能溢出木桶（令牌被丢弃），如果此时有5个报文想要入关，那么这5个报文就去木桶里找令牌，正好一人一个，于是他们5个手持令牌，快乐的入关了，此时木桶空了，再有报文想要入关，已经没有对应的令牌可以使用了，但是，过了6秒钟，新的令牌生成了，此刻，正好来了一个报文想要入关，于是，这个报文拿起这个令牌，就入关了，在这个报文之后，如果很长一段时间内没有新的报文想要入关，木桶中的令牌又会慢慢的积攒了起来，直到达到5个令牌，并且一直保持着5个令牌，直到有人需要使用这些令牌，这就是令牌桶算法的大致逻辑。</p>
+</blockquote>
+</li>
+<li><p>udp扩展模块</p>
+<ul>
+<li>–sport：匹配udp报文的源地址</li>
+<li>–dport：匹配udp报文的目标地址</li>
+<li>支持指定一个连续的端口范围</li>
+<li>不能一次性指定多个离散的端口，可以使用multiport扩展模块</li>
+</ul>
+</li>
+<li><p>icmp扩展模块</p>
+<ul>
+<li>–icmp-type：匹配icmp报文的具体类型<ul>
+<li>使用icmp报文对应的<code>type/code</code></li>
+<li>使用icmp报文的描述名称，名称中的”空格”需要替换为”-“</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>state扩展模块：可以让iptables实现”连接追踪”机制</p>
+<ul>
+<li><p>对于state而言，报文状态可以为</p>
+<ul>
+<li><p><strong>NEW</strong>：连接中的第一个包，状态就是NEW，我们可以理解为新连接的第一个包的状态为NEW。</p>
+</li>
+<li><p><strong>ESTABLISHED</strong>：我们可以把NEW状态包后面的包的状态理解为ESTABLISHED，表示连接已建立。</p>
+</li>
+<li><p><strong>RELATED</strong>：相关报文，<strong>最常用</strong>，表示这个封包是与我们主机发送出去的封包有关，可能是响应封包或者是联机成功之后的传送封包，这个状态很常被设定，因为设定了他之后，只要未来由本机发送出去的封包，即使我们没有设定封包的 INPUT 规则，该有关的封包还是可以进入我们主机，可以简化相当多的设定规则。</p>
+<p>比如FTP服务，FTP服务端会建立两个进程，一个命令进程，一个数据进程。命令进程负责服务端与客户端之间的命令传输（我们可以把这个传输过程理解成state中所谓的一个”连接”，暂称为”命令连接”）。</p>
+<p>数据进程负责服务端与客户端之间的数据传输 ( 我们把这个过程暂称为”数据连接” )。</p>
+<p>但是具体传输哪些数据，是由命令去控制的，所以，”数据连接”中的报文与”命令连接”是有”关系”的。</p>
+<p>那么，”数据连接”中的报文可能就是RELATED状态，因为这些报文与”命令连接”中的报文有关系。</p>
+</li>
+<li><p><strong>INVALID</strong>：无效的封包，例如数据破损的封包状态。如果一个包没有办法被识别，或者这个包没有任何状态，那么这个包的状态就是INVALID，我们可以主动屏蔽状态为INVALID的报文。</p>
+</li>
+<li><p><strong>UNTRACKED</strong>：报文的状态为untracked时，表示报文未被追踪，当报文的状态为Untracked时通常表示无法找到相关的连接。</p>
+</li>
+</ul>
+</li>
+<li><p>可以将状态为RELATED或ESTABLISHED的报文都放行，这样，就表示只有回应我们的报文能够通过防火墙，如果是别人主动发送过来的新的报文，则无法通过防火墙</p>
+<ul>
+<li><code>-m state --state RELATED,ESTABLISHED</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">允许 ICMP 封包与允许已建立的联机通过<br>filter表中INPUT链为DROP，OUTPUT链为ACCEPT，<br>此时本机ping其他主机不通，在INPUT链中添加规则：<br>iptables -AINPUT -m state --state ESTABLISHED,RELATED -j ACCEPT<br>本机可以ping其他主机，但是其他主机无法ping本机<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h3><p>“动作”与”匹配条件”一样，也有”基础”与”扩展”之分。同样，使用扩展动作也需要借助扩展模块，但是，扩展动作可以<strong>直接使用</strong>，不用像使用”扩展匹配条件”那样指定特定的模块。</p>
+<p>ACCEPT与DROP都属于基础动作。而REJECT则属于扩展动作。</p>
+<p>“动作”也有自己的选项，我们可以在使用动作时，设置对应的选项。</p>
+<h4 id="动作REJECT"><a href="#动作REJECT" class="headerlink" title="动作REJECT"></a>动作REJECT</h4><p>REJECT动作的常用选项为–reject-with</p>
+<p>使用–reject-with选项，可以设置提示信息，当对方被拒绝时，会提示对方为什么被拒绝。</p>
+<p>可用值如下</p>
+<p>icmp-net-unreachable</p>
+<p>icmp-host-unreachable</p>
+<p>icmp-port-unreachable,</p>
+<p>icmp-proto-unreachable</p>
+<p>icmp-net-prohibited</p>
+<p>icmp-host-pro-hibited</p>
+<p>icmp-admin-prohibited</p>
+<p>当不设置任何值时，默认值为icmp-port-unreachable。</p>
+<h4 id="动作LOG"><a href="#动作LOG" class="headerlink" title="动作LOG"></a>动作LOG</h4><p>使用LOG动作，可以将符合条件的报文的相关信息记录到日志中，但当前报文具体是被”接受”，还是被”拒绝”，都由后面的规则控制，换句话说，LOG动作只负责记录匹配到的报文的相关信息，不负责对报文的其他处理，如果想要对报文进行进一步的处理，可以在之后设置具体规则，进行进一步的处理。</p>
+<p>在使用LOG动作时，匹配条件应该尽量写的精确一些，匹配到的报文数量也会大幅度的减少，这样冗余的日志信息就会变少，同时日后分析日志时，日志中的信息可用程度更高。</p>
+<p>LOG动作会将报文的相关信息记录在/var/log/message文件中，当然，我们也可以将相关信息记录在指定的文件中，以防止iptables的相关信息与其他日志信息相混淆，修改/etc/rsyslog.conf文件（或者/etc/syslog.conf），在rsyslog配置文件中添加如下配置即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#vim /etc/rsyslog.conf<br>kern.warning /var/log/iptables.log<br></code></pre></td></tr></table></figure>
+
+<p>加入上述配置后，报文的相关信息将会被记录到/var/log/iptables.log文件中。</p>
+<p>完成上述配置后，重启rsyslog服务（或者syslogd），服务重启后，配置即可生效，匹配到的报文的相关信息将被记录到指定的文件中。</p>
+<p>LOG动作也有自己的选项，常用选项如下</p>
+<ul>
+<li><p>–log-level选项可以指定记录日志的日志级别，可用级别有emerg，alert，crit，error，warning，notice，info，debug。</p>
+</li>
+<li><p>–log-prefix选项可以给记录到的相关信息添加”标签”之类的信息，以便区分各种记录到的报文信息，方便在分析时进行过滤。</p>
+</li>
+</ul>
+<p>注：–log-prefix对应的值不能超过29个字符。</p>
+<h4 id="动作SNAT"><a href="#动作SNAT" class="headerlink" title="动作SNAT"></a>动作SNAT</h4><p>网络内部的主机可以借助SNAT隐藏自己的IP地址，同时还能够共享合法的公网IP，让局域网内的多台主机共享公网IP访问互联网。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">iptables -t nat -A POSTROUTING -s 10.1.0.0/16 -j SNAT --to-source 公网IP<br></code></pre></td></tr></table></figure>
+
+<p>SNAT规则只能存在于POSTROUTING链与INPUT链中</p>
+<h4 id="动作DNAT"><a href="#动作DNAT" class="headerlink" title="动作DNAT"></a>动作DNAT</h4><p>通过公网IP访问局域网内的服务。</p>
+<p>理论上来说，只要配置DNAT规则，不需要对应的SNAT规则即可达到DNAT效果。但是在测试DNAT时，对应SNAT规则也需要配置，才能正常DNAT，可以先尝试只配置DNAT规则，如果无法正常DNAT，再尝试添加对应的SNAT规则，SNAT规则配置一条即可，DNAT规则需要根据实际情况配置不同的DNAT规则。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">iptables -t nat -I PREROUTING -d 公网IP -p tcp --dport 公网端口 -j DNAT --to-destination 私网IP:端口号<br><br>iptables -t nat -I PREROUTING -d 公网IP -p tcp --dport 8080 -j DNAT --to-destination 10.1.0.1:80<br><br>iptables -t nat -A POSTROUTING -s 10.1.0.0/16 -j SNAT --to-source 公网IP<br></code></pre></td></tr></table></figure>
+
+<p>DNAT规则只配置在PREROUTING链与OUTPUT链中</p>
+<h4 id="动作MASQUERADE"><a href="#动作MASQUERADE" class="headerlink" title="动作MASQUERADE"></a>动作MASQUERADE</h4><p>如果公网IP是动态获取的，不是固定的，则可以使用MASQUERADE进行动态的SNAT操作，如下命令表示将10.1网段的报文的源IP修改为eth0网卡中可用的地址。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">iptables -t nat -A POSTROUTING -s 10.1.0.0/16 -o eth0 -j MASQUERADE<br></code></pre></td></tr></table></figure>
+
+<p>可以把MASQUERADE理解为动态的、自动化的SNAT，如果没有动态SNAT的需求，没有必要使用MASQUERADE，因为SNAT更加高效。</p>
+<h4 id="动作REDIRECT"><a href="#动作REDIRECT" class="headerlink" title="动作REDIRECT"></a>动作REDIRECT</h4><p>使用REDIRECT动作可以在本机上进行端口映射</p>
+<p>比如，将本机的80端口映射到本机的8080端口上</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080<br></code></pre></td></tr></table></figure>
+
+<p>经过上述规则映射后，当别的机器访问本机的80端口时，报文会被重定向到本机的8080端口上。</p>
+<p>REDIRECT规则只能定义在PREROUTING链或者OUTPUT链中。</p>
+<h3 id="规则套路"><a href="#规则套路" class="headerlink" title="规则套路"></a>规则套路</h3><p><strong>1</strong>、规则的顺序非常重要。</p>
+<p>如果报文已经被前面的规则匹配到，IPTABLES则会对报文执行对应的动作，通常是ACCEPT或者REJECT，报文被放行或拒绝以后，即使后面的规则也能匹配到刚才放行或拒绝的报文，也没有机会再对报文执行相应的动作了（前面规则的动作为LOG时除外），所以，针对相同服务的规则，更严格的规则应该放在前面。</p>
+<p><strong>2</strong>、当规则中有多个匹配条件时，条件之间默认存在”与”的关系。</p>
+<p>如果一条规则中包含了多个匹配条件，那么报文必须同时满足这个规则中的所有匹配条件，报文才能被这条规则匹配到。</p>
+<p><strong>3</strong>、在不考虑1的情况下，应该将更容易被匹配到的规则放置在前面。</p>
+<p>比如，你写了两条规则，一条针对sshd服务，一条针对web服务。</p>
+<p>假设，一天之内，有20000个请求访问web服务，有200个请求访问sshd服务，</p>
+<p>那么，应该将针对web服务的规则放在前面，针对sshd的规则放在后面，因为访问web服务的请求频率更高。</p>
+<p>如果将sshd的规则放在前面，当报文是访问web服务时，sshd的规则也要白白的验证一遍，由于访问web服务的频率更高，白白耗费的资源就更多。</p>
+<p>如果web服务的规则放在前面，由于访问web服务的频率更高，所以无用功会比较少。</p>
+<p>换句话说就是，在没有顺序要求的情况下，不同类别的规则，被匹配次数多的、匹配频率高的规则应该放在前面。</p>
+<p><strong>4</strong>、当IPTABLES所在主机作为网络防火 墙时，在配置规则时，应着重考虑方向性，双向都要考虑，从外到内，从内到外。</p>
+<p><strong>5</strong>、在配置IPTABLES白名单时，往往会将链的默认策略设置为ACCEPT，通过在链的最后设置REJECT规则实现白名单机制，而不是将链的默认策略设置为DROP，如果将链的默认策略设置为DROP，当链中的规则被清空时，管理员的请求也将会被DROP掉。</p>
+<h2 id="Part3-配置内容"><a href="#Part3-配置内容" class="headerlink" title="Part3 配置内容"></a>Part3 配置内容</h2><p>filter表：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 清除所有链中的规则</span><br>iptables -F<br><span class="hljs-meta">#</span><span class="bash"> 清除所有用户自定义链</span><br>iptables -X<br><span class="hljs-meta">#</span><span class="bash"> 修改链的默认规则</span><br>iptables -P INPUT DROP<br>iptables -P OUTPUT DROP<br>iptalbes -P FORWARD DROP<br><span class="hljs-meta">#</span><span class="bash"> 添加规则，接受相应状态的封包</span><br>iptables -A INPUT	-m state --state ESTABLISHED,RELATED -j ACCEPT<br>iptables -A OUTPUT	-m state --state ESTABLISHED,RELATED -j ACCEPT<br>iptables -A FORWARD	-m state --state ESTABLISHED,RELATED -j ACCEPT<br><span class="hljs-meta">#</span><span class="bash"> 添加规则，丢弃无效封包</span><br>iptables -A INPUT	-m state --state INVALID -j DROP<br>iptables -A OUTPUT	-m state --state INVALID -j DROP<br>iptables -A FORWARD	-m state --state INVALID -j DROP<br><span class="hljs-meta">#</span><span class="bash"> 接受loop网口的输入和输出</span><br>iptables -A INPUT	-i lo -j ACCEPT<br>iptables -A OUTPUT	-o lo -j ACCEPT<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 防止SYN洪泛攻击</span><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 新建SYNFLOOD链</span></span><br>iptables -N SYNFLOOD<br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 在INPUT上检查tcp封包，跳转到子链执行，两种写法</span></span><br>iptables -A INPUT -p tcp --tcp-flags ACK,RST,SYN,FIN SYN -j SYNFLOOD<br>iptables -A INPUT -p tcp --syn -j SYNFLOOD<br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 在子链中设置访问速度，最后跳转回INPUT链</span></span><br>iptables -A SYNFLOOD -p tcp -m limit --limit 25/second --limit-burst 50 -j RETURN<br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 不符合要求的封包一律丢弃</span></span><br>iptables -A SYNFLOOD -j DROP<br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">## REJECT –reject-with tcp-reset 比 DROP 好，干脆利落，节约时间，节约带宽</span></span><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment">## REJECT表示拒绝，DROP表示丢弃，丢弃会导致对方重传，拒绝后则不会</span></span><br>iptables -A SYNFLOOD -j REJECT<br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 为ssh server设置相关规则</span><br>iptables -N SSHSRV<br>iptables -A INPUT -p tcp --dport 22 -m state --state NE<br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># --set表示将匹配到的报文记录下来，--name给用来记录报文的列表起名称，--resource表示记录源ip地址</span></span><br>iptables -A SSHSRV -m recent --set --name SSHSRV --resource<br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># --update 是指每次建立连接都更新列表，--seconds 必须与--rcheck或者--update同时使用，--hitcount必须与--rcheck或者--update同时使用</span></span><br><span class="hljs-meta">#</span><span class="bash"><span class="hljs-comment"># 利用recent限制单IP在60s内只能与本机建立4个新连接。被限制5分钟后即可恢复访问。</span></span><br>iptables -A SSHSRV -m recent --update --name SSHSRV --seconds 60 --hitcount 4 --rsource -j REJECT<br>iptables -A SSHSRV -j ACCEPT<br></code></pre></td></tr></table></figure>
+
+<h2 id="Part4-其他内容"><a href="#Part4-其他内容" class="headerlink" title="Part4 其他内容"></a>Part4 其他内容</h2><h3 id="防止SYN-Flood攻击"><a href="#防止SYN-Flood攻击" class="headerlink" title="防止SYN Flood攻击"></a>防止SYN Flood攻击</h3><p>SYN泛洪攻击(SYN Flood)是指使用不完善的TCP/IP三次握手，恶意发送大量只包含SYN握手序列的数据包的攻击方法。这种攻击方法可能会导致被攻击的计算机拒绝服务甚至崩溃，从而使潜在的连接占用大量的系统资源，无法完成三次手。</p>
+<p>措施：</p>
+<p><strong>减少SYN-Timeout时间:</strong> 由于SYN Flood攻击的效果取决于服务器上保持的SYN半连接数，这个值=SYN攻击的频度 x SYN Timeout，所以通过缩短从接收到SYN报文到确定这个报文无效并丢弃改连接的时间。<strong>缺点是</strong>仅在对方攻击频度不高的情况下生效</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -A FORWARD -p tcp –syn -m limit –limit 1/s -j ACCEPT<br>iptables -A INPUT -i eth0 -m limit –limit 1/sec –limit-burst 5 -j ACCEPT<br></code></pre></td></tr></table></figure>
+
+<p><strong>限制syn的请求速度</strong>：需要调节一个合理的速度值，不然会影响正常用户的请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -N syn-flood<br>iptables -A INPUT -p tcp –syn -j syn-flood<br>iptables -A syn-flood -p tcp –syn -m limit –limit 1/s –limit-burst 50 -j RETURN<br>iptables -A syn-flood -j REJECT<br></code></pre></td></tr></table></figure>
+
+<p><strong>设置SYN Cookie</strong>：给每一个请求连接的IP地址分配一个Cookie，如果短时间内连续受到某个IP的重复SYN报文，就认定是受到了攻击，以后从这个IP地址来的包会被丢弃。<strong>不足之处是</strong>依赖于对方使用真实的IP地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">sysctl -w net.ipv4.tcp_syncookies=1<br>sysctl -w net.ipv4.tcp_max_syn_backlog=3072<br>sysctl -w net.ipv4.tcp_synack_retries=0<br>sysctl -w net.ipv4.tcp_syn_retries=0<br>sysctl -w net.ipv4.conf.all.send_redirects=0<br>sysctl -w net.ipv4.conf.all.accept_redirects=0<br>sysctl -w net.ipv4.conf.all.forwarding=0<br>sysctl -w net.ipv4.icmp_echo_ignore_broadcasts=1<br></code></pre></td></tr></table></figure>
+
+<p><strong>防止ping命令</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">sysctl -w net.ipv4.icmp_echo_ignore_all=1<br></code></pre></td></tr></table></figure>
+
+<p><strong>阻止特定的IP范围</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -A INPUT -s 192.168.5.1/8 -i eth0 -j Drop<br></code></pre></td></tr></table></figure>
+
+<h4 id="iptabes-其他限制规则："><a href="#iptabes-其他限制规则：" class="headerlink" title="iptabes 其他限制规则："></a>iptabes 其他限制规则：</h4><p><strong>防御太多DOS攻击连接,可以允许外网每个IP最多15个初始连接,超过的丢弃，第二条是在第一条的基础上允许已经建立的连接和子连接允许</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -A INPUT -i eth0 -p tcp --syn -m connlimit --connlimit-above 15 --connlimit-mask 32 -j DROP  （--connlimit-mask  32为主机掩码，32即为一个主机ip，也可以是网段）<br>iptables -A INPUT -p tcp -m state --state ESTABLISHED,RELATED -j ACCEPT<br></code></pre></td></tr></table></figure>
+
+<p><strong>抵御DDOS ，允许外网最多24个初始连接,然后服务器每秒新增12个，访问太多超过的丢弃，第二条是允许服务器内部每秒1个初始连接进行转发</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -A INPUT  -p tcp --syn -m limit --limit 12/s --limit-burst 24 -j ACCEPT<br>iptables -A FORWARD -p tcp --syn -m limit --limit 1/s -j ACCEPT<br></code></pre></td></tr></table></figure>
+
+<p><strong>允许单个IP访问服务器的80端口的最大连接数为 20</strong> </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -I INPUT -p tcp --dport 80 -m connlimit  --connlimit-above 20 -j REJECT <br></code></pre></td></tr></table></figure>
+
+<p> <strong>对访问本机的22端口进行限制，每个ip每小时只能连接5次，超过的拒接，1小时候重新计算次数</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --name SSHPOOL --rcheck --seconds 3600 --hitcount 5 -j DROP<br><br>iptables -A INPUT -p tcp --dport 22 -m state --state NEW -m recent --name SSHPOOL --set -j ACCEPT<br></code></pre></td></tr></table></figure>
+
+<p> （上面recent规则只适用于默认规则为DROP中，如果要适用默认ACCEPT的规则，需要–set放前面 并且无-j ACCEPT）</p>
+<h3 id="iptables中的return"><a href="#iptables中的return" class="headerlink" title="iptables中的return"></a>iptables中的return</h3><ol>
+<li>从一个CHAIN里可以jump到另一个CHAIN, jump到的那个CHAIN是子CHAIN</li>
+<li>从子CHAIN return后，回到触发jump的那条规则，从那条规则的下一条继续匹配</li>
+<li>如果return不是在子CHAIN里，而是在main CHAIN，那么就以默认规则进行</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li>  <a target="_blank" rel="noopener" href="https://ulomo.github.io/2019/04/25/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E8%AE%BE%E7%BD%AE-%E8%AF%AD%E6%B3%95/">iptables防火墙设置</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Iptables_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">iptables (简体中文)</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://www.cnblogs.com/harlanzhang/p/6189491.html">浅谈iptables防SYN Flood攻击和CC攻击</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000012637947">iptables 之 REJECT 与 DROP 对比</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zsythink.net/archives/category/%e8%bf%90%e7%bb%b4%e7%9b%b8%e5%85%b3/iptables">iptables详解</a></li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

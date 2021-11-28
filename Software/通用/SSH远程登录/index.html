@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH%E7%AE%80%E4%BB%8B"><span class="toc-text">SSH简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BB%E5%BD%95%E6%96%B9%E5%BC%8F"><span class="toc-text">登录方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A3%E4%BB%A4%E7%99%BB%E5%BD%95"><span class="toc-text">口令登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E9%92%A5%E7%99%BB%E5%BD%95"><span class="toc-text">公钥登录</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		SSH远程登录
+	</div>
+	
+	<div class="page-date">
+		2019-02-14
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>SSH远程登录的两种方法</p>
+<span id="more"></span>
+
+<h2 id="SSH简介"><a href="#SSH简介" class="headerlink" title="SSH简介"></a>SSH简介</h2><p>Secure Shell(SSH) 是由 IETF(The Internet Engineering Task Force) 制定的建立在应用层基础上的安全网络协议。</p>
+<p>SSH提供两种级别的验证方法：</p>
+<ul>
+<li>基于口令的安全验证：通过帐号和口令登录到远程主机，传输数据加密<ul>
+<li>  优点：适合临时使用，简单方便</li>
+<li>  缺点：不能保证正在连接的服务器就是想连接的服务器，可能会有别的服务器在冒充真正的服务器，也就是受到“中间人攻击”</li>
+</ul>
+</li>
+<li>基于密钥的安全验证：通过设置的密钥进行登录验证，不需要在网络上传输口令<ul>
+<li>  优点：安全性更高，可以有效防止中间人攻击</li>
+</ul>
+</li>
+</ul>
+<h2 id="登录方式"><a href="#登录方式" class="headerlink" title="登录方式"></a>登录方式</h2><h3 id="口令登录"><a href="#口令登录" class="headerlink" title="口令登录"></a>口令登录</h3><p>命令格式：<code>ssh 用户名@服务器ip地址</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">//root用户登录<br>ssh root@192.168.0.116<br>//调用图像界面登录<br>ssh -X root@192.168.0.116<br>//客户机用户名与服务器要登录的用户名相同，可省略用户名<br>ssh 192.168.0.116<br>//指定登录端口<br>ssh -p 2333 root@192.168.0.116<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  SSH服务的默认端口号是22，登录时默认也是22</p>
+</blockquote>
+<h3 id="公钥登录"><a href="#公钥登录" class="headerlink" title="公钥登录"></a>公钥登录</h3><ol>
+<li> 客户机生成密钥对：<code>ssh-keygen -t rsa</code>，-t表示类型选项，这里采用rsa加密算法</li>
+<li> 将公钥复制到远程主机中：<code>ssh-copy-id root@192.168.0.116</code></li>
+</ol>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

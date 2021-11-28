@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#const-%E5%B8%B8%E9%87%8F%E4%BB%A3%E6%9B%BF-define"><span class="toc-text">const 常量代替 #define</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#the-enum-hack"><span class="toc-text">the enum hack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inline-%E5%87%BD%E6%95%B0%E4%BB%A3%E6%9B%BF-define"><span class="toc-text">inline 函数代替 #define</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Item2-尽量使用 const、enum、inline等替换
+	</div>
+	
+	<div class="page-date">
+		2021-01-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Effective C++">Effective C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>Item 2: 尽量使用 const、enum、inline替换 #define</p>
+<span id="more"></span>
+
+<p>这个 Item 改名为 用 <strong>编译器</strong> 取代 <strong>预处理器</strong> 也许更好一些，因为 #define 或许不被视为语言的一部分。这正是问题所在。</p>
+<h2 id="const-常量代替-define"><a href="#const-常量代替-define" class="headerlink" title="const 常量代替 #define"></a>const 常量代替 #define</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ASPECT_RATIO 1.653</span><br></code></pre></td></tr></table></figure>
+
+<p>记号名称<code>ASPECT_RATIO</code>在编译器开始处理代码之前就被预处理器替换掉了，导致编译器没看见<code>ASPECT_RATIO</code>这个记号名称，从而<code>ASPECT_RATIO</code>没进入记号表（symbol table）。</p>
+<p>当运用此变量出现编译错误时，错误信息只会提到<code>1.653</code>而不是<code>ASPECT_RATIO</code>，如果<code>ASPECT_RATIO</code>定义在一个非你所写的头文件内，则很难追踪。</p>
+<p>该问题也可能出现在记号式调试（symbolic debugger）中，原因相同：名称可能并未进入到记号表。</p>
+<p>解决办法是使用一个常量替换宏：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">double</span> AspectRatio = <span class="hljs-number">1.653</span>;<br></code></pre></td></tr></table></figure>
+
+<p>使用常量替换 #define 的好处：</p>
+<ul>
+<li>  语言常量一定会被编译器看到，因此能够进入记号表内</li>
+<li>  使用常量可能会比用 #define 使用更少的空间，原因是预处理器执行的是宏替换，可能导致目标码（object code）出现多份<code>1.653</code></li>
+</ul>
+<p>使用常量替换 #define 的两种特殊情况：</p>
+<ul>
+<li>  定义常量指针，若要指针所指内容不变则需要两次使用 const</li>
+<li>class专属常量：<ul>
+<li>  为了将常量的作用域限制于class内，必须让它成为class的一个成员</li>
+<li>  为了确保此常量只有一份实体，必须让它成为一个static成员</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//常量指针</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> authorName = <span class="hljs-string">&quot;Scott Meyers&quot;</span>;<br><br><span class="hljs-comment">//类专属常量</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GamePlayer</span> &#123;</span><br><span class="hljs-keyword">private</span>:<br>  <span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> NumTurns = <span class="hljs-number">5</span>;      <span class="hljs-comment">//常量声明</span><br>  <span class="hljs-keyword">int</span> scores[NumTurns];               <span class="hljs-comment">//常量使用</span><br>  ...<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>NumTurns 是 declaration（声明），而不是 definition（定义）</p>
+<p>通常，C++ 要求你为你使用的任何东西都提供一个定义，但是一个  static 整型（例如：int，char，bool）的类专属常量是一个例外。只要你不去取得它们的地址，你可以只声明并使用它，而不提供它的定义。如果你要取得一个类专属常量的地址，或者你使用的编译器在你没有取得地址时也要求定义的话（该行为不是正确的），就必须单独提供定义：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> GamePlayer::NumTurns;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  应该把它放在一个实现文件而非头文件中。</li>
+<li>  因为类专属常量的初始值在声明时已经提供初值，定义时不可以再设初值</li>
+<li>  定义时不需要 static 关键字。</li>
+</ul>
+<p>没有办法使用 #define 来创建一个类专属常量，因为 #defines 不考虑作用域。一旦一个宏被定义，它就在其后的编译过程有效（除非在某处被 #undef）。除此之外，#define 不能够提供任何封装性，没有 private #define。</p>
+<h2 id="the-enum-hack"><a href="#the-enum-hack" class="headerlink" title="the enum hack"></a>the enum hack</h2><p>旧式编译器也许不支持staitc成员在声明时获得初值，且“<code>in-class</code> 初值设定”也只允许对整数常量进行。</p>
+<p>编译器必须在编译期间知道数组大小，若编译器不允许“static整数型class常量”完成“in class初值设定”，则可改用“the enum hack”补偿做法。</p>
+<p>一个属于枚举类型的数值可充当 int 被使用。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GamePlayer</span> &#123;</span><br><span class="hljs-keyword">private</span>:<br>  <span class="hljs-class"><span class="hljs-keyword">enum</span> &#123;</span> NumTurns = <span class="hljs-number">5</span> &#125;;<span class="hljs-comment">//&quot;the enmu hack&quot; —— 令NumTurns成为5的一个记号名称</span><br>  <span class="hljs-keyword">int</span> scores[NumTurns];<br>  ...<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>enum hack 的行为某方面说比较像 #define 而不像 const ，事实上 enum hack 是模板元编程的基础技术。</p>
+<p>可以合法地取得一个 const 的地址，但不能合法地取得一个 enum 的地址，这正像同样不能合法地取得一个 #define 的地址。如果你不希望人们得到你的整数常量的指针或引用，枚举就是强制约束这一点的好方法。</p>
+<h2 id="inline-函数代替-define"><a href="#inline-函数代替-define" class="headerlink" title="inline 函数代替 #define"></a>inline 函数代替 #define</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//以 a 和 b 的较大值调用函数 f</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> CALL_WITH_MAX(a, b) f((a) &gt; (b) ? (a) : (b))</span><br></code></pre></td></tr></table></figure>
+
+<p>当写出这种宏时，必须为每一个实参加上小括号，否则可能在表达式调用这个宏时可能遇到麻烦。</p>
+<p>即使加上了小括号，仍有不可思议的事情发生：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> a = <span class="hljs-number">5</span>, b = <span class="hljs-number">0</span>;<br><span class="hljs-built_in">CALL_WITH_MAX</span>(++a, b); 		<span class="hljs-comment">//a 被累加了2次</span><br><span class="hljs-built_in">CALL_WITH_MAX</span>(++a, b+<span class="hljs-number">10</span>); 	<span class="hljs-comment">//a 被累加了1次</span><br></code></pre></td></tr></table></figure>
+
+<p>可以通过模板内联函数获得宏的效率以及一般函数的所有可预料行为和类型安全性：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;    </span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">callWithMax</span><span class="hljs-params">(<span class="hljs-keyword">const</span> T&amp; a, <span class="hljs-keyword">const</span> T&amp; b)</span> </span><br><span class="hljs-function"></span>&#123;                                       <br>    <span class="hljs-built_in">f</span>(a &gt; b ? a : b);                        <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>因为 callWithMax 是一个真正的函数，它遵循函数的作用域和访问规则。例如绝对可以写出一个类内的私有内联函数，而宏一般无法做到。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>  有了const、enum 和 inline ，对预处理器的需求降低了，但并非完全消除，#include、#ifdef/#ifndef 仍然很重要</p>
+</li>
+<li><p>对于简单常量，使用 const 代替宏定义，其优点：</p>
+<ul>
+<li>  const 常量能够出现在符号表中，方便调试</li>
+<li>  宏定义因为进行的宏替换，有时候会造成代码冗余，const 常量能够很好的避免这个问题</li>
+<li>  const 常量可以作为类专属成员，#define 则毫无封装性</li>
+<li>  整型的类专属常量可以在类中声明时直接初始化</li>
+</ul>
+</li>
+<li><p>  enum 也可以作为整型常量使用，并且无法取得其地址</p>
+</li>
+<li><p>  使用内联函数代替宏定义的函数将会在不损失效率的情况下降低发生错误的可能性</p>
+</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

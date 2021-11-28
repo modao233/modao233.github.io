@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#QDrag"><span class="toc-text">QDrag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E4%B8%AD%E7%9A%84%E7%AE%80%E5%8D%95%E6%8B%96%E6%94%BE%E7%A4%BA%E4%BE%8B"><span class="toc-text">PyQt5 中的简单拖放示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%96%E6%94%BE%E6%8C%89%E9%92%AE%E5%B0%8F%E9%83%A8%E4%BB%B6"><span class="toc-text">拖放按钮小部件</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		PyQt5 中的拖放
+	</div>
+	
+	<div class="page-date">
+		2020-08-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/PyQt5">PyQt5</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="http://zetcode.com/gui/pyqt5/dragdrop/">翻译自原文：Drag and drop in PyQt5</a></p>
+<p>翻译时间 2020 年 8 月 20 日</p>
+<span id="more"></span>
+
+<p>在 PyQt5 教程的这一部分中，我们将讨论拖放操作。</p>
+<p>在计算机图形用户界面中，拖放是单击虚拟对象并将其拖动到其他位置或其他虚拟对象的操作（或支持的操作）。通常，它可用于调用多种类型的操作，或在两个抽象对象之间创建各种类型的关联。</p>
+<p>拖放是图形用户界面的一部分。拖放操作使用户能够直观地执行复杂操作。</p>
+<p>通常，我们可以拖放两件事情：数据或一些图形对象。如果我们将图像从一个应用程序拖到另一个应用程序，我们会拖放二进制数据。如果我们在 Firefox 中拖动一个选项卡并将其移动到另一个位置，我们会拖放图形组件。</p>
+<h2 id="QDrag"><a href="#QDrag" class="headerlink" title="QDrag"></a>QDrag</h2><p><code>QDrag</code>为基于 MIME 的拖放数据传输提供支持。它处理拖放操作的绝大多数详细信息。传输的数据存放在<code>QMimeData</code>对象中。</p>
+<h2 id="PyQt5-中的简单拖放示例"><a href="#PyQt5-中的简单拖放示例" class="headerlink" title="PyQt5 中的简单拖放示例"></a>PyQt5 中的简单拖放示例</h2><p>在第一个示例中，我们使用<code>QLineEdit</code>和<code>QPushButton</code>。我们从行编辑部件拖动纯文本，并将其拖放到按钮小部件上，按钮的标签将更改。</p>
+<p>simple_dragdrop.py</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">import sys<br><br>from PyQt5.QtWidgets import (QPushButton, QWidget,<br>                             QLineEdit, QApplication)<br><br><br>class Button(QPushButton):<br><br>    def __init__(self, title, parent):<br>        super().__init__(title, parent)<br><br>        self.setAcceptDrops(True)<br><br>    def dragEnterEvent(self, e):<br><br>        if e.mimeData().hasFormat(&#x27;text/plain&#x27;):<br>            e.accept()<br>        else:<br>            e.ignore()<br><br>    def dropEvent(self, e):<br><br>        self.setText(e.mimeData().text())<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br><br>        edit = QLineEdit(&#x27;&#x27;, self)<br>        edit.setDragEnabled(True)<br>        edit.move(30, 30)<br><br>        button = Button(&quot;Button&quot;, self)<br>        button.move(30, 60)<br><br>        self.setWindowTitle(&#x27;Simple drag and drop&#x27;)<br>        self.setGeometry(300, 300, 300, 150)<br><br><br>def main():<br><br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    ex.show()<br>    app.exec_()<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>该示例提供了一个简单的拖放操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">class Button(QPushButton):<br><br>    def __init__(self, title, parent):<br>        super().__init__(title, parent)<br><br>        ...<br></code></pre></td></tr></table></figure>
+
+<p>为了在<code>QPushButton</code>部件上放置文本，我们必须重新实现一些方法。因此，我们创建自己的类<code>Button</code>，继承自<code>QPushButton</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.setAcceptDrops(True)<br></code></pre></td></tr></table></figure>
+
+<p>我们使用<code>setAcceptDrops()</code>启用部件的放置事件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def dragEnterEvent(self, e):<br><br>    if e.mimeData().hasFormat(&#x27;text/plain&#x27;):<br>        e.accept()<br>    else:<br>        e.ignore()<br></code></pre></td></tr></table></figure>
+
+<p>首先，我们重新实现<code>dragEnterEvent()</code>方法。我们会告知我们接受的被拖进来的数据类型。在我们的案例中，它是纯文本。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def dropEvent(self, e):<br><br>    self.setText(e.mimeData().text())<br></code></pre></td></tr></table></figure>
+
+<p>通过重新实现<code>dropEvent()</code>方法，我们定义了在<code>drop</code>事件中的操作。在这里，我们改变按钮部件的文本。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">edit = QLineEdit(&#x27;&#x27;, self)<br>edit.setDragEnabled(True)<br></code></pre></td></tr></table></figure>
+
+<p><code>QLineEdit</code>部件具有对拖动操作的内置支持。我们只需调用<code>setDragEnabled()</code>该方法来激活它。</p>
+<p><img src="/Drag-and-drop-in-PyQt5/image-20200820171620457.png" alt="image-20200820171620457"></p>
+<center>图：简单的拖放</center>
+
+<h2 id="拖放按钮小部件"><a href="#拖放按钮小部件" class="headerlink" title="拖放按钮小部件"></a>拖放按钮小部件</h2><p>下面的示例演示如何拖放按钮部件。</p>
+<p>drag_button.py</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">import sys<br><br>from PyQt5.QtCore import Qt, QMimeData<br>from PyQt5.QtGui import QDrag<br>from PyQt5.QtWidgets import QPushButton, QWidget, QApplication<br><br><br>class Button(QPushButton):<br><br>    def __init__(self, title, parent):<br>        super().__init__(title, parent)<br><br>    def mouseMoveEvent(self, e):<br><br>        if e.buttons() != Qt.RightButton:<br>            return<br><br>        mimeData = QMimeData()<br><br>        drag = QDrag(self)<br>        drag.setMimeData(mimeData)<br>        drag.setHotSpot(e.pos() - self.rect().topLeft())<br><br>        dropAction = drag.exec_(Qt.MoveAction)<br><br>    def mousePressEvent(self, e):<br><br>        super().mousePressEvent(e)<br><br>        if e.button() == Qt.LeftButton:<br>            print(&#x27;press&#x27;)<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br><br>        self.setAcceptDrops(True)<br><br>        self.button = Button(&#x27;Button&#x27;, self)<br>        self.button.move(100, 65)<br><br>        self.setWindowTitle(&#x27;Click or Move&#x27;)<br>        self.setGeometry(300, 300, 550, 450)<br><br>    def dragEnterEvent(self, e):<br>        e.accept()<br><br>    def dropEvent(self, e):<br>        position = e.pos()<br>        self.button.move(position)<br><br>        e.setDropAction(Qt.MoveAction)<br>        e.accept()<br><br><br>def main():<br>    <br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    ex.show()<br>    app.exec_()<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>在我们的代码示例中，我们有一个窗口。如果我们单击鼠标左键的按钮，则”press”消息将打印到控制台。通过右键单击并移动按钮，我们对按钮<code>QPushButton</code>部件执行拖放操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">class Button(QPushButton):<br><br>    def __init__(self, title, parent):<br>        super().__init__(title, parent)<br></code></pre></td></tr></table></figure>
+
+<p>我们创建一个派生自<code>QPushButton</code>的类<code>Button</code>。我们还重新实现<code>QPushButton</code>的两种方法：<code>mouseMoveEvent()</code>和<code>mousePressEvent()</code>。<code>mouseMoveEvent()</code>方法是拖放操作开始的位置。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">if e.buttons() != Qt.RightButton:<br>    return<br></code></pre></td></tr></table></figure>
+
+<p>在这里，我们决定，我们只能用鼠标右键执行拖放。左鼠标按钮保留用于单击该按钮。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">mimeData = QMimeData()<br><br>drag = QDrag(self)<br>drag.setMimeData(mimeData)<br>drag.setHotSpot(e.pos() - self.rect().topLeft())<br></code></pre></td></tr></table></figure>
+
+<p><code>QDrag</code>对象已创建。该类对基于 MIME 的拖放数据传输提供支持。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">dropAction = drag.exec_(Qt.MoveAction)<br></code></pre></td></tr></table></figure>
+
+<p>拖动对象的<code>exec_()</code>方法启动拖放操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def mousePressEvent(self, e):<br><br>    super().mousePressEvent(e)<br><br>    if e.button() == Qt.LeftButton:<br>        print(&#x27;press&#x27;)<br></code></pre></td></tr></table></figure>
+
+<p>如果我们左键单击鼠标按钮，我们会将”press”到控制台。请注意，我们也在父级上调用<code>mousePressEvent()</code>方法。否则，我们不会看到按下按钮。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">position = e.pos()<br>self.button.move(position)<br></code></pre></td></tr></table></figure>
+
+<p>在<code>dropEvent()</code>方法中，我们指定释放鼠标按钮并完成放置操作后发生的情况。在我们的案例中，我们找出当前鼠标指针的位置，并相应地移动按钮。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">e.setDropAction(Qt.MoveAction)<br>e.accept()<br></code></pre></td></tr></table></figure>
+
+<p>我们使用<code>setDropAction()</code>指定<code>drop</code>动作的类型。在我们的案例中，这是一个移动动作。</p>
+<p>PyQt5 教程的这一部分专门用于拖放操作。</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

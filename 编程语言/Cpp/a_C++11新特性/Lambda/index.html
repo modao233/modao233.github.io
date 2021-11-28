@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95%E7%A4%BA%E4%BE%8B"><span class="toc-text">用法示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E7%9B%B8%E5%85%B3"><span class="toc-text">记录相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lazy-evaluation-%EF%BC%88%E6%83%B0%E6%80%A7%E6%B1%82%E5%80%BC%EF%BC%89"><span class="toc-text">lazy evaluation （惰性求值）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91lambda%E5%86%99%E6%B3%95"><span class="toc-text">斐波那契lambda写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#auto%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-text">auto类型的参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lambda%E6%8D%95%E8%8E%B7"><span class="toc-text">lambda捕获</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		lambda 表达式
+	</div>
+	
+	<div class="page-date">
+		2020-12-07
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><strong>C++是唯一一个lambda用完所有括号的语言</strong></p>
+<span id="more"></span>
+
+<h2 id="用法示例"><a href="#用法示例" class="headerlink" title="用法示例"></a>用法示例</h2><p>lambda 表达式（通常称为 “ <em>lambda</em>“）是一种在被调用的位置或作为自变量传递给函数的位置定义匿名函数对象（<em>闭包</em>）的简便方法。 Lambda 通常用于封装传递给算法或异步方法的少量代码行。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;algorithm&gt;</span>   <span class="hljs-comment">// sort函数模板、for_each函数模板</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br> <br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><br><span class="hljs-comment">//[capture list](parameter list)-&gt; return type &#123;function body&#125;</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span> <span class="hljs-params">( )</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> f1 = []() &#123; cout &lt;&lt; <span class="hljs-string">&quot;lambda test&quot;</span> &lt;&lt; endl; &#125;;<br>    <span class="hljs-built_in">f1</span>();<br><br>    <span class="hljs-comment">//use paramter list</span><br>    <span class="hljs-keyword">auto</span> f2 = [](<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b) &#123; cout &lt;&lt; a &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span> &lt;&lt; b &lt;&lt; endl; &#125;;<br>    <span class="hljs-built_in">f2</span>(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>);<br><br>    <span class="hljs-comment">//use capture list</span><br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">auto</span> f3 = [a]() &#123; cout &lt;&lt; a &lt;&lt; endl; &#125;; <span class="hljs-comment">//值捕获</span><br>    <span class="hljs-built_in">f3</span>();<br>    <span class="hljs-keyword">auto</span> f4 = [&amp;a]() &#123; a++; cout &lt;&lt; a &lt;&lt; endl; &#125;;<span class="hljs-comment">//引用捕获</span><br>    <span class="hljs-built_in">f4</span>();<br>    <span class="hljs-keyword">auto</span> f5 = [&amp;]() &#123; a++; cout &lt;&lt; a &lt;&lt; endl; &#125;;<span class="hljs-comment">//隐式捕获引用</span><br>    <span class="hljs-built_in">f5</span>();<br>    <span class="hljs-keyword">auto</span> f6 = [=]() &#123; cout &lt;&lt; a &lt;&lt; endl; &#125;;<span class="hljs-comment">//隐式捕获值</span><br>    <span class="hljs-built_in">f6</span>();<br>    <span class="hljs-keyword">auto</span> f7 = [=]() <span class="hljs-keyword">mutable</span> &#123; a++; cout &lt;&lt; a &lt;&lt; endl; &#125;; <span class="hljs-comment">//隐式捕获值，可变lambda，捕获的值在函数体改变不影响外面变量</span><br>    <span class="hljs-built_in">f7</span>();<br>    cout &lt;&lt; <span class="hljs-string">&quot;after mutable&quot;</span> &lt;&lt; a &lt;&lt; endl;<br>    <span class="hljs-keyword">auto</span> f8 = [&amp;,a]() &#123; cout &lt;&lt; a &lt;&lt; endl; &#125;;<br>    <span class="hljs-built_in">f8</span>();<br>    <span class="hljs-keyword">auto</span> f9 = [=, &amp;a]() &#123; a++; cout &lt;&lt; a &lt;&lt; endl; &#125;;<br>    <span class="hljs-built_in">f9</span>();<br><br>    <span class="hljs-comment">//return type</span><br>    <span class="hljs-comment">//函数体包含除return之外的任何语句，编译器默认此lambda返回void，可手动声明返回类型</span><br>    vector&lt;<span class="hljs-keyword">int</span>&gt; v1 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">-2</span>, <span class="hljs-number">-4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">-6</span>&#125;;<br>    <span class="hljs-comment">//下面按照标准是不能通过编译的，但是编译器实现了类型推断（可能是实现了C++14）</span><br>    <span class="hljs-comment">//lambda返回auto，auto推断成int，推断成功的前提是返回的都是相同类型</span><br>    <span class="hljs-comment">//https://stackoverflow.com/questions/26692637/c11-restrictions-on-lambda-return-type</span><br>    <span class="hljs-built_in">transform</span>(v1.<span class="hljs-built_in">begin</span>(), v1.<span class="hljs-built_in">end</span>(), v1.<span class="hljs-built_in">begin</span>(), [](<span class="hljs-keyword">int</span> a) &#123;<span class="hljs-keyword">if</span>(a &gt; <span class="hljs-number">0</span>)<span class="hljs-keyword">return</span> a; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> -a; &#125;);<br>    <span class="hljs-comment">//标准用法：</span><br>    <span class="hljs-built_in">transform</span>(v1.<span class="hljs-built_in">begin</span>(), v1.<span class="hljs-built_in">end</span>(), v1.<span class="hljs-built_in">begin</span>(), [](<span class="hljs-keyword">int</span> a) -&gt; <span class="hljs-keyword">int</span> &#123;<span class="hljs-keyword">if</span>(a &gt; <span class="hljs-number">0</span>)<span class="hljs-keyword">return</span> a; <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> -a; &#125;);<br>    for_each(v1.<span class="hljs-built_in">begin</span>(), v1.<span class="hljs-built_in">end</span>(), [](<span class="hljs-keyword">int</span> a) &#123; cout &lt;&lt; a; &#125;);<br>    <span class="hljs-comment">//error :return type &#x27;char&#x27; must match previous return type &#x27;int&#x27; when lambda expression has unspecified explicit return type</span><br>    <span class="hljs-comment">//transform(v1.begin(), v1.end(), v1.begin(), [](int a) &#123;if(a &gt; 0)return a; else return &#x27;a&#x27;; &#125;);</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="记录相关"><a href="#记录相关" class="headerlink" title="记录相关"></a>记录相关</h2><h3 id="lazy-evaluation-（惰性求值）"><a href="#lazy-evaluation-（惰性求值）" class="headerlink" title="lazy evaluation （惰性求值）"></a><em>lazy evaluation</em> <em>（惰性求值）</em></h3><p>trpl：可以创建一个存放闭包和调用闭包结果的结构体。该结构体只会在需要结果时执行闭包，并会缓存结果值，这样余下的代码就不必再负责保存结果并可以复用该值。你可能见过这种模式被称 <em>memoization</em> 或 <em>lazy evaluation</em> <em>（惰性求值）</em>。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Lazy</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Lazy</span>() &#123;&#125;<br><br>    <span class="hljs-comment">//保存需要延迟执行的函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> Func, <span class="hljs-keyword">typename</span> ...Args&gt;</span><br><span class="hljs-function">    <span class="hljs-title">Lazy</span><span class="hljs-params">(Func&amp; f, Args&amp;&amp; ...args)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-comment">//两种写法</span><br>        <span class="hljs-comment">//m_function = [&amp;f, &amp;args...]() &#123; return f(std::forward&lt;Args&gt;(args)...); &#125;;</span><br>        m_function = std::<span class="hljs-built_in">bind</span>(f, std::forward&lt;Args&gt;(args)...);<br>    &#125;<br><br>    <span class="hljs-comment">//延迟执行，将结果保存起来</span><br>    <span class="hljs-function">T&amp; <span class="hljs-title">value</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">if</span> (!m_isCreate)<br>        &#123;<br>            m_result = <span class="hljs-built_in">m_function</span>();<br>            m_isCreate = <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> m_result;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    std::function&lt;<span class="hljs-built_in">T</span>()&gt; m_function;<br>    T                  m_result;<br>    <span class="hljs-keyword">bool</span>               m_isCreate = <span class="hljs-literal">false</span>;<br>&#125;;<br><br><span class="hljs-comment">//帮助函数 -&gt; 将要执行的函数以及函数的入参保存成Lazy对象</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Func</span>, <span class="hljs-title">typename</span> ...<span class="hljs-title">Args</span>&gt;</span><br>Lazy&lt;<span class="hljs-keyword">typename</span> std::result_of&lt;<span class="hljs-built_in">Func</span>(Args...)&gt;::type&gt;<br><span class="hljs-built_in">lazy</span>(Func&amp;&amp; f, Args&amp;&amp; ...args)<br>&#123;<br>    <span class="hljs-keyword">return</span> Lazy&lt;<span class="hljs-keyword">typename</span> std::result_of&lt;<span class="hljs-built_in">Func</span>(Args...)&gt;::type&gt;(<br>        std::forward&lt;Func&gt;(f), std::forward&lt;Args&gt;(args)...);<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Object</span>       //<span class="hljs-title">big</span> <span class="hljs-title">object</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Object</span>()<br>    &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;big object create&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">MyStruct</span>     //<span class="hljs-title">operation</span> <span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-built_in">MyStruct</span>()<br>    &#123;<br>        <span class="hljs-keyword">auto</span> fun = [] &#123;<span class="hljs-keyword">return</span> std::make_shared&lt;Object&gt;(); &#125;;<br>        m_obj = <span class="hljs-built_in">lazy</span>(fun);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">load</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        m_obj.<span class="hljs-built_in">value</span>();<br>    &#125;<br><br>    Lazy&lt;std::shared_ptr&lt;Object&gt;&gt; m_obj;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> x * <span class="hljs-number">20</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//测试大对象延迟加载</span><br>    MyStruct t;<br>    t.<span class="hljs-built_in">load</span>();<br><br>    <span class="hljs-comment">//测试普通函数加载延迟加载</span><br>    <span class="hljs-keyword">auto</span> lazyer1 = <span class="hljs-built_in">lazy</span>(foo, <span class="hljs-number">4</span>);<br>    cout &lt;&lt; lazyer1.<span class="hljs-built_in">value</span>() &lt;&lt; endl;<br><br>    <span class="hljs-comment">//测试无参数lamda</span><br>    <span class="hljs-keyword">auto</span> lazy_func2 = []() &#123;<span class="hljs-keyword">return</span> <span class="hljs-number">12</span>; &#125;;<br>    Lazy&lt;<span class="hljs-keyword">int</span>&gt; lazyer2 = <span class="hljs-built_in">lazy</span>(lazy_func2);<br>    cout &lt;&lt; lazyer2.<span class="hljs-built_in">value</span>() &lt;&lt; endl;<br><br>    <span class="hljs-comment">//测试有参数lamda    </span><br>    <span class="hljs-keyword">auto</span> lazy_func3 = [](<span class="hljs-keyword">int</span> x) &#123;<span class="hljs-keyword">return</span> <span class="hljs-number">10</span> + x; &#125;;<br>    Lazy&lt;<span class="hljs-keyword">int</span>&gt; lazyer3 = <span class="hljs-built_in">lazy</span>(lazy_func3, <span class="hljs-number">20</span>);<br>    cout &lt;&lt; lazyer3.<span class="hljs-built_in">value</span>() &lt;&lt; endl;<br><br>    <span class="hljs-comment">//测试有参数的function</span><br>    std::function&lt;<span class="hljs-built_in"><span class="hljs-keyword">int</span></span>(<span class="hljs-keyword">int</span>)&gt; f = [](<span class="hljs-keyword">int</span> x) &#123;<span class="hljs-keyword">return</span> x + <span class="hljs-number">3</span>; &#125;;<br>    <span class="hljs-keyword">auto</span> lazyer4 = <span class="hljs-built_in">lazy</span>(f, <span class="hljs-number">4</span>);<br>    cout &lt;&lt; lazyer4.<span class="hljs-built_in">value</span>() &lt;&lt; endl;<br><br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="斐波那契lambda写法"><a href="#斐波那契lambda写法" class="headerlink" title="斐波那契lambda写法"></a>斐波那契lambda写法</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//必须捕获引用，按值捕获会产生复制，如果按值捕获，就是”先有鸡还是先有蛋“问题了</span><br>    <span class="hljs-comment">//闭包存在的价值是立即捕获，对于lazy类型（惰性求值）也可用捕获引用</span><br>    std::function&lt;<span class="hljs-built_in"><span class="hljs-keyword">int</span></span>(<span class="hljs-keyword">int</span>)&gt; f = [&amp;f](<span class="hljs-keyword">int</span> i)&#123;<br>        <span class="hljs-keyword">if</span>(i &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> i;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">f</span>(i - <span class="hljs-number">1</span>) + <span class="hljs-built_in">f</span>(i - <span class="hljs-number">2</span>);<br>    &#125;;<br><br>    std::cout &lt;&lt; <span class="hljs-built_in">f</span>(<span class="hljs-number">10</span>) &lt;&lt; std::endl;<br><br>    std::cout &lt;&lt; [](<span class="hljs-keyword">int</span> i)&#123;<br>        <span class="hljs-keyword">auto</span> f = [&amp;](<span class="hljs-keyword">auto</span> f, <span class="hljs-keyword">int</span> n)&#123;<br>            <span class="hljs-keyword">if</span>(n &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> n;<br>            <span class="hljs-keyword">return</span> <span class="hljs-built_in">f</span>(f, n - <span class="hljs-number">1</span>) + <span class="hljs-built_in">f</span>(f, n - <span class="hljs-number">2</span>);<br>        &#125;;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">f</span>(f, i);<br>    &#125;(<span class="hljs-number">10</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="auto类型的参数"><a href="#auto类型的参数" class="headerlink" title="auto类型的参数"></a>auto类型的参数</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;functional&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//lambda对auto类型的参数可识别出其类型</span><br>    <span class="hljs-keyword">auto</span> fn = [](<span class="hljs-keyword">auto</span> val)&#123;<br>        std::cout &lt;&lt; <span class="hljs-built_in"><span class="hljs-keyword">typeid</span></span>(val).<span class="hljs-built_in">name</span>() &lt;&lt; std::endl;<br>    &#125;;<br><br>    <span class="hljs-built_in">fn</span>(<span class="hljs-number">123</span>);<br>    <span class="hljs-built_in">fn</span>(<span class="hljs-number">123.f</span>);<br>    <span class="hljs-built_in">fn</span>(<span class="hljs-string">&quot;123&quot;</span>);<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="lambda捕获"><a href="#lambda捕获" class="headerlink" title="lambda捕获"></a>lambda捕获</h2><p>声明捕获的几种形式：</p>
+<p>lambda-capture：</p>
+<ul>
+<li>capture-default：隐式捕获<ul>
+<li>  &amp;：捕获引用</li>
+<li>  =：捕获值</li>
+</ul>
+</li>
+<li>capture-list：显示声明捕获列表<ul>
+<li>  <strong>capture</strong>…opt</li>
+<li>  capture-list, capture…opt</li>
+</ul>
+</li>
+<li>  capture-default, capture-list：声明隐式捕获方式，并显示声明捕获列表，捕获列表的捕获方式同隐式捕获方式相反</li>
+</ul>
+<blockquote>
+<p>  capture：</p>
+<ul>
+<li>simple-capture<ul>
+<li>  identifier</li>
+<li>  &amp;identifier</li>
+<li>  this：捕获<code>this</code>意味着<strong>通过引用</strong>捕获<code>*this</code>（它是对象的左值），<strong>而不是通过值</strong>捕获指针</li>
+<li>  <code>*this</code>：捕获本地实体的值</li>
+</ul>
+</li>
+<li>init-capture<ul>
+<li>  identifier initializer</li>
+<li>  &amp;identifier initializer</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>参考：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16323032/why-cant-i-capture-this-by-reference-this-in-lambda">https://stackoverflow.com/questions/16323032/why-cant-i-capture-this-by-reference-this-in-lambda</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

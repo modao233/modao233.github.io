@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E7%BB%93%E6%9E%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">5.1 结构程序设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E4%BA%BA%E6%9C%BA%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1"><span class="toc-text">5.2 人机界面设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-1-%E8%AE%BE%E8%AE%A1%E9%97%AE%E9%A2%98"><span class="toc-text">5.2.1 设计问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-2-%E8%AE%BE%E8%AE%A1%E8%BF%87%E7%A8%8B"><span class="toc-text">5.2.2 设计过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-3-%E4%BA%BA%E6%9C%BA%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E6%8C%87%E5%8D%97"><span class="toc-text">5.2.3 人机界面设计指南</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E8%BF%87%E7%A8%8B%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-text">5.3 过程设计的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-1-%E7%A8%8B%E5%BA%8F%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-text">5.3.1 程序流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-2-%E7%9B%92%E5%9B%BE%EF%BC%88N-S%E5%9B%BE%EF%BC%89"><span class="toc-text">5.3.2 盒图（N-S图）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-3-PAD%E5%9B%BE"><span class="toc-text">5.3.3 PAD图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-4-%E5%88%A4%E5%AE%9A%E8%A1%A8"><span class="toc-text">5.3.4 判定表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-5-%E5%88%A4%E5%AE%9A%E6%A0%91"><span class="toc-text">5.3.5 判定树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-6-%E8%BF%87%E7%A8%8B%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80"><span class="toc-text">5.3.6 过程设计语言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E9%9D%A2%E5%90%91%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-text">5.4 面向数据结构的设计方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-1-Jackson%E5%9B%BE"><span class="toc-text">5.4.1 Jackson图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-2-%E6%94%B9%E8%BF%9B%E7%9A%84Jackson%E5%9B%BE"><span class="toc-text">5.4.2 改进的Jackson图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-3-Jackson%E6%96%B9%E6%B3%95"><span class="toc-text">5.4.3 Jackson方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5-%E7%A8%8B%E5%BA%8F%E5%A4%8D%E6%9D%82%E7%A8%8B%E5%BA%A6%E7%9A%84%E5%AE%9A%E9%87%8F%E5%BA%A6%E9%87%8F"><span class="toc-text">5.5 程序复杂程度的定量度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-1-McCabe%E6%96%B9%E6%B3%95"><span class="toc-text">5.5.1 McCabe方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%B5%81%E5%9B%BE"><span class="toc-text">1. 流图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E7%8E%AF%E5%BD%A2%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">2. 计算环形复杂度的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%8E%AF%E5%BD%A2%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E7%94%A8%E9%80%94"><span class="toc-text">3. 环形复杂度的用途</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-2-Halstead%E6%96%B9%E6%B3%95"><span class="toc-text">5.5.2 Halstead方法</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		第5章 详细设计
+	</div>
+	
+	<div class="page-date">
+		2020-04-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/软件工程导论">软件工程导论</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>第5章 详细设计</p>
+<span id="more"></span>
+
+<p><strong>详细设计阶段的根本目标：</strong>确定应该怎样具体地实现所要求的系统。经过这个阶段的设计工作，应该得出对目标系统的精确描述，从而在编码阶段可以把这个描述直接翻译成用某种程序设计语言书写的程序。</p>
+<p>结构程序设计技术是实现上述目标的关键技术，因此是详细设计的逻辑基础。 </p>
+<h2 id="5-1-结构程序设计"><a href="#5-1-结构程序设计" class="headerlink" title="5.1 结构程序设计"></a>5.1 结构程序设计</h2><p><strong>经典定义：</strong>如果一个程序的代码块仅仅通过顺序、选择和循环这3种基本控制结构进行连接，并且每个代码块只有一个入口和一个出口，则称这个程序是结构化的。</p>
+<p><strong>更全面定义：</strong>结构程序设计是尽可能少用GOTO语句的程序设计方法。最好仅在检测出错误时才使用GOTO语句，而且应该总是使用前向GOTO语句。</p>
+<p>为了实际使用方便起见，常常还允许使用DO-UNTIL和DO-CASE两种控制结构。</p>
+<p>有时需要立即从循环(甚至嵌套的循环)中转移出来，允许使用LEAVE(或BREAK)结构。LEAVE或BREAK结构实质上是受限制的GOTO语句，用于转移到循环结构后面。 </p>
+<p><strong>经典的结构程序设计：</strong>只允许使用顺序、IF-THEN-ELSE型分支和DO-WHILE型循环这3种基本控制结构；</p>
+<p><strong>扩展的结构程序设计：</strong>如果除了上述3种基本控制结构之外，还允许使用DO-CASE型多分支结构和DO-UNTIL型循环结构；</p>
+<p><strong>修正的结构程序设计：</strong>再加上允许使用LEAVE(或BREAK)结构。 </p>
+<h2 id="5-2-人机界面设计"><a href="#5-2-人机界面设计" class="headerlink" title="5.2 人机界面设计"></a>5.2 人机界面设计</h2><p>人机界面设计是接口设计的重要组成部分。对于交互式系统来说，人机界面设计和数据设计、体系结构设计及过程设计一样重要。</p>
+<p>人机界面的设计质量，直接影响用户对软件产品的评价，从而影响软件产品的竞争力和寿命，必须对人机界面设计给予足够重视。 </p>
+<p><strong>三条“黄金规则”：</strong> </p>
+<ol>
+<li><p> 置用户于控制之下。</p>
+</li>
+<li><p> 减少用户记忆负担。</p>
+</li>
+<li><p> 保持界面一致。</p>
+</li>
+</ol>
+<h3 id="5-2-1-设计问题"><a href="#5-2-1-设计问题" class="headerlink" title="5.2.1 设计问题"></a>5.2.1 设计问题</h3><p>在设计人机界面的过程中，几乎总会遇到下述4个问题：</p>
+<p><strong>1. 系统响应时间</strong></p>
+<p>系统响应时间指从用户完成某个控制动作，到软件给出预期的响应之间的这段时间。系统响应时间有两个重要属性：长度和易变性。</p>
+<p><strong>长度：</strong>如果系统响应时间过长，用户就会感到紧张和沮丧；系统响应时间过短会迫使用户加快操作节奏，从而可能会犯错误。</p>
+<p><strong>易变性：</strong>指系统响应时间相对于平均响应时间的偏差，即使系统响应时间较长，响应时间易变性低也有助于用户建立起稳定的工作节奏。</p>
+<p><strong>2. 用户帮助设施</strong></p>
+<p>大多数现代软件都提供联机帮助设施，用户无须离开用户界面就能解决自己的问题。常见的帮助设施可分为集成的和附加的两类。</p>
+<p>集成的帮助设施设计在软件里面，它对用户工作内容是敏感的，用户可以从与刚刚完成的操作有关的主题中选择一个请求帮助。</p>
+<p>附加的帮助设施是在系统建成后再添加到软件中的，它实际上是一种查询能力有限的联机用户手册。</p>
+<p>集成的帮助设施优于附加的帮助设施。</p>
+<p><strong>3. 出错信息处理</strong></p>
+<p>出错信息和警告信息，是出现问题时交互式系统给出的“坏消息”。应该具有下述属性：</p>
+<ol>
+<li> 信息应该用用户可以理解的术语描述问题。</li>
+<li> 信息应该提供有助于从错误中恢复的建设性意见。</li>
+<li> 信息应该指出错误可能导致哪些负面后果(例如，破坏数据文件)，以便用户检查是否出现了这些问题，并在确实出现问题时及时解决。</li>
+<li> 信息应该伴随着听觉上或视觉上的提示，例如，在显示信息时同时发出警告铃声，或者信息用闪烁方式显示，或者信息用明显表示出错的颜色显示。</li>
+<li> 信息不能带有指责色彩，也就是说，不能责怪用户。</li>
+</ol>
+<p>当确实出现了问题的时候，有效的出错信息能提高交互式系统的质量，减轻用户的挫折感。</p>
+<p><strong>4. 命令交互</strong></p>
+<p>多数情况下，用户既可以从菜单中选择软件功能，也可以通过键盘命令序列调用软件功能。</p>
+<p>在理想的情况下，所有应用软件都有一致的命令使用方法。 </p>
+<h3 id="5-2-2-设计过程"><a href="#5-2-2-设计过程" class="headerlink" title="5.2.2 设计过程"></a>5.2.2 设计过程</h3><p>用户界面设计是一个迭代的过程，也就是说，通常先创建设计模型，再用原型实现这个设计模型，并由用户试用和评估，然后根据用户意见进行修改。</p>
+<p>为了支持上述迭代过程，各种用于界面设计和原型开发的软件工具应运而生。这些工具被称为用户界面工具箱或用户界面开发系统。</p>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/1.png" alt="img"></p>
+<p><strong>界面设计评估周期简述：</strong>完成初步设计之后就创建第一级原型；用户试用并评估该原型，直接向设计者表述对界面的评价；设计者根据用户意见修改设计并实现下一级原型。上述评估过程持续进行下去，直到用户感到满意，不需要再修改界面设计时为止。</p>
+<h3 id="5-2-3-人机界面设计指南"><a href="#5-2-3-人机界面设计指南" class="headerlink" title="5.2.3 人机界面设计指南"></a>5.2.3 人机界面设计指南</h3><ol>
+<li>一般交互指南<ol>
+<li> 保持一致性。</li>
+<li> 提供有意义的反馈</li>
+<li> 在执行有较大破坏性的动作之前要求用户确认</li>
+<li> 允许取消绝大多数操作</li>
+<li> 减少在两次操作之间必须记忆的信息量</li>
+<li> 提高对话、移动和思考的效率</li>
+<li> 允许犯错误</li>
+<li> 按功能对动作分类，并据此设计屏幕布局</li>
+<li> 提供对用户工作内容敏感的帮助设施</li>
+<li> 用简单动词或动词短语作为命名</li>
+</ol>
+</li>
+<li>信息显示指南<ol>
+<li> 只显示与当前工作内容有关的信息</li>
+<li> 不要用数据淹没用户，应该用便于用户迅速吸取信息的方式来表示数据</li>
+<li> 使用一致的标志、标准的缩写和可预知的颜色</li>
+<li> 允许用户保持可视化的语境</li>
+<li> 产生有意义的出错信息</li>
+<li> 使用大小写、缩进和文本分组以帮助理解</li>
+<li> 使用窗口分隔不同类型的信息</li>
+<li> 使用“模拟”显示方式表示信息，以使信息更容易被用户提取。</li>
+<li> 高效率地使用显示屏。</li>
+</ol>
+</li>
+<li>数据输入指南<ol>
+<li> 尽量减少用户的输入动作。</li>
+<li> 保持信息显示和数据输入之间的一致性。</li>
+<li> 允许用户自定义输入。</li>
+<li> 交互应该是灵活的，并且可调整成用户最喜欢的输入方式。</li>
+<li> 使在当前动作语境中不适用的命令不起作用。</li>
+<li> 让用户控制交互流。</li>
+<li> 对所有输入动作都提供帮助。</li>
+<li> 消除冗余的输入。</li>
+</ol>
+</li>
+<li>颜色使用指南<ol>
+<li> 一个窗口中不应该出现5种以上不同色系的颜色。一般的，尽量少用不同的颜色总是好的。</li>
+<li> 如果一个图表中仅包含几种颜色，背景应该选用其中一种颜色的补色：如果一幅图中包含许多颜色，背景应该选用一种中性的颜色，如灰色。</li>
+<li> 如果两个相邻的颜色不是特别和谐，可以用细的黑色边框将它们分开。</li>
+<li> 背景和字体颜色应选用对比度强的颜色。</li>
+<li> 颜色的应用要适度，装饰性的使用服从功能性的使用。</li>
+<li> 区域的颜色实际上能够影响他的观察尺寸。</li>
+<li> 使用高饱和度(亮)颜色的大区域是不明智的。</li>
+<li> 红色和蓝色具有最强的深度不一致的效果，红色看起来近，蓝色看起来远。</li>
+</ol>
+</li>
+</ol>
+<h2 id="5-3-过程设计的工具"><a href="#5-3-过程设计的工具" class="headerlink" title="5.3 过程设计的工具"></a>5.3 过程设计的工具</h2><p><strong>过程设计的任务：</strong>提供对设计无歧义的描述，指明控制流程、处理功能、数据组织以及其他方面的实现细节，从而在编码阶段能把对设计的描述直接翻译成程序代码。</p>
+<h3 id="5-3-1-程序流程图"><a href="#5-3-1-程序流程图" class="headerlink" title="5.3.1 程序流程图"></a>5.3.1 程序流程图</h3><p>程序流程图又称为程序框图，它是历史最悠久、使用最广泛的描述过程设计的方法，然而它也是用得最混乱的一种方法。</p>
+<p>程序流程图历史悠久，至今仍在广泛使用着。</p>
+<p><strong>主要优点：</strong>是对控制流程的描绘很直观，便于初学者掌握。</p>
+<p><strong>主要缺点：</strong></p>
+<ol>
+<li><p> 程序流程图本质上不是逐步求精的好工具，它诱使程序员过早地考虑程序的控制流程，而不去考虑程序的全局结构。</p>
+</li>
+<li><p> 程序流程图中用箭头代表控制流，因此程序员不受任何约束，可以完全不顾结构程序设计的精神，随意转移控制。</p>
+</li>
+<li><p> 程序流程图不易表示数据结构。 </p>
+</li>
+</ol>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/2.png" alt="img"></p>
+<h3 id="5-3-2-盒图（N-S图）"><a href="#5-3-2-盒图（N-S图）" class="headerlink" title="5.3.2 盒图（N-S图）"></a>5.3.2 盒图（N-S图）</h3><p>出于要有一种不允许违背结构程序设计精神的图形工具的考虑，Nassi和Shneiderman提出了盒图，又称为N-S图。盒图没有箭头，因此不允许随意转移控制。坚持使用盒图作为详细设计的工具，可以使程序员逐步养成用结构化的方式思考问题和解决问题的习惯。</p>
+<p><strong>盒图具有下述特点：</strong></p>
+<ol>
+<li><p> 功能域明确。</p>
+</li>
+<li><p> 不可能任意转移控制。</p>
+</li>
+<li><p> 很容易确定局部和全程数据的作用域。</p>
+</li>
+<li><p> 很容易表现嵌套关系，也可以表示模块的层次结构。</p>
+</li>
+</ol>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/3.png" alt="img"></p>
+<h3 id="5-3-3-PAD图"><a href="#5-3-3-PAD图" class="headerlink" title="5.3.3 PAD图"></a>5.3.3 PAD图</h3><p>PAD是问题分析图(problem analysis diagram)的英文缩写。它用二维树形结构的图来表示程序的控制流，将这种图翻译成程序代码比较容易。</p>
+<p><strong>PAD图的主要优点如下：</strong></p>
+<ol>
+<li> 使用表示结构化控制结构的PAD符号设计出来的程序必然是结构化程序。</li>
+<li> PAD图所描绘的程序结构十分清晰。</li>
+<li> PAD图表现程序逻辑易读、易懂、易记。</li>
+<li> 容易将PAD图转换成高级语言源程序，这种转换可用软件工具自动完成。</li>
+<li> 即可表示程序逻辑，也可描绘数据结构。</li>
+<li> PAD图的符号支持自顶向下、逐步求精方法的使用。</li>
+</ol>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/4.png" alt="img"></p>
+<h3 id="5-3-4-判定表"><a href="#5-3-4-判定表" class="headerlink" title="5.3.4 判定表"></a>5.3.4 判定表</h3><p>当算法中包含多重嵌套的条件选择时，用程序流程图、盒图、PAD图或后面即将介绍的过程设计语言(PDL)都不易清楚地描述。</p>
+<p>判定表却能够清晰地表示复杂的条件组合与应做的动作之间的对应关系。 </p>
+<p><strong>一张判定表由4部分组成：</strong></p>
+<ol>
+<li><p> 左上部列出所有条件；</p>
+</li>
+<li><p> 左下部是所有可能做的动作；</p>
+</li>
+<li><p> 右上部是表示各种条件组合的一个矩阵；</p>
+</li>
+<li><p> 右下部是和每种条件组合相对应的动作。 </p>
+</li>
+</ol>
+<p><strong>判定表的优点：</strong>能清晰地表示复杂的条件组合与应做的动作之间的对应关系。</p>
+<p><strong>判定表的缺点：</strong>     </p>
+<ol>
+<li> 判定表的含义不是一眼就能看出来的，初次接触这种工具的人理解它需要有一个简短的学习过程。</li>
+<li> 当数据元素的值多于两个时，判定表的简洁程度也将下降。</li>
+</ol>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/5.png" alt="img"></p>
+<h3 id="5-3-5-判定树"><a href="#5-3-5-判定树" class="headerlink" title="5.3.5 判定树"></a>5.3.5 判定树</h3><p>判定树是判定表的变种，也能清晰地表示复杂的条件组合与应做的动作之间的对应关系。</p>
+<p>多年来判定树一直受到人们的重视，是一种比较常用的系统分析和设计的工具。</p>
+<p><strong>判定树的优点：</strong>它的形式简单，一眼就可以看出其含义，因此易于掌握和使用。</p>
+<p><strong>判定树的缺点：</strong></p>
+<ol>
+<li> 简洁性不如判定表，数据元素的同一个值往往要重复写多遍，而且越接近树的叶端重复次数越多。</li>
+<li> 画判定树时分枝的次序可能对最终画出的判定树的简洁程度有较大影响。 </li>
+</ol>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/6.png" alt="img"></p>
+<h3 id="5-3-6-过程设计语言"><a href="#5-3-6-过程设计语言" class="headerlink" title="5.3.6 过程设计语言"></a>5.3.6 过程设计语言</h3><p>过程设计语言(PDL)也称为伪码，它是用正文形式表示数据和处理过程的设计工具。</p>
+<p>PDL具有严格的关键字外部语法，用于定义控制结构和数据结构；另一方面，PDL表示实际操作和条件的内部语法通常又是灵活自由的，可以适应各种工程项目的需要。</p>
+<p>PDL是一种“混杂”语言，它使用一种语言的词汇，同时却使用另一种语言的语法。 </p>
+<p><strong>伪代码的基本控制结构：</strong></p>
+<ol>
+<li> 简单陈述句结构：避免复合语句。</li>
+<li> 判定结构：IF_THEN_ELSE或CASE_OF结构。</li>
+<li> 选择结构：WHILE_DO或REPEAT_UNTIL结构。</li>
+</ol>
+<p><strong>PDL的特点：</strong></p>
+<ul>
+<li><p>  关键字的固定语法，它提供了结构化控制结构、数据说明和模块化的特点。</p>
+</li>
+<li><p>  自然语言的自由语法，它描述处理特点。</p>
+</li>
+<li><p>  数据说明的手段。应该既包括简单的数据结构，又包括复杂的数据结构。</p>
+</li>
+<li><p>  模块定义和调用的技术，应该提供各种接口描述模式。 </p>
+</li>
+</ul>
+<p><strong>PDL的优点：</strong></p>
+<ol>
+<li> 可以作为注释直接插在源程序中间。有助于保持文档和程序的一致性，提高了文档的质量。</li>
+<li> 可以使用普通的正文编辑程序或文字处理系统，很方便地完成PDL的书写和编辑工作。</li>
+<li> 已经有自动处理程序存在，而且可以自动由PDL生成程序代码。</li>
+</ol>
+<p><strong>PDL的缺点：</strong>不如图形工具形象直观，描述复杂的条件组合与动作间的对应关系时，不如判定表清晰简单。 </p>
+<h2 id="5-4-面向数据结构的设计方法"><a href="#5-4-面向数据结构的设计方法" class="headerlink" title="5.4 面向数据结构的设计方法"></a>5.4 面向数据结构的设计方法</h2><p><strong>数据结构既影响程序的结构又影响程序的处理过程：</strong></p>
+<ul>
+<li>  重复出现的数据通常由具有循环控制结构的程序来处理</li>
+<li>  选择数据要用带有分支控制结构的程序来处理</li>
+<li>  层次的数据组织通常和使用这些数据的程序的层次结构十分相似</li>
+</ul>
+<p>面向数据结构的设计方法的<strong>最终目标</strong>是：得出对程序处理过程的描述。</p>
+<h3 id="5-4-1-Jackson图"><a href="#5-4-1-Jackson图" class="headerlink" title="5.4.1 Jackson图"></a>5.4.1 Jackson图</h3><p><strong>数据结构中数据元素彼此间的逻辑关系：</strong></p>
+<ul>
+<li><p>  顺序结构：顺序结构的数据由一个或多个数据元素组成，每个元素按确定次序出现一次。</p>
+</li>
+<li><p>  选择结构：选择结构的数据包含两个或多个数据元素，每次使用这个数据时按一定条件从这些数据元素中选择一个。</p>
+</li>
+<li><p>  重复结构：重复结构的数据，根据使用时的条件由一个数据元素出现零次或多次构成。 </p>
+</li>
+</ul>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/7.png" alt="img"></p>
+<p><strong>Jackson图的优点：</strong></p>
+<ul>
+<li>  便于表示层次结构，而且是对结构进行自顶向下分解的有力工具；</li>
+<li>  形象直观可读性好；</li>
+<li>  既能表示数据结构也能表示程序结构。</li>
+</ul>
+<p><strong>Jackson图的缺点：</strong></p>
+<ul>
+<li><p>  表示选择或重复结构时，选择条件或循环结束条件不能直接在图上表示出来，影响了图的表达能力，也不易直接把图翻译成程序；</p>
+</li>
+<li><p>  框间连线为斜线，不易在行式打印机上输出。</p>
+</li>
+</ul>
+<h3 id="5-4-2-改进的Jackson图"><a href="#5-4-2-改进的Jackson图" class="headerlink" title="5.4.2 改进的Jackson图"></a>5.4.2 改进的Jackson图</h3><p><img src="/%E7%AC%AC5%E7%AB%A0/8.png" alt="img"></p>
+<p><strong>Jackson图和层次图的区别：</strong></p>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/9.png" alt="img"></p>
+<h3 id="5-4-3-Jackson方法"><a href="#5-4-3-Jackson方法" class="headerlink" title="5.4.3 Jackson方法"></a>5.4.3 Jackson方法</h3><p>Jackson结构程序设计方法由5个步骤组成：</p>
+<ol>
+<li> 分析并确定输入数据和输出数据的逻辑结构，用Jackson图描绘数据结构。</li>
+<li> 找出输入数据结构和输出数据结构中有对应关系的数据单元。所谓有对应关系是指有直接的因果关系，在程序中可以同时处理的数据单元(对于重复出现的数据单元必须重复的次序和次数都相同才可能有对应关系)。 </li>
+<li>用下述规则从描绘数据结构的Jackson图导出描绘程序结构的Jackson图：<ol>
+<li> 第一，为每对有对应关系的数据单元，按照它们在数据结构图中的层次在程序结构图的相应层次画一个处理框(层次不同时与图中层次低的那个对应)；</li>
+<li> 第二，根据输入数据结构中剩余的每个数据单元所处的层次，在程序结构图的相应层次分别为它们画上对应的处理框；</li>
+<li> 第三，根据输出数据结构中剩余的每个数据单元所处的层次，在程序结构图的相应层次分别为它们画上对应的处理框。</li>
+<li> 改进的Jackson图规定在构成顺序结构的元素中不能有重复出现或选择出现的元素，因此可能需要增加中间层次的处理框。 </li>
+</ol>
+</li>
+<li> 列出所有操作和条件(包括分支条件和循环结束条件)，并且把它们分配到程序结构图的适当位置。</li>
+<li> 用伪码表示程序。</li>
+</ol>
+<h2 id="5-5-程序复杂程度的定量度量"><a href="#5-5-程序复杂程度的定量度量" class="headerlink" title="5.5 程序复杂程度的定量度量"></a>5.5 程序复杂程度的定量度量</h2><p>详细设计阶段设计出的模块质量可以使用软件设计的基本原理和概念进一步仔细衡量它们的质量。但是，这种衡量毕竟只能是定性的，人们希望能进一步定量度量软件的性质。</p>
+<p><strong>定量度量程序复杂程度的作用：</strong></p>
+<ul>
+<li>  把程序的复杂程度乘以适当常数即可估算出软件中错误的数量以及软件开发需要用的工作量；</li>
+<li>  定量度量的结果可以用来比较两个不同的设计或两个不同算法的优劣；</li>
+<li>  程序的定量的复杂程度可以作为模块规模的精确限度。 </li>
+</ul>
+<h3 id="5-5-1-McCabe方法"><a href="#5-5-1-McCabe方法" class="headerlink" title="5.5.1 McCabe方法"></a>5.5.1 McCabe方法</h3><h4 id="1-流图"><a href="#1-流图" class="headerlink" title="1. 流图"></a>1. 流图</h4><p>McCabe方法根据程序控制流的复杂程度定量度量程序的复杂程度，这样度量出的结果称为程序的环形复杂度。</p>
+<p>所谓流图实质上是“退化了的”程序流程图，它仅仅描绘程序的控制流程，完全不表现对数据的具体操作以及分支或循环的具体条件。 </p>
+<p><strong>流图的表示：</strong></p>
+<ul>
+<li><p>  <strong>结点：</strong>用圆表示，一个圆代表一条或多条语句。</p>
+</li>
+<li><p>  <strong>边：</strong>箭头线称为边，代表控制流。在流图中一条边必须终止于一个结点，即使这个结点并不代表任何语句。</p>
+</li>
+<li><p>  <strong>区域：</strong>由边和结点围成的面积称为区域，包括图外部未被围起来的区域。 </p>
+</li>
+</ul>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/10.png" alt="img"></p>
+<p><strong>映射方法：</strong>任何方法表示的过程设计结果，都可以翻译成流图。</p>
+<p><strong>对于顺序结构，</strong>一个顺序处理序列和下一个选择或循环的开始语句，可以映射成流图中的一个结点。</p>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/11.png" alt="img"></p>
+<p><strong>对于选择结构，</strong>开始语句映射成一个结点；两条分支至少各映射成一个结点；结束映射成一个结点。</p>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/12.png" alt="img"></p>
+<p><strong>对于循环结构，</strong>开始和结束语句各映射成一个结点。</p>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/13.png" alt="img"></p>
+<p>当过程设计中包含复合条件时，应该把复合条件分解为若干个简单条件，每个简单条件对应流图中一个结点。</p>
+<p>所谓复合条件，就是在条件中包含了一个或多个布尔运算符(逻辑OR，AND，NAND，NOR)。</p>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/14.png" alt="img"></p>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/15.png" alt="img"></p>
+<h4 id="2-计算环形复杂度的方法"><a href="#2-计算环形复杂度的方法" class="headerlink" title="2. 计算环形复杂度的方法"></a>2. 计算环形复杂度的方法</h4><p>环形复杂度定量度量程序的逻辑复杂度。有了描绘程序控制流的流图之后，可以用下述3种方法中的任何一种来计算环形复杂度V(G)。</p>
+<ul>
+<li>  V(G)=流图中的区域数</li>
+<li>  V(G)=E-N+2（其中E是流图中的边数，N是结点数）</li>
+<li>  V(G)=P+1（其中P是流图中判定结点的数目 ）</li>
+</ul>
+<p><img src="/%E7%AC%AC5%E7%AB%A0/16.png" alt="img"></p>
+<h4 id="3-环形复杂度的用途"><a href="#3-环形复杂度的用途" class="headerlink" title="3. 环形复杂度的用途"></a>3. 环形复杂度的用途</h4><ul>
+<li>  定量度量程序内分支数或循环个数，即程序结构的复杂程度；</li>
+<li>  定量度量测试难度；</li>
+<li>  能对软件最终的可靠性给出某种预测。</li>
+<li>  实践表明，模块规模以V(G)≤10为宜。 </li>
+</ul>
+<h3 id="5-5-2-Halstead方法"><a href="#5-5-2-Halstead方法" class="headerlink" title="5.5.2 Halstead方法"></a>5.5.2 Halstead方法</h3><p>Halstead方法根据程序中运算符和操作数的总数来度量程序的复杂程度。</p>
+<p>令N1为程序中运算符出现的总次数，N2为操作数出现的总次数，程序长度N定义为：</p>
+<p>N=N1+N2</p>
+<p>程序中使用的不同运算符(包括关键字)的个数n1，以及不同操作数(变量和常数)的个数n2。预测程序长度的公式如下：</p>
+<p>H = n1 log2n1 + n2 log2n2</p>
+<p>多次验证都表明，预测的长度H与实际的长度N非常接近</p>
+<p>预测程序中包含错误的个数的公式如下：</p>
+<p>E = N log2 (n1+n2)/3000 </p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

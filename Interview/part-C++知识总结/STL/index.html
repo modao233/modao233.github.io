@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#STL"><span class="toc-text">STL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#STL-%E7%BB%84%E6%88%90"><span class="toc-text">STL 组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#STL-%E5%AE%B9%E5%99%A8"><span class="toc-text">STL 容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8"><span class="toc-text">顺序容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8"><span class="toc-text">关联容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%BA%8F%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8"><span class="toc-text">无序关联容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8"><span class="toc-text">容器适配器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#span"><span class="toc-text">span</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#STL-%E7%A4%BA%E4%BE%8B"><span class="toc-text">STL 示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#std-array"><span class="toc-text">std::array</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#std-vector"><span class="toc-text">std::vector</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#STL-%E7%B4%A2%E5%BC%95"><span class="toc-text">STL 索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83"><span class="toc-text">比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#array"><span class="toc-text">array</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vector"><span class="toc-text">vector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deque"><span class="toc-text">deque</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forward-list"><span class="toc-text">forward_list</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#list"><span class="toc-text">list</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set"><span class="toc-text">set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#multiset"><span class="toc-text">multiset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map"><span class="toc-text">map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#multimap"><span class="toc-text">multimap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unordered-set"><span class="toc-text">unordered_set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unordered-multiset"><span class="toc-text">unordered_multiset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unordered-map"><span class="toc-text">unordered_map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unordered-multimap"><span class="toc-text">unordered_multimap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stack"><span class="toc-text">stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#queue"><span class="toc-text">queue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#priority-queue"><span class="toc-text">priority_queue</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#STL-%E7%AE%97%E6%B3%95"><span class="toc-text">STL 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83"><span class="toc-text">其它</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tuple"><span class="toc-text">tuple</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tuple-tuple"><span class="toc-text">tuple::tuple</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pair"><span class="toc-text">pair</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pair-pair"><span class="toc-text">pair::pair</span></a></li></ol></li></ol></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		
+	</div>
+	
+	<div class="page-date">
+		2021-11-07
+	</div>
+	
+	<div class="category-area">
+		
+			
+		
+	</div>
+	
+	<div class="content">
+		<h1 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h1><p><a target="_blank" rel="noopener" href="https://github.com/huihut/interview/blob/master/STL/STL.md">https://github.com/huihut/interview/blob/master/STL/STL.md</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/huihut/interview/tree/master/STL">https://github.com/huihut/interview/tree/master/STL</a></p>
+<h2 id="STL-组成"><a href="#STL-组成" class="headerlink" title="STL 组成"></a>STL 组成</h2><ul>
+<li>  容器（containers）</li>
+<li>  算法（algorithms）</li>
+<li>  迭代器（iterators）</li>
+<li>  仿函数（functors）</li>
+<li>  配接器（adapters）</li>
+<li>  空间配置器（allocator）</li>
+</ul>
+<h2 id="STL-容器"><a href="#STL-容器" class="headerlink" title="STL 容器"></a>STL 容器</h2><p>总体分类：</p>
+<ul>
+<li>  序列式容器（sequence containers）：元素都是可以排序的，但不一定是排序好的</li>
+<li>  关联式容器（associattive containers）</li>
+</ul>
+<h3 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h3><p>顺序容器实现能按顺序访问的数据结构。</p>
+<ul>
+<li><p>array(C++11)：静态的连续数组 (类模板)</p>
+</li>
+<li><p>vector：动态的连续数组 (类模板)</p>
+</li>
+<li><p>deque：双端队列 (类模板)</p>
+</li>
+<li><p>forward_list(C++11 起)：单链表 (类模板)</p>
+</li>
+<li><p>list：双链表 (类模板)</p>
+</li>
+</ul>
+<h3 id="关联容器"><a href="#关联容器" class="headerlink" title="关联容器"></a>关联容器</h3><p>关联容器实现能快速查找（ <em>O(log n)</em> 复杂度）的数据结构。</p>
+<ul>
+<li><p>set：唯一键的集合，按照键排序 (类模板)</p>
+</li>
+<li><p>map：键值对的集合，按照键排序，键是唯一的 (类模板)</p>
+</li>
+<li><p>multiset：键的集合，按照键排序 (类模板)</p>
+</li>
+<li><p>multimap：键值对的集合，按照键排序 (类模板)</p>
+</li>
+</ul>
+<h3 id="无序关联容器"><a href="#无序关联容器" class="headerlink" title="无序关联容器"></a>无序关联容器</h3><p>无序关联容器提供能快速查找的无序数据结构（哈希表实现的数据结构）。（均摊 <em>O(1)</em> ，最坏情况 <em>O(n)</em> 的复杂度）</p>
+<ul>
+<li><p>unordered_set(C++11 起)：唯一键的集合，按照键生成散列 (类模板)</p>
+</li>
+<li><p>unordered_map(C++11 起)：键值对的集合，按照键生成散列，键是唯一的 (类模板)</p>
+</li>
+<li><p>unordered_multiset(C++11 起)：键的集合，按照键生成散列 (类模板)</p>
+</li>
+<li><p>unordered_multimap(C++11 起)：键值对的集合，按照键生成散列 (类模板)</p>
+</li>
+</ul>
+<h3 id="容器适配器"><a href="#容器适配器" class="headerlink" title="容器适配器"></a>容器适配器</h3><p>容器适配器提供顺序容器的不同接口。</p>
+<ul>
+<li><p>stack：适配一个容器以提供栈（LIFO 数据结构）(类模板) </p>
+</li>
+<li><p>queue：适配一个容器以提供队列（FIFO 数据结构）(类模板)  </p>
+</li>
+<li><p>priority_queue：适配一个容器以提供优先级队列 (类模板)</p>
+</li>
+</ul>
+<h3 id="span"><a href="#span" class="headerlink" title="span"></a><code>span</code></h3><p><code>span</code> 是相接的对象序列上的非占有视图，某个其他对象占有序列的存储。</p>
+<ul>
+<li>span(C++20)：对象的连续序列上的无所有权视图 (类模板)</li>
+</ul>
+<h2 id="STL-示例"><a href="#STL-示例" class="headerlink" title="STL 示例"></a>STL 示例</h2><h3 id="std-array"><a href="#std-array" class="headerlink" title="std::array"></a>std::array</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//此容器是一个聚合类型,能作为聚合类型聚合初始化</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;array&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-comment">//初始化</span><br>    std::array&lt;<span class="hljs-keyword">int</span>, 3&gt; a1 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;;<br>    std::array&lt;std::string, 2&gt; a2 = &#123;std::<span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;a&quot;</span>), <span class="hljs-string">&quot;b&quot;</span>&#125;;<br>    std::array&lt;<span class="hljs-keyword">int</span>, 3&gt; a3;<br>    <span class="hljs-comment">//获取迭代器</span><br>    std::array&lt;<span class="hljs-keyword">int</span>, 3&gt;::iterator begin = a1.<span class="hljs-built_in">begin</span>();<br>    <span class="hljs-keyword">auto</span> cbegin = a1.<span class="hljs-built_in">cbegin</span>();<br>    <span class="hljs-keyword">auto</span> end = a1.<span class="hljs-built_in">end</span>();<br>    <span class="hljs-keyword">auto</span> cend = a1.<span class="hljs-built_in">cend</span>();<br>    <span class="hljs-keyword">auto</span> rbegin = a1.<span class="hljs-built_in">rbegin</span>();<br>    <span class="hljs-keyword">auto</span> crbegin = a1.<span class="hljs-built_in">crbegin</span>();<br>    <span class="hljs-keyword">auto</span> rend = a1.<span class="hljs-built_in">rend</span>();<br>    <span class="hljs-keyword">auto</span> crend = a1.<span class="hljs-built_in">crend</span>();<br>    <span class="hljs-comment">//容量</span><br>    <span class="hljs-keyword">bool</span> isEmpty = a1.<span class="hljs-built_in">empty</span>();<br>    <span class="hljs-keyword">int</span> size = a1.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">int</span> max_size = a1.<span class="hljs-built_in">max_size</span>();<br>    <span class="hljs-comment">//操作</span><br>    a3.<span class="hljs-built_in">fill</span>(<span class="hljs-number">6</span>);<span class="hljs-comment">//将定值 value 赋给容器中的所有元素</span><br>    a1.<span class="hljs-built_in">swap</span>(a3);<span class="hljs-comment">//将容器a1内容和a3交换。不导致迭代器和引用关联到别的容器。</span><br>    <span class="hljs-comment">//访问</span><br>    <span class="hljs-keyword">int</span> a = a1.<span class="hljs-built_in">front</span>();<br>    <span class="hljs-keyword">int</span> b = a1.<span class="hljs-built_in">back</span>();<br>    <span class="hljs-keyword">int</span> c = a1[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">int</span> d = a1.<span class="hljs-built_in">at</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">int</span> e = std::get&lt;<span class="hljs-number">2</span>&gt;(a1);<span class="hljs-comment">//访问位置的范围有效性在编译时强制，与 at() 或 operator[] 相反</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="std-vector"><a href="#std-vector" class="headerlink" title="std::vector"></a>std::vector</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//此容器是一个聚合类型,能作为聚合类型聚合初始化</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-comment">//初始化</span><br>    <span class="hljs-function">std::vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">a1</span><span class="hljs-params">(<span class="hljs-number">4</span>, <span class="hljs-number">0</span>)</span></span>;<br>    std::vector&lt;<span class="hljs-keyword">int</span>&gt; a2;<br>    <span class="hljs-function">std::vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">a3</span><span class="hljs-params">(a1.begin(), a1.end())</span></span>;<br>    <span class="hljs-function">std::vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">a4</span><span class="hljs-params">(a1)</span></span>;<br>    <span class="hljs-keyword">int</span> tmp[] = &#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;;<br>    <span class="hljs-function">std::vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">a5</span><span class="hljs-params">(tmp, tmp+<span class="hljs-keyword">sizeof</span>(tmp)/<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>))</span></span>;<br>    std::vector&lt;<span class="hljs-keyword">int</span>&gt; a6 = a1;<br>    <span class="hljs-comment">//访问</span><br>    <span class="hljs-keyword">int</span> b1 = a1[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">int</span> b2 = a1.<span class="hljs-built_in">at</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">int</span> b3 = a1.<span class="hljs-built_in">front</span>();<br>    <span class="hljs-keyword">int</span> b4 = a1.<span class="hljs-built_in">back</span>();<br>    <span class="hljs-keyword">int</span> b5 = *a1.<span class="hljs-built_in">data</span>();<span class="hljs-comment">//返回指向内存中数组第一个元素的指针</span><br>    <span class="hljs-comment">//获取迭代器</span><br>    std::vector&lt;<span class="hljs-keyword">int</span>&gt;::iterator begin = a1.<span class="hljs-built_in">begin</span>();<br>    <span class="hljs-keyword">auto</span> cbegin = a1.<span class="hljs-built_in">cbegin</span>();<br>    <span class="hljs-keyword">auto</span> end = a1.<span class="hljs-built_in">end</span>();<br>    <span class="hljs-keyword">auto</span> cend = a1.<span class="hljs-built_in">cend</span>();<br>    <span class="hljs-keyword">auto</span> rbegin = a1.<span class="hljs-built_in">rbegin</span>();<br>    <span class="hljs-keyword">auto</span> crbegin = a1.<span class="hljs-built_in">crbegin</span>();<br>    <span class="hljs-keyword">auto</span> rend = a1.<span class="hljs-built_in">rend</span>();<br>    <span class="hljs-keyword">auto</span> crend = a1.<span class="hljs-built_in">crend</span>();<br>    <span class="hljs-comment">//容量</span><br>    <span class="hljs-keyword">bool</span> isEmpty = a1.<span class="hljs-built_in">empty</span>();<br>    <span class="hljs-keyword">int</span> size = a1.<span class="hljs-built_in">size</span>();<span class="hljs-comment">//返回容纳的元素数</span><br>    <span class="hljs-keyword">int</span> capacity = a1.<span class="hljs-built_in">capacity</span>();<span class="hljs-comment">//返回当前存储空间能够容纳的元素数</span><br>    <span class="hljs-keyword">int</span> max_size = a1.<span class="hljs-built_in">max_size</span>();<br>    <span class="hljs-keyword">int</span> new_cap = size * <span class="hljs-number">2</span>;<br>    a1.<span class="hljs-built_in">reserve</span>(new_cap);<span class="hljs-comment">//增加 vector 的容量到大于或等于 new_cap 的值</span><br>    a1.<span class="hljs-built_in">shrink_to_fit</span>();<span class="hljs-comment">//请求移除未使用的容量</span><br>    <span class="hljs-comment">//修改器</span><br>    a1.<span class="hljs-built_in">insert</span>(a1.<span class="hljs-built_in">begin</span>(), <span class="hljs-number">10</span>);<span class="hljs-comment">//在指定位置前插入</span><br>    a1.<span class="hljs-built_in">insert</span>(a1.<span class="hljs-built_in">end</span>(), <span class="hljs-number">3</span>, <span class="hljs-number">6</span>);<span class="hljs-comment">//插入3个6</span><br>    a1.<span class="hljs-built_in">emplace</span>(a1.<span class="hljs-built_in">begin</span>(), <span class="hljs-number">11</span>);<span class="hljs-comment">//可避免不必要的临时对象产生</span><br>    a1.<span class="hljs-built_in">erase</span>(a1.<span class="hljs-built_in">begin</span>());<br>    a1.<span class="hljs-built_in">erase</span>(a1.<span class="hljs-built_in">begin</span>(), a1.<span class="hljs-built_in">begin</span>()+<span class="hljs-number">2</span>);<br>    a1.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">12</span>);<br>    a1.<span class="hljs-built_in">emplace_back</span>(<span class="hljs-number">13</span>);<br>    a1.<span class="hljs-built_in">pop_back</span>();<br>    a1.<span class="hljs-built_in">resize</span>(<span class="hljs-number">32</span>);<br>    a1.<span class="hljs-built_in">resize</span>(<span class="hljs-number">20</span>, <span class="hljs-number">20</span>);<br>    a1.<span class="hljs-built_in">swap</span>(a2);<br>    std::<span class="hljs-built_in">swap</span>(a1, a2);<br>    a1.<span class="hljs-built_in">clear</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="STL-索引"><a href="#STL-索引" class="headerlink" title="STL 索引"></a>STL 索引</h2><h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><table>
+<thead>
+<tr>
+<th>容器</th>
+<th>底层数据结构</th>
+<th>时间复杂度</th>
+<th>有无序</th>
+<th>可不可重复</th>
+<th>其他</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>array</td>
+<td>数组</td>
+<td>随机读改 O(1)</td>
+<td>无序</td>
+<td>可重复</td>
+<td>支持随机访问</td>
+</tr>
+<tr>
+<td>vector</td>
+<td>数组</td>
+<td>随机读改、尾部插入、尾部删除 O(1) 头部插入、头部删除 O(n)</td>
+<td>无序</td>
+<td>可重复</td>
+<td>支持随机访问</td>
+</tr>
+<tr>
+<td>deque</td>
+<td>双端队列</td>
+<td>头尾插入、头尾删除 O(1)</td>
+<td>无序</td>
+<td>可重复</td>
+<td>一个中央控制器 + 多个缓冲区，支持首尾快速增删，支持随机访问</td>
+</tr>
+<tr>
+<td>forward_list</td>
+<td>单向链表</td>
+<td>插入、删除 O(1)</td>
+<td>无序</td>
+<td>可重复</td>
+<td>不支持随机访问</td>
+</tr>
+<tr>
+<td>list</td>
+<td>双向链表</td>
+<td>插入、删除 O(1)</td>
+<td>无序</td>
+<td>可重复</td>
+<td>不支持随机访问</td>
+</tr>
+<tr>
+<td>stack</td>
+<td>deque / list</td>
+<td>顶部插入、顶部删除 O(1)</td>
+<td>无序</td>
+<td>可重复</td>
+<td>deque 或 list 封闭头端开口，不用 vector 的原因应该是容量大小有限制，扩容耗时</td>
+</tr>
+<tr>
+<td>queue</td>
+<td>deque / list</td>
+<td>尾部插入、头部删除 O(1)</td>
+<td>无序</td>
+<td>可重复</td>
+<td>deque 或 list 封闭头端开口，不用 vector 的原因应该是容量大小有限制，扩容耗时</td>
+</tr>
+<tr>
+<td>priority_queue</td>
+<td>vector + max-heap</td>
+<td>插入、删除 O(log2n)</td>
+<td>有序</td>
+<td>可重复</td>
+<td>vector容器+heap处理规则</td>
+</tr>
+<tr>
+<td>set</td>
+<td>红黑树</td>
+<td>插入、删除、查找 O(log2n)</td>
+<td>有序</td>
+<td>不可重复</td>
+<td></td>
+</tr>
+<tr>
+<td>multiset</td>
+<td>红黑树</td>
+<td>插入、删除、查找 O(log2n)</td>
+<td>有序</td>
+<td>可重复</td>
+<td></td>
+</tr>
+<tr>
+<td>map</td>
+<td>红黑树</td>
+<td>插入、删除、查找 O(log2n)</td>
+<td>有序</td>
+<td>不可重复</td>
+<td></td>
+</tr>
+<tr>
+<td>multimap</td>
+<td>红黑树</td>
+<td>插入、删除、查找 O(log2n)</td>
+<td>有序</td>
+<td>可重复</td>
+<td></td>
+</tr>
+<tr>
+<td>unordered_set</td>
+<td>哈希表</td>
+<td>插入、删除、查找 O(1) 最差 O(n)</td>
+<td>无序</td>
+<td>不可重复</td>
+<td></td>
+</tr>
+<tr>
+<td>unordered_multiset</td>
+<td>哈希表</td>
+<td>插入、删除、查找 O(1) 最差 O(n)</td>
+<td>无序</td>
+<td>可重复</td>
+<td></td>
+</tr>
+<tr>
+<td>unordered_map</td>
+<td>哈希表</td>
+<td>插入、删除、查找 O(1) 最差 O(n)</td>
+<td>无序</td>
+<td>不可重复</td>
+<td></td>
+</tr>
+<tr>
+<td>unordered_multimap</td>
+<td>哈希表</td>
+<td>插入、删除、查找 O(1) 最差 O(n)</td>
+<td>无序</td>
+<td>可重复</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="array"><a href="#array" class="headerlink" title="array"></a>array</h3><p>array是固定大小的顺序容器，它们保存了一个以严格的线性顺序排列的特定数量的元素。</p>
+<p>在内部，一个数组除了它所包含的元素（甚至不是它的大小，它是一个模板参数，在编译时是固定的）以外不保存任何数据。存储大小与用语言括号语法（[]）声明的普通数组一样高效。这个类只是增加了一层成员函数和全局函数，所以数组可以作为标准容器使用。</p>
+<p>与其他标准容器不同，数组具有固定的大小，并且不通过分配器管理其元素的分配：它们是封装固定大小数组元素的聚合类型。因此，他们不能动态地扩大或缩小。</p>
+<p>零大小的数组是有效的，但是它们不应该被解除引用（成员的前面，后面和数据）。</p>
+<p>与标准库中的其他容器不同，交换两个数组容器是一种线性操作，它涉及单独交换范围内的所有元素，这通常是相当低效的操作。另一方面，这允许迭代器在两个容器中的元素保持其原始容器关联。</p>
+<p>数组容器的另一个独特特性是它们可以被当作元组对象来处理：array头部重载get函数来访问数组元素，就像它是一个元组，以及专门的tuple_size和tuple_element类型。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>, <span class="hljs-title">size_t</span> <span class="hljs-title">N</span> &gt;</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">array</span>;</span><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>begin</td>
+<td>返回指向数组容器中第一个元素的迭代器</td>
+</tr>
+<tr>
+<td>end</td>
+<td>返回指向数组容器中最后一个元素之后的理论元素的迭代器</td>
+</tr>
+<tr>
+<td>rbegin</td>
+<td>返回指向数组容器中最后一个元素的反向迭代器</td>
+</tr>
+<tr>
+<td>rend</td>
+<td>返回一个反向迭代器，指向数组中第一个元素之前的理论元素</td>
+</tr>
+<tr>
+<td>cbegin</td>
+<td>返回指向数组容器中第一个元素的常量迭代器（const_iterator）</td>
+</tr>
+<tr>
+<td>cend</td>
+<td>返回指向数组容器中最后一个元素之后的理论元素的常量迭代器（const_iterator）</td>
+</tr>
+<tr>
+<td>crbegin</td>
+<td>返回指向数组容器中最后一个元素的常量反向迭代器（const_reverse_iterator）</td>
+</tr>
+<tr>
+<td>crend</td>
+<td>返回指向数组中第一个元素之前的理论元素的常量反向迭代器（const_reverse_iterator）</td>
+</tr>
+<tr>
+<td>size</td>
+<td>返回数组容器中元素的数量</td>
+</tr>
+<tr>
+<td>max_size</td>
+<td>返回数组容器可容纳的最大元素数</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>返回一个布尔值，指示数组容器是否为空</td>
+</tr>
+<tr>
+<td>operator[]</td>
+<td>返回容器中第 n（参数）个位置的元素的引用</td>
+</tr>
+<tr>
+<td>at</td>
+<td>返回容器中第 n（参数）个位置的元素的引用</td>
+</tr>
+<tr>
+<td>front</td>
+<td>返回对容器中第一个元素的引用</td>
+</tr>
+<tr>
+<td>back</td>
+<td>返回对容器中最后一个元素的引用</td>
+</tr>
+<tr>
+<td>data</td>
+<td>返回指向容器中第一个元素的指针</td>
+</tr>
+<tr>
+<td>fill</td>
+<td>用 val（参数）填充数组所有元素</td>
+</tr>
+<tr>
+<td>swap</td>
+<td>通过 x（参数）的内容交换数组的内容</td>
+</tr>
+<tr>
+<td>get（array）</td>
+<td>形如 <code>std::get&lt;0&gt;(myarray)</code>；传入一个数组容器，返回指定位置元素的引用</td>
+</tr>
+<tr>
+<td>relational operators (array)</td>
+<td>形如 <code>arrayA &gt; arrayB</code>；依此比较数组每个元素的大小关系</td>
+</tr>
+</tbody></table>
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><p>vector 是表示可以改变大小的数组的序列容器。</p>
+<p>就像数组一样，vector为它们的元素使用连续的存储位置，这意味着它们的元素也可以使用到其元素的常规指针上的偏移来访问，而且和数组一样高效。但是与数组不同的是，它们的大小可以动态地改变，它们的存储由容器自动处理。</p>
+<p>在内部，vector使用一个动态分配的数组来存储它们的元素。这个数组可能需要重新分配，以便在插入新元素时增加大小，这意味着分配一个新数组并将所有元素移动到其中。就处理时间而言，这是一个相对昂贵的任务，因此每次将元素添加到容器时矢量都不会重新分配。</p>
+<p>相反，vector容器可以分配一些额外的存储以适应可能的增长，并且因此容器可以具有比严格需要包含其元素（即，其大小）的存储更大的实际容量。库可以实现不同的策略的增长到内存使用和重新分配之间的平衡，但在任何情况下，再分配应仅在对数生长的间隔发生尺寸，使得在所述载体的末端各个元件的插入可以与提供分期常量时间复杂性。</p>
+<p>因此，与数组相比，载体消耗更多的内存来交换管理存储和以有效方式动态增长的能力。</p>
+<p>与其他动态序列容器（deques，lists和 forward_lists  ）相比，vector非常有效地访问其元素（就像数组一样），并相对有效地从元素末尾添加或移除元素。对于涉及插入或移除除了结尾之外的位置的元素的操作，它们执行比其他位置更差的操作，并且具有比列表和 forward_lists 更不一致的迭代器和引用。</p>
+<p>针对 vector 的各种常见操作的复杂度（效率）如下：</p>
+<ul>
+<li>  随机访问 - 常数 O(1)</li>
+<li>  在尾部增删元素 - 平摊（amortized）常数 O(1)}}</li>
+<li>  增删元素 - 至 vector 尾部的线性距离 O(n)}}</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>, <span class="hljs-keyword">class</span> <span class="hljs-title">Alloc</span> =</span> allocator&lt;T&gt; &gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">vector</span>;</span><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>vector</td>
+<td>构造函数</td>
+</tr>
+<tr>
+<td>~vector</td>
+<td>析构函数，销毁容器对象</td>
+</tr>
+<tr>
+<td>operator=</td>
+<td>将新内容分配给容器，替换其当前内容，并相应地修改其大小</td>
+</tr>
+<tr>
+<td>begin</td>
+<td>返回指向容器中第一个元素的迭代器</td>
+</tr>
+<tr>
+<td>end</td>
+<td>返回指向容器中最后一个元素之后的理论元素的迭代器</td>
+</tr>
+<tr>
+<td>rbegin</td>
+<td>返回指向容器中最后一个元素的反向迭代器</td>
+</tr>
+<tr>
+<td>rend</td>
+<td>返回一个反向迭代器，指向中第一个元素之前的理论元素</td>
+</tr>
+<tr>
+<td>cbegin</td>
+<td>返回指向容器中第一个元素的常量迭代器（const_iterator）</td>
+</tr>
+<tr>
+<td>cend</td>
+<td>返回指向容器中最后一个元素之后的理论元素的常量迭代器（const_iterator）</td>
+</tr>
+<tr>
+<td>crbegin</td>
+<td>返回指向容器中最后一个元素的常量反向迭代器（const_reverse_iterator）</td>
+</tr>
+<tr>
+<td>crend</td>
+<td>返回指向容器中第一个元素之前的理论元素的常量反向迭代器（const_reverse_iterator）</td>
+</tr>
+<tr>
+<td>size</td>
+<td>返回容器中元素的数量</td>
+</tr>
+<tr>
+<td>max_size</td>
+<td>返回容器可容纳的最大元素数</td>
+</tr>
+<tr>
+<td>resize</td>
+<td>调整容器的大小，使其包含 n（参数）个元素</td>
+</tr>
+<tr>
+<td>capacity</td>
+<td>返回当前为 vector 分配的存储空间（容量）的大小</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>返回 vector 是否为空</td>
+</tr>
+<tr>
+<td>reserve</td>
+<td>请求 vector 容量至少足以包含 n（参数）个元素</td>
+</tr>
+<tr>
+<td>shrink_to_fit</td>
+<td>要求容器减小其 capacity（容量）以适应其 size（元素数量）</td>
+</tr>
+<tr>
+<td>operator[]</td>
+<td>返回容器中第 n（参数）个位置的元素的引用</td>
+</tr>
+<tr>
+<td>at</td>
+<td>返回容器中第 n（参数）个位置的元素的引用</td>
+</tr>
+<tr>
+<td>front</td>
+<td>返回对容器中第一个元素的引用</td>
+</tr>
+<tr>
+<td>back</td>
+<td>返回对容器中最后一个元素的引用</td>
+</tr>
+<tr>
+<td>data</td>
+<td>返回指向容器中第一个元素的指针</td>
+</tr>
+<tr>
+<td>assign</td>
+<td>将新内容分配给 vector，替换其当前内容，并相应地修改其 size</td>
+</tr>
+<tr>
+<td>push_back</td>
+<td>在容器的最后一个元素之后添加一个新元素</td>
+</tr>
+<tr>
+<td>pop_back</td>
+<td>删除容器中的最后一个元素，有效地将容器 size 减少一个</td>
+</tr>
+<tr>
+<td>insert</td>
+<td>通过在指定位置的元素之前插入新元素来扩展该容器，通过插入元素的数量有效地增加容器大小</td>
+</tr>
+<tr>
+<td>erase</td>
+<td>从 vector 中删除单个元素（<code>position</code>）或一系列元素（<code>[first，last)</code>），这有效地减少了被去除的元素的数量，从而破坏了容器的大小</td>
+</tr>
+<tr>
+<td>swap</td>
+<td>通过 x（参数）的内容交换容器的内容，x 是另一个类型相同、size 可能不同的 vector 对象</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>从 vector 中删除所有的元素（被销毁），留下 size 为 0 的容器</td>
+</tr>
+<tr>
+<td>emplace</td>
+<td>通过在 position（参数）位置处插入新元素 args（参数）来扩展容器</td>
+</tr>
+<tr>
+<td>emplace_back</td>
+<td>在 vector 的末尾插入一个新的元素，紧跟在当前的最后一个元素之后</td>
+</tr>
+<tr>
+<td>get_allocator</td>
+<td>返回与vector关联的构造器对象的副本</td>
+</tr>
+<tr>
+<td>swap(vector)</td>
+<td>容器 x（参数）的内容与容器 y（参数）的内容交换。两个容器对象都必须是相同的类型（相同的模板参数），尽管大小可能不同</td>
+</tr>
+<tr>
+<td>relational operators (vector)</td>
+<td>形如 <code>vectorA &gt; vectorB</code>；依此比较每个元素的大小关系</td>
+</tr>
+</tbody></table>
+<h3 id="deque"><a href="#deque" class="headerlink" title="deque"></a>deque</h3><p>deque（[‘dek]）（双端队列）是double-ended queue 的一个不规则缩写。deque是具有动态大小的序列容器，可以在两端（前端或后端）扩展或收缩。</p>
+<p>特定的库可以以不同的方式实现deques，通常作为某种形式的动态数组。但是在任何情况下，它们都允许通过随机访问迭代器直接访问各个元素，通过根据需要扩展和收缩容器来自动处理存储。</p>
+<p>因此，它们提供了类似于vector的功能，但是在序列的开始部分也可以高效地插入和删除元素，而不仅仅是在结尾。但是，与vector不同，deques并不保证将其所有元素存储在连续的存储位置：deque通过偏移指向另一个元素的指针访问元素会导致未定义的行为。</p>
+<p>两个vector和deques提供了一个非常相似的接口，可以用于类似的目的，但内部工作方式完全不同：虽然vector使用单个数组需要偶尔重新分配以增长，但是deque的元素可以分散在不同的块的容器，容器在内部保存必要的信息以提供对其任何元素的持续时间和统一的顺序接口（通过迭代器）的直接访问。因此，deques在内部比vector更复杂一点，但是这使得他们在某些情况下更有效地增长，尤其是在重新分配变得更加昂贵的很长序列的情况下。</p>
+<p>对于频繁插入或删除开始或结束位置以外的元素的操作，deques表现得更差，并且与列表和转发列表相比，迭代器和引用的一致性更低。</p>
+<p>deque上常见操作的复杂性（效率）如下：</p>
+<ul>
+<li>  随机访问 - 常数O(1)</li>
+<li>  在结尾或开头插入或移除元素 - 摊销不变O(1)</li>
+<li>  插入或移除元素 - 线性O(n)</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>, <span class="hljs-keyword">class</span> <span class="hljs-title">Alloc</span> =</span> allocator&lt;T&gt; &gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">deque</span>;</span><br></code></pre></td></tr></table></figure>
+
+<p>deque的方法和vector一样，但其压入弹出操作是双向的：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>push_back</td>
+<td>在当前的最后一个元素之后 ，在 deque 容器的末尾添加一个新元素</td>
+</tr>
+<tr>
+<td>push_front</td>
+<td>在 deque 容器的开始位置插入一个新的元素，位于当前的第一个元素之前</td>
+</tr>
+<tr>
+<td>pop_back</td>
+<td>删除 deque 容器中的最后一个元素，有效地将容器大小减少一个</td>
+</tr>
+<tr>
+<td>pop_front</td>
+<td>删除 deque 容器中的第一个元素，有效地减小其大小</td>
+</tr>
+<tr>
+<td>emplace_front</td>
+<td>在 deque 的开头插入一个新的元素，就在其当前的第一个元素之前</td>
+</tr>
+<tr>
+<td>emplace_back</td>
+<td>在 deque 的末尾插入一个新的元素，紧跟在当前的最后一个元素之后</td>
+</tr>
+</tbody></table>
+<h3 id="forward-list"><a href="#forward-list" class="headerlink" title="forward_list"></a>forward_list</h3><p>forward_list（单向链表）是序列容器，允许在序列中的任何地方进行恒定的时间插入和擦除操作。</p>
+<p>forward_list（单向链表）被实现为单链表; 单链表可以将它们包含的每个元素存储在不同和不相关的存储位置中。通过关联到序列中下一个元素的链接的每个元素来保留排序。forward_list容器和列表</p>
+<p>之间的主要设计区别容器是第一个内部只保留一个到下一个元素的链接，而后者每个元素保留两个链接：一个指向下一个元素，一个指向前一个元素，允许在两个方向上有效的迭代，但是每个元素消耗额外的存储空间并且插入和移除元件的时间开销略高。因此，forward_list对象比列表对象更有效率，尽管它们只能向前迭代。</p>
+<p>与其他基本的标准序列容器（array，vector和deque），forward_list通常在插入，提取和移动容器内任何位置的元素方面效果更好，因此也适用于密集使用这些元素的算法，如排序算法。</p>
+<p>的主要缺点修饰符Modifiers S和列表相比这些其它序列容器s是说，他们缺乏可以通过位置的元素的直接访问;  例如，要访问forward_list中的第六个元素，必须从开始位置迭代到该位置，这需要在这些位置之间的线性时间。它们还消耗一些额外的内存来保持与每个元素相关联的链接信息（这可能是大型小元素列表的重要因素）。</p>
+<p>该修饰符Modifiersclass模板的设计考虑到效率：按照设计，它与简单的手写C型单链表一样高效，实际上是唯一的标准容器，为了效率的考虑故意缺少尺寸成员函数：由于其性质作为一个链表，具有一个需要一定时间的大小的成员将需要它保持一个内部计数器的大小（如列表所示）。这会消耗一些额外的存储空间，并使插入和删除操作效率稍低。要获取forward_list对象的大小，可以使用距离算法的开始和结束，这是一个需要线性时间的操作。</p>
+<p><strong>不支持随机访问，仅支持单向访问</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>front</td>
+<td>访问第一个元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>before_begin（cbefore_begin）</td>
+<td>返回指向第一个元素之前迭代器(公开成员函数)</td>
+</tr>
+<tr>
+<td>begin（cbegin）</td>
+<td>返回指向起始的迭代器(公开成员函数)</td>
+</tr>
+<tr>
+<td>end（cend）</td>
+<td>返回指向末尾的迭代器(公开成员函数)</td>
+</tr>
+<tr>
+<td>empty</td>
+<td>检查容器是否为空(公开成员函数)</td>
+</tr>
+<tr>
+<td>max_size</td>
+<td>返回可容纳的最大元素数(公开成员函数)</td>
+</tr>
+<tr>
+<td>clear</td>
+<td>清除内容(公开成员函数)</td>
+</tr>
+<tr>
+<td>insert_after</td>
+<td>在某个元素后插入新元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>emplace_after</td>
+<td>在元素后原位构造元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>erase_after</td>
+<td>擦除元素后的元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>push_front</td>
+<td>插入元素到容器起始(公开成员函数)</td>
+</tr>
+<tr>
+<td>emplace_front</td>
+<td>在容器头部就地构造元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>pop_front</td>
+<td>移除首元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>resize</td>
+<td>改变容器中可存储元素的个数(公开成员函数)</td>
+</tr>
+<tr>
+<td>swap</td>
+<td>交换内容(公开成员函数)</td>
+</tr>
+<tr>
+<td>merge</td>
+<td>合并二个已排序列表(公开成员函数)</td>
+</tr>
+<tr>
+<td>splice_after</td>
+<td>从另一 forward_list 移动元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>remove（remove_if）</td>
+<td>移除满足特定标准的元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>reverse</td>
+<td>将该链表的所有元素的顺序反转(公开成员函数)</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>删除连续的重复元素(公开成员函数)</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>对元素进行排序(公开成员函数)</td>
+</tr>
+</tbody></table>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p>list，双向链表，是序列容器，允许在序列中的任何地方进行常数时间插入和擦除操作，并在两个方向上进行迭代。</p>
+<p><strong>不支持随机访问，支持双向访问</strong></p>
+<p><strong>支持双向压入弹出</strong></p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>set 是按照特定顺序存储唯一元素的容器。</p>
+<h3 id="multiset"><a href="#multiset" class="headerlink" title="multiset"></a>multiset</h3><h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>map 是关联容器，按照特定顺序存储由 key value (键值) 和 mapped value (映射值) 组合形成的元素。</p>
+<p>在映射中，键值通常用于对元素进行排序和唯一标识，而映射的值存储与此键关联的内容。该类型的键和映射的值可能不同，并且在部件类型被分组在一起VALUE_TYPE，这是一种对类型结合两种：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">typedef</span> pair&lt;<span class="hljs-keyword">const</span> Key, T&gt; value_type;<br></code></pre></td></tr></table></figure>
+
+<p>在内部，映射中的元素总是按照由其内部比较对象（比较类型）指示的特定的严格弱排序标准按键排序。映射容器通常比unordered_map容器慢，以通过它们的键来访问各个元素，但是它们允许基于它们的顺序对子集进行直接迭代。 在该映射值地图可以直接通过使用其相应的键来访问括号运算符（（操作符[] ）。 映射通常如实施</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Key</span>,                                     // <span class="hljs-title">map</span>:</span>:key_type<br>           <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>,                                       // <span class="hljs-title">map</span>:</span>:mapped_type<br>           <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Compare</span> =</span> less&lt;Key&gt;,                     <span class="hljs-comment">// map::key_compare</span><br>           <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Alloc</span> =</span> allocator&lt;pair&lt;<span class="hljs-keyword">const</span> Key,T&gt; &gt;    <span class="hljs-comment">// map::allocator_type</span><br>           &gt; <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">map</span>;</span><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>map</td>
+<td>构造函数</td>
+</tr>
+<tr>
+<td>begin</td>
+<td>返回引用容器中第一个元素的迭代器</td>
+</tr>
+<tr>
+<td>key_comp</td>
+<td>返回容器用于比较键的比较对象的副本</td>
+</tr>
+<tr>
+<td>value_comp</td>
+<td>返回可用于比较两个元素的比较对象，以获取第一个元素的键是否在第二个元素之前</td>
+</tr>
+<tr>
+<td>find</td>
+<td>在容器中搜索具有等于 k（参数）的键的元素，如果找到则返回一个迭代器，否则返回 map::end 的迭代器</td>
+</tr>
+<tr>
+<td>count</td>
+<td>在容器中搜索具有等于 k（参数）的键的元素，并返回匹配的数量</td>
+</tr>
+<tr>
+<td>lower_bound</td>
+<td>返回一个非递减序列 <code>[first, last)</code>（参数）中的第一个大于等于值 val（参数）的位置的迭代器</td>
+</tr>
+<tr>
+<td>upper_bound</td>
+<td>返回一个非递减序列 <code>[first, last)</code>（参数）中第一个大于 val（参数）的位置的迭代器</td>
+</tr>
+<tr>
+<td>equal_range</td>
+<td>获取相同元素的范围，返回包含容器中所有具有与 k（参数）等价的键的元素的范围边界（<code>pair&lt; map&lt;char,int&gt;::iterator, map&lt;char,int&gt;::iterator &gt;</code>）</td>
+</tr>
+</tbody></table>
+<h3 id="multimap"><a href="#multimap" class="headerlink" title="multimap"></a>multimap</h3><h3 id="unordered-set"><a href="#unordered-set" class="headerlink" title="unordered_set"></a>unordered_set</h3><h3 id="unordered-multiset"><a href="#unordered-multiset" class="headerlink" title="unordered_multiset"></a>unordered_multiset</h3><h3 id="unordered-map"><a href="#unordered-map" class="headerlink" title="unordered_map"></a>unordered_map</h3><h3 id="unordered-multimap"><a href="#unordered-multimap" class="headerlink" title="unordered_multimap"></a>unordered_multimap</h3><h3 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h3><p>stack 是一种容器适配器，用于在LIFO（后进先出）的操作，其中元素仅从容器的一端插入和提取。</p>
+<h3 id="queue"><a href="#queue" class="headerlink" title="queue"></a>queue</h3><p>queue 是一种容器适配器，用于在FIFO（先入先出）的操作，其中元素插入到容器的一端并从另一端提取。</p>
+<h3 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h3><h2 id="STL-算法"><a href="#STL-算法" class="headerlink" title="STL 算法"></a>STL 算法</h2><table>
+<thead>
+<tr>
+<th>算法</th>
+<th>底层算法</th>
+<th>时间复杂度</th>
+<th>可不可重复</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>find</td>
+<td>顺序查找</td>
+<td>O(n)</td>
+<td>可重复</td>
+</tr>
+<tr>
+<td>sort</td>
+<td>内省排序</td>
+<td>O(n*log2n)</td>
+<td>可重复</td>
+</tr>
+</tbody></table>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 简单查找算法，要求输入迭代器（input iterator）</span><br><span class="hljs-built_in">find</span>(beg, end, val); <span class="hljs-comment">// 返回一个迭代器，指向输入序列中第一个等于 val 的元素，未找到返回 end</span><br><span class="hljs-built_in">find_if</span>(beg, end, unaryPred); <span class="hljs-comment">// 返回一个迭代器，指向第一个满足 unaryPred 的元素，未找到返回 end</span><br><span class="hljs-built_in">find_if_not</span>(beg, end, unaryPred); <span class="hljs-comment">// 返回一个迭代器，指向第一个令 unaryPred 为 false 的元素，未找到返回 end</span><br><span class="hljs-built_in">count</span>(beg, end, val); <span class="hljs-comment">// 返回一个计数器，指出 val 出现了多少次</span><br><span class="hljs-built_in">count_if</span>(beg, end, unaryPred); <span class="hljs-comment">// 统计有多少个元素满足 unaryPred</span><br><span class="hljs-built_in">all_of</span>(beg, end, unaryPred); <span class="hljs-comment">// 返回一个 bool 值，判断是否所有元素都满足 unaryPred</span><br><span class="hljs-built_in">any_of</span>(beg, end, unaryPred); <span class="hljs-comment">// 返回一个 bool 值，判断是否任意（存在）一个元素满足 unaryPred</span><br><span class="hljs-built_in">none_of</span>(beg, end, unaryPred); <span class="hljs-comment">// 返回一个 bool 值，判断是否所有元素都不满足 unaryPred</span><br><br><span class="hljs-comment">// 查找重复值的算法，传入向前迭代器（forward iterator）</span><br><span class="hljs-built_in">adjacent_find</span>(beg, end); <span class="hljs-comment">// 返回指向第一对相邻重复元素的迭代器，无相邻元素则返回 end</span><br><span class="hljs-built_in">adjacent_find</span>(beg, end, binaryPred); <span class="hljs-comment">// 返回指向第一对相邻重复元素的迭代器，无相邻元素则返回 end</span><br><span class="hljs-built_in">search_n</span>(beg, end, count, val); <span class="hljs-comment">// 返回一个迭代器，从此位置开始有 count 个相等元素，不存在则返回 end</span><br><span class="hljs-built_in">search_n</span>(beg, end, count, val, binaryPred); <span class="hljs-comment">// 返回一个迭代器，从此位置开始有 count 个相等元素，不存在则返回 end</span><br><br><span class="hljs-comment">// 查找子序列算法，除 find_first_of（前两个输入迭代器，后两个前向迭代器） 外，都要求两个前向迭代器</span><br><span class="hljs-built_in">search</span>(beg1, end1, beg2, end2); <span class="hljs-comment">// 返回第二个输入范围（子序列）在爹一个输入范围中第一次出现的位置，未找到则返回 end1</span><br><span class="hljs-built_in">search</span>(beg1, end1, beg2, end2, binaryPred); <span class="hljs-comment">// 返回第二个输入范围（子序列）在爹一个输入范围中第一次出现的位置，未找到则返回 end1</span><br><span class="hljs-built_in">find_first_of</span>(beg1, end1, beg2, end2); <span class="hljs-comment">// 返回一个迭代器，指向第二个输入范围中任意元素在第一个范围中首次出现的位置，未找到则返回end1</span><br><span class="hljs-built_in">find_first_of</span>(beg1, end1, beg2, end2, binaryPred); <span class="hljs-comment">// 返回一个迭代器，指向第二个输入范围中任意元素在第一个范围中首次出现的位置，未找到则返回end1</span><br><span class="hljs-built_in">find_end</span>(beg1, end1, beg2, end2); <span class="hljs-comment">// 类似 search，但返回的最后一次出现的位置。如果第二个输入范围为空，或者在第一个输入范围为空，或者在第一个输入范围中未找到它，则返回 end1</span><br><span class="hljs-built_in">find_end</span>(beg1, end1, beg2, end2, binaryPred); <span class="hljs-comment">// 类似 search，但返回的最后一次出现的位置。如果第二个输入范围为空，或者在第一个输入范围为空，或者在第一个输入范围中未找到它，则返回 end1</span><br><br><span class="hljs-comment">// 其他只读算法，传入输入迭代器</span><br>for_each(beg, end, unaryOp); <span class="hljs-comment">// 对输入序列中的每个元素应用可调用对象 unaryOp，unaryOp 的返回值被忽略</span><br><span class="hljs-built_in">mismatch</span>(beg1, end1, beg2); <span class="hljs-comment">// 比较两个序列中的元素。返回一个迭代器的 pair，表示两个序列中第一个不匹配的元素</span><br><span class="hljs-built_in">mismatch</span>(beg1, end1, beg2, binaryPred); <span class="hljs-comment">// 比较两个序列中的元素。返回一个迭代器的 pair，表示两个序列中第一个不匹配的元素</span><br><span class="hljs-built_in">equal</span>(beg1, end1, beg2); <span class="hljs-comment">// 比较每个元素，确定两个序列是否相等。</span><br><span class="hljs-built_in">equal</span>(beg1, end1, beg2, binaryPred); <span class="hljs-comment">// 比较每个元素，确定两个序列是否相等。</span><br><br><span class="hljs-comment">// 二分搜索算法，传入前向迭代器或随机访问迭代器（random-access iterator），要求序列中的元素已经是有序的。通过小于运算符（&lt;）或 comp 比较操作实现比较。</span><br><span class="hljs-built_in">lower_bound</span>(beg, end, val); <span class="hljs-comment">// 返回一个非递减序列 [beg, end) 中的第一个大于等于值 val 的位置的迭代器，不存在则返回 end</span><br><span class="hljs-built_in">lower_bound</span>(beg, end, val, comp); <span class="hljs-comment">// 返回一个非递减序列 [beg, end) 中的第一个大于等于值 val 的位置的迭代器，不存在则返回 end</span><br><span class="hljs-built_in">upper_bound</span>(beg, end, val); <span class="hljs-comment">// 返回一个非递减序列 [beg, end) 中第一个大于 val 的位置的迭代器，不存在则返回 end</span><br><span class="hljs-built_in">upper_bound</span>(beg, end, val, comp); <span class="hljs-comment">// 返回一个非递减序列 [beg, end) 中第一个大于 val 的位置的迭代器，不存在则返回 end</span><br><span class="hljs-built_in">equal_range</span>(beg, end, val); <span class="hljs-comment">// 返回一个 pair，其 first 成员是 lower_bound 返回的迭代器，其 second 成员是 upper_bound 返回的迭代器</span><br><span class="hljs-built_in">binary_search</span>(beg, end, val); <span class="hljs-comment">// 返回一个 bool 值，指出序列中是否包含等于 val 的元素。对于两个值 x 和 y，当 x 不小于 y 且 y 也不小于 x 时，认为它们相等。</span><br><br><span class="hljs-comment">// 只写不读算法，要求输出迭代器（output iterator）</span><br><span class="hljs-built_in">fill</span>(beg, end, val); <span class="hljs-comment">// 将 val 赋予每个元素，返回 void</span><br><span class="hljs-built_in">fill_n</span>(beg, cnt, val); <span class="hljs-comment">// 将 val 赋予 cnt 个元素，返回指向写入到输出序列最有一个元素之后位置的迭代器</span><br><span class="hljs-built_in">genetate</span>(beg, end, Gen); <span class="hljs-comment">// 每次调用 Gen() 生成不同的值赋予每个序列，返回 void</span><br><span class="hljs-built_in">genetate_n</span>(beg, cnt, Gen); <span class="hljs-comment">// 每次调用 Gen() 生成不同的值赋予 cnt 个序列，返回指向写入到输出序列最有一个元素之后位置的迭代器</span><br><br><span class="hljs-comment">// 使用输入迭代器的写算法，读取一个输入序列，将值写入到一个输出序列（dest）中</span><br><span class="hljs-built_in">copy</span>(beg, end, dest); <span class="hljs-comment">// 从输入范围将元素拷贝所有元素到 dest 指定定的目的序列</span><br><span class="hljs-built_in">copy_if</span>(beg, end, dest, unaryPred); <span class="hljs-comment">// 从输入范围将元素拷贝满足 unaryPred 的元素到 dest 指定定的目的序列</span><br><span class="hljs-built_in">copy_n</span>(beg, n, dest); <span class="hljs-comment">// 从输入范围将元素拷贝前 n 个元素到 dest 指定定的目的序列</span><br><span class="hljs-built_in">move</span>(beg, end, dest); <span class="hljs-comment">// 对输入序列中的每个元素调用 std::move，将其移动到迭代器 dest 开始始的序列中</span><br><span class="hljs-built_in">transform</span>(beg, end, dest, unaryOp); <span class="hljs-comment">// 调用给定操作（一元操作），并将结果写到dest中</span><br><span class="hljs-built_in">transform</span>(beg, end, beg2, dest, binaryOp); <span class="hljs-comment">// 调用给定操作（二元操作），并将结果写到dest中</span><br><span class="hljs-built_in">replace_copy</span>(beg, end, dest, old_val, new_val); <span class="hljs-comment">// 将每个元素拷贝到 dest，将等于 old_val 的的元素替换为 new_val</span><br><span class="hljs-built_in">replace_copy_if</span>(beg, end, dest, unaryPred, new_val); <span class="hljs-comment">// 将每个元素拷贝到 dest，将满足 unaryPred 的的元素替换为 new_val</span><br><span class="hljs-built_in">merge</span>(beg1, end1, beg2, end2, dest); <span class="hljs-comment">// 两个输入序列必须都是有序的，用 &lt; 运算符将合并后的序列写入到 dest 中</span><br><span class="hljs-built_in">merge</span>(beg1, end1, beg2, end2, dest, comp); <span class="hljs-comment">// 两个输入序列必须都是有序的，使用给定的比较操作（comp）将合并后的序列写入到 dest 中</span><br><br><span class="hljs-comment">// 使用前向迭代器的写算法，要求前向迭代器</span><br><span class="hljs-built_in">iter_swap</span>(iter1, iter2); <span class="hljs-comment">// 交换 iter1 和 iter2 所表示的元素，返回 void</span><br><span class="hljs-built_in">swap_ranges</span>(beg1, end1, beg2); <span class="hljs-comment">// 将输入范围中所有元素与 beg2 开始的第二个序列中所有元素进行交换。返回递增后的的 beg2，指向最后一个交换元素之后的位置。</span><br><span class="hljs-built_in">replace</span>(beg, end, old_val, new_val); <span class="hljs-comment">// 用 new_val 替换等于 old_val 的每个匹配元素</span><br><span class="hljs-built_in">replace_if</span>(beg, end, unaryPred, new_val); <span class="hljs-comment">// 用 new_val 替换满足 unaryPred 的每个匹配元素</span><br><br><span class="hljs-comment">// 使用双向迭代器的写算法，要求双向选代器（bidirectional iterator）</span><br><span class="hljs-built_in">copy_backward</span>(beg, end, dest); <span class="hljs-comment">// 从输入范围中拷贝元素到指定目的位置。如果范围为空,则返回值为 dest；否则，返回值表示从 *beg 中拷贝或移动的元素。</span><br><span class="hljs-built_in">move_backward</span>(beg, end, dest);  <span class="hljs-comment">// 从输入范围中移动元素到指定目的位置。如果范围为空,则返回值为 dest；否则,返回值表示从 *beg 中拷贝或移动的元素。</span><br><span class="hljs-built_in">inplace_merge</span>(beg, mid, end); <span class="hljs-comment">// 将同一个序列中的两个有序子序列合并为单一的有序序列。beg 到 mid 间的子序列和 mid 到 end 间的子序列被合并，并被写入到原序列中。使用 &lt; 比较元素。</span><br><span class="hljs-built_in">inplace_merge</span>(beg, mid, end, comp); <span class="hljs-comment">// 将同一个序列中的两个有序子序列合并为单一的有序序列。beg 到 mid 间的子序列和 mid 到 end 间的子序列被合并，并被写入到原序列中。使用给定的 comp 操作。</span><br><br><span class="hljs-comment">// 划分算法，要求双向选代器（bidirectional iterator）</span><br><span class="hljs-built_in">is_partitioned</span>(beg, end, unaryPred); <span class="hljs-comment">// 如果所有满足谓词 unaryPred 的元素都在不满足 unarypred 的元素之前，则返回 true。若序列为空，也返回 true</span><br><span class="hljs-built_in">partition_copy</span>(beg, end, dest1, dest2, unaryPred); <span class="hljs-comment">// 将满足 unaryPred 的元素拷贝到到 dest1，并将不满足 unaryPred 的元素拷贝到到 dest2。返回一个迭代器 pair，其 first 成员表示拷贝到 dest1 的的元素的末尾，second 表示拷贝到 dest2 的元素的末尾。</span><br><span class="hljs-built_in">partitioned_point</span>(beg, end, unaryPred); <span class="hljs-comment">// 输入序列必须是已经用 unaryPred 划分过的。返回满足  unaryPred 的范围的尾后迭代器。如果返回的迭代器不是 end，则它指向的元素及其后的元素必须都不满足 unaryPred</span><br><span class="hljs-built_in">stable_partition</span>(beg, end, unaryPred); <span class="hljs-comment">// 使用 unaryPred 划分输入序列。满足 unaryPred 的元素放置在序列开始，不满足的元素放在序列尾部。返回一个迭代器，指向最后一个满足 unaryPred 的元素之后的位置如果所有元素都不满足 unaryPred，则返回 beg</span><br><span class="hljs-built_in">partition</span>(beg, end, unaryPred); <span class="hljs-comment">// 使用 unaryPred 划分输入序列。满足 unaryPred 的元素放置在序列开始，不满足的元素放在序列尾部。返回一个迭代器，指向最后一个满足 unaryPred 的元素之后的位置如果所有元素都不满足 unaryPred，则返回 beg</span><br><br><span class="hljs-comment">// 排序算法，要求随机访问迭代器（random-access iterator）</span><br><span class="hljs-built_in">sort</span>(beg, end); <span class="hljs-comment">// 排序整个范围</span><br><span class="hljs-built_in">stable_sort</span>(beg, end); <span class="hljs-comment">// 排序整个范围（稳定排序）</span><br><span class="hljs-built_in">sort</span>(beg, end, comp); <span class="hljs-comment">// 排序整个范围</span><br><span class="hljs-built_in">stable_sort</span>(beg, end, comp); <span class="hljs-comment">// 排序整个范围（稳定排序）</span><br><span class="hljs-built_in">is_sorted</span>(beg, end); <span class="hljs-comment">// 返回一个 bool 值，指出整个输入序列是否有序</span><br><span class="hljs-built_in">is_sorted</span>(beg, end, comp); <span class="hljs-comment">// 返回一个 bool 值，指出整个输入序列是否有序</span><br><span class="hljs-built_in">is_sorted_until</span>(beg, end); <span class="hljs-comment">// 在输入序列中査找最长初始有序子序列，并返回子序列的尾后迭代器</span><br><span class="hljs-built_in">is_sorted_until</span>(beg, end, comp); <span class="hljs-comment">// 在输入序列中査找最长初始有序子序列，并返回子序列的尾后迭代器</span><br><span class="hljs-built_in">partial_sort</span>(beg, mid, end); <span class="hljs-comment">// 排序 mid-beg 个元素。即，如果 mid-beg 等于 42，则此函数将值最小的 42 个元素有序放在序列前 42 个位置</span><br><span class="hljs-built_in">partial_sort</span>(beg, mid, end, comp); <span class="hljs-comment">// 排序 mid-beg 个元素。即，如果 mid-beg 等于 42，则此函数将值最小的 42 个元素有序放在序列前 42 个位置</span><br><span class="hljs-built_in">partial_sort_copy</span>(beg, end, destBeg, destEnd); <span class="hljs-comment">// 排序输入范围中的元素，并将足够多的已排序元素放到 destBeg 和 destEnd 所指示的序列中</span><br><span class="hljs-built_in">partial_sort_copy</span>(beg, end, destBeg, destEnd, comp); <span class="hljs-comment">// 排序输入范围中的元素，并将足够多的已排序元素放到 destBeg 和 destEnd 所指示的序列中</span><br><span class="hljs-built_in">nth_element</span>(beg, nth, end); <span class="hljs-comment">// nth 是一个迭代器，指向输入序列中第 n 大的元素。nth 之前的元素都小于等于它，而之后的元素都大于等于它</span><br><span class="hljs-built_in">nth_element</span>(beg, nth, end, comp); <span class="hljs-comment">// nth 是一个迭代器，指向输入序列中第 n 大的元素。nth 之前的元素都小于等于它，而之后的元素都大于等于它</span><br><br><span class="hljs-comment">// 使用前向迭代器的重排算法。普通版本在输入序列自身内部重拍元素，_copy 版本完成重拍后写入到指定目的序列中，而不改变输入序列</span><br><span class="hljs-built_in">remove</span>(beg, end, val); <span class="hljs-comment">// 通过用保留的元素覆盖要删除的元素实现删除 ==val 的元素，返回一个指向最后一个删除元素的尾后位置的迭代器</span><br><span class="hljs-built_in">remove_if</span>(beg, end, unaryPred); <span class="hljs-comment">// 通过用保留的元素覆盖要删除的元素实现删除满足 unaryPred 的元素，返回一个指向最后一个删除元素的尾后位置的迭代器</span><br><span class="hljs-built_in">remove_copy</span>(beg, end, dest, val); <span class="hljs-comment">// 通过用保留的元素覆盖要删除的元素实现删除 ==val 的元素，返回一个指向最后一个删除元素的尾后位置的迭代器</span><br><span class="hljs-built_in">remove_copy_if</span>(beg, end, dest, unaryPred); <span class="hljs-comment">// 通过用保留的元素覆盖要删除的元素实现删除满足 unaryPred 的元素，返回一个指向最后一个删除元素的尾后位置的迭代器</span><br><span class="hljs-built_in">unique</span>(beg, end); <span class="hljs-comment">// 通过对覆盖相邻的重复元素（用 == 确定是否相同）实现重排序列。返回一个迭代器，指向不重复元素的尾后位置</span><br><span class="hljs-built_in">unique</span> (beg, end, binaryPred); <span class="hljs-comment">// 通过对覆盖相邻的重复元素（用 binaryPred 确定是否相同）实现重排序列。返回一个迭代器，指向不重复元素的尾后位置</span><br><span class="hljs-built_in">unique_copy</span>(beg, end, dest); <span class="hljs-comment">// 通过对覆盖相邻的重复元素（用 == 确定是否相同）实现重排序列。返回一个迭代器，指向不重复元素的尾后位置</span><br><span class="hljs-built_in">unique_copy_if</span>(beg, end, dest, binaryPred); <span class="hljs-comment">// 通过对覆盖相邻的重复元素（用 binaryPred 确定是否相同）实现重排序列。返回一个迭代器，指向不重复元素的尾后位置</span><br><span class="hljs-built_in">rotate</span>(beg, mid, end); <span class="hljs-comment">// 围绕 mid 指向的元素进行元素转动。元素 mid 成为为首元素，随后是 mid+1 到到 end 之前的元素，再接着是 beg 到 mid 之前的元素。返回一个迭代器，指向原来在 beg 位置的元素</span><br><span class="hljs-built_in">rotate_copy</span>(beg, mid, end, dest); <span class="hljs-comment">// 围绕 mid 指向的元素进行元素转动。元素 mid 成为为首元素，随后是 mid+1 到到 end 之前的元素，再接着是 beg 到 mid 之前的元素。返回一个迭代器，指向原来在 beg 位置的元素</span><br><br><span class="hljs-comment">// 使用双向迭代器的重排算法</span><br><span class="hljs-built_in">reverse</span>(beg, end); <span class="hljs-comment">// 翻转序列中的元素，返回 void</span><br><span class="hljs-built_in">reverse_copy</span>(beg, end, dest);; <span class="hljs-comment">// 翻转序列中的元素，返回一个迭代器，指向拷贝到目的序列的元素的尾后位置</span><br><br><span class="hljs-comment">// 使用随机访问迭代器的重排算法</span><br><span class="hljs-built_in">random_shuffle</span>(beg, end); <span class="hljs-comment">// 混洗输入序列中的元素，返回 void</span><br><span class="hljs-built_in">random_shuffle</span>(beg, end, rand); <span class="hljs-comment">// 混洗输入序列中的元素，rand 接受一个正整数的随机对象，返回 void</span><br><span class="hljs-built_in">shuffle</span>(beg, end, Uniform_rand); <span class="hljs-comment">// 混洗输入序列中的元素，Uniform_rand 必须满足均匀分布随机数生成器的要求，返回 void</span><br><br><span class="hljs-comment">// 最小值和最大值，使用 &lt; 运算符或给定的比较操作 comp 进行比较</span><br><span class="hljs-built_in">min</span>(val1, va12); <span class="hljs-comment">// 返回 val1 和 val2 中的最小值，两个实参的类型必须完全一致。参数和返回类型都是 const的引引用，意味着对象不会被拷贝。下略</span><br><span class="hljs-built_in">min</span>(val1, val2, comp);<br><span class="hljs-built_in">min</span>(init_list);<br><span class="hljs-built_in">min</span>(init_list, comp);<br><span class="hljs-built_in">max</span>(val1, val2);<br><span class="hljs-built_in">max</span>(val1, val2, comp);<br><span class="hljs-built_in">max</span>(init_list);<br><span class="hljs-built_in">max</span>(init_list, comp);<br><span class="hljs-built_in">minmax</span>(val1, val2); <span class="hljs-comment">// 返回一个 pair，其 first 成员为提供的值中的较小者，second 成员为较大者。下略</span><br><span class="hljs-built_in">minmax</span>(vall, val2, comp);<br><span class="hljs-built_in">minmax</span>(init_list);<br><span class="hljs-built_in">minmax</span>(init_list, comp);<br><span class="hljs-built_in">min_element</span>(beg, end); <span class="hljs-comment">// 返回指向输入序列中最小元素的迭代器</span><br><span class="hljs-built_in">min_element</span>(beg, end, comp); <span class="hljs-comment">// 返回指向输入序列中最小元素的迭代器</span><br><span class="hljs-built_in">max_element</span>(beg, end); <span class="hljs-comment">// 返回指向输入序列中最大元素的迭代器</span><br><span class="hljs-built_in">max_element</span>(beg, end, comp); <span class="hljs-comment">// 返回指向输入序列中最大元素的迭代器</span><br><span class="hljs-built_in">minmax_element</span>(beg, end); <span class="hljs-comment">// 返回一个 pair，其中 first 成员为最小元素，second 成员为最大元素</span><br><span class="hljs-built_in">minmax_element</span>(beg, end, comp); <span class="hljs-comment">// 返回一个 pair，其中 first 成员为最小元素，second 成员为最大元素</span><br><br><span class="hljs-comment">// 字典序比较，根据第一对不相等的元素的相对大小来返回结果。如果第一个序列在字典序中小于第二个序列，则返回 true。否则，返回 fa1se。如果个序列比另一个短，且所有元素都与较长序列的对应元素相等，则较短序列在字典序中更小。如果序列长度相等，且对应元素都相等，则在字典序中任何一个都不大于另外一个。</span><br><span class="hljs-built_in">lexicographical_compare</span>(beg1, end1, beg2, end2);<br><span class="hljs-built_in">lexicographical_compare</span>(beg1, end1, beg2, end2, comp);<br></code></pre></td></tr></table></figure>
+
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h3><p>元组是一个能够容纳元素集合的对象。每个元素可以是不同的类型。</p>
+<p>元组是一个能够容纳元素集合的对象。每个元素可以是不同的类型。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">template &lt;class... Types&gt; class tuple;<br></code></pre></td></tr></table></figure>
+
+<p>Example</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#include &lt;iostream&gt;     // std::cout<br>#include &lt;tuple&gt;        // std::tuple, std::get, std::tie, std::ignore<br><br>int main ()<br>&#123;<br>  std::tuple&lt;int,char&gt; foo (10,&#x27;x&#x27;);<br>  auto bar = std::make_tuple (&quot;test&quot;, 3.1, 14, &#x27;y&#x27;);<br><br>  std::get&lt;2&gt;(bar) = 100;                                    // access element<br><br>  int myint; char mychar;<br><br>  std::tie (myint, mychar) = foo;                            // unpack elements<br>  std::tie (std::ignore, std::ignore, myint, mychar) = bar;  // unpack (with ignore)<br><br>  mychar = std::get&lt;3&gt;(bar);<br><br>  std::get&lt;0&gt;(foo) = std::get&lt;2&gt;(bar);<br>  std::get&lt;1&gt;(foo) = mychar;<br><br>  std::cout &lt;&lt; &quot;foo contains: &quot;;<br>  std::cout &lt;&lt; std::get&lt;0&gt;(foo) &lt;&lt; &#x27; &#x27;;<br>  std::cout &lt;&lt; std::get&lt;1&gt;(foo) &lt;&lt; &#x27;\n&#x27;;<br><br>  return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Output</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">foo contains: 100 y<br></code></pre></td></tr></table></figure>
+
+<h4 id=""><a href="#" class="headerlink" title=""></a></h4><h4 id="tuple-tuple"><a href="#tuple-tuple" class="headerlink" title="tuple::tuple"></a>tuple::tuple</h4><p>构建一个 tuple（元组）对象。</p>
+<p>这涉及单独构建其元素，初始化取决于调用的构造函数形式：</p>
+<p>（1）默认的构造函数</p>
+<p>构建一个 元组对象的元素值初始化。</p>
+<p>（2）复制/移动构造函数</p>
+<p>该对象使用tpl的内容进行初始化 元组目的。tpl 的相应元素被传递给每个元素的构造函数。</p>
+<p>（3）隐式转换构造函数</p>
+<p>同上。tpl中的 所有类型都可以隐含地转换为构造中它们各自元素的类型元组 目的。</p>
+<p>（4）初始化构造函数 用elems中的相应元素初始化每个元素。elems 的相应元素被传递给每个元素的构造函数。</p>
+<p>（5）对转换构造函数</p>
+<p>该对象有两个对应于pr.first和的元素pr.second。PR中的所有类型都应该隐含地转换为其中各自元素的类型元组 目的。</p>
+<p>（6）分配器版本</p>
+<p>和上面的版本一样，除了每个元素都是使用allocator alloc构造的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">default (1)	<br>constexpr tuple();<br>copy / move (2)	<br>tuple (const tuple&amp; tpl) = default;<br>tuple (tuple&amp;&amp; tpl) = default;<br>implicit conversion (3)	<br>template &lt;class... UTypes&gt;<br>  tuple (const tuple&lt;UTypes...&gt;&amp; tpl);<br>template &lt;class... UTypes&gt;<br>  tuple (tuple&lt;UTypes...&gt;&amp;&amp; tpl);<br>initialization (4)	<br>explicit tuple (const Types&amp;... elems);<br>template &lt;class... UTypes&gt;<br>  explicit tuple (UTypes&amp;&amp;... elems);<br>conversion from pair (5)	<br>template &lt;class U1, class U2&gt;<br>  tuple (const pair&lt;U1,U2&gt;&amp; pr);<br>template &lt;class U1, class U2&gt;<br>  tuple (pair&lt;U1,U2&gt;&amp;&amp; pr);<br>allocator (6)	<br>template&lt;class Alloc&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc);<br>template&lt;class Alloc&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, const tuple&amp; tpl);<br>template&lt;class Alloc&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, tuple&amp;&amp; tpl);<br>template&lt;class Alloc,class... UTypes&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, const tuple&lt;UTypes...&gt;&amp; tpl);<br>template&lt;class Alloc, class... UTypes&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, tuple&lt;UTypes...&gt;&amp;&amp; tpl);<br>template&lt;class Alloc&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, const Types&amp;... elems);<br>template&lt;class Alloc, class... UTypes&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, UTypes&amp;&amp;... elems);<br>template&lt;class Alloc, class U1, class U2&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, const pair&lt;U1,U2&gt;&amp; pr);<br>template&lt;class Alloc, class U1, class U2&gt;<br>  tuple (allocator_arg_t aa, const Alloc&amp; alloc, pair&lt;U1,U2&gt;&amp;&amp; pr);<br></code></pre></td></tr></table></figure>
+
+<p>Example</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#include &lt;iostream&gt;     // std::cout<br>#include &lt;utility&gt;      // std::make_pair<br>#include &lt;tuple&gt;        // std::tuple, std::make_tuple, std::get<br><br>int main ()<br>&#123;<br>  std::tuple&lt;int,char&gt; first;                             // default<br>  std::tuple&lt;int,char&gt; second (first);                    // copy<br>  std::tuple&lt;int,char&gt; third (std::make_tuple(20,&#x27;b&#x27;));   // move<br>  std::tuple&lt;long,char&gt; fourth (third);                   // implicit conversion<br>  std::tuple&lt;int,char&gt; fifth (10,&#x27;a&#x27;);                    // initialization<br>  std::tuple&lt;int,char&gt; sixth (std::make_pair(30,&#x27;c&#x27;));    // from pair / move<br><br>  std::cout &lt;&lt; &quot;sixth contains: &quot; &lt;&lt; std::get&lt;0&gt;(sixth);<br>  std::cout &lt;&lt; &quot; and &quot; &lt;&lt; std::get&lt;1&gt;(sixth) &lt;&lt; &#x27;\n&#x27;;<br><br>  return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Output</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">sixth contains: 30 and c<br></code></pre></td></tr></table></figure>
+
+<h3 id="pair"><a href="#pair" class="headerlink" title="pair"></a>pair</h3><p>这个类把一对值（values）结合在一起，这些值可能是不同的类型（T1 和 T2）。每个值可以被公有的成员变量first、second访问。</p>
+<p>pair是tuple（元组）的一个特例。</p>
+<p>pair的实现是一个结构体，主要的两个成员变量是first second 因为是使用struct不是class，所以可以直接使用pair的成员变量。</p>
+<p>应用：</p>
+<ul>
+<li>  可以将两个类型数据组合成一个如map&lt;key, value&gt;</li>
+<li>  当某个函数需要两个返回值时</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">template &lt;class T1, class T2&gt; struct pair;<br></code></pre></td></tr></table></figure>
+
+<h4 id="-1"><a href="#-1" class="headerlink" title=""></a></h4><h4 id="pair-pair"><a href="#pair-pair" class="headerlink" title="pair::pair"></a>pair::pair</h4><p>构建一个pair对象。</p>
+<p>这涉及到单独构建它的两个组件对象，初始化依赖于调用的构造器形式：</p>
+<p>（1）默认的构造函数</p>
+<p>构建一个 对对象的元素值初始化。</p>
+<p>（2）复制/移动构造函数（和隐式转换）</p>
+<p>该对象被初始化为pr的内容 对目的。pr 的相应成员被传递给每个成员的构造函数。</p>
+<p>（3）初始化构造函数</p>
+<p>会员 第一是由一个和成员构建的第二与b。</p>
+<p>（4）分段构造</p>
+<p>构造成员 first  和 second  到位，传递元素first_args 作为参数的构造函数 first，和元素 second_args 到的构造函数 second 。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">default (1)	<br>constexpr pair();<br>copy / move (2)	<br>template&lt;class U, class V&gt; pair (const pair&lt;U,V&gt;&amp; pr);<br>template&lt;class U, class V&gt; pair (pair&lt;U,V&gt;&amp;&amp; pr);<br>pair (const pair&amp; pr) = default;<br>pair (pair&amp;&amp; pr) = default;<br>initialization (3)	<br>pair (const first_type&amp; a, const second_type&amp; b);<br>template&lt;class U, class V&gt; pair (U&amp;&amp; a, V&amp;&amp; b);<br>piecewise (4)	<br>template &lt;class... Args1, class... Args2&gt;<br>  pair (piecewise_construct_t pwc, tuple&lt;Args1...&gt; first_args,<br>                                   tuple&lt;Args2...&gt; second_args);<br></code></pre></td></tr></table></figure>
+
+<p>Example</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#include &lt;utility&gt;      // std::pair, std::make_pair<br>#include &lt;string&gt;       // std::string<br>#include &lt;iostream&gt;     // std::cout<br><br>int main () &#123;<br>  std::pair &lt;std::string,double&gt; product1;                     // default constructor<br>  std::pair &lt;std::string,double&gt; product2 (&quot;tomatoes&quot;,2.30);   // value init<br>  std::pair &lt;std::string,double&gt; product3 (product2);          // copy constructor<br><br>  product1 = std::make_pair(std::string(&quot;lightbulbs&quot;),0.99);   // using make_pair (move)<br><br>  product2.first = &quot;shoes&quot;;                  // the type of first is string<br>  product2.second = 39.90;                   // the type of second is double<br><br>  std::cout &lt;&lt; &quot;The price of &quot; &lt;&lt; product1.first &lt;&lt; &quot; is $&quot; &lt;&lt; product1.second &lt;&lt; &#x27;\n&#x27;;<br>  std::cout &lt;&lt; &quot;The price of &quot; &lt;&lt; product2.first &lt;&lt; &quot; is $&quot; &lt;&lt; product2.second &lt;&lt; &#x27;\n&#x27;;<br>  std::cout &lt;&lt; &quot;The price of &quot; &lt;&lt; product3.first &lt;&lt; &quot; is $&quot; &lt;&lt; product3.second &lt;&lt; &#x27;\n&#x27;;<br>  return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Output</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">The price of lightbulbs is $0.99<br>The price of shoes is $39.9<br>The price of tomatoes is $2.3<br></code></pre></td></tr></table></figure>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

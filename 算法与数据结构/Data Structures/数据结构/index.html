@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%84"><span class="toc-text">线性结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8"><span class="toc-text">顺序表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8"><span class="toc-text">链表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E8%A1%A8%E5%92%8C%E9%93%BE%E8%A1%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">顺序表和链表的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88"><span class="toc-text">栈</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%A0%88"><span class="toc-text">顺序栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%A0%88"><span class="toc-text">链栈</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%9F%E5%88%97"><span class="toc-text">队列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97"><span class="toc-text">非循环队列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97"><span class="toc-text">循环队列</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E7%BB%93%E6%9E%84"><span class="toc-text">非线性结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">二叉树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E5%88%86%E6%94%AF"><span class="toc-text">二叉树分支</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">满二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">完全二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91"><span class="toc-text">二叉查找树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">平衡二叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91"><span class="toc-text">红黑树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91"><span class="toc-text">哈夫曼树</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B%E6%A0%91"><span class="toc-text">B树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-%E6%A0%91"><span class="toc-text">B+树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B%E6%A0%91%E5%92%8CB-%E6%A0%91%E7%9A%84%E5%90%8C%E5%92%8C%E5%BC%82"><span class="toc-text">B树和B+树的同和异</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#B%E6%A0%91%EF%BC%9A"><span class="toc-text">B树：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#B-%E6%A0%91%EF%BC%9A"><span class="toc-text">B+树：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E5%8F%89%E6%A0%91"><span class="toc-text">八叉树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%A3%E5%88%97%E8%A1%A8"><span class="toc-text">散列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%BF%E4%B9%89%E8%A1%A8"><span class="toc-text">广义表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%B4%E5%B0%BE%E9%93%BE%E8%A1%A8%E5%AD%98%E5%82%A8%E8%A1%A8%E7%A4%BA"><span class="toc-text">头尾链表存储表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E7%BA%BF%E6%80%A7%E9%93%BE%E8%A1%A8%E5%AD%98%E5%82%A8%E8%A1%A8%E7%A4%BA"><span class="toc-text">扩展线性链表存储表示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-text">参考文章</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		数据结构简述
+	</div>
+	
+	<div class="page-date">
+		2018-07-05
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Data Structures">Data Structures</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>数据结构由某一元素的集合和该集合中数据元素之间的关系组成。</p>
+<p>依据数据元素之间的关系不同，数据结构分为两大类：线性结构和非线性结构。</p>
+<span id="more"></span>
+
+<h2 id="线性结构"><a href="#线性结构" class="headerlink" title="线性结构"></a>线性结构</h2><h3 id="顺序表"><a href="#顺序表" class="headerlink" title="顺序表"></a>顺序表</h3><p>顺序表是内存中连续存储多个元素的结构，在内存中的分配也是连续的，通过数组下标访问，下标从0开始。</p>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200714164706921.png" alt="image-20200714164706921"></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SeqList</span>&#123;</span><br><span class="hljs-keyword">private</span>:<br>    T* data;	<span class="hljs-comment">//存放元素的起始地址</span><br>    <span class="hljs-keyword">int</span> len;	<span class="hljs-comment">//长度</span><br>    <span class="hljs-keyword">int</span> size;	<span class="hljs-comment">//容量</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>优点：</p>
+<ol>
+<li> 按照索引查询元素速度快 </li>
+<li> 按照索引遍历数组方便</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li> 数组的大小固定后就无法扩容了 </li>
+<li> 数组只能存储一种类型的数据 </li>
+<li> 添加，删除的操作慢，因为要移动其他的元素。</li>
+</ol>
+<p>适用场景： 频繁查询，对存储空间要求不大，很少增加和删除的情况。</p>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>链表是一种递归的数据结构，它或者为空（null），或者是指向一个结点（node）的引用，该节点还有一个元素和一个指向另一条链表的引用。</p>
+<p>链表是物理存储单元上非连续的、非顺序的存储结构，数据元素的逻辑顺序是通过链表的指针地址实现，每个元素包含两个结点，一个是存储元素的数据域  (内存空间)，另一个是指向下一个结点地址的指针域。根据指针的指向，链表能形成不同的结构，例如单链表，双向链表，循环链表等。 </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">LinkNode</span></span><br><span class="hljs-class">&#123;</span><br>    T data;<br>    LinkNode&lt;T&gt; *link;<br>    <span class="hljs-built_in">LinkNode</span>(LinkNode&lt;T&gt;* ptr = <span class="hljs-literal">NULL</span>)&#123;link == ptr;&#125;<br>    <span class="hljs-built_in">LinkNode</span>(<span class="hljs-keyword">const</span> T&amp; item, LinkNode&lt;T&gt;* ptr = <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        data = item;<br>        link = ptr;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LinkedList</span></span><br><span class="hljs-class">&#123;</span><br> <span class="hljs-keyword">private</span>:<br>    LinkNode&lt;T&gt; *head;<br>    <span class="hljs-keyword">int</span> len;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>单链表：<img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200714165745808.png" alt="image-20200714165745808"></p>
+<p>双向链表：<img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200714165757431.png" alt="image-20200714165757431"></p>
+<p>循环链表：<img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200714165811790.png" alt="image-20200714165811790">优点：</p>
+<ol>
+<li> 链表是很常用的一种数据结构，不需要初始化容量，可以任意加减元素</li>
+<li> 添加或者删除元素时只需要改变前后两个元素结点的指针域指向地址即可，所以添加，删除很快；</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li> 因为含有大量的指针域，占用空间较大</li>
+<li> 查找元素需要遍历链表来查找，非常耗时。</li>
+</ol>
+<p>适用场景：数据量较小，需要频繁增加，删除操作的场景</p>
+<blockquote>
+<h2 id="顺序表和链表的区别"><a href="#顺序表和链表的区别" class="headerlink" title="顺序表和链表的区别"></a>顺序表和链表的区别</h2><p>  存储分配的方式：</p>
+<ol>
+<li> 顺序表的存储空间是静态分配的</li>
+<li> 链表的存储空间是动态分配的</li>
+</ol>
+<p>  存储密度 = ${结点数据（data）本身所占的存储量 \over 结点结构所占的存储总量}$</p>
+<ol>
+<li> 顺序表的存储密度 = 1</li>
+<li>  链表的存储密度 &lt; 1</li>
+</ol>
+<p>  插入/删除时移动元素个数：</p>
+<ol>
+<li> 顺序表平均需要移动近一半元素</li>
+<li> 链表不需要移动元素，只需要修改指针</li>
+<li> 若插入/删除仅发生在表的两端，宜采用带尾指针的循环链表</li>
+</ol>
+</blockquote>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一种特殊的线性表，仅能在线性表的一端操作，栈顶允许操作，栈底不允许操作。 栈的特点是：先进后出，或者说是后进先出，从栈顶放入元素的操作叫入栈，取出元素叫出栈。 </p>
+<h4 id="顺序栈"><a href="#顺序栈" class="headerlink" title="顺序栈"></a>顺序栈</h4><p>使用数组实现，有固定大小。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">seqStack</span>&#123;</span><br><span class="hljs-keyword">private</span>:<br>    T* elements;<br>    <span class="hljs-keyword">int</span> top;<br>    <span class="hljs-keyword">int</span> size;<br>    <span class="hljs-keyword">int</span> increment;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200714171002069.png" alt="image-20200714171002069"></p>
+<h4 id="链栈"><a href="#链栈" class="headerlink" title="链栈"></a>链栈</h4><p>使用链表实现，无固定大小。</p>
+<p>只定义栈顶指针。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">LinkNode</span>&#123;</span><br>    T data;<br>    LinkNode&lt;T&gt;* link;<br>    <span class="hljs-built_in">LinkNode</span>(LinkNode&lt;T&gt;* ptr = <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        link = ptr;<br>    &#125;<br>    <span class="hljs-built_in">LinkNode</span>(<span class="hljs-keyword">const</span> T&amp; item, LinkNode&lt;T&gt;* ptr = <span class="hljs-literal">NULL</span>)<br>    &#123;<br>        link = ptr;<br>        data = item;<br>    &#125;<br>&#125;;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LinkedStack</span>&#123;</span><br><span class="hljs-keyword">private</span>:<br>    LinkNode&lt;T&gt;* top;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h3><p>队列与栈一样，也是一种线性表，不同的是，队列可以在一端添加元素，在另一端取出元素，也就是：先进先出。从一端放入元素的操作称为入队，取出元素为出队。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SeqQueue</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">int</span> rear, front;    <span class="hljs-comment">// 队尾和队头指针</span><br>    T* elements;        <span class="hljs-comment">//存放队列元素的数组</span><br>    <span class="hljs-keyword">int</span> size;        <span class="hljs-comment">//队列最大可容纳元素个数</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="非循环队列"><a href="#非循环队列" class="headerlink" title="非循环队列"></a>非循环队列</h4><p>插入时，队尾指针：<code>rear++</code></p>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200714171920784.png" alt="image-20200714171920784"></p>
+<h4 id="循环队列"><a href="#循环队列" class="headerlink" title="循环队列"></a>循环队列</h4><p>插入时，队尾指针：<code>rear = (rear + 1) % size</code></p>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200714171949671.png" alt="image-20200714171949671"></p>
+<h2 id="非线性结构"><a href="#非线性结构" class="headerlink" title="非线性结构"></a>非线性结构</h2><h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p><strong>二叉树的性质：</strong></p>
+<ol>
+<li>非空二叉树第 i 层最多 2<sup>(i-1)</sup> 个结点 （i &gt;= 1）</li>
+<li>深度为 k 的二叉树最多 2<sup>k</sup> - 1 个结点 （k &gt;= 1）</li>
+<li>度为 0 的结点数为 n<sub>0</sub>，度为 2 的结点数为 n<sub>2</sub>，则 n<sub>0</sub> = n<sub>2</sub> + 1</li>
+<li>有 n 个结点的完全二叉树深度 k = ⌊ log<sub>2</sub>(n) ⌋ + 1 </li>
+<li>对于含 n 个结点的完全二叉树中编号为 i （1 &lt;= i &lt;= n） 的结点<ol>
+<li>若 i = 1，为根，否则双亲为 ⌊ i / 2 ⌋</li>
+<li>若 2i &gt; n，则 i 结点没有左孩子，否则孩子编号为 2i</li>
+<li>若 2i + 1 &gt; n，则 i 结点没有右孩子，否则孩子编号为 2i + 1</li>
+</ol>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">BiTNode</span></span><br><span class="hljs-class">&#123;</span><br>    TElemType data;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">BiTNode</span> *<span class="hljs-title">lchild</span>, *<span class="hljs-title">rchild</span>;</span><br>&#125;BiTNode, *BiTree;<br></code></pre></td></tr></table></figure>
+
+<p>二叉树顺序存储：</p>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715114213227.png" alt="image-20200715114213227"></p>
+<ul>
+<li>顺序存储一般只用于完全二叉树，非完全二叉树使用顺序存储时需要空出很多内存，原因是：<ul>
+<li>  left_child = parent * 2;</li>
+<li>  right_child = parent * 2 + 1;</li>
+</ul>
+</li>
+</ul>
+<p>二叉树链式存储：</p>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715114333346.png" alt="image-20200715114333346"></p>
+<p>二叉树遍历方式：</p>
+<ul>
+<li>先序遍历：先访问<code>根节点</code>，然后访问左子树， 最后访问右子树。</li>
+<li>中序遍历：先访问左子树，然后访问<code>根节点</code>， 最后访问右子树。</li>
+<li>后续遍历：先访问左子树，然后访问右子树， 最后访问<code>根节点</code>。</li>
+<li>层次遍历</li>
+</ul>
+<blockquote>
+<p>  先序遍历、后序遍历可以确定根节点</p>
+<p>  中序遍历可以确定左子树和右子树</p>
+<p>  按照规律，可通过递归还原树</p>
+</blockquote>
+<p>树的存储表示：</p>
+<ul>
+<li><p>广义表表示法</p>
+<p>  <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715114800569.png" alt="image-20200715114800569"></p>
+</li>
+<li><p>父指针表示法</p>
+<p>  <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715114816296.png" alt="image-20200715114816296"></p>
+</li>
+<li><p>子女链表表示法</p>
+<p>  <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715114829138.png" alt="image-20200715114829138"></p>
+</li>
+<li><p>子女-兄弟链表表示法（左指针指向子女，右指针指向兄弟）</p>
+<p>  <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715114924227.png" alt="image-20200715114924227"></p>
+</li>
+</ul>
+<h3 id="二叉树分支"><a href="#二叉树分支" class="headerlink" title="二叉树分支"></a>二叉树分支</h3><h4 id="满二叉树"><a href="#满二叉树" class="headerlink" title="满二叉树"></a>满二叉树</h4><ul>
+<li>深度为 k 的二叉树最多 2<sup>k</sup> - 1 个结点 （k &gt;= 1）</li>
+<li>深度为 k 的满二叉树有 2<sup>k</sup> - 1 个结点 （k &gt;= 1）</li>
+</ul>
+<h4 id="完全二叉树"><a href="#完全二叉树" class="headerlink" title="完全二叉树"></a>完全二叉树</h4><ul>
+<li>  深度为 k 的二叉树，除第 k 层外，各层结点都达到最大个数（k &gt;= 1），且第 k 层所有的结点都连续集中在最左边</li>
+</ul>
+<ul>
+<li>堆一般都是用完全二叉树来实现的<ul>
+<li>大顶堆：根 &gt;= 左 &amp;&amp; 根 &gt;= 右</li>
+<li>小顶堆：根 &lt;= 左 &amp;&amp; 根 &lt;= 右</li>
+</ul>
+</li>
+</ul>
+<h4 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h4><p>二叉查找树也叫二叉搜索树，或称二叉排序树（Binary Sort Tree），或者是一棵空树，或者是具有下列性质的二叉树：</p>
+<ul>
+<li>左 &lt; 根 &lt; 右<ul>
+<li>若任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值</li>
+<li>若任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值</li>
+</ul>
+</li>
+<li>任意节点的左、右子树也分别为二叉查找树</li>
+<li>查找、插入的时间复杂度较低为 O ( log ⁡ n ) </li>
+<li><strong>对二叉查找树进行中序遍历，即可得到有序的数列</strong></li>
+</ul>
+<h4 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h4><p>简称AVL树</p>
+<p>定义：基于二分法的策略提高数据的查找速度的一种二叉树数据结构；</p>
+<p>特点：平衡二叉树是采用二分法思想把数据按规则组装成一个树形结构的数据，用这个树形结构的数据减少无关数据的检索，大大的提升了数据检索的速度</p>
+<p>平衡二叉树的数据结构组装过程遵循以下规则：</p>
+<ul>
+<li>  非叶子节点只能允许最多两个子节点存在</li>
+<li>  每一个非叶子节点数据分布规则为左边的子节点小当前节点的值，右边的子节点大于当前节点的值(这里值是基于自己的算法规则而定的，比如hash值)</li>
+</ul>
+<p><strong>平衡二叉树特点：</strong></p>
+<ul>
+<li>树的左右两边的层级数相差不会大于1，<code>| 左子树树高 - 右子树树高 | &lt;= 1</code></li>
+<li>平衡二叉树必定是二叉搜索树，反之则不一定</li>
+<li>没有值相等重复的节点</li>
+<li>非叶子节点最多拥有两个子节点</li>
+<li>最小二叉平衡树的节点的公式：<code>F(n)=F(n-1)+F(n-2)+1</code> （1 是根节点，F(n-1) 是左子树的节点数量，F(n-2) 是右子树的节点数量）</li>
+</ul>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715150417233.png" alt="image-20200715150417233"></p>
+<blockquote>
+<p>  平衡树的层级结构：因为平衡二叉树查询复杂度和树的层级（h高度）成反比，h值越小查询越快，为了保证树的左右两端数据大致平衡以降低二叉树的查询难度一般会采用一种算法机制实现节点数据结构的平衡，实现了这种算法的有比如AVL、Treap、红黑树等，使用平衡二叉树能保证数据的左右两边的节点层级相差不会大于1，这样可以避免树形结构由于删除增加变成线性链表进而影响查询效率。保证数据平衡的情况下查找数据的速度近于二分法查找。</p>
+</blockquote>
+<ul>
+<li><p>最小失衡树：平衡二叉树插入新结点导致失衡的子树：调整：</p>
+<ul>
+<li>LL型：根的左孩子右旋</li>
+<li>RR型：根的右孩子左旋</li>
+<li>LR型：根的左孩子左旋，再右旋</li>
+<li>RL型：右孩子的左子树，先右旋，再左旋</li>
+</ul>
+</li>
+</ul>
+<h4 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h4><ul>
+<li>每个结点是红色或黑色。（红或黑）</li>
+<li>根结点是黑色。（根黑）</li>
+<li>所有叶子节点都是黑色（叶结点即指树尾端NIL指针或NULL结点）。 （叶黑）</li>
+<li>如果一个结点是红的，那么它的两个儿子都是黑的。 （红子黑）</li>
+<li>对于任意结点而言，其到叶结点树尾端NIL指针的每条路径都包含相同数目的黑结点。（路径下黑相同）</li>
+</ul>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200720220512006.png" alt="image-20200720220512006"></p>
+<p>调整方式：</p>
+<ul>
+<li>  变色</li>
+<li>  左旋</li>
+<li>  右旋</li>
+</ul>
+<p>应用：STL中的map和set</p>
+<blockquote>
+<p>  <strong>红黑树、B 树、B+ 树的区别？</strong></p>
+<ul>
+<li>红黑树的深度比较大，而 B 树和 B+ 树的深度则相对要小一些</li>
+<li>B+ 树则将数据都保存在叶子节点，同时通过链表的形式将他们连接在一起。</li>
+</ul>
+</blockquote>
+<h4 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h4><p>Huffman Tree</p>
+<p>哈夫曼树是一种带权路径长度最短的二叉树，也称为最优二叉树。</p>
+<p>一般可以按下面步骤构建：</p>
+<ol>
+<li> 根据给定的 n 个权值，构造具有 n 棵扩充二叉树的森林</li>
+<li> 在森林中选出两棵根节点的权值最小的树作为一棵新树的左，右子树，且置新树的附加根节点的权值为其左，右子树上根节点的权值之和。注意，左子树的权值应小于右子树的权值</li>
+<li> 从森林中删除这两棵树，同时把新树加入到森林中</li>
+<li> 重复2，3步骤，直到森林中只有一棵树为止，此树便是哈夫曼树</li>
+</ol>
+<blockquote>
+<p>  哈夫曼树的应用：哈夫曼编码，即如何让电文中出现较多的字符采用尽可能短的编码且保证在译码时不出现歧义。</p>
+</blockquote>
+<h3 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h3><p>B树（B-tree）属于<strong>多叉树</strong>又名<strong>平衡多路查找树</strong>（查找路径不只两个），是一种自平衡的树，能够保持数据有序。这种数据结构能够让查找数据、顺序访问、插入数据及删除的动作，都在对数时间内完成。B树，概括来说是一个一般化的二叉查找树（binary search tree），可以拥有最多2个子节点。</p>
+<p>与自平衡二叉查找树不同，B树适用于读写相对大的数据块的存储系统，例如磁盘。由于相比于磁盘IO的速度，内存中的耗时几乎可以省略，所以只要树的高度足够低，IO次数足够小，就可以提升查询性能。</p>
+<ol start="0">
+<li><p> <strong>m阶代表一个树节点最多有多少个查找路径，m=m路,当m=2则是2叉树,m=3则是3叉</strong></p>
+</li>
+<li><p> 根结点至少有两个子女。</p>
+</li>
+<li><p> 每个中间节点都包含k-1个元素和k个孩子，其中 m/2 &lt;= k &lt;= m</p>
+</li>
+<li><p> 每一个叶子节点都包含k-1个元素，其中 m/2 &lt;= k &lt;= m</p>
+</li>
+<li><p> 所有叶子节点均在同一层、叶子节点除了包含了关键字和关键字记录的指针外也有指向其子节点的指针只不过其指针地址都为null</p>
+</li>
+<li><p> 每个节点中的元素从小到大排列，节点当中k-1个元素正好是k个孩子包含的元素的值域分划</p>
+</li>
+<li><p><strong>排序方式</strong>：所有节点关键字是按<strong>递增次序</strong>排列，并遵循<strong>左小右大</strong>原则</p>
+<p> <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200720223510251.png" alt="image-20200720223510251"></p>
+</li>
+</ol>
+<h3 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h3><p>B+ 树是一种树数据结构，通常用于关系型数据库（如Mysql）和操作系统的文件系统中。</p>
+<p>B+ 树的特点是能够保持数据稳定有序，其插入与修改拥有较稳定的对数时间复杂度。</p>
+<ul>
+<li><p>  B+ 树元素自底向上插入，这与二叉树恰好相反。</p>
+</li>
+<li><p>  在B树基础上，为叶子结点增加链表指针（B树+叶子有序链表），<strong>所有关键字指针都在叶子结点</strong>中出现，非叶子结点作为叶子结点的索引；B+树总是到叶子结点才命中。</p>
+</li>
+<li><p>  b+树的非叶子节点不保存数据，只保存子树的临界值（最大或者最小），所以同样大小的节点，b+树相对于b树能够有更多的分支，使得这棵树更加矮胖，查询时做的IO操作次数也更少。</p>
+</li>
+</ul>
+<p>这通常在多数节点在次级存储比如硬盘中的时候出现。通过最大化在每个内部节点内的子节点的数目减少树的高度，平衡操作不经常发生，而且效率增加了。</p>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200720224453522.png" alt="image-20200720224453522"></p>
+<h3 id="B树和B-树的同和异"><a href="#B树和B-树的同和异" class="headerlink" title="B树和B+树的同和异"></a>B树和B+树的同和异</h3><p>特点：</p>
+<ul>
+<li>一般化的二叉查找树（binary search tree）</li>
+<li>“矮胖”，内部（非叶子）节点可以拥有可变数量的子节点（数量范围预先定义好）</li>
+</ul>
+<p>应用：大部分文件系统、数据库系统都采用B树、B+树作为索引结构</p>
+<blockquote>
+<p>  优点比较：</p>
+<ul>
+<li>  B树：对于在内部节点的数据，可直接得到，不必根据叶子节点来定位。如果经常访问的数据离根节点很近，而<strong>B树</strong>的<strong>非叶子</strong>节点本身存有关键字其数据的地址，所以这种数据检索的时候会要比<strong>B+树</strong>快。</li>
+<li>B+树：<ul>
+<li>  B+<strong>树的层级更少</strong>：相较于B树B+每个<strong>非叶子</strong>节点存储的关键字数更多，一个内部节点可以定位更多的叶子节点，且树的层级更少所以查询数据更快</li>
+<li>  B+<strong>树查询速度更稳定</strong>：B+所有关键字数据地址都存在<strong>叶子</strong>节点上，所以每次查找的次数都相同所以查询速度要比B树更稳定</li>
+<li>  B+<strong>树天然具备排序功能：</strong>B+树所有的<strong>叶子</strong>节点数据构成了一个有序链表，在查询大小区间的数据时候更方便，数据紧密性很高，缓存的命中率也会比B树高</li>
+<li>  B+<strong>树全节点遍历更快</strong>：B+树遍历整棵树只需要遍历所有的<strong>叶子</strong>节点即可，，而不需要像B树一样需要对每一层进行遍历，这有利于数据库做全表扫描</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>  区别分析</p>
+<ul>
+<li>B+树中只有叶子节点会带有指向记录的指针（ROWID），而B树则所有节点都带有，在内部节点出现的索引项不会再出现在叶子节点中。</li>
+<li>B+树中所有叶子节点都是通过指针连接在一起，而B树不会。</li>
+</ul>
+</blockquote>
+<blockquote>
+<h4 id="B树："><a href="#B树：" class="headerlink" title="B树："></a>B树：</h4><p>  <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200720224744197.png" alt="image-20200720224744197"></p>
+<h4 id="B-树："><a href="#B-树：" class="headerlink" title="B+树："></a>B+树：</h4><p>  <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200720224800081.png" alt="image-20200720224800081"></p>
+</blockquote>
+<blockquote>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ol>
+<li><p>相同思想和策略</p>
+<p> 从平衡二叉树、B树、B+树总体来看它们的贯彻的思想是相同的，都是采用<strong>二分法和数据平衡策略</strong>来提升查找数据的速度；</p>
+</li>
+<li><p>不同的方式的磁盘空间利用</p>
+<p> 不同点是他们一个一个在演变的过程中通过IO从磁盘读取数据的原理进行一步步的演变，每一次演变都是为了让节点的空间更合理的运用起来，从而使树的层级减少达到快速查找数据的目的；</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="八叉树"><a href="#八叉树" class="headerlink" title="八叉树"></a>八叉树</h3><p>八叉树（octree），或称八元树，是一种用于描述三维空间（划分空间）的树状数据结构。八叉树的每个节点表示一个正方体的体积元素，每个节点有八个子节点，这八个子节点所表示的体积元素加在一起就等于父节点的体积。一般中心点作为节点的分叉中心。</p>
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715151219530.png" alt="image-20200715151219530"></p>
+<p>应用：</p>
+<ul>
+<li>  三维计算机图形</li>
+<li>  最邻近搜索</li>
+</ul>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列表（Hash table，也叫哈希表），是根据关键码值(Key value)而直接进行访问的数据结构。也就是说，它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射函数叫做散列函数，存放记录的数组叫做散列表。</p>
+<p>构造方法：</p>
+<ul>
+<li>直接定址法</li>
+<li>除留余数法</li>
+<li>数字分析法</li>
+<li>折叠法</li>
+<li>平方取中法</li>
+</ul>
+<p>处理冲突的方法：</p>
+<ul>
+<li><p>开散列方法：链地址法，key 相同的用单链表链接</p>
+</li>
+<li><p>闭散列方法</p>
+<ul>
+<li><p>线性探测法：key 相同 -&gt; 放到 key 的下一个位置，<code>Hi = (H(key) + i) % m</code></p>
+  <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">char</span> KeyType;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    KeyType key;<br>&#125;RcdType;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    RcdType *rcd;<br>    <span class="hljs-keyword">int</span> size;<br>    <span class="hljs-keyword">int</span> count;<br>    <span class="hljs-keyword">bool</span> *tag;<br>&#125;HashTable;<br></code></pre></td></tr></table></figure>
+
+<p>  <img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715113356751.png" alt="image-20200715113356751"></p>
+</li>
+<li><p>二次探测法：key 相同 -&gt; 放到 <code>Di = 1^2, -1^2, ..., ±（k)^2,(k&lt;=m/2）</code></p>
+</li>
+<li><p>随机探测法：<code>H = (H(key) + 伪随机数) % m</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="广义表"><a href="#广义表" class="headerlink" title="广义表"></a>广义表</h2><h3 id="头尾链表存储表示"><a href="#头尾链表存储表示" class="headerlink" title="头尾链表存储表示"></a>头尾链表存储表示</h3><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 广义表的头尾链表存储表示</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> &#123;</span>ATOM, LIST&#125; ElemTag;<br><span class="hljs-comment">// ATOM==0：原子，LIST==1：子表</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GLNode</span> &#123;</span><br>    ElemTag tag;<br>    <span class="hljs-comment">// 公共部分，用于区分原子结点和表结点</span><br>    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>        <span class="hljs-comment">// 原子结点和表结点的联合部分</span><br>        AtomType atom;<br>        <span class="hljs-comment">// atom 是原子结点的值域，AtomType 由用户定义</span><br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>            <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GLNode</span> *<span class="hljs-title">hp</span>, *<span class="hljs-title">tp</span>;</span><br>        &#125; ptr;<br>        <span class="hljs-comment">// ptr 是表结点的指针域，prt.hp 和 ptr.tp 分别指向表头和表尾</span><br>    &#125; a;<br>&#125; *GList, GLNode;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715113545525.png" alt="image-20200715113545525"></p>
+<h3 id="扩展线性链表存储表示"><a href="#扩展线性链表存储表示" class="headerlink" title="扩展线性链表存储表示"></a>扩展线性链表存储表示</h3><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 广义表的扩展线性链表存储表示</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> &#123;</span>ATOM, LIST&#125; ElemTag;<br><span class="hljs-comment">// ATOM==0：原子，LIST==1：子表</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GLNode1</span> &#123;</span><br>    ElemTag tag;<br>    <span class="hljs-comment">// 公共部分，用于区分原子结点和表结点</span><br>    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>        <span class="hljs-comment">// 原子结点和表结点的联合部分</span><br>        AtomType atom; <span class="hljs-comment">// 原子结点的值域</span><br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GLNode1</span> *<span class="hljs-title">hp</span>;</span> <span class="hljs-comment">// 表结点的表头指针</span><br>    &#125; a;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GLNode1</span> *<span class="hljs-title">tp</span>;</span><br>    <span class="hljs-comment">// 相当于线性链表的 next，指向下一个元素结点</span><br>&#125; *GList1, GLNode1;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/image-20200715113804217.png" alt="image-20200715113804217"></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36982160/article/details/90667735">平衡二叉树、B树、B+树，B*树的区别与联系</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wannuoge4766/article/details/83998377">数据结构之树</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

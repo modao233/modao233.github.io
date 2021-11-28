@@ -1,0 +1,34 @@
+.header {
+    padding-left: 20%;
+    padding-right: 20%;
+    width: 60%;
+}
+.topbar-button {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #888;
+    font-size: 32px;
+    font-family: angelinaFont;
+}
+
+.topbar-mine {
+    font-size: 38px;
+    font-weight: bold;
+    color: #666;
+    flex: 1;
+    font-family: angelinaFont;
+}
+.slogan {
+    font-size: 26px;
+    text-align: center;
+    color: #666;
+}
+
+.topbar-button a {
+    color: #888;
+    text-decoration: none;
+}
+
+.topbar-button a:hover {
+    color: #020202;
+}

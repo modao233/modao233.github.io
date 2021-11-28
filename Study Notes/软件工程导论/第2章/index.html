@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%8F%AF%E8%A1%8C%E6%80%A7%E7%A0%94%E7%A9%B6%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="toc-text">2.1 可行性研究的任务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%8F%AF%E8%A1%8C%E6%80%A7%E7%A0%94%E7%A9%B6%E8%BF%87%E7%A8%8B"><span class="toc-text">2.2 可行性研究过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E7%B3%BB%E7%BB%9F%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-text">2.3 系统流程图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B1%82"><span class="toc-text">分层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE"><span class="toc-text">2.4 数据流图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%BB%E6%95%B0%E6%8D%AE%E6%B5%81%E5%9B%BE%E7%9A%84%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-text">画数据流图的步骤：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E5%90%8D"><span class="toc-text">命名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E9%80%94"><span class="toc-text">用途</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8"><span class="toc-text">2.5 数据字典</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E7%94%B14%E7%B1%BB%E5%85%83%E7%B4%A0%E7%9A%84%E5%AE%9A%E4%B9%89%E7%BB%84%E6%88%90%EF%BC%9A"><span class="toc-text">数据字典由4类元素的定义组成：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E4%B8%AD%E8%AE%B0%E5%BD%95%E6%95%B0%E6%8D%AE%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%8B%E5%88%97%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="toc-text">在数据字典中记录数据元素的下列信息：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">定义数据的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E7%9A%84%E7%94%A8%E9%80%94"><span class="toc-text">数据字典的用途</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%97%E5%85%B8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">数据字典的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6%E6%88%90%E6%9C%AC-%E6%95%88%E7%9B%8A%E5%88%86%E6%9E%90"><span class="toc-text">2.6成本&#x2F;效益分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E6%9C%AC%E4%BC%B0%E8%AE%A1"><span class="toc-text">成本估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E6%9C%AC-%E6%95%88%E7%9B%8A%E5%88%86%E6%9E%90%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">成本&#x2F;效益分析的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-7%E5%B0%8F%E7%BB%93"><span class="toc-text">2.7小结</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		第2章 可行性研究
+	</div>
+	
+	<div class="page-date">
+		2020-04-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/软件工程导论">软件工程导论</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>第2章 可行性研究</p>
+<span id="more"></span>
+
+<p><img src="/%E7%AC%AC2%E7%AB%A0/%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.jpg" alt="img"></p>
+<h2 id="2-1-可行性研究的任务"><a href="#2-1-可行性研究的任务" class="headerlink" title="2.1 可行性研究的任务"></a>2.1 可行性研究的任务</h2><p>可行性研究的目的，就是用最小的代价在尽可能短的时间内确定问题是否能够解决，不是解决问题，而是确定问题是否值得去解决。</p>
+<p>可行性研究实质上是要进行一次大大压缩简化了的系统分析和设计的过程，也就是在较高层次上以比较抽象的方式进行的系统分析和设计的过程。</p>
+<p>可行性研究最根本的任务是对以后的行动方针提出建议</p>
+<p>可行性研究的内容：</p>
+<ol>
+<li> 首先需要进一步分析和澄清问题定义，导出系统的逻辑模型</li>
+<li> 然后从系统逻辑模型出发，探索若干种可供选择的主要解法(即系统实现方案)</li>
+<li> 对每种解法都研究它的可行性，至少应该从三方面研究每种解法的可行性 </li>
+</ol>
+<p>主要方面：</p>
+<ol>
+<li> 技术可行性，使用现有的技术能实现这个系统吗？</li>
+<li> 经济可行性，这个系统的经济效益能超过它的开发成本吗？</li>
+<li> 操作可行性，系统的操作方式在这个用户组织内行得通吗？</li>
+</ol>
+<p>其他方面：</p>
+<ol>
+<li> 运行可行性，系统的运行方式是否可行？</li>
+<li> 法律可行性，系统是否侵犯他人、集体或国家的利益，是否违反法律？ </li>
+<li> 分析员应该为每个可行的解法制定一个粗略的实现进度。</li>
+<li> 如果问题没有可行的解，分析员应该建议停止这项开发工程，以避免时间、资源、人力和金钱的浪费；如果问题值得解，分析员应该推荐一个较好的解决方案，并且为工程制定一个初步的计划。</li>
+<li> 可行性研究需要的时间长短取决于工程的规模。一般说来，可行性研究的成本只是预期的工程总成本的5%～10%。 </li>
+</ol>
+<h2 id="2-2-可行性研究过程"><a href="#2-2-可行性研究过程" class="headerlink" title="2.2 可行性研究过程"></a>2.2 可行性研究过程</h2><ol>
+<li><p> 复查系统规模和目标：对问题定义阶段书写的关于规模和目标的报告书进一步复查确认。</p>
+</li>
+<li><p> 研究目前正在使用的系统：新的目标系统必须也能完成旧系统的基本功能；另一方面，新系统必须能解决旧系统中存在的问题。</p>
+</li>
+<li><p> 导出新系统的高层逻辑模型：现有的物理系统→现有系统的逻辑模型→目标系统的逻辑模型→新的物理系统 </p>
+</li>
+<li><p> 进一步定义问题：分析员应该和用户一起再次复查问题定义、工程规模和目标。 </p>
+</li>
+</ol>
+<p><strong>可行性研究的前4个步骤实质上构成一个循环。</strong> </p>
+<ol start="5">
+<li><p>导出和评价供选择的解法：</p>
+<p> 1、首先从技术角度出发排除不可行方案；</p>
+<p> 2、其次考虑操作可行性，去掉用户不能接受的方案；</p>
+<p> 3、接下来考虑经济可行性，估计余下的每个可能的系统的开发成本和运行费用，进行成本/效益分析；</p>
+<p> 4、最后为每个在各方面都可行的系统制定实现进度表（如下图）。</p>
+<p> <img src="/%E7%AC%AC2%E7%AB%A0/%E5%B7%A5%E7%A8%8B%E8%BF%9B%E5%BA%A6%E8%A1%A8.jpg" alt="img"></p>
+</li>
+<li><p> 推荐行动方针：根据可行性研究结果应该做出的一个关键性决定是，是否继续进行这项开发工程。若继续开发，选择一种最好的解法，说明选择这个解决方案的理由。</p>
+</li>
+<li><p>草拟开发计划：分析员应该为所推荐的方案草拟一份开发计划，制定工程进度表、估计对各类开发人员和各种资源的需要情况、估计系统生命周期每个阶段的成本、给出下一个阶段(需求分析)的详细进度表和成本估计。 </p>
+<p> <img src="/%E7%AC%AC2%E7%AB%A0/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%96%BD%E8%AE%A1%E5%88%92%E8%A1%A8.jpg" alt="img"></p>
+</li>
+<li><p> 书写文档提交审查：把可行性研究各个步骤的工作结果写成清晰的文档，请用户、客户组织的负责人及评审组审查，以决定是否继续这项工程及是否接受分析员推荐的方案。 </p>
+</li>
+</ol>
+<h2 id="2-3-系统流程图"><a href="#2-3-系统流程图" class="headerlink" title="2.3 系统流程图"></a>2.3 系统流程图</h2><p>概念：</p>
+<ol>
+<li> 系统流程图是概括地描绘物理系统的传统工具。</li>
+<li> 它用图形符号以黑盒子形式描绘组成系统的每个部件(程序，文档，数据库，人工过程等)。</li>
+<li> 它表达的是数据在系统各部件之间流动的情况，而不是对数据进行加工处理的控制过程。</li>
+<li> 它是物理数据流图而不是程序流程图。</li>
+</ol>
+<p>符号：</p>
+<ol>
+<li><p>基本符号：以概括性的方式抽象地描绘一个实际系统</p>
+<p> <img src="/%E7%AC%AC2%E7%AB%A0/%E5%9F%BA%E6%9C%AC%E7%AC%A6%E5%8F%B7.jpg" alt="img"></p>
+</li>
+<li><p>系统符号：具体地描绘一个物理系统所用的符号</p>
+<p> <img src="/%E7%AC%AC2%E7%AB%A0/%E7%B3%BB%E7%BB%9F%E7%AC%A6%E5%8F%B7.jpg" alt="img"></p>
+</li>
+</ol>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li> 分析：部件、程序、文档、数据、人工过程</li>
+<li> 画流程图</li>
+</ol>
+<h3 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h3><ol>
+<li> 面对复杂的系统 —-分层描绘</li>
+<li> 首先用一张高层次的系统流程图描绘系统总体概貌，表明系统的关键功能。</li>
+<li> 然后分别把每个关键功能扩展到适当的详细程度，画在单独的一页纸上。</li>
+<li> 便于阅读者按从抽象到具体的过程逐步深入地了解一个复杂的系统。</li>
+</ol>
+<h2 id="2-4-数据流图"><a href="#2-4-数据流图" class="headerlink" title="2.4 数据流图"></a>2.4 数据流图</h2><p>概念：数据流图是一种图形化技术，它描绘信息流和数据从输入移动到输出的过程中所经受的变换。在数据流图中没有任何具体的物理部件，它只是描绘数据在软件中流动和被处理的逻辑过程。</p>
+<p>符号：</p>
+<ol>
+<li><p>4种基本符号：</p>
+<p> <img src="/%E7%AC%AC2%E7%AB%A0/4%E7%A7%8D%E5%9F%BA%E6%9C%AC%E7%AC%A6%E5%8F%B7.jpg" alt="img"></p>
+</li>
+<li><p>附加符号：</p>
+<p> <img src="/%E7%AC%AC2%E7%AB%A0/%E9%99%84%E5%8A%A0%E7%AC%A6%E5%8F%B7.jpg" alt="img"></p>
+</li>
+</ol>
+<h3 id="画数据流图的步骤："><a href="#画数据流图的步骤：" class="headerlink" title="画数据流图的步骤："></a>画数据流图的步骤：</h3><ol>
+<li> 从问题描述中提取数据流图的四种成分</li>
+<li> 画基本系统模型</li>
+<li> 细化，描述系统的主要功能（功能级数据流图）</li>
+<li> 对系统主要功能进一步细化</li>
+</ol>
+<blockquote>
+<p>  细化时注意：</p>
+<ol>
+<li> 当进一步分解涉及如何具体的实现一个功能时就不应该再分解了。</li>
+<li> 当对数据流图分层细化时必须保持信息连续性，也就是说，当把一个处理分解为一系列处理时，分解前和分解后的输入输出数据流必须相同。</li>
+<li> 注意对处理进行编号的方法。 </li>
+</ol>
+</blockquote>
+<h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><p>为数据流（或数据存储）命名：</p>
+<ol>
+<li> 完整性，名字应代表整个数据流（或数据存储）的内容</li>
+<li> 具体性，不要用空洞的、缺乏具体含义的名字</li>
+<li> 起名字遇到了困难时，试试重新分解</li>
+</ol>
+<p>为处理命名：</p>
+<ol>
+<li> 通常先为数据流命名，然后再为与之相关联的处理命名</li>
+<li> 完整性，名字应该反映整个处理的功能</li>
+<li> 及物动词+宾语，具体性</li>
+<li> 通常名字中仅包含一个动词，否则进行分解</li>
+<li> 命名遇到了困难时，应考虑重新分解</li>
+</ol>
+<p>为数据源点/终点命名：采用它们在问题域中习惯的名字</p>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p>基本目的是利用它作为交流信息的工具：</p>
+<ol>
+<li> 供有关人员审查确认</li>
+<li> 供用户理解和评价</li>
+<li> 数据流图应该分层，超过9个时应该画分图</li>
+</ol>
+<p>另一个主要用途是作为分析和设计的工具：</p>
+<ol>
+<li> 描述系统所完成的功能</li>
+<li> 辅助物理系统的设计时，以定时要求为指南，画出许多组自动化边界，对应不同的物理系统</li>
+<li> 导出更详细的设计步骤——面向数据流的设计方法</li>
+</ol>
+<p><strong>数据存储和数据流都是数据，仅仅所处的状态不同。数据存储是出于静止状态的数据，数据流是处于运动中的数据。</strong></p>
+<h2 id="2-5-数据字典"><a href="#2-5-数据字典" class="headerlink" title="2.5 数据字典"></a>2.5 数据字典</h2><p>数据字典是关于数据的信息的集合，也就是对数据流图中包含的所有元素的定义的集合。</p>
+<p>数据字典的作用也正是在软件分析和设计的过程中给人提供关于数据的描述信息。</p>
+<p>数据流图和数据字典共同构成系统的逻辑模型，没有数据字典，数据流图就不严格，然而没有数据流图，数据字典也难于发挥作用。只有数据流图和对数据流图中每个元素的精确定义放在一起，才能共同构成系统的规格说明。</p>
+<h3 id="数据字典由4类元素的定义组成："><a href="#数据字典由4类元素的定义组成：" class="headerlink" title="数据字典由4类元素的定义组成："></a>数据字典由4类元素的定义组成：</h3><ol>
+<li><p>数据流</p>
+<ol>
+<li> 说明：简要介绍作用，即它产生的原因和结果</li>
+<li> 数据流来源：即该数据流来自何方</li>
+<li> 数据流去向：去向何处</li>
+<li> 数据流组成：数据结构</li>
+<li> 每个数据量流通量：数据量、流通量</li>
+</ol>
+</li>
+<li><p>数据流分量(即数据元素)</p>
+<ol>
+<li> 类型:数字（离散值、连续值），文字（编码类型）</li>
+<li> 长度</li>
+<li> 取值范围</li>
+<li> 相关的数据元素及数据结构</li>
+</ol>
+</li>
+<li><p> 数据存储</p>
+</li>
+<li><p> 处理</p>
+</li>
+</ol>
+<h3 id="在数据字典中记录数据元素的下列信息："><a href="#在数据字典中记录数据元素的下列信息：" class="headerlink" title="在数据字典中记录数据元素的下列信息："></a>在数据字典中记录数据元素的下列信息：</h3><ol>
+<li> 一般信息</li>
+<li> 定义</li>
+<li> 使用特点</li>
+<li> 控制信息</li>
+<li> 分组信息</li>
+</ol>
+<h3 id="定义数据的方法"><a href="#定义数据的方法" class="headerlink" title="定义数据的方法"></a>定义数据的方法</h3><p>方法：对数据自顶向下分解</p>
+<p>数据组成方式：</p>
+<ol>
+<li> 顺序，以确定次序连接两个或多个分量</li>
+<li> 选择，从两个或多个可能的元素中选取一个</li>
+<li> 重复，把指定的分量重复零次或多次</li>
+<li> 附加类型：可选，一个分量是可有可无的(重复零次或一次)</li>
+</ol>
+<p>符号：</p>
+<ol>
+<li><p> =意思是等价于(或定义为)；</p>
+</li>
+<li><p> +意思是和(即，连接两个分量)；</p>
+</li>
+<li><p> ［ ］意思是或(即，从方括弧内列出的若干个分量中选择一个)，通常用“|”号隔开供选择的分量；</p>
+</li>
+<li><p> { }意思是重复(即，重复花括弧内的分量)；常常使用上限和下限进一步注释表示重复的花括弧。</p>
+</li>
+<li><p> ( )意思是可选(即，圆括弧里的分量可有可无)。 </p>
+</li>
+</ol>
+<h3 id="数据字典的用途"><a href="#数据字典的用途" class="headerlink" title="数据字典的用途"></a>数据字典的用途</h3><ol>
+<li><p> 数据字典最重要的用途是作为分析阶段的工具；</p>
+</li>
+<li><p> 数据字典中包含的每个数据元素的控制信息是很有价值的。很容易估计改变一个数据将产生的影响；</p>
+</li>
+<li><p> 数据字典是开发数据库的第一步，而且是很有价值的一步。</p>
+</li>
+</ol>
+<h3 id="数据字典的实现"><a href="#数据字典的实现" class="headerlink" title="数据字典的实现"></a>数据字典的实现</h3><ol>
+<li> 计算机实现，目前，数据字典几乎总是作为CASE（计算机辅助软件工程）“结构化分析与设计工具”的一部分实现的。在开发大型软件系统的过程中，数据字典的规模和复杂程度迅速增加，人工维护数据字典几乎是不可能的。</li>
+<li> 人工实现，采用卡片形式书写数据字典，每张卡片上保存描述一个数据的信息。每张卡片上主要应该包含下述这样一些信息：名字、别名、描述、定义、位置。 </li>
+</ol>
+<h2 id="2-6成本-效益分析"><a href="#2-6成本-效益分析" class="headerlink" title="2.6成本/效益分析"></a>2.6成本/效益分析</h2><h3 id="成本估计"><a href="#成本估计" class="headerlink" title="成本估计"></a>成本估计</h3><ol>
+<li> 代码行技术</li>
+<li> 任务分解技术</li>
+<li> 自动估计成本技术</li>
+</ol>
+<h3 id="成本-效益分析的方法"><a href="#成本-效益分析的方法" class="headerlink" title="成本/效益分析的方法"></a>成本/效益分析的方法</h3><ol>
+<li> 货币的时间价值</li>
+<li> 投资回收期</li>
+<li> 纯收入</li>
+<li> 投资回收率</li>
+</ol>
+<h2 id="2-7小结"><a href="#2-7小结" class="headerlink" title="2.7小结"></a>2.7小结</h2>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

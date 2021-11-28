@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6"><span class="toc-text">PyQt5 中的事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%8F%92%E6%A7%BD"><span class="toc-text">PyQt5 信号和插槽</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E9%87%8D%E6%96%B0%E5%AE%9E%E7%8E%B0%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">PyQt5 重新实现事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="toc-text">PyQt5 中的事件对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E4%BA%8B%E4%BB%B6%E5%8F%91%E9%80%81%E8%80%85"><span class="toc-text">PyQt5 事件发送者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E5%8F%91%E5%B0%84%E4%BF%A1%E5%8F%B7"><span class="toc-text">PyQt5 发射信号</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		PyQt5 中的事件和信号
+	</div>
+	
+	<div class="page-date">
+		2020-08-19
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/PyQt5">PyQt5</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="http://zetcode.com/gui/pyqt5/eventssignals/">翻译自原文：Events and signals in PyQt5</a></p>
+<p>翻译时间 2020 年 8 月 19 日</p>
+<span id="more"></span>
+
+<p>在 PyQt5 编程教程的这一部分中，我们将探讨应用程序中发生的事件和信号。</p>
+<h2 id="PyQt5-中的事件"><a href="#PyQt5-中的事件" class="headerlink" title="PyQt5 中的事件"></a>PyQt5 中的事件</h2><p>GUI 应用程序是事件驱动的，事件主要由应用程序的用户生成。但是，它们也可以通过其他方式产生，例如，互联网连接、窗口管理器或计时器。当我们调用应用程序的<code>exec_()</code>方法时，应用程序进入主循环。主循环获取事件并将其发送到对象。</p>
+<p>在活动模型中，有三个参与者：</p>
+<ul>
+<li>  事件源</li>
+<li>  事件对象</li>
+<li>  事件目标</li>
+</ul>
+<p>事件源是状态更改的对象，它生成事件。</p>
+<p>事件对象（事件）封装事件源中的状态更改。</p>
+<p>事件目标是想要收到通知的对象。事件源对象将处理事件的任务委托给事件目标。</p>
+<p>PyQt5 具有独特的信号和插槽机制来处理事件。信号和插槽用于对象之间的通信。发生特定事件时发出信号。插槽可以是任何可调用的 Python 程序。发出连接信号时调用插槽。</p>
+<h2 id="PyQt5-信号和插槽"><a href="#PyQt5-信号和插槽" class="headerlink" title="PyQt5 信号和插槽"></a>PyQt5 信号和插槽</h2><p>这是一个简单的示例，演示 PyQt5 中的信号和插槽。</p>
+<p>signals_slots.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> Qt<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> (QWidget, QLCDNumber, QSlider,<br>                             QVBoxLayout, QApplication)<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span>(<span class="hljs-params">QWidget</span>):</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br><br>        self.initUI()<br><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br><br>        lcd = QLCDNumber(self)<br>        sld = QSlider(Qt.Horizontal, self)<br><br>        vbox = QVBoxLayout()<br>        vbox.addWidget(lcd)<br>        vbox.addWidget(sld)<br><br>        self.setLayout(vbox)<br>        sld.valueChanged.connect(lcd.display)<br><br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">250</span>, <span class="hljs-number">150</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;Signal and slot&#x27;</span>)<br>        self.show()<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>在我们的示例中，我们展示了<code>QtGui.QLCDNumber</code>和<code>QtGui.QSlider</code>部件。我们通过拖动滑块旋钮来更改<code>lcd</code>的数字。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">sld.valueChanged.connect(lcd.display)<br></code></pre></td></tr></table></figure>
+
+<p>在这里，我们将滑块的<code>valueChanged</code>信号连接到<code>lcd</code>数字的<code>display</code>插槽。</p>
+<p><strong>发送方是发送信号的对象。接收器是接收信号的对象。插槽是响应信号的方法。</strong></p>
+<p><img src="/Events-and-signals-in-PyQt5/image-20200819141726404.png" alt="image-20200819141726404"></p>
+<center>图：信号和插槽</center>
+
+<h2 id="PyQt5-重新实现事件处理程序"><a href="#PyQt5-重新实现事件处理程序" class="headerlink" title="PyQt5 重新实现事件处理程序"></a>PyQt5 重新实现事件处理程序</h2><p>PyQt5 中的事件通常由重新实现的事件处理程序进行处理。</p>
+<p>reimplement_handler.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> Qt<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QWidget, QApplication<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span>(<span class="hljs-params">QWidget</span>):</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br><br>        self.initUI()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">250</span>, <span class="hljs-number">150</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;Event handler&#x27;</span>)<br>        self.show()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">keyPressEvent</span>(<span class="hljs-params">self, e</span>):</span><br>        <span class="hljs-keyword">if</span> e.key() == Qt.Key_Escape:<br>            self.close()<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>在我们的示例中，我们重新实现事件处理程序<code>keyPressEvent()</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def keyPressEvent(self, e):<br><br>    if e.key() == Qt.Key_Escape:<br>        self.close()<br></code></pre></td></tr></table></figure>
+
+<p>如果我们单击”Escape“按钮（键盘的ESC键），应用程序将终止。</p>
+<h2 id="PyQt5-中的事件对象"><a href="#PyQt5-中的事件对象" class="headerlink" title="PyQt5 中的事件对象"></a>PyQt5 中的事件对象</h2><p>事件对象是一个 Python 对象，其中包含描述事件的多个属性。事件对象特定于生成的事件类型。</p>
+<p>event_object.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> Qt<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QWidget, QApplication, QGridLayout, QLabel<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span>(<span class="hljs-params">QWidget</span>):</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br><br>        self.initUI()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        grid = QGridLayout()<br><br>        x = <span class="hljs-number">0</span><br>        y = <span class="hljs-number">0</span><br><br>        self.text = <span class="hljs-string">f&#x27;x: <span class="hljs-subst">&#123;x&#125;</span>,  y: <span class="hljs-subst">&#123;y&#125;</span>&#x27;</span><br><br>        self.label = QLabel(self.text, self)<br>        grid.addWidget(self.label, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, Qt.AlignTop)<br><br>        self.setMouseTracking(<span class="hljs-literal">True</span>)<br><br>        self.setLayout(grid)<br><br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">450</span>, <span class="hljs-number">300</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;Event object&#x27;</span>)<br>        self.show()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mouseMoveEvent</span>(<span class="hljs-params">self, e</span>):</span><br>        x = e.x()<br>        y = e.y()<br><br>        text = <span class="hljs-string">f&#x27;x: <span class="hljs-subst">&#123;x&#125;</span>,  y: <span class="hljs-subst">&#123;y&#125;</span>&#x27;</span><br>        self.label.setText(text)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>在此示例中，我们在标签部件中显示鼠标指针的 x 和 y 坐标。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.text = f&#x27;x: &#123;x&#125;,  y: &#123;y&#125;&#x27;<br><br>self.label = QLabel(self.text, self)<br></code></pre></td></tr></table></figure>
+
+<p>x 和 y 坐标显示在<code>QLabel</code>部件中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.setMouseTracking(True)<br></code></pre></td></tr></table></figure>
+
+<p>默认情况下，鼠标跟踪处于禁用状态，因此部件仅在移动鼠标时至少按下一个鼠标按钮时才收到鼠标移动事件。如果启用鼠标跟踪，则即使未按下任何按钮，部件也将收到鼠标移动事件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def mouseMoveEvent(self, e):<br><br>    x = e.x()<br>    y = e.y()<br><br>    text = f&#x27;x: &#123;x&#125;,  y: &#123;y&#125;&#x27;<br>    self.label.setText(text)<br></code></pre></td></tr></table></figure>
+
+<p><code>e</code>是事件对象，它包含有关触发事件的数据。在我们的案例中，<code>e</code>是鼠标移动事件。使用<code>x()</code>和<code>y()</code>方法，我们确定鼠标指针的 x 和 y 坐标。我们生成字符串并设置为标签部件的内容。</p>
+<p><img src="/Events-and-signals-in-PyQt5/image-20200819142642009.png" alt="image-20200819142642009"></p>
+<center>图：事件对象</center> 
+
+<h2 id="PyQt5-事件发送者"><a href="#PyQt5-事件发送者" class="headerlink" title="PyQt5 事件发送者"></a>PyQt5 事件发送者</h2><p>有时，知道哪个部件是信号的发送者是很方便的。为此，PyQt5 具有<code>sender</code>方法。</p>
+<p>event_sender.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QMainWindow, QPushButton, QApplication<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span>(<span class="hljs-params">QMainWindow</span>):</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br><br>        self.initUI()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br>        btn1 = QPushButton(<span class="hljs-string">&quot;Button 1&quot;</span>, self)<br>        btn1.move(<span class="hljs-number">30</span>, <span class="hljs-number">50</span>)<br><br>        btn2 = QPushButton(<span class="hljs-string">&quot;Button 2&quot;</span>, self)<br>        btn2.move(<span class="hljs-number">150</span>, <span class="hljs-number">50</span>)<br><br>        btn1.clicked.connect(self.buttonClicked)<br>        btn2.clicked.connect(self.buttonClicked)<br><br>        self.statusBar()<br><br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">450</span>, <span class="hljs-number">350</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;Event sender&#x27;</span>)<br>        self.show()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">buttonClicked</span>(<span class="hljs-params">self</span>):</span><br>        sender = self.sender()<br>        self.statusBar().showMessage(sender.text() + <span class="hljs-string">&#x27; was pressed&#x27;</span>)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>我们的示例有两个按钮。在<code>buttonClicked</code>方法中，我们通过调用<code>sender()</code>方法确定单击的按钮。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">btn1.clicked.connect(self.buttonClicked)<br>btn2.clicked.connect(self.buttonClicked)<br></code></pre></td></tr></table></figure>
+
+<p>两个按钮都连接到同一插槽。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def buttonClicked(self):<br><br>    sender = self.sender()<br>    self.statusBar().showMessage(sender.text() + &#x27; was pressed&#x27;)<br></code></pre></td></tr></table></figure>
+
+<p>我们通过调用<code>sender()</code>方法确定信号源。在应用程序的状态栏中，我们显示按下按钮的标签。</p>
+<p><img src="/Events-and-signals-in-PyQt5/image-20200819143108993.png" alt="image-20200819143108993"></p>
+<center>图：事件发送者</center>
+
+<h2 id="PyQt5-发射信号"><a href="#PyQt5-发射信号" class="headerlink" title="PyQt5 发射信号"></a>PyQt5 发射信号</h2><p>从<code>QObject</code>中创建的对象可以发出信号。下面的示例演示我们如何发出自定义信号。</p>
+<p>custom_signal.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">from</span> PyQt5.QtCore <span class="hljs-keyword">import</span> pyqtSignal, QObject<br><span class="hljs-keyword">from</span> PyQt5.QtWidgets <span class="hljs-keyword">import</span> QMainWindow, QApplication<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Communicate</span>(<span class="hljs-params">QObject</span>):</span><br><br>    closeApp = pyqtSignal()<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span>(<span class="hljs-params">QMainWindow</span>):</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__()<br><br>        self.initUI()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initUI</span>(<span class="hljs-params">self</span>):</span><br><br>        self.c = Communicate()<br>        self.c.closeApp.connect(self.close)<br><br>        self.setGeometry(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-number">450</span>, <span class="hljs-number">350</span>)<br>        self.setWindowTitle(<span class="hljs-string">&#x27;Emit signal&#x27;</span>)<br>        self.show()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mousePressEvent</span>(<span class="hljs-params">self, event</span>):</span><br><br>        self.c.closeApp.emit()<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>我们创建一个名为<code>closeApp</code>的新信号。此信号在鼠标按下事件期间发出。信号连接到<code>QMainWindow</code>的<code>close()</code>插槽。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">class Communicate(QObject):<br><br>    closeApp = pyqtSignal()<br></code></pre></td></tr></table></figure>
+
+<p>使用<code>pyqtSignal()</code>作为外部类<code>Communicate</code>的类属性创建信号。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.c = Communicate()<br>self.c.closeApp.connect(self.close)<br></code></pre></td></tr></table></figure>
+
+<p>自定义<code>closeApp</code>信号连接到<code>QMainWindow</code>的<code>close()</code>插槽。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def mousePressEvent(self, event):<br><br>    self.c.closeApp.emit()<br></code></pre></td></tr></table></figure>
+
+<p>当我们用鼠标指针单击窗口时，<code>closeApp</code>信号会发出。应用程序终止。</p>
+<p>在 PyQt5 教程的这一部分中，我们介绍了信号和插槽。</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#URL%E7%BC%96%E7%A0%81%E5%8E%9F%E7%90%86"><span class="toc-text">URL编码原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-text">C++编码解码实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-text">参考文章</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		URL中文问题
+	</div>
+	
+	<div class="page-date">
+		2021-04-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>URL中文问题</p>
+<span id="more"></span>
+
+<h2 id="URL编码原理"><a href="#URL编码原理" class="headerlink" title="URL编码原理"></a>URL编码原理</h2><p>网页URL的合法字符分成两类：</p>
+<ul>
+<li><p>  URL元字符：分号（;），逗号（,），斜杠（/），问号（?），冒号（:），at（@），&amp;，等号（=），加号（+），美元符号（$），井号（#）</p>
+</li>
+<li><p>  语义字符：a-z，A-Z，0-9，连词号（-），下划线（_），点（.），感叹号（!），波浪线（~），星号（*），单引号（），圆括号（()）</p>
+</li>
+</ul>
+<p>除了以上字符，其他字符出现在URL之中都<strong>必须转义</strong>，规则是<strong>根据操作系统的默认编码</strong>，将每个字节转为百分号（%）加上两个大写的十六进制字母，这些不是什么乱码，而是UTF-8编码或者gbk(GB2312)编码，那些百分号（%）后面的数字和字母其实就是16进制数。</p>
+<ul>
+<li><p>  如果是中文的gbk(GB2312)编码，那么它的形式应该是这样的，即一个汉字对应两组%xx，即%xx%xx</p>
+</li>
+<li><p>  如果是中文的UTF-8编码，那么它的形式应该是这样的，即一个汉字对应三组%xx，即%xx%xx%xx</p>
+</li>
+</ul>
+<blockquote>
+<p>  为什么要使用这样的编码？<br>  这是为了兼容一些设备，有些设备只能传ASCII码，只认识128个字符，不认识汉字。</p>
+</blockquote>
+<h2 id="C-编码解码实现"><a href="#C-编码解码实现" class="headerlink" title="C++编码解码实现"></a>C++编码解码实现</h2><p>C++使用GBK编码</p>
+<p>绝对不编码的，只有字母、数字、短横线(-)、下划线(_)、点(.)和波浪号(~)，其他字符要视情况而定</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> <span class="hljs-title">ToHex</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> x)</span> </span><br><span class="hljs-function"></span>&#123; <br>    <span class="hljs-keyword">return</span>  x &gt; <span class="hljs-number">9</span> ? x + <span class="hljs-number">55</span> : x + <span class="hljs-number">48</span>; <br>&#125;<br> <br><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> <span class="hljs-title">FromHex</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> x)</span> </span><br><span class="hljs-function"></span>&#123; <br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> y;<br>    <span class="hljs-keyword">if</span> (x &gt;= <span class="hljs-string">&#x27;A&#x27;</span> &amp;&amp; x &lt;= <span class="hljs-string">&#x27;Z&#x27;</span>) y = x - <span class="hljs-string">&#x27;A&#x27;</span> + <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x &gt;= <span class="hljs-string">&#x27;a&#x27;</span> &amp;&amp; x &lt;= <span class="hljs-string">&#x27;z&#x27;</span>) y = x - <span class="hljs-string">&#x27;a&#x27;</span> + <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x &gt;= <span class="hljs-string">&#x27;0&#x27;</span> &amp;&amp; x &lt;= <span class="hljs-string">&#x27;9&#x27;</span>) y = x - <span class="hljs-string">&#x27;0&#x27;</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">assert</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> y;<br>&#125;<br> <br><span class="hljs-function">std::string <span class="hljs-title">UrlEncode</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::string&amp; str)</span></span><br><span class="hljs-function"></span>&#123;<br>    std::string strTemp = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">size_t</span> length = str.<span class="hljs-built_in">length</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; length; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isalnum</span>((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>)str[i]) || <br>            (str[i] == <span class="hljs-string">&#x27;-&#x27;</span>) ||<br>            (str[i] == <span class="hljs-string">&#x27;_&#x27;</span>) || <br>            (str[i] == <span class="hljs-string">&#x27;.&#x27;</span>) || <br>            (str[i] == <span class="hljs-string">&#x27;~&#x27;</span>))<br>            strTemp += str[i];<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (str[i] == <span class="hljs-string">&#x27; &#x27;</span>)<br>            strTemp += <span class="hljs-string">&quot;+&quot;</span>;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            strTemp += <span class="hljs-string">&#x27;%&#x27;</span>;<br>            strTemp += <span class="hljs-built_in">ToHex</span>((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>)str[i] &gt;&gt; <span class="hljs-number">4</span>);<br>            strTemp += <span class="hljs-built_in">ToHex</span>((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>)str[i] % <span class="hljs-number">16</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> strTemp;<br>&#125;<br> <br><span class="hljs-function">std::string <span class="hljs-title">UrlDecode</span><span class="hljs-params">(<span class="hljs-keyword">const</span> std::string&amp; str)</span></span><br><span class="hljs-function"></span>&#123;<br>    std::string strTemp = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-keyword">size_t</span> length = str.<span class="hljs-built_in">length</span>();<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; length; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (str[i] == <span class="hljs-string">&#x27;+&#x27;</span>) strTemp += <span class="hljs-string">&#x27; &#x27;</span>;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (str[i] == <span class="hljs-string">&#x27;%&#x27;</span>)<br>        &#123;<br>            <span class="hljs-built_in">assert</span>(i + <span class="hljs-number">2</span> &lt; length);<br>            <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> high = <span class="hljs-built_in">FromHex</span>((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>)str[++i]);<br>            <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> low = <span class="hljs-built_in">FromHex</span>((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>)str[++i]);<br>            strTemp += high*<span class="hljs-number">16</span> + low;<br>        &#125;<br>        <span class="hljs-keyword">else</span> strTemp += str[i];<br>    &#125;<br>    <span class="hljs-keyword">return</span> strTemp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://www.douban.com/note/209548174/">含有中文的网址中显示百分号%、十六进制数字等“乱码”是什么?</a></p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000011268085">URL传递中文编码的解决方案</a></p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="http://www.voidcn.com/article/p-yurfrgwa-bpu.html">C++ Http请求中文传参乱码问题</a></p>
+</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

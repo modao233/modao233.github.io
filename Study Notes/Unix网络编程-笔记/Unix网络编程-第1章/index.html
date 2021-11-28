@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AB%A0%E8%8A%82%E6%9C%AB%E4%B9%A0%E9%A2%98%EF%BC%9A"><span class="toc-text">章节末习题：</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Unix网络编程-第1章 简介
+	</div>
+	
+	<div class="page-date">
+		2019-12-07
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Unix网络编程">Unix网络编程</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>Unix网络编程-第1章 简介</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">源代码下载：http://www.unpbook.com/<br><br>源代码使用方法见解压后的README文件<br></code></pre></td></tr></table></figure>
+
+<p><strong>TCP是一个没有记录边界的<em>字节流</em>协议，TCP本身并不提供记录结束的标志：如果应用程序需要确定记录的边界，它就要自己去实现，已有的一些常用的方法可供选择。</strong></p>
+<p><strong>迭代服务器</strong>：对于每个客户都迭代执行一次。</p>
+<p><strong>并发服务器</strong>：同时能处理多个客户。</p>
+<p><strong>原始套接字</strong>：网络应用绕过传输层直接使用IPv4或IPv6。</p>
+<p><strong>为什么套接字提供的是从OSI模型的顶上三层进入传输层的接口？</strong></p>
+<p>理由有两：</p>
+<ol>
+<li> 顶上三层处理具体网络应用的所有细节，却对通信细节了解很少；底下四层对具体网络应用了解不多，却处理所有的通信细节：发送数据，等待确认，给无序到达的数据排序，计算并验证校验和，等等。</li>
+<li> 顶上三层通常构成所谓的用户进程(user process)，底下四层却通常作为操作系统内核的一部分提供。Unix与其他现代操作系统都提供分隔用户进程与内核的机制。</li>
+</ol>
+<p>由此可见，第4层和第5层之间的接口是构建API的的自然位置。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0/image-20210313172914195.png" alt="image-20210313172914195"></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0/image-20210122104917940.png" alt="image-20210122104917940"></p>
+<p><strong>网络拓扑的发现</strong></p>
+<ol>
+<li> netstat -ni，提供网络接口信息，-n标志指定输出数值地址</li>
+<li> netstat -nr，展示路由表，-n标志指定输出数值地址</li>
+<li> ifconfig，查看所有接口详细信息</li>
+<li> ifconfig eth0，查看eth0接口的详细信息</li>
+</ol>
+<p><strong>POSIX是Portable Operating System Interface的首字母的缩写，可移植操作系统接口。</strong></p>
+<p>现有32位Unix系统上共同的编程模型称为ILP32模型，表示整数（I）、长整数（L)、指针（P）都占用32位</p>
+<p>64位Unix系统上变得最为流行的模型称为LP64模型，表示只有长整数（L）、指针（P）占用64位</p>
+<p>LP64模型意味着我们不能假设一个指针能存放在一个整数中。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>ILP32</th>
+<th>LP64</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>short</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>int</td>
+<td>32</td>
+<td>32</td>
+</tr>
+<tr>
+<td>long</td>
+<td>32</td>
+<td>64</td>
+</tr>
+<tr>
+<td>指针</td>
+<td>32</td>
+<td>64</td>
+</tr>
+</tbody></table>
+<h2 id="章节末习题："><a href="#章节末习题：" class="headerlink" title="章节末习题："></a>章节末习题：</h2><p>第三题：</p>
+<p>修改client socket(AF_INET, SOCK_STREAM, 0) AF_INET成9999，结果报socket error: Address family not supported by protocol family ，经查询：AF_INET本身代表了protocol family的一个特殊标记值，如果修改成其他值，相当于一个新的protocol family，那么之后传入的address family当然不会支持了。</p>
+<p>第四题：</p>
+<p>client增加一个计数器并打印。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">int</span> counter = <span class="hljs-number">0</span>;<br><br><span class="hljs-keyword">while</span> ( (n = read(sockfd, recvline, MAXLINE)) &gt; <span class="hljs-number">0</span>) &#123;<br>    counter++;<br>    recvline[n] = <span class="hljs-number">0</span>;    <span class="hljs-comment">/* null terminate */</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">fputs</span>(recvline, <span class="hljs-built_in">stdout</span>) == EOF)<br>        err_sys(<span class="hljs-string">&quot;fputs error&quot;</span>);<br>&#125;<br><br><span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>,counter);<br></code></pre></td></tr></table></figure>
+
+<p>第五题：</p>
+<p>修改server端代码，将原本完整的内容，单字节发送，并查看client端实际执行的read次数。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-built_in">snprintf</span>(buff, <span class="hljs-keyword">sizeof</span>(buff), <span class="hljs-string">&quot;%.24s\r\n&quot;</span>, ctime(&amp;ticks));<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">strlen</span>(buff); ++i) &#123;<br>    Write(connfd, &amp;(buff[i]), <span class="hljs-number">1</span>);<br>&#125;<br><br>Close(connfd);<br></code></pre></td></tr></table></figure>
+
+<p>实际执行client端，每次执行read的counter都在变化。</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

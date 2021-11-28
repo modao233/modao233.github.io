@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B"><span class="toc-text">懒汉式单例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E6%B1%89-%E4%BA%92%E6%96%A5%E5%8F%98%E9%87%8F%EF%BC%9A"><span class="toc-text">懒汉+互斥变量：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%87%92%E6%B1%89-%E6%A3%80%E6%B5%8B%E5%90%8E%E5%8A%A0%E9%94%81%E2%80%94%E2%80%94DCL%EF%BC%88%E5%8F%8C%E6%A3%80%E6%B5%8B%E9%94%81%EF%BC%89"><span class="toc-text">懒汉+检测后加锁——DCL（双检测锁）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#call-once-once-flag"><span class="toc-text">call_once&#x2F;once_flag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Meyers%E2%80%99-Singleton"><span class="toc-text">Meyers’ Singleton</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#static-local-%E5%8D%95%E4%BE%8B%E6%A8%A1%E6%9D%BF"><span class="toc-text">static local 单例模板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-text">参考文章</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		单例模式
+	</div>
+	
+	<div class="page-date">
+		2021-03-03
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Design Pattern(GoF)">Design Pattern(GoF)</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>使用C++实现单例模式样例</p>
+<span id="more"></span>
+
+<p>单例模式应该返回引用，而不是返回指针，避免滥用。</p>
+<h2 id="懒汉式单例"><a href="#懒汉式单例" class="headerlink" title="懒汉式单例"></a>懒汉式单例</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;thread&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;chrono&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><span class="hljs-keyword">using</span> std::thread;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Single</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Single &amp;<span class="hljs-title">instance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(ptr_single == <span class="hljs-literal">nullptr</span>)&#123;<br>            std::this_thread::<span class="hljs-built_in">sleep_for</span>(std::chrono::<span class="hljs-built_in">milliseconds</span>(<span class="hljs-number">1000</span>));<span class="hljs-comment">//睡眠1000毫秒</span><br>            ptr_single = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Single</span>();<br>            cout &lt;&lt; <span class="hljs-string">&quot;init&quot;</span> &lt;&lt; endl;<br>        &#125;<br>        <br>        cout &lt;&lt; <span class="hljs-string">&quot;not init&quot;</span> &lt;&lt; endl;<br>        <span class="hljs-keyword">return</span> *ptr_single;<br>    &#125;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">static</span> Single* ptr_single;<span class="hljs-comment">//静态单例指针，保存单例对象</span><br>    <span class="hljs-built_in">Single</span>(<span class="hljs-keyword">const</span> Single &amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Single</span>()=<span class="hljs-keyword">default</span>;<span class="hljs-comment">//私有构建函数，只能由编译器调用</span><br>&#125;;<br><br>Single* Single::ptr_single=<span class="hljs-literal">nullptr</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t3</span><span class="hljs-params">(Single::instance)</span></span>;<br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br>    t3.<span class="hljs-built_in">join</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>存在问题：内存无释放、线程不安全</p>
+<h2 id="懒汉-互斥变量："><a href="#懒汉-互斥变量：" class="headerlink" title="懒汉+互斥变量："></a>懒汉+互斥变量：</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;thread&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;chrono&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mutex&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><span class="hljs-keyword">using</span> std::thread;<br><br>std::mutex g_mutex;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Single</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Single &amp;<span class="hljs-title">instance</span><span class="hljs-params">()</span></span>&#123;<br>        g_mutex.<span class="hljs-built_in">lock</span>();<br>        <span class="hljs-keyword">if</span>(ptr_single == <span class="hljs-literal">nullptr</span>)&#123;<br>            std::this_thread::<span class="hljs-built_in">sleep_for</span>(std::chrono::<span class="hljs-built_in">milliseconds</span>(<span class="hljs-number">100</span>));<span class="hljs-comment">//睡眠1000毫秒</span><br>            ptr_single = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Single</span>();<br>            cout &lt;&lt; <span class="hljs-string">&quot;init&quot;</span> &lt;&lt; endl;<br>        &#125;<br>        <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;not init&quot;</span> &lt;&lt; endl;<br>        g_mutex.<span class="hljs-built_in">unlock</span>();<br>        <span class="hljs-keyword">return</span> *ptr_single;<br>    &#125;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">static</span> Single* ptr_single;<span class="hljs-comment">//静态单例指针，保存单例对象</span><br>    <span class="hljs-built_in">Single</span>(<span class="hljs-keyword">const</span> Single &amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Single</span>()=<span class="hljs-keyword">default</span>;<span class="hljs-comment">//私有构建函数，只能由编译器调用</span><br>&#125;;<br><br>Single* Single::ptr_single=<span class="hljs-literal">nullptr</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t3</span><span class="hljs-params">(Single::instance)</span></span>;<br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br>    t3.<span class="hljs-built_in">join</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>存在问题：不管需不需要初始化对象，都有加锁和解锁。</p>
+<h2 id="懒汉-检测后加锁——DCL（双检测锁）"><a href="#懒汉-检测后加锁——DCL（双检测锁）" class="headerlink" title="懒汉+检测后加锁——DCL（双检测锁）"></a>懒汉+检测后加锁——DCL（双检测锁）</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;thread&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;chrono&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mutex&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><span class="hljs-keyword">using</span> std::thread;<br><br>std::mutex g_mutex;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Single</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Single &amp;<span class="hljs-title">instance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(ptr_single == <span class="hljs-literal">nullptr</span>)&#123;<br>            g_mutex.<span class="hljs-built_in">lock</span>();<br>            <span class="hljs-keyword">if</span>(ptr_single == <span class="hljs-literal">nullptr</span>)&#123;<br>                std::this_thread::<span class="hljs-built_in">sleep_for</span>(std::chrono::<span class="hljs-built_in">milliseconds</span>(<span class="hljs-number">100</span>));<span class="hljs-comment">//睡眠1000毫秒</span><br>                ptr_single = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Single</span>();<br>                cout &lt;&lt; <span class="hljs-string">&quot;init&quot;</span> &lt;&lt; endl;<br>            &#125;<br>            <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;not init&quot;</span> &lt;&lt; endl;<br>            g_mutex.<span class="hljs-built_in">unlock</span>();<br>        &#125;<br>        <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;not init&quot;</span> &lt;&lt; endl;<br>        <span class="hljs-keyword">return</span> *ptr_single;<br>    &#125;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">static</span> Single* ptr_single;<span class="hljs-comment">//静态单例指针，保存单例对象</span><br>    <span class="hljs-built_in">Single</span>(<span class="hljs-keyword">const</span> Single &amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Single</span>()=<span class="hljs-keyword">default</span>;<span class="hljs-comment">//私有构建函数，只能由编译器调用</span><br>&#125;;<br><br>Single* Single::ptr_single=<span class="hljs-literal">nullptr</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t3</span><span class="hljs-params">(Single::instance)</span></span>;<br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br>    t3.<span class="hljs-built_in">join</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>存在问题：由于内存读写的乱序执行（编译器的问题），DCL不能保证线程安全。</p>
+<p>new操作可分三步骤：</p>
+<ol>
+<li> 分配类对象所需的内存</li>
+<li> 在分配的内存初始化对象</li>
+<li> 把分配的内存的地址赋给指针</li>
+</ol>
+<p>该操作只能保证步骤1优先执行，步骤2和步骤3的执行顺序不一定。</p>
+<p>针对此问题，Java和C#添加了关键字<code>volatile</code>，VC++2005以上版本也加入该关键字，编译器看到该关键字，一定要先分配内存，在执行构造器，都完成之后再赋值。</p>
+<p>到了<code>c++ 11</code>版本，终于有了这样的机制帮助我们实现跨平台的方案。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//C++ 11版本之后的跨平台实现 </span><br><span class="hljs-comment">// atomic c++11中提供的原子操作</span><br>std::atomic&lt;Singleton*&gt; Singleton::m_instance;<br>std::mutex Singleton::m_mutex;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">* std::atomic_thread_fence(std::memory_order_acquire); </span><br><span class="hljs-comment">* std::atomic_thread_fence(std::memory_order_release);</span><br><span class="hljs-comment">* 这两句话可以保证他们之间的语句不会发生乱序执行。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-function">Singleton* <span class="hljs-title">Singleton::getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>    Singleton* tmp = m_instance.<span class="hljs-built_in">load</span>(std::memory_order_relaxed);<br>    std::<span class="hljs-built_in">atomic_thread_fence</span>(std::memory_order_acquire);<span class="hljs-comment">//获取内存fence</span><br>    <span class="hljs-keyword">if</span> (tmp == <span class="hljs-literal">nullptr</span>) &#123;<br>        <span class="hljs-function">std::lock_guard&lt;std::mutex&gt; <span class="hljs-title">lock</span><span class="hljs-params">(m_mutex)</span></span>;<br>        tmp = m_instance.<span class="hljs-built_in">load</span>(std::memory_order_relaxed);<br>        <span class="hljs-keyword">if</span> (tmp == <span class="hljs-literal">nullptr</span>) &#123;<br>            tmp = <span class="hljs-keyword">new</span> Singleton;<br>            std::<span class="hljs-built_in">atomic_thread_fence</span>(std::memory_order_release);<span class="hljs-comment">//释放内存fence</span><br>            m_instance.<span class="hljs-built_in">store</span>(tmp, std::memory_order_relaxed);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> tmp;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="call-once-once-flag"><a href="#call-once-once-flag" class="headerlink" title="call_once/once_flag"></a>call_once/once_flag</h2><p><code>c++ 11</code>提供<code>std::call_once</code>方法来保证函数在多线程环境中只被调用一次，需要一个<code>once_flag</code>的参数。</p>
+<p>类似方法在不同平台有各自的实现：</p>
+<ul>
+<li>  Linux：<code>pthread_once()</code>函数可以保证某个函数只执行一次</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;thread&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;chrono&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mutex&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><span class="hljs-keyword">using</span> std::thread;<br><br>std::mutex g_mutex;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Single</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Single &amp;<span class="hljs-title">get_instance</span><span class="hljs-params">()</span></span>&#123;<br>        std::<span class="hljs-built_in">call_once</span>(flag, instance);<br>        <span class="hljs-keyword">return</span> *ptr_single;<br>    &#125;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-keyword">static</span> Single* ptr_single;<span class="hljs-comment">//静态单例指针，保存单例对象</span><br>    <span class="hljs-keyword">static</span> std::once_flag flag;<br>    <span class="hljs-built_in">Single</span>(<span class="hljs-keyword">const</span> Single &amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Single</span>()=<span class="hljs-keyword">default</span>;<span class="hljs-comment">//私有构建函数，只能由编译器调用</span><br>    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">instance</span><span class="hljs-params">()</span></span>&#123;<br>        ptr_single = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Single</span>();<br>        cout &lt;&lt; <span class="hljs-string">&quot;init&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br>Single* Single::ptr_single=<span class="hljs-literal">nullptr</span>;<br>std::once_flag Single::flag;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(Single::get_instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(Single::get_instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t3</span><span class="hljs-params">(Single::get_instance)</span></span>;<br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br>    t3.<span class="hljs-built_in">join</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Meyers’-Singleton"><a href="#Meyers’-Singleton" class="headerlink" title="Meyers’ Singleton"></a>Meyers’ Singleton</h2><p>Meyers’ Singleton，著名的写出《Effective C++》系列书籍的作者 Meyers 提出的。所用到的特性是在C++11标准中的<a target="_blank" rel="noopener" href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2660.htm">Magic Static</a>特性：</p>
+<blockquote>
+<p>  If control enters the declaration concurrently while the variable is  being initialized, the concurrent execution shall wait for completion of the initialization.<br>   如果当变量在初始化的时候，并发同时进入声明语句，并发线程将会阻塞等待初始化结束。</p>
+</blockquote>
+<p>可以理解为变量初始化前后由互斥变量加锁和解锁。</p>
+<p>由该特性可知道，静态局部变量是线程安全的。</p>
+<p>这样保证了并发线程在获取静态局部变量的时候一定是初始化过的，所以具有线程安全性。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;thread&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><span class="hljs-keyword">using</span> std::thread;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Single</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Single &amp;<span class="hljs-title">instance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">static</span> Single single;<br>        <span class="hljs-keyword">return</span> single;<br>    &#125;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Single</span>(<span class="hljs-keyword">const</span> Single &amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Single</span>()&#123;<span class="hljs-comment">//私有构建函数，只能由编译器调用</span><br>        cout &lt;&lt; <span class="hljs-string">&quot;init&quot;</span> &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t3</span><span class="hljs-params">(Single::instance)</span></span>;<br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br>    t3.<span class="hljs-built_in">join</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>static local 的变量只有在<strong>第一次执行的时候才会初始化</strong>，所以这是延迟初始化。</p>
+<p>可以通过静态变量，接收外部条件延迟初始化单例。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;thread&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><span class="hljs-keyword">using</span> std::thread;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Single</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Single &amp;<span class="hljs-title">instance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-function"><span class="hljs-keyword">static</span> Single <span class="hljs-title">single</span><span class="hljs-params">(pram)</span></span>;<br>        <span class="hljs-keyword">return</span> single;<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> pram;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Single</span>(<span class="hljs-keyword">const</span> Single &amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-built_in">Single</span>(<span class="hljs-keyword">int</span> arg)&#123;<span class="hljs-comment">//私有构建函数，只能由编译器调用</span><br>        cout &lt;&lt; <span class="hljs-string">&quot;init: &quot;</span> &lt;&lt; arg &lt;&lt; endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-keyword">int</span> Single::pram = <span class="hljs-number">2</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-function">thread <span class="hljs-title">t1</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t2</span><span class="hljs-params">(Single::instance)</span></span>;<br>    <span class="hljs-function">thread <span class="hljs-title">t3</span><span class="hljs-params">(Single::instance)</span></span>;<br>    t1.<span class="hljs-built_in">join</span>();<br>    t2.<span class="hljs-built_in">join</span>();<br>    t3.<span class="hljs-built_in">join</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="static-local-单例模板"><a href="#static-local-单例模板" class="headerlink" title="static local 单例模板"></a>static local 单例模板</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> T&amp; <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">static</span> T value_; <span class="hljs-comment">//静态局部变量</span><br>        <span class="hljs-keyword">return</span> value_;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Singleton</span>();<br>    ~<span class="hljs-built_in">Singleton</span>();<br>    <span class="hljs-built_in">Singleton</span>(<span class="hljs-keyword">const</span> Singleton&amp;); <span class="hljs-comment">//拷贝构造函数</span><br>    Singleton&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Singleton&amp;); <span class="hljs-comment">// =运算符重载</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li>  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/342769966">线程安全的C++单例实现与性能测试</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000015950693">设计模式之单例模式(c++版)</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunchaothu/p/10389842.html">C++ 单例模式总结与剖析</a></li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

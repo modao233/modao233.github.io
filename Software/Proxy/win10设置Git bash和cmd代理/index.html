@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-bash%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86"><span class="toc-text">Git bash设置代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E4%BB%A3%E7%90%86"><span class="toc-text">临时代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B0%B8%E4%B9%85%E4%BB%A3%E7%90%86"><span class="toc-text">永久代理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cmd%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86"><span class="toc-text">cmd设置代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E4%BB%A3%E7%90%86-1"><span class="toc-text">临时代理</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		win10设置Git bash和cmd代理
+	</div>
+	
+	<div class="page-date">
+		2020-06-02
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Proxy">Proxy</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>win10设置Git bash和cmd代理</p>
+<span id="more"></span>
+
+<h2 id="Git-bash设置代理"><a href="#Git-bash设置代理" class="headerlink" title="Git bash设置代理"></a>Git bash设置代理</h2><h3 id="临时代理"><a href="#临时代理" class="headerlink" title="临时代理"></a>临时代理</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">export all_proxy=127.0.0.1:10809<br></code></pre></td></tr></table></figure>
+
+<p><strong>临时代理是在当前窗口有效，关闭后就失效，适合偶尔使用，个人觉得比较方便</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># 1080是我个人使用的代理端口，不是默认配置，需要按照实际情况修改，以下同此<br>export http_proxy=http://127.0.0.1:1080<br>export https_proxy=https://127.0.0.1:1080<br><br>export http_proxy=socks5://127.0.0.1:1080<br>export https_proxy=socks5://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
+
+<h3 id="永久代理"><a href="#永久代理" class="headerlink" title="永久代理"></a>永久代理</h3><p><strong>永久代理的原理是修改配置文件，Git bash启动时读取配置文件并生效</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># 参数可以使用--system、--global、--local，这里使用global，下文同理<br>git config --global http.proxy http://127.0.0.1:1080<br>git config --global https.proxy https://127.0.0.1:1080<br><br>git config --global http.proxy socks5://127.0.0.1:1080<br>git config --global https.proxy socks5://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
+
+<p><strong>既可以使用命令修改配置，也可直接修改配置文件：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">[http]<br>proxy = http://127.0.0.1:1080<br>[https]<br>proxy = https://127.0.0.1:1080<br><br>[http]<br>proxy = socks5://127.0.0.1:1080<br>[https]<br>proxy = socks5://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
+
+<p><strong>取消代理</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">git config --global --unset http.proxy<br>git config --global --unset https.proxy<br></code></pre></td></tr></table></figure>
+
+<p><strong>查看代理情况</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">git config --get --global http.proxy<br>git config --get --global https.proxy<br><br>git config --get --global http.proxy socks5<br>git config --get --global https.proxy socks5<br></code></pre></td></tr></table></figure>
+
+<h2 id="cmd设置代理"><a href="#cmd设置代理" class="headerlink" title="cmd设置代理"></a>cmd设置代理</h2><h3 id="临时代理-1"><a href="#临时代理-1" class="headerlink" title="临时代理"></a>临时代理</h3><p><strong>临时代理是在当前窗口有效，关闭后就失效，适合偶尔使用，个人觉得比较方便</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">set http_proxy=http://127.0.0.1:1080<br>set https_proxy=https://127.0.0.1:1080<br><br>set http_proxy=socks5://127.0.0.1:1080<br>set https_proxy=socks5://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

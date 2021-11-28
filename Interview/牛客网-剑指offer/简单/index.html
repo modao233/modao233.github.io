@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ1%EF%BC%9A%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E6%9F%A5%E6%89%BE"><span class="toc-text">JZ1：二维数组中查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ2%EF%BC%9A%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC"><span class="toc-text">JZ2：替换空格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ3%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8"><span class="toc-text">JZ3从尾到头打印链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ4-%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">JZ4 重建二叉树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ5%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97"><span class="toc-text">JZ5用两个栈实现队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ6%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97"><span class="toc-text">JZ6旋转数组的最小数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ7%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="toc-text">JZ7斐波那契数列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ48-%E4%B8%8D%E7%94%A8%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E5%81%9A%E5%8A%A0%E6%B3%95"><span class="toc-text">JZ48 不用加减乘除做加法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-1"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-2"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-3"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-4"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-5"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-6"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-7"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-8"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-9"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-10"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-11"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-12"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-13"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-14"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-15"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-16"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-17"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-18"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-19"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-20"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-JZ"><span class="toc-text">JZ&#96;&#96;JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-21"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-22"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-23"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-24"><span class="toc-text">JZ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JZ-25"><span class="toc-text">JZ</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		牛客网-剑指offer算法专栏
+	</div>
+	
+	<div class="page-date">
+		2020-07-09
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Algorithm">Algorithm</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>对算法题的一些记录。</p>
+<span id="more"></span>
+
+<h2 id="JZ1：二维数组中查找"><a href="#JZ1：二维数组中查找" class="headerlink" title="JZ1：二维数组中查找"></a><code>JZ1</code>：二维数组中查找</h2><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/* 思路<br>* 矩阵是有序的，从左下角来看，向上数字递减，向右数字递增，<br>* 因此从左下角开始查找，当要查找数字比左下角数字大时。右移<br>* 要查找数字比左下角数字小时，上移<br>*/<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">Find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> target, vector&lt;vector&lt;<span class="hljs-keyword">int</span>&gt; &gt; array)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> row = array.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">int</span> col = array[<span class="hljs-number">0</span>].<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">int</span> m = row<span class="hljs-number">-1</span>, n = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(m&gt;=<span class="hljs-number">0</span> &amp;&amp; n &lt; col)&#123;<br>            <span class="hljs-keyword">if</span>(target == array[m][n])<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(target &gt; array[m][n])++n;<br>            <span class="hljs-keyword">else</span> --m;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><strong>循环判断的条件不使用无符号类型</strong></p>
+<h2 id="JZ2：替换空格"><a href="#JZ2：替换空格" class="headerlink" title="JZ2：替换空格"></a><code>JZ2</code>：替换空格</h2><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">/*<br>问题1：替换字符串，是在原来的字符串上做替换，还是新开辟一个字符串做替换！<br>问题2：在当前字符串替换，怎么替换才更有效率（不考虑java里现有的replace方法）。<br>   ``从前往后替换，后面的字符要不断往后移动，要多次移动，所以效率低下<br>   ``从后往前，先计算需要多少空间，然后从后往前移动，则每个字符只为移动一次，这样效率更高一点。<br>*/<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">replaceSpace</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *str,<span class="hljs-keyword">int</span> length)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> count=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;length;i++)&#123;<br>            <span class="hljs-keyword">if</span>(str[i]==<span class="hljs-string">&#x27; &#x27;</span>)<br>                count++;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=length<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;i--)&#123;<br>            <span class="hljs-keyword">if</span>(str[i]!=<span class="hljs-string">&#x27; &#x27;</span>)&#123;<br>                str[i+<span class="hljs-number">2</span>*count]=str[i];<br>            &#125;<br>            <span class="hljs-keyword">else</span>&#123;<br>                count--;<br>                str[i+<span class="hljs-number">2</span>*count]=<span class="hljs-string">&#x27;%&#x27;</span>;<br>                str[i+<span class="hljs-number">2</span>*count+<span class="hljs-number">1</span>]=<span class="hljs-string">&#x27;2&#x27;</span>;<br>                str[i+<span class="hljs-number">2</span>*count+<span class="hljs-number">2</span>]=<span class="hljs-string">&#x27;0&#x27;</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="JZ3从尾到头打印链表"><a href="#JZ3从尾到头打印链表" class="headerlink" title="JZ3从尾到头打印链表"></a><code>JZ3</code>从尾到头打印链表</h2><p>输入一个链表，按链表从尾到头的顺序返回一个ArrayList。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">思路1：利用栈先入后出的特性完成<br>思路2：保存数组，数组翻转<br>思路3：递归<br>/**<br>*  struct ListNode &#123;<br>*        int val;<br>*        struct ListNode *next;<br>*        ListNode(int x) :<br>*              val(x), next(NULL) &#123;<br>*        &#125;<br>*  &#125;;<br>*/<br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">printListFromTailToHead</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        stack&lt;<span class="hljs-keyword">int</span>&gt; temp;<br>        <span class="hljs-keyword">while</span>(head != <span class="hljs-literal">NULL</span>)&#123;<br>            temp.<span class="hljs-built_in">push</span>(head-&gt;val);<br>            head = head -&gt; next;<br>        &#125;<br>        vector&lt;<span class="hljs-keyword">int</span>&gt; a;<br>        <span class="hljs-keyword">while</span>(!temp.<span class="hljs-built_in">empty</span>())&#123;<br>            a.<span class="hljs-built_in">push_back</span>(temp.<span class="hljs-built_in">top</span>());<br>            temp.<span class="hljs-built_in">pop</span>();<br>        &#125;<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">printListFromTailToHead</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        vector&lt;<span class="hljs-keyword">int</span>&gt; a;<br>        <span class="hljs-keyword">while</span>(head != <span class="hljs-literal">NULL</span>)&#123;<br>            a.<span class="hljs-built_in">push_back</span>(head-&gt;val);<br>            head = head -&gt; next;<br>        &#125;<br>        <span class="hljs-built_in">reverse</span>(a.<span class="hljs-built_in">begin</span>(), a.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">printListFromTailToHead</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;<br>        vector&lt;<span class="hljs-keyword">int</span>&gt; a;<br>        <span class="hljs-keyword">if</span>(head != <span class="hljs-literal">NULL</span>)&#123;<br>            a.<span class="hljs-built_in">insert</span>(a.<span class="hljs-built_in">begin</span>(), head-&gt;val);<br>            <span class="hljs-keyword">if</span>(head -&gt; next != <span class="hljs-literal">NULL</span>)&#123;<br>                vector&lt;<span class="hljs-keyword">int</span>&gt; b = <span class="hljs-built_in">printListFromTailToHead</span>(head -&gt; next);<br>                <span class="hljs-keyword">if</span>(!b.<span class="hljs-built_in">empty</span>())a.<span class="hljs-built_in">insert</span>(a.<span class="hljs-built_in">begin</span>(), b.<span class="hljs-built_in">begin</span>(), b.<span class="hljs-built_in">end</span>());<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="JZ4-重建二叉树"><a href="#JZ4-重建二叉树" class="headerlink" title="JZ4 重建二叉树"></a><code>JZ4</code> 重建二叉树</h2><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">思路：因为是树的结构，一般都是用递归来实现。<br><br>用数学归纳法的思想就是，假设最后一步，就是root的左右子树都已经重建好了，那么我只要考虑将root的左右子树安上去即可。<br><br>根据前序遍历的性质，第一个元素必然就是root，那么下面的工作就是如何确定root的左右子树的范围。<br><br>根据中序遍历的性质，root元素前面都是root的左子树，后面都是root的右子树。那么我们只要找到中序遍历中root的位置，就可以确定好左右子树的范围。<br><br>正如上面所说，只需要将确定的左右子树安到root上即可。递归要注意出口，假设最后只有一个元素了，那么就要返回。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for binary tree</span><br><span class="hljs-comment"> * struct TreeNode &#123;</span><br><span class="hljs-comment"> *     int val;</span><br><span class="hljs-comment"> *     TreeNode *left;</span><br><span class="hljs-comment"> *     TreeNode *right;</span><br><span class="hljs-comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="hljs-comment"> * &#125;;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">TreeNode* <span class="hljs-title">reConstructBinaryTree</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; pre,vector&lt;<span class="hljs-keyword">int</span>&gt; vin)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> vinlen = vin.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">if</span>(!vinlen)<span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;<br>        TreeNode *root = <span class="hljs-keyword">new</span> <span class="hljs-built_in">TreeNode</span>(pre[<span class="hljs-number">0</span>]);<br>        <span class="hljs-keyword">if</span>(vinlen == <span class="hljs-number">1</span>)<span class="hljs-keyword">return</span> root;<br>        <span class="hljs-keyword">int</span> gen = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt; vinlen; i++)&#123;<br>            <span class="hljs-keyword">if</span>(pre[<span class="hljs-number">0</span>] == vin[i])&#123;<br>                gen = i;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>        vector&lt;<span class="hljs-keyword">int</span>&gt; pre_l, pre_r, vin_l, vin_r;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; gen; i++)&#123;<br>            vin_l.<span class="hljs-built_in">push_back</span>(vin[i]);<br>            pre_l.<span class="hljs-built_in">push_back</span>(pre[i+<span class="hljs-number">1</span>]);<br>        &#125;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = gen+<span class="hljs-number">1</span>; i &lt; vinlen; i++)&#123;<br>            vin_r.<span class="hljs-built_in">push_back</span>(vin[i]);<br>            pre_r.<span class="hljs-built_in">push_back</span>(pre[i]);<br>        &#125;<br>        root -&gt; left = <span class="hljs-built_in">reConstructBinaryTree</span>(pre_l, vin_l);<br>        root -&gt; right = <span class="hljs-built_in">reConstructBinaryTree</span>(pre_r, vin_r);<br>        <span class="hljs-keyword">return</span> root;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="JZ5用两个栈实现队列"><a href="#JZ5用两个栈实现队列" class="headerlink" title="JZ5用两个栈实现队列"></a><code>JZ5</code>用两个栈实现队列</h2><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">用两个栈实现一个队列的功能:<br><br>入队：将元素进栈A<br>出队：<br>    判断栈B是否为空，如果不为空，栈B直接出栈。<br>    如果为空，则将栈A中所有元素pop，并push进栈B，栈B出栈；<br><br>用两个队列实现一个栈的功能:<br><br>入栈：将元素进队列A<br>出栈：判断队列A中元素的个数是否为1，如果等于1，则出队列，<br>否则将队列A中的元素出队列，并放入队列B，直到队列A中的元素留下一个，然后队列A出队列，再把队列B中的元素出队列以此放入队列A中。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(<span class="hljs-keyword">int</span> node)</span> </span>&#123;<br>        stack1.<span class="hljs-built_in">push</span>(node);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pop</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">if</span>(!stack2.<span class="hljs-built_in">empty</span>())&#123;<br>            res = stack2.<span class="hljs-built_in">top</span>();<br>            stack2.<span class="hljs-built_in">pop</span>();<br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">while</span>(stack1.<span class="hljs-built_in">size</span>())&#123;<br>                <span class="hljs-keyword">int</span> temp = stack1.<span class="hljs-built_in">top</span>();<br>                stack1.<span class="hljs-built_in">pop</span>();<br>                stack2.<span class="hljs-built_in">push</span>(temp);<br>            &#125;<br>            res = stack2.<span class="hljs-built_in">top</span>();<br>            stack2.<span class="hljs-built_in">pop</span>();<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    stack&lt;<span class="hljs-keyword">int</span>&gt; stack1;<br>    stack&lt;<span class="hljs-keyword">int</span>&gt; stack2;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="JZ6旋转数组的最小数字"><a href="#JZ6旋转数组的最小数字" class="headerlink" title="JZ6旋转数组的最小数字"></a><code>JZ6</code>旋转数组的最小数字</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。<br> 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。<br> 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。<br> NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"> 思路：<br><br>（1）我们用两个指针left,right分别指向数组的第一个元素和最后一个元素。按照题目的旋转的规则，第一个元素应该是大于最后一个元素的（没有重复的元素）。<br><br>但是如果不是旋转，第一个元素肯定小于最后一个元素。<br><br>（2）找到数组的中间元素。<br><br>中间元素大于第一个元素，则中间元素位于前面的递增子数组，此时最小元素位于中间元素的后面。我们可以让第一个指针left指向中间元素。<br><br>移动之后，第一个指针仍然位于前面的递增数组中。<br><br>中间元素小于第一个元素，则中间元素位于后面的递增子数组，此时最小元素位于中间元素的前面。我们可以让第二个指针right指向中间元素。<br><br>移动之后，第二个指针仍然位于后面的递增数组中。<br><br>这样可以缩小寻找的范围。<br><br>（3）按照以上思路，第一个指针left总是指向前面递增数组的元素，第二个指针right总是指向后面递增的数组元素。<br><br>最终第一个指针将指向前面数组的最后一个元素，第二个指针指向后面数组中的第一个元素。<br><br>也就是说他们将指向两个相邻的元素，而第二个指针指向的刚好是最小的元素，这就是循环的结束条件。 <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//C++ 二分法</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minNumberInRotateArray</span><span class="hljs-params">(vector&lt;<span class="hljs-keyword">int</span>&gt; rotateArray)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (rotateArray.<span class="hljs-built_in">empty</span>()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = rotateArray.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span> (left &lt; right) &#123;<br>            <span class="hljs-comment">//确认子数组是否是类似1,1,2,4,5,..,7的非递减数组</span><br>            <span class="hljs-keyword">if</span> (rotateArray[left] &lt; rotateArray[right]) <span class="hljs-keyword">return</span> rotateArray[left];<br>             <br>            <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>            <span class="hljs-comment">//如果左半数组为有序数组</span><br>            <span class="hljs-keyword">if</span> (rotateArray[left] &lt; rotateArray[mid])<br>                left = mid + <span class="hljs-number">1</span>;<br>            <span class="hljs-comment">//如果右半数组为有序数组</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (rotateArray[mid] &lt; rotateArray[right])<br>                right = mid;<br>            <span class="hljs-comment">//否则，rotateArray[left] &gt;= rotateArray[mid] &gt;= rotateArray[right]</span><br>            <span class="hljs-comment">/*</span><br><span class="hljs-comment">            例如： 5 4 3 2 1</span><br><span class="hljs-comment">			应该为rotateArray[left] &gt;= rotateArray[mid] &gt;= rotateArray[right]</span><br><span class="hljs-comment">			所以要++left，而不能是--right。</span><br><span class="hljs-comment">			不然按照你的 rotateArray[left] == rotateArray[mid] == rotateArray[right] 话，--right也可行。</span><br><span class="hljs-comment">            */</span><br>            <span class="hljs-keyword">else</span> &#123;<br>                ++left;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> rotateArray[left];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="JZ7斐波那契数列"><a href="#JZ7斐波那契数列" class="headerlink" title="JZ7斐波那契数列"></a><code>JZ7</code>斐波那契数列</h2><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0，第1项是1）。 </p>
+<p>  n&lt;=39 </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++">思路：<br>    <span class="hljs-number">1.</span> 常规算法<br>    <span class="hljs-number">2.</span> 动态规划<br>    <span class="hljs-number">3.</span> 矩阵快速幂<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(n == <span class="hljs-number">1</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>,b = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">int</span> m = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>;i &lt;= n;i++)&#123;<br>            m = a + b;<br>            a = b;<br>            b = m;<br>        &#125;<br>        <span class="hljs-keyword">return</span> m;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// c++动态规划版 </span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Fibonacci</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> f = <span class="hljs-number">0</span>, g = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(n--&gt;<span class="hljs-number">0</span>) &#123;<br>            g += f;		<span class="hljs-comment">//最后g是算到第n+1个</span><br>            f = g - f;	<span class="hljs-comment">//通过g，算出第n个，算了第n+1个数，然后倒推</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> f;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="JZ48-不用加减乘除做加法"><a href="#JZ48-不用加减乘除做加法" class="headerlink" title="JZ48 不用加减乘除做加法"></a><code>JZ48</code> 不用加减乘除做加法</h2><p>写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">思路：位运算<br><br>1. 两个数异或：相当于每一位相加，而不考虑进位；<br>2. 两个数相与，并左移一位：相当于求得进位；<br>3. 将上述两步的结果相加 <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num1, <span class="hljs-keyword">int</span> num2)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">while</span>(num2)&#123;<br>            <span class="hljs-keyword">int</span> temp = num1 ^ num2;<br>            num2 = (num1 &amp; num2) &lt;&lt; <span class="hljs-number">1</span>;<br>            num1 = temp;<br>        &#125;<br>        <span class="hljs-keyword">return</span> num1;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="JZ"><a href="#JZ" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-1"><a href="#JZ-1" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-2"><a href="#JZ-2" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-3"><a href="#JZ-3" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-4"><a href="#JZ-4" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-5"><a href="#JZ-5" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-6"><a href="#JZ-6" class="headerlink" title="JZ"></a><code>JZ</code></h2><p>v</p>
+<h2 id="JZ-7"><a href="#JZ-7" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-8"><a href="#JZ-8" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-9"><a href="#JZ-9" class="headerlink" title="JZ"></a><code>JZ</code></h2><p>v</p>
+<p>v</p>
+<h2 id="JZ-10"><a href="#JZ-10" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-11"><a href="#JZ-11" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-12"><a href="#JZ-12" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-13"><a href="#JZ-13" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-14"><a href="#JZ-14" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-15"><a href="#JZ-15" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-16"><a href="#JZ-16" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-17"><a href="#JZ-17" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-18"><a href="#JZ-18" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-19"><a href="#JZ-19" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-20"><a href="#JZ-20" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-JZ"><a href="#JZ-JZ" class="headerlink" title="JZ``JZ"></a><code>JZ``JZ</code></h2><h2 id="JZ-21"><a href="#JZ-21" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-22"><a href="#JZ-22" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-23"><a href="#JZ-23" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-24"><a href="#JZ-24" class="headerlink" title="JZ"></a><code>JZ</code></h2><h2 id="JZ-25"><a href="#JZ-25" class="headerlink" title="JZ"></a><code>JZ</code></h2>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

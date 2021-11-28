@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99"><span class="toc-text">规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89%E7%9A%84%E5%8F%98%E5%8C%96"><span class="toc-text">含义的变化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3"><span class="toc-text">注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		inline 说明符
+	</div>
+	
+	<div class="page-date">
+		2020-12-29
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p> <code>inline</code> 说明符</p>
+<span id="more"></span>
+
+<h2 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h2><p>inline 说明符在用于函数的 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/declarations#.E8.AF.B4.E6.98.8E.E7.AC.A6">声明说明符序列</a> 时，将函数声明为一个 <em>内联（inline）函数</em>。</p>
+<p>完全在 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/classes">class/struct/union 的定义</a>之内<strong>定义</strong>的函数，无论它是成员函数还是非成员 friend 函数，均为隐式的内联函数。</p>
+<blockquote>
+<p>  C++11起</p>
+<p>  声明有 <code>constexpr</code> 的函数是隐式的内联函数。</p>
+<p>  弃置的函数是隐式的内联函数：其（弃置）定义可出现在多于一个翻译单元中。</p>
+</blockquote>
+<blockquote>
+<p>  C++17起：内联变量</p>
+<p>  <code>inline</code> 说明符，在用于具有<strong>静态存储期的变量</strong>（静态类成员或命名空间作用域变量）的 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/declarations#.E8.AF.B4.E6.98.8E.E7.AC.A6">声明说明符序列</a> 时，将变量声明为<em>内联变量</em>。</p>
+<p>  声明为 <code>constexpr</code> 的<strong>静态成员变量</strong>（但不是命名空间作用域变量）是隐式的内联变量。</p>
+</blockquote>
+<p><em>内联函数</em>或<em>内联变量</em> 具有下列性质：</p>
+<ol>
+<li> inline 函数或变量的定义必须在访问它的翻译单元中可达（不一定要在访问点前）。</li>
+<li>带<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/storage_duration">外部链接</a>的 inline 函数或变量（例如不声明为 static ）拥有下列额外属性：<ol>
+<li> 内联函数或变量 (C++17 起)在程序中可拥有<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/definition#.E5.8D.95.E4.B8.80.E5.AE.9A.E4.B9.89.E8.A7.84.E5.88.99.EF.BC.88ODR.EF.BC.89">多于一次定义</a>，只要每个定义都出现在不同翻译单元中（对于非静态的内联函数和变量）且所有定义等同即可。例如，内联函数或内联变量可定义于被多个源文件所 #include 的头文件中。</li>
+<li> 它必须在每个翻译单元中均声明为 inline 。</li>
+<li> 它在每个翻译单元中均拥有相同地址。</li>
+</ol>
+</li>
+</ol>
+<p>在内联函数中，</p>
+<ul>
+<li>  所有函数定义中的函数局部静态对象在所有翻译单元间共享（它们都指代相同的定义于某一个翻译单元中的对象）</li>
+<li>  所有函数定义中所定义的类型亦在所有翻译单元中相同。</li>
+</ul>
+<blockquote>
+<p>  C++17起：</p>
+<p>  命名空间作用域的内联 const 变量默认具有<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/storage_duration">外部链接</a>（这点不同于非内联非 volatile 的有 const 限定的变量）</p>
+</blockquote>
+<h2 id="含义的变化"><a href="#含义的变化" class="headerlink" title="含义的变化"></a>含义的变化</h2><p>inline 关键词的本意是作为给优化器的指示器，以指示优先采用<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/inline_expansion">函数的内联替换</a>而非进行函数调用，即并不执行将控制转移到函数体内的函数调用 CPU 指令，而是代之以执行函数体的一份副本而无需生成调用。这会避免函数调用的开销（传递实参及返回结果），但它可能导致更大的可执行文件，因为函数体必须被复制多次。</p>
+<p>因为关键词 inline 的含义是非强制的，编译器拥有对任何未标记为 inline 的函数使用内联替换的自由，和对任何标记为 inline 的函数生成函数调用的自由。这些优化选择不改变上述关于多个定义和共享静态变量的规则。</p>
+<p><strong>C++17 起：由于关键词 inline 对于函数的含义已经变为“<em>容许多次定义</em>”而不是“<em>优先内联</em>”，因此这个含义也扩展到了变量。</strong></p>
+<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><p>若具有外部连接的内联函数或变量在不同翻译单元中的<strong>定义不同</strong>，则<strong>行为未定义</strong>。</p>
+<p>inline 说明符不能用于块作用域内（函数内部）的函数或变量声明</p>
+<p>inline 说明符<strong>不能重声明</strong>在翻译单元中<strong>已定义的非内联</strong>函数或变量。</p>
+<p>隐式生成的成员函数、任何在其首条声明中声明为inline的成员函数、任何在类定义内定义的函数：都是内联的。</p>
+<p>若内联函数在不同翻译单元中进行声明，则其<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/default_arguments">默认实参</a>的积累集合必须在每个翻译单元的末尾相同。</p>
+<blockquote>
+<p>  在 C 中，内联函数不必在每个翻译单元声明为 inline（至多一个可为非 inline 或 extern inline），函数定义不必相同（但若程序依赖于调用的是哪个函数，则行为未指明），且函数局部的静态变量在同一函数的不同定义间不同。</p>
+</blockquote>
+<blockquote>
+<p>  C++17起：</p>
+<p>  关于内联静态成员的额外规则见<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/static">静态数据成员</a></p>
+<p>  内联变量消除了将 C++ 代码打包为唯头文件的库的主要障碍（允许多次（相同）定义）</p>
+</blockquote>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 头文件</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> EXAMPLE_H</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> EXAMPLE_H</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;atomic&gt;</span></span><br><span class="hljs-comment">// 包含于多个源文件的函数必须为 inline</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span> </span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> a + b;<br>&#125;<br><span class="hljs-comment">// 拥有外部链接的包含于多个源文件的变量必须为 inline</span><br><span class="hljs-function"><span class="hljs-keyword">inline</span> std::atomic&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">counter</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span></span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br> <br><span class="hljs-comment">// 源文件 #1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;example.h&quot;</span></span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">a</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    ++counter;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);<br>&#125;<br> <br><span class="hljs-comment">// 源文件 #2</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;example.h&quot;</span></span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">b</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    ++counter;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span>(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

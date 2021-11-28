@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ArchLinux%E7%AB%AF%E5%AE%89%E8%A3%85vsftpd"><span class="toc-text">ArchLinux端安装vsftpd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu%E7%AB%AF%E5%AE%89%E8%A3%85ncftp"><span class="toc-text">Ubuntu端安装ncftp</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		使用FTP
+	</div>
+	
+	<div class="page-date">
+		2021-03-03
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>记录使用ftp的过程</p>
+<span id="more"></span>
+
+<h2 id="ArchLinux端安装vsftpd"><a href="#ArchLinux端安装vsftpd" class="headerlink" title="ArchLinux端安装vsftpd"></a>ArchLinux端安装vsftpd</h2><p>vsftpd (“Very Secure FTP Daemon“) 是一个为 UNIX 类系统开发的轻量，稳定和安全的 FTP 服务器端。 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -S vsftpd<br>systemctl start vsftpd.service<br>systemctl enable vsftpd.service<br></code></pre></td></tr></table></figure>
+
+<p>vsftpd配置文件<code>/etc/vsftpd.conf</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">//允许本地用户登录<br>local_enable=YES<br>//允许上传<br>write_enable=YES<br></code></pre></td></tr></table></figure>
+
+<p>配置允许的连接<code>/etc/hosts.allow</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># 允许所有连接<br>vsftpd: ALL<br># IP 地址范围<br>vsftpd: 10.0.0.0/255.255.255.0<br></code></pre></td></tr></table></figure>
+
+<p>客户端出现<strong>Error 500</strong>：vsftpd: Error 500 with kernel 4.18+</p>
+<p>如果在列出目录时遇到故障，将其添加到 <code>/etc/vsftpd.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">seccomp_sandbox=NO<br></code></pre></td></tr></table></figure>
+
+<h2 id="Ubuntu端安装ncftp"><a href="#Ubuntu端安装ncftp" class="headerlink" title="Ubuntu端安装ncftp"></a>Ubuntu端安装ncftp</h2><p>原始的ftp功能不支持<code>-R</code>递归发送目录，我使用了ncftp替代。</p>
+<p>ncftp连接时必须指定用户密码，否则会匿名连接。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">//连接命令的选项必须在 主机号 前面，否则也是匿名登录<br>ncftp -u [用户名] -p [密码] 192.168.206.134<br>//进入ncftp页面后，输入?或help可以查看帮助<br>//命令不带l前缀的是切换远程端目录<br>//命令带l前缀的是切换本地端目录<br>cd [远程端接收文件目录，可通过mkdir先创建]<br>lcd [本地打算上传的文件的目录]<br>put -R [本地端目录名]<br></code></pre></td></tr></table></figure>
+
+<p>其它ftp命令行客户端：<code>lftp</code>、<code>cbftp</code>、<code>yafc</code></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

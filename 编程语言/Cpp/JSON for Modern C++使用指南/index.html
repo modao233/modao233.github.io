@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D"><span class="toc-text">简单介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%AE%80%E4%BB%8B"><span class="toc-text">使用简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON-as-first-class-data-type"><span class="toc-text">JSON as first-class data type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Serialization-Deserialization%EF%BC%88%E5%BA%8F%E5%88%97%E5%8F%B7-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%EF%BC%89"><span class="toc-text">Serialization &#x2F; Deserialization（序列号&#x2F;反序列化）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		JSON for Modern C++
+	</div>
+	
+	<div class="page-date">
+		2020-09-10
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>JSON for Modern C++是一个简单且强大的json处理库，只需要包含一个头文件便可使用。 </p>
+<p>本文代码说明：单行注释解释代码，多行注释展示输出。</p>
+<span id="more"></span>
+
+<h2 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h2><p>JSON for Modern C++有如下特点：</p>
+<ul>
+<li>  语法直观，容易理解</li>
+<li>  集成至一个库文件，使用方便</li>
+<li>  代码经过严格测试，质量高</li>
+</ul>
+<h2 id="使用简介"><a href="#使用简介" class="headerlink" title="使用简介"></a>使用简介</h2><h3 id="JSON-as-first-class-data-type"><a href="#JSON-as-first-class-data-type" class="headerlink" title="JSON as first-class data type"></a>JSON as first-class data type</h3><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iomanip&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;json.hpp&quot;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> json = nlohmann::json;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span> </span>&#123;<br>    <span class="hljs-comment">// create an empty structure (null)</span><br>    json j;<br><br>    <span class="hljs-comment">// add a number that is stored as double (note the implicit conversion of j to an object)</span><br>    j[<span class="hljs-string">&quot;pi&quot;</span>] = <span class="hljs-number">3.141</span>;<br><br>    <span class="hljs-comment">// add a Boolean that is stored as bool</span><br>    j[<span class="hljs-string">&quot;happy&quot;</span>] = <span class="hljs-literal">true</span>;<br><br>    <span class="hljs-comment">// add a string that is stored as std::string</span><br>    j[<span class="hljs-string">&quot;name&quot;</span>] = <span class="hljs-string">&quot;Niels&quot;</span>;<br><br>    <span class="hljs-comment">// add another null object by passing nullptr</span><br>    j[<span class="hljs-string">&quot;nothing&quot;</span>] = <span class="hljs-literal">nullptr</span>;<br><br>    <span class="hljs-comment">// add an object inside the object</span><br>    j[<span class="hljs-string">&quot;answer&quot;</span>][<span class="hljs-string">&quot;everything&quot;</span>] = <span class="hljs-number">42</span>;<br><br>    <span class="hljs-comment">// add an array that is stored as std::vector (using an initializer list)</span><br>    j[<span class="hljs-string">&quot;list&quot;</span>] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>&#125;;<br><br>    <span class="hljs-comment">// add another object (using an initializer list of pairs)</span><br>    j[<span class="hljs-string">&quot;object&quot;</span>] = &#123;&#123;<span class="hljs-string">&quot;currency&quot;</span>, <span class="hljs-string">&quot;USD&quot;</span>&#125;,<br>                   &#123;<span class="hljs-string">&quot;value&quot;</span>,    <span class="hljs-number">42.99</span>&#125;&#125;;<br><br>    <span class="hljs-comment">// instead, you could also write (which looks very similar to the JSON above)</span><br>    json j2 = &#123;<br>            &#123;<span class="hljs-string">&quot;pi&quot;</span>,      <span class="hljs-number">3.141</span>&#125;,<br>            &#123;<span class="hljs-string">&quot;happy&quot;</span>,   <span class="hljs-literal">true</span>&#125;,<br>            &#123;<span class="hljs-string">&quot;name&quot;</span>,    <span class="hljs-string">&quot;Niels&quot;</span>&#125;,<br>            &#123;<span class="hljs-string">&quot;nothing&quot;</span>, <span class="hljs-literal">nullptr</span>&#125;,<br>            &#123;<span class="hljs-string">&quot;answer&quot;</span>,  &#123;<br>                                &#123;<span class="hljs-string">&quot;everything&quot;</span>, <span class="hljs-number">42</span>&#125;<br>                        &#125;&#125;,<br>            &#123;<span class="hljs-string">&quot;list&quot;</span>,    &#123;       <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>&#125;&#125;,<br>            &#123;<span class="hljs-string">&quot;object&quot;</span>,  &#123;<br>                                &#123;<span class="hljs-string">&quot;currency&quot;</span>,   <span class="hljs-string">&quot;USD&quot;</span>&#125;,<br>                                   &#123;<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-number">42.99</span>&#125;<br>                        &#125;&#125;<br>    &#125;;<br><br>    cout &lt;&lt; j.<span class="hljs-built_in">dump</span>(<span class="hljs-number">4</span>) &lt;&lt; endl;<br>    cout &lt;&lt; j2.<span class="hljs-built_in">dump</span>(<span class="hljs-number">4</span>) &lt;&lt; endl;<br>    <span class="hljs-comment">/*  相同的输出：</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        &quot;answer&quot;: &#123;</span><br><span class="hljs-comment">            &quot;everything&quot;: 42</span><br><span class="hljs-comment">        &#125;,</span><br><span class="hljs-comment">        &quot;happy&quot;: true,</span><br><span class="hljs-comment">        &quot;list&quot;: [</span><br><span class="hljs-comment">            1,</span><br><span class="hljs-comment">            0,</span><br><span class="hljs-comment">            2</span><br><span class="hljs-comment">        ],</span><br><span class="hljs-comment">        &quot;name&quot;: &quot;Niels&quot;,</span><br><span class="hljs-comment">        &quot;nothing&quot;: null,</span><br><span class="hljs-comment">        &quot;object&quot;: &#123;</span><br><span class="hljs-comment">            &quot;currency&quot;: &quot;USD&quot;,</span><br><span class="hljs-comment">            &quot;value&quot;: 42.99</span><br><span class="hljs-comment">        &#125;,</span><br><span class="hljs-comment">        &quot;pi&quot;: 3.141</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一般情况无需声明json的值类型，但也支持显示声明特定的值类型：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iomanip&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;json.hpp&quot;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> json = nlohmann::json;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span> </span>&#123;<br>    <span class="hljs-comment">// a way to express the empty array []</span><br>    json empty_array_explicit = json::<span class="hljs-built_in">array</span>();<br><br>    <span class="hljs-comment">// ways to express the empty object &#123;&#125;</span><br>    json empty_object_implicit = <span class="hljs-built_in">json</span>(&#123;&#125;);      <span class="hljs-comment">//隐式使用</span><br>    json empty_object_explicit = json::<span class="hljs-built_in">object</span>();<span class="hljs-comment">//显示使用</span><br><br>    <span class="hljs-comment">// a way to express an _array_ of key/value pairs [[&quot;currency&quot;, &quot;USD&quot;], [&quot;value&quot;, 42.99]]</span><br>    json array_not_object = json::<span class="hljs-built_in">array</span>(&#123; &#123;<span class="hljs-string">&quot;currency&quot;</span>, <span class="hljs-string">&quot;USD&quot;</span>&#125;, &#123;<span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-number">42.99</span>&#125; &#125;);<br>    cout &lt;&lt; array_not_object.<span class="hljs-built_in">dump</span>(<span class="hljs-number">4</span>) &lt;&lt; endl;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    [</span><br><span class="hljs-comment">        [</span><br><span class="hljs-comment">            &quot;currency&quot;,</span><br><span class="hljs-comment">            &quot;USD&quot;</span><br><span class="hljs-comment">        ],</span><br><span class="hljs-comment">        [</span><br><span class="hljs-comment">            &quot;value&quot;,</span><br><span class="hljs-comment">            42.99</span><br><span class="hljs-comment">        ]</span><br><span class="hljs-comment">    ]</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Serialization-Deserialization（序列号-反序列化）"><a href="#Serialization-Deserialization（序列号-反序列化）" class="headerlink" title="Serialization / Deserialization（序列号/反序列化）"></a>Serialization / Deserialization（序列号/反序列化）</h3><ol>
+<li><p>json与string类型的转换</p>
+ <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iomanip&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;json.hpp&quot;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> json = nlohmann::json;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span> </span>&#123;<br>    <span class="hljs-comment">// create object from string literal</span><br>    json j = <span class="hljs-string">&quot;&#123; \&quot;happy\&quot;: true, \&quot;pi\&quot;: 3.141 &#125;&quot;</span>_json;<br><br>    <span class="hljs-comment">// or even nicer with a raw string literal</span><br>    <span class="hljs-keyword">auto</span> j2 = <span class="hljs-string">R&quot;(</span><br><span class="hljs-string">    &#123;</span><br><span class="hljs-string">        &quot;happy&quot;: true,</span><br><span class="hljs-string">        &quot;pi&quot;: 3.141</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">    )&quot;</span>_json;<br><br>    <span class="hljs-comment">// parse explicitly</span><br>    <span class="hljs-keyword">auto</span> j3 = json::<span class="hljs-built_in">parse</span>(<span class="hljs-string">&quot;&#123; \&quot;happy\&quot;: true, \&quot;pi\&quot;: 3.141 &#125;&quot;</span>);<br><br>    cout &lt;&lt; j.<span class="hljs-built_in">dump</span>() &lt;&lt; endl;<br>    cout &lt;&lt; j2.<span class="hljs-built_in">dump</span>() &lt;&lt; endl;<br>    cout &lt;&lt; j3.<span class="hljs-built_in">dump</span>() &lt;&lt; endl;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    &#123;&quot;happy&quot;:true,&quot;pi&quot;:3.141&#125;</span><br><span class="hljs-comment">    &#123;&quot;happy&quot;:true,&quot;pi&quot;:3.141&#125;</span><br><span class="hljs-comment">    &#123;&quot;happy&quot;:true,&quot;pi&quot;:3.141&#125;</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> 序列号与赋值的区别：</p>
+ <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iomanip&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;json.hpp&quot;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> json = nlohmann::json;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span> </span>&#123;<br>    <span class="hljs-comment">// store a string in a JSON value</span><br>    json j_string = <span class="hljs-string">&quot;this is a string&quot;</span>;<br><br>    <span class="hljs-comment">// retrieve the string value</span><br>    <span class="hljs-keyword">auto</span> cpp_string = j_string.get&lt;std::string&gt;();<br>    <span class="hljs-comment">// retrieve the string value (alternative when an variable already exists)</span><br>    std::string cpp_string2;<br>    j_string.<span class="hljs-built_in">get_to</span>(cpp_string2);<br><br>    <span class="hljs-comment">// retrieve the serialized value (explicit JSON serialization)</span><br>    std::string serialized_string = j_string.<span class="hljs-built_in">dump</span>();<br><br>    <span class="hljs-comment">// output of original string</span><br>    std::cout &lt;&lt; cpp_string &lt;&lt; <span class="hljs-string">&quot; == &quot;</span> &lt;&lt; cpp_string2 &lt;&lt; <span class="hljs-string">&quot; == &quot;</span> &lt;&lt; j_string.get&lt;std::string&gt;() &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;<br>    <span class="hljs-comment">// output of serialized value</span><br>    std::cout &lt;&lt; j_string &lt;&lt; <span class="hljs-string">&quot; == &quot;</span> &lt;&lt; serialized_string &lt;&lt; std::endl;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    this is a string == this is a string == this is a string</span><br><span class="hljs-comment">    &quot;this is a string&quot; == &quot;this is a string&quot;</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  <code>dump()</code>函数返回最初存储的字符串的值</p>
+<p>  注意：该库仅支持UTF-8，当在库中存储不同编码的字符串时，调用dump()可能会抛出异常，除非异常json::error_handler_t::replace或json::error_handler_t::ignore被错误处理程序正确处理。</p>
+</blockquote>
+</li>
+<li><p>json与stream类型的转换</p>
+ <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iomanip&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;json.hpp&quot;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> json = nlohmann::json;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span> </span>&#123;<br>    <span class="hljs-comment">// deserialize from standard input</span><br>    json j;<br>    std::cin &gt;&gt; j;<br><br>    <span class="hljs-comment">// serialize to standard output</span><br>    std::cout &lt;&lt; j &lt;&lt; endl;<br><br>    <span class="hljs-comment">// the setw manipulator was overloaded to set the indentation for pretty printing</span><br>    std::cout &lt;&lt; std::<span class="hljs-built_in">setw</span>(<span class="hljs-number">4</span>) &lt;&lt; j &lt;&lt; std::endl;<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    &#123;&quot;happy&quot;:true,&quot;pi&quot;:3.141&#125;</span><br><span class="hljs-comment">    &#123;&quot;happy&quot;:true,&quot;pi&quot;:3.141&#125;</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        &quot;happy&quot;: true,</span><br><span class="hljs-comment">        &quot;pi&quot;: 3.141</span><br><span class="hljs-comment">    &#125;</span><br><span class="hljs-comment">     */</span><br><br>    <span class="hljs-comment">// read a JSON file</span><br>    <span class="hljs-function">std::ifstream <span class="hljs-title">i</span><span class="hljs-params">(<span class="hljs-string">&quot;file.json&quot;</span>)</span></span>;<br>    json j;<br>    i &gt;&gt; j;<br><br>    <span class="hljs-comment">// write prettified JSON to another file</span><br>    <span class="hljs-function">std::ofstream <span class="hljs-title">o</span><span class="hljs-params">(<span class="hljs-string">&quot;pretty.json&quot;</span>)</span></span>;<br>    o &lt;&lt; std::<span class="hljs-built_in">setw</span>(<span class="hljs-number">4</span>) &lt;&lt; j &lt;&lt; std::endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>根据迭代器范围读取json</p>
+<p> 如果迭代器的value_type是一个1、2或4字节的整型类型，那么它将分别被解释为UTF-8、UTF-16和UTF-32。</p>
+ <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iomanip&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;json.hpp&quot;</span></span><br><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">using</span> json = nlohmann::json;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span> </span>&#123;<br>    std::vector&lt;std::<span class="hljs-keyword">uint8_t</span>&gt; v = &#123;<span class="hljs-string">&#x27;t&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;u&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>&#125;;<br>    json j = json::<span class="hljs-built_in">parse</span>(v.<span class="hljs-built_in">begin</span>(), v.<span class="hljs-built_in">end</span>());<br>    json j2 = json::<span class="hljs-built_in">parse</span>(v);<br>    cout &lt;&lt; j.<span class="hljs-built_in">dump</span>() &lt;&lt; endl;<br>    cout &lt;&lt; j2.<span class="hljs-built_in">dump</span>() &lt;&lt; endl;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    true</span><br><span class="hljs-comment">    true</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>其他使用</p>
+<ol>
+<li> 自定义容器和迭代器</li>
+<li> SAX接口</li>
+</ol>
+</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/nlohmann/json">JSON for Modern C++</a></p>
+<p>json支持：<a target="_blank" rel="noopener" href="https://www.json.org/">json官网</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

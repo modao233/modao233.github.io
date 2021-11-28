@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%EF%BC%9A-lt-stdio-h-gt"><span class="toc-text">输入输出：&lt;stdio.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%88%AB%E6%B5%8B%E8%AF%95%EF%BC%9A-lt-ctype-h-gt"><span class="toc-text">字符类别测试：&lt;ctype.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0%EF%BC%9A-lt-string-h-gt"><span class="toc-text">字符串函数：&lt;string.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0%EF%BC%9A-lt-math-h-gt"><span class="toc-text">数学函数：&lt;math.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%94%A8%E5%87%BD%E6%95%B0%EF%BC%9A-lt-stdlib-h-gt"><span class="toc-text">实用函数：&lt;stdlib.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8A%E6%96%AD%EF%BC%9A-lt-assert-h-gt"><span class="toc-text">诊断：&lt;assert.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E8%A1%A8%EF%BC%9A-lt-stdarg-h-gt"><span class="toc-text">可变参数表：&lt;stdarg.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%B1%80%E9%83%A8%E8%B7%B3%E8%BD%AC%EF%BC%9A-lt-setjmp-h-gt"><span class="toc-text">非局部跳转：&lt;setjmp.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%EF%BC%9A-lt-signal-h-gt"><span class="toc-text">信号：&lt;signal.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E5%87%BD%E6%95%B0%EF%BC%9A-lt-time-h-gt"><span class="toc-text">日期和时间函数：&lt;time.h&gt;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0%E7%9B%B8%E5%85%B3%E7%9A%84%E9%99%90%E5%88%B6%EF%BC%9A-lt-limits-h-gt-%E5%92%8C-lt-float-h-gt"><span class="toc-text">与具体实现相关的限制：&lt;limits.h&gt;和&lt;float.h&gt;</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		C语言标准库常用函数
+	</div>
+	
+	<div class="page-date">
+		2021-02-14
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C">C</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>C语言标准库常用函数</p>
+<span id="more"></span>
+
+<h2 id="输入输出：-lt-stdio-h-gt"><a href="#输入输出：-lt-stdio-h-gt" class="headerlink" title="输入输出：&lt;stdio.h&gt;"></a>输入输出：&lt;stdio.h&gt;</h2><p><strong>文件操作</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-function">FILE *<span class="hljs-title">fopen</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *mode)</span></span>;<br><span class="hljs-function">FILE *<span class="hljs-title">freopen</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *mode, FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fflush</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fclose</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *filename)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rename</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *oldname, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *newname)</span></span>;<br><span class="hljs-function">FILE *<span class="hljs-title">tmpfile</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">tmpnam</span><span class="hljs-params">(<span class="hljs-keyword">char</span> s[L_tmpnam])</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">setvbuf</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">char</span> *buf, <span class="hljs-keyword">int</span> mode, <span class="hljs-keyword">size_t</span> size)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setbuf</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">char</span> *buf)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>格式化输出</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fprintf</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, ...)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">printf</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, ...)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sprintf</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, ...)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">vprintf</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, va_list arg)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">vfprintf</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, va_list arg)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">vsprintf</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, va_list arg)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>格式化输入</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fscanf</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, ...)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">scanf</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, ...)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sscanf</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format, ...)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>字符输入输出</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fgetc</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">fgets</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">int</span> n, FILE *stream)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fputc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> c, FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fputs</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s, FILE *stream)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getc</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getchar</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">gets</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">putc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> c, FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">putchar</span><span class="hljs-params">(<span class="hljs-keyword">int</span> c)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">puts</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">ungetc</span><span class="hljs-params">(<span class="hljs-keyword">int</span> c, FILE *stream)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>直接输入输出</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">size_t</span> <span class="hljs-title">fread</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *ptr, <span class="hljs-keyword">size_t</span> size, <span class="hljs-keyword">size_t</span> nobj, FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">size_t</span> <span class="hljs-title">fwrite</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *ptr, <span class="hljs-keyword">size_t</span> size, <span class="hljs-keyword">size_t</span> nobj, FILE *stream)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>文件定位</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fseek</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">long</span> offset, <span class="hljs-keyword">int</span> origin)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">ftell</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rewind</span><span class="hljs-params">(FILE *stream)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fgetpos</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">fpos_t</span> *ptr)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">fsetpos</span><span class="hljs-params">(FILE *stream, <span class="hljs-keyword">const</span> <span class="hljs-keyword">fpos_t</span> *ptr)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><strong>错误处理</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clearerr</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">feof</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ferror</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">perror</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="字符类别测试：-lt-ctype-h-gt"><a href="#字符类别测试：-lt-ctype-h-gt" class="headerlink" title="字符类别测试：&lt;ctype.h&gt;"></a>字符类别测试：&lt;ctype.h&gt;</h2><p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214151154168.png" alt="image-20210214151154168"></p>
+<ul>
+<li>参数类型：<ul>
+<li>  unsigned char类型</li>
+<li>  EOF的int对象</li>
+</ul>
+</li>
+<li>  返回值类型：int</li>
+</ul>
+<h2 id="字符串函数：-lt-string-h-gt"><a href="#字符串函数：-lt-string-h-gt" class="headerlink" title="字符串函数：&lt;string.h&gt;"></a>字符串函数：&lt;string.h&gt;</h2><p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214153144129.png" alt="image-20210214153144129"></p>
+<ul>
+<li>参数类型：<ul>
+<li>  变量s和t：char *</li>
+<li>  cs和ct：const char *</li>
+<li>  n：size_t</li>
+<li>  c：int（将被转换为char类型）</li>
+</ul>
+</li>
+</ul>
+<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214153638159.png" alt="image-20210214153638159"></p>
+<p>以mem开头的函数按照字符数组的方式操作对象，主要目的是提供一个高效的函数接口。</p>
+<p>参数顺序是：目标s = 源ct</p>
+<p>参数类型：</p>
+<ul>
+<li>  s和t：void *</li>
+<li>  cs和ct：const void *</li>
+<li>  n：size_t</li>
+<li>  c：int（将被转换为unsigned char类型）</li>
+</ul>
+<h2 id="数学函数：-lt-math-h-gt"><a href="#数学函数：-lt-math-h-gt" class="headerlink" title="数学函数：&lt;math.h&gt;"></a>数学函数：&lt;math.h&gt;</h2><p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214154006707.png" alt="image-20210214154006707"></p>
+<p>参数类型;</p>
+<ul>
+<li>  x和y：double</li>
+<li>  n：int</li>
+</ul>
+<p>返回值类型：double</p>
+<h2 id="实用函数：-lt-stdlib-h-gt"><a href="#实用函数：-lt-stdlib-h-gt" class="headerlink" title="实用函数：&lt;stdlib.h&gt;"></a>实用函数：&lt;stdlib.h&gt;</h2><p>声明了数值转换、内存分配以及其它类似工作的函数</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">atof</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">atoi</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">atol</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">strtod</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">char</span> **endp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">strtol</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">char</span> **endp, <span class="hljs-keyword">int</span> base)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-title">strtoul</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">char</span> **endp, <span class="hljs-keyword">int</span> base)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">rand</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">srand</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> seed)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">calloc</span><span class="hljs-params">(<span class="hljs-keyword">size_t</span> nobj, <span class="hljs-keyword">size_t</span> size)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">malloc</span><span class="hljs-params">(<span class="hljs-keyword">size_t</span> size)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">realloc</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *p, <span class="hljs-keyword">size_t</span> size)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *p)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">abort</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> status)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">atexit</span><span class="hljs-params">(<span class="hljs-keyword">void</span> (*fcn)(<span class="hljs-keyword">void</span>))</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">system</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">getenv</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">bsearch</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *key, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *base,</span></span><br><span class="hljs-params"><span class="hljs-function">             <span class="hljs-keyword">size_t</span> n, <span class="hljs-keyword">size_t</span> size,</span></span><br><span class="hljs-params"><span class="hljs-function">             <span class="hljs-keyword">int</span> (*cmp)(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *keyval, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *datum))</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">qsort</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *base, <span class="hljs-keyword">size_t</span> n, <span class="hljs-keyword">size_t</span> size, </span></span><br><span class="hljs-params"><span class="hljs-function">          <span class="hljs-keyword">int</span> (*cmp)(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *))</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">abs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">labs</span><span class="hljs-params">(<span class="hljs-keyword">long</span> n)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">div_t</span> <span class="hljs-title">div</span><span class="hljs-params">(<span class="hljs-keyword">int</span> num, <span class="hljs-keyword">int</span> denom)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">ldiv_t</span> <span class="hljs-title">ldiv</span><span class="hljs-params">(<span class="hljs-keyword">long</span> num, <span class="hljs-keyword">long</span> denom)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="诊断：-lt-assert-h-gt"><a href="#诊断：-lt-assert-h-gt" class="headerlink" title="诊断：&lt;assert.h&gt;"></a>诊断：&lt;assert.h&gt;</h2><p>assert宏用于程序诊断</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">assert</span><span class="hljs-params">(<span class="hljs-keyword">int</span> expression)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>当表达式值为0时，assert宏将在stderr中打印一条消息，打印完后宏将调用abort终止程序的执行。</p>
+<p>消息格式如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Assertion failed: 表达式, file 源文件名, line行号<br></code></pre></td></tr></table></figure>
+
+<p>预处理器宏：</p>
+<ul>
+<li>  源文件名：<code>__FILE__</code></li>
+<li>  行号：<code>__LINE__</code></li>
+</ul>
+<p>如果定义了宏<code>NDEBUG</code>，同时又包含了头文件&lt;assert.h&gt;，则assert宏将被忽略。</p>
+<h2 id="可变参数表：-lt-stdarg-h-gt"><a href="#可变参数表：-lt-stdarg-h-gt" class="headerlink" title="可变参数表：&lt;stdarg.h&gt;"></a>可变参数表：&lt;stdarg.h&gt;</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//ap依此指向每个实际参数</span><br>va_list ap;<br><span class="hljs-comment">//访问任何未命名参数前，必须用va_start宏初始化ap一次</span><br><span class="hljs-comment">//lastarg是最后一个命名形参</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">va_start</span><span class="hljs-params">(va_list ap, lastarg)</span></span>;<br><span class="hljs-comment">//产生一个与未命名参数具有相同类型和数值的值</span><br><span class="hljs-comment">//同时修改ap，使其指向下一个未命名参数</span><br><span class="hljs-function">type <span class="hljs-title">va_arg</span><span class="hljs-params">(va_list ap, type)</span></span>;<br><span class="hljs-comment">//处理完所有参数后，在退出函数前，必须调用宏va_end</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">va_end</span><span class="hljs-params">(va_list ap)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="非局部跳转：-lt-setjmp-h-gt"><a href="#非局部跳转：-lt-setjmp-h-gt" class="headerlink" title="非局部跳转：&lt;setjmp.h&gt;"></a>非局部跳转：&lt;setjmp.h&gt;</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">setjmp</span><span class="hljs-params">(jmp_buf env)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">longjmp</span><span class="hljs-params">(jmp_buf env, <span class="hljs-keyword">int</span> val)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="信号：-lt-signal-h-gt"><a href="#信号：-lt-signal-h-gt" class="headerlink" title="信号：&lt;signal.h&gt;"></a>信号：&lt;signal.h&gt;</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">void</span> (*signal(<span class="hljs-keyword">int</span> sig, <span class="hljs-keyword">void</span> (*handle)(<span class="hljs-keyword">int</span>)))(<span class="hljs-keyword">int</span>);<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">raise</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sig)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="日期和时间函数：-lt-time-h-gt"><a href="#日期和时间函数：-lt-time-h-gt" class="headerlink" title="日期和时间函数：&lt;time.h&gt;"></a>日期和时间函数：&lt;time.h&gt;</h2><p>表示时间的算术类型：clock_t和time_t</p>
+<p>日历时间结构体tm，其成员包括：</p>
+<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214195337120.png" alt="image-20210214195337120"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">clock_t</span> <span class="hljs-title">clock</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">time_t</span> <span class="hljs-title">time</span><span class="hljs-params">(<span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">difftime</span><span class="hljs-params">(<span class="hljs-keyword">time_t</span> time2, <span class="hljs-keyword">time_t</span> time1)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">time_t</span> <span class="hljs-title">mktime</span><span class="hljs-params">(struct tm *tp)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">asctime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct tm *tp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">ctime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><span class="hljs-function">struct tm *<span class="hljs-title">gmtime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><span class="hljs-function">struct tm *<span class="hljs-title">localtime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">size_t</span> <span class="hljs-title">strftime</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">size_t</span> smax, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *fmt, <span class="hljs-keyword">const</span> struct tm *tp)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="与具体实现相关的限制：-lt-limits-h-gt-和-lt-float-h-gt"><a href="#与具体实现相关的限制：-lt-limits-h-gt-和-lt-float-h-gt" class="headerlink" title="与具体实现相关的限制：&lt;limits.h&gt;和&lt;float.h&gt;"></a>与具体实现相关的限制：&lt;limits.h&gt;和&lt;float.h&gt;</h2><p>头文件&lt;limits.h&gt;定义了一些表示整型大小的常量。列出的值是可接受的最小值。</p>
+<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214201600788.png" alt="image-20210214201600788"></p>
+<p>下表列出的名字是&lt;float.h&gt;的子集，表示与浮点算术运算相关的一些常量，给出的每个值代表相应量的最小取值。</p>
+<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214201640885.png" alt="image-20210214201640885"></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

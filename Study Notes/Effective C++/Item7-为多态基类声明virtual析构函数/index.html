@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E5%9F%BA%E7%B1%BB%E5%BA%94%E8%AF%A5%E5%A3%B0%E6%98%8E%E4%B8%80%E4%B8%AA-virtual-%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-text">多态基类应该声明一个 virtual 析构函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Item7-为多态基类声明 virtual 析构函数
+	</div>
+	
+	<div class="page-date">
+		2021-01-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Effective C++">Effective C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>Item7-为多态基类声明 virtual 析构函数</p>
+<span id="more"></span>
+
+<h2 id="多态基类应该声明一个-virtual-析构函数"><a href="#多态基类应该声明一个-virtual-析构函数" class="headerlink" title="多态基类应该声明一个 virtual 析构函数"></a>多态基类应该声明一个 virtual 析构函数</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TimeKeeper</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">TimeKeeper</span>();<br>  ~<span class="hljs-built_in">TimeKeeper</span>();<br>  ...<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AtomicClock</span>:</span> <span class="hljs-keyword">public</span> TimeKeeper &#123; ... &#125;;	<span class="hljs-comment">//原子钟</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WaterClock</span>:</span> <span class="hljs-keyword">public</span> TimeKeeper &#123; ... &#125;;	<span class="hljs-comment">//水钟</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WristWatch</span>:</span> <span class="hljs-keyword">public</span> TimeKeeper &#123; ... &#125;;	<span class="hljs-comment">//腕表</span><br><br><span class="hljs-comment">//@ 使用时</span><br>TimeKeeper *ptk = <span class="hljs-built_in">getTimeKeeper</span>();  <br>...                         <br><span class="hljs-keyword">delete</span> ptk;                        <br></code></pre></td></tr></table></figure>
+
+<p>getTimeKeeper() 是一个 factory 函数，返回指针指向一个 TimeKeeper 派生类的动态分配对象，返回的对象位于 heap，因此需要对其返回的对象适当地 delete 掉。</p>
+<p>C++ 明确指出：当派生类对象经由一个基类指针删除，而该基类指针带有 non-virtual 析构函数，则结果未定义——实际执行时通常发生的是对象的 derived 部分没被销毁，而 base 类部分通常会被销毁，造成一个诡异的“局部销毁”对象，可能造成资源泄漏、败坏数据结构、徒增调试时间。</p>
+<p>消除这个问题的做法是：给 base 类一个 virtual 析构函数。这样通过基类指针销毁派生类将会符合期望：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TimeKeeper</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">TimeKeeper</span>();<br>  <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">TimeKeeper</span>();<br>  ...<br>&#125;;<br><br>TimeKeeper *ptk = <span class="hljs-built_in">getTimeKeeper</span>();<br>...<br><span class="hljs-keyword">delete</span> ptk;  <br></code></pre></td></tr></table></figure>
+
+<p>类似 TimeKeeper  这样的基类一般都包含除了析构函数以外的其它 virtual 函数，因为 virtual 函数的目的就是允许派生类的实现得以定制化。例如，TimeKeeper 可以有一个虚函数  getCurrentTime，它在各种不同的派生类中有不同的实现。几乎所有拥有虚函数的类差不多都应该有一个虚析构函数。</p>
+<p>如果一个类不包含虚函数，通常表示它并不意图被用作一个基类。当一个类不打算作为基类时，令其析构函数为 virtual 通常是个馊主意。考虑一个用来表示二维空间中的点的类：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Point</span> &#123;</span>                           <span class="hljs-comment">//@ a 2D point</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">Point</span>(<span class="hljs-keyword">int</span> xCoord, <span class="hljs-keyword">int</span> yCoord);<br>  ~<span class="hljs-built_in">Point</span>();<br><span class="hljs-keyword">private</span>:<br>  <span class="hljs-keyword">int</span> x, y;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>如果一个 int 占用 32 bits，一个 Point object 正好适用于 64-bit 的寄存器。而且，这样一个 Point  object 可以被作为一个 64-bit 的量传递给其它语言写的函数，比如 C 或者 FORTRAN。如果 Point  的析构函数被虚拟，情况就完全不一样了。</p>
+<p>虚函数的实现要求对象携带额外的信息，这些信息用于在运行时确定该对象应该调用哪一个虚函数。这份信息通常由 vptr（virtual table pointer）指针指出，vptr指向一个由函数指针构成的数组，称为 vtbl（virtual table）。每个带有 virtual 函数的类，都有一个相应的 vtbl，当对象调用某一 virtual 函数，实际被调用的函数取决于该对象的 vptr 所指的哪个 vtbl——编译器在其中寻找适当的函数指针。</p>
+<p>virtual 函数的实现并不重要，重要的是如果 Point class 内含 virtual 函数，其对象的体积会增加：在一个 32-bit 架构中，它们将从 64 bits长到 96 bits（两个 ints 加上 vptr）；在一个 64-bit 架构中，它们可能从 64 bits 长到 128 bits，因为在这样的架构中指针的大小是 64 bits 的。Point 对象不再适合 64-bit 寄存器。而且，对象在 C++ 和其它语言（比如  C）中，看起来不再具有相同的结构，因为它们在其它语言中的对应物没有 vptr。结果，Points  不再可能传入其它语言写成的函数或从其中传出，除非你为 vptr 做出明确的补偿（这属于实现细节），也因此失去可移植性。</p>
+<p>因此，无故地将所有析构函数声明为 virtual ，就像从未声明它们为 virtual 一样，都是错误的。许多人的心得是：只有当 class 内含至少一个 virtual 函数，才为它声明 virtual 析构函数。</p>
+<p>标准 string 类型不包含虚拟函数，但是被误导的程序员有时将它当作基类使用：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SpecialString</span>:</span> <span class="hljs-keyword">public</span> std::string &#123;   <span class="hljs-comment">// bad idea! std::string has a</span><br>  ...                                       <span class="hljs-comment">// non-virtual destructor</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>乍看似乎无害，但如果在程序的某个地方因为某种原因，你将一个指向 SpecialString 的指针转型为一个指向 string 的指针，然后你将 delete 施加于这个指向 string 的指针，就会出现“未定义行为”！</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">SpecialString *pss =   <span class="hljs-keyword">new</span> <span class="hljs-built_in">SpecialString</span>(<span class="hljs-string">&quot;Impending Doom&quot;</span>);<br>std::string *ps;<br>...<br>ps = pss;   <br>...<br><span class="hljs-keyword">delete</span> ps;    	<span class="hljs-comment">//@ undefined! In practice, *ps&#x27;s SpecialString resources will be leaked, 			  </span><br>                <span class="hljs-comment">//@ because the SpecialString destructor won&#x27;t be called.</span><br></code></pre></td></tr></table></figure>
+
+<p>同样的分析适用于任何不带 virtual 析构函数的类，包括全部的 STL 容器类型（例如，vector，list，set，tr1::unordered_map）。</p>
+<p>一定不要继承一个标准库容器或任何其它“带有 non-virtual 析构函数”的 class。</p>
+<p>有时候希望有抽象 class，但没有任何 pure virtual 函数，则可以为希望成为抽象的 class 声明一个 pure virtual 析构函数。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AWOV</span> &#123;</span>       <span class="hljs-comment">//@ AWOV = &quot;Abstract w/o Virtuals&quot;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">AWOV</span>() = <span class="hljs-number">0</span>;          <span class="hljs-comment">//@ declare pure virtual destructor</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>这个类有一个纯虚函数，所以它是抽象的，又因为它有一个虚析构函数，所以不必担心析构函数问题。然而这里有个窍门：你必须为这个纯虚析构函数提供一份定义：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">AWOV::~<span class="hljs-built_in">AWOV</span>() &#123; &#125; <span class="hljs-comment">// definition of pure virtual dtor</span><br></code></pre></td></tr></table></figure>
+
+<p>析构函数的运作方式是：最深层派生（most derived）的那个 class 的析构函数最先被调用，然后是其每一个 base class 的析构函数被调用。编译器会在 AWOV 的 derived class 的析构函数中创建一个对<code>~AWOV()</code>的调用动作，所以必须为这个函数提供一份定义，如果没有定义，链接器会报错。</p>
+<p>“给 base class 一个 virtual 析构函数”这个规则只适用于 polymorphic（带多态性质的）base class，这个 base class 的设计目的是为了用来“通过 base class接口处理 derived class对象”。</p>
+<p>并非所有 base class 的设计目的都是为了多态用途，如标准 string 和 STL都不被设计为 base class使用，更别提多态了。还有某些 class 的设计目的是作为 base class 使用，但不是为了多态用途。它们都不需要 virtual 析构函数。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>  polymorphic（带多态性质的）base class 应该声明一个virtual 析构函数。如果 class 带有任何 virtual 函数，它就应该拥有一个 virtual 析构函数</li>
+<li>  class 的设计目的如果不是作为 base class使用，或不是为了具备多态性，就不该声明 virtual 析构函数</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

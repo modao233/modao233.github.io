@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%B6%8B%E5%9B%BE%E5%92%8C%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C"><span class="toc-text">前趋图和程序执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C"><span class="toc-text">程序顺序执行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B9%B6%E5%8F%91%E6%89%A7%E8%A1%8C"><span class="toc-text">程序并发执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%8F%8F%E8%BF%B0"><span class="toc-text">进程的描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-text">进程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8"><span class="toc-text">操作系统内核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">进程的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%BB%88%E6%AD%A2"><span class="toc-text">进程的终止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E9%98%BB%E5%A1%9E%E4%B8%8E%E5%94%A4%E9%86%92"><span class="toc-text">进程的阻塞与唤醒</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%8C%82%E8%B5%B7%E4%B8%8E%E6%BF%80%E6%B4%BB"><span class="toc-text">进程的挂起与激活</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%87%E6%8D%A2"><span class="toc-text">进程的切换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="toc-text">进程同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">进程同步的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90"><span class="toc-text">临界资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B4%E7%95%8C%E5%8C%BA"><span class="toc-text">临界区</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E5%90%8C%E6%AD%A5%E6%9C%BA%E5%88%B6"><span class="toc-text">硬件同步机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6"><span class="toc-text">信号量机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">信号量的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B%E6%9C%BA%E5%88%B6"><span class="toc-text">管程机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98"><span class="toc-text">经典进程的同步问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">生产者-消费者问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%B2%E5%AD%A6%E5%AE%B6%E8%BF%9B%E9%A4%90%E9%97%AE%E9%A2%98"><span class="toc-text">哲学家进餐问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E8%80%85-%E5%86%99%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">读者-写者问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-text">进程通信的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E9%80%9A%E4%BF%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">消息传递通信的实现方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E7%B3%BB%E7%BB%9F"><span class="toc-text">直接消息传递系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E7%AE%B1%E9%80%9A%E4%BF%A1"><span class="toc-text">信箱通信</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E7%B3%BB%E7%BB%9F%E7%A4%BA%E4%BE%8B"><span class="toc-text">直接消息传递系统示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%EF%BC%88Threads%EF%BC%89%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">线程（Threads）的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">线程与进程的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%9D%97"><span class="toc-text">线程的状态和线程控制块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">线程的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">线程的实现方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0-1"><span class="toc-text">线程的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E6%94%AF%E6%8C%81%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">内核支持线程的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BA%A7%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">用户级线程的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E7%BB%88%E6%AD%A2"><span class="toc-text">线程的创建和终止</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		第二章 进程的描述与控制
+	</div>
+	
+	<div class="page-date">
+		2019-08-28
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/操作系统">操作系统</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>在传统的操作系统中，为了提高资源利用率和系统吞吐量，通常采用多道程序技术，将多个程序同时装入内存，并使之并发运行，传统意义上的程序不再能独立运行，此时，作为资源分配和独立运行的基本单位都是进程。</p>
+<span id="more"></span>
+
+<h2 id="前趋图和程序执行"><a href="#前趋图和程序执行" class="headerlink" title="前趋图和程序执行"></a>前趋图和程序执行</h2><p>为了能更好地描述程序的顺序和并发执行情况，引入了描述程序执行先后顺序的前趋图。</p>
+<p>前趋图是一个有向无循环图，可记为DAG，用于描述进程之间执行的先后顺序。</p>
+<h3 id="程序顺序执行"><a href="#程序顺序执行" class="headerlink" title="程序顺序执行"></a>程序顺序执行</h3><p>特征：</p>
+<ol>
+<li> 顺序性：指处理机严格地按照程序规定的顺序执行，每一个操作必须在下一个操作开始之前结束</li>
+<li> 封闭性：程序运行在封闭的环境下，即运行时独占全机资源，不受外界因素影响</li>
+<li> 可再现性：只要环境和初始条件相同，同一个程序的运行结果总是相同</li>
+</ol>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620095629716.png" alt="image-20200620095629716"></p>
+<h3 id="程序并发执行"><a href="#程序并发执行" class="headerlink" title="程序并发执行"></a>程序并发执行</h3><p>特征：</p>
+<ol>
+<li> 间断性：程序并发执行时，由于共享资源和相互合作，并发执行的程序之间相互制约</li>
+<li> 失去封闭性：系统中资源不再由一个程序独占</li>
+<li> 不可再现性：程序并发执行时，由于失去封闭性，也将导致不可再现性</li>
+</ol>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620095852075.png" alt="image-20200620095852075"></p>
+<h2 id="进程的描述"><a href="#进程的描述" class="headerlink" title="进程的描述"></a>进程的描述</h2><p>在多道程序环境下，允许多个程序并发执行，此时它们将失去封闭性，并具有间断性及不可再现性的特征。<strong>为此引入了进程（Process）的概念</strong>，以便更好地描述和控制程序的并发执行，实现操作系统的并发性和共享性（最基本的两个特性）。</p>
+<p>进程控制块：为了使参与并发执行的每个程序（含数据）都能独立地运行，在操作系统中必须为之配置一个专门的数据结构，称为<strong>进程控制块（PCB）</strong>。系统利用进程控制块来描述进程的基本情况和活动过程，进而控制和管理进程。</p>
+<p>由程序段、相关的数据段和PCB三部分构成<strong>进程实体</strong>（又称<strong>进程映像</strong>）。一般情况下，进程实体简称进程。</p>
+<blockquote>
+<p>  进程映像是静态的，进程的动态的。</p>
+<p>  PCB是进程存在的唯一标志</p>
+</blockquote>
+<p>创建进程实质上是创建进程实体中的PCB；撤销进程，实质上是撤销进程PCB。</p>
+<p>传统OS中的<strong>进程</strong>可<strong>定义</strong>为：进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位。【注：资源分配及其时间片分配】</p>
+<p><strong>进程的特征：</strong></p>
+<ol>
+<li> 动态性：进程的实质是进程实体的执行过程，因此动态性是进程最基本的特征</li>
+<li> 并发性：多个进程实体同存于内存中，且能在同一段时间内同时运行</li>
+<li> 独立性：进程实体是一个能独立运行、独立获得资源和独立接受调度的基本单位</li>
+<li> 异步性：进程是按异步方式运行的，即按各自独立的、不可预知的速度向前推进</li>
+</ol>
+<p><strong>进程的三种基本状态：</strong></p>
+<ol>
+<li> 就绪（Ready）状态：指进程已处于准备好运行的状态，即进程分配到除CPU以外的所有必要资源。多个就绪状态的进程排成的队列称为就绪队列。</li>
+<li> 执行（Running）状态：进程已获得CPU，其程序正在执行的状态</li>
+<li> 阻塞（Block）状态：正在执行的进程由于发生某件事件（如I/O请求、申请缓冲区失败）暂时无法继续执行的状态。多个阻塞状态的进程排成的队列称为阻塞队列</li>
+</ol>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620101413846.png" alt="image-20200620101413846"></p>
+<p><strong>创建和终止状态：</strong></p>
+<p>为了满足进程控制块对数据及操作的完整性要求以及增强管理的灵活性，通常在系统中又引入了两种常见状态：创建状态和终止状态。</p>
+<p>创建状态：进程所需的资源尚不能得到满足（系统内存不足以将其装入内存），此时创建工作未完成，则进程处于创建状态</p>
+<p>终止状态：一个进程到达自然结束点，或是出现了无法克服的错误，或是被操作系统终结，或是被其他有终止权的进程终结，都将进入终止状态</p>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620102159991.png" alt="image-20200620102159991"></p>
+<p>进程创建的过程：</p>
+<ol>
+<li> 进程申请一个空白的PCB</li>
+<li> 向PCB中填写用于控制和管理进程的信息</li>
+<li> 为该进程分配运行时所需要的资源</li>
+<li> 将进程转入就绪状态并插入就绪队列</li>
+</ol>
+<p>进程终止的过程：</p>
+<ol>
+<li> 等待操作系统进行善后处理</li>
+<li> 将PCB清零，并将PCB空间返回系统</li>
+</ol>
+<p><strong>进程的挂起操作</strong>：当挂起操作作用于某个进程时，该进程将被挂起，意味着此时该进程处于静止状态。</p>
+<p>挂起原语：Suspend</p>
+<p>激活原语：Active</p>
+<p><strong>引入挂起原语操作后进程状态的转换：</strong></p>
+<ol>
+<li>Suspend：<ol>
+<li> 活动就绪 -&gt; 静止就绪</li>
+<li> 活动阻塞 -&gt; 静止阻塞</li>
+<li> 执行 -&gt; 静止就绪</li>
+</ol>
+</li>
+<li>Active<ol>
+<li> 静止就绪 -&gt; 活动就绪</li>
+<li> 静止阻塞 -&gt; 活动阻塞</li>
+</ol>
+</li>
+</ol>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620102908016.png" alt="image-20200620102908016"></p>
+<p>创建 -&gt; 活动就绪：在当前系统的性能和内存的容量均允许的情况下，完成对进程创建的必要操作后，相应的系统进程将进程的状态转换为活动就绪状态。</p>
+<p>创建 -&gt; 静止就绪：考虑到系统当前资源状况和性能的需求，不分配给新建进程所需资源，主要是主存，相应的系统将进程状态转换为静止就绪状态，被安置在外存，不参与调度，此时进程创建工作尚未完成。</p>
+<p>在计算机系统中，对于每个资源和每个进程都设置了一个数据结构，用于表征其实体，我们称之为资源信息表或进程信息表，其中包含了资源或进程的标识、描述、状态等信息以及一批指针。</p>
+<p>OS管理用于管理控制的数据结构一般分为四类：内存表、设备表、文件表和用于进程管理的进程表。</p>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620103800164.png" alt="image-20200620103800164"></p>
+<p>进程表又称为进程控制块PCB。PCB的具体作用：</p>
+<ol>
+<li> 作为独立运行基本单位的标志</li>
+<li> 能实现间断性运行方式</li>
+<li> 提供进程管理所需要的信息</li>
+<li> 提供进程调度所需要的信息</li>
+<li> 实现与其他进程的同步与通信</li>
+</ol>
+<p>进程控制块中的信息：</p>
+<ol>
+<li>进程标识符<ol>
+<li> 外部标识符：方便（进程）对进程的访问，由字母、数字组成</li>
+<li> 内部标识符：方便系统对进程的使用，唯一的数字标识符</li>
+</ol>
+</li>
+<li> 处理机状态：也称为处理机的上下文，主要由处理机的各种寄存器中的内容组成</li>
+<li>进程调度信息<ol>
+<li> 进程状态，指明进程当前状态</li>
+<li> 进程优先级</li>
+<li> 进程调度所需要的其他信息</li>
+<li> 事件，指进程由执行状态转换为阻塞状态所等待发生的事件，即阻塞原因</li>
+</ol>
+</li>
+<li>进程控制信息<ol>
+<li> 程序和数据地址</li>
+<li> 进程同步和通信机制</li>
+<li> 组员清单</li>
+<li> 链接指针，给出了本进程PCB所在队列中下一个进程的PCB的首地址</li>
+</ol>
+</li>
+</ol>
+<p><strong>进程控制块的组织方式</strong>：</p>
+<ol>
+<li><p>线性方式</p>
+<p> <img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620104759437.png" alt="image-20200620104759437"></p>
+</li>
+<li><p>链接方式</p>
+<p> <img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620104809549.png" alt="image-20200620104809549"></p>
+</li>
+<li><p>索引方式</p>
+<p> <img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620104821473.png" alt="image-20200620104821473"></p>
+</li>
+</ol>
+<p>进程是一个独立的运行单位，也是操作系统进行资源分配和调度的基本单位，由以下三部分组成：</p>
+<ol>
+<li> 进程控制块PCB（最核心）：进程实体的一部分，是进程存在的唯一标志</li>
+<li> 程序段：能被进程调度到CPU执行的程序代码段</li>
+<li> 数据段：进程对应的程序加工处理的原始数据，或程序执行时产生的中间或最终结果</li>
+</ol>
+<h2 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h2><h3 id="操作系统内核"><a href="#操作系统内核" class="headerlink" title="操作系统内核"></a>操作系统内核</h3><p>进程控制一般由OS的内核中的原语来实现的。</p>
+<p>现代操作系统一般将OS划分为若干层次，再将OS的不同功能分别设置在不同的层次中。通常将一些与硬件紧密相关的模块（如中断处理程序等）、各种常用设备的驱动程序以及运行频率较高的模块（如时钟管理、进程调度和许多模块所公用的一些基本操作），都安排在紧靠硬件的软件层次中，将它们常驻内存，即通常被称为的<strong>OS内核</strong>。这种安排方式的目的在于：</p>
+<ul>
+<li>  便于对这些软件进行保护，防止遭受其他应用程序的破坏</li>
+<li>  提高OS的运行效率</li>
+</ul>
+<p>为了防止OS本身及关键数据（如PCB等）遭受应用程序有意无意的破坏，通常也将处理机的执行状态分为<strong>系统态和用户态</strong>两种：</p>
+<ul>
+<li>  系统态，又称管态，也称内核态。具有较高特权，能执行一切指令，访问所有寄存器和存储区，传统的OS都在系统态运行</li>
+<li>  用户态，又称目态。具有较低特权的执行状态，仅能执行规定的指令，访问指定寄存器和存储区</li>
+</ul>
+<p>一般情况下，应用程序只能在用户态运行，不能去执行OS指令及访问OS区域，可以防止应用程序对OS的破坏。</p>
+<p>不同类型和规模的OS，它们的内核所包含的功能存在一定的差异，但大多数<strong>OS内核都包含两大方面的功能</strong>：</p>
+<ol>
+<li><p><strong>支撑功能</strong></p>
+<p> 提供给OS其他众多模块所需要的一些基本功能，以便支撑这些模块工作。</p>
+<p> 最基本的三种支撑功能是：</p>
+<ul>
+<li>  中断处理，内核最基本的功能，整个操作系统活动的基础，系统调用、键盘命令输入、进程调度、设备驱动等都依赖中断处理</li>
+<li>  时钟管理，内核的一项基本功能，OS中许多操作需要它的支撑，实时系统的截止时间控制、批处理系统的最长运行时间控制、时间片轮转调度等都依赖此功能</li>
+<li>  原语操作，原语是若干指令组成的用于完成一定功能的一个过程。它与一般过程的区别是它们是“原子操作”。原子操作是指一个操作要么全做要么全不做，即原语操作是一个不可分割的基本单位。原语操作不允许被中断，在系统态下执行，常驻内存。</li>
+</ul>
+</li>
+<li><p><strong>资源管理功能</strong></p>
+<ol>
+<li> 进程管理</li>
+<li> 存储器管理</li>
+<li> 设备管理</li>
+</ol>
+</li>
+</ol>
+<h3 id="进程的创建"><a href="#进程的创建" class="headerlink" title="进程的创建"></a>进程的创建</h3><p>在OS中，允许一个进程创建另一个进程，通常把创建进程的进程称为父进程，而把被创建的进程称为子进程，子进程还可以创建更多孙进程，形成一个进程的层次结构。子进程可以继承父进程所拥有的资源，子进程撤销时应将从父进程那里获得的资源归还父进程，父进程撤销时必须同时撤销其所有的子进程。</p>
+<p>在Unix中，进程与其子孙进程共同组成一个进程家庭（组），在PCB中设置了家族关系表项以标明自己的父进程及所有子进程，进程不能拒绝其子进程的继承权。</p>
+<p>在Windows中不存在进程层次结构的概念，所有进程具有相同的地位，进程创建另一个进程时获得一个句柄，可用来控制被创建的进程，句柄可传递。进程间不再是层次关系，而是获得句柄与否、控制与被控制的简单关系。</p>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200620140101366.png" alt="image-20200620140101366"></p>
+<p>引起创建进程的事件：</p>
+<ul>
+<li>  用户登录。分时系统中用户登录成功后，系统为该用户建立一个进程并插入就绪队列中</li>
+<li>  作业调度。多道批处理系统中，作业调度程序调度某个作业时，便将它装入内存，为它创建进程并插入就绪队列中</li>
+<li>  提供服务。运行中的用户程序提出某种请求后系统将专门创建一个进程提供用户所需要的服务</li>
+<li>  应用请求。上面三种是系统内核为用户创建新进程，而这类事件是用户进程自己创建新进程，使新进程同父进程并发运行完成任务</li>
+</ul>
+<p><strong>OS调用进程创建原语Creat创建一个新进程：</strong></p>
+<ol>
+<li> 申请空白PCB，为新进程申请获得唯一的数字标识符，并从PCB集合中索取一个空白PCB</li>
+<li> 为新进程分配其运行所需的资源，包括各种物理和逻辑资源，如内存、文件、I/O设备和CPU时间等。这些资源或从操作系统或仅从其父进程获得，新进程对这些资源的需求详情一般也要提前告知操作系统或其父进程</li>
+<li>初始化进程控制块（PCB）<ul>
+<li>  初始化标识符信息，将系统分配的标识符和父进程标识符填入新PCB中</li>
+<li>  初始化处理机状态信息，使程序计数器指向程序入口地址，使其指针指向栈顶</li>
+<li>  初始化处理机控制信息，将进程的状态设置为就绪状态或静止就绪状态，对于优先级通常是设置为最低优先级，除非用户一显示方式提出高优先级要求</li>
+</ul>
+</li>
+<li> 如果进程就绪队列能够接纳新进程，便将新进程插入就绪队列</li>
+</ol>
+<h3 id="进程的终止"><a href="#进程的终止" class="headerlink" title="进程的终止"></a>进程的终止</h3><p>引起进程终止的事件：</p>
+<ul>
+<li>  正常结束，表示进程的任务已经完成，准备退出运行</li>
+<li>异常结束，表示进程在运行时发生了某种异常事件，使程序无法继续运行<ul>
+<li>  越界错，访问进程区域外的存储区</li>
+<li>  保护错，访问不允许访问的资源或文件，或者以不适当的方式进行访问</li>
+<li>  非法指令，试图执行一条不存在的指令</li>
+<li>  特权指令错，用户进程试图执行一条只允许OS执行的指令</li>
+<li>  运行超时，进程的执行时间超过了指定的最大值</li>
+<li>  等待超时，进程等待某事件的事件超过了指定的最大值</li>
+<li>  算术运算错，进程试图去执行一个被禁止的运算</li>
+<li>  I/O故障，I/O过程中发生了错误</li>
+</ul>
+</li>
+<li>外界干预，是指进程应外界的请求而终止<ul>
+<li>  操作员或操作系统干预</li>
+<li>  父进程请求，指当子进程已完成父进程所要求的任务时，父进程可以提出请求结束该子进程</li>
+<li>  因父进程终止而接受子进程</li>
+</ul>
+</li>
+</ul>
+<p><strong>如果系统中发生了要求终止进程的某事件，OS便调用进程终止原语，按下述过程去终止指定的进程：</strong></p>
+<ol>
+<li> 根据被终止进程的标识符，从PCB集合中检索出该进程的PCB，从中读出该进程的状态</li>
+<li> 若被终止进程正处于执行状态，应立即终止该进程的执行，并置调度标志为真，用于指示该进程被终止后应重新进行调度</li>
+<li> 若该进程还有子孙进程，还应将其所有子孙进程也都予以终止，以防它们成为不可控的进程</li>
+<li> 将被终止进程所拥有的全部资源或者归还给其父进程，或者归还给系统</li>
+<li> 将被终止进程（PCB）从所在队列（或链表）中移出，等待其他程序来搜集信息</li>
+</ol>
+<h3 id="进程的阻塞与唤醒"><a href="#进程的阻塞与唤醒" class="headerlink" title="进程的阻塞与唤醒"></a>进程的阻塞与唤醒</h3><p>引起进程阻塞和唤醒的事件：</p>
+<ul>
+<li>  向系统请求共享资源失败</li>
+<li>  等待某种操作的完成</li>
+<li>  新数据尚未到达</li>
+<li>  等待新任务的到达</li>
+</ul>
+<p><strong>进程阻塞过程：</strong>发生了以上某事件，进程便<strong>主动</strong>通过调用阻塞原语block将自己阻塞。进入block过程后，由于该进程还处于执行状态，所以应该立即停止执行，把进程控制块中的现行状态由“执行“改为阻塞，并将PCB插入阻塞队列。</p>
+<p><strong>进程唤醒过程：</strong>当被阻塞进程所期待的事件发生时，由有关进程调用唤醒原语wakeup，将等待该事件的进程唤醒。首先把被阻塞的进程从等待该事件的阻塞队列中移出，将其PCB中的现行状态由阻塞改为就绪，然后再将该PCB插入到就绪队列。</p>
+<p>block原语和wakeup原语是一对作用相反的原语，使用它们时必须成对使用，否则阻塞进程会因不能被唤醒而永久地处于阻塞队列，再无机会继续运行。</p>
+<h3 id="进程的挂起与激活"><a href="#进程的挂起与激活" class="headerlink" title="进程的挂起与激活"></a>进程的挂起与激活</h3><p>当系统中出现了引起进程挂起的事件时，OS利用挂起原语suspend将指定进程或处于阻塞状态的进程挂起。suspend的执行过程是：</p>
+<ul>
+<li>首先检查被挂起进程的状态<ul>
+<li>  若处于活动就绪状态，便将其改为静止就绪</li>
+<li>  对于活动阻塞状态的进程，则将其改为静止阻塞</li>
+</ul>
+</li>
+<li>  为了方便用户或父进程考察该进程的执行情况，而把该进程的PCB复制到某指定的内存区域</li>
+<li>  最后，若被挂起的进程正在执行，则转向调度陈下程序调度</li>
+</ul>
+<p>当系统中发生激活进程的事件时，OS利用激活原语active，将指定进程激活。active的执行过程是：</p>
+<ul>
+<li>激活原语先将进程从外存调入内存，检查该进程的现行状态<ul>
+<li>  若是静止就绪，便将之改为活动就绪</li>
+<li>  若是静止阻塞，便将之改为活动阻塞</li>
+</ul>
+</li>
+<li>假如采用抢占调度策略，则每当有静止就绪进程被激活而进入活动就绪队列时，便应检查是否要进行重新调度，调度程序比较被激活进程和当前进程两者的优先级<ul>
+<li>  如果被激活进程的优先级低，就不必重新调度</li>
+<li>  否则，立即剥夺当前进程的运行，把处理机分配给刚刚被激活的进程</li>
+</ul>
+</li>
+</ul>
+<h3 id="进程的切换"><a href="#进程的切换" class="headerlink" title="进程的切换"></a>进程的切换</h3><p>进程切换是指处理机从一个进程的运行转到另一个进程上运行，在这个过程中，进程的运行环境产生了实质性的变化。</p>
+<p>进程切换的过程：</p>
+<ol>
+<li> 保存处理机上下文，包括程序计数器和其它寄存器</li>
+<li> 更新PCB信息</li>
+<li> 把进程的PCB移入相应的队列，如就绪、在某事件阻塞等队列</li>
+<li> 选择另一个进程执行，并更新其PCB</li>
+<li> 更新内存管理的数据结构</li>
+<li> 恢复处理机上下文</li>
+</ol>
+<blockquote>
+<p>  “调度”和”切换“的区别：</p>
+<p>  调度是指决定资源分配给哪个进程的行为，是一种决策行为；</p>
+<p>  切换是指实际分配的行为，是执行行为。</p>
+<p>  一般来说，先有资源的调度，然后才有进程的切换。</p>
+</blockquote>
+<h2 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a>进程同步</h2><p>OS引入了进程后，一方面可以使系统中的多道程序并发执行，不仅能有效地改善资源利用率，还可以显著地提高系统的吞吐量，另一方面使系统变得更加复杂。</p>
+<p>为保证多个进程能有条不紊地运行，在多道程序系统中，必须引入进程同步机制。</p>
+<h3 id="进程同步的基本概念"><a href="#进程同步的基本概念" class="headerlink" title="进程同步的基本概念"></a>进程同步的基本概念</h3><p>进程同步机制的主要任务，是对多个相关进程在执行次序上进行协调，使并发执行的诸进程之间能够按照一定的规则（或时序）共享系统资源，并能很好地相互合作，从而使程序的执行具有<strong>可再现性</strong>。</p>
+<p>同一个系统的多个进程共享系统中的资源或者合作共同完成某项任务，它们之间存在两种形式的制约：</p>
+<ul>
+<li>  互斥，也称间接相互制约关系：源于共享系统资源</li>
+<li>  同步，也称直接相互制约关系：源于进程间相互合作</li>
+</ul>
+<h4 id="临界资源"><a href="#临界资源" class="headerlink" title="临界资源"></a>临界资源</h4><p>许多硬件设备都属于临界资源，诸进程间应采取互斥方式，实现对这种资源的共享。</p>
+<p>生产者-消费者问题是一个著名的进程同步问题。生产者进程与消费者进程都以异步方式运行，但是它们之间保持同步，既不允许消费者进程到一个空缓冲区去取产品，也不允许生产者进程向一个已装满产品且尚未被取走的缓冲区中投放产品。</p>
+<p>数组buffer表示具有n个缓冲区的缓冲池，每投入（或取出）一个产品时，缓冲池buffer中暂存产品（或已取走产品的空闲单元）的数组单元指针in（或out）加1。buffer缓冲池被组织成循环缓冲，故加1应该表示为<code>in = (in + 1) % n</code>（或<code>out = (out + 1) % n</code>）。当<code>(in + 1) % n = out</code>时表示缓冲池满；而<code>in = out</code>则表示缓冲池空。引入整型变量counter表示缓冲池产品数量。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">int in = 0, out = 0, counter = 0;<br>item buffer[n];<br><br>void producer()&#123;<br>    while(1)&#123;<br>        produce an item in nextp;//nextp变量用于暂时存放每次刚刚生产出来的产品<br>        ...<br>        while(counter == n)	//缓冲池满了，阻塞<br>        ;<br>        buffer[in] = nextp;<br>        in = (in + 1) % n;<br>        counter++;<br>    &#125;<br>&#125;<br><br>void consumer()&#123;<br>    while(1)&#123;<br>        while(counter == 0)//缓冲池为空，阻塞<br>        ;<br>        nextc = buffer[out];<br>        out = (out + 1) % n;<br>        counter--;<br>        consume the item in nextc;//nextc变量用于暂时存放每次要消费的产品<br>        ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">register1 = counter;<br>register1 = register1 + 1;<br>counter = register1;<br><br>register2 = counter;<br>register2 = register2 - 1;<br>counter = register2;<br>//先执行前三条，再执行后三条，或者反过来，结果都是一样的，但是如果将3条一组的语句拆散开了，则结果出现了不可再现性<br>register1 = counter;<br>register1 = register1 + 1;<br>register2 = counter;<br>register2 = register2 - 1;<br>counter = register1;<br>counter = register2;<br></code></pre></td></tr></table></figure>
+
+<p>为了预防产生这种错误，解决问题的关键是应把变量counter作为临界资源处理，令生产者进程和消费者进程互斥地访问变量counter。</p>
+<h4 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h4><p>不论是硬件临界资源还是软件临界资源，多个进程必须互斥访问。每个进程中访问临界资源的那段代码称为<strong>临界区</strong>。多个进程互斥地进入自己的临界区，便可实现诸进程对临界资源的互斥访问。</p>
+<p>为此，每个进程进入临界区之前，必须对临界资源进行检查，看是否正被访问：</p>
+<ul>
+<li>  如果临界资源未被访问，进程便可进入临界区，并设置该资源正被访问的标志</li>
+<li>  如果该临界资源正被某进程访问，则本进程不能进入临界区</li>
+</ul>
+<p>进程进入临界区前面的检查代码称为<strong>进入区</strong>，相应地，在临界区后面也要加上一段称为<strong>退出区</strong>的代码，用于将临界区正被访问的标志恢复为未被访问的标志。进程除了进入区、临界区及退出区之外的其他部分代码称为剩余区。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">while(TRUE)&#123;<br>    进入区<br>    临界区<br>    退出区<br>    剩余区<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>所有同步机制应遵循的规则</strong>：</p>
+<ol>
+<li> 空闲让进。当无进程处于临界区时，表明临界资源处于空闲状态，应允许一个请求进入临界区的进程立即进入自己的临界区，以有效地利用临界资源</li>
+<li> 忙则等待。当已有进程进入临界区时，表明临界资源正在被访问，因而其他试图进入临界区的进程必须等待，以保证对临界资源的互斥访问</li>
+<li> 有限等待。对要求访问临界资源的进程，应保证在有限时间内能进入自己的临界区，以免陷入”死等“状态</li>
+<li> 让权等待。当进程不能进入自己的临界区时，应立即释放处理机，以免进程陷入“忙等”状态</li>
+</ol>
+<h3 id="硬件同步机制"><a href="#硬件同步机制" class="headerlink" title="硬件同步机制"></a>硬件同步机制</h3><p>软件方法解决进程互斥进入临界区问题有一定难度，而且局限性很大。</p>
+<ol>
+<li><p><strong>关中断</strong></p>
+<p> 关中断是实现互斥的最简单的方法之一。在进入锁测试之前关闭中断，直到完成锁测试并上锁之后才打开中断。这样进程在临界区执行期间，计算机系统不响应中断，从而不会引发调度，也就不会发生进程或线程切换，有效地保证了互斥。</p>
+<p> 关中断存在许多缺点：</p>
+<ul>
+<li>  滥用关中断权力可能导致严重后果</li>
+<li>  关中断时间过长，会影响系统效率，现在了处理器交叉执行程序的能力</li>
+<li>  关中断方法不适用于多CPU系统，因为一个处理器上关中断并不能防止进程在其它处理器上执行相同的临界段代码</li>
+</ul>
+</li>
+<li><p><strong>利用Test-and-Set指令实现互斥</strong></p>
+<p> 访问临界资源的时候，借助一条硬件指令——”测试并建立“指令TS以实现互斥的方法。许多计算机都提供了这种指令。</p>
+<p> TS指令的执行过程是不可分割的，即是一条原语。用TS指令管理临界区时，为每个临界资源设置一个布尔变量lock，lock变量代表该资源的状态，可以看出是一把锁。</p>
+<p> 利用TS指令实现互斥可描述为：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">boolean TS(boolean *lock)&#123;<br>    boolean old;<br>    old = *lock;<br>    *lock = TRUE;<br>    return old;<br>&#125;<br>do &#123;<br>    ...<br>    while(TS(&amp;lock))<br>    ;<br>    critical section;<br>    lock := FALSE;<br>    remainder section;<br>&#125;while(TRUE);<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>利用Swap指令实现进程互斥</strong></p>
+<p> 该指令称为对换指令，在Intel 80x86 中又称为XCHG指令，用于交换两个字的内容。</p>
+<p> 用对换指令实现简单的互斥，方法是为每个临时资源设置一个全局的布尔变量lock，初值为false，在每个进程在利用一个局部变量key：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">void swap(boolean *a, boolean *b)&#123;<br>    boolean temp;<br>    temp = *a;<br>    *a = *b;<br>    *b = temp;<br>&#125;<br>do&#123;<br>    key = true;<br>    do&#123;<br>        swap(&amp;lock, &amp;key);<br>    &#125;while(key != false);<br>    lock = false;<br>    ...<br>&#125;while(true);<br></code></pre></td></tr></table></figure>
+<p> 上述硬件指令能有效实现进程互斥，但是当临界资源忙碌时，访问进程不断测试，处于“忙等”状态，不符合“让权等待”原则，造成处理机资源浪费，无法解决复杂的进程同步问题。</p>
+</li>
+</ol>
+<p>硬件方法的优点：</p>
+<ul>
+<li>  适用于任意数目的进程，而不管是单处理机还是多处理机</li>
+<li>  简单、容易验证其正确性</li>
+<li>  可以支持进程内有多个临界区，只需为每个临界区设立一个布尔变量</li>
+</ul>
+<p>硬件方法的缺点：</p>
+<ul>
+<li>  进程等待进入临界区时要耗费处理机时间，不能实现让权等待</li>
+<li>  从等待进程中随机选择一个进入临界区，可能导致“饥饿”现象</li>
+</ul>
+<h3 id="信号量机制"><a href="#信号量机制" class="headerlink" title="信号量机制"></a>信号量机制</h3><p>信号量机制是一种卓有成效的进程同步工具。经过发展，已经被广泛应用于单处理机和多处理机系统以及计算机网络中。</p>
+<ol>
+<li><p><strong>整型信号量</strong></p>
+<p> 定义一个用于表示资源数目的整型量S，除了初始化外，仅能通过两个标准原子操作wait(S)和signal(S)来访问，常被称为PV操作。原子操作表明它们在执行时是不可中断的，即当一个进程在修改某信号量时，其它进程不可同时对该信号量进行修改</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">wait(S)&#123;<br>    while(S&lt;=0);	//do no-op<br>    S--;<br>&#125;<br>signal(S)&#123;<br>    S++;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>记录型信号量</strong></p>
+<p> 在整型信号量中，当S&lt;=0会不断测试，处于“忙等”状态，不符合“让权等待”原则。</p>
+<p> 记录型信号量机制中，除了一个用于代表资源数目的整型变量value外，还有一个进程链表指针list，用于链接上述的所有等待进程。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">typedef struct&#123;<br>    int value;<br>    struct process_control_block *list;<br>&#125;semaphore;<br><br>wait(semaphore *S)&#123;<br>    S-&gt;value--;<br>    if(S-&gt;value &lt; 0)bolck(S-&gt;list);//资源分配完毕，进程调用block自我阻塞，放弃处理机<br>&#125;<br>signal(semaphore *S)&#123;<br>    S-&gt;value++;<br>    if(S-&gt;value &lt;= 0)wakeup(S-&gt;list);//表明仍有等待资源的进程被阻塞，唤醒进程<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> 如果value初值为1，表示只允许一个进程访问临界资源，此时的信号量转化为互斥信号量，用于进程互斥。</p>
+</li>
+<li><p><strong>AND型信号量</strong></p>
+<p> 一个进程访问多个临界资源，则需要使用多个用于互斥的信号量。</p>
+<p> AND同步机制的基本思想是：将进程在整个运行过程中需要的所有资源，一次性全部地分配给进程，待进程使用完后再一起释放。只要有一个资源未能分配给进程，其它所有可能为之分配的资源也不分配给它。即对若干个临界资源的分配采用原子操作方式，这样可避免死锁情况发生。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Swait(S1,..,Sn)&#123;<br>    while(TRUE)&#123;<br>        if(Si &gt;= 1 &amp;&amp; ... &amp;&amp; Sn &gt;= 1)&#123;<br>            for(i = 1; i&lt;n; i++)Si--;<br>            break;<br>        &#125;<br>        else&#123;<br>            //将进程插入到资源Si的等待队列，<br>            //并将该程序的程序计数器设置到Swait操作的开始处<br>        &#125;<br>    &#125;<br>&#125;<br>Ssignal(S1,...,Sn)&#123;<br>    while(TRUE)&#123;<br>        for(i=1; i&lt;=n;i++)&#123;<br>            Si++;<br>            //将资源Si的等待队列的所有进程转移到准备好队列<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>信号量集</strong></p>
+<p> 对AND信号量机制加以扩充，对进程所申请的所有资源以及每类资源不同的资源需求量，在一次P、V原语操作中完成申请或释放。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">//ti是资源分配的下限值，要求Si &gt;= ti，否则不予分配<br>//di是资源需求量<br>Swait(S1, t1, d1, ... , Sn, tn, dn);<br>Ssignal(S1, d1, ... , Sn, dn);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  <code>Swait(S, d, d)</code>：信号量集中只有一个信号量S，允许每次申请d个资源，当现有资源少于d时，不予分配</li>
+<li>  <code>Swait(S, 1, 1)</code>：信号量集蜕化为一般的记录型信号量（S&gt;1时）或互斥信号量（S=1时）</li>
+<li>  <code>Swait(S, 1, 0)</code>：一种特殊且很有用的信号量操作。当S&gt;=1时，允许多个进程进入某特定区；当S变为0后，阻止任何进程进入特定区。相当于一个可控开关。</li>
+</ul>
+</li>
+</ol>
+<h3 id="信号量的应用"><a href="#信号量的应用" class="headerlink" title="信号量的应用"></a>信号量的应用</h3><ol>
+<li><p> 利用信号量实现进程同步</p>
+</li>
+<li><p>利用信号量实现进程互斥</p>
+<p> 对临界资源设置互斥信号量，初始化为1，将进程临界区置于PV操作之间即可实现进程互斥。</p>
+<p> 利用信号量实现进程互斥时，PV操作必须成对出现，缺少wait将导致系统混乱，不能保证对临界资源的互斥访问；缺少signal将会使临界资源永远不被释放，从而使因等待资源而阻塞的进程不能被唤醒。</p>
+</li>
+<li><p> 利用信号量实现前趋关系</p>
+</li>
+</ol>
+<h3 id="管程机制"><a href="#管程机制" class="headerlink" title="管程机制"></a>管程机制</h3><p>虽然信号量机制是一种既方便、又有效的进程同步机制，但要访问临界资源的进程都必须自备同步操作wait和signal，这就使大量的同步操作分散在各个进程中，不利于系统管理，容易使用不当造成死锁。</p>
+<p>代表共享资源的数据结构以及由对该共享数据结构实施操作的一组过程所组成的资源管理程序共同构成了一个操作系统的资源管理模块，称之为<strong>管程</strong>。</p>
+<p>管程被请求和释放资源的进程所调用。管程分别四部分：</p>
+<ul>
+<li>  管程的名称</li>
+<li>  局部于管程的共享数据结构说明</li>
+<li>  对数据结构进行的一组操作</li>
+<li>  对局部于管程的共享数据设置初始值的语句</li>
+</ul>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200621142151865.png" alt="image-20200621142151865"></p>
+<p>管程具有三个特性：模块化、抽象数据类型、信息隐蔽</p>
+<p><strong>管程和进程的区别</strong>：</p>
+<ol>
+<li> 二者都定义了数据结构，但是进程定义的是私有数据结构PCB，管程定义的是公有数据结构如消息队列</li>
+<li> 二者都存在对各自数据结构上的操作，但进程是由程序顺序执行有关操作，而管程主要进行同步操作和初始化操作</li>
+<li> 设置进程的目的在于实现系统的并发性，管程的设置是解决共享资源互斥使用的问题</li>
+<li> 进程通过调用管程中的过程对共享数据结构实行操作，因此管程为被动工作方式，进程为主动工作方式</li>
+<li> 进程之间能并发执行，管程则不能与其调用者并发</li>
+<li> 进程具有动态性，管程是操作系统的一个资源管理模块</li>
+</ol>
+<p>管程也是一种临界资源，当一个进程在管程中被阻塞或挂起后，需要释放管程，以便让其它进程调用。进程阻塞或挂起的原因有多个，因此在管程中设置多个条件变量，对条件变量的访问只能在管程中进行。每个条件变量保存了一个链表，用于记录因该条件而阻塞的所有进程，提供了两个操作：(x为条件变量)</p>
+<ul>
+<li><p>  x.wait：正在调用管程的进程因x条件需要被阻塞或挂起，则调用x.wait将自己插入到x条件的等待队列上，并释放管程，直到x条件变化。此时其它进程可使用该管程</p>
+</li>
+<li><p>x.signal：正在调用管程的进程发现x条件发生变化，则调用x.signal，重新启动一个因x条件而阻塞或挂起的进程，如果没有，继续执行原进程不产生任何后果，如果有多个进程则选择其中一个。重新启动后两个进程P和Q（被重新启动），如何确定先执行哪个：</p>
+<ul>
+<li>  P等待，直至Q离开管程或等待另一条件</li>
+<li>  Q等待，直至P离开管程或等待另一条件</li>
+</ul>
+<p>  Hoare采用第一种方式，Hansan选择了两者的折中：他规定管程中的过程所执行的signal操作是过程体的最后一个操作，于是，P进程执行signal操作后立即退出管程，Q马上恢复执行。</p>
+</li>
+</ul>
+<h2 id="经典进程的同步问题"><a href="#经典进程的同步问题" class="headerlink" title="经典进程的同步问题"></a>经典进程的同步问题</h2><h3 id="生产者-消费者问题"><a href="#生产者-消费者问题" class="headerlink" title="生产者-消费者问题"></a>生产者-消费者问题</h3><p>生产者-消费者问题是<strong>相互合作的进程关系</strong>的一种抽象。</p>
+<ol>
+<li><p>利用记录型信号量解决</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">int in = 0, out = 0;<br>item buffer[n];<br>semaphore mutex = 1, empty = n. full = 0;<br>void proceducer()&#123;<br>    do&#123;<br>        produce an item nextp;<br>        ...<br>        wait(empty);	//空缓冲区数量为0，则阻塞于此<br>        wait(mutex);<br>        buffer[in] = nextp;<br>        in := (in + 1)%n;<br>        signal(mutex);<br>        signal(full);<br>    &#125;while(TRUE);<br>&#125;<br>void consumer()&#123;<br>    do&#123;<br>        wait(full);		//满缓冲区数量为0，则阻塞于此<br>        wait(mutex);<br>        nextc = buffer[out];<br>        out = (out + 1)%n;<br>        signal(mutex);<br>        signal(empty);<br>        consumer the item in nextc;<br>        ...<br>    &#125;while(TRUE);<br>&#125;<br>void main()&#123;<br>    cobegin<br>        proceducer();	consumer();<br>    coend;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> 对资源信号量empty和full的wait操作必须在互斥信号量mutex的wait之前，否则可能引起死锁</p>
+</li>
+<li><p>利用AND信号量解决</p>
+<p> <code>Swait(empty, mutex)</code>代替<code>wait(empty)</code>和<code>wait(mutex)</code></p>
+<p> <code>Ssignal(mutex, full)</code>代替<code>signal(mutex)</code>和<code>signal(full)</code></p>
+<p> <code>Swait(full, mutex)</code>代替<code>wait(full)</code>和<code>wait(mutex)</code></p>
+<p> <code>Ssignal(mutex, empty)</code>代替<code>signal(mutex)</code>和<code>signal(empty)</code></p>
+</li>
+<li><p>利用管程解决</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Monitor producerconsumer&#123;<br>    item buffer[N];<br>    int in, out;<br>    condition notfull, notempty;<br>    int count;<br>    public:<br>    void put(item x)&#123;<br>        if(count &gt;= N)cwait(notfull);//缓冲区都满了，则阻塞起来，等待条件notfull满足<br>        buffer[in] = x;<br>        in = (in + 1) % N;<br>        count++;<br>        csignal(notempty);<br>    &#125;<br>    void get(item x)&#123;<br>        if(count &lt;= 0)cwait(notempty);//缓冲区都空了，则阻塞起来，等待条件notempty满足<br>        x = buffer[out];<br>        out = (out + 1) % N;<br>        count--;<br>        csignal(notfull);<br>    &#125;<br>    &#123;in = 0; out = 0; count = 0;&#125;<br>&#125;PC;<br><br>void proceducer()&#123;<br>    item x;<br>    while(TRUE)&#123;<br>        ...<br>        produce an item in nextp;<br>        PC.put(x);<br>    &#125;<br>&#125;<br>void consumer()&#123;<br>    item x;<br>    while(TRUE)&#123;<br>        PC.get(x);<br>        consumer the item in nextc;<br>        ...<br>    &#125;<br>&#125;<br>void main()&#123;<br>    cobegin<br>        proceducer();	consumer();<br>    coend;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="哲学家进餐问题"><a href="#哲学家进餐问题" class="headerlink" title="哲学家进餐问题"></a>哲学家进餐问题</h3><p>哲学家进餐问题是<strong>典型的同步问题</strong>：五个哲学家，五个碗，五只筷子，交替进餐。</p>
+<ol>
+<li><p>利用记录型信号量解决</p>
+<p> 筷子是临界资源，一段时间内只允许一位哲学家使用。为了实现筷子的互斥使用，可以使用一个信号量表示一只筷子，由五个信号量组成信号量数组：<code>semanphore chopstick[5] = &#123;1,1,1,1,1&#125;;</code></p>
+<p> 第i位哲学家的活动可描述为：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">do&#123;<br>    wait(chopstick[i]);<br>    wait(chopstick[(i+1)%5]);<br>    ...<br>    //eat<br>    ...<br>    signal(chopstick[i]);<br>    signal(chopstick[(i+1)%5]);<br>    ...<br>    //think<br>    ...<br>&#125;while(TRUE);<br></code></pre></td></tr></table></figure>
+
+<p> 如果五位哲学家同时拿左边的筷子，则会陷入死锁。可采取的几种解决方法：</p>
+<ul>
+<li>  至多只允许有四位哲学家同时拿左边的筷子</li>
+<li>  仅当哲学家左右两只筷子都可使用时，才允许他拿起筷子</li>
+<li>  规定奇数号哲学家先拿左边筷子，再拿右边筷子；偶数号哲学家相反</li>
+</ul>
+</li>
+<li><p>利用AND信号量机制解决</p>
+<p> 要求每个哲学家先获得两个临界资源（筷子）后才能进餐</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">semanphore chopstick[5] = &#123;1,1,1,1,1&#125;;<br>do&#123;<br>    ...<br>    //think<br>    ...<br>    Swait(chopstick[(i+1)%5], chopstick[i]);<br>    ...<br>    //eat<br>    ...<br>    Ssignal(chopstick[(i+1)%5], chopstick[i]);<br>&#125;while(TRUE);<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="读者-写者问题"><a href="#读者-写者问题" class="headerlink" title="读者-写者问题"></a>读者-写者问题</h3><p>允许多个进程同时读一个共享对象，因为这样不会使文件混乱；但不允许一个Writer进程和其它Reader进程或Writer进程同时访问共享对象，因为这种访问将会引起混乱。</p>
+<p>读者-写者问题是指：保证一个Writer进程必须与其它进程互斥地访问共享对象的同步问题。常被用来测试新同步原语。</p>
+<ol>
+<li><p>利用记录型信号量解决</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">semanphore rmutex = 1, wmutex = 1;<br>int readcount = 0;<br>void reader()&#123;<br>    do&#123;<br>        wait(rmutex);	//读的时候上锁，避免readcount被别的进程修改<br>        if(readcount == 0)wait(wmutex);//读的时候不允许写<br>        readcount++;<br>        signal(rmutex);<br>        ...<br>        perform read operation<br>        ...<br>        wait(rmutex);	//读的时候上锁，避免readcount被别的进程修改<br>        readcount--;	//读完后将数量减一<br>        if(readcount == 0)wait(wmutex);//如果没有读者了的话，就释放wmutex，允许写者操作<br>        signal(rmutex);<br>    &#125;while(TRUE);<br>&#125;<br>void writer()&#123;<br>    do&#123;<br>        wait(wmutex);<br>        perform write operation;<br>        signal(wmutex);<br>    &#125;while(TRUE);<br>&#125;<br>void main()&#123;<br>    cobegin<br>        reader();	writer();<br>    coend<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>利用信号量集机制解决</p>
+<p> 这里为读者-写者问题添加限制：最多只允许RN个读者同时读。为此引入一个信号量L，并赋初值为RN，通过执行<code>wait(L, 1, 1)</code>操作来控制读者数目。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">int RN;<br>semaphore L=RN,mx=1;<br>void reader()&#123;<br>    do&#123;<br>        Swait(L, 1, 1);<br>        Swait(mx, 1, 0);	//只要无writer进程进入写操作，mx=1，reader进程可进入读操作<br>        perform read operation;<br>        Ssignal(L, 1);<br>    &#125;while(TRUE);<br>&#125;<br>void writer()&#123;<br>    do&#123;<br>        Swait(mx, 1, 1; L, RN, 0);//当且仅当既无writer进程在写操作（mx=1）、又无reader进程在读操作（L=RN）时，writer进程才能进入临界区进行写操作<br>        perform write operation;<br>        Ssignal(mx, 1);<br>    &#125;while(TRUE);<br>&#125;<br>void main()&#123;<br>    cobegin<br>        reader();	writer();<br>    coend<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h2><p>进程通信是指进程之间的信息交换。由于进程的互斥与同步，需要在进程间交换一定的信息，这是低级通信，效率低，通信对用户不透明。</p>
+<p>在进程之间要传递大量数据时，应当利用OS提供的<strong>高级通信</strong>工具，其特点是：使用方便、高效地传递大量数据。</p>
+<h3 id="进程通信的类型"><a href="#进程通信的类型" class="headerlink" title="进程通信的类型"></a>进程通信的类型</h3><ol>
+<li><p><strong>共享存储器系统</strong></p>
+<p> 相互通信的进程共享某些数据结构或共享存储区，进程之间能够共享这些空间进行通信：</p>
+<ol>
+<li> 基于共享数据结构的通信方式，属于低级通信</li>
+<li> 基于共享存储区的通信方式，属于高级通信</li>
+</ol>
+</li>
+<li><p><strong>管道（pipe）通信系统</strong></p>
+<p> 所谓“管道”，是指用于连接一个读进程和一个写进程以实现它们之间通信的一个共享文件，又名pipe文件。向管道（共享文件）提供输入的发送进程（即写进程）以<strong>字符流形式</strong>将大量数据送入管道，而接受管道输出的接收进程（即读程序）则从管道中接收（读）数据。</p>
+<p> 为了协调双方的通信，管道机制必须提供以下三方面的协调能力：</p>
+<ul>
+<li>  互斥，即当一个进程正在对pipe执行读/写操作时，其它进程必须等待</li>
+<li>  同步，写进程将数据写入pipe后便睡眠等待读进程将数据取走后再唤醒，读进程读一空pipe时，也应睡眠等待写进程将数据写入后再唤醒。</li>
+<li>确定对方是否存在，只有确定了对方已存在时才能进行通信</li>
+</ul>
+</li>
+<li><p><strong>消息传递系统</strong></p>
+<p> 不必借助任何共享存储区或数据结构，而是以格式化的消息（message）为单位，将通信的数据封装在消息中，并利用操作系统提供的一组通信命令（原语：发送消息和接收消息），在进程间进行消息传递，完成进程间的数据交换。</p>
+<p> 该方式隐藏了通信实现细节，使通信过程对用户透明化，降低了通信程序设计的复杂性和错误率，成为当前应用最为广泛的一类进程间通信的机制。</p>
+<p> 基于消息传递系统的通信方式属于高级通信方式，因其实现方式的不同，可进一步分成两类：</p>
+<ul>
+<li>  直接通信方式，是指发送进程利用OS所提供的发送原语，直接把消息发送给目标进程，并将它挂在接收进程的消息缓冲队列上，接收进程从消息缓冲队列中取得消息</li>
+<li>  间接通信方式，是指发送和接受进程，都通过共享中间实体（称为邮箱）的方式进行消息的发送和接收，完成进程间的通信</li>
+</ul>
+</li>
+<li><p><strong>客户机-服务器系统</strong></p>
+<p> 在网络环境的各种应用领域已成为当前主流的通信实现机制，主要实现方法分为三类：</p>
+<ul>
+<li><p><strong>套接字</strong></p>
+<ul>
+<li>  基于文件型：通信进程处于同一台主机，一个套接字关联到一个特殊的本地文件</li>
+<li>  基于网络型：网络环境中的不同主机，采用非对称方式通信，即发送者需要提供接收者命名。</li>
+</ul>
+</li>
+<li><p><strong>远程过程调用和远程方法调用</strong></p>
+<p>  远程过程（函数）调用RPC，是一个通信协议，用于通过网络连接的系统。该协议允许运行于一台主机（本地）系统上的进程调用另一台主机（远程）系统上的进程，而对程序员表现为常规的过程调用，无须额外地为此编程。如果涉及的软件采用面向对象编程，那么远程过程调用亦可称为<strong>远程方法调用</strong>。</p>
+<p>  负责处理远程过程调用的进程：本地客户进程、远程服务器进程，常被称为网络守护进程，主要负责网络间的消息传递，常处于阻塞状态等待消息。</p>
+<p>  为了使远程过程调用看起来和本地过程调用一样，即希望实现RPC的透明性，RPC引入一个存根的概念：在<strong>本地客户端</strong>，每个能独立运行的远程过程都拥有一个<strong>客户存根</strong>，本地进程调用远程进程过程实际是调用<strong>该过程关联的存根</strong>；与此类似的，服务器端也存在一个<strong>服务器存根</strong>。</p>
+<p>  远程过程调用的步骤：</p>
+<ol>
+<li> 本地过程调用者以一般方式调用远程过程在本地关联的客户存根，传递相应参数，将控制权转移给客户存根</li>
+<li> 客户存根执行，完成消息建立，将控制权转移给本地客户进程</li>
+<li> 本地客户进程完成与服务器的消息传递，将消息发送到远程服务器进程</li>
+<li> 远程服务器进程接收消息后转入执行，根据其中的远程过程名找到对应的服务器存根，将消息转给该存根</li>
+<li> 服务器存根接收到消息后，由阻塞转入执行状态，取出消息中的参数，以一般方式调用服务器上关联的过程</li>
+<li> 服务器端的远程过程运行完毕，返回结构给服务器存根</li>
+<li> 服务器存根取得控制权运行，将结果打包为消息，将控制权转移给远程服务器进程</li>
+<li> 远程服务器进程将消息发送回客户端</li>
+<li> 本地客户进程接收到消息后，根据过程名将消息存入关联的客户存根，再将控制权转移给客户存根</li>
+<li> 客户存根从消息中取出结果，返回给本地调用者进程，并完成控制权的转移</li>
+</ol>
+<p>  <code>本地调用进程-&gt;客户存根-&gt;本地客户进程（发送）</code></p>
+<p>  <code>远程服务器进程（接收）-&gt;服务器存根-&gt;服务器关联过程-&gt;服务器存根-&gt;远程服务器进程（发送）</code></p>
+<p>  <code>本地客户进程（接收）-&gt;客户存根-&gt;本地调用进程</code></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="消息传递通信的实现方式"><a href="#消息传递通信的实现方式" class="headerlink" title="消息传递通信的实现方式"></a>消息传递通信的实现方式</h3><h4 id="直接消息传递系统"><a href="#直接消息传递系统" class="headerlink" title="直接消息传递系统"></a>直接消息传递系统</h4><p>发送进程利用OS所提供的发送命令（原语），直接把消息发送给目标进程。</p>
+<ol>
+<li><p>直接通信原语</p>
+<ol>
+<li><p>对称寻址方式：通信双方显示提供对方的标识符</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">send(receiver, message);	//发送一个消息给接收进程<br>receive(sender, message);	//接收Sender发来的消息<br></code></pre></td></tr></table></figure></li>
+<li><p>非对称寻址方式：接收进程的原语中不需要命名发送进程</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">send(P, message);	//发送一个消息给进程P<br>receive(id, message);	//接收来自任何进程的消息，id变量可设置为进行通信的发送方进程id或名字<br></code></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>消息的格式</p>
+<ul>
+<li>  定长消息格式，消息处理和存储开销小</li>
+<li>  变长消息格式，开销变大了，但是方便了用户</li>
+</ul>
+</li>
+<li><p>进程的同步方式</p>
+<p> 在进程之间进行通信时，需要有进程同步机制以使诸进程间能协调通信。</p>
+<p> 进程在完成消息发送或接收后，共用三种情况：</p>
+<ul>
+<li>  发送进程阻塞，接收进程阻塞：用于进程间紧密同步，进程之间无缓冲时</li>
+<li>  发送进程不阻塞，接收进程阻塞：应用最广的进程同步方式，发送进程可以尽快把一个或多个消息发送给多个目标，接收进程在消息到来时唤醒</li>
+<li>  发送进程和接收进程均不阻塞：常见的同步方式，进程都在忙自己的事情，仅当某事情使它无法继续运行时才阻塞起来</li>
+</ul>
+</li>
+<li><p>通信链路</p>
+<ul>
+<li>  建立方式一：发送进程在通信前用显示的“建立连接”命令（原语）请求系统为之建立一条通信链路，在链路使用完成后拆除链路。主要用于计算机网络中。</li>
+<li>  建立方式二：发送进程无须明确提出建立链路的请求，只须利用系统提供的发送命令（原语），系统会自动为之建立一条链路。主要用于单机系统中。</li>
+</ul>
+<p> 根据通信方式的不同，把链路分两种：</p>
+<ul>
+<li>  单向通信链路，只允许发送进程向接收进程发送消息，或者相反</li>
+<li>  双向通信链路，通信双方的进程可互相发送消息</li>
+</ul>
+</li>
+</ol>
+<h4 id="信箱通信"><a href="#信箱通信" class="headerlink" title="信箱通信"></a>信箱通信</h4><p>信箱通信属于间接通信方式，需要通过某种中间实体完成通信，每个信箱都有一个唯一标识符，消息在信箱中可以安全保存，只允许核准的目标用户随时读取。既可实现实时通信，又可实现非实时通信。消息传递方式可以是双向的也可以是单向的。</p>
+<p>信箱定义为一种数据结构，主要分为两个部分：</p>
+<ul>
+<li>  信箱头：存放描述信箱，包括信箱标识符、信箱拥有者、信箱口令、信箱空格等</li>
+<li>  信箱体：若干个可以存放消息的格子，其数目以及大小在创建信箱时确定</li>
+</ul>
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200622103316635.png" alt="image-20200622103316635"></p>
+<p>系统为信箱通信提供了若干条原语，分别用于：</p>
+<ul>
+<li><p>  信箱的创建和撤销：信箱的名字、属性（公用、私用或共享）、共享者名字等。</p>
+</li>
+<li><p>消息的发送和接收</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Sedn(mailbox, message);		//将一个消息发送到指定信箱<br>Receive(mailbox, message);	//从指定信箱中接收一个消息<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>信箱可以由系统创建，也可以由用户进程创建，创建者即拥有者，信箱类型分为三类：</p>
+<ul>
+<li>  私用信箱：用户进程创建，拥有者可读取消息，其它用户可以发送消息到信箱。单向通信，当创建信箱的进程结束时，信箱随之消失</li>
+<li>  公用信箱：操作系统创建，提供给系统中的所有核准进程使用。双向通信，通常系统运行期间始终存在</li>
+<li>  共享信箱：某进程创建，创建者和共享者可使用。双向通信。</li>
+</ul>
+<p>在利用信箱通信时，在发送进程和接收进程之间存在四种关系：</p>
+<ul>
+<li>  一对一关系</li>
+<li>  多对一关系</li>
+<li>  一对多关系</li>
+<li>  多对多关系</li>
+</ul>
+<h3 id="直接消息传递系统示例"><a href="#直接消息传递系统示例" class="headerlink" title="直接消息传递系统示例"></a>直接消息传递系统示例</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">type struct message_buffer&#123;<br>    int sender;		//发送者进程标识符<br>    int size;		//消息长度<br>    char *text;		//消息正文<br>    struct message_buffer *next;	//指向下一个消息缓冲区的指针<br>&#125;<br><br>typedef struct processcontrol_block&#123;<br>    ...<br>    struct message_buffer *mq;	//消息队列首指针<br>    semaphore mutex;	//消息队列互斥信号量<br>    semaphore sm;		//消息队列资源信号量<br>    ...<br>&#125;PCB;<br><br>void send(receiver, a)&#123;			//receiver为接收进程标识符，a为发送区首地址<br>    getbuf(a.size, i);			//根据a.size申请缓冲区<br>    copy(i.sender, a.sender);	//将发送区a中的消息复制到消息缓冲区i中<br>    i.size = a.size;<br>    copy(i.text, a.text);<br>    i.next = 0;<br>    getid(PCBset, receiver.j);	//获得接收进程的内部标识符<br>    wait(j.mutex);<br>    insert(&amp;j.mq, i);<br>    signal(j.mutex);<br>    signal(j.sm);<br>&#125;<br><br>void receiver(b)&#123;<br>    j = internal name;	//接收进程内部标识符j<br>    wait(j.sm);<br>    wait(j.mutex);<br>    remove(j.mq, i);	//将消息队列中第一个消息移出<br>    signal(j.mutex);<br>    copy(b.sender, i.sender);	//将缓冲区i中的信息复制到接收区b<br>    b.size = i.size;<br>    copy(b.text, i.text);<br>    releasebuff(i);		//释放消息缓冲区<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200622110835513.png" alt="image-20200622110835513"></p>
+<h2 id="线程（Threads）的基本概念"><a href="#线程（Threads）的基本概念" class="headerlink" title="线程（Threads）的基本概念"></a>线程（Threads）的基本概念</h2><p>引入进程的目的：为了使多个程序能并发执行，以提高资源利用率和吞吐量</p>
+<p>引入线程的目的：为了减少程序在并发执行时所付出的时空开销，使OS具有更好的并发性</p>
+<p>进程的两个基本属性:</p>
+<ol>
+<li> 进程是一个可拥有资源的独立单位</li>
+<li> 进程是一个可独立调度和分配的基本单位</li>
+</ol>
+<p>程序并发执行时系统必须进行的一系列操作：</p>
+<ul>
+<li>  创建进程，系统在创建进程时，必须为它分配其所必需的、除处理机以外的所有资源，如内存空间、I/O设备，以及建立相应的PCB</li>
+<li>  撤销进程，系统在撤销进程时，必须对其所占有的资源执行回收操作，然后再撤销PCB</li>
+<li>  进程切换，对进程进行上下文切换时，需要保留当前进程的CPU环境，设置新选中进程的CPU环境，需要花费处理机时间</li>
+</ul>
+<p>由于进程是一个资源的拥有者，因而在创建、撤销和切换中，系统必须为之付出较大的时空开销。这就限制了系统中所设置进程的数目，而且进程切换不宜过于频繁，从而限制了并发程度的进一步提高。</p>
+<p>在OS中引入线程后，以线程作为调度和分派的基本单位，则可以有效地改善多处理机系统的性能。</p>
+<p>由于线程具有许多传统进程所具有的特征，所以又称为轻型进程或进程元，把传统进程称为重型进程。</p>
+<h3 id="线程与进程的比较"><a href="#线程与进程的比较" class="headerlink" title="线程与进程的比较"></a>线程与进程的比较</h3><ol>
+<li><p>调度的基本单位</p>
+<ul>
+<li>  传统OS中，进程是作为独立调度和分派的基本单位，因而进程是能独立运行的基本单位。但是调度的上下文切换开销太大。</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>引入线程的OS中，线程作为调度和分派的基本单位，因而线程是能独立运行的基本单位。线程切换仅需保存和设置少量寄存器内容，切换代价远低于进程。</li>
+</ul>
+<ol start="2">
+<li><p>并发性</p>
+<p> 在引入线程的OS中，不仅进程间可以并发执行，同一个进程的多个线程也可以并发执行，不同进程的线程也能并发执行，使OS拥有更好的并发性，有效提高系统资源利用率和系统的吞吐量。</p>
+</li>
+<li><p>拥有资源</p>
+<ul>
+<li>  进程可以拥有资源，并作为系统中拥有资源的一个基本单位。</li>
+<li>  线程本身不拥有系统资源，而是仅有一点必不可少的、能保证独立运行的资源。多个线程可以共享该进程所拥有的资源。</li>
+</ul>
+</li>
+<li><p>独立性</p>
+<p> 同一个进程中的不同线程之间的独立性要比不同进程之间的独立性要低得多。因为进程的资源是独立的，而线程可能共同使用一个进程的资源。</p>
+</li>
+<li><p>系统开销</p>
+<p> 进程的创建、撤销系统都要为之分配或回收资源，进程切换时上下文的切换都需要耗费较大的开销，而线程的切换只需保存和设置少量寄存器的内容，开销很小。</p>
+</li>
+<li><p>支撑多处理机系统</p>
+<p> 对于传统的进程（即单线程进程），不管有多少处理机，该进程只能运行在一个处理机上。多线程进程可以将一个进程的多个线程分配到多个处理机上，使它们并行执行。</p>
+</li>
+</ol>
+<h3 id="线程的状态和线程控制块"><a href="#线程的状态和线程控制块" class="headerlink" title="线程的状态和线程控制块"></a>线程的状态和线程控制块</h3><p>线程在运行时具有三种基本状态：</p>
+<ul>
+<li>  执行状态，表示线程已获得处理机而正在运行</li>
+<li>  就绪状态，指线程已具备了各种执行条件，只须再获得CPU便可立即执行</li>
+<li>  阻塞状态，指线程在执行过程中因为某事件受阻而处于暂停状态</li>
+</ul>
+<p>线程控制块TCB：</p>
+<ul>
+<li>  线程标识符：唯一的线程标识符</li>
+<li>  一组寄存器：程序计数器PC、状态寄存器和通用寄存器</li>
+<li>  线程的运行状态</li>
+<li>  线程优先级</li>
+<li>  线程专用存储区</li>
+<li>  信号屏蔽</li>
+<li>  堆栈指针</li>
+</ul>
+<p>多线程OS中的进程属性：</p>
+<ul>
+<li>  进程是一个可拥有资源的基本单位</li>
+<li>  多个线程可并发执行</li>
+<li>  进程已不是可执行的实体。在多线程OS中，把线程作为独立运行（或调度）的基本单位。虽然如此，但是进程扔具有执行相关的状态，对进程施加的与进程状态相关的操作也对其线程起作用。</li>
+</ul>
+<h2 id="线程的实现"><a href="#线程的实现" class="headerlink" title="线程的实现"></a>线程的实现</h2><h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><ol>
+<li><p><strong>内核支持线程KST</strong></p>
+<p> 在OS中的所有进程，无论是系统进程还是用户进程，都是在操作系统内核的支持下运行的，是与内核紧密相关的。</p>
+<p> 内核支撑线程KST同样也是在内核支持下运行的，它们的创建、阻塞、撤销、切换等，都是在内核空间实现的。</p>
+<p> <strong>内核支持线程中，调度是以线程为单位进行的。</strong></p>
+<blockquote>
+<p>  <strong>为了对内核线程进行控制和管理，在内核空间为每个内核线程设置了一个线程控制块。</strong></p>
+</blockquote>
+<p> 内核支持线程KST的优点：</p>
+<ul>
+<li>  在多处理器系统中，内核能同时调度同一进程中的多个线程并行执行</li>
+<li>  如果进程中的一个线程阻塞了，内核可以调度进程中的其它线程战役处理器运行，也可以运行其它进程中的线程</li>
+<li>  内核支持线程具有很小的数据结构和堆栈，线程切换比较快，切换开销小</li>
+<li>  内核本身可以采用多线程技术，提高系统的执行速度和效率</li>
+</ul>
+<p> 主要缺点：对于用户的线程切换而言开销较大，对同一个进程进行线程切换时，需要从用户态转到核心态进行，因为用户进程的线程在用户态运行，而线程调度和管理在内核实现，系统开销较大。</p>
+</li>
+<li><p><strong>用户级线程ULT</strong></p>
+<p> 用户级线程是在用户空间中实现的，对线程的创建、撤销、同步与通信等功能，都无需内核支持，即用户级线程是与内核无关的。</p>
+<p> <strong>在设置了用户级线程的系统中，调度仍是以进程为单位的</strong>，当采用轮转调度算法时，一个进程执行一个时间片，如果每个进程拥有的线程数量不同（甚至相差很大），则很不公平</p>
+<p> 用户级线程ULT的优点：</p>
+<ul>
+<li>  线程切换不需要转换到内核空间，节省了模式切换的开销</li>
+<li>  调度算法可以是进程专用的</li>
+<li>  用户级线程的实现与OS平台无关</li>
+</ul>
+<p> 用户级线程ULT的缺点：</p>
+<ul>
+<li>  系统调用的阻塞问题。在基于进程机制的OS中，进程的线程调用一个系统调用而被阻塞时，进程的其它线程也会被阻塞</li>
+<li>  无法利用多处理机进行多重处理的优点，内核每次分配给一个进程的仅有一个CPU，因而，进程中仅有一个线程能执行，其它线程只能等待</li>
+</ul>
+</li>
+<li><p><strong>组合方式</strong></p>
+<p> 有些OS把用户级线程和内核支持线程两种方式进行组合，提供了组合方式ULT/KST线程。</p>
+<p> 由于用户级线程和内核支持线程连接方式的不同，形成了三种模型：</p>
+<ul>
+<li><p>多对一模型，即将用户级线程映射到一个内核控制线程。这些用户级线程一般属于一个进程，运行在该进程的用户空间，对这些<strong>线程的调度和管理也是在用户空间中完成</strong>，仅当用户线程需要访问内核时，才将其映射到内核控制线程上，而且每次只允许一个线程进行映射。</p>
+<p>  优点：线程管理开销小，效率高</p>
+<p>  缺点：一个线程在访问内核时发生阻塞，则整个进程都阻塞，同一时刻只有一个线程访问内核，多个线程不能同时运行在多个处理机上</p>
+</li>
+<li><p>一对一模型，即将每个用户级线程映射到一个内核支持线程。</p>
+<p>  优点：当一个线程阻塞时，允许调度另一个线程运行，允许多个线程并行地运行在多处理机上</p>
+<p>  缺点：每创建一个用户级线程，相应地需要创建一个内核线程，开销较大，需要限制整个系统的线程数</p>
+</li>
+<li><p>  多对多模型，即将许多用户线程映射到同样数量或更少数量的内核线程上。结合了前两种模型的优点</p>
+</li>
+</ul>
+<p> <img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200622162446963.png" alt="image-20200622162446963"></p>
+</li>
+</ol>
+<h3 id="线程的实现-1"><a href="#线程的实现-1" class="headerlink" title="线程的实现"></a>线程的实现</h3><p>不管是进程还是线程，都必须直接或间接地取得内核的支持。</p>
+<h4 id="内核支持线程的实现"><a href="#内核支持线程的实现" class="headerlink" title="内核支持线程的实现"></a>内核支持线程的实现</h4><p>一种可能的线程控制方法是，系统在创建一个新进程时，便为它分配一个任务数据区PTDA，其中包括若干线程控制块TCB空间，保存在内核空间。</p>
+<p>当PTDA中所有TCB空间已用完，而进程又要创建新的线程时，只要其所创建的线程数未超过系统的允许值，系统可为之分配新的TCB空间。在撤销一个线程时，也应回收该线程的所有资源和TCB。与进程相类似。</p>
+<p>内核支持线程的调度和切换与进程的调度和切换十分相似，也分抢占式方式和非抢占式方式两种，但是线程在调度和切换上所花费的开销要比进程小得多。</p>
+<h4 id="用户级线程的实现"><a href="#用户级线程的实现" class="headerlink" title="用户级线程的实现"></a>用户级线程的实现</h4><p>用户级线程是在用户空间实现的。所有的用户级线程都具有相同的结构，它们都运行在一个中间系统上。当前有两种盎司实现中间系统：</p>
+<ol>
+<li><p>运行时系统</p>
+<p> 运行时系统实质上是用于管理和控制线程的函数（过程）的集合，运行时系统中的所有函数都驻留在用户空间，并作为用户级线程和内核直接的接口。</p>
+<p> 用户级线程的切换不须转入核心态，且切换简单，故而切换速度非常快。</p>
+<p> 用户级线程是不能利用系统调用的，当线程需要系统资源时，是将该要求传送给运行时系统，由后者通过相应的系统调用来获得资源。</p>
+</li>
+<li><p>内核控制线程</p>
+<p> 这种线程又称为轻型进程LWP。每一个进程可拥有多个LWP，同用户级线程一样，每个LWP都有自己 数据结构（如TCB）。LWP可共享进程所拥有的资源，可通过系统调用获得内核提供的服务。</p>
+<p> 当一个用户级线程运行时，只须将它连接到一个LWP上，此时它便具有了内核支持线程的所有属性。这种线程实现方式就是组合方式。</p>
+<p> 为了节省系统开销，不可能设定太多LWP，把LWP做成一个缓冲池，称为<strong>”线程池“</strong>。多个用户级线程多路复用一个LWP，但只有当前连接到LWP上的线程才能与内核通信，其它等待或阻塞。</p>
+<p> 每个LWP都要连接到一个内核线程上。</p>
+<p> 在内核级线程执行操作时，如果发生阻塞，与之相连接的多个LWP也将随之阻塞，从而使连接到LWP上的用户级线程也被阻塞。如果进程只包含了一个LWP（即只包含一个线程），此时进程也应阻塞；若包含其它线程，即使进程中所有LWP都阻塞，进程中的线程也能继续执行，只是不能访问内核。</p>
+<p> <img src="/%E7%AC%AC%E4%BA%8C%E7%AB%A0/image-20200622171846051.png" alt="image-20200622171846051"></p>
+</li>
+</ol>
+<h3 id="线程的创建和终止"><a href="#线程的创建和终止" class="headerlink" title="线程的创建和终止"></a>线程的创建和终止</h3><p>和进程一样，线程也具有生命期，由创建而产生，由调度而执行，由终止而消亡。</p>
+<ol>
+<li><p>线程的创建</p>
+<p> 应用程序在启动时，通常仅有一个线程在执行，称为”初始化线程“，主要功能是创建新线程。</p>
+<p> 调用线程创建函数，传递相应参数，执行完后返回线程标识符。</p>
+</li>
+<li><p>线程的终止</p>
+<p> 当一个线程完成了自己的任务后，或是线程在运行中出现了异常情况而须被强行终止时，由终止线程通过调用相应的函数（或系统调用）对它执行终止操作。</p>
+<p> 大多数OS中，线程被终止后不立即释放资源，只有当进程中的其它线程执行了分离函数后，被终止的线程才与资源分离，此时的资源才能被其它线程利用。</p>
+<p> 已经终止但尚未释放资源的线程仍可以被需要它的线程所调用，重新恢复运行。调用线程须调用一条称为”等待线程终止“的连接命令来与该线程进行连接。若指定线程尚未被终止，则调用线程阻塞，直至指定线程终止。</p>
+</li>
+</ol>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

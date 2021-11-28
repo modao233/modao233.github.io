@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#rustup%E6%8D%A2%E6%BA%90%EF%BC%88%E4%B8%AD%E7%A7%91%E5%A4%A7%E6%BA%90%EF%BC%89%EF%BC%9A"><span class="toc-text">rustup换源（中科大源）：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cargo%E6%8D%A2%E6%BA%90%EF%BC%88%E6%B8%85%E5%8D%8E%E6%BA%90%EF%BC%89"><span class="toc-text">cargo换源（清华源）</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		(转载)rustup换源
+	</div>
+	
+	<div class="page-date">
+		2020-11-24
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Rust">Rust</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43209843/article/details/104361360">https://blog.csdn.net/weixin_43209843/article/details/104361360</a></p>
+<span id="more"></span>
+
+<h2 id="rustup换源（中科大源）："><a href="#rustup换源（中科大源）：" class="headerlink" title="rustup换源（中科大源）："></a>rustup换源（中科大源）：</h2><p>在<code>.bashrc</code>中写入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static<br><span class="hljs-built_in">export</span> RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup<br></code></pre></td></tr></table></figure>
+
+<p>cargo换源：<br>新建（或编辑已有）文件<code>～/.cargo/config</code>，写入：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[source.crates-io]<br>registry = <span class="hljs-string">&quot;https://github.com/rust-lang/crates.io-index&quot;</span><br>replace-with = <span class="hljs-string">&#x27;ustc&#x27;</span><br>[source.ustc]<br>registry = <span class="hljs-string">&quot;https://mirrors.ustc.edu.cn/crates.io-index/&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果cargo版本小于0.13.0，在开头添加：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[registry]<br>index = <span class="hljs-string">&quot;https://mirrors.ustc.edu.cn/crates.io-index/&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="cargo换源（清华源）"><a href="#cargo换源（清华源）" class="headerlink" title="cargo换源（清华源）"></a>cargo换源（清华源）</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fifolilo/p/13184622.html">Win10 修改 rust 的 crates 源为中科大源</a></p>
+<p>因为我是手动安装 rust 的，所以在 <code>~/.cargo/</code> 目录下没有 <code>config</code> 文件（这里我用 Linux 下的 <code>~</code> 来指代windows下的用户根目录），所以手动新建一个 <code>~/.cargo/config</code> 文件并编辑内容如下：</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><code class="hljs toml"><span class="hljs-section">[http]</span><br><span class="hljs-attr">check-revoke</span> = <span class="hljs-literal">false</span><br><br><span class="hljs-section">[source.crates-io]</span><br><span class="hljs-attr">replace-with</span> = <span class="hljs-string">&#x27;ustc&#x27;</span><br><br><span class="hljs-section">[source.ustc]</span><br><span class="hljs-attr">registry</span> = <span class="hljs-string">&quot;https://mirrors.ustc.edu.cn/crates.io-index&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后在项目下执行 <code>cargo build</code> 安装依赖，发现下载安装速度一下子就提升了。</p>
+<p>另提供 tuna 的配置：</p>
+<figure class="highlight toml"><table><tr><td class="code"><pre><code class="hljs toml"><span class="hljs-attr">replace-with</span> = <span class="hljs-string">&#x27;tuna&#x27;</span><br><span class="hljs-section">[source.tuna]</span><br><span class="hljs-attr">registry</span> = <span class="hljs-string">&quot;https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git&quot;</span><br></code></pre></td></tr></table></figure>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

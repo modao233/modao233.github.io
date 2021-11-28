@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-text">命名空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E5%90%8D%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-text">具名命名空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%EF%BC%88C-11%EF%BC%89"><span class="toc-text">内联命名空间（C++11）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%90%8D%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-text">无名命名空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%EF%BC%88C-17%EF%BC%89"><span class="toc-text">嵌套命名空间（C++17）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#using"><span class="toc-text">using</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#using-%E5%A3%B0%E6%98%8E"><span class="toc-text">using 声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#using-%E6%8C%87%E4%BB%A4"><span class="toc-text">using 指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		命名空间
+	</div>
+	
+	<div class="page-date">
+		2020-12-28
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>命名空间提供了在大项目中<strong>避免名字冲突</strong>的一种方法。</p>
+<p>声明于命名空间块内的符号被放入一个<strong>具名</strong>的作用域中，避免这些符号被误认为其他作用域中的同名符号。</p>
+<p>允许具有相同名字的多个命名空间块。这些块中的所有声明声明于该具名作用域。</p>
+<span id="more"></span>
+
+<h2 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h2><p>命名空间的定义：只允许在<strong>命名空间作用域</strong>，包括全局作用域中出现</p>
+<p>重打开一个已经定义的命名空间（<strong>某个外围命名空间</strong>或<strong>外围命名空间中的内联命名空间</strong>的成员），需要使用命名空间名（而非别名）。</p>
+<p>命名空间体内声明的所有名字，都成为该命名空间的成员，无论此命名空间定义是原初命名空间定义（引入 <em>标识符</em> 者），还是扩展命名空间定义（“重打开”已定义命名空间者）</p>
+<p>声明于命名空间体内的命名空间成员，可以在其外部用显式限定进行定义或再声明：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> Q &#123;<br>  <span class="hljs-keyword">namespace</span> V &#123; <span class="hljs-comment">// V 是 Q 的成员，且完全在 Q 内定义</span><br><span class="hljs-comment">// namespace Q::V &#123; // C++17 中对上述二行的替代写法</span><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span> &#123;</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m</span><span class="hljs-params">()</span></span>; &#125;; <span class="hljs-comment">// C 是 V 的成员且完全定义于 V 内</span><br>                           <span class="hljs-comment">// C::m 仅声明</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// f 是 V 的成员，但只在此声明</span><br>  &#125;<br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">V::f</span><span class="hljs-params">()</span> <span class="hljs-comment">// V 的成员 f 的 V 外定义</span></span><br><span class="hljs-function">              <span class="hljs-comment">// f 的外围命名空间仍是全局命名空间、Q 与 Q::V</span></span><br><span class="hljs-function">  </span>&#123;<br>      <span class="hljs-function"><span class="hljs-keyword">extern</span> <span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 这声明 ::Q::V::h</span><br>  &#125;<br>  <span class="hljs-keyword">void</span> V::C::<span class="hljs-built_in">m</span>() <span class="hljs-comment">// V::C::m 的命名空间（及类）外定义</span><br>                 <span class="hljs-comment">// 外围命名空间是全局命名空间、Q 与 Q::V</span><br>  &#123;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>命名空间外的定义和再声明：</p>
+<ul>
+<li>  只能出现在声明点（第一次声明）后</li>
+<li>  必须在命名空间作用域里，且只能在包围原命名空间的命名空间（包括全局命名空间）中允许出现</li>
+<li>  必须使用限定标识语法 (C++14 起)</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> Q &#123;<br>  <span class="hljs-keyword">namespace</span> V &#123; <span class="hljs-comment">// V 的原初命名空间定义</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// Q::V::f 的声明</span><br>  &#125;<br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">V::f</span><span class="hljs-params">()</span> </span>&#123;&#125; <span class="hljs-comment">// OK</span><br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">V::g</span><span class="hljs-params">()</span> </span>&#123;&#125; <span class="hljs-comment">// 错误：g() 仍不是 V 的成员</span><br>  <span class="hljs-keyword">namespace</span> V &#123; <span class="hljs-comment">// V 的扩展命名空间定义</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// Q::V::g 的声明</span><br>  &#125;<br>&#125;<br><span class="hljs-keyword">namespace</span> R &#123; <span class="hljs-comment">// 不是 Q 的外围命名空间</span><br>   <span class="hljs-keyword">void</span> Q::V::<span class="hljs-built_in">g</span>() &#123;&#125; <span class="hljs-comment">// 错误：不能在 R 内定义 Q::V::g</span><br>&#125;<br><span class="hljs-keyword">void</span> Q::V::<span class="hljs-built_in">g</span>() &#123;&#125; <span class="hljs-comment">// OK：全局命名空间包围 Q</span><br></code></pre></td></tr></table></figure>
+
+<p>在非局部类 X 中由<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/friend">友元</a>声明所引入的名字，会成为 X 的<strong><em>最内层</em>外围命名空间</strong>的成员，但它们对于通常的<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/lookup">名字查找</a>（<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/unqualified_lookup">无限定</a>或<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/qualified_lookup">有限定</a>）不可见，除非在命名空间作用域提供与之匹配的声明，不论在类之前还是之后均可。这种名字可通过 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/adl">ADL</a> 找到，其中同时考虑命名空间和类。</p>
+<p>这种友元声明，在确定名字是否与先前声明的名字冲突时，只考虑最内层外围命名空间。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br><span class="hljs-keyword">namespace</span> A &#123;<br>  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">X</span> &#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(X)</span></span>; <span class="hljs-comment">// A::f 是友元</span><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Y</span> &#123;</span><br>        <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// A::g 是友元</span><br>        <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; <span class="hljs-comment">// A::h 是友元，与 ::h 不冲突</span><br>    &#125;;<br>  &#125;;<br>  <span class="hljs-comment">// A::f、A::g 与 A::h 在命名空间作用域不可见</span><br>  <span class="hljs-comment">// 虽然它们是命名空间 A 的成员</span><br>  X x;<br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span> </span>&#123;  <span class="hljs-comment">// A::g 的定义</span><br>     <span class="hljs-built_in">f</span>(x); <span class="hljs-comment">// A::X::f 通过 ADL 找到</span><br>  &#125;<br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(X)</span> </span>&#123;&#125;       <span class="hljs-comment">// A::f 的定义</span><br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span> </span>&#123;&#125;     <span class="hljs-comment">// A::h 的定义</span><br>  <span class="hljs-comment">// A::f 、 A::g 与 A::h 现在在命名空间作用域可见</span><br>  <span class="hljs-comment">// 而且它们亦是 A::X 与 A::X::Y 的友元</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="具名命名空间"><a href="#具名命名空间" class="headerlink" title="具名命名空间"></a>具名命名空间</h3><p><code>namespace</code> <em>命名空间名</em> { <em>声明序列</em> }</p>
+<h3 id="内联命名空间（C-11）"><a href="#内联命名空间（C-11）" class="headerlink" title="内联命名空间（C++11）"></a>内联命名空间（C++11）</h3><p><code>inline</code> <code>namespace</code> <em>命名空间名</em> { <em>声明序列</em> }</p>
+<p>内联命名空间是在其<em>原初命名空间定义</em>中使用了可选的关键词 <code>inline</code> 的命名空间。</p>
+<p>许多情况下（列于下方），内联命名空间的成员都被当做如同它们是其外围命名空间的成员一样。这项性质是传递性的：若命名空间 N 包含内联命名空间 M，它又继而包含内联命名空间 O，则 O 的成员能按如同它们是 M 或 N 的成员一样使用。</p>
+<ul>
+<li>  在外围命名空间中，隐含地插入了一条指名内联命名空间的 <em>using 指令</em>（类似于无名命名空间的隐式 using 指令）</li>
+<li>  <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/adl">实参依赖查找</a>中，当将命名空间添加到关联命名空间集合时，亦添加其内联命名空间，而当添加内联命名空间到关联命名空间列表时，亦添加其外围命名空间。</li>
+<li>  内联命名空间的每个成员，都能按照如同它是外围命名空间的成员一样，进行部分特化、显式实例化或显式特化。</li>
+<li>  检验外围命名空间的有限定<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/lookup">名字查找</a>，将包含来自其各个内联命名空间的名称，即使同一名称已存在于外围命名空间也是如此。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//C++11起</span><br>&#123; <span class="hljs-comment">// C++14 中，std::literals 及其成员命名空间是内联的</span><br>   <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std::string_literals; <span class="hljs-comment">// 令来自 std::literals::string_literals</span><br>                                         <span class="hljs-comment">// 的 operator&quot;&quot;s 可见</span><br>   <span class="hljs-keyword">auto</span> str = <span class="hljs-string">&quot;abc&quot;</span>s;<br>&#125;<br>&#123;<br>   <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std::literals; <span class="hljs-comment">// 令</span><br>                                  <span class="hljs-comment">// std::literals::string_literals::operator&quot;&quot;s 与</span><br>                                  <span class="hljs-comment">// std::literals::chrono_literals::operator&quot;&quot;s 均可见</span><br>   <span class="hljs-keyword">auto</span> str = <span class="hljs-string">&quot;abc&quot;</span>s;<br>   <span class="hljs-keyword">auto</span> min = <span class="hljs-number">60</span>s;<br>&#125;<br>&#123;<br>   <span class="hljs-keyword">using</span> std::<span class="hljs-keyword">operator</span><span class="hljs-string">&quot;&quot;</span>s; <span class="hljs-comment">// 令 std::literals::string_literals::operator&quot;&quot;s 与</span><br>                           <span class="hljs-comment">// std::literals::chrono_literals::operator&quot;&quot;s 均可见</span><br>   <span class="hljs-keyword">auto</span> str = <span class="hljs-string">&quot;abc&quot;</span>s;<br>   <span class="hljs-keyword">auto</span> min = <span class="hljs-number">60</span>s;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注意：上述关于特化的规则允许建立库版本：库模板的不同实现可定义于不同内联命名空间，同时仍然允许用户通过主模板的显式特化来扩充父命名空间。</p>
+<h3 id="无名命名空间"><a href="#无名命名空间" class="headerlink" title="无名命名空间"></a>无名命名空间</h3><p><code>namespace</code> { <em>声明序列</em> }</p>
+<p>此定义被当做一个拥有<strong>独有名字</strong>的命名空间定义 + 当前作用域中指名此无名命名空间的一条 <em>using 指令</em>。（定义完并using。）</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> &#123;<br>    <span class="hljs-keyword">int</span> i;  <span class="hljs-comment">// 定义 ::(独有)::i</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;<br>    i++;  <span class="hljs-comment">// 自增 ::(独有)::i</span><br>&#125;<br> <br><span class="hljs-keyword">namespace</span> A &#123;<br>    <span class="hljs-keyword">namespace</span> &#123;<br>        <span class="hljs-keyword">int</span> i; <span class="hljs-comment">// A::(独有)::i</span><br>        <span class="hljs-keyword">int</span> j; <span class="hljs-comment">// A::(独有)::j</span><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span> </span>&#123; i++; &#125; <span class="hljs-comment">// A::(独有)::i++</span><br>&#125;<br> <br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> A; <span class="hljs-comment">// 从 A 引入所有名称到全局命名空间</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">()</span> </span>&#123;<br>    i++;    <span class="hljs-comment">// 错误：::(独有)::i 与 ::A::(独有)::i 均在作用域中</span><br>    A::i++; <span class="hljs-comment">// OK：自增 A::(独有)::i</span><br>    j++;    <span class="hljs-comment">// OK：自增 A::(独有)::j</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>C++11 前：虽然无名命名空间中的名字可以声明为具有外部连接，但绝对无法从其他翻译单元访问它们，因为其命名空间名是独有的。</p>
+<p>C++11 起：无名命名空间以及所有直接或间接在无名命名空间内声明的命名空间，都具有<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/storage_duration#.E8.BF.9E.E6.8E.A5">内部连接</a>，这表示声明于无名命名空间内的任何名字都具有内部连接。</p>
+<h3 id="嵌套命名空间（C-17）"><a href="#嵌套命名空间（C-17）" class="headerlink" title="嵌套命名空间（C++17）"></a>嵌套命名空间（C++17）</h3><p><code>namespace</code> <em>命名空间名</em> <code>::inline</code>(C++20 起)(可选) <em>名字</em> { <em>声明序列</em> }</p>
+<p><strong>inline 可出现于除首个以外的每个命名空间名之前</strong></p>
+<p>嵌套命名空间定义：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> A::B::C &#123; ... &#125;<br><span class="hljs-keyword">namespace</span> A &#123; <span class="hljs-keyword">namespace</span> B &#123; <span class="hljs-keyword">namespace</span> C &#123; ... &#125; &#125; &#125;<br><br><span class="hljs-keyword">namespace</span> A::B::<span class="hljs-keyword">inline</span> C &#123; ... &#125;<br><span class="hljs-keyword">namespace</span> A::B &#123; <span class="hljs-keyword">inline</span> <span class="hljs-keyword">namespace</span> C &#123; ... &#125; &#125;<br><br><span class="hljs-keyword">namespace</span> A::<span class="hljs-keyword">inline</span> B::C &#123;&#125;<br><span class="hljs-keyword">namespace</span> A &#123; <span class="hljs-keyword">inline</span> <span class="hljs-keyword">namespace</span> B &#123; <span class="hljs-keyword">namespace</span> C &#123;&#125; &#125; &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="using"><a href="#using" class="headerlink" title="using"></a>using</h2><p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/namespace#using_.E6.8C.87.E4.BB.A4">using 指令</a>：从 using 指令之后到指令出现的作用域结尾为止，以对任何名字的无限定<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/lookup">名字查找</a>的视点来说，来自 <em>命名空间名</em> 的任何名字均可见，如同它声明于同时含有该 using 指令和 <em>命名空间名</em> 两者的最接近外围命名空间作用域一样。</p>
+<p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/namespace#using_.E5.A3.B0.E6.98.8E">using 声明</a>：令来自命名空间 <em>命名空间名</em> 的符号 <em>名字</em> 对<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/lookup">无限定名字查找</a>可见，如同将它声明于包含该 using 声明的相同的类作用域、块作用域或命名空间之中一样。</p>
+<h3 id="using-声明"><a href="#using-声明" class="headerlink" title="using 声明"></a>using 声明</h3><p>引入定义于别处的名称到 using 声明所在的声明性区域。</p>
+<ul>
+<li><p>  <code>using</code> <code>typename</code>(可选) <em>嵌套名说明符</em> <em>无限定标识</em> <code>;</code>(C++17 前)</p>
+</li>
+<li><p><code>using</code> <em>声明符列表</em> <code>;</code>(C++17 起)</p>
+<ul>
+<li>  <em>声明符列表</em>：一或多个形式为 <strong><code>typename</code>(可选) <em>嵌套名说明符</em> <em>无限定标识</em></strong> 的声明符的逗号分隔列表。声明符可以后随省略号以指示<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/parameter_pack">包展开</a>，但这种形式只在<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/using_declaration">派生类定义</a>中有意义</li>
+</ul>
+</li>
+</ul>
+<p>using 声明可用于</p>
+<ul>
+<li>  将命名空间的成员引入到其他命名空间和块作用域中</li>
+<li>  将基类的成员引入到派生类定义中</li>
+<li>  将<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/enum">枚举项</a>引入命名空间、块或类作用域中 (C++20 起)。</li>
+</ul>
+<p>(C++17 起)拥有多于一个 using 声明符的 using 声明，等价于对应的单个 using 声明符的 using 声明的序列。</p>
+<p>对于在派生类定义中的用法，见 <a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/using_declaration">using 声明</a>。</p>
+<p>由 using 声明引入到命名空间作用域的名字，可以同任何其他名字一样使用，包含从其他作用域进行的有限定查找：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span></span>;<br><span class="hljs-keyword">namespace</span> A &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>;<br>&#125;<br><span class="hljs-keyword">namespace</span> X &#123;<br>    <span class="hljs-keyword">using</span> ::f; <span class="hljs-comment">// 全局 f 现在作为 ::X::f 可见</span><br>    <span class="hljs-keyword">using</span> A::g; <span class="hljs-comment">// A::g 现在作为 ::X::g 可见</span><br>    <span class="hljs-keyword">using</span> A::g, A::g; <span class="hljs-comment">// (C++17) OK：命名空间作用域允许双重声明</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    X::<span class="hljs-built_in">f</span>(); <span class="hljs-comment">// 调用 ::f</span><br>    X::<span class="hljs-built_in">g</span>(); <span class="hljs-comment">// 调用 A::g</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在用 using 声明从命名空间采取成员后，若该命名空间被扩充并引入了同名的额外声明，则这些额外声明不会通过该 using 声明变为可见（与 using 指令相反）。一个例外是 using 声明指名类模板时：后面引入的部分特化实际上是可见的，因为其<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/lookup">查找</a>是通过主模板达成的。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> A &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br>&#125;<br><span class="hljs-keyword">using</span> A::f; <span class="hljs-comment">// ::f 现在是 A::f(int) 的同义词</span><br> <br><span class="hljs-keyword">namespace</span> A &#123; <span class="hljs-comment">// 命名空间扩展</span><br>   <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">char</span>)</span></span>; <span class="hljs-comment">// 不更改 ::f 的含义</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">f</span>(<span class="hljs-string">&#x27;a&#x27;</span>); <span class="hljs-comment">// 调用 f(int)，即使 f(char) 存在。</span><br>&#125; <br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span> </span>&#123;<br>   <span class="hljs-keyword">using</span> A::f; <span class="hljs-comment">// 此 f 是 A::f(int) 与 A::f(char) 的同义词</span><br>   <span class="hljs-built_in">f</span>(<span class="hljs-string">&#x27;a&#x27;</span>); <span class="hljs-comment">// 调用 f(char)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>using 声明不能指名<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/templates#.E6.A8.A1.E6.9D.BF.E6.A0.87.E8.AF.86">模板标识</a>或命名空间，或有作用域枚举项 (C++20 前)。using 声明中的每个声明符引入一个且只有一个名字，例如<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/enum">枚举</a> 的 using 声明不引入其任何枚举项。</p>
+<p>针对相同名字的常规声明的所有制约，隐藏和重载规则，均适用于 using 声明：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> A &#123;<br>    <span class="hljs-keyword">int</span> x;<br>&#125;<br><span class="hljs-keyword">namespace</span> B &#123;<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">g</span> &#123;</span> &#125;;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">x</span> &#123;</span> &#125;;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">(<span class="hljs-keyword">char</span>)</span></span>; <span class="hljs-comment">// OK：函数名 g 隐藏类 g</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-keyword">using</span> B::i; <span class="hljs-comment">// 错误：两次声明 i</span><br> <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">char</span>)</span></span>;<br>    <span class="hljs-keyword">using</span> B::f; <span class="hljs-comment">// OK：f(char)、f(int)、f(double) 是重载</span><br>    <span class="hljs-built_in">f</span>(<span class="hljs-number">3.5</span>); <span class="hljs-comment">// 调用 B::f(double)</span><br> <br>    <span class="hljs-keyword">using</span> B::g;<br>    <span class="hljs-built_in">g</span>(<span class="hljs-string">&#x27;a&#x27;</span>);      <span class="hljs-comment">// 调用 B::g(char)</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">g</span> <span class="hljs-title">g1</span>;</span> <span class="hljs-comment">// 声明 g1 拥有类型 struct B::g</span><br> <br>    <span class="hljs-keyword">using</span> B::x;<br>    <span class="hljs-keyword">using</span> A::x;  <span class="hljs-comment">// OK ：隐藏 B::x</span><br>    x = <span class="hljs-number">99</span>;      <span class="hljs-comment">// 赋值给 A::x</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">x</span> <span class="hljs-title">x1</span>;</span> <span class="hljs-comment">// 声明 x1 拥有类型 struct B::x</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>若用 using 声明引入函数，则声明拥有相同名字和形参列表的函数是非良构的（除非是同一函数的声明）。若用 using 声明引入函数模板，则声明拥有相同名字、形参类型列表、返回类型及模板形参列表的函数模板是非良构的。两个 using 声明<strong>可以引入</strong>拥有相同名字和形参列表的函数，但<strong>若试图调用</strong>该函数，则程序非良构。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> B &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span>)</span></span>;<br>&#125;<br><span class="hljs-keyword">namespace</span> C &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">double</span>)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">char</span>)</span></span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">h</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">using</span> B::f; <span class="hljs-comment">// 引入 B::f(int) 、 B::f(double)</span><br>    <span class="hljs-keyword">using</span> C::f; <span class="hljs-comment">// 引入 C::f(int) 、 C::f(double) 及 C::f(char)</span><br>    <span class="hljs-built_in">f</span>(<span class="hljs-string">&#x27;h&#x27;</span>);      <span class="hljs-comment">// 调用 C::f(char)</span><br>    <span class="hljs-built_in">f</span>(<span class="hljs-number">1</span>);        <span class="hljs-comment">// 错误：B::f(int) 或 C::f(int) ？</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>; <span class="hljs-comment">// 错误：f(int) 与 C::f(int) 及 B::f(int) 冲突</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  //C++14起</p>
+<p>  若某个实体被声明，但未在某内层命名空间中定义，然后在外层命名空间中通过 using 声明予以声明，然后在外层命名空间中再出现拥有相同非限定名的定义，则该定义是外层命名空间的成员，且与 using 声明冲突：</p>
+  <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> X &#123;<br>  <span class="hljs-keyword">namespace</span> M &#123;<br>     <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 声明，但不定义 X::M::g()</span><br>  &#125;<br>  <span class="hljs-keyword">using</span> M::g;<br>  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">g</span><span class="hljs-params">()</span></span>;   <span class="hljs-comment">// 错误：试图声明与 X::M::g() 冲突的 X::g</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>  更一般地，出现于任何命名空间作用域中并用无限定标识符引入名字的声明，始终向它所在的命名空间中引入一个成员，而并非向任何其他命名空间引入。例外情况是对定义于内联命名空间的主模板进行的显式实例化和显式特化：因为它们不引入新名字，它们在外围命名空间中可以使用无限定标识。</p>
+</blockquote>
+<h3 id="using-指令"><a href="#using-指令" class="headerlink" title="using 指令"></a>using 指令</h3><p><em>attr</em>(C++11可选) <code>using</code> <code>namespace</code> <em>嵌套名说明符</em>(可选) <em>命名空间名</em> <code>;</code></p>
+<p>using 指令仅在命名空间<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/scope">作用域</a>和块作用域中允许出现。</p>
+<p>从某个 using 指令之后到该指令出现的作用域结尾为止，以任何名字的无限定<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/lookup">名字查找</a>的视点，来自 <em>命名空间名</em> 的每个名字均<strong>可见</strong>，如同它声明于同时包含该 using 指令和 <em>命名空间名</em> 两者的最接近外围命名空间一样。</p>
+<p>using 指令<strong>不向其所出现的声明性区域添加任何名字</strong>（不同于 using 声明），因而并不妨碍再声明相同的名字。(<strong>只是让名字可见而且</strong>)</p>
+<p>using 指令对于<a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/lookup">无限定查找</a>是传递性的：若作用域包含指名 <em>命名空间名</em> 的 using 指令，而它自身包含对某 <em>命名空间名-2</em> 的 using 指令，则效果如同第二个命名空间中的 using 指令出现在第一个之中一样。这些传递性命名空间的出现顺序并不影响名字查找。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> A &#123;<br>    <span class="hljs-keyword">int</span> i;<br>&#125;<br><span class="hljs-keyword">namespace</span> B &#123;<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-keyword">int</span> j;<br>    <span class="hljs-keyword">namespace</span> C &#123;<br>        <span class="hljs-keyword">namespace</span> D &#123;<br>            <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> A; <span class="hljs-comment">// 注入所有来自 A 的名称到全局命名空间</span><br>            <span class="hljs-keyword">int</span> j;<br>            <span class="hljs-keyword">int</span> k;<br>            <span class="hljs-keyword">int</span> a = i; <span class="hljs-comment">// i 是 B::i，因为 B::i 隐藏 A::i</span><br>        &#125;<br>        <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> D; <span class="hljs-comment">// 注入来自 D 的名称到 C</span><br>                           <span class="hljs-comment">// 注入来自 A 的名称到全局命名空间</span><br>        <span class="hljs-keyword">int</span> k = <span class="hljs-number">89</span>; <span class="hljs-comment">// 声明与用 using 引入者等同的名称 OK</span><br>        <span class="hljs-keyword">int</span> l = k;  <span class="hljs-comment">// 歧义：C::k 或 D::k</span><br>        <span class="hljs-keyword">int</span> m = i;  <span class="hljs-comment">// OK：B::i 隐藏 A::i</span><br>        <span class="hljs-keyword">int</span> n = j;  <span class="hljs-comment">// OK：D::j 隐藏 B::j</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在使用 using 指令指名某命名空间后，若该命名空间被扩充并向其添加了额外的成员和/或 using 指令，则这些额外成员和额外的命名空间通过该 using 指令可见（与 using 声明相反）</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">namespace</span> D &#123;<br>   <span class="hljs-keyword">int</span> d1;<br>   <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">char</span>)</span></span>;<br>&#125;<br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> D; <span class="hljs-comment">// 引入 D::d1、D::f、D::d2、D::f，</span><br>                   <span class="hljs-comment">// E::e 及 E::f 到全局命名空间！</span><br> <br><span class="hljs-keyword">int</span> d1; <span class="hljs-comment">// OK：声明时与 D::d1 不冲突</span><br><span class="hljs-keyword">namespace</span> E &#123;<br>    <span class="hljs-keyword">int</span> e;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br>&#125;<br><span class="hljs-keyword">namespace</span> D &#123; <span class="hljs-comment">// 命名空间扩展</span><br>    <span class="hljs-keyword">int</span> d2;<br>    <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> E; <span class="hljs-comment">// 传递性 using 指令</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f</span><span class="hljs-params">()</span> </span>&#123;<br>    d1++; <span class="hljs-comment">// 错误：歧义：::d1 或 D::d1？</span><br>    ::d1++; <span class="hljs-comment">// OK</span><br>    D::d1++; <span class="hljs-comment">// OK</span><br>    d2++; <span class="hljs-comment">// OK，d2 是 D::d2</span><br>    e++; <span class="hljs-comment">// OK：e 是 E::e，因为传递性 using</span><br>    <span class="hljs-built_in">f</span>(<span class="hljs-number">1</span>); <span class="hljs-comment">// 错误：歧义：D::f(int) 或 E::f(int)？</span><br>    <span class="hljs-built_in">f</span>(<span class="hljs-string">&#x27;a&#x27;</span>); <span class="hljs-comment">// OK：仅有的 f(char) 是 D::f(char)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>注解</strong></p>
+<p>在任何命名空间作用域中的 using 指令 <code>using namespace std;</code>，将命名空间 <code>std</code> 中的所有名字都引入到全局命名空间中（因为全局命名空间是同时包含 <code>std</code> 和任何用户声明命名空间的最近命名空间），这可能导致不合预期的名字冲突。通常认为，在头文件的文件作用域中采用它或其他的 using 指令是不良的实践。</p>
+<p><strong>示例</strong></p>
+<p>此例展示如何用命名空间创建已命名于 <code>std</code> 命名空间的类。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br> <br><span class="hljs-keyword">namespace</span> vec &#123;<br> <br>    <span class="hljs-keyword">template</span>&lt; <span class="hljs-keyword">typename</span> T &gt;<br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">vector</span> &#123;</span><br>        <span class="hljs-comment">// ...</span><br>    &#125;;<br> <br>&#125; <span class="hljs-comment">// of vec</span><br> <br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    std::vector&lt;<span class="hljs-keyword">int</span>&gt; v1; <span class="hljs-comment">// 标准 vector。</span><br>    vec::vector&lt;<span class="hljs-keyword">int</span>&gt; v2; <span class="hljs-comment">// 用户定义 vector。</span><br> <br>    v1 = v2; <span class="hljs-comment">// 错误：v1 与 v2 是不同类型的对象。</span><br> <br>    &#123;<br>        <span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br>        vector&lt;<span class="hljs-keyword">int</span>&gt; v3; <span class="hljs-comment">// 同 std::vector</span><br>        v1 = v3; <span class="hljs-comment">// OK</span><br>    &#125;<br> <br>    &#123;<br>        <span class="hljs-keyword">using</span> vec::vector;<br>        vector&lt;<span class="hljs-keyword">int</span>&gt; v4; <span class="hljs-comment">// 同 vec::vector</span><br>        v2 = v4; <span class="hljs-comment">// OK</span><br>    &#125;<br> <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/language/namespace">https://zh.cppreference.com/w/cpp/language/namespace</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

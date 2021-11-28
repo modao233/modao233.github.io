@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#const-%E4%B8%8E%E6%8C%87%E9%92%88"><span class="toc-text">const 与指针</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E4%B8%8E%E4%B8%8D%E5%8F%98"><span class="toc-text">变与不变</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const-%E4%B8%8E%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="toc-text">const 与迭代器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const-%E4%B8%8E%E5%87%BD%E6%95%B0"><span class="toc-text">const 与函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E-const-value"><span class="toc-text">函数返回 const value</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#const-%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-text">const 成员函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bitwise-constness-%E5%92%8C-logical-constness"><span class="toc-text">bitwise constness 和 logical constness</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-const-%E5%92%8C-non-const-%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E4%B8%AD%E9%81%BF%E5%85%8D%E9%87%8D%E5%A4%8D"><span class="toc-text">在 const 和 non-const 成员函数中避免重复</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Item3-尽可能使用const
+	</div>
+	
+	<div class="page-date">
+		2021-01-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Effective C++">Effective C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>Item 3: 尽可能使用 const</p>
+<span id="more"></span>
+
+<p>const 指定一个“不该被改动”的对象，编译器会强制实施这项约束。</p>
+<h2 id="const-与指针"><a href="#const-与指针" class="headerlink" title="const 与指针"></a>const 与指针</h2><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">char</span> greeting[] = <span class="hljs-string">&quot;Hello&quot;</span>;<br><span class="hljs-keyword">char</span>* p = greeting;	<span class="hljs-comment">//@ non-const data,non-const pointer</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* p = greeting;	<span class="hljs-comment">//@ non-const pointer,const data</span><br><span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> p = greeting;	<span class="hljs-comment">//@ const pointer,non-const data</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* <span class="hljs-keyword">const</span> p = greeting; <span class="hljs-comment">//@ const pointer,const data</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  const 出现在 <code>*</code> 左边，则指针指向的内容是 const。</li>
+<li>  const 出现在  <code>*</code> 右边，则指针本身是 const。</li>
+<li>  const 出现在  <code>*</code> 两边，两者都是 const。</li>
+</ul>
+<blockquote>
+<p>  C++ Primer 5th ：<strong>弄清楚声明的含义：从右向左阅读，离变量名最近的对变量有直接影响，其余部分确定对象的类型</strong>。</p>
+</blockquote>
+<p>当指针指向的内容是常量时，将 const 放在类型前和放在类型后是没有区别的：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//@ 等价的形式</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f1</span><span class="hljs-params">(<span class="hljs-keyword">const</span> Widget *pw)</span></span>;	<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">f1</span><span class="hljs-params">(Widget <span class="hljs-keyword">const</span> *pw)</span></span>;	<br></code></pre></td></tr></table></figure>
+
+<h3 id="变与不变"><a href="#变与不变" class="headerlink" title="变与不变"></a>变与不变</h3><p>当指针指向的内容是常量时，表示无法通过指针修改变量的值，但是可以通过其它方式修改指针指向变量的值：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> *p = &amp;a;<br>cout &lt;&lt; *p &lt;&lt; endl;	<span class="hljs-comment">//@ 1</span><br>*p = <span class="hljs-number">2</span>;	<span class="hljs-comment">//@ error, data is const</span><br>a = <span class="hljs-number">2</span>;<br>cout &lt;&lt; *p &lt;&lt; endl;	<span class="hljs-comment">//@ 2</span><br></code></pre></td></tr></table></figure>
+
+<p>指针本身是常量，表示指针表示的地址是固定的，但是其指向的内容是可以改变的：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> a = <span class="hljs-number">1</span>, b = <span class="hljs-number">2</span>;<br><span class="hljs-keyword">int</span>* <span class="hljs-keyword">const</span> p = &amp;a;<br>cout &lt;&lt; *p &lt;&lt; endl;	<span class="hljs-comment">//@ 1</span><br>p = &amp;b;	<span class="hljs-comment">//@ error, pointer is const</span><br>*p = b;<br>cout &lt;&lt; *p &lt;&lt; endl;	<span class="hljs-comment">//@ 2</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="const-与迭代器"><a href="#const-与迭代器" class="headerlink" title="const 与迭代器"></a>const 与迭代器</h2><p>STL 迭代器以指针为原型，所以 iterator 的作用就像个 T* 指针。声明一个 iterator 为 const 就类似于声明一个 pointer 为 const（也就是说，声明一个 T* const pointer）：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">std::vector&lt;<span class="hljs-keyword">int</span>&gt; vec;<br><br><span class="hljs-keyword">const</span> std::vector&lt;<span class="hljs-keyword">int</span>&gt;::iterator iter = vec.<span class="hljs-built_in">begin</span>();<br>*iter = <span class="hljs-number">10</span>;	<span class="hljs-comment">//@ ok,change what the iterator point to</span><br>iter++;		<span class="hljs-comment">//@ error,iter is const</span><br><br>std::vector&lt;<span class="hljs-keyword">int</span>&gt;::const_iterator cIter =  vec.<span class="hljs-built_in">begin</span>();<br>*cIter = <span class="hljs-number">10</span>;	<span class="hljs-comment">//@ error,*cIter is const</span><br>++cIter;		<span class="hljs-comment">//@ ok,change cIter</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="const-与函数"><a href="#const-与函数" class="headerlink" title="const 与函数"></a>const 与函数</h2><p>const 可以用在函数返回值，函数的个别参数，对于成员函数，还可以用于整个函数。</p>
+<h3 id="函数返回-const-value"><a href="#函数返回-const-value" class="headerlink" title="函数返回 const value"></a>函数返回 const value</h3><p>令函数返回一个常量值，往往可以在不放弃安全性和高效性的前提下降低因客户错误而造成的意外。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rational</span>&#123;</span>...&#125;;<br><span class="hljs-keyword">const</span> Rational <span class="hljs-keyword">operator</span>*(<span class="hljs-keyword">const</span> Rational&amp; lhs,<span class="hljs-keyword">const</span> Rational&amp; rhs);<br><br>Rational a,b,c;<br>...<br>(a * b) = c;	<span class="hljs-comment">//为两个数的乘积赋值，将返回值声明为const 可以避免此问题</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="const-成员函数"><a href="#const-成员函数" class="headerlink" title="const 成员函数"></a>const 成员函数</h3><ul>
+<li>  声明 const 成员函数是为了确认哪些方法可以通过常量对象来访问</li>
+<li>  使 class 接口比较容易被理解，容易知道哪个函数可以改动对象而哪个函数不行</li>
+<li>  常量对象只能调用常量方法， 非常量对象优先调用非常量方法，如不存在会调用同名常量方法</li>
+<li>  常量成员函数也可以在类声明外定义，但声明和定义都需要指定 const 关键字</li>
+<li>  成员方法添加常量限定符属于函数重载，这是C++的一个重要特性</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextBlock</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  ...  <br>  <span class="hljs-comment">//@ operator[] for const objects</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>&amp; <span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> position) <span class="hljs-keyword">const</span>  <br>  &#123; <span class="hljs-keyword">return</span> text[position]; &#125;                          <br><br>  <span class="hljs-comment">//@ operator[] for non-const objects</span><br>  <span class="hljs-keyword">char</span>&amp; <span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> position)           <br>  &#123; <span class="hljs-keyword">return</span> text[position]; &#125;                          <br><br><span class="hljs-keyword">private</span>:<br>   std::string text;<br>&#125;;<br><br><span class="hljs-comment">//@ 使用</span><br><span class="hljs-function">TextBlock <span class="hljs-title">tb</span><span class="hljs-params">(<span class="hljs-string">&quot;Hello&quot;</span>)</span></span>;<br>std::cout &lt;&lt; tb[<span class="hljs-number">0</span>];	<span class="hljs-comment">//@ calls non-const TextBlock::operator[]</span><br>                                       <br><span class="hljs-function"><span class="hljs-keyword">const</span> TextBlock <span class="hljs-title">ctb</span><span class="hljs-params">(<span class="hljs-string">&quot;World&quot;</span>)</span></span>;<br>std::cout &lt;&lt; ctb[<span class="hljs-number">0</span>];  <span class="hljs-comment">//@ calls const TextBlock::operator[]</span><br></code></pre></td></tr></table></figure>
+
+<p>真实程序中 const 对象大多用于 <code>passed by pointer-to-const </code>或<code>passed by reference-to-const</code>：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(<span class="hljs-keyword">const</span> TextBlock&amp; ctb)</span>       <span class="hljs-comment">// in this function, ctb is const</span></span><br><span class="hljs-function"></span>&#123;<br>  std::cout &lt;&lt; ctb[<span class="hljs-number">0</span>];                 <span class="hljs-comment">// calls const TextBlock::operator[]</span><br>  ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//@ 对 const 和 non-const 的 TextBlocks 做不同的操作</span><br>std::cout &lt;&lt; tb[<span class="hljs-number">0</span>];   <span class="hljs-comment">//@ fine — reading a non-const TextBlock</span><br>tb[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;x&#x27;</span>;         <span class="hljs-comment">//@ fine — writing a non-const TextBlock</span><br>std::cout &lt;&lt; ctb[<span class="hljs-number">0</span>]; <span class="hljs-comment">//@ fine — reading a const TextBlock</span><br>ctb[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;x&#x27;</span>;       <span class="hljs-comment">//@ error! — writing a const TextBlock</span><br></code></pre></td></tr></table></figure>
+
+<p>错误只与 operator[] 返回类型有关，而 operator[] 调用动作自身没问题。</p>
+<p>如果 non-const 版本的 operator[] 返回一个char而不是一个char引用，则下面语句将无法编译通过：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">tb[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;x&#x27;</span>;	<span class="hljs-comment">//返回一个右值，企图为一个右值赋值</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="bitwise-constness-和-logical-constness"><a href="#bitwise-constness-和-logical-constness" class="headerlink" title="bitwise constness 和 logical constness"></a>bitwise constness 和 logical constness</h3><p><strong>（比特常量和逻辑常量）</strong></p>
+<p>比特常量：成员函数只有在不更改对象内的任何非静态成员变量，那该函数是const的，即不更改对象内任何一个 bit。比特常量是C++ 对常量性（constness）的定义。</p>
+<p>不幸的是，许多成员函数虽然不具备 const 性质，却能通过 bitwise测试：一个更改了“指针所指物”的成员函数不能算const，但如果只有指针（而非其所指物）隶属于对象，则称此函数为 bitwise const 不会引发编译器异议。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CTextBlock</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  ...<br>  <span class="hljs-keyword">char</span>&amp; <span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> position) <span class="hljs-keyword">const</span>   <span class="hljs-comment">// inappropriate (but bitwise</span><br>  &#123; <span class="hljs-keyword">return</span> pText[position]; &#125;                    <span class="hljs-comment">// const) declaration of</span><br>                                                 <span class="hljs-comment">// operator[]</span><br><span class="hljs-keyword">private</span>:<br>  <span class="hljs-keyword">char</span> *pText;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>看看 operator[] 的实现，它并没有使用任何手段改变 pText。结果，编译器愉快地生成了 operator[] 的代码，因为毕竟对所有编译器而言，它都是 bitwise const 的，但是我们看看会发生什么：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">const</span> CTextBlock <span class="hljs-title">cctb</span><span class="hljs-params">(<span class="hljs-string">&quot;Hello&quot;</span>)</span></span>;   <span class="hljs-comment">//@ declare constant object</span><br><span class="hljs-keyword">char</span> *pc = &amp;cctb[<span class="hljs-number">0</span>];  <span class="hljs-comment">//@ call the const operator[] to get a pointer to cctb&#x27;s data</span><br>*pc = <span class="hljs-string">&#x27;J&#x27;</span>; <span class="hljs-comment">//@ cctb now has the value &quot;Jello&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>这里确实出了问题，你创建一个常量对象并设以某值，然后你只是用它调用了 const 成员函数，但是你还是改变了它的值！</p>
+<p>这种情况导出所谓的 logical constness（逻辑常量）：一个 const 成员函数可以修改它所处理的对象内的某些 bits，但只有在客户端侦测不到的情况下才得如此。</p>
+<p>const 成员函数修改对象内容对对象而言虽然可以接受，但编译器不同意，此时需要 mutable 限定符：mutable 释放掉non-static 成员变量的 bitwise constness 约束：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CTextBlock</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  ...<br>  <span class="hljs-function">std::<span class="hljs-keyword">size_t</span> <span class="hljs-title">length</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;<br><span class="hljs-keyword">private</span>:<br>  <span class="hljs-keyword">char</span> *pText;<br>  <span class="hljs-keyword">mutable</span> std::<span class="hljs-keyword">size_t</span> textLength;	<span class="hljs-comment">//这些成员变量可能总是会被更改</span><br>  <span class="hljs-keyword">mutable</span> <span class="hljs-keyword">bool</span> lengthIsValid;		<span class="hljs-comment">//即使在const 成员函数内</span><br>&#125;;    <br><br><span class="hljs-function">std::<span class="hljs-keyword">size_t</span> <span class="hljs-title">CTextBlock::length</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">if</span> (!lengthIsValid) &#123;<br>    textLength = std::<span class="hljs-built_in">strlen</span>(pText);      <span class="hljs-comment">//now fine</span><br>    lengthIsValid = <span class="hljs-literal">true</span>;                 <span class="hljs-comment">//also fine</span><br>  &#125;<br><br>  <span class="hljs-keyword">return</span> textLength;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="在-const-和-non-const-成员函数中避免重复"><a href="#在-const-和-non-const-成员函数中避免重复" class="headerlink" title="在 const 和 non-const 成员函数中避免重复"></a>在 const 和 non-const 成员函数中避免重复</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextBlock</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  ...<br>  <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>&amp; <span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> position) <span class="hljs-keyword">const</span><br>  &#123;<br>    ...	<span class="hljs-comment">//边界检验（bounds checking）</span><br>    ... <span class="hljs-comment">//日志访问数据（log access data）</span><br>    ... <span class="hljs-comment">//检验数据完整性（verify data integrity）</span><br>    <span class="hljs-keyword">return</span> text[position];<br>  &#125;<br><br>  <span class="hljs-keyword">char</span>&amp; <span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> position)<br>  &#123;<br>    ...	<span class="hljs-comment">//边界检验（bounds checking）</span><br>    ... <span class="hljs-comment">//日志访问数据（log access data）</span><br>    ... <span class="hljs-comment">//检验数据完整性（verify data integrity）</span><br>    <span class="hljs-keyword">return</span> text[position];<br>  &#125;<br>...<br><span class="hljs-keyword">private</span>：<br>    std::string text;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>代码重复伴随着编译时间、维护、代码膨胀等问题。</p>
+<p>真正需要的是一次 operator[] 功能实现，然后使用它两次，即必须令其中一个调用另一个。</p>
+<p>运用 const 成员函数实现了其 non-const 成员函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextBlock</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  ...<br>  <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>&amp; <span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> position) <span class="hljs-keyword">const</span>     <span class="hljs-comment">// same as before</span><br>  &#123;<br>    ...<br>    <span class="hljs-keyword">return</span> text[position];<br>  &#125;<br><br>  <span class="hljs-keyword">char</span>&amp; <span class="hljs-keyword">operator</span>[](std::<span class="hljs-keyword">size_t</span> position)         <span class="hljs-comment">// now just calls const op[]</span><br>  &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">const_cast</span>&lt;<span class="hljs-keyword">char</span>&amp;&gt;(<br>        <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">const</span> TextBlock&amp;&gt;(*<span class="hljs-keyword">this</span>)[position]);<br>  &#125;<br>...<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  <code>*this</code> 的类型是 TextBlock ，先把它强制隐式转换为 const TextBlock，这样才能调用常量方法。</li>
+<li>  调用 <code>operator[](size_t) const</code> ，得到的返回值类型为 const char&amp;。</li>
+<li>  把返回值去掉 const 属性，得到类型为 char&amp; 的返回值。</li>
+</ul>
+<p>反之，运用 non-const 成员函数实现了其 const 成员函数是错误的，const成员函数承诺绝不改变其对象的逻辑状态，而 non-const 成员函数没有这般承诺。</p>
+<p>non-const成员函数本身就可以对对象做任何动作，因此以static_cast处理<code>*this</code>并不存在风险。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>  将某些东西声明为 const 可帮助编译器侦测出错误用法</li>
+</ul>
+<ul>
+<li>const 与指针：<ul>
+<li>  const 在前表示指针指向的内容是常量</li>
+<li>  <code>*</code>号在前表示指针本身是常量</li>
+</ul>
+</li>
+<li>const 与迭代器：<ul>
+<li>  const 修饰迭代器时表示迭代器本身是常量</li>
+<li>  迭代器指向的内容是常量时应该使用 const_iterator</li>
+</ul>
+</li>
+<li>const 与函数<ul>
+<li>  函数返回值为 const 可以避免一些意外赋值的情况发生</li>
+<li>  尽可能的将函数参数声明为 const</li>
+<li>  常量对象只能调用常量方法， 非常量对象优先调用非常量方法，如不存在会调用同名常量方法</li>
+<li>  如果一个方法不改变对象的任何非静态变量，那么该方法是常量方法</li>
+<li>  mutable 限定符对于即使是 const 的对象也可以做修改</li>
+<li>  当 const 和 non-const 成员函数有着实质等价的实现时，令 non-const 版本调用 const 版本可以避免代码重复</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>  编译器强制实施 bitwise constness，但编写程序时应该使用“概念上的常量性”</li>
+</ul>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

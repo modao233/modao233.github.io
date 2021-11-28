@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AA%E9%80%82%E7%94%A8%E4%BA%8E%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">只适用于单线程模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E3%80%81%E5%86%85%E5%AD%98%E5%AE%89%E5%85%A8%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">线程安全、内存安全的单例模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">使用局部静态变量实现的单例模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		面试题2：实现Singleton模式
+	</div>
+	
+	<div class="page-date">
+		2020-07-09
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/剑指offer">剑指offer</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>剑指offer面试题2，实现单例模式。</p>
+<span id="more"></span>
+
+<p>题目：设计一个类，我们只能生成该类的一个实例。</p>
+<h2 id="只适用于单线程模式"><a href="#只适用于单线程模式" class="headerlink" title="只适用于单线程模式"></a>只适用于单线程模式</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span>&#123;</span><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Singleton</span>()&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;constructor called&quot;</span> &lt;&lt; end;<br>    &#125;<br>    <span class="hljs-built_in">Singleton</span>(Singleton&amp;) = <span class="hljs-keyword">delete</span>;<br>    Singleton&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Singleton&amp;) = <span class="hljs-keyword">delete</span>;<br>    <span class="hljs-keyword">static</span> Singleton* ptr;<br><span class="hljs-keyword">public</span>:<br>    ~<span class="hljs-built_in">Singleton</span>()&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;destructor called!&quot;</span>&lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Singleton* <span class="hljs-title">get_instance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(ptr == <span class="hljs-literal">nullptr</span>)&#123;<br>            ptr = <span class="hljs-keyword">new</span> Singleton;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ptr;<br>    &#125;<br>&#125;;<br>Singleton* Singleton::ptr = <span class="hljs-literal">nullptr</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    Singleton* instance = Singleton::<span class="hljs-built_in">get_instance</span>();<br>    Singleton* instance_2 = Singleton::<span class="hljs-built_in">get_instance</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行结果是：（只有一次类的构造函数被调用）</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++">constructor called!<br></code></pre></td></tr></table></figure>
+
+<p>存在问题：</p>
+<ul>
+<li><p><strong>线程安全问题</strong>：当多线程获取单例可能引发竞态条件：第一个线程在if中判断 <code>ptr</code>是空的，于是开始实例化单例;同时第2个线程也尝试获取单例，这个时候判断<code>ptr</code>还是空的，于是也开始实例化单例;这样就会实例化出两个对象,这就是线程安全问题的由来。</p>
+<p>  <strong>解决办法</strong>：加锁</p>
+</li>
+<li><p><strong>内存泄漏</strong>. 注意到类中只负责new出对象，却没有负责delete对象，因此只有构造函数被调用，析构函数却没有被调用;因此会导致内存泄漏。</p>
+<p>  <strong>解决办法</strong>： 使用共享指针</p>
+</li>
+</ul>
+<h2 id="线程安全、内存安全的单例模式"><a href="#线程安全、内存安全的单例模式" class="headerlink" title="线程安全、内存安全的单例模式"></a>线程安全、内存安全的单例模式</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span> <span class="hljs-comment">// shared_ptr</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mutex&gt;</span>  <span class="hljs-comment">// mutex</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span>&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">typedef</span> std::shared_ptr&lt;Singleton&gt; Ptr;<br>    ~<span class="hljs-built_in">Singleton</span>()&#123;<br>        std::cout&lt;&lt;<span class="hljs-string">&quot;destructor called!&quot;</span>&lt;&lt;std::endl;<br>    &#125;<br>    <span class="hljs-built_in">Singleton</span>(Singleton&amp;)=<span class="hljs-keyword">delete</span>;<br>    Singleton&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Singleton&amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Ptr <span class="hljs-title">get_instance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-comment">// &quot;double checked lock&quot;</span><br>        <span class="hljs-keyword">if</span>(m_instance_ptr==<span class="hljs-literal">nullptr</span>)&#123;<br>            <span class="hljs-function">std::lock_guard&lt;std::mutex&gt; <span class="hljs-title">lk</span><span class="hljs-params">(m_mutex)</span></span>;<br>            <span class="hljs-keyword">if</span>(m_instance_ptr == <span class="hljs-literal">nullptr</span>)&#123;<br>              m_instance_ptr = std::shared_ptr&lt;Singleton&gt;(<span class="hljs-keyword">new</span> Singleton);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> m_instance_ptr;<br>    &#125;<br><br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Singleton</span>()&#123;<br>        std::cout&lt;&lt;<span class="hljs-string">&quot;constructor called!&quot;</span>&lt;&lt;std::endl;<br>    &#125;<br>    <span class="hljs-keyword">static</span> Ptr m_instance_ptr;<br>    <span class="hljs-keyword">static</span> std::mutex m_mutex;<br>&#125;;<br><br><span class="hljs-comment">// initialization static variables out of class</span><br>Singleton::Ptr Singleton::m_instance_ptr = <span class="hljs-literal">nullptr</span>;<br>std::mutex Singleton::m_mutex;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    Singleton::Ptr instance = Singleton::<span class="hljs-built_in">get_instance</span>();<br>    Singleton::Ptr instance2 = Singleton::<span class="hljs-built_in">get_instance</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行结果如下，发现确实只构造了一次实例，并且发生了析构。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs txt">constructor called!<br>destructor called!<br></code></pre></td></tr></table></figure>
+
+<p>这种方法的优点是</p>
+<ul>
+<li>  基于 shared_ptr, 用了C++比较倡导的 RAII思想，用对象管理资源,当 shared_ptr 析构的时候，new 出来的对象也会被 delete掉。以此避免内存泄漏。</li>
+<li>  加了锁，使用互斥量来达到线程安全。这里使用了两个 if判断语句的技术称为<strong>双检锁</strong>；好处是，只有判断指针为空的时候才加锁，避免每次调用 get_instance的方法都加锁，锁的开销毕竟还是有点大的。</li>
+</ul>
+<p>不足之处在于： 、</p>
+<ul>
+<li>  使用智能指针会要求用户也得使用智能指针，非必要不应该提出这种约束</li>
+<li>  使用锁也有开销;</li>
+<li>  同时代码量也增多了，实现上我们希望越简单越好</li>
+<li>  更加严重的问题，在某些平台（与编译器和指令集架构有关），双检锁会失效！</li>
+</ul>
+<h2 id="使用局部静态变量实现的单例模式"><a href="#使用局部静态变量实现的单例模式" class="headerlink" title="使用局部静态变量实现的单例模式"></a>使用局部静态变量实现的单例模式</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    ~<span class="hljs-built_in">Singleton</span>()&#123;<br>        std::cout&lt;&lt;<span class="hljs-string">&quot;destructor called!&quot;</span>&lt;&lt;std::endl;<br>    &#125;<br>    <span class="hljs-built_in">Singleton</span>(<span class="hljs-keyword">const</span> Singleton&amp;)=<span class="hljs-keyword">delete</span>;<br>    Singleton&amp; <span class="hljs-keyword">operator</span>=(<span class="hljs-keyword">const</span> Singleton&amp;)=<span class="hljs-keyword">delete</span>;<br>    <span class="hljs-function"><span class="hljs-keyword">static</span> Singleton&amp; <span class="hljs-title">get_instance</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">static</span> Singleton instance;<br>        <span class="hljs-keyword">return</span> instance;<br><br>    &#125;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-built_in">Singleton</span>()&#123;<br>        std::cout&lt;&lt;<span class="hljs-string">&quot;constructor called!&quot;</span>&lt;&lt;std::endl;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>    Singleton&amp; instance_1 = Singleton::<span class="hljs-built_in">get_instance</span>();<br>    Singleton&amp; instance_2 = Singleton::<span class="hljs-built_in">get_instance</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>这是最推荐的一种单例实现方式：</strong></p>
+<ol>
+<li> 通过局部静态变量的特性保证了线程安全 (C++11, GCC &gt; 4.3, VS2015支持该特性);</li>
+<li> 不需要使用共享指针，代码简洁；</li>
+<li> 注意在使用的时候需要声明单例的引用 <code>Single&amp;</code> 才能获取对象。</li>
+</ol>
+<p>另外网上有人的实现返回指针而不是返回引用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">static Singleton* get_instance()&#123;<br>    static Singleton instance;<br>    return &amp;instance;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这样做并不好，理由主要是无法避免用户使用<code>delete instance</code>导致对象被提前销毁。还是建议大家使用返回引用的方式。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunchaothu/p/10389842.html">C++ 单例模式总结与剖析</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

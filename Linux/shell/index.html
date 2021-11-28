@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+
+</div>
+
+<div class="content-area">
+	<div class="title">
+		
+	</div>
+	
+	<div class="page-date">
+		2021-11-07
+	</div>
+	
+	<div class="category-area">
+		
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="https://macplay.github.io/posts/ji-ge-you-yong-de-zhong-duan-ming-ling-zheng-li/">https://macplay.github.io/posts/ji-ge-you-yong-de-zhong-duan-ming-ling-zheng-li/</a><br>使用 zsh 之后，就养成了不整理终端命令的“坏”习惯。可能当时遇到问题折腾好半天才解决，但却从没有写个日志（哪怕片段）记录下来的想法。因为 zsh 默认保存上万条历史让这一做法显得没有必要，要再次调用的话直接 fzf 搜索，简单修改下回车执行就行。</p>
+<p>最近两天抹盘安装了 High Sierra 系统，装完后把之前的 .zsh_history 文件拷贝回 home 目录，继续老习惯接着用就成。不过还是有点不放心，一方面担心使用频率超低（但有用）的命令可能会被冲掉，另一方面万一某一天 history 文件损坏就悲剧了，更重要的是有时会到别的电脑上执行命令。所以，还是整理下为好，该命令列表应该会不定期更新。</p>
+<ol>
+<li>查找并删除 .DS_Store 文件 find . -type f -name “.DS_Store” -delete .DS_Store 文件有时会引起麻烦，用以上命令清掉就好。 .DS_Store 只是举个例子，文件名称可以随便填，可用通配符。还有 -depth 1 可用来指定递归深度，比如删除掉 Downloads 目录最外面一层所有的 jpg 图片。</li>
+<li>find 也可以用正则表达式 当然只是有限的正则表达式。比如把符合条件的所有图片移动到桌面。 <code>find . -regex &quot;.*/[a-z0-9]\&#123;32\&#125;\.jpg&quot; -exec mv &#123;&#125; ~/Desktop/ \;</code></li>
+<li>分别统计文件行数 find ~/.hammerspoon -type f -name “*.lua” -print0 | xargs -0 wc -l</li>
+<li>配合 chmod 使用 <code>find . -type f -exec chmod 644 &#123;&#125; \;</code> <code>find . -type d -exec chmod 744 &#123;&#125; \;</code> 最近的 find 应用案例。把移动硬盘上备份的 repo 复制回新安装的系统，结果提示一大堆文件已更改，真是莫名其妙。git diff 一看，文件权限全变成了 755。这才想起老早老早以前把移动硬盘格成了 exFAT 格式，文件权限全丢了。利用以上两行命令，文件全改成 644，文件夹全改成 744，搞完后 repo 恢复正常。</li>
+<li>推出所有 dmg 磁盘 osascript -e ‘tell application “Finder” to eject (every disk whose ejectable is true)’ 有时候尝试完一堆新软件，懒得一个个点推出。执行一下这个就好。见过别人电脑上差不多 10 个未推出的 dmg 镜像，问干嘛用完不推呢，答曰刚使用 macOS 没这习惯……</li>
+<li>重置 LaunchPad defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock 如果你习惯让系统内置应用单独一页，同时不想让应用没布满一页就挤到下一页。执行该命令将会重置 LaunchPad。</li>
+<li>重置 QuickLook 服务 qlmanage -r QuickLook 就是按空格预览的那个。如果你复制了新的预览器（如 markdown、压缩包等）到 ~/Library/QuickLook 目录，可能需要执行下该命令。</li>
+<li>加载新服务 launchctl load -w ~/Library/LaunchAgents/com.github.aria2.plist 让 aria2 开机后台运行，launchctl 常用命令还有 unload、start、stop 等。</li>
+<li>指定内核启动 jupyter jupyter-qtconsole –kernel=python2 jupyter console 和 Qt 前端均可用该方式指定启动时的内核。有了 jupyter console ， ipython 以后减少使用为好。 jupyter-kernelspec list 列出当前可用的内核。</li>
+<li> 升级系统 vim</li>
+</ol>
+<pre><code>brew install vim --with-override-system-vi --with-lua
+
+High Sierra 自带 vim 版本已经是 8.0，但编译缺了三个重要特性：clipboard、conceal、lua。用以上命令重新编译个倒也不费劲，时间还很快。不过，更好的选择是直接用 neovim 。
+</code></pre>
+<ol start="11">
+<li> neovim 配置位置</li>
+</ol>
+<pre><code>~/.config/nvim/init.vim 。我的 vim 配置和 neovim 是共用的，所以执行下 ln ~/.vimrc ~/.config/nvim/init.vim 就好。
+</code></pre>
+<ol start="12">
+<li> 给 neovim 添加 python 支持</li>
+</ol>
+<pre><code>pip3 install neovim
+
+运行 :CheckHealth 可显示 neovim 的状态信息，包括 python2、python3 支持等。如果你使用 pyenv 或 virtualenv 的话，将 g:python_host_prog 或 g:python3_host_prog 的值设置为虚拟环境中 python 的执行路径。
+</code></pre>
+<ol start="13">
+<li> reST 转换为其它格式</li>
+</ol>
+<pre><code>rst2s5.py ./posts/30-fen-zhong-jian-li-yi-ge-nikola-bo-ke.rst new.html
+
+还有其它类似命令： rst2html5.py ， rst2xelex.py ， rst2odt.py 等。
+</code></pre>
+<ol start="14">
+<li> you-get 下载视频</li>
+</ol>
+<pre><code>you-get -i url 列出可用的视频下载格式； you-get --format=HD -p mpv url 指定下载格式，并调用 mpv 播放。
+</code></pre>
+<ol start="15">
+<li> 统计文件夹大小</li>
+</ol>
+<pre><code>du -d1 -h .vim
+
+-d1 用来指定文件夹层次。
+</code></pre>
+<ol start="16">
+<li> 禁用截图阴影</li>
+</ol>
+<pre><code>defaults write com.apple.screencapture disable-shadow -bool true
+</code></pre>
+<ol start="17">
+<li> 禁用长按输入音调功能</li>
+</ol>
+<pre><code>defaults write com.github.atom ApplePressAndHoldEnabled -bool false
+
+macOS 上长按会弹出音调输入菜单。而如果你某些编辑器使用了 vim 插件，这一行为就显得有些讨厌。以上命令可以指定在某一应用内禁用该功能。
+</code></pre>
+<ol start="18">
+<li> 编译 mpv</li>
+</ol>
+<pre><code>brew install mpv --with-bundle --with-libaacs --with-libarchive --with-libbluray --with-libdvdnav --with-libcaca --with-libdvdread --with-uchardet --with-vapoursynth
+
+让 mpv 支持 DVD、蓝光等格式，并打个 bundle 包。
+</code></pre>
+<ol start="19">
+<li> 使用 duc 生成磁盘空间图表</li>
+</ol>
+<pre><code>duc graph --format=png --gradient --palette=greyscale ~/Downloads
+</code></pre>
+<ol start="20">
+<li> 不加载配置启动 Vim</li>
+</ol>
+<pre><code>vim -u NONE
+</code></pre>
+<ol start="21">
+<li> 指定局域截图</li>
+</ol>
+<pre><code>screencapture -T5 -R0,776,200,19 ~/Desktop/file5.png
+</code></pre>
+<ol start="22">
+<li> 垂直方向合并多张图</li>
+</ol>
+<pre><code>convert dock.png clip.png down.png -append test.png
+
+如果是 +append ，则是水平方向合并。
+</code></pre>
+<ol start="23">
+<li> 截掉多余边框</li>
+</ol>
+<pre><code>convert resize.png -trim tmp.png
+
+仅当图像边缘为透明或者纯色时好用。
+</code></pre>
+<ol start="24">
+<li> 切图</li>
+</ol>
+<pre><code>convert resize.png -crop +0+2x195x38 view.png
+</code></pre>
+<ol start="25">
+<li> 叠加图片</li>
+</ol>
+<pre><code>composite front.png bg.png -gravity center result.png
+</code></pre>
+<ol start="26">
+<li> 按照列表合并多个视频片段</li>
+</ol>
+<pre><code>ffmpeg -f concat -i new.mp4.txt -c copy new.flv
+</code></pre>
+<ol start="27">
+<li> 从超大图片截取区域部分</li>
+</ol>
+<pre><code>convert source.png -geometry +113+198 -region 1600x400 tmp.png
+</code></pre>
+<ol start="28">
+<li> 新建一张空白图</li>
+</ol>
+<pre><code>convert -size 36x660 xc:none -fill &quot;#ffffff&quot; ~/Desktop/new.png
+</code></pre>
+<ol start="29">
+<li> 产生一张黑白对折图</li>
+</ol>
+<pre><code>convert -size 1275x768 xc:none -fill black -draw &quot;polygon 0,0 0,768 1275,768&quot; -fill white -draw &quot;polygon 0,0 1275,0 1275,768&quot; ~/Desktop/main.png
+</code></pre>
+<ol start="30">
+<li> 对图片应用滤镜</li>
+</ol>
+<pre><code>convert dark.png mask.png -alpha off -compose CopyOpacity -composite result.png
+</code></pre>
+<ol start="31">
+<li> 扩展图片画布</li>
+</ol>
+<pre><code>convert youdao.png -background none -gravity center -extent 100x100 ~/Desktop/youdao.png
+</code></pre>
+<ol start="32">
+<li> 把图片指定颜色变为透明</li>
+</ol>
+<pre><code>convert emoji-evil.jpg -fuzz 1% -transparent &quot;#FDFDFD&quot; new.png
+</code></pre>
+<ol start="33">
+<li> Vim 启动时间 profile</li>
+</ol>
+<pre><code>nvim --startuptime tmp.txt
+</code></pre>
+<ol start="34">
+<li> 加载 locate 服务</li>
+</ol>
+<pre><code>sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+</code></pre>
+<ol start="35">
+<li> 打印文件额外属性</li>
+</ol>
+<pre><code>xattr -p LICENSE
+</code></pre>
+<ol start="36">
+<li> 编译 emacs-mac</li>
+</ol>
+<pre><code>brew install emacs-mac --with-ctags --with-dbus --with-glib --with-gnutls --with-imagemagick --with-spacemacs-icon --with-modules --with-texinfo --with-xml2
+</code></pre>
+<ol start="37">
+<li> 回撤上一个 git 提交</li>
+</ol>
+<pre><code>git reset --hard HEAD^
+</code></pre>
+<ol start="38">
+<li> 逐帧压缩并缩放 GIF 动图</li>
+</ol>
+<pre><code>convert Untitled.gif -coalesce -resize 50% -layers OptimizeFrame good.gif
+</code></pre>
+<ol start="39">
+<li> MacTex 自带命令行管理器</li>
+</ol>
+<pre><code>tlmgr search indentfirst
+
+texdoc tikz 自带文档查看。
+
+sudo tlmgr option repository http://mirrors.aliyun.com/CTAN/systems/texlive/tlnet/ 更改默认 repo。
+
+tlmgr update --all
+</code></pre>
+<ol start="40">
+<li> 磁盘读写查看</li>
+</ol>
+<pre><code>iostat -d 1
+</code></pre>
+<ol start="41">
+<li> 视频轨道查看</li>
+</ol>
+<pre><code>ffprobe Homeland.S06E02.720p.HEVC.x265-MeGusta.mkv
+</code></pre>
+<ol start="42">
+<li> Markdown 文件转换为 epub 电子书</li>
+</ol>
+<pre><code>pandoc file.md -f markdown -t epub -o new.epub
+</code></pre>
+<ol start="43">
+<li> 使用 curl 上传一张图片</li>
+</ol>
+<pre><code>curl -X POST -d &quot;smfile=/Users/ashfinal/2.png&quot; https://sm.ms/api/upload
+</code></pre>
+<ol start="44">
+<li> 指定 curl 访问 UA</li>
+</ol>
+<pre><code>curl --user-agent &quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36&quot; https://www.bing.com/az/hprichbg/rb/BMXTunnel_ZH-CN11405649743_1920x1080.jpg -O
+</code></pre>
+<ol start="45">
+<li> man 转换为 PDF 并打开</li>
+</ol>
+<pre><code>man -t rsync | open -f -a Preview.app
+</code></pre>
+<ol start="46">
+<li> 请求 GitHub Trend 数据</li>
+</ol>
+<pre><code>``curl -G https://api.github.com/search/repositories --data-urlencode &quot;sort=stars&quot; --data-urlencode &quot;order=desc&quot; --data-urlencode &quot;q=language:java&quot;  --data-urlencode &quot;q=created:&gt;`date -v-7d &#39;+%Y-%m-%d&#39;`&quot; &gt; tmp.json``
+</code></pre>
+<ol start="47">
+<li> 生成目录层级报告</li>
+</ol>
+<pre><code>`tree --charset utf8 -H file:///Users/ashfinal/Downloads ~/Downloads -o ~/tmp.html`
+</code></pre>
+<ol start="48">
+<li> 指定进程列头</li>
+</ol>
+<pre><code>ps -A -ro pid,user,pcpu,pmem,command
+</code></pre>
+<ol start="49">
+<li> 指定命令行代理</li>
+</ol>
+<pre><code>proxychains4 brew upgrade weechat
+</code></pre>
+<ol start="50">
+<li> 返回 mac 地址</li>
+</ol>
+<pre><code>`ifconfig en0 | grep ether | awk &#123;&#39;print $2&#39;&#125;`
+</code></pre>
+<ol start="51">
+<li> macOS 计算机名相关</li>
+</ol>
+<pre><code>sudo scutil --set HostName &quot;iMBP&quot;
+sudo scutil --set ComputerName &quot;iMBP&quot;
+sudo scutil --set LocalHostName &quot;iMBP&quot;
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string &quot;iMBP&quot;
+</code></pre>
+<ol start="52">
+<li> curl 下载文件显示进度条</li>
+</ol>
+<pre><code>curl -# http://www.andre-simon.de/zip/highlight-3.36.dmg -O
+</code></pre>
+<ol start="53">
+<li> 调用 curl 下载文件列表</li>
+</ol>
+<pre><code>``ROW=0; for URL in `cat url.txt`; do ROW=$(($ROW+1)); curl -# $URL -o $ROW; done``
+</code></pre>
+<ol start="54">
+<li> pygments 语法高亮文件</li>
+</ol>
+<pre><code>pygmentize -l python tmp.py -o tmp.html
+</code></pre>
+<ol start="55">
+<li> 上传一个文件</li>
+</ol>
+<pre><code>curl -F c=@- https://ptpb.pw/ &lt; 9ku.py
+</code></pre>
+<ol start="56">
+<li> 命令行版的 gist</li>
+</ol>
+<pre><code>gist --login
+gist
+gist selenium0.py
+gist -l ashfinal
+gist -d &quot;aria2 launchagent for macOS&quot; com.github.aria2.plist
+</code></pre>
+<ol start="57">
+<li> 用各种语音说“Hello World”</li>
+</ol>
+<pre><code>``for i in `say -v &#39;?&#39; | cut -d &#39; &#39; -f 1`; do echo $i &amp;&amp; say -v &quot;$i&quot; &#39;Hello World&#39;;done``
+</code></pre>
+<ol start="58">
+<li> 列出压缩包文件名</li>
+</ol>
+<pre><code>unzip -l ZeroNet-mac-dist.zip
+</code></pre>
+<ol start="59">
+<li> 从 html 文件下载图片</li>
+</ol>
+<pre><code>`lynx -dump http://rom.ligux.com/wallpaper/ | egrep -o &quot;http:.*jpg&quot; | xargs -n1 wget`
+</code></pre>
+<ol start="60">
+<li> 烧录系统镜像到 U 盘</li>
+</ol>
+<pre><code>sudo dd if=Desktop/openSUSE-Tumbleweed-KDE-Live-x86_64-Snapshot20161109-Media.iso of=/dev/disk2 bs=512 conv=noerror,sync
+</code></pre>
+<ol start="61">
+<li> git rebase</li>
+</ol>
+<pre><code>git rebase -i 6e9ddc5
+</code></pre>
+<ol start="62">
+<li> 从 git 历史中删除二进制文件</li>
+</ol>
+<pre><code>git filter-branch --force --index-filter \\
+&#39;git rm --cached --ignore-unmatch resources/watchbg.png&#39; \\
+--prune-empty --tag-name-filter cat -- --all
+
+后面还需要三个命令：
+
+git reflog expire --expire=now --all
+git gc --prune=now
+git gc --aggressive --prune=now
+</code></pre>
+<ol start="63">
+<li> 列出中文字体</li>
+</ol>
+<pre><code>`fc-list :lang=zh-cn | fzf`
+</code></pre>
+<ol start="64">
+<li> 文件夹比较报告</li>
+</ol>
+<pre><code>`diffoscope /usr/local/lib/python3.6/site-packages/jedi Downloads/jedi-0.10.2/jedi-0.10.2/jedi/ --html tmp.html`
+</code></pre>
+<ol start="65">
+<li> Nikola 指定新建文件的 jupyter notebook 内核</li>
+</ol>
+<pre><code>nikola new_post -f ipynb@python2
+</code></pre>
+<ol start="66">
+<li> Atom 安装插件</li>
+</ol>
+<pre><code>apm install --verbose atom-beautify autocomplete-python git-time-machine file-icons code-peek pigments advanced-open-file atom-ternjs autoprefixer hydrogen script regex-railroad-diagram linter-proselint color-picker platformio-ide-terminal merge-conflicts activate-power-mode atom-latex autocomplete-paths
+</code></pre>
+<ol start="67">
+<li> 生成简短的中文字体列表</li>
+</ol>
+<pre><code>`fc-list -f &quot;%&#123;family&#125;\n&quot; :lang=zh  &gt; zhfont.txt`
+</code></pre>
+<ol start="68">
+<li> ffmpeg 视频极限压缩（替代 GIF）</li>
+</ol>
+<pre><code>`ffmpeg -i in.mp4 -vf scale=-2:240 -c:v libx264 -an -crf 35 -b:v 100k -r 10 -preset slow out.mp4`
+</code></pre>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

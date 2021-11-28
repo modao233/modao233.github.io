@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E7%AE%A1%E9%81%93"><span class="toc-text">创建和使用管道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E7%AE%A1%E9%81%93%E4%BD%9C%E4%B8%BA%E4%B8%80%E7%A7%8D%E8%BF%9B%E7%A8%8B%E5%90%8C%E6%AD%A5%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">将管道作为一种进程同步的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%AE%A1%E9%81%93%E8%BF%9E%E6%8E%A5%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-text">使用管道连接过滤器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%AE%A1%E9%81%93%E4%B8%8Eshell%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E9%80%9A%E4%BF%A1%EF%BC%9Apopen"><span class="toc-text">通过管道与shell命令进行通信：popen()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%92%8Cstdio%E7%BC%93%E5%86%B2"><span class="toc-text">管道和stdio缓冲</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		第44章 管道和FIFO
+	</div>
+	
+	<div class="page-date">
+		2021-02-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux/Unix系统编程手册">Linux/Unix系统编程手册</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>管道是Unix系统上最古老的IPC方法。</p>
+<p>FIFO是管道概念的变体，它们之间的差别在于FIFO可以用于任意进程间的通信。</p>
+<span id="more"></span>
+
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ ls | wc -l<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210130114347946.png" alt="image-20210130114347946"></p>
+<p>两个进程并不知道管道的存在，它们只是从标准文件描述符中读取数据和写入数据。</p>
+<p>管道的重要特征：</p>
+<ul>
+<li><p>一个管道是一个字节流</p>
+<ul>
+<li>  使用管道时不存在消息或消息边界的概念</li>
+<li>  可以从管道中读取任意大小的数据块，不管写入管道的数据块大小是什么</li>
+<li>  通过管道传递的数据是顺序的，无法随机访问</li>
+</ul>
+</li>
+<li><p>  读空管道会阻塞至数据到来。管道写端关闭后，管道读取进程在读完剩余所有数据后将看到文件结束（即read()返回0）</p>
+</li>
+<li><p>  在管道中数据的传递方向是单向的</p>
+</li>
+<li><p>  可以确保写入不超过PIPE_BUF字节的操作是原子的</p>
+</li>
+<li><p>  管道的容量是有限的</p>
+</li>
+</ul>
+<h2 id="创建和使用管道"><a href="#创建和使用管道" class="headerlink" title="创建和使用管道"></a>创建和使用管道</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-comment">//成功返回0，失败返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pipe</span><span class="hljs-params">(<span class="hljs-keyword">int</span> filedes[<span class="hljs-number">2</span>])</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>成功的pipe()调用会在filedes中返回两个打开的文件描述符：</p>
+<ul>
+<li>  filedes[0]：表示管道的读取端</li>
+<li>  filedes[1]：表示管道的写入端</li>
+</ul>
+<p>一旦向管道的写入端写入数据之后立即就能从管道的读取端读取数据。</p>
+<p>管道上的read()调用会读取的数据量为所请求的字节数与管道中当前存在的字节数两者之间较小的那个。</p>
+<p>ioctl(fd, FIONREAD, &amp;cnt)调用返回文件描述符fd所引用的管道或FIFO中未读取的字节数。</p>
+<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210130154430225.png" alt="image-20210130154430225"></p>
+<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210130154440374.png" alt="image-20210130154440374"></p>
+<p>让父进程和子进程都能够从一个管道中读取和写入数据这种做法并不常见的一个原因是：如果两个进程同时试图从管道中读取数据，那么就无法确定哪个进程会首先读取成功——两个进程竞争数据了。</p>
+<p>管道允许进程间的通信：</p>
+<ul>
+<li>  管道可用于任意两个（或多个）相关进程之间的通信。相关进程的含义：拥有相同的祖先进程，由该祖先进程负责创建管道。shell在构建管道线时所做的工作。</li>
+<li>  通过UNIX domain socket传递一个文件描述符使得管道的一个文件描述符传递给另一个非相关进程</li>
+</ul>
+<p><strong>为何要关闭未使用管道文件描述符</strong></p>
+<ol>
+<li> 确保进程不会耗尽文件描述符的限制</li>
+<li> 只有当所有进程中所有引用一个管道的文件描述符被关闭之后才会销毁该管道以及释放该管道占用的资源以供其它进程复用</li>
+<li> 读取进程要关闭其持有的未使用的管道的写入描述符：当其它进程关闭了写入描述符之后，如果读取进程没有关闭写入描述符，则内核知道至少存在一个管道的写入描述符打开着，则读取进程即使读取了管道中的所有数据后仍不会看到文件结束，并阻塞在read()调用，<strong>理论上</strong>该读取进程仍然可以向管道写入数据，即使它已经被读取操作阻塞。</li>
+<li> 写入进程要关闭其持有的未使用的管道的读取描述符：当一个进程向一个管道写入数据但没有任何进程拥有该管道的打开着的读取描述符时，内核会向写入进程发送一个SIGPIPE信号，默认情况该信号会杀死一个进程。进程也可以捕获或忽略该信号，这样会导致管道上的write()操作因EPIPI错误（已损坏的管道）而失败。收到SIGPIPE信号或得到EPIPE错误对于标示出管道的状态是有用的。如果写入进程没有关闭管道的读取端而其它进程已经关闭了该管道的读取端，则写入进程会将数据充满整个管道，后续的写入请求会被永远阻塞。</li>
+</ol>
+<p>程序示例：在父进程和子进程间使用管道通信</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/wait.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-comment">//typedef __ssize_t ssize_t</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BUF_SIZE 10</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-keyword">int</span> pfd[<span class="hljs-number">2</span>];<br>    <span class="hljs-keyword">char</span> buf[BUF_SIZE];<br>    <span class="hljs-keyword">ssize_t</span> numRead;<br><br>    <span class="hljs-keyword">if</span>(argc != <span class="hljs-number">2</span> || <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;--help&quot;</span>) == <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;usage: %s string\n&quot;</span>, argv[<span class="hljs-number">0</span>]);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(pipe(pfd) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error create pipe&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">switch</span>(fork())&#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error fork&quot;</span>);<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">1</span>]) == <span class="hljs-number">-1</span>)&#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close child&#x27;s write of pipe&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>            numRead = read(pfd[<span class="hljs-number">0</span>], buf, BUF_SIZE);<br>            <span class="hljs-keyword">if</span>(numRead == <span class="hljs-number">-1</span>)&#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error read&quot;</span>);<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span>(numRead == <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">if</span>(write(STDOUT_FILENO, buf, numRead) != numRead)<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;child -partial/failed write&quot;</span>);<br>        &#125;<br><br>        write(STDOUT_FILENO, <span class="hljs-string">&quot;\n&quot;</span>, <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">0</span>]) == <span class="hljs-number">-1</span>)&#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close child&#x27;s read of pipe&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        &#125;<br>        _exit(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">default</span>:<br>        <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">0</span>]) == <span class="hljs-number">-1</span>)&#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close parent&#x27;s read of pipe&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(write(pfd[<span class="hljs-number">1</span>], argv[<span class="hljs-number">1</span>], <span class="hljs-built_in">strlen</span>(argv[<span class="hljs-number">1</span>])) != <span class="hljs-built_in">strlen</span>(argv[<span class="hljs-number">1</span>]))<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;parent - partial/failed write&quot;</span>);<br><br>        <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">1</span>]) == <span class="hljs-number">-1</span>)&#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close parent&#x27;s write of pipe&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        &#125;<br>        wait(<span class="hljs-literal">NULL</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="将管道作为一种进程同步的方法"><a href="#将管道作为一种进程同步的方法" class="headerlink" title="将管道作为一种进程同步的方法"></a>将管道作为一种进程同步的方法</h2><p>使用管道同步具备一个优势：它可以同时用来协调一个进程的动作使之与多个其它（相关）进程匹配。</p>
+<p>多个（标准）信号无法排队的事实使得信号不适用于这种情形，相反，信号的优势是它可以被一个进程广播到进程组中的所有成员处。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BUF_SIZE 10</span><br><br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">currTime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *format)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span> buf[BUF_SIZE];  <span class="hljs-comment">/* Nonreentrant */</span><br>    <span class="hljs-keyword">time_t</span> t;<br>    <span class="hljs-keyword">size_t</span> s;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tm</span> *<span class="hljs-title">tm</span>;</span><br><br>    t = time(<span class="hljs-literal">NULL</span>);<br>    tm = localtime(&amp;t);<br>    <span class="hljs-keyword">if</span> (tm == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br><br>    s = strftime(buf, BUF_SIZE, (format != <span class="hljs-literal">NULL</span>) ? format : <span class="hljs-string">&quot;%c&quot;</span>, tm);<br><br>    <span class="hljs-keyword">return</span> (s == <span class="hljs-number">0</span>) ? <span class="hljs-literal">NULL</span> : buf;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-keyword">int</span> pfd[<span class="hljs-number">2</span>];<br>    <span class="hljs-keyword">int</span> j, dummy;<br><br>    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">2</span> || <span class="hljs-built_in">strcmp</span>(argv[<span class="hljs-number">1</span>], <span class="hljs-string">&quot;--help&quot;</span>) == <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;usage: %s sleep-time...\n&quot;</span>, argv[<span class="hljs-number">0</span>]);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    setbuf(<span class="hljs-built_in">stdout</span>, <span class="hljs-literal">NULL</span>);<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s Parent started\n&quot;</span>, currTime(<span class="hljs-string">&quot;%T&quot;</span>));<br><br>    <span class="hljs-keyword">if</span>(pipe(pfd) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error pipe&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">1</span>; j &lt; argc; ++j)&#123;<br>        <span class="hljs-keyword">switch</span>(fork())&#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error fork %d&quot;</span>, j);<br>                <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>                <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">0</span>]) == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>                    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>                &#125;<br>                sleep(strtol(argv[j], <span class="hljs-literal">NULL</span>, <span class="hljs-number">10</span>));<br><br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s Child %d (PID=%ld) closing pepe\n&quot;</span>,<br>                        currTime(<span class="hljs-string">&quot;%T&quot;</span>), j, (<span class="hljs-keyword">long</span>)getpid());<br>                <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">1</span>]) == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>                    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>                &#125;<br>                _exit(<span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">default</span>:<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">1</span>]) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(read(pfd[<span class="hljs-number">0</span>], &amp;dummy, <span class="hljs-number">1</span>) != <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;parent didn&#x27;t get EOF&quot;</span>);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s Parent ready to go\n&quot;</span>, currTime(<span class="hljs-string">&quot;%T&quot;</span>));<br><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="使用管道连接过滤器"><a href="#使用管道连接过滤器" class="headerlink" title="使用管道连接过滤器"></a>使用管道连接过滤器</h2><p>当管道被创建之后，为管道的两端分配的文件描述符是可用描述符中数值最小的两个。</p>
+<p>使用管道连接两个过滤器（即从stdin读取和写入到stdout的程序）使得一个程序的标准输出被定向到管道中，而另一个程序的标准输入则从管道中读取。</p>
+<p>通常情况下，进程已经使用了描述符0、1、2，为管道分配的文件描述符数值更大。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/wait.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    <span class="hljs-keyword">int</span> pfd[<span class="hljs-number">2</span>];<br><br>    <span class="hljs-keyword">if</span>(pipe(pfd) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error pipe&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">switch</span>(fork())&#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error fork&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">0</span>]) == <span class="hljs-number">-1</span>)&#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>                <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span>(pfd[<span class="hljs-number">1</span>] != STDOUT_FILENO)&#123;<br>                <span class="hljs-keyword">if</span>(dup2(pfd[<span class="hljs-number">1</span>], STDOUT_FILENO) == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error dup2&quot;</span>);<br>                    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>                &#125;<br>                <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">1</span>]) == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>                    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>                &#125;<br>            &#125;<br>            execlp(<span class="hljs-string">&quot;ls&quot;</span>, <span class="hljs-string">&quot;ls&quot;</span>, (<span class="hljs-keyword">char</span>*)<span class="hljs-literal">NULL</span>);<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error execlp ls&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">default</span>:<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-keyword">switch</span>(fork())&#123;<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error fork&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">1</span>]) == <span class="hljs-number">-1</span>)&#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>                <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span>(pfd[<span class="hljs-number">0</span>] != STDIN_FILENO)&#123;<br>                <span class="hljs-keyword">if</span>(dup2(pfd[<span class="hljs-number">0</span>], STDIN_FILENO) == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error dup2&quot;</span>);<br>                    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>                &#125;<br>                <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">0</span>]) == <span class="hljs-number">-1</span>)&#123;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>                    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>                &#125;<br>            &#125;<br>            execlp(<span class="hljs-string">&quot;wc&quot;</span>, <span class="hljs-string">&quot;wc&quot;</span>, <span class="hljs-string">&quot;-l&quot;</span>, (<span class="hljs-keyword">char</span>*)<span class="hljs-literal">NULL</span>);<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error execlp wc&quot;</span>);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">default</span>:<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">0</span>]) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(close(pfd[<span class="hljs-number">1</span>]) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error close&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(wait(<span class="hljs-literal">NULL</span>) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error wait&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>    <span class="hljs-keyword">if</span>(wait(<span class="hljs-literal">NULL</span>) == <span class="hljs-number">-1</span>)&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;error wait&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>    <br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="通过管道与shell命令进行通信：popen"><a href="#通过管道与shell命令进行通信：popen" class="headerlink" title="通过管道与shell命令进行通信：popen()"></a>通过管道与shell命令进行通信：popen()</h2><p>管道的一个常见用途是执行shell命令并读取其输出或向其发送一些输入。popen()和pclose()函数简化了这个任务。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/types/FILE.h&gt;</span></span><br><br><span class="hljs-function">FILE *<span class="hljs-title">popen</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *command, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *mode)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pclose</span><span class="hljs-params">(FILE *stream)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>popen()成功时返回可供stdio库函数使用的<strong>文件流指针</strong>，当发生错误时（如mode不是r或w，创建管道失败，或通过fork()创建子进程失败），popen()会返回NULL并设置errno以标示出发生错误的原因。</p>
+<p>popen()函数<strong>创建了一个管道</strong>，然后创建了一个子进程来执行shell，而shell又创建了一个子进程来执行command字符串。mode参数是一个字符串，它确定调用进程是从管道中读取数据（mode是r）还是将数据写入到管道中（mode是w）。</p>
+<p>mode的取值确定了所执行的命令的标准输出是连接到管道的写入端还是将其标准输入连接到管道的读取端。</p>
+<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210131174301562.png" alt="image-20210131174301562"></p>
+<p>与使用pipe()创建的管道一样，当从管道中读取数据时，调用进程在command关闭管道的写入端之后会看到文件结束；当向管道写入数据时，如果command已经关闭了管道的读取端，那么调用进程会收到SIGPIPE信号并得到EPIPE错误。</p>
+<p>一旦I/O结束之后，可以使用pclose()函数关闭管道并<strong>等待</strong>子进程中的shell终止。（fclose()函数不等待子进程）。pclose()在成功时会返回子进程中shell的终止状态。如果无法执行shell，那么pclose()会返回一个值就像子进程中的shell通过调用_exit(127)来终止一样。如果发生了其它错误（如无法取得终止状态），pclose()返回-1。</p>
+<blockquote>
+<p>  <strong>未读：system()和popen()以及pclose()的异同</strong>**</p>
+</blockquote>
+<p>程序示例：使用popen()通配文件描述符</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ctype.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/types/FILE.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdbool.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> POPEN_FMT <span class="hljs-meta-string">&quot;/bin/ls -d %s 2&gt; /dev/null&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PAT_SIZE 50</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PCMD_BUF_SIZE (sizeof(POPEN_FMT) + PAT_SIZE)</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">char</span> pat[PAT_SIZE];<br>    <span class="hljs-keyword">char</span> popenCmd[PCMD_BUF_SIZE];<br>    FILE *fp;<br>    <span class="hljs-keyword">bool</span> badPattern;<br>    <span class="hljs-keyword">int</span> len, status, fileCnt, j;<br>    <span class="hljs-keyword">char</span> pathname[PATH_MAX];<br><br>    <span class="hljs-keyword">for</span> (;;)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pattren: &quot;</span>);<br>        fflush(<span class="hljs-built_in">stdout</span>);<br>        <span class="hljs-keyword">if</span> (fgets(pat, PAT_SIZE, <span class="hljs-built_in">stdin</span>) == <span class="hljs-literal">NULL</span>)<br>            <span class="hljs-keyword">break</span>;<br>        len = <span class="hljs-built_in">strlen</span>(pat);<br>        <span class="hljs-keyword">if</span> (len &lt;= <span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">continue</span>;<br><br>        <span class="hljs-keyword">if</span> (pat[len - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;\n&#x27;</span>)<br>            pat[len - <span class="hljs-number">1</span>] = <span class="hljs-string">&#x27;\0&#x27;</span>;<br><br>        <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>, badPattern = <span class="hljs-literal">false</span>; j &lt; len &amp;&amp; !badPattern; ++j)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">isalnum</span>((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>)pat[j]) &amp;&amp;<br>                <span class="hljs-built_in">strchr</span>(<span class="hljs-string">&quot;_*?[^-]).&quot;</span>, pat[j]) == <span class="hljs-literal">NULL</span>)<br>                badPattern = <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (badPattern)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Bad pattern character: %c\n&quot;</span>, pat[j - <span class="hljs-number">1</span>]);<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br><br>        <span class="hljs-built_in">snprintf</span>(popenCmd, PCMD_BUF_SIZE, POPEN_FMT, pat);<br>        popenCmd[PCMD_BUF_SIZE - <span class="hljs-number">1</span>] = <span class="hljs-string">&#x27;\0&#x27;</span>;<br><br>        fp = popen(popenCmd, <span class="hljs-string">&quot;r&quot;</span>);<br>        <span class="hljs-keyword">if</span> (fp == <span class="hljs-literal">NULL</span>)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;popen() failed\n&quot;</span>);<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br><br>        fileCnt = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span> (fgets(pathname, PATH_MAX, fp) != <span class="hljs-literal">NULL</span>)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s&quot;</span>, pathname);<br>            fileCnt++;<br>        &#125;<br><br>        status = pclose(fp);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;    %d matching file%s\n&quot;</span>, fileCnt, (fileCnt != <span class="hljs-number">1</span>) ? <span class="hljs-string">&quot;s&quot;</span> : <span class="hljs-string">&quot;&quot;</span>);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;    pclose() status = %#x\n&quot;</span>, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)status);<br>        <span class="hljs-keyword">if</span> (status != <span class="hljs-number">-1</span>)<br>        &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\t&quot;</span>);<br>            <span class="hljs-keyword">if</span> (WIFEXITED(status))<br>            &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;child exited, status=%d\n&quot;</span>, WEXITSTATUS(status));<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (WIFSIGNALED(status))<br>            &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;child killed by signal %d (%s)&quot;</span>,<br>                       WTERMSIG(status), strsignal(WTERMSIG(status)));<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> WCOREDUMP <span class="hljs-comment">/* Not in SUSv3, may be absent on some systems */</span></span><br>                <span class="hljs-keyword">if</span> (WCOREDUMP(status))<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot; (core dumped)&quot;</span>);<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (WIFSTOPPED(status))<br>            &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;child stopped by signal %d (%s)\n&quot;</span>,<br>                       WSTOPSIG(status), strsignal(WSTOPSIG(status)));<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> WIFCONTINUED <span class="hljs-comment">/* SUSv3 has this, but older Linux versions and \</span></span><br><span class="hljs-comment"><span class="hljs-meta">                    some other UNIX implementations don&#x27;t */</span></span><br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (WIFCONTINUED(status))<br>            &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;child continued\n&quot;</span>);<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>            &#125;<br>            <span class="hljs-keyword">else</span><br>            &#123; <span class="hljs-comment">/* Should never happen */</span><br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;what happened to this child? (status=%x)\n&quot;</span>,<br>                       (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)status);<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="管道和stdio缓冲"><a href="#管道和stdio缓冲" class="headerlink" title="管道和stdio缓冲"></a>管道和stdio缓冲</h2><p>由于popen()调用返回的文件流指针没有引用一个终端，因此stdio库会对这种文件流应用<strong>块缓冲</strong>。</p>
+<p>当将mode的值设置为w来调用popen()时：默认情况下只有当stdio缓冲器被充满或使用pclose()关闭管道之后输出才会被发送到管道另一端的子进程。如果需要确保子进程能够立即从管道中接收数据，那么就需要定期调用fflush()或使用setbuf(fp, NULL)调用禁用stdio缓冲。</p>
+<blockquote>
+<p>  当使用pipe()创建管道，然后使用fdopen()获取一个与管道的写入端对应的stdio流时也可以使用这项技术</p>
+</blockquote>
+<p>当将mode的值设置为r来调用popen()时：如果子进程（写入数据的进程）正在使用stdio库，那么除非调用进程显示调用了fflush()或使用setbuf(fp, NULL)调用禁用stdio缓冲，子进程的输出只有在子进程填满stdio缓冲器或调用了fclose()之后才会对调用进程可用。（使用pipe()创建的管道也适用该规则）</p>
+<p>如果无法修改源代码，则可以适用伪终端来替换管道。一个伪终端是一个IPC通道，对进程来讲它就像是一个终端。其结果是stdio库会逐行输出缓冲器中的数据。</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

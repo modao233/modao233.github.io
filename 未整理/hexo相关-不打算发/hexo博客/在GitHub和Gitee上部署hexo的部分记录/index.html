@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%9B%E5%BB%BA%E6%89%98%E7%AE%A1%E4%BB%93%E5%BA%93"><span class="toc-text">一、创建托管仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81SSH%E5%85%AC%E9%92%A5%E9%85%8D%E7%BD%AE"><span class="toc-text">二、SSH公钥配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BC%80%E5%90%AFPages%E6%9C%8D%E5%8A%A1"><span class="toc-text">三、开启Pages服务</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		在GitHub和Gitee上部署hexo的部分记录
+	</div>
+	
+	<div class="page-date">
+		2020-05-16
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/hexo">hexo</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>在GitHub和Gitee上部署hexo的部分记录</p>
+<span id="more"></span>
+
+<h2 id="一、创建托管仓库"><a href="#一、创建托管仓库" class="headerlink" title="一、创建托管仓库"></a>一、创建托管仓库</h2><ul>
+<li><p>GitHub，<a target="_blank" rel="noopener" href="https://github.com/[username]">https://github.com/[username]</a><br>仓库名格式为：[username].github.io<br>创建仓库时添加一个Readme</p>
+</li>
+<li><p>Gitee，<a target="_blank" rel="noopener" href="https://gitee.com/[username]">https://gitee.com/[username]</a><br>仓库名完全和用户名相同：[username]<br>创建时添加一个Readme</p>
+</li>
+</ul>
+<h2 id="二、SSH公钥配置"><a href="#二、SSH公钥配置" class="headerlink" title="二、SSH公钥配置"></a>二、SSH公钥配置</h2><p>我注册邮箱相同</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#生成ssh key（可以三次回车使用默认值）<br>ssh-keygen -t rsa -C &quot;邮箱&quot;<br># 查看公钥<br>cat ~/.ssh/id_rsa.pub<br></code></pre></td></tr></table></figure>
+<p>若输出不为空，则复制其内容添加到托管服务的SSH Keys中</p>
+<h2 id="三、开启Pages服务"><a href="#三、开启Pages服务" class="headerlink" title="三、开启Pages服务"></a>三、开启Pages服务</h2><p>Github的Pages服务就先省略不说，这里专门说下Gitee的Pages服务，Gitee要求仓库里有个index.html才能开启Pages服务，在项目网页上手动添加项目文件index.html</p>
+<p>Gitee每次部署后需要手动更新pages服务</p>
+<p>如果Gitee上部署的hexo无法加载css和js，需要在hexo的配置文件里修改</p>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/[username]/[username]">https://gitee.com/[username]/[username]</a></p>
+<ul>
+<li>url为用户空间 ：<a target="_blank" rel="noopener" href="https://gitee.com/[username]">https://gitee.com/[username]</a></li>
+<li>root为项目名称 ：/</li>
+</ul>
+<p>访问页面为https://[username].gitee.io/</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

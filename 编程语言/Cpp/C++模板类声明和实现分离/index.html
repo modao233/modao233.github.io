@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BD%95%E6%B2%A1%E5%BF%85%E8%A6%81"><span class="toc-text">为何没必要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%A1%8C"><span class="toc-text">为什么不行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9F%E4%B8%8D%E6%98%AF%E4%B8%8D%E8%A1%8C"><span class="toc-text">也不是不行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		C++模板类声明和实现分离
+	</div>
+	
+	<div class="page-date">
+		2020-07-08
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>模板类的声明和实现不能分开写，而且也没必要。观看STL库也是实现写进class的作用域中。</p>
+<span id="more"></span>
+
+<h2 id="为何没必要"><a href="#为何没必要" class="headerlink" title="为何没必要"></a>为何没必要</h2><p>“为了实现信息的隐蔽，对类成员函数的定义一般不放在头文件里。类的声明和函数定义是分别放在两个文件里的。”</p>
+<p>信息的隐藏等同封装，这句话的意思是，把你的代码编译成目标文件打包（或封装）成库，然后把你的库和<strong>函数声明</strong>（并非是指整个.h文件）交给需求方或买家，这样对方就能使用你的代码，却看不到源文件了。一个是保护了商业利益，另外如果你要更改实现的话，可以重新编译你的库，这样需求方的代码不需要为了此次更改更新它自己的代码，只需要重新编译整个项目就可以了。</p>
+<p>把声明和实现分开写，主要是为了方便程序员修改实现，而不必修改声明，可以保证在接口不变的情况下改变实现。</p>
+<p>封装本身就是为了编写代码的便利，一切都是为了编写代码的便利。</p>
+<h2 id="为什么不行"><a href="#为什么不行" class="headerlink" title="为什么不行"></a>为什么不行</h2><p>编译过程中，对于头文件永远只会预处理，而不会编译。然后，预处理的代码与实际编译的cpp文件结合。这时候如果编译器必须为模板函数分配适当的内存空间，则编译器需要知道模板类的数据类型，然而引入头文件的模板类进行预处理相当于宏替换，并未携带模板类的数据类型，只要无法创建内存布局，则无法生成方法定义的说明。</p>
+<p>模板类并不是一个完全体的类（必须先实例化），其实例化必须从参数获取数据类型信息后，由编译器在编译时生成。</p>
+<p>类方法的第一个参数是<code>*this*</code>指针， 所有类方法都被转换成第一个参数为所操作的对象的同名方法。</p>
+<p><code>this</code>参数实际上指明了模板类实例的对象的大小，除非用户用有效的类型参数实例化对象，否则编译器将无法得知操作对象的大小。 在这种情况下，如果您将方法定义放在一个单独的cpp文件中并尝试编译它，则对象文件本身将不会与类信息一起生成。 编译不会失败，它将生成对象文件，但它不会为对象文件中的模板类生成任何代码。 这就是为什么链接器无法在对象文件中找到符号而生成失败的原因。 </p>
+<h2 id="也不是不行"><a href="#也不是不行" class="headerlink" title="也不是不行"></a>也不是不行</h2><p>《C++ Template》第六章：组织模板代码有三种方式：</p>
+<ol>
+<li><p> 包含模型（常规写法 将实现写在头文件中）</p>
+</li>
+<li><p>显式实例化（实现写在cpp文件中，使用template class语法进行显式实例化）</p>
+ <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// main.cpp</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;foobar.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    foobar&lt;<span class="hljs-keyword">int</span>&gt; f;<br>    *(f.<span class="hljs-built_in">get</span>()) = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">// foobar.h</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">foobar</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">foobar</span>() : <span class="hljs-built_in">data</span>() &#123;<br>        data = <span class="hljs-keyword">new</span> T;<br>    &#125;<br>    ~<span class="hljs-built_in">foobar</span>() &#123;<br>        <span class="hljs-keyword">delete</span> data;<br>    &#125;<br>    <span class="hljs-function">T* <span class="hljs-title">get</span><span class="hljs-params">()</span></span>; <span class="hljs-comment">// 这个方法是你想写在 cpp 文件里的</span><br><span class="hljs-keyword">private</span>:<br>    T* data;<br>&#125;;<br><br><span class="hljs-comment">// foobar.cpp</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;foobar.h&quot;</span></span><br><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;<br>T* foobar&lt;T&gt;::<span class="hljs-built_in">get</span>() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>-&gt;data;<br>&#125;<br><span class="hljs-keyword">template</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">foobar</span>&lt;</span><span class="hljs-keyword">int</span>&gt;; <span class="hljs-comment">// 显式实例化</span><br></code></pre></td></tr></table></figure></li>
+<li><p>分离模型（使用C++ export关键字声明导出）</p>
+<p> 这个feature叫做Export Template，即外名模板，它的作用在于使得模板代码可依照C/C++语言习惯，将模板声明和实现分开分别放到.h和.cpp文件中，并且可以减少冗长的模板编译时间（否则同一模板实例需要在不同编译单元中分别实例化）。</p>
+<p> Export Template曾经是被写入C++98标准中的，然并卵，很少有主流编译器支持这一特性。在最新的C++11标准中，它已经被除名了，代之使用extern关键字阻止编译器在某编译单元内实例化特定模板。</p>
+<p> subtitle, Export Template的实现原理，摘录自《深入实践C++模板编程》</p>
+<p> 在编译main.cpp时，como的处理与其他编译器并无太大差异，也是生成一个对square<float>的调用等待链接。而在编译square.cpp时，由于square模板声明是一个外名模板，虽然como不会为其生成任何模板实例代码，但是会额外生成一个square.et文件，其中包含对square函数模板实现的索引信息。之后进入一个预链接（prelink）阶段。在此阶段，编译器将根据之前编译时发现的对模板实例的需求，从所有et文件中查找到所需模板实现所在代码文件（cpp文件），并重新编译出所需模板实例。例如例1.8中，在main.cpp中调用了square<float>。那么como将从square.et文件中找到模板square的实现在文件square.cpp中，然后重新编译square.cpp以生成square<float>供链接使用。随后的链接过程和其他C++编译器类似，最终形成链接完整的可执行文件。</p>
+<p> 有点类似于C++编译器处理全局类对象实例构造的过程，它们需要在main函数之前构造好。</p>
+<p> 而现代编译器通常的模板实现方式是在编译单元当场生成实例，随后在链接时从重复实例中随机挑选一个进行链接。然而为了支持Export Template，需要对现有编译器做出巨大改动。从人力时间成本考虑，并且有work around可替代方法，Export Template最终被大部分编译器抛弃了。</p>
+<p> 于是C++的模板库，一定是开源的^ ^</p>
+<p> Export Template被废弃也不奇怪，因为就算是Export Template也不可能把模版函数编译成二进制，只能把实现的源码拷贝到生成的库里，这就让二进制库变成了一半二进制一半还保留源码的怪胎，并且这些Export Template只能在静态链接时被特化生成二进制代码，而无法动态链接时使用它们（除非某个变态的runtime支持JITC++）</p>
+</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/1724036/splitting-templated-c-classes-into-hpp-cpp-files-is-it-possible">stack overflow</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20630104">知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bbsmax.com/A/rV573nLE5P/">实现C++模板类头文件和实现文件分离的方法</a></p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

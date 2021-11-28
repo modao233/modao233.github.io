@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「生活可以更简单, 欢迎来到我的开源世界」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-QPixmap"><span class="toc-text">PyQt5 QPixmap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-QLineEdit"><span class="toc-text">PyQt5 QLineEdit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-QSplitter"><span class="toc-text">PyQt5 QSplitter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-QComboBox"><span class="toc-text">PyQt5 QComboBox</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		PyQt5 小部件 II
+	</div>
+	
+	<div class="page-date">
+		2020-08-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/PyQt5">PyQt5</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="http://zetcode.com/gui/pyqt5/widgets2/">翻译自原文：PyQt5 widgets II</a></p>
+<p>翻译时间 2020 年 8 月 20 日</p>
+<span id="more"></span>
+
+<p>在本章中，我们继续介绍 PyQt5 部件。我们将涵盖<code>QPixmap</code>、<code>QLineEdit</code>、<code>QSplitter</code>、<code>QComboBox</code>。</p>
+<h2 id="PyQt5-QPixmap"><a href="#PyQt5-QPixmap" class="headerlink" title="PyQt5 QPixmap"></a>PyQt5 QPixmap</h2><p><code>QPixmap</code>是用于处理图像的部件之一。它针对在屏幕上显示图像进行了优化。在我们的代码示例中，我们将使用<code>QPixmap</code>在窗口上显示图像。</p>
+<p>pixmap.py</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">from PyQt5.QtWidgets import (QWidget, QHBoxLayout,<br>                             QLabel, QApplication)<br>from PyQt5.QtGui import QPixmap<br>import sys<br>from PyQt5.QtCore import QFileInfo<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br>        hbox = QHBoxLayout(self)<br>        root = QFileInfo(__file__).absolutePath()<br>        pixmap = QPixmap(root + &#x27;/sid.jpg&#x27;)<br><br>        lbl = QLabel(self)<br>        lbl.setPixmap(pixmap)<br><br>        hbox.addWidget(lbl)<br>        self.setLayout(hbox)<br><br>        self.move(300, 200)<br>        self.setWindowTitle(&#x27;Sid&#x27;)<br>        self.show()<br><br><br>def main():<br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>在我们的示例中，我们在窗口上显示图像。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pixmap = QPixmap(&#x27;sid.jpg&#x27;)<br></code></pre></td></tr></table></figure>
+
+<p>我们创建一个<code>QPixmap</code>对象。它将文件的名称作为参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">lbl = QLabel(self)<br>lbl.setPixmap(pixmap)<br></code></pre></td></tr></table></figure>
+
+<p>我们将像素图放入<code>QLabel</code>部件中。</p>
+<h2 id="PyQt5-QLineEdit"><a href="#PyQt5-QLineEdit" class="headerlink" title="PyQt5 QLineEdit"></a>PyQt5 QLineEdit</h2><p><code>QLineEdit</code>是允许输入和编辑单行纯文本的部件。有撤消和重做，剪切和粘贴，以及拖放功能的部件。</p>
+<p>line_edit.py</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">import sys<br>from PyQt5.QtWidgets import (QWidget, QLabel,<br>                             QLineEdit, QApplication)<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br>        self.lbl = QLabel(self)<br>        qle = QLineEdit(self)<br><br>        qle.move(60, 100)<br>        self.lbl.move(60, 40)<br><br>        qle.textChanged[str].connect(self.onChanged)<br><br>        self.setGeometry(300, 300, 350, 250)<br>        self.setWindowTitle(&#x27;QLineEdit&#x27;)<br>        self.show()<br><br>    def onChanged(self, text):<br>        self.lbl.setText(text)<br>        self.lbl.adjustSize()<br><br><br>def main():<br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>此示例显示行编辑小部件和标签。我们在行编辑中键的文本将立即显示在标签小部件中。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">qle = QLineEdit(self)<br></code></pre></td></tr></table></figure>
+
+<p>创建<code>QLineEdit</code>部件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">qle.textChanged[str].connect(self.onChanged)<br></code></pre></td></tr></table></figure>
+
+<p>如果行编辑部件中的文本发生更改，我们调用<code>onChanged</code>方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def onChanged(self, text):<br>    <br>    self.lbl.setText(text)<br>    self.lbl.adjustSize() <br></code></pre></td></tr></table></figure>
+
+<p>在<code>onChanged</code>方法内，我们将键入的文本设置为标签部件的内容。我们调用<code>adjustSize</code>方法将标签的大小调整到文本的长度。</p>
+<p><img src="/PyQt5-widgets-2/image-20200820164758002.png" alt="image-20200820164758002"></p>
+<center>图： QlineEdit</center>
+
+<h2 id="PyQt5-QSplitter"><a href="#PyQt5-QSplitter" class="headerlink" title="PyQt5 QSplitter"></a>PyQt5 QSplitter</h2><p><code>QSplitter</code>允许用户通过拖动子部件之间的边界来控制子部件的大小。在我们的示例中，我们显示了三个<code>QFrame</code>部件被两个拆分器拆分开来。</p>
+<p>splitter.py</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">import sys<br><br>from PyQt5.QtCore import Qt<br>from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QFrame,<br>                             QSplitter, QApplication)<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br><br>        hbox = QHBoxLayout(self)<br><br>        topleft = QFrame(self)<br>        topleft.setFrameShape(QFrame.StyledPanel)<br><br>        topright = QFrame(self)<br>        topright.setFrameShape(QFrame.StyledPanel)<br><br>        bottom = QFrame(self)<br>        bottom.setFrameShape(QFrame.StyledPanel)<br><br>        splitter1 = QSplitter(Qt.Horizontal)<br>        splitter1.addWidget(topleft)<br>        splitter1.addWidget(topright)<br><br>        splitter2 = QSplitter(Qt.Vertical)<br>        splitter2.addWidget(splitter1)<br>        splitter2.addWidget(bottom)<br><br>        hbox.addWidget(splitter2)<br>        self.setLayout(hbox)<br><br>        self.setGeometry(300, 300, 450, 400)<br>        self.setWindowTitle(&#x27;QSplitter&#x27;)<br>        self.show()<br><br><br>def main():<br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>在我们的示例中，我们有三个<code>QFrame</code>部件和两个拆分器。请注意，在某些主题下，拆分器可能不太明显。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">topleft = QFrame(self)<br>topleft.setFrameShape(QFrame.StyledPanel)<br></code></pre></td></tr></table></figure>
+
+<p>我们使用样式框架来查看<code>QFrame</code>部件之间的边界。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">splitter1 = QSplitter(Qt.Horizontal)<br>splitter1.addWidget(topleft)<br>splitter1.addWidget(topright)<br></code></pre></td></tr></table></figure>
+
+<p>我们创建一个<code>QSplitter</code>部件，并在其中添加两个<code>QFrame</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">splitter2 = QSplitter(Qt.Vertical)<br>splitter2.addWidget(splitter1)<br></code></pre></td></tr></table></figure>
+
+<p>我们还可以在拆分器部件里添加拆分器。</p>
+<p><img src="/PyQt5-widgets-2/image-20200820165311876.png" alt="image-20200820165311876"></p>
+<center>图： QSplitter 小部件</center> 
+
+<h2 id="PyQt5-QComboBox"><a href="#PyQt5-QComboBox" class="headerlink" title="PyQt5 QComboBox"></a>PyQt5 QComboBox</h2><p><code>QComboBox</code>是允许用户从选项列表中进行选择的部件。</p>
+<p>combobox.py</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">import sys<br><br>from PyQt5.QtWidgets import (QWidget, QLabel,<br>                             QComboBox, QApplication)<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br><br>        self.lbl = QLabel(&#x27;Ubuntu&#x27;, self)<br><br>        combo = QComboBox(self)<br>        combo.addItem(&#x27;Ubuntu&#x27;)<br>        combo.addItem(&#x27;Mandriva&#x27;)<br>        combo.addItem(&#x27;Fedora&#x27;)<br>        combo.addItem(&#x27;Arch&#x27;)<br>        combo.addItem(&#x27;Gentoo&#x27;)<br><br>        combo.move(50, 50)<br>        self.lbl.move(50, 150)<br><br>        combo.activated[str].connect(self.onActivated)<br><br>        self.setGeometry(300, 300, 450, 400)<br>        self.setWindowTitle(&#x27;QComboBox&#x27;)<br>        self.show()<br><br>    def onActivated(self, text):<br>        self.lbl.setText(text)<br>        self.lbl.adjustSize()<br><br><br>def main():<br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>该示例显示<code>QComboBox</code>和<code>QLabel</code>。组合框包含五个选项的列表。这些是 Linux 发行版的名称。标签部件显示组合框中的选定选项。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">combo = QComboBox(self)<br>combo.addItem(&#x27;Ubuntu&#x27;)<br>combo.addItem(&#x27;Mandriva&#x27;)<br>combo.addItem(&#x27;Fedora&#x27;)<br>combo.addItem(&#x27;Arch&#x27;)<br>combo.addItem(&#x27;Gentoo&#x27;)<br></code></pre></td></tr></table></figure>
+
+<p>我们创建一个包含五个选项的<code>QComboBox</code>部件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">combo.activated[str].connect(self.onActivated) <br></code></pre></td></tr></table></figure>
+
+<p>在项目选择时，我们调用<code>onActivated()</code>方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def onActivated(self, text):<br>  <br>    self.lbl.setText(text)<br>    self.lbl.adjustSize() <br></code></pre></td></tr></table></figure>
+
+<p>在方法内，我们将所选项目的文本设置为标签部件的内容。我们调整标签的大小。</p>
+<p><img src="/PyQt5-widgets-2/image-20200820165603513.png" alt="image-20200820165603513"></p>
+<center>图： QComboBox</center>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>
