@@ -1,0 +1,9 @@
+.group-item{padding:10px 15px;font-size:14px;width:49%;box-sizing:border-box;display:inline-block;vertical-align:top;}
+.group-item img{border-radius:8px;margin:4px 12px 0 0;float:left;width:48px;height:48px;}
+.group-item a{line-height: 28px;}
+.group-item-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display: block;}
+.group-item-meta{font-size:13px;font-weight:200;display:block;word-break:break-all;}
+.links-item{width:32%;margin:1em 0;}
+@media only screen and (max-width:683px) {
+	.links-item{width:49%}
+}
