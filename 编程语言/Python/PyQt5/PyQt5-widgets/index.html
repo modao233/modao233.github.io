@@ -156,7 +156,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def changeTitle(self, state):<br><br>    if state == Qt.Checked:<br>        self.setWindowTitle(&#x27;QCheckBox&#x27;)<br>    else:<br>        self.setWindowTitle(&#x27; &#x27;)<br></code></pre></td></tr></table></figure>
 
 <p>部件的状态将传递给<code>changeTitle()</code>方法的<code>state</code>变量。如果部件选中，我们将设置窗口的标题。否则，我们将空字符串设置为标题栏。</p>
-<p><img src="/PyQt5-widgets/image-20200819174338161.png" alt="image-20200819174338161"></p>
+<p><img src="image-20200819174338161.png" alt="image-20200819174338161"></p>
 <center>图： QCheckBox</center>
 
 <h2 id="切换按钮"><a href="#切换按钮" class="headerlink" title="切换按钮"></a>切换按钮</h2><p>切换按钮<code>QPushButton</code>是处于特殊模式的。这是一个按钮，有两个状态：按下和未按下。我们通过单击这两种状态在两种状态之间切换。</p>
@@ -182,7 +182,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.square.setStyleSheet(&quot;QFrame &#123; background-color: %s &#125;&quot; %<br>    self.col.name())<br></code></pre></td></tr></table></figure>
 
 <p>我们使用样式表来更改背景颜色。样式表使用<code>setStyleSheet()</code>方法进行更新。</p>
-<p><img src="/PyQt5-widgets/image-20200819180417775.png" alt="image-20200819180417775"></p>
+<p><img src="image-20200819180417775.png" alt="image-20200819180417775"></p>
 <center>图：切换按钮</center>
 
 <h2 id="PyQt5-QSliider"><a href="#PyQt5-QSliider" class="headerlink" title="PyQt5 QSliider"></a>PyQt5 QSliider</h2><p><code>QSlider</code>是具有简单滑动条的部件。此滑动条可以来回拉。这样，我们为特定任务选择一个值。有时使用滑块比输入数字或使用旋转框更自然。</p>
@@ -203,8 +203,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">if value == 0:<br>    self.label.setPixmap(QPixmap(&#x27;mute.png&#x27;))<br>...<br></code></pre></td></tr></table></figure>
 
 <p>根据滑块的值，我们将图像设置为标签。在上面的代码中，如果滑块等于零，我们将图像<code>mute.jpg</code>设置为标签。</p>
-<p><img src="/PyQt5-widgets/image-20200819184720870.png" alt="image-20200819184720870"></p>
-<p><img src="/PyQt5-widgets/image-20200819184710483.png" alt="image-20200819184710483"></p>
+<p><img src="image-20200819184720870.png" alt="image-20200819184720870"></p>
+<p><img src="image-20200819184710483.png" alt="image-20200819184710483"></p>
 <center>图： QSlider 小部件</center>
 
 <h2 id="PyQt5-QProgressBar"><a href="#PyQt5-QProgressBar" class="headerlink" title="PyQt5 QProgressBar"></a>PyQt5 QProgressBar</h2><p>进度条是处理冗长任务时使用的部件。它进行动画处理，以便用户知道任务正在进行中。<code>QProgressBar</code>部件在 PyQt5 工具包中提供水平或垂直进度条。程序员可以设置进度条的最小值和最大值。默认值为 0 和 99。</p>
@@ -227,7 +227,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def doAction(self):<br><br>    if self.timer.isActive():<br>        self.timer.stop()<br>        self.btn.setText(&#x27;Start&#x27;)<br><br>    else:<br>        self.timer.start(100, self)<br>        self.btn.setText(&#x27;Stop&#x27;)<br></code></pre></td></tr></table></figure>
 
 <p>在<code>doAction()</code>方法内，我们开始和停止计时器。</p>
-<p><img src="/PyQt5-widgets/image-20200819185436693.png" alt="image-20200819185436693"></p>
+<p><img src="image-20200819185436693.png" alt="image-20200819185436693"></p>
 <center>图：进度栏</center>
 
 <h2 id="PyQt5-QCalendarWidget"><a href="#PyQt5-QCalendarWidget" class="headerlink" title="PyQt5 QCalendarWidget"></a>PyQt5 QCalendarWidget</h2><p><code>QCalendarWidget</code>提供基于月份的日历部件。它允许用户以简单直观的方式选择日期。</p>
@@ -247,7 +247,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def showDate(self, date):<br><br>    self.lbl.setText(date.toString())<br></code></pre></td></tr></table></figure>
 
 <p>我们将 date 对象转换为字符串，并将其设置为标签部件。</p>
-<p><img src="/PyQt5-widgets/image-20200819190053748.png" alt="image-20200819190053748"></p>
+<p><img src="image-20200819190053748.png" alt="image-20200819190053748"></p>
 <p>在 PyQt5 教程的这一部分中，我们介绍了几种常见的部件。</p>
 
 	</div>

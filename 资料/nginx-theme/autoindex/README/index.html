@@ -131,8 +131,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># fulicat.bz<br>server &#123;<br>    listen          80;<br>    server_name     fulicat.bz;<br>    root            D:\websites\fulicat;<br><br>    location / &#123;<br>        index index.html index.htm index.php;<br>    &#125;<br><br>    # autoindex for nginx<br>    location ~ ^(.*)/$ &#123;<br>        autoindex       on;<br>        autoindex_localtime on;<br>        autoindex_exact_size off;<br><br>        #add_before_body /.autoindex/header.html;<br>        add_after_body /.autoindex/footer.html;<br>    &#125;<br><br>    location ~ \.php$ &#123;<br>        fastcgi_pass        127.0.0.1:9000;<br>        fastcgi_index       index.php;<br>        fastcgi_param       SCRIPT_FILENAME  $document_root$fastcgi_script_name;<br>        include             fastcgi_params;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <hr>
-<h1 id="Screenshots"><a href="#Screenshots" class="headerlink" title="Screenshots:"></a>Screenshots:</h1><h3 id="before"><a href="#before" class="headerlink" title="before:"></a>before:</h3><p><img src="https://raw.githubusercontent.com/fulicat/autoindex/master/autoindex_before.png" alt="before"></p>
-<h3 id="after"><a href="#after" class="headerlink" title="after:"></a>after:</h3><p><img src="https://raw.githubusercontent.com/fulicat/autoindex/master/autoindex_after.png" alt="after"></p>
+<h1 id="Screenshots"><a href="#Screenshots" class="headerlink" title="Screenshots:"></a>Screenshots:</h1><h3 id="before"><a href="#before" class="headerlink" title="before:"></a>before:</h3><p><img src="autoindex_before.png" alt="before"></p>
+<h3 id="after"><a href="#after" class="headerlink" title="after:"></a>after:</h3><p><img src="autoindex_after.png" alt="after"></p>
 
 	</div>
 </div>

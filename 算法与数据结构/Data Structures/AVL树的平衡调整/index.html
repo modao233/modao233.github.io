@@ -131,7 +131,7 @@
 <span id="more"></span>
 
 <h2 id="AVL简介"><a href="#AVL简介" class="headerlink" title="AVL简介"></a>AVL简介</h2><p>在BST中搜索一个结点的平均时间复杂度是<code>O(lgn)</code>，最坏情况会出现<code>O(n)</code>，即出现连续的左/右子树：</p>
-<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722110541352.png" alt="image-20200722110541352"></p>
+<p><img src="image-20200722110541352.png" alt="image-20200722110541352"></p>
 <p>这种情况其实就已经是链式存储，无法将树的优势体现出来。为了避免这种情况，我们就要保证这个树随时都是平衡的。当然要求不能那么严格，不需要保证它完全平衡（每个节点的左右子树高度差的绝对值都为0），AVL树就要求的是只要每个节点的左右子树高度差的绝对值不超过1，就可以称作平衡。</p>
 <h2 id="AVL自旋"><a href="#AVL自旋" class="headerlink" title="AVL自旋"></a>AVL自旋</h2><p>**平衡因子(BF)**：每个节点的左右子树的高度差的绝对值</p>
 <p>在AVL树中，插入一个节点之后都会判断是否打破了这个平衡。如果打破了，就需要对树进行调整，让它仍然满足平衡的定义，并且不改变中序遍历的正确性。这步操作就叫做旋转。即，是否需要旋转以及具体的旋转实现都要包含在插入函数里。</p>
@@ -146,7 +146,7 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLTree</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> height;                <span class="hljs-comment">//当前节点的高度。</span><br>    <span class="hljs-keyword">int</span> data;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLTree</span>* <span class="hljs-title">lchild</span>;</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AVLTree</span>* <span class="hljs-title">rchild</span>;</span><br>&#125;Tree,*pTree;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">GetHeight</span><span class="hljs-params">(pTree tree)</span>            <span class="hljs-comment">//获取当前节点的高度。</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(tree == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">return</span> tree-&gt;height;<br>&#125;<br> <br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">IsBalanced</span><span class="hljs-params">(pTree tree)</span>            <span class="hljs-comment">//判断是否平衡。</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> BF = <span class="hljs-built_in">GetHeight</span>(tree-&gt;lchild) - <span class="hljs-built_in">GetHeight</span>(tree-&gt;rchild);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(BF) &lt; <span class="hljs-number">2</span>;<br>&#125;<br> <br></code></pre></td></tr></table></figure>
 
 <h3 id="左左LL"><a href="#左左LL" class="headerlink" title="左左LL"></a>左左LL</h3><p>导致失衡的节点node(1)是节点node(3)的左子树的左孩子，即为LL情况。</p>
-<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722111715724.png" alt="image-20200722111715724"></p>
+<p><img src="image-20200722111715724.png" alt="image-20200722111715724"></p>
 <p>算法步骤：</p>
 <ol>
 <li> 对于节点node(3)，先取它的左孩子node(2)作为临时节点temp；</li>
@@ -158,14 +158,14 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function">pTree <span class="hljs-title">Rotate_LL</span><span class="hljs-params">(pTree tree)</span></span><br><span class="hljs-function"></span>&#123;<br>    pTree temp = tree-&gt;lchild;<br>    tree-&gt;lchild = temp-&gt;rchild;<br>    temp-&gt;rchild = tree;<br> <br>    <span class="hljs-comment">//更新高度,先更新node再更新temp。</span><br>    tree-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(tree-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(tree-&gt;rchild))+<span class="hljs-number">1</span>;<br>    temp-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(temp-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(temp-&gt;rchild))+<span class="hljs-number">1</span>;<br> <br>    <span class="hljs-keyword">return</span> temp;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>调整结果：</p>
-<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722111910017.png" alt="image-20200722111910017"></p>
+<p><img src="image-20200722111910017.png" alt="image-20200722111910017"></p>
 <h3 id="右右RR"><a href="#右右RR" class="headerlink" title="右右RR"></a>右右RR</h3><p>RR型由于和LL型是对称的，所以只需要将LL中的所有左右互换就可以了。</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-function">pTree <span class="hljs-title">Rotate_RR</span><span class="hljs-params">(pTree tree)</span></span><br><span class="hljs-function"></span>&#123;<br>    pTree temp = tree-&gt;rchild;<br>    tree-&gt;rchild = temp-&gt;lchild;<br>    temp-&gt;lchild = tree;<br> <br>    <span class="hljs-comment">//更新高度,先更新node再更新temp。</span><br>    tree-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(tree-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(tree-&gt;rchild))+<span class="hljs-number">1</span>;<br>    temp-&gt;height = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">GetHeight</span>(temp-&gt;lchild),<span class="hljs-built_in">GetHeight</span>(temp-&gt;rchild))+<span class="hljs-number">1</span>;<br> <br>    <span class="hljs-keyword">return</span> temp;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 
 <h3 id="左右LR"><a href="#左右LR" class="headerlink" title="左右LR"></a>左右LR</h3><p>引起失衡的是node节点的左子树的右孩子。</p>
-<p><img src="/AVL%E6%A0%91%E7%9A%84%E5%B9%B3%E8%A1%A1%E8%B0%83%E6%95%B4/image-20200722113201966.png" alt="image-20200722113201966"></p>
+<p><img src="image-20200722113201966.png" alt="image-20200722113201966"></p>
 <p>在节点值为4的节点插入5，是4的右孩子。此时已经失衡。即为LR问题。</p>
 <p>算法步骤：</p>
 <ol>

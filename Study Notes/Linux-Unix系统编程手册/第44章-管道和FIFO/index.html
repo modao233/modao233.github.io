@@ -133,7 +133,7 @@
 
 <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ ls | wc -l<br></code></pre></td></tr></table></figure>
 
-<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210130114347946.png" alt="image-20210130114347946"></p>
+<p><img src="image-20210130114347946.png" alt="image-20210130114347946"></p>
 <p>两个进程并不知道管道的存在，它们只是从标准文件描述符中读取数据和写入数据。</p>
 <p>管道的重要特征：</p>
 <ul>
@@ -163,8 +163,8 @@
 <p>一旦向管道的写入端写入数据之后立即就能从管道的读取端读取数据。</p>
 <p>管道上的read()调用会读取的数据量为所请求的字节数与管道中当前存在的字节数两者之间较小的那个。</p>
 <p>ioctl(fd, FIONREAD, &amp;cnt)调用返回文件描述符fd所引用的管道或FIFO中未读取的字节数。</p>
-<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210130154430225.png" alt="image-20210130154430225"></p>
-<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210130154440374.png" alt="image-20210130154440374"></p>
+<p><img src="image-20210130154430225.png" alt="image-20210130154430225"></p>
+<p><img src="image-20210130154440374.png" alt="image-20210130154440374"></p>
 <p>让父进程和子进程都能够从一个管道中读取和写入数据这种做法并不常见的一个原因是：如果两个进程同时试图从管道中读取数据，那么就无法确定哪个进程会首先读取成功——两个进程竞争数据了。</p>
 <p>管道允许进程间的通信：</p>
 <ul>
@@ -196,7 +196,7 @@
 <p>popen()成功时返回可供stdio库函数使用的<strong>文件流指针</strong>，当发生错误时（如mode不是r或w，创建管道失败，或通过fork()创建子进程失败），popen()会返回NULL并设置errno以标示出发生错误的原因。</p>
 <p>popen()函数<strong>创建了一个管道</strong>，然后创建了一个子进程来执行shell，而shell又创建了一个子进程来执行command字符串。mode参数是一个字符串，它确定调用进程是从管道中读取数据（mode是r）还是将数据写入到管道中（mode是w）。</p>
 <p>mode的取值确定了所执行的命令的标准输出是连接到管道的写入端还是将其标准输入连接到管道的读取端。</p>
-<p><img src="/%E7%AC%AC44%E7%AB%A0-%E7%AE%A1%E9%81%93%E5%92%8CFIFO/image-20210131174301562.png" alt="image-20210131174301562"></p>
+<p><img src="image-20210131174301562.png" alt="image-20210131174301562"></p>
 <p>与使用pipe()创建的管道一样，当从管道中读取数据时，调用进程在command关闭管道的写入端之后会看到文件结束；当向管道写入数据时，如果command已经关闭了管道的读取端，那么调用进程会收到SIGPIPE信号并得到EPIPE错误。</p>
 <p>一旦I/O结束之后，可以使用pclose()函数关闭管道并<strong>等待</strong>子进程中的shell终止。（fclose()函数不等待子进程）。pclose()在成功时会返回子进程中shell的终止状态。如果无法执行shell，那么pclose()会返回一个值就像子进程中的shell通过调用_exit(127)来终止一样。如果发生了其它错误（如无法取得终止状态），pclose()返回-1。</p>
 <blockquote>

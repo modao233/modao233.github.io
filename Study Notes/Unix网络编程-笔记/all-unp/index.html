@@ -155,7 +155,7 @@
 <h3 id="新的通用套接字地址结构"><a href="#新的通用套接字地址结构" class="headerlink" title="新的通用套接字地址结构"></a>新的通用套接字地址结构</h3><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_storage</span>&#123;</span><br>    <span class="hljs-keyword">uint8_t</span>        ss_len;<br>    <span class="hljs-keyword">sa_family_t</span>    ss_family;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><strong>套接字地址结构比较：</strong></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E7%BB%93%E6%9E%84.png" alt="1579573720073"></p>
+<p><img src="%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E7%BB%93%E6%9E%84.png" alt="1579573720073"></p>
 <h2 id="3-3-值-结果参数"><a href="#3-3-值-结果参数" class="headerlink" title="3.3 值-结果参数"></a>3.3 值-结果参数</h2><p>套接字的地址结构总是以引用形式传递给套接字函数的。</p>
 <p>套接字的长度作为一个参数传递给套接字函数时，其传递方式取决于该结构的传递方向。</p>
 <p>套接字地址结构可以在两个方向上传递：</p>
@@ -173,7 +173,7 @@
 <li>  小端字节序：将低序字节存储在起始地址</li>
 <li>  大端字节序：将高序字节存储在起始地址</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F.png" alt="1579582483045"></p>
+<p><img src="%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F.png" alt="1579582483045"></p>
 <p>最高有效位：MSB：most significant bit</p>
 <p>最低有效位：LSB：least significant bit</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">术语“小端”和“大端”表示：多个字节值的哪一端（小端或大端）存储在该值的起始地址（低地址）。<br></code></pre></td></tr></table></figure>
@@ -189,7 +189,7 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-comment">//主机：host(h)</span><br><span class="hljs-comment">//网络：network(n)</span><br><span class="hljs-comment">//短整型：short(s)</span><br><span class="hljs-comment">//长整型：long(l)</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;netinet/in.h&gt;</span></span><br><br><span class="hljs-comment">//返回网络字节序的值</span><br><span class="hljs-function"><span class="hljs-keyword">uint16_t</span> <span class="hljs-title">htons</span><span class="hljs-params">(<span class="hljs-keyword">uint16_t</span> host16bitvalue)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">uint32_t</span> <span class="hljs-title">htonl</span><span class="hljs-params">(<span class="hljs-keyword">uint32_t</span> host32bitvalue)</span></span>;<br><br><span class="hljs-comment">//返回主机字节序的值</span><br><span class="hljs-function"><span class="hljs-keyword">uint16_t</span> <span class="hljs-title">ntohs</span><span class="hljs-params">(<span class="hljs-keyword">uint16_t</span> net16bitvalue)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">uint32_t</span> <span class="hljs-title">ntohl</span><span class="hljs-params">(<span class="hljs-keyword">uint32_t</span> net32bitvalue)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <p>因特网另一个重要的约定是<strong>位序</strong>，IPv4首部前32位的位序如下：</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E4%BD%8D%E5%BA%8F.png" alt="1579584598760"></p>
+<p><img src="%E4%BD%8D%E5%BA%8F.png" alt="1579584598760"></p>
 <h2 id="3-5-字节操作函数"><a href="#3-5-字节操作函数" class="headerlink" title="3.5 字节操作函数"></a>3.5 字节操作函数</h2><p>操作多字节段的函数有<strong>两组</strong>，它们既不对数据作解释，也不假设数据是以空字节符结束的C字符串。</p>
 <ul>
 <li><p>第一组函数源于4.2BSD，名字以b（表示字节）开头</p>
@@ -205,7 +205,7 @@
 <h2 id="3-7-inet-pton和inet-ntop函数"><a href="#3-7-inet-pton和inet-ntop函数" class="headerlink" title="3.7 inet_pton和inet_ntop函数"></a>3.7 inet_pton和inet_ntop函数</h2><p>这两个函数对于IPv4地址和IPv6地址都适用。函数名中p和n分别代表<strong>表达（presentation）</strong>和<strong>数值（numeric）</strong>。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;arpa/inet.h&gt;</span></span><br><br><span class="hljs-comment">//函数执行成功返回1，表达的格式无效返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">inet_pton</span><span class="hljs-params">(<span class="hljs-keyword">int</span> family, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *strptr, <span class="hljs-keyword">void</span> *addptr)</span></span>;<br><br><span class="hljs-comment">//函数执行成功返回指向结果的指针，出错返回NULL</span><br><span class="hljs-function"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *<span class="hljs-title">inet_ntop</span><span class="hljs-params">(<span class="hljs-keyword">int</span> family, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *addptr, <span class="hljs-keyword">char</span> *strptr, <span class="hljs-keyword">size_t</span> len)</span></span>;<br><br><span class="hljs-comment">//family参数可以是AF_INET，也可以是AF_INET6，如果以不被支持的地址族作为family参数，两个函数就都返回一个错误，并将errno置为EAFNOSUPPORT</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="总结5个函数"><a href="#总结5个函数" class="headerlink" title="总结5个函数"></a>总结5个函数</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/3.7%E6%80%BB%E7%BB%93.png" alt="1579590914742"></p>
+<h3 id="总结5个函数"><a href="#总结5个函数" class="headerlink" title="总结5个函数"></a>总结5个函数</h3><p><img src="3.7%E6%80%BB%E7%BB%93.png" alt="1579590914742"></p>
 <h2 id="3-8-sock-ntop和相关函数"><a href="#3-8-sock-ntop和相关函数" class="headerlink" title="3.8 sock_ntop和相关函数"></a>3.8 sock_ntop和相关函数</h2><p>本书编写的协议无关性函数。函数名以sock_开头。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-comment">//成功返回非空指针，出错返回NULL</span><br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">sock_ntop</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct sockaddr * sockaddr, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-comment">//成功返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sock_bind_wild</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">int</span> family)</span></span>;<br><br><span class="hljs-comment">//若地址为同一协议族且相同，则返回0，反则返回非0</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sock_cmp_addr</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct sockaddr *sockaddr1,</span></span><br><span class="hljs-params"><span class="hljs-function">                  <span class="hljs-keyword">const</span> struct sockaddr *sockaddr2, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-comment">//若地址为同一协议族且端口相同，则返回0，反则返回非0</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sock_cmp_addr</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct sockaddr *sockaddr1,</span></span><br><span class="hljs-params"><span class="hljs-function">                  <span class="hljs-keyword">const</span> struct sockaddr *sockaddr2, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-comment">//返回：若为IPv4或IPv6地址则为非负端口号，否则为-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sock_get_port</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct sockaddr *sockaddr, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-comment">//成功返回非空指针，出错返回NULL</span><br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">sock_ntop_host</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct sockaddr *sockaddr, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sock_set_addr</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct sockaddr *sockaddr, </span></span><br><span class="hljs-params"><span class="hljs-function">                   <span class="hljs-keyword">socklen_t</span> addrlen, <span class="hljs-keyword">void</span> *ptr)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sock_set_port</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct sockaddr *sockaddr,</span></span><br><span class="hljs-params"><span class="hljs-function">                   <span class="hljs-keyword">socklen_t</span> addrlen, <span class="hljs-keyword">int</span> port)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sock_set_wild</span><span class="hljs-params">(sturct sockaddr *sockaddr, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br></code></pre></td></tr></table></figure>
 
@@ -214,24 +214,24 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">ssize_t</span> <span class="hljs-title">readn</span><span class="hljs-params">(<span class="hljs-keyword">int</span> filedes, <span class="hljs-keyword">void</span> *buff, <span class="hljs-keyword">size_t</span> nbytes)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">ssize_t</span> <span class="hljs-title">written</span><span class="hljs-params">(<span class="hljs-keyword">int</span> filedes, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *buff, <span class="hljs-keyword">size_t</span> nbytes)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">ssize_t</span> <span class="hljs-title">readline</span><span class="hljs-params">(<span class="hljs-keyword">int</span> filedes, <span class="hljs-keyword">void</span> *buff, <span class="hljs-keyword">size_t</span> maxlen)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <h1 id="第4章-基本TCP套接字编程"><a href="#第4章-基本TCP套接字编程" class="headerlink" title="第4章 基本TCP套接字编程"></a>第4章 基本TCP套接字编程</h1><h2 id="4-1-概述"><a href="#4-1-概述" class="headerlink" title="4.1 概述"></a>4.1 概述</h2><p><strong>TCP客户与服务器进程之间发生的一些典型事件的时间表</strong>:</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.1.png" alt="1579936030580"></p>
+<p><img src="4.1.png" alt="1579936030580"></p>
 <h2 id="4-2-socket函数"><a href="#4-2-socket函数" class="headerlink" title="4.2 socket函数"></a>4.2 socket函数</h2><p>为了执行网络I/O，一个进程必须做的第一件事就是：<strong>调用socket函数，指定期望的通信协议类型</strong>。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">//成功返回一个小的非负整数值，即套接字描述符（sockfd），若出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">socket</span><span class="hljs-params">(<span class="hljs-keyword">int</span> family, <span class="hljs-keyword">int</span> type, <span class="hljs-keyword">int</span> protocol)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>  family参数指明协议族（该参数又被称为协议域），是一个常值。</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_2.png" alt="1579936305279"></p>
+<p><img src="4.2_2.png" alt="1579936305279"></p>
 <ul>
 <li>  type参数指明套接字类型，是一个常值。</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_3.png" alt="1579936393623"></p>
+<p><img src="4.2_3.png" alt="1579936393623"></p>
 <ul>
 <li>  protocol参数设置为对应协议类型的常值。</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_4.png" alt="1579936706600"></p>
+<p><img src="4.2_4.png" alt="1579936706600"></p>
 <p><strong>并非所有套接字family和type的组合都是有效的:</strong></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.3_5.png" alt="1579937354376"></p>
+<p><img src="4.3_5.png" alt="1579937354376"></p>
 <p>AF_前缀表示地址族，PF_前缀表示协议族。</p>
 <p><em>历史想法：单个协议族可以支持多个地址族，PF_值用来创建套接字，而AF_值用于套接字地址结构。实际上，支持多个地址族的协议族从来就未实现过，头文件&lt;sys/socket.h&gt;中为一给定协议定义的PF_值总是与此协议的AF_值相等。</em></p>
 <h2 id="4-3-connect函数"><a href="#4-3-connect函数" class="headerlink" title="4.3 connect函数"></a>4.3 connect函数</h2><p>TCP客户用connect函数来建立与TCP服务器的连接。</p>
@@ -273,7 +273,7 @@
 <li>  TCP客户通常不把IP地址捆绑到它的套接字上，当连接套接字时，<strong>内核根据外出网络接口来选择源IP地址</strong></li>
 <li>  TCP服务器没有捆绑IP地址，<strong>内核就把客户的SYN的目的地址作为服务器的源IP地址</strong></li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.4_2.png" alt="1579959335440"></p>
+<p><img src="4.4_2.png" alt="1579959335440"></p>
 <p>IPv4：设置sin_addr和sin_port</p>
 <p>通配地址由常值INADDR_ANY来指定，其值一般为0，无论主机字节序还是网络字节序值为0都一样，因此使用htonl并非必需。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">servaddr</span>;</span><br>servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br></code></pre></td></tr></table></figure>
@@ -296,9 +296,9 @@
 <li> 未完成连接队列。客户SYN到达服务器但未完成三次握手。</li>
 <li> 已完成连接队列。完成三次握手。</li>
 </ol>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.5_2.png" alt="1579965675751"></p>
+<p><img src="4.5_2.png" alt="1579965675751"></p>
 <p>每当在未完成连接队列中创建一项时，来自监听套接字的参数就复制到即将建立的连接中，连接的创建机制是完成自动的，无需服务器进程插手。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/image-20200605103311037.png" alt="image-20200605103311037"></p>
+<p><img src="image-20200605103311037.png" alt="image-20200605103311037"></p>
 <p>当进程调用accept时，已完成连接队列的队头项返回给进程，如果此队列为空则该进程投入睡眠，直到已完成连接队列放入一项才唤醒。</p>
 <p><strong>关于两个队列的处理，有几点考虑：</strong></p>
 <ul>
@@ -354,7 +354,7 @@
 
 <p>这些函数只在出错时才返回到调用者，否在，控制将被传递给新程序的起始点，通常是main函数。</p>
 <p>execve是内核中的系统调用，其他5个都是调用execve的库函数。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.7_3.png" alt="1580115067308"></p>
+<p><img src="4.7_3.png" alt="1580115067308"></p>
 <ul>
 <li>  上面的三个函数以空指针结束可变数量的参数，下面三个的参数数组argv必须含有一个用于指定其末尾的空指针</li>
 <li>  左列2个函数指定一个filename参数，如果filename参数里不包含斜杆（/），exec将使用当前PATH环境变量把该文件名参数转换为一个路径名</li>
@@ -392,7 +392,7 @@
 </ol>
 <p><strong>POSIX规范允许对未绑定的套接字调用getsockname，该函数应该适合任何已打开的套接字描述符</strong>。</p>
 <p><strong>大多数TCP服务器是并发的，大多数UDP服务器是迭代的</strong>。</p>
-<h1 id="第5章-TCP客户-服务器程序示例"><a href="#第5章-TCP客户-服务器程序示例" class="headerlink" title="第5章 TCP客户/服务器程序示例"></a>第5章 TCP客户/服务器程序示例</h1><h2 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h2><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.1.png" alt="image-20200212163819379"></p>
+<h1 id="第5章-TCP客户-服务器程序示例"><a href="#第5章-TCP客户-服务器程序示例" class="headerlink" title="第5章 TCP客户/服务器程序示例"></a>第5章 TCP客户/服务器程序示例</h1><h2 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h2><p><img src="5.1.png" alt="image-20200212163819379"></p>
 <h2 id="5-6-正常启动"><a href="#5-6-正常启动" class="headerlink" title="5.6 正常启动"></a>5.6 正常启动</h2><p>使用<code>netstat -a</code>检查服务器套接字的状态</p>
 <p>在目前众多较新的 Linux 发行版中，已经移除了 net-tools 套件，ifconfig、route、netstat、arp 等一系列工具均无法使用。</p>
 <p>新的工具<em>ss</em> 代替了 netstat。</p>
@@ -433,8 +433,8 @@
 <h3 id="signal函数"><a href="#signal函数" class="headerlink" title="signal函数"></a>signal函数</h3><p>建立信号处置的POSIX方法就是调用sigaction函数，但是有点复杂，因为该函数的参数之一是我们必须分配并填写的结构。简答些的方法是调用signal函数，其第一个参数是信号名，第二个参数或为指向函数的指针，或为常值SIG_IGN或SIG_DFL。</p>
 <p>signal函数是早于POSIX出现的历史悠久的函数，不同的实现提供不同的信号语义以达成后向兼容。</p>
 <p>POSIX则明确规定了调用sigaction时的信号语义。我们定义了自己的signal函数，它只是调用POSIX的sigaction函数，这就以所期望的POSIX语义提供一个简答的接口。</p>
-<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8.png" alt="image-20200212205315625"></p>
-<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8_2.png" alt="image-20200212210809188"></p>
+<p><img src="5.8.png" alt="image-20200212205315625"></p>
+<p><img src="5.8_2.png" alt="image-20200212210809188"></p>
 <h3 id="POSIX信号语义"><a href="#POSIX信号语义" class="headerlink" title="POSIX信号语义"></a>POSIX信号语义</h3><ul>
 <li>  一旦安装了信号处理函数，便一直安装着（早期系统执行一次便拆除）</li>
 <li>  在一个信号处理函数运行期间，正被递交的信号是阻塞的，而且sa_mask信号集中指定的任何额外信号也被阻塞</li>
@@ -477,7 +477,7 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//处理accept返回EINIT的TCP服务器程序最终（正确）版</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>	<span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>					listenfd, connfd;<br>    <span class="hljs-keyword">pid_t</span>				childpid;<br>    <span class="hljs-keyword">socklen_t</span>			clilen;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>	<span class="hljs-title">cliaddr</span>, <span class="hljs-title">servaddr</span>;</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span>				<span class="hljs-title">sig_chld</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br><br>    listenfd = Socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family      = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port        = htons(SERV_PORT);<br><br>    Bind(listenfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    Listen(listenfd, LISTENQ);<br><br>    Signal(SIGCHLD, sig_chld);	<span class="hljs-comment">/* must call waitpid() */</span><br><br>    <span class="hljs-keyword">for</span> ( ; ; ) &#123;<br>        clilen = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>        <span class="hljs-keyword">if</span> ( (connfd = accept(listenfd, (SA *) &amp;cliaddr, &amp;clilen)) &lt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">if</span> (errno == EINTR)<br>                <span class="hljs-keyword">continue</span>;		<span class="hljs-comment">/* back to for() */</span><br>            <span class="hljs-keyword">else</span><br>                err_sys(<span class="hljs-string">&quot;accept error&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> ( (childpid = Fork()) == <span class="hljs-number">0</span>) &#123;	<span class="hljs-comment">/* child process */</span><br>            Close(listenfd);	<span class="hljs-comment">/* close listening socket */</span><br>            str_echo(connfd);	<span class="hljs-comment">/* process the request */</span><br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>        &#125;<br>        Close(connfd);			<span class="hljs-comment">/* parent closes connected socket */</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="5-11-accept返回前连接中止"><a href="#5-11-accept返回前连接中止" class="headerlink" title="5.11 accept返回前连接中止"></a>5.11 accept返回前连接中止</h2><p>三次握手完成建立连接后，客户TCP却发送RST，服务器端该连接已由TCP排队，在等待accept时RST到达，稍后服务器进程调用accept。</p>
-<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.11.png" alt="image-20200213115625378"></p>
+<p><img src="5.11.png" alt="image-20200213115625378"></p>
 <p>处理连接中止依赖于不同的实现，大多数返回一个错误给服务器，作为accept的返回结果，POSIX指出返回的<strong>errno值必须是ECONNABORTED</strong>（“software caused connection abort”，软件引起的连接中止）。遇到此错误，服务器可以选择忽略它，再次调用accept函数。</p>
 <h2 id="5-12-服务器进程终止"><a href="#5-12-服务器进程终止" class="headerlink" title="5.12 服务器进程终止"></a>5.12 服务器进程终止</h2><p>启动客户/服务器，然后杀死服务器子进程，模拟服务器进程崩溃时的情况：</p>
 <ol>
@@ -517,8 +517,8 @@
 <li>  如果我们忽略SIGTERM信号，我们的服务器将由SIGKILL信号终止</li>
 <li>  如果我们不捕获也不忽略SIGTERM信号，那么起作用的是SIGTERM的默认处置（终止进程），那么服务器将被SIGTERM信号终止，SIGKILL信号不可能再发送给服务器</li>
 </ul>
-<h2 id="5-17-TCP程序例子小结"><a href="#5-17-TCP程序例子小结" class="headerlink" title="5.17 TCP程序例子小结"></a>5.17 TCP程序例子小结</h2><h3 id="从客户角度总结TCP客户-服务器"><a href="#从客户角度总结TCP客户-服务器" class="headerlink" title="从客户角度总结TCP客户/服务器"></a>从客户角度总结TCP客户/服务器</h3><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.17.1.png" alt="image-20200218171852426"></p>
-<h3 id="从服务器角度总结TCP客户-服务器"><a href="#从服务器角度总结TCP客户-服务器" class="headerlink" title="从服务器角度总结TCP客户/服务器"></a>从服务器角度总结TCP客户/服务器</h3><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.17.2.png" alt="image-20200218172026706"></p>
+<h2 id="5-17-TCP程序例子小结"><a href="#5-17-TCP程序例子小结" class="headerlink" title="5.17 TCP程序例子小结"></a>5.17 TCP程序例子小结</h2><h3 id="从客户角度总结TCP客户-服务器"><a href="#从客户角度总结TCP客户-服务器" class="headerlink" title="从客户角度总结TCP客户/服务器"></a>从客户角度总结TCP客户/服务器</h3><p><img src="5.17.1.png" alt="image-20200218171852426"></p>
+<h3 id="从服务器角度总结TCP客户-服务器"><a href="#从服务器角度总结TCP客户-服务器" class="headerlink" title="从服务器角度总结TCP客户/服务器"></a>从服务器角度总结TCP客户/服务器</h3><p><img src="5.17.2.png" alt="image-20200218172026706"></p>
 <h2 id="5-18-数据格式"><a href="#5-18-数据格式" class="headerlink" title="5.18 数据格式"></a>5.18 数据格式</h2><p>传递二进制数据可能存在的问题：</p>
 <ol>
 <li> 不同的实现以不同的格式存储二进制数，大端字节序和小端字节序</li>
@@ -559,21 +559,21 @@
 <li> 把数据从内核缓冲区复制到应用进程缓冲区</li>
 </ol>
 <h3 id="6-2-1-阻塞式I-O阻塞"><a href="#6-2-1-阻塞式I-O阻塞" class="headerlink" title="6.2.1 阻塞式I/O阻塞"></a>6.2.1 阻塞式I/O阻塞</h3><p>最流行的I/O模型是阻塞式I/O模型。默认情况下，所有套接字都是阻塞的。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.1.1.png" alt="image-20200220142525476"></p>
+<p><img src="6.1.1.png" alt="image-20200220142525476"></p>
 <h3 id="6-2-2-非阻塞式I-O模型"><a href="#6-2-2-非阻塞式I-O模型" class="headerlink" title="6.2.2 非阻塞式I/O模型"></a>6.2.2 非阻塞式I/O模型</h3><p>进程把一个套接字设置为非阻塞是在通知内核：当所请求的I/O操作非把本进程投入睡眠才能完成时，不要把本进程投入睡眠，而是返回一个错误。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.2.png" alt="image-20200220143123892"></p>
+<p><img src="6.2.2.png" alt="image-20200220143123892"></p>
 <p>**轮询（polling)**：应用进程持续轮询内核，以查看某个操作是否就绪，这样做往往耗费大量CPU时间。</p>
 <h3 id="6-2-3-I-O复用模型"><a href="#6-2-3-I-O复用模型" class="headerlink" title="6.2.3 I/O复用模型"></a>6.2.3 I/O复用模型</h3><p>通过调用select或poll，阻塞在这两个系统调用中的某一个之上，而不是阻塞在真正的I/O调用上</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.3.png" alt="image-20200220211237813"></p>
+<p><img src="6.2.3.png" alt="image-20200220211237813"></p>
 <p>I/O复用需要两个系统调用</p>
 <p>优势：可以等待多个描述符就绪</p>
 <h3 id="6-2-4-信号驱动式I-O模型"><a href="#6-2-4-信号驱动式I-O模型" class="headerlink" title="6.2.4 信号驱动式I/O模型"></a>6.2.4 信号驱动式I/O模型</h3><p>使用信号，让内核在描述符就绪时发送SIGIO信号通知我们，这种模式为信号驱动式I/O。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.4.png" alt="image-20200220211730610"></p>
+<p><img src="6.2.4.png" alt="image-20200220211730610"></p>
 <p>优势：等待数据报到达期间进程不被阻塞，主循环可以继续执行，只要等待来自信号处理函数的通知：既可以是数据已经准备好被处理，也可以是数据报已准备好被读取</p>
 <h3 id="6-2-5-异步I-O模型"><a href="#6-2-5-异步I-O模型" class="headerlink" title="6.2.5 异步I/O模型"></a>6.2.5 异步I/O模型</h3><p>异步I/O由POSIX规范定义。</p>
 <p>异步函数的工作机制是：告知内核启动某个操作，并让内核在整个操作（包括将数据从内核复制到我们自己的缓冲区）完成后通知我们。</p>
 <p>与信号驱动模型的主要区别在于：信号驱动式I/O是由内核通知我们何时可以启动一个I/O操作，而异步I/O模型是由内核通知我们I/O操作何时完成。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.5.png" alt="image-20200220222137004"></p>
+<p><img src="6.2.5.png" alt="image-20200220222137004"></p>
 <p>POSIX异步函数以aio_或lio_开头。</p>
 <p>这里调用aio_read函数，给内核传递描述符、缓冲区指针、缓冲区大小（与read相同的三个参数）和文件偏移（与lseek类似），并告诉内核当整个操作完成时如何通知我们。该系统调用立即返回，而且在等待I/O完成期间，进程不被阻塞。</p>
 <h3 id="6-2-6-各种I-O模型的比较"><a href="#6-2-6-各种I-O模型的比较" class="headerlink" title="6.2.6 各种I/O模型的比较"></a>6.2.6 各种I/O模型的比较</h3><p>POSIX定义：</p>
@@ -583,7 +583,7 @@
 <li><p>  异步I/O操作：不导致请求进程阻塞</p>
 </li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.6.png" alt="image-20200220222618152"></p>
+<p><img src="6.2.6.png" alt="image-20200220222618152"></p>
 <p>前4种模型都是同步I/O模型，因为其中真正的I/O操作（recvfrom）将进程阻塞。只有异步I/O模型与POSIX定义的异步I/O相匹配。</p>
 <h2 id="6-3-select函数"><a href="#6-3-select函数" class="headerlink" title="6.3 select函数"></a>6.3 select函数</h2><p>该函数允许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒它。</p>
 <p>select函数告知内核对哪些描述符（就读、写或异常条件）感兴趣以及等待多长时间。描述符不局限于套接字，任何描述符都可以使用select来测试。</p>
@@ -645,13 +645,13 @@
 <p>  举例：当数据少于64字节时，应用程序没有任何有效工作可做，则把接收低水位标记设置为64，以防少于64字节的数据准备好时select唤醒程序。</p>
 <p>  任何UDP套接字只要其发送低水位标记小于等于发送缓冲区大小（默认关系）就总是可写的，这是因为UDP套接字不需要连接。</p>
 </blockquote>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200805213132250.png" alt="image-20200805213132250"></p>
+<p><img src="image-20200805213132250.png" alt="image-20200805213132250"></p>
 <h3 id="6-3-2-select的最大描述符数"><a href="#6-3-2-select的最大描述符数" class="headerlink" title="6.3.2 select的最大描述符数"></a>6.3.2 select的最大描述符数</h3><p>最初设计select时，操作系统通常对每个进程可用的最大描述符数设置了上限，select就使用了相同的限制。</p>
 <p>当今的Unix版本允许每个进程使用事实上无数目限制的描述符（往往仅受限于内存总量和管理性限制）。</p>
 <p>表面上可以通过将FD_SETSIZE定义为某个更大的值，实际上却行不通，首先它是内核集成的，修改后需要重新编译内核，其次可能存在扩展性问题。</p>
 <p>有些应用程序开始改用poll代替select，典型例子是需要复选大量描述符的事件驱动型服务器程序，所需描述符量超过1024个</p>
 <h2 id="6-4-str-cli函数（修订版）"><a href="#6-4-str-cli函数（修订版）" class="headerlink" title="6.4 str_cli函数（修订版）"></a>6.4 str_cli函数（修订版）</h2><p>原先版本可能阻塞于fgets调用，新版改为阻塞于select调用，或是等待标准输入可读，或是等待套接字可读。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200805220011258.png" alt="image-20200805220011258"></p>
+<p><img src="image-20200805220011258.png" alt="image-20200805220011258"></p>
 <p>客户的套接字上的三个条件处理如下：</p>
 <ul>
 <li>  如果对端TCP发送数据，那么该套接字变为可读，并且read返回一个大于0的值（读入数据的字节数）</li>
@@ -662,9 +662,9 @@
 
 <h2 id="6-5-批量输入"><a href="#6-5-批量输入" class="headerlink" title="6.5 批量输入"></a>6.5 批量输入</h2><p>当客户端使用停-等方式工作时，虽然对交互式使用是合适的，但是却不能实现对通信管道的高效利用。</p>
 <p>如果把客户与服务器之间的网络作为全双工管道考虑，请求从客户想服务器发送，应答从服务器向客户发送，则停-等方式如下图：</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806100510176.png" alt="image-20200806100510176"></p>
+<p><img src="image-20200806100510176.png" alt="image-20200806100510176"></p>
 <p>在Unix的shell环境下，很容易实现重定向标准输入和标准输出，从而可以批量运行客户。当我们把标准输入和标准输出重定向到文件来运行新的客户程序时，却发现输出文件总是小于输入文件（对于回射服务器而言理应相等）。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806101504809.png" alt="image-20200806101504809"></p>
+<p><img src="image-20200806101504809.png" alt="image-20200806101504809"></p>
 <p>当运行一个客户程序时，标准输入的EOF同时意味着完成从套接字的读入。批量运行客户程序时，客户程序写完请求时，并不能立即关闭连接，因为管道中还有其它的请求和应答，但是修订版的str_cli函数对标准输入EOF的处理却是返回到main函数，而main函数随后终止。</p>
 <p>我们需要的是一种关闭TCP连接其中一半的方法，即给服务器发送一个FIN告诉它我们已经完成了数据发送，但仍然保持套接字描述符打开以便读取。由shutdown函数完成。</p>
 <p>为了提升性能而引入的缓冲机制增加了网络应用程序的复杂性：</p>
@@ -679,7 +679,7 @@
 <li>  close把描述符引用计数减1，仅在计数变为0时才关闭套接字。shutdown可以不管引用计数就激发TCP的正常连接终止序列</li>
 <li>  close终止读和写两个方向的数据传送。既然TCP连接是全双工的，有时候我们需要告知对端已经完成数据发送，即使对端仍有数据要发送给我们。</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806105214830.png" alt="image-20200806105214830"></p>
+<p><img src="image-20200806105214830.png" alt="image-20200806105214830"></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">//成功返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">shutdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">int</span> howto)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <p>函数行为依赖于<code>howto</code>参数的值：</p>
@@ -727,7 +727,7 @@
 <p>poll提供的功能与select类似，不过在处理流设备时，它能够提供额外的信息。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;poll.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pollfd</span>&#123;</span><br>    <span class="hljs-keyword">int</span>		fd;<br>    <span class="hljs-keyword">short</span>	events;	<span class="hljs-comment">//指定要测试的条件</span><br>    <span class="hljs-keyword">short</span>	revents;<span class="hljs-comment">//返回描述符的状态</span><br>&#125;<br><span class="hljs-comment">//若有就绪描述符返回其数目，超时返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">poll</span><span class="hljs-params">(struct pollfd *fdarray, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> nfds, <span class="hljs-keyword">int</span> timeout)</span></span>;<br></code></pre></td></tr></table></figure>
 
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20210122225638690.png" alt="image-20210122225638690"></p>
+<p><img src="image-20210122225638690.png" alt="image-20210122225638690"></p>
 <p>图分为三个部分：</p>
 <ul>
 <li>  第一部分：处理输入的四个常值</li>
@@ -745,7 +745,7 @@
 <li>  非阻塞connect的完成被认为是使相应套接字可写</li>
 </ul>
 <p>参数nfds指定结构数组中元素的个数；timeout参数指定poll函数返回前等待多长时间，它是一个指定应等待毫秒数的正值。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806153002725.png" alt="image-20200806153002725"></p>
+<p><img src="image-20200806153002725.png" alt="image-20200806153002725"></p>
 <blockquote>
 <p>  INFTIM常值被定义为一个负值，如果系统不能提供毫秒级精度的定时器，该值就向上舍入到最接近的支持值。</p>
 </blockquote>
@@ -799,7 +799,7 @@
 <li>  NFS：网络文件系统</li>
 <li>  SNMP：简单网络管理协议</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815203716894.png" alt="image-20200815203716894"></p>
+<p><img src="image-20200815203716894.png" alt="image-20200815203716894"></p>
 <h2 id="8-2-recvfrom和sendto函数"><a href="#8-2-recvfrom和sendto函数" class="headerlink" title="8.2 recvfrom和sendto函数"></a>8.2 recvfrom和sendto函数</h2><p>类似于标准的read和write函数，不过需要三个额外的参数：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">//成功则均返回读或写的字节数，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">ssize_t</span> <span class="hljs-title">recvfrom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">void</span> *buff, <span class="hljs-keyword">size_t</span> nbytes, <span class="hljs-keyword">int</span> flags,</span></span><br><span class="hljs-params"><span class="hljs-function">                struct sockadd *from, <span class="hljs-keyword">socklen_t</span> *addrlen)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">ssize_t</span> <span class="hljs-title">sendto</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">void</span> *buff, <span class="hljs-keyword">size_t</span> nbytes, <span class="hljs-keyword">int</span> flags,</span></span><br><span class="hljs-params"><span class="hljs-function">              <span class="hljs-keyword">const</span> struct sockaddr *to, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br></code></pre></td></tr></table></figure>
 
@@ -819,7 +819,7 @@
 </blockquote>
 <p><strong>写一个长度为0的数据报是可行的。</strong>在UDP情况下，会形成一个只包含IP首部和UDP首部而没有数据的IP数据报，即recvfrom返回0值是可接受的。</p>
 <p>UDP是无连接的，不存在关闭连接之类的事情。</p>
-<h2 id="8-3-UDP回射服务器程序：main函数"><a href="#8-3-UDP回射服务器程序：main函数" class="headerlink" title="8.3 UDP回射服务器程序：main函数"></a>8.3 UDP回射服务器程序：main函数</h2><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815211416476.png" alt="image-20200815211416476"></p>
+<h2 id="8-3-UDP回射服务器程序：main函数"><a href="#8-3-UDP回射服务器程序：main函数" class="headerlink" title="8.3 UDP回射服务器程序：main函数"></a>8.3 UDP回射服务器程序：main函数</h2><p><img src="image-20200815211416476.png" alt="image-20200815211416476"></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                    sockfd;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>     <span class="hljs-title">servaddr</span>, <span class="hljs-title">cliaddr</span>;</span><br><br>    <span class="hljs-comment">//通过指定SOCK_DGRAM，创建一个UDP套接字</span><br>    sockfd = Socket(AF_INET, SOCK_DGRAM, <span class="hljs-number">0</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family      = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port        = htons(SERV_PORT);<br><br>    Bind(sockfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    dg_echo(sockfd, (SA *) &amp;cliaddr, <span class="hljs-keyword">sizeof</span>(cliaddr));<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="8-4-UDP回收服务器程序：dg-echo函数"><a href="#8-4-UDP回收服务器程序：dg-echo函数" class="headerlink" title="8.4 UDP回收服务器程序：dg_echo函数"></a>8.4 UDP回收服务器程序：dg_echo函数</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">dg_echo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, SA *pcliaddr, <span class="hljs-keyword">socklen_t</span> clilen)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>            n;<br>    <span class="hljs-keyword">socklen_t</span>      len;<br>    <span class="hljs-keyword">char</span>           mesg[MAXLINE];<br><br>    <span class="hljs-comment">//迭代服务器，永不终止，无连接</span><br>    <span class="hljs-keyword">for</span> ( ; ; ) &#123;<br>        len = clilen;<br>        n = Recvfrom(sockfd, mesg, MAXLINE, <span class="hljs-number">0</span>, pcliaddr, &amp;len);<br><br>        Sendto(sockfd, mesg, n, <span class="hljs-number">0</span>, pcliaddr, len);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -828,8 +828,8 @@
 <blockquote>
 <p>  dg_echo函数是协议无关的：调用者分配一个正确大小的套接字地址结构，将其地址指针和大小传参给dg_echo，dg_echo绝不查看该结构的内容，而是把一个指向该结构的指针传递给recvfrom和sendto。</p>
 </blockquote>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815212534596.png" alt="image-20200815212534596"></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815212550160.png" alt="image-20200815212550160"></p>
+<p><img src="image-20200815212534596.png" alt="image-20200815212534596"></p>
+<p><img src="image-20200815212550160.png" alt="image-20200815212550160"></p>
 <h2 id="8-5-UDP回射客户程序：main函数"><a href="#8-5-UDP回射客户程序：main函数" class="headerlink" title="8.5 UDP回射客户程序：main函数"></a>8.5 UDP回射客户程序：main函数</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                    sockfd;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>     <span class="hljs-title">servaddr</span>;</span><br><br>    <span class="hljs-keyword">if</span> (argc != <span class="hljs-number">2</span>)<br>        err_quit(<span class="hljs-string">&quot;usage: udpcli &lt;IPaddress&gt;&quot;</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family = AF_INET;<br>    servaddr.sin_port = htons(SERV_PORT);<br>    Inet_pton(AF_INET, argv[<span class="hljs-number">1</span>], &amp;servaddr.sin_addr);<br><br>    sockfd = Socket(AF_INET, SOCK_DGRAM, <span class="hljs-number">0</span>);<br><br>    dg_cli(<span class="hljs-built_in">stdin</span>, sockfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="8-6-UDP回射客户程序：dg-cli函数"><a href="#8-6-UDP回射客户程序：dg-cli函数" class="headerlink" title="8.6 UDP回射客户程序：dg_cli函数"></a>8.6 UDP回射客户程序：dg_cli函数</h2><p>dg_cli函数也是协议无关的，不过main函数都是协议相关的。</p>
@@ -857,12 +857,12 @@
 <blockquote>
 <p>  只要SO_BSDCOMPAT套记者选项没有开启，Linux甚至对未连接的套接字也返回大多数ICMP “destination unreachable”错误。</p>
 </blockquote>
-<h2 id="8-10-UDP程序例子小结"><a href="#8-10-UDP程序例子小结" class="headerlink" title="8.10 UDP程序例子小结"></a>8.10 UDP程序例子小结</h2><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816101704301.png" alt="image-20200816101704301"></p>
+<h2 id="8-10-UDP程序例子小结"><a href="#8-10-UDP程序例子小结" class="headerlink" title="8.10 UDP程序例子小结"></a>8.10 UDP程序例子小结</h2><p><img src="image-20200816101704301.png" alt="image-20200816101704301"></p>
 <ul>
 <li>  客户临时端口是在第一次调用sendto时一次性选定，不能改变</li>
 <li>  客户的IP地址可以随客户发送的每个UDP数据报而变动</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816101727333.png" alt="image-20200816101727333"></p>
+<p><img src="image-20200816101727333.png" alt="image-20200816101727333"></p>
 <ul>
 <li>  对于UDP套接字来是，目的IP地址只能通过为IPv4设置IP_RECVDSTADDR套接字选项（或为IPv6设置IPV6_PKTINFO套接字选项）然后调用recvmsg取得。</li>
 </ul>
@@ -890,8 +890,8 @@
 <li><p>  已连接UDP套接字的异步错误会返回给它们所在的进程，而未连接UDP套接字不接受任何异步错误</p>
 </li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816103351241.png" alt="image-20200816103351241"></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816103527775.png" alt="image-20200816103527775"></p>
+<p><img src="image-20200816103351241.png" alt="image-20200816103351241"></p>
+<p><img src="image-20200816103527775.png" alt="image-20200816103527775"></p>
 <p>UDP客户进程或服务进程只在使用自己的UDP套接字与确定的唯一对端进行通信时，才可以调用connect，调用connect的通常是UDP客户，不过有些网络应用中的UDP服务器会与单个客户长时间通信（如TFTP），这种情况下，客户和服务器都可能调用connect。</p>
 <h3 id="8-11-1-给一个UDP套接字多次调用connect"><a href="#8-11-1-给一个UDP套接字多次调用connect" class="headerlink" title="8.11.1 给一个UDP套接字多次调用connect"></a>8.11.1 给一个UDP套接字多次调用connect</h3><p>一个已连接UDP套接字的进程可由下列两个目的再次调用connect：</p>
 <ul>

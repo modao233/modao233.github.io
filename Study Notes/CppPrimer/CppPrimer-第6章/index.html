@@ -223,7 +223,7 @@
 </ol>
 <p>C++还有一种特殊的形参类型（即省略符），可以用它传递可变数量的实参，一般只用于与C函数交互的接口程序。</p>
 <p>如果函数的实参数量未知但是全部实参的类型都相同，我们可以使用initializer_list类型的形参，initializer_list是一种标准库类型，用于表示某种特定类型的值的数组，定义在同名头文件中。</p>
-<p><img src="/CppPrimer-%E7%AC%AC6%E7%AB%A0/image-20200617175355468.png" alt="image-20200617175355468"></p>
+<p><img src="image-20200617175355468.png" alt="image-20200617175355468"></p>
 <p>和vector一样是模板类型，但是initializer_list对象中的元素永远是常量值，无法改变。如果想向initial</p>
 <h2 id="6-3-返回类型和return语句"><a href="#6-3-返回类型和return语句" class="headerlink" title="6.3 返回类型和return语句"></a>6.3 返回类型和return语句</h2><p>return语句终止当前正在执行的函数并将控制权返回到调用该函数的地方。</p>
 <h3 id="6-3-1-无返回值函数"><a href="#6-3-1-无返回值函数" class="headerlink" title="6.3.1 无返回值函数"></a>6.3.1 无返回值函数</h3><p>没有返回值的return语句只能用在返回类型是void的函数中。返回void的函数不要求一定要有return语句，因为在这类函数的最后会隐式地执行return。</p>

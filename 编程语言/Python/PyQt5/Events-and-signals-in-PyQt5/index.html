@@ -159,7 +159,7 @@
 
 <p>在这里，我们将滑块的<code>valueChanged</code>信号连接到<code>lcd</code>数字的<code>display</code>插槽。</p>
 <p><strong>发送方是发送信号的对象。接收器是接收信号的对象。插槽是响应信号的方法。</strong></p>
-<p><img src="/Events-and-signals-in-PyQt5/image-20200819141726404.png" alt="image-20200819141726404"></p>
+<p><img src="image-20200819141726404.png" alt="image-20200819141726404"></p>
 <center>图：信号和插槽</center>
 
 <h2 id="PyQt5-重新实现事件处理程序"><a href="#PyQt5-重新实现事件处理程序" class="headerlink" title="PyQt5 重新实现事件处理程序"></a>PyQt5 重新实现事件处理程序</h2><p>PyQt5 中的事件通常由重新实现的事件处理程序进行处理。</p>
@@ -184,7 +184,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def mouseMoveEvent(self, e):<br><br>    x = e.x()<br>    y = e.y()<br><br>    text = f&#x27;x: &#123;x&#125;,  y: &#123;y&#125;&#x27;<br>    self.label.setText(text)<br></code></pre></td></tr></table></figure>
 
 <p><code>e</code>是事件对象，它包含有关触发事件的数据。在我们的案例中，<code>e</code>是鼠标移动事件。使用<code>x()</code>和<code>y()</code>方法，我们确定鼠标指针的 x 和 y 坐标。我们生成字符串并设置为标签部件的内容。</p>
-<p><img src="/Events-and-signals-in-PyQt5/image-20200819142642009.png" alt="image-20200819142642009"></p>
+<p><img src="image-20200819142642009.png" alt="image-20200819142642009"></p>
 <center>图：事件对象</center> 
 
 <h2 id="PyQt5-事件发送者"><a href="#PyQt5-事件发送者" class="headerlink" title="PyQt5 事件发送者"></a>PyQt5 事件发送者</h2><p>有时，知道哪个部件是信号的发送者是很方便的。为此，PyQt5 具有<code>sender</code>方法。</p>
@@ -198,7 +198,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def buttonClicked(self):<br><br>    sender = self.sender()<br>    self.statusBar().showMessage(sender.text() + &#x27; was pressed&#x27;)<br></code></pre></td></tr></table></figure>
 
 <p>我们通过调用<code>sender()</code>方法确定信号源。在应用程序的状态栏中，我们显示按下按钮的标签。</p>
-<p><img src="/Events-and-signals-in-PyQt5/image-20200819143108993.png" alt="image-20200819143108993"></p>
+<p><img src="image-20200819143108993.png" alt="image-20200819143108993"></p>
 <center>图：事件发送者</center>
 
 <h2 id="PyQt5-发射信号"><a href="#PyQt5-发射信号" class="headerlink" title="PyQt5 发射信号"></a>PyQt5 发射信号</h2><p>从<code>QObject</code>中创建的对象可以发出信号。下面的示例演示我们如何发出自定义信号。</p>

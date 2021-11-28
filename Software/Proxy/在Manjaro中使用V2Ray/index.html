@@ -156,9 +156,9 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">systemctl enable v2ray  #开机自启v2ray<br>systemctl start v2ray   #启动v2ray<br></code></pre></td></tr></table></figure>
 
 <h2 id="配置Socks代理"><a href="#配置Socks代理" class="headerlink" title="配置Socks代理"></a>配置Socks代理</h2><p>打开系统设置，进入网络设置，配置如下图：</p>
-<p><img src="/%E5%9C%A8Manjaro%E4%B8%AD%E4%BD%BF%E7%94%A8V2Ray/v2ray-manual-socks.png" alt="img"><em>System Manual Proxy</em></p>
+<p><img src="v2ray-manual-socks.png" alt="img"><em>System Manual Proxy</em></p>
 <p>如果仅需要浏览器代理，可以下载<code>SwitchyOmega</code>浏览器插件，最简配置如下：</p>
-<p><img src="/%E5%9C%A8Manjaro%E4%B8%AD%E4%BD%BF%E7%94%A8V2Ray/switchyomega.png" alt="img"><em>SwitchyOmega Settings</em></p>
+<p><img src="switchyomega.png" alt="img"><em>SwitchyOmega Settings</em></p>
 <h2 id="配置shell代理"><a href="#配置shell代理" class="headerlink" title="配置shell代理"></a>配置shell代理</h2><p>为了解决终端下载被墙服务器的安装包失败的问题，可以考虑代理终端。</p>
 <h3 id="临时代理"><a href="#临时代理" class="headerlink" title="临时代理"></a>临时代理</h3><p>只需要http代理则输入命令<code>export http_proxy=http://proxyAddress:port</code>； 全部协议代理则输入命令<code>export ALL_PROXY=http://proxyAddress:port</code>。 临时代理仅对当前环境有效，重启即失效。</p>
 <h3 id="长期代理"><a href="#长期代理" class="headerlink" title="长期代理"></a>长期代理</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">sudo gedit ~/.bashrc    #编辑.bashrc文件<br></code></pre></td></tr></table></figure>
@@ -174,9 +174,9 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">genpac --format=pac -o auto.pac --pac-proxy=&quot;SOCKS5 127.0.0.1:1080&quot;<br></code></pre></td></tr></table></figure>
 
 <h3 id="Firefox-PAC代理设置"><a href="#Firefox-PAC代理设置" class="headerlink" title="Firefox PAC代理设置"></a>Firefox PAC代理设置</h3><p>PAC文件的绝对路径为<code>file:///etc/v2ray/auto.pac</code>，如下图</p>
-<p><img src="/%E5%9C%A8Manjaro%E4%B8%AD%E4%BD%BF%E7%94%A8V2Ray/firefox-pac.png" alt="img"><em>Firefox PAC Manual Proxy</em></p>
+<p><img src="firefox-pac.png" alt="img"><em>Firefox PAC Manual Proxy</em></p>
 <h3 id="系统PAC代理设置"><a href="#系统PAC代理设置" class="headerlink" title="系统PAC代理设置"></a>系统PAC代理设置</h3><p>以<code>gnome</code>桌面为例，PAC文件的绝对路径为<code>file:///etc/v2ray/auto.pac</code>；</p>
-<p><img src="/%E5%9C%A8Manjaro%E4%B8%AD%E4%BD%BF%E7%94%A8V2Ray/v2ray-auto-pac.png" alt="img"><em>PAC Automatic Proxy</em></p>
+<p><img src="v2ray-auto-pac.png" alt="img"><em>PAC Automatic Proxy</em></p>
 <p>全局代理也可以通过以下命令来设置:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">gsettings set org.gnome.system.proxy autoconfig-url file:///etc/v2ray/auto.pac<br>gsettings set org.gnome.system.proxy mode &#x27;auto&#x27;<br><br>gsettings set org.gnome.system.proxy.socks host &#x27;127.0.0.1&#x27;<br>gsettings set org.gnome.system.proxy.socks port 1088<br></code></pre></td></tr></table></figure>
 

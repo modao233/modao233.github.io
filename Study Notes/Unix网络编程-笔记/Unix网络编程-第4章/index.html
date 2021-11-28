@@ -138,24 +138,24 @@
 <span id="more"></span>
 
 <h2 id="4-1-概述"><a href="#4-1-概述" class="headerlink" title="4.1 概述"></a>4.1 概述</h2><p><strong>TCP客户与服务器进程之间发生的一些典型事件的时间表</strong>:</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.1.png" alt="1579936030580"></p>
+<p><img src="4.1.png" alt="1579936030580"></p>
 <h2 id="4-2-socket函数"><a href="#4-2-socket函数" class="headerlink" title="4.2 socket函数"></a>4.2 socket函数</h2><p>为了执行网络I/O，一个进程必须做的第一件事就是：<strong>调用socket函数，指定期望的通信协议类型</strong>。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">//成功返回一个小的非负整数值，即套接字描述符（sockfd），若出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">socket</span><span class="hljs-params">(<span class="hljs-keyword">int</span> family, <span class="hljs-keyword">int</span> type, <span class="hljs-keyword">int</span> protocol)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>  family参数指明协议族（该参数又被称为协议域），是一个常值。</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_2.png" alt="1579936305279"></p>
+<p><img src="4.2_2.png" alt="1579936305279"></p>
 <ul>
 <li>  type参数指明套接字类型，是一个常值。</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_3.png" alt="1579936393623"></p>
+<p><img src="4.2_3.png" alt="1579936393623"></p>
 <ul>
 <li>  protocol参数设置为对应协议类型的常值。</li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_4.png" alt="1579936706600"></p>
+<p><img src="4.2_4.png" alt="1579936706600"></p>
 <p><strong>并非所有套接字family和type的组合都是有效的:</strong></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.3_5.png" alt="1579937354376"></p>
+<p><img src="4.3_5.png" alt="1579937354376"></p>
 <p>AF_前缀表示地址族，PF_前缀表示协议族。</p>
 <p><em>历史想法：单个协议族可以支持多个地址族，PF_值用来创建套接字，而AF_值用于套接字地址结构。实际上，支持多个地址族的协议族从来就未实现过，头文件&lt;sys/socket.h&gt;中为一给定协议定义的PF_值总是与此协议的AF_值相等。</em></p>
 <h2 id="4-3-connect函数"><a href="#4-3-connect函数" class="headerlink" title="4.3 connect函数"></a>4.3 connect函数</h2><p>TCP客户用connect函数来建立与TCP服务器的连接。</p>
@@ -197,7 +197,7 @@
 <li>  TCP客户通常不把IP地址捆绑到它的套接字上，当连接套接字时，<strong>内核根据外出网络接口来选择源IP地址</strong></li>
 <li>  TCP服务器没有捆绑IP地址，<strong>内核就把客户的SYN的目的地址作为服务器的源IP地址</strong></li>
 </ul>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.4_2.png" alt="1579959335440"></p>
+<p><img src="4.4_2.png" alt="1579959335440"></p>
 <p>IPv4：设置sin_addr和sin_port</p>
 <p>通配地址由常值INADDR_ANY来指定，其值一般为0，无论主机字节序还是网络字节序值为0都一样，因此使用htonl并非必需。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs C"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">servaddr</span>;</span><br>servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br></code></pre></td></tr></table></figure>
@@ -220,9 +220,9 @@
 <li> 未完成连接队列。客户SYN到达服务器但未完成三次握手。</li>
 <li> 已完成连接队列。完成三次握手。</li>
 </ol>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.5_2.png" alt="1579965675751"></p>
+<p><img src="4.5_2.png" alt="1579965675751"></p>
 <p>每当在未完成连接队列中创建一项时，来自监听套接字的参数就复制到即将建立的连接中，连接的创建机制是完成自动的，无需服务器进程插手。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/image-20200605103311037.png" alt="image-20200605103311037"></p>
+<p><img src="image-20200605103311037.png" alt="image-20200605103311037"></p>
 <p>当进程调用accept时，已完成连接队列的队头项返回给进程，如果此队列为空则该进程投入睡眠，直到已完成连接队列放入一项才唤醒。</p>
 <p><strong>关于两个队列的处理，有几点考虑：</strong></p>
 <ul>
@@ -278,7 +278,7 @@
 
 <p>这些函数只在出错时才返回到调用者，否在，控制将被传递给新程序的起始点，通常是main函数。</p>
 <p>execve是内核中的系统调用，其他5个都是调用execve的库函数。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.7_3.png" alt="1580115067308"></p>
+<p><img src="4.7_3.png" alt="1580115067308"></p>
 <ul>
 <li>  上面的三个函数以空指针结束可变数量的参数，下面三个的参数数组argv必须含有一个用于指定其末尾的空指针</li>
 <li>  左列2个函数指定一个filename参数，如果filename参数里不包含斜杆（/），exec将使用当前PATH环境变量把该文件名参数转换为一个路径名</li>

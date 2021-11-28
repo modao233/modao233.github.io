@@ -169,7 +169,7 @@
 
 <p>最后，我们输入应用程序的主循环（mainloop）。事件处理从这一点开始。主循环从窗口系统接收事件，并将它们发送到应用程序部件。如果我们调用<code>exit()</code>方法或主部件被销毁，则主循环结束。<code>sys.exit()</code>方法可确保干净退出。环境将通知如何结束应用程序。</p>
 <p><code>exec_()</code>方法具有下划线，这是因为<code>exec</code>是 Python 关键字，因此使用<code>exec_()</code>。</p>
-<p><img src="/First-programs-in-PyQt5/image-20200818204212869.png" alt="image-20200818204212869"></p>
+<p><img src="image-20200818204212869.png" alt="image-20200818204212869"></p>
 <center>图:Simple</center>
 
 <h2 id="应用程序图标"><a href="#应用程序图标" class="headerlink" title="应用程序图标"></a>应用程序图标</h2><p>应用程序图标是一个小图像，通常显示在标题栏的左上角。在下面的示例中，我们将演示如何在 PyQt5 中做到这一点。我们还将介绍一些新的方法。</p>
@@ -201,7 +201,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def main():<br><br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br></code></pre></td></tr></table></figure>
 
 <p>创建应用程序和示例对象。主循环已启动。</p>
-<p><img src="/First-programs-in-PyQt5/image-20200818210910239.png" alt="image-20200818210910239"></p>
+<p><img src="image-20200818210910239.png" alt="image-20200818210910239"></p>
 <center>图：图标显示</center>
 
 <h2 id="在-PyQt5-中显示工具提示"><a href="#在-PyQt5-中显示工具提示" class="headerlink" title="在 PyQt5 中显示工具提示"></a>在 PyQt5 中显示工具提示</h2><p>我们可以为我们的任何部件提供”显示帮助“。</p>
@@ -221,7 +221,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">btn.resize(btn.sizeHint())<br>btn.move(50, 50)<br></code></pre></td></tr></table></figure>
 
 <p>调整按钮的大小和在窗口上的位置。<code>sizeHint()</code>方法为按钮提供了建议的大小。</p>
-<p><img src="/First-programs-in-PyQt5/image-20200818211718893.png" alt="image-20200818211718893"></p>
+<p><img src="image-20200818211718893.png" alt="image-20200818211718893"></p>
 <center>图：工具提示</center>
 
 <h2 id="关闭窗口"><a href="#关闭窗口" class="headerlink" title="关闭窗口"></a>关闭窗口</h2><p>关闭窗口的显示方式是单击标题栏上的✖标记。在下面的示例中，我们将演示如何以编程方式关闭窗口。我们将简要触摸信号和插槽。</p>
@@ -240,7 +240,7 @@
 
 <p>PyQt5 中的事件处理系统由信号和插槽机制构建。如果我们单击该按钮，<code>clicked</code>信号将发出。插槽可以是 Qt 插槽或任何 Python 可调用。</p>
 <p>使用<code>QApplication.instance()</code>检索到的**<code>QCoreApplication</code>**包含主事件循环，它处理并调度所有事件。单击的信号连接到终止应用程序的<code>quit()</code>方法。通信在两个对象之间完成：发送方和接收方，发送方是按钮，接收方是应用程序对象。</p>
-<p><img src="/First-programs-in-PyQt5/image-20200818213015794.png" alt="image-20200818213015794"></p>
+<p><img src="image-20200818213015794.png" alt="image-20200818213015794"></p>
 <center>图：退出按钮</center>
 
 <h2 id="PyQt5-消息框"><a href="#PyQt5-消息框" class="headerlink" title="PyQt5 消息框"></a>PyQt5 消息框</h2><p>默认情况下，如果我们单击标题栏上的 ✖ 按钮，则<code>QWidget</code>关闭，有时我们想要修改此默认行为。例如，如果我们在编辑器中打开了一个文件，我们为此进行了一些更改。我们显示一个消息框来确认操作。</p>
@@ -254,7 +254,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">if reply == QtGui.QMessageBox.Yes:<br>    event.accept()<br>else:<br>    event.ignore()<br></code></pre></td></tr></table></figure>
 
 <p>在这里，我们测试返回值。如果我们单击”是”按钮，我们接受导致关闭小部件和终止应用程序的事件。否则，我们忽略关闭事件。</p>
-<p><img src="/First-programs-in-PyQt5/image-20200818225254940.png" alt="image-20200818225254940"></p>
+<p><img src="image-20200818225254940.png" alt="image-20200818225254940"></p>
 <center>图：消息框</center>
 
 <h2 id="屏幕上的居中窗口"><a href="#屏幕上的居中窗口" class="headerlink" title="屏幕上的居中窗口"></a>屏幕上的居中窗口</h2><p>以下脚本演示了如何在桌面屏幕上居中设置窗口的中心。</p>

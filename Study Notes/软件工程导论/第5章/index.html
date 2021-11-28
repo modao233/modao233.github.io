@@ -182,7 +182,7 @@
 <p>在理想的情况下，所有应用软件都有一致的命令使用方法。 </p>
 <h3 id="5-2-2-设计过程"><a href="#5-2-2-设计过程" class="headerlink" title="5.2.2 设计过程"></a>5.2.2 设计过程</h3><p>用户界面设计是一个迭代的过程，也就是说，通常先创建设计模型，再用原型实现这个设计模型，并由用户试用和评估，然后根据用户意见进行修改。</p>
 <p>为了支持上述迭代过程，各种用于界面设计和原型开发的软件工具应运而生。这些工具被称为用户界面工具箱或用户界面开发系统。</p>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/1.png" alt="img"></p>
+<p><img src="1.png" alt="img"></p>
 <p><strong>界面设计评估周期简述：</strong>完成初步设计之后就创建第一级原型；用户试用并评估该原型，直接向设计者表述对界面的评价；设计者根据用户意见修改设计并实现下一级原型。上述评估过程持续进行下去，直到用户感到满意，不需要再修改界面设计时为止。</p>
 <h3 id="5-2-3-人机界面设计指南"><a href="#5-2-3-人机界面设计指南" class="headerlink" title="5.2.3 人机界面设计指南"></a>5.2.3 人机界面设计指南</h3><ol>
 <li>一般交互指南<ol>
@@ -246,7 +246,7 @@
 <li><p> 程序流程图不易表示数据结构。 </p>
 </li>
 </ol>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/2.png" alt="img"></p>
+<p><img src="2.png" alt="img"></p>
 <h3 id="5-3-2-盒图（N-S图）"><a href="#5-3-2-盒图（N-S图）" class="headerlink" title="5.3.2 盒图（N-S图）"></a>5.3.2 盒图（N-S图）</h3><p>出于要有一种不允许违背结构程序设计精神的图形工具的考虑，Nassi和Shneiderman提出了盒图，又称为N-S图。盒图没有箭头，因此不允许随意转移控制。坚持使用盒图作为详细设计的工具，可以使程序员逐步养成用结构化的方式思考问题和解决问题的习惯。</p>
 <p><strong>盒图具有下述特点：</strong></p>
 <ol>
@@ -259,7 +259,7 @@
 <li><p> 很容易表现嵌套关系，也可以表示模块的层次结构。</p>
 </li>
 </ol>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/3.png" alt="img"></p>
+<p><img src="3.png" alt="img"></p>
 <h3 id="5-3-3-PAD图"><a href="#5-3-3-PAD图" class="headerlink" title="5.3.3 PAD图"></a>5.3.3 PAD图</h3><p>PAD是问题分析图(problem analysis diagram)的英文缩写。它用二维树形结构的图来表示程序的控制流，将这种图翻译成程序代码比较容易。</p>
 <p><strong>PAD图的主要优点如下：</strong></p>
 <ol>
@@ -270,7 +270,7 @@
 <li> 即可表示程序逻辑，也可描绘数据结构。</li>
 <li> PAD图的符号支持自顶向下、逐步求精方法的使用。</li>
 </ol>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/4.png" alt="img"></p>
+<p><img src="4.png" alt="img"></p>
 <h3 id="5-3-4-判定表"><a href="#5-3-4-判定表" class="headerlink" title="5.3.4 判定表"></a>5.3.4 判定表</h3><p>当算法中包含多重嵌套的条件选择时，用程序流程图、盒图、PAD图或后面即将介绍的过程设计语言(PDL)都不易清楚地描述。</p>
 <p>判定表却能够清晰地表示复杂的条件组合与应做的动作之间的对应关系。 </p>
 <p><strong>一张判定表由4部分组成：</strong></p>
@@ -290,7 +290,7 @@
 <li> 判定表的含义不是一眼就能看出来的，初次接触这种工具的人理解它需要有一个简短的学习过程。</li>
 <li> 当数据元素的值多于两个时，判定表的简洁程度也将下降。</li>
 </ol>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/5.png" alt="img"></p>
+<p><img src="5.png" alt="img"></p>
 <h3 id="5-3-5-判定树"><a href="#5-3-5-判定树" class="headerlink" title="5.3.5 判定树"></a>5.3.5 判定树</h3><p>判定树是判定表的变种，也能清晰地表示复杂的条件组合与应做的动作之间的对应关系。</p>
 <p>多年来判定树一直受到人们的重视，是一种比较常用的系统分析和设计的工具。</p>
 <p><strong>判定树的优点：</strong>它的形式简单，一眼就可以看出其含义，因此易于掌握和使用。</p>
@@ -299,7 +299,7 @@
 <li> 简洁性不如判定表，数据元素的同一个值往往要重复写多遍，而且越接近树的叶端重复次数越多。</li>
 <li> 画判定树时分枝的次序可能对最终画出的判定树的简洁程度有较大影响。 </li>
 </ol>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/6.png" alt="img"></p>
+<p><img src="6.png" alt="img"></p>
 <h3 id="5-3-6-过程设计语言"><a href="#5-3-6-过程设计语言" class="headerlink" title="5.3.6 过程设计语言"></a>5.3.6 过程设计语言</h3><p>过程设计语言(PDL)也称为伪码，它是用正文形式表示数据和处理过程的设计工具。</p>
 <p>PDL具有严格的关键字外部语法，用于定义控制结构和数据结构；另一方面，PDL表示实际操作和条件的内部语法通常又是灵活自由的，可以适应各种工程项目的需要。</p>
 <p>PDL是一种“混杂”语言，它使用一种语言的词汇，同时却使用另一种语言的语法。 </p>
@@ -343,7 +343,7 @@
 <li><p>  重复结构：重复结构的数据，根据使用时的条件由一个数据元素出现零次或多次构成。 </p>
 </li>
 </ul>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/7.png" alt="img"></p>
+<p><img src="7.png" alt="img"></p>
 <p><strong>Jackson图的优点：</strong></p>
 <ul>
 <li>  便于表示层次结构，而且是对结构进行自顶向下分解的有力工具；</li>
@@ -357,9 +357,9 @@
 <li><p>  框间连线为斜线，不易在行式打印机上输出。</p>
 </li>
 </ul>
-<h3 id="5-4-2-改进的Jackson图"><a href="#5-4-2-改进的Jackson图" class="headerlink" title="5.4.2 改进的Jackson图"></a>5.4.2 改进的Jackson图</h3><p><img src="/%E7%AC%AC5%E7%AB%A0/8.png" alt="img"></p>
+<h3 id="5-4-2-改进的Jackson图"><a href="#5-4-2-改进的Jackson图" class="headerlink" title="5.4.2 改进的Jackson图"></a>5.4.2 改进的Jackson图</h3><p><img src="8.png" alt="img"></p>
 <p><strong>Jackson图和层次图的区别：</strong></p>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/9.png" alt="img"></p>
+<p><img src="9.png" alt="img"></p>
 <h3 id="5-4-3-Jackson方法"><a href="#5-4-3-Jackson方法" class="headerlink" title="5.4.3 Jackson方法"></a>5.4.3 Jackson方法</h3><p>Jackson结构程序设计方法由5个步骤组成：</p>
 <ol>
 <li> 分析并确定输入数据和输出数据的逻辑结构，用Jackson图描绘数据结构。</li>
@@ -392,25 +392,25 @@
 <li><p>  <strong>区域：</strong>由边和结点围成的面积称为区域，包括图外部未被围起来的区域。 </p>
 </li>
 </ul>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/10.png" alt="img"></p>
+<p><img src="10.png" alt="img"></p>
 <p><strong>映射方法：</strong>任何方法表示的过程设计结果，都可以翻译成流图。</p>
 <p><strong>对于顺序结构，</strong>一个顺序处理序列和下一个选择或循环的开始语句，可以映射成流图中的一个结点。</p>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/11.png" alt="img"></p>
+<p><img src="11.png" alt="img"></p>
 <p><strong>对于选择结构，</strong>开始语句映射成一个结点；两条分支至少各映射成一个结点；结束映射成一个结点。</p>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/12.png" alt="img"></p>
+<p><img src="12.png" alt="img"></p>
 <p><strong>对于循环结构，</strong>开始和结束语句各映射成一个结点。</p>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/13.png" alt="img"></p>
+<p><img src="13.png" alt="img"></p>
 <p>当过程设计中包含复合条件时，应该把复合条件分解为若干个简单条件，每个简单条件对应流图中一个结点。</p>
 <p>所谓复合条件，就是在条件中包含了一个或多个布尔运算符(逻辑OR，AND，NAND，NOR)。</p>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/14.png" alt="img"></p>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/15.png" alt="img"></p>
+<p><img src="14.png" alt="img"></p>
+<p><img src="15.png" alt="img"></p>
 <h4 id="2-计算环形复杂度的方法"><a href="#2-计算环形复杂度的方法" class="headerlink" title="2. 计算环形复杂度的方法"></a>2. 计算环形复杂度的方法</h4><p>环形复杂度定量度量程序的逻辑复杂度。有了描绘程序控制流的流图之后，可以用下述3种方法中的任何一种来计算环形复杂度V(G)。</p>
 <ul>
 <li>  V(G)=流图中的区域数</li>
 <li>  V(G)=E-N+2（其中E是流图中的边数，N是结点数）</li>
 <li>  V(G)=P+1（其中P是流图中判定结点的数目 ）</li>
 </ul>
-<p><img src="/%E7%AC%AC5%E7%AB%A0/16.png" alt="img"></p>
+<p><img src="16.png" alt="img"></p>
 <h4 id="3-环形复杂度的用途"><a href="#3-环形复杂度的用途" class="headerlink" title="3. 环形复杂度的用途"></a>3. 环形复杂度的用途</h4><ul>
 <li>  定量度量程序内分支数或循环个数，即程序结构的复杂程度；</li>
 <li>  定量度量测试难度；</li>

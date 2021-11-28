@@ -152,7 +152,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#圆括号结构用法</span><br><span class="hljs-comment">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Father Shell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span>      <span class="hljs-comment">#打印父shell的层次，为0</span><br>outervar=OUTER                              <span class="hljs-comment">#父shell的变量outervar</span><br><br>(                                           <span class="hljs-comment">#利用圆括号结构创建子shell</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;SubShell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span>        <span class="hljs-comment">#子shell的层次为1</span><br>(<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;GrandSubShell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span> <span class="hljs-comment">#孙shell的层次为2</span><br>) <br>innervar=INNER                            <span class="hljs-comment">#子shell的变量</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;innervar=<span class="hljs-variable">$innervar</span>&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;outervar=<span class="hljs-variable">$outervar</span>&quot;</span>                 <span class="hljs-comment">#outervar继承了符shell所赋给它的值</span><br>)                                           <span class="hljs-comment">#回到父shell</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Father Shell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span>   <br><br><span class="hljs-keyword">if</span> [ -z <span class="hljs-string">&quot;<span class="hljs-variable">$innervar</span>&quot;</span> ]                      <span class="hljs-comment">#子shell中定义变量为空，则说明</span><br><span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;The \$innervar is not defined in main body.&quot;</span><br><span class="hljs-keyword">else</span><br>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;The \$innervar is defined in main body.&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140925143613826" alt="img"></p>
+<p><img src="20140925143613826" alt="img"></p>
 <p><strong>子shell不影响父shell的环境：</strong></p>
 <ul>
 <li>  子shell中变量的作用域不能在父Shell中生效</li>
@@ -189,21 +189,21 @@
 </ol>
 <h3 id="3、进程处理"><a href="#3、进程处理" class="headerlink" title="3、进程处理"></a>3、进程处理</h3><p><strong>进程角度看shell执行</strong></p>
 <p>内建命令是由shell本身执行的命令，而外部命令则需要创建新的进程来执行。从进程角度归纳shell执行内建命令和外部命令的过程。</p>
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926135700456" alt="img"></p>
+<p><img src="20140926135700456" alt="img"></p>
 <p>当shell命令不是内建命令时，linux利用fork对一个子进程执行该命令，父进程处于等待状态。若该命令或脚本中包含编译过的可执行文件，则内核将新程序装载到内存，并覆盖子进程，执行结束退出子进程，父进程被重新激活开始读取shell的后一条命令。</p>
 <p>fork是系统调用，fork创建的子进程是父进程的副本，两个进程具有同样的环境、打开的文件、用户标志符、当前工作目录和信号等。</p>
 <p>fork后exec，重新装载另一个程序。</p>
 <p><strong>进程和作业</strong></p>
 <p>作业是用户层面的概念，而进程是操作系统层面的概念。其区别：一个正在执行的进程称为作业，一个作业可以包含多个进程，用户提交作业到操作系统，作业的完成可能依赖于启动多个进程。</p>
 <p>进程的三种基本状态：</p>
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926141255187" alt="img"></p>
+<p><img src="20140926141255187" alt="img"></p>
 <p>作业号标识的是在该shell下运行的所有进程，而进程号就标识整个系统下正在运行的所有进程。</p>
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926142025238" alt="img"></p>
+<p><img src="20140926142025238" alt="img"></p>
 <p>其中[1]是作业号，7574是进程号。</p>
 <p><strong>作业控制</strong></p>
 <p>作业是针对shell而言的，有前台运行和后台运行。内建命令fg可将后台运行的作业放到前台，而&amp;符号使得作业在后台运行。</p>
 <p>fg可以指定作业的方法（Ctrl+Z组合键可将正在运行的作业阻塞）：</p>
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926143152484" alt="img"></p>
+<p><img src="20140926143152484" alt="img"></p>
 <p>bg命令可将阻塞状态的作业转入后台运行。</p>
 <p>jobs查看作业列表。</p>
 <p>disown用于从shell的作业表中删除作业。</p>
@@ -213,22 +213,22 @@
 <p>信号事件的来源：硬件来源（比如按下键盘或其他 硬件故障）、软件来源（比如系统函数kill、raise、alarm、setitimer和sigqueue函数）。</p>
 <p>信号是进程间通信机制中唯一的异步通信机制。</p>
 <p>向进程发送信号大多通过Ctrl键加上一些功能键来实现。</p>
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926145812843" alt="img"></p>
+<p><img src="20140926145812843" alt="img"></p>
 <p>除了利用组合键发送信号外，内建命令kill可用于向进程发送TERM（即terminal）信号，功能和INT信号类似用于停止进程。kill可以通过进程号、作业号（kill %n）或进程命令名想任何作业发送信号。kill杀掉自己本身的进程（记录了运行该脚本的进程号），其中大于128的退出码表示脚本是被系统强行结束的。kill -l可看出，kill命令一共能发出64种信号。</p>
 <p><strong>trap命令</strong></p>
 <p>trap是Linux的内建命令，用于捕捉信号，trap命令可以指定收到某种信号时所执行的命令。trap命令的格式如下：trap command sig1 sig2 … sigN，当接收到sinN中任意一个信号时，执行command命令，command命令完成后继续接收到信号前的操作，直到脚本结束。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">trap</span> <span class="hljs-string">&quot;echo &#x27;You hit Ctrl+c!&#x27;&quot;</span> INT<br><br><span class="hljs-keyword">while</span> :; <span class="hljs-keyword">do</span><br>  <span class="hljs-built_in">let</span> count=count+1<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This is the <span class="hljs-variable">$count</span> sleep&quot;</span><br>  sleep 5<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
 
-<p> <img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926152749436" alt="img"></p>
+<p> <img src="20140926152749436" alt="img"></p>
 <p>利用trap命令捕捉INT信号（即与Ctrl+c绑定的中断信号）。trap还可以忽略某些信号，将command用空字符串代替即可，如trap “” TERM INT，忽略kill %n和Ctrl+c发送的信号（kill发送的是TERM信号）。LInux更强劲的杀死进程的命令：kill -9 进程号（或kill -9 %n作业号）等价与kill -KILL 进程号。</p>
 <p><strong>子shell的信号</strong></p>
 <p>子shell能继承父shell所忽略的信号，但是不能继承父shell未忽略的信号。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">trap</span> <span class="hljs-string">&quot;&quot;</span> QUIT            <span class="hljs-comment">#忽略kill -3信号，并且子shell能继承父shell所忽略的信号</span><br><span class="hljs-built_in">trap</span> <span class="hljs-string">&quot;echo &#x27;You want to kill me&#x27;&quot;</span> TERM    <span class="hljs-comment">#父shell处理的信号，子shell不能继承</span><br>(                       <span class="hljs-comment">#子shell，子进程号比父进程号大1</span><br><span class="hljs-keyword">while</span> :; <span class="hljs-keyword">do</span><br><span class="hljs-built_in">let</span> count=count+1<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This is the <span class="hljs-variable">$count</span> sleep&quot;</span><br>sleep 5<br><span class="hljs-keyword">done</span><br>)<br></code></pre></td></tr></table></figure>
 
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926164007320" alt="img"></p>
+<p><img src="20140926164007320" alt="img"></p>
 <p>父shell忽略QUIT信号但不忽略TERM信号，9987为父 shell进程号9988为子shell进程号，kill -3 9987向父shell发送3信号和kill -3  9988向子shell发送3信号，均未退出，可以看出子shell对QUIT的忽略是从父shell继承而来的。</p>
 <p>kill  9987向父shell发送TERM信号，父shell仍存活（因处理了TERM信号），kill  9988向子shell发送TERM信号，子shell退出，随后父shell执行完毕结束。TERM信号能杀掉子shell，说明子shell不能继承 父shel未忽略的信号。</p>
-<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926164031984" alt="img"></p>
+<p><img src="20140926164031984" alt="img"></p>
 <p>最后出现父shell响应TERM信号的输出，是因为子shell执行fork一个子进程后父shell处于等待状态，只有子shell退出后父shell才会被激活执行输出。</p>
 
 	</div>

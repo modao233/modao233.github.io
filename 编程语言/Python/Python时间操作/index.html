@@ -137,7 +137,7 @@
 <li>  <code>format</code>：匹配格式，根据<code>date_string</code>的不同而不同</li>
 </ul>
 <p><code>format</code> 有以下格式：</p>
-<p><img src="/Python%E6%97%B6%E9%97%B4%E6%93%8D%E4%BD%9C/20160627170308271" alt="img"></p>
+<p><img src="20160627170308271" alt="img"></p>
 <h2 id="获取凌晨时间"><a href="#获取凌晨时间" class="headerlink" title="获取凌晨时间"></a>获取凌晨时间</h2><p>网上查的大部分都是用时间戳相减，或者用时区的方式，总感觉不是很好</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法一 获取凌晨时间戳</span><br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-comment"># 思路特别简单 </span><br>dt = time.strftime(<span class="hljs-string">&quot;%Y-%m-%d&quot;</span>)<br><span class="hljs-built_in">print</span>(dt)  <span class="hljs-comment"># 先得到前缀 2019-12-13 这种，然后在拼接成2019-12-13 00:00:00</span><br>time_array = time.strptime(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;dt&#125;</span> 00:00:00&quot;</span>, <span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<br><span class="hljs-comment"># 然后转化为时间戳，思路特别简单</span><br>timestamp = time.mktime(time_array)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(timestamp) * <span class="hljs-number">1000</span>)<br><br><br><span class="hljs-comment"># 方法二 刚搜出来的，感觉不错</span><br>day_time = time.mktime(datetime.date.today().timetuple())<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(day_time) * <span class="hljs-number">1000</span>)<br></code></pre></td></tr></table></figure>
 

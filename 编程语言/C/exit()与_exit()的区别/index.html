@@ -131,7 +131,7 @@
 <span id="more"></span>
 
 <p><code>exit()</code>和<code>_exit()</code>这两个函数都是用于函数退出，但这两者有一些细微的差别，在<code>exit()</code>函数里会调用<code>_exit()</code>函数。</p>
-<p><img src="/exit()%E4%B8%8E_exit()%E7%9A%84%E5%8C%BA%E5%88%AB/image-20210206130959619.png" alt="image-20210206130959619"></p>
+<p><img src="image-20210206130959619.png" alt="image-20210206130959619"></p>
 <p><code>_exit()</code> 函数：直接使进程停止运行，清除其使用的内存空间，并清除其在内核的各种数据结构</p>
 <p><code>exit() </code> 函数：在<code>_exit()</code>的基础上做了一些小动作，在执行退出之前还加了若干道工序。</p>
 <p><code>exit()</code>函数与<code> _exit()</code> 函数的<strong>最大区别</strong>在于<code>exit()</code>函数在调用<code>exit</code> 系统调用前要检查文件的打开情况，把文件缓冲区中的内容写回文件。也就是图中的“清理I/O缓冲”。</p>

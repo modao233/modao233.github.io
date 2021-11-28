@@ -242,7 +242,7 @@
 <p><code>select [列名] from [表名] where [条件：列=值];</code></p>
 <p>SQL过滤比应用过滤往往更高效。</p>
 <p>同时使用<code>order by</code>和<code>where</code>子句时，应让<code>order by</code>位于<code>where</code>之后。</p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203103659906.png" alt="image-20210203103659906"></p>
+<p><img src="image-20210203103659906.png" alt="image-20210203103659906"></p>
 <p><code>where</code>子句中，<strong>单引号</strong>用来限定字符串，如果将值与串类型的列进行比较，则需要限定引号，用来与数值列进行比较的值不用引号。</p>
 <p>范围值检查（包括指定的开始值和结束值）：<code>select [列名] from [表名] where [条件：列名 between 5 and 10];</code></p>
 <p>在一个列不包含值时，称其为包含空值NULL。</p>
@@ -325,7 +325,7 @@
 <li><p>  <code>\\\</code>：匹配<code>\</code></p>
 </li>
 <li><p>引用元字符：</p>
-<p>  <img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203140923429.png" alt="image-20210203140923429"></p>
+<p>  <img src="image-20210203140923429.png" alt="image-20210203140923429"></p>
 </li>
 </ul>
 </li>
@@ -334,11 +334,11 @@
 <p>  MySQL的正则表达式使用<strong>双斜杠</strong>转义特殊字符，原因是：MySQL自己解释一个，正则表达式库解释一个</p>
 </blockquote>
 <p><strong>匹配字符类：</strong></p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203141120073.png" alt="image-20210203141120073"></p>
+<p><img src="image-20210203141120073.png" alt="image-20210203141120073"></p>
 <p><strong>匹配多个实例：</strong></p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203141146635.png" alt="image-20210203141146635"></p>
+<p><img src="image-20210203141146635.png" alt="image-20210203141146635"></p>
 <p><strong>定位符</strong>：</p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203141227050.png" alt="image-20210203141227050"></p>
+<p><img src="image-20210203141227050.png" alt="image-20210203141227050"></p>
 <blockquote>
 <p>  <code>^</code>的双重用途：</p>
 <ul>
@@ -388,17 +388,17 @@
 <li>  处理日期和时间值并从这些值中提前特定承父的日期和时间函数</li>
 <li>  返回DBMS正使用的特殊信息（如返回用户登录信息，检查版本细节）的系统函数</li>
 </ul>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203152739102.png" alt="image-20210203152739102"></p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203152751072.png" alt="image-20210203152751072"></p>
+<p><img src="image-20210203152739102.png" alt="image-20210203152739102"></p>
+<p><img src="image-20210203152751072.png" alt="image-20210203152751072"></p>
 <p><code>Soundex()</code>是一个将任何文本串转换为描述其<strong>语音表示</strong>的字母数字模式的算法，可用于读音正确但输入错误的情况。</p>
 <p>日期和时间采用相应的数据类型和特殊的格式存储，以便能快速和有效地排序或过滤，并且节省物理存储空间。</p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203153132476.png" alt="image-20210203153132476"></p>
+<p><img src="image-20210203153132476.png" alt="image-20210203153132476"></p>
 <p>MySQL首选的日期格式是yyyy-mm-dd，因为它排除了多义性。</p>
 <p>如果需要使用的只是日期，则使用<code>Date()</code>是一个好习惯。</p>
 <p>数值处理函数在主要DBMS的函数中，数值函数是最一致最统一的函数，主要用于代数、三角或几何运算。</p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203153808242.png" alt="image-20210203153808242"></p>
+<p><img src="image-20210203153808242.png" alt="image-20210203153808242"></p>
 <h2 id="第12章-汇总数据"><a href="#第12章-汇总数据" class="headerlink" title="第12章 汇总数据"></a>第12章 汇总数据</h2><p>聚集函数：运行在组上，计算和返回单个值的函数。</p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203160909679.png" alt="image-20210203160909679"></p>
+<p><img src="image-20210203160909679.png" alt="image-20210203160909679"></p>
 <p><code>AVG()</code>函数：</p>
 <ul>
 <li>  只用于单个列，可以使用多个<code>AVG()</code>函数</li>
@@ -459,7 +459,7 @@
 <li>  <code>having</code>在数据分组后进行过滤</li>
 </ul>
 <p><code>group by</code>和<code>order by</code>经常完成相同的工作，但还是存在很大差别的：</p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210203210155236.png" alt="image-20210203210155236"></p>
+<p><img src="image-20210203210155236.png" alt="image-20210203210155236"></p>
 <p>SQL规范并没有要求用<code>group by</code>分组的数据以分组顺序输出。</p>
 <p>要保证数据正确排序，则必须使用<code>order by</code>子句。</p>
 <p><strong><code>select</code>语句中子句的顺序</strong>：</p>
@@ -590,7 +590,7 @@
 <p>   布尔方式不同于其它全文本搜索的地方在于，即使没有定义<code>fulltext</code>索引也可以使用，但操作缓慢</p>
 </blockquote>
 <p><code>select [列名] from [表名] where Match([列名]) Against(&#39;表达式&#39; in boolean mode);</code></p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210204165320219.png" alt="image-20210204165320219"></p>
+<p><img src="image-20210204165320219.png" alt="image-20210204165320219"></p>
 <p>若两个词没有指定操作符，则搜索匹配包含两个词中至少一个。</p>
 <blockquote>
 <p>  排列而不排序：在布尔方式中，不按等级值降序排序返回的行</p>
@@ -990,8 +990,8 @@
 <li>  特定的列</li>
 <li>  特定的存储过程</li>
 </ul>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210205230446495.png" alt="image-20210205230446495"></p>
-<p><img src="/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/image-20210205230455318.png" alt="image-20210205230455318"></p>
+<p><img src="image-20210205230446495.png" alt="image-20210205230446495"></p>
+<p><img src="image-20210205230455318.png" alt="image-20210205230455318"></p>
 <blockquote>
 <p>  权限设置时，用户账号必须存在，但对所涉及的对象没有这个要求：</p>
 <ul>

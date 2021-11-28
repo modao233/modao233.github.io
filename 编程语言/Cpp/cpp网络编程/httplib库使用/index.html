@@ -268,7 +268,7 @@
 
 <h3 id="With-Progress-Callback"><a href="#With-Progress-Callback" class="headerlink" title="With Progress Callback"></a>With Progress Callback</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">httplib::Client client(url, port);<br><br>// prints: 0 / 000 bytes =&gt; 50% complete<br>auto res = cli.Get(&quot;/&quot;, [](uint64_t len, uint64_t total) &#123;<br>  printf(&quot;%lld / %lld bytes =&gt; %d%% complete\n&quot;,<br>    len, total,<br>    (int)(len*100/total));<br>  return true; // return &#x27;false&#x27; if you want to cancel the request.<br>&#125;<br>);<br></code></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/236374/33138910-495c4ecc-cf86-11e7-8693-2fc6d09615c4.gif"><img src="https://user-images.githubusercontent.com/236374/33138910-495c4ecc-cf86-11e7-8693-2fc6d09615c4.gif" alt="progress"></a></p>
+<p><a target="_blank" rel="noopener" href="https://user-images.githubusercontent.com/236374/33138910-495c4ecc-cf86-11e7-8693-2fc6d09615c4.gif"><img src="33138910-495c4ecc-cf86-11e7-8693-2fc6d09615c4.gif" alt="progress"></a></p>
 <h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">// Basic Authentication<br>cli.set_basic_auth(&quot;user&quot;, &quot;pass&quot;);<br><br>// Digest Authentication<br>cli.set_digest_auth(&quot;user&quot;, &quot;pass&quot;);<br><br>// Bearer Token Authentication<br>cli.set_bearer_token_auth(&quot;token&quot;);<br></code></pre></td></tr></table></figure>
 
 <p>NOTE: OpenSSL is required for Digest Authentication.</p>

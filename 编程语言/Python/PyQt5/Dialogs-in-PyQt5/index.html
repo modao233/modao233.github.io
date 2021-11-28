@@ -150,7 +150,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">if ok:<br>    self.le.setText(str(text))<br></code></pre></td></tr></table></figure>
 
 <p>我们通过<code>setText()</code>将行编辑部件的文本内容设置为从对话框中收到的文本。</p>
-<p><img src="/Dialogs-in-PyQt5/image-20200819170027455.png" alt="image-20200819170027455"></p>
+<p><img src="image-20200819170027455.png" alt="image-20200819170027455"></p>
 <center>图：输入对话框</center>
 
 <h2 id="PyQt5-QColorDialog"><a href="#PyQt5-QColorDialog" class="headerlink" title="PyQt5 QColorDialog"></a>PyQt5 QColorDialog</h2><p><code>QColorDialog</code>提供用于选择颜色值的对话框部件。</p>
@@ -167,7 +167,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">if col.isValid():<br>    self.frm.setStyleSheet(&quot;QWidget &#123; background-color: %s &#125;&quot;<br>        % col.name())<br></code></pre></td></tr></table></figure>
 
 <p>我们检查颜色是否有效。如果我们单击”取消”按钮，则不会返回任何有效颜色。如果颜色有效，我们使用样式表更改背景颜色。</p>
-<p><img src="/Dialogs-in-PyQt5/image-20200819170635485.png" alt="image-20200819170635485"></p>
+<p><img src="image-20200819170635485.png" alt="image-20200819170635485"></p>
 <h2 id="PyQt5-QFontDialog"><a href="#PyQt5-QFontDialog" class="headerlink" title="PyQt5 QFontDialog"></a>PyQt5 QFontDialog</h2><p><code>QFontDialog</code>是用于选择字体的对话框部件。</p>
 <p>font_dialog.py</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QPushButton,<br>                             QSizePolicy, QLabel, QFontDialog, QApplication)<br>import sys<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br>        vbox = QVBoxLayout()<br><br>        btn = QPushButton(&#x27;Dialog&#x27;, self)<br>        btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)<br>        btn.move(20, 20)<br><br>        vbox.addWidget(btn)<br><br>        btn.clicked.connect(self.showDialog)<br><br>        self.lbl = QLabel(&#x27;Knowledge only matters&#x27;, self)<br>        self.lbl.move(130, 20)<br><br>        vbox.addWidget(self.lbl)<br>        self.setLayout(vbox)<br><br>        self.setGeometry(300, 300, 450, 350)<br>        self.setWindowTitle(&#x27;Font dialog&#x27;)<br>        self.show()<br><br>    def showDialog(self):<br><br>        font, ok = QFontDialog.getFont()<br>        if ok:<br>            self.lbl.setFont(font)<br><br><br>def main():<br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
@@ -179,7 +179,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">if ok:<br>    self.label.setFont(font)<br></code></pre></td></tr></table></figure>
 
 <p>如果我们单击”确定”，则<code>setFont</code>将更改标签的字体。</p>
-<p><img src="/Dialogs-in-PyQt5/image-20200819171024413.png" alt="image-20200819171024413"></p>
+<p><img src="image-20200819171024413.png" alt="image-20200819171024413"></p>
 <h2 id="PyQt5-QFileDialog"><a href="#PyQt5-QFileDialog" class="headerlink" title="PyQt5 QFileDialog"></a>PyQt5 QFileDialog</h2><p><code>QFileDialog</code>是允许用户选择文件或目录的对话框。可以选择这些文件进行打开和保存。</p>
 <p>file_dialog.py</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">from PyQt5.QtWidgets import (QMainWindow, QTextEdit,<br>                             QAction, QFileDialog, QApplication)<br>from PyQt5.QtGui import QIcon<br>import sys<br>from pathlib import Path<br>from PyQt5.QtCore import QFileInfo<br><br><br>class Example(QMainWindow):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br>        self.textEdit = QTextEdit()<br>        self.setCentralWidget(self.textEdit)<br>        self.statusBar()<br><br>        root = QFileInfo(__file__).absolutePath()<br>        openFile = QAction(QIcon(root + &#x27;/web.png&#x27;), &#x27;Open&#x27;, self)<br>        openFile.setShortcut(&#x27;Ctrl+O&#x27;)<br>        openFile.setStatusTip(&#x27;Open new File&#x27;)<br>        openFile.triggered.connect(self.showDialog)<br><br>        menubar = self.menuBar()<br>        fileMenu = menubar.addMenu(&#x27;&amp;File&#x27;)<br>        fileMenu.addAction(openFile)<br><br>        self.setGeometry(300, 300, 550, 450)<br>        self.setWindowTitle(&#x27;File dialog&#x27;)<br>        self.show()<br><br>    def showDialog(self):<br><br>        home_dir = str(Path.home())<br>        fname = QFileDialog.getOpenFileName(self, &#x27;Open file&#x27;, home_dir)<br><br>        if fname[0]:<br>            f = open(fname[0], &#x27;r&#x27;)<br><br>            with f:<br>                data = f.read()<br>                self.textEdit.setText(data)<br><br><br>def main():<br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
@@ -195,7 +195,7 @@
 
 <p>读取所选文件名，将文件内容设置为文本编辑小部件。</p>
 <p>在 PyQt5 教程的这一部分中，我们使用对话框。</p>
-<p><img src="/Dialogs-in-PyQt5/image-20200819172232428.png" alt="image-20200819172232428"></p>
+<p><img src="image-20200819172232428.png" alt="image-20200819172232428"></p>
 
 	</div>
 </div>

@@ -134,7 +134,7 @@
 
 <figure class="highlight rust"><table><tr><td class="code"><pre><code class="hljs rust"><span class="hljs-comment">//匿名函数解决法</span><br><span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() &#123;<br>    <span class="hljs-keyword">let</span> fib = |n| &#123;<br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Fib</span></span>&lt;<span class="hljs-symbol">&#x27;s</span>&gt; &#123; f: &amp;<span class="hljs-symbol">&#x27;s</span> <span class="hljs-keyword">dyn</span> <span class="hljs-built_in">Fn</span>(&amp;Fib, <span class="hljs-built_in">u32</span>) -&gt; <span class="hljs-built_in">u32</span> &#125;<br>        <span class="hljs-keyword">let</span> fib = Fib &#123;<br>            f: &amp;|fib, n| <span class="hljs-keyword">match</span> n &#123;<br>                <span class="hljs-number">0</span> | <span class="hljs-number">1</span> =&gt; n,<br>                _ =&gt; (fib.f)(fib, n - <span class="hljs-number">1</span>) + (fib.f)(fib, n - <span class="hljs-number">2</span>),<br>            &#125;<br>        &#125;;<br>        (fib.f)(&amp;fib, n)<br>    &#125;;<br>    <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&#123;&#125;&quot;</span>, fib(<span class="hljs-number">10</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><img src="/%E9%97%AD%E5%8C%85%E8%A7%A3%E5%86%B3%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91/image-20201228205112046.png" alt="image-20201228205112046"></p>
+<p><img src="image-20201228205112046.png" alt="image-20201228205112046"></p>
 
 	</div>
 </div>

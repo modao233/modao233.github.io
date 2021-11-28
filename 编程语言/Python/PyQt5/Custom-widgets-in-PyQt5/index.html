@@ -165,7 +165,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def changeValue(self, value):<br><br>    self.c.updateBW.emit(value)<br>    self.wid.repaint()<br></code></pre></td></tr></table></figure>
 
 <p>当我们移动滑块时，将调用<code>changeValue()</code>该方法。在方法内，我们发送一个带参数的自定义信号<code>updateBW</code>。参数是滑块的当前值，该值稍后用于计算要绘制的刻录小部件的容量，然后重新绘制自定义小部件。</p>
-<p><img src="/Custom-widgets-in-PyQt5/image-20200820214024211.png" alt="image-20200820214024211"></p>
+<p><img src="image-20200820214024211.png" alt="image-20200820214024211"></p>
 <center>图：刻录小部件</center>
 
 <p>在 PyQt5 教程的这一部分中，我们创建了一个自定义部件。</p>

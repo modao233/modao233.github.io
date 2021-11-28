@@ -459,7 +459,7 @@
 <p>若expr的操作符是元字符（不是普通字符），需要用转义符将操作符的特殊含义屏蔽，进行数学运算，如<code>expr 2014 \* 2</code></p>
 <p>expr中操作符的两端必须有空格，否则不会执行数学运算，如<code>expr 2014 - 2008</code></p>
 <p>注意：*乘法运算符号需要转义</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140909091436484" alt="img"></p>
+<p><img src="20140909091436484" alt="img"></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">modao@modao-hp:~$ ans=$(expr 3 + 8)<br>modao@modao-hp:~$ echo $ans<br>11<br>modao@modao-hp:~$ ans=$(expr 3 - 8)<br>modao@modao-hp:~$ echo $ans<br>-5<br>modao@modao-hp:~$ ans=$(expr 3 \* 8)<br>modao@modao-hp:~$ echo $ans<br>24<br>modao@modao-hp:~$ ans=$(expr 24 / 8)<br>modao@modao-hp:~$ echo $ans<br>3<br></code></pre></td></tr></table></figure>
 
 <h4 id="使用-执行算术"><a href="#使用-执行算术" class="headerlink" title="使用[]执行算术"></a>使用[]执行算术</h4><p>[]执行算术比expr简单多了，并且*乘法运算符号不需要转义</p>
@@ -477,9 +477,9 @@
 <h4 id="bc运算器"><a href="#bc运算器" class="headerlink" title="bc运算器"></a>bc运算器</h4><p>bash 不支持浮点运算，如果需要进行浮点运算，需要借助bc,awk 处理</p>
 <p>bc是一种<strong>内建的运算器</strong>，是bash shell中最常用的浮点数运算工具，包括整型数和浮点数、数组变量、表达式、复杂程序结构和函数。</p>
 <p>bc运算器支持的数学运算符号如下表：</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140909092840734" alt="img"></p>
+<p><img src="20140909092840734" alt="img"></p>
 <p>bc运算器定义了内建变量scale用于设定除法运算的精度（默认scale=0）。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/image-20210320145626875.png" alt="image-20210320145626875"></p>
+<p><img src="image-20210320145626875.png" alt="image-20210320145626875"></p>
 <p>scale设为4后，除法结果小数点后保留4位。bc -q可以使bc运算器不输出版本信息。</p>
 <p>在shell中用bc运算器进行浮点数运算需要使用命令替换的方式。脚本中调用bc运算器一般格式：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">variable=`echo &quot;options; expression&quot; | bc`<br></code></pre></td></tr></table></figure>
@@ -693,9 +693,9 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br> <br><span class="hljs-built_in">let</span> <span class="hljs-string">&quot;num1=40&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;num1=<span class="hljs-variable">$num1</span>&quot;</span><br> <br><span class="hljs-built_in">let</span> <span class="hljs-string">&quot;num2=040&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;num2=<span class="hljs-variable">$num2</span>&quot;</span><br> <br><span class="hljs-built_in">let</span> <span class="hljs-string">&quot;num3=0x40&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;num3=<span class="hljs-variable">$num3</span>&quot;</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h4><p>用于<strong>整数间的运算</strong></p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140828143826259" alt="img"></p>
+<p><img src="20140828143826259" alt="img"></p>
 <p>位运算符同样可以同赋值运算符联用，组成<strong>复合赋值运算符</strong>。</p>
-<p><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/20140828143844246" alt="img"></p>
+<p><img src="20140828143844246" alt="img"></p>
 <h4 id="测试命令test"><a href="#测试命令test" class="headerlink" title="测试命令test"></a>测试命令test</h4><p>Linux中shell的测试命令，用于测试某种条件或某几种条件是否真实存在。</p>
 <p>测试命令是判断语句和循环语句中条件测试的工具，对判断和运算符的比较测试有很大的帮助。</p>
 <p>测试条件为真，返回一个0值；为假，返回一个非0整数值。</p>
@@ -1512,14 +1512,14 @@ bash shell会将一些称为位置参数（positional parameter）的特殊变�
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/bash<br>count=1<br>for param in &quot;$*&quot;<br>do<br>    echo &quot;\$* Parameter #$count = $param&quot;<br>    count=$[ $count + 1 ]<br>done<br>echo<br><br>count=1<br>for param in &quot;$@&quot;<br>do<br>    echo &quot;\$@ Parameter #$count = $param&quot;<br>    count=$[ $count + 1 ]<br>done<br></code></pre></td></tr></table></figure>
 
 
-<p>运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201%E6%8A%93%E5%8F%96%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95.png"><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201201%E6%8A%93%E5%8F%96%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95.png" alt="抓取所有参数的两种方法"></a></p>
+<p>运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201%E6%8A%93%E5%8F%96%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95.png"><img src="20201201%E6%8A%93%E5%8F%96%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95.png" alt="抓取所有参数的两种方法"></a></p>
 <h3 id="4-3-移动变量"><a href="#4-3-移动变量" class="headerlink" title="4.3.移动变量"></a>4.3.移动变量</h3><p>bash shell的<code>shift</code>命令能够用来操作命令行参数。顾名思义，他会根据它们的相对位置来移动命令行参数。<br>默认情况下它会将每个参数变量向左移动一个位置。所以，变量<code>$3</code>的值会移到<code>$2</code>中，变量<code>$2</code>的值会移到<code>$1</code>中，而变量<code>$1</code>的值则会被删除（注意，变量<code>$0</code>的值即程序名不会改变）。也可以一次性移动多个位置，只需要给<code>shift</code>命令提供一个参数指明要移动的位置数就行了：<code>shift n</code>。<br><strong>注意：</strong>如果某个参数被移出，它的值就被丢弃了，无法再恢复。</p>
 <p>这是遍历命令行参数的另一个好方法，尤其是在你不知道到底有多少参数时。你可以只操作第一个参数，移动参数，然后继续操作第一个参数，例如：</p>
 <p>一键复制</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/bash<br>count=1<br>while [ -n &quot;$1&quot; ]; do<br>    echo &quot;Parameter #$count = $1&quot;<br>    count=$[ $count + 1 ]<br>    shift<br>done<br></code></pre></td></tr></table></figure>
 
 
-<p>运行结果如图所示：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201%E7%A7%BB%E5%8A%A8%E5%8F%98%E9%87%8F.png"><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201201%E7%A7%BB%E5%8A%A8%E5%8F%98%E9%87%8F.png" alt="移动变量"></a></p>
+<p>运行结果如图所示：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201%E7%A7%BB%E5%8A%A8%E5%8F%98%E9%87%8F.png"><img src="20201201%E7%A7%BB%E5%8A%A8%E5%8F%98%E9%87%8F.png" alt="移动变量"></a></p>
 <h3 id="4-4-处理选项"><a href="#4-4-处理选项" class="headerlink" title="4.4.处理选项"></a>4.4.处理选项</h3><p>「<code>选项</code>」是跟在单破折线后面的<strong>单个字母</strong>，它能改变命令的行为，此处介绍3种在脚本中处理选项的方法。</p>
 <h4 id="1-查找选项"><a href="#1-查找选项" class="headerlink" title="(1)查找选项"></a>(1)查找选项</h4><p>表面上看，命令行选项也没什么特殊的。在命令行上，它们紧跟在脚本名之后，就跟命令行参数一样。实际上，如果愿意，你可以像处理命令行参数一样处理命令行选项。</p>
 <ul>
@@ -1561,7 +1561,7 @@ bash shell会将一些称为位置参数（positional parameter）的特殊变�
   <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">--<br></code></pre></td></tr></table></figure>
 
 <p>  分离后，当脚本遇到双破折线时，它会停止处理选项，并将剩下的参数都当作命令行参数。</p>
-<p>  <img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201201%E5%88%86%E7%A6%BB%E5%8F%82%E6%95%B0%E5%92%8C%E9%80%89%E9%A1%B9.png" alt="分离参数和选项"></p>
+<p>  <img src="20201201%E5%88%86%E7%A6%BB%E5%8F%82%E6%95%B0%E5%92%8C%E9%80%89%E9%A1%B9.png" alt="分离参数和选项"></p>
 </li>
 <li><p>③处理带值的选项：</p>
 <p>  有些选项会带上一个额外的参数值，例如：</p>
@@ -1590,12 +1590,12 @@ bash shell会将一些称为位置参数（positional parameter）的特殊变�
   <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">shift<br></code></pre></td></tr></table></figure>
 
 <p>  命令多移动一个位置。运行结果如图：</p>
-<p>  <img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201201%E5%A4%84%E7%90%86%E5%B8%A6%E5%80%BC%E7%9A%84%E9%80%89%E9%A1%B9.png" alt="处理带值的选项"></p>
+<p>  <img src="20201201%E5%A4%84%E7%90%86%E5%B8%A6%E5%80%BC%E7%9A%84%E9%80%89%E9%A1%B9.png" alt="处理带值的选项"></p>
 </li>
 </ul>
 <h4 id="2-getopt命令"><a href="#2-getopt命令" class="headerlink" title="(2)getopt命令"></a>(2)<code>getopt</code>命令</h4><p>上述shell脚本已经有了处理命令行选项的基本能力，但还有一些限制。比如，<strong>合并选项</strong>是Linux中一个很常见的用法，如果你想<strong>将多个选项放进一个参数中</strong>时，它就不能工作了。<br><code>getopt</code>命令是一个在处理命令行选项和参数时非常方便的工具。它能够识别命令行参数，从而在脚本中解析它们时更方便。</p>
 <p>命令格式：<code>getopt optstring parameters</code>。<br><code>optstring</code>是这个过程的关键所在，它定义了命令行有效的选项字母，还定义了哪些选项字母需要参数值。<br>首先，在<code>optstring</code>中列出你要在脚本中用到的每个命令行选项字母。然后，在每个需要参数值的选项字母后加一个冒号。<code>getopt</code>命令会基于你定义的<code>optstring</code>解析提供的参数。</p>
-<p>举例如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201getopt%E5%91%BD%E4%BB%A4.png"><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201201getopt%E5%91%BD%E4%BB%A4.png" alt="getopt命令"></a><br>命令行<code>getopt ab:cd -a -b test1 -cd test2 test3</code>中的<code>optstring</code>定义了四个有效选项字母：<code>a</code>、<code>b</code>、<code>c</code>和<code>d</code>。冒号（<code>:</code>）被放在了字母<code>b</code>后面，因为<code>b</code>选项需要一个参数值。当<code>getopt</code>命令运行时，它会检查提供的参数列表（<code>-a -b test1 -cd test2 test3</code>），并基于提供的<code>optstring</code>进行解析。注意，它会自动将<code>-cd</code>选项分成两个单独的选项，并插入双破折线来分隔行中的额外参数<code>test2 test3</code>。<br><strong>注意：</strong>如果指定了一个不在<code>optstring</code>中的选项，默认情况下<code>getopt</code>命令会产生一条错误消息，可以在命令后加<code>-q</code>选项来忽略这条错误消息。如下图所示：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201%E5%A4%9A%E4%BD%99%E7%9A%84%E9%80%89%E9%A1%B9.png"><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201201%E5%A4%9A%E4%BD%99%E7%9A%84%E9%80%89%E9%A1%B9.png" alt="多余的选项"></a></p>
+<p>举例如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201getopt%E5%91%BD%E4%BB%A4.png"><img src="20201201getopt%E5%91%BD%E4%BB%A4.png" alt="getopt命令"></a><br>命令行<code>getopt ab:cd -a -b test1 -cd test2 test3</code>中的<code>optstring</code>定义了四个有效选项字母：<code>a</code>、<code>b</code>、<code>c</code>和<code>d</code>。冒号（<code>:</code>）被放在了字母<code>b</code>后面，因为<code>b</code>选项需要一个参数值。当<code>getopt</code>命令运行时，它会检查提供的参数列表（<code>-a -b test1 -cd test2 test3</code>），并基于提供的<code>optstring</code>进行解析。注意，它会自动将<code>-cd</code>选项分成两个单独的选项，并插入双破折线来分隔行中的额外参数<code>test2 test3</code>。<br><strong>注意：</strong>如果指定了一个不在<code>optstring</code>中的选项，默认情况下<code>getopt</code>命令会产生一条错误消息，可以在命令后加<code>-q</code>选项来忽略这条错误消息。如下图所示：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201201%E5%A4%9A%E4%BD%99%E7%9A%84%E9%80%89%E9%A1%B9.png"><img src="20201201%E5%A4%9A%E4%BD%99%E7%9A%84%E9%80%89%E9%A1%B9.png" alt="多余的选项"></a></p>
 <hr>
 <p>可以在脚本中使用<code>getopt</code>来格式化脚本所携带的任何命令行选项或参数，但用起来略微复杂。<br>用<code>getopt</code>命令生成的格式化后的版本来替换已有的命令行选项和参数，<code>set</code>命令的选项之一是双破折线<code>--</code>，它会将命令行参数替换成<code>set</code>命令的命令行值。</p>
 <p>该方法会将原始脚本的命令行参数传给<code>getopt</code>命令，之后再将<code>getopt</code>命令的输出传给<code>set</code>命令，用<code>getopt</code>格式化后的命令行参数来替换原始的命令行参数，格式看起来如下所示：<code>set -- $(getopt -q ab:cd &quot;$@&quot;)</code>。<br>现在原始的命令行参数变量的值会被<code>getopt</code>命令的输出替换，而<code>getopt</code>已经为我们格式化<br>好了命令行参数。利用该方法就可以写出能帮我们处理命令行参数的脚本：</p>
@@ -1612,13 +1612,13 @@ bash shell会将一些称为位置参数（positional parameter）的特殊变�
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/bash<br># simple demonstration of the getopts command<br>while getopts :ab:c opt<br>do<br>    case &quot;$opt&quot; in<br>        a) echo &quot;Found the -a option&quot; ;;<br>        b) echo &quot;Found the -b option, with value $OPTARG&quot;;;<br>        c) echo &quot;Found the -c option&quot; ;;<br>        *) echo &quot;Unknown option: $opt&quot;;;<br>    esac<br>done<br></code></pre></td></tr></table></figure>
 
 
-<p><code>while</code>语句定义了<code>getopts</code>命令，指明了要查找哪些命令行选项，以及每次迭代中存储它们的变量名（<code>opt</code>）。注意到在本例中<code>case</code>语句的用法有些不同：<code>getopts</code>命令解析命令行选项时会移除开头的单破折线，所以在<code>case</code>定义中不用单破折线。<br><code>getopts</code>命令有几个好用的功能：①可以在参数值中包含空格；②可以将选项字母和参数值放在一起使用，而不用加空格，<code>getopts</code>命令能够从选项中正确解析出参数值；③可以将命令行上所有未定义的选项统一输出成问号，以问号形式发送给代码。<br>上述代码运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201202getopts%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95.png"><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201202getopts%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95.png" alt="getopts命令用法"></a></p>
+<p><code>while</code>语句定义了<code>getopts</code>命令，指明了要查找哪些命令行选项，以及每次迭代中存储它们的变量名（<code>opt</code>）。注意到在本例中<code>case</code>语句的用法有些不同：<code>getopts</code>命令解析命令行选项时会移除开头的单破折线，所以在<code>case</code>定义中不用单破折线。<br><code>getopts</code>命令有几个好用的功能：①可以在参数值中包含空格；②可以将选项字母和参数值放在一起使用，而不用加空格，<code>getopts</code>命令能够从选项中正确解析出参数值；③可以将命令行上所有未定义的选项统一输出成问号，以问号形式发送给代码。<br>上述代码运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201202getopts%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95.png"><img src="20201202getopts%E5%91%BD%E4%BB%A4%E7%94%A8%E6%B3%95.png" alt="getopts命令用法"></a></p>
 <p><code>getopts</code>命令知道何时停止处理选项，并将参数留给你处理。在<code>getopts</code>处理每个选项时，它会将<code>OPTIND</code>环境变量值增一。在<code>getopts</code>完成处理时，你可以使用<code>shift</code>命令和<code>OPTIND</code>值来移动参数。如下例：</p>
 <p>一键复制</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/bash<br>while getopts :ab:cd opt<br>do<br>    case &quot;$opt&quot; in<br>        a) echo &quot;Found the -a option&quot; ;;<br>        b) echo &quot;Found the -b option, with value $OPTARG&quot; ;;<br>        c) echo &quot;Found the -c option&quot; ;;<br>        d) echo &quot;Found the -d option&quot; ;;<br>        *) echo &quot;Unknown option: $opt&quot; ;;<br>    esac<br>done<br><br>shift $[ $OPTIND - 1 ]<br>count=1<br>for param in &quot;$@&quot;<br>do<br>    echo &quot;Parameter $count: $param&quot;<br>    count=$[ $count + 1 ]<br>done<br></code></pre></td></tr></table></figure>
 
 
-<p>运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201202%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FOPTIND.png"><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201202%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FOPTIND.png" alt="环境变量OPTIND"></a></p>
+<p>运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201202%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FOPTIND.png"><img src="20201202%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8FOPTIND.png" alt="环境变量OPTIND"></a></p>
 <h3 id="4-5-将选项标准化"><a href="#4-5-将选项标准化" class="headerlink" title="4.5.将选项标准化"></a>4.5.将选项标准化</h3><p>所谓选项标准化，就是尽量遵循某些字母选项在Linux世界里已经拥有的某种程度的标准含义，而不是随意决定用哪些字母选项以及它们的用法，将选项标准化使得脚本看起来能更友好一些。常用的Linux命令选项如下：</p>
 <table>
 <thead>
@@ -1722,13 +1722,13 @@ bash shell会将一些称为位置参数（positional parameter）的特殊变�
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/bash<br>read -n1 -p &quot;Do you want to continue [Y/N]? &quot; answer<br>case $answer in<br>    Y | y) echo<br>           echo &quot;fine, continue on…&quot;;;<br>    N | n) echo<br>           echo OK, goodbye<br>           exit;;<br>esac<br>echo &quot;This is the end of the script&quot;<br></code></pre></td></tr></table></figure>
 
 
-<p>运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201202read%E5%91%BD%E4%BB%A4%E6%8E%A5%E5%8F%97%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6.png"><img src="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/20201202read%E5%91%BD%E4%BB%A4%E6%8E%A5%E5%8F%97%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6.png" alt="read命令接受指定字符"></a></p>
+<p>运行结果如图：<br><a target="_blank" rel="noopener" href="https://cdn.jsdelivr.net/gh/hwame/pics@main/shell/20201202read%E5%91%BD%E4%BB%A4%E6%8E%A5%E5%8F%97%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6.png"><img src="20201202read%E5%91%BD%E4%BB%A4%E6%8E%A5%E5%8F%97%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6.png" alt="read命令接受指定字符"></a></p>
 <h4 id="3-隐藏方式读取"><a href="#3-隐藏方式读取" class="headerlink" title="(3)隐藏方式读取"></a>(3)隐藏方式读取</h4><p>当需要输入类似密码这种需要从脚本用户处得到输入，但又在屏幕上显示输入信息时，可以使用<code>-s</code>选项不回显终端的输入（实际上数据会被显示，只是<code>read</code>命令会将文本颜色设成跟背景色一样）。输入提示符输入的数据不会出现在屏幕上，但会赋给变量，以便在脚本中使用。例如：<code>read -s -p &quot;Enter your password: &quot; password</code>。</p>
 <h4 id="4-从文件中读取"><a href="#4-从文件中读取" class="headerlink" title="(4)从文件中读取"></a>(4)从文件中读取</h4><p>可以用<code>read</code>命令来读取文件里的数据，每次调用<code>read</code>命令都会从文件中读取一行文本。当文件中再没有内容时，<code>read</code>命令会退出并返回非零退出状态码。<br>如何将文件中的数据传给<code>read</code>命令呢？最常见的方法是对文件使用<code>cat</code>命令，将结果通过管道直接传给含有<code>read</code>命令的<code>while</code>命令。见下例：</p>
 <p>一键复制</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/bash<br>count=1<br>cat textfile | while read line<br>do<br>    echo &quot;Line $count: $line&quot;<br>    count=$[ $count + 1]<br>done<br>echo &quot;Finished processing the file&quot;<br></code></pre></td></tr></table></figure>
 
-<p>文件<code>textfile</code>内容及运行结果如下：<br>[<img src="/Linux%E4%B8%8Bshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B%E5%AD%A6%E4%B9%A0/20201202%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE.png" alt="从文件中读取数据"></p>
+<p>文件<code>textfile</code>内容及运行结果如下：<br>[<img src="20201202%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE.png" alt="从文件中读取数据"></p>
 
 	</div>
 </div>

@@ -158,7 +158,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">qp.drawText(event.rect(), Qt.AlignCenter, self.text)<br></code></pre></td></tr></table></figure>
 
 <p><code>drawText</code>方法在窗口上绘制文本。绘制事件的<code>rect</code>方法返回需要更新的矩形。使用 <code>Qt.AlignCenter</code>，我们在两个维度中对齐文本。</p>
-<p><img src="/Painting-in-PyQt5/image-20200820175256627.png" alt="image-20200820175256627"></p>
+<p><img src="image-20200820175256627.png" alt="image-20200820175256627"></p>
 <center>图：绘图文本</center>
 
 <h2 id="PyQt5-绘制点"><a href="#PyQt5-绘制点" class="headerlink" title="PyQt5 绘制点"></a>PyQt5 绘制点</h2><p>点是可以绘制的最简单的图形对象。它是应用窗口上的一个小点。</p>
@@ -175,7 +175,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">qp.drawPoint(x, y) <br></code></pre></td></tr></table></figure>
 
 <p>通过 <code>drawPoint()</code>方法画点。</p>
-<p><img src="/Painting-in-PyQt5/image-20200820175628711.png" alt="image-20200820175628711"></p>
+<p><img src="image-20200820175628711.png" alt="image-20200820175628711"></p>
 <center>图：点</center>
 
 <h2 id="PyQt5-颜色"><a href="#PyQt5-颜色" class="headerlink" title="PyQt5 颜色"></a>PyQt5 颜色</h2><p>颜色是表示红色、绿色和蓝色 （RGB） 强度值组合的对象。有效 RGB 值在 0 到 255 之间。我们可以用各种方式定义颜色。最常见的是 RGB 十进制值或十六进制值。我们还可以使用代表红色、绿色、蓝色和 Alpha 的 RGBA 值。在这里，我们添加一些有关透明度的额外信息。Alpha 值 255 定义完全不透明度，0 表示完全透明，例如颜色不可见。</p>
@@ -189,7 +189,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">qp.setBrush(QColor(200, 0, 0))<br>qp.drawRect(10, 15, 90, 60)<br></code></pre></td></tr></table></figure>
 
 <p>在这里，我们定义一个画笔并绘制一个矩形。笔刷是一个基本的图形对象，用于绘制形状的背景。<code>drawRect()</code>方法接受四个参数。前两个值是轴上的 x 和 y 值。第三个和第四个参数是矩形的宽度和高度。该方法使用当前笔和笔刷绘制矩形。</p>
-<p><img src="/Painting-in-PyQt5/image-20200820180516295.png" alt="image-20200820180516295"></p>
+<p><img src="image-20200820180516295.png" alt="image-20200820180516295"></p>
 <center>图：颜色</center> 
 
 <h2 id="PyQt5-QPen"><a href="#PyQt5-QPen" class="headerlink" title="PyQt5 QPen"></a>PyQt5 QPen</h2><p><code>QPen</code>是基本图形对象。它用于绘制矩形、椭圆、多边形或其他形状的线条、曲线和轮廓。</p>
@@ -203,7 +203,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pen.setStyle(Qt.CustomDashLine)<br>pen.setDashPattern([1, 4, 5, 4])<br>qp.setPen(pen)<br></code></pre></td></tr></table></figure>
 
 <p>在这里，我们定义自定义笔样式。我们设置了<code>Qt.CustomDashLine</code>笔样式并调用<code>setDashPattern</code>方法。数字列表定义样式。一定有一个均匀的数字数。奇数定义破折号，偶数空白。数字多，空间或破折号也更大。我们的模式是 1 px 破折号， 4 px 空白， 5 px 破折号， 4 px 空白等.</p>
-<p><img src="/Painting-in-PyQt5/image-20200820211021199.png" alt="image-20200820211021199"></p>
+<p><img src="image-20200820211021199.png" alt="image-20200820211021199"></p>
 <center>图：钢笔样式</center>
 
 
@@ -216,7 +216,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">brush = QBrush(Qt.SolidPattern)<br>qp.setBrush(brush)<br>qp.drawRect(10, 15, 90, 60)<br></code></pre></td></tr></table></figure>
 
 <p>我们定义画笔对象。我们把它设置为绘制器对象，然后通过调用<code>drawRect</code>方法绘制矩形。</p>
-<p><img src="/Painting-in-PyQt5/image-20200820211145652.png" alt="image-20200820211145652"></p>
+<p><img src="image-20200820211145652.png" alt="image-20200820211145652"></p>
 <center>图：画笔</center>
 
 <h2 id="贝塞尔曲线"><a href="#贝塞尔曲线" class="headerlink" title="贝塞尔曲线"></a>贝塞尔曲线</h2><p>贝塞尔曲线是立方线。PyQt5 中的贝塞尔曲线可以使用<code>QPainterPath</code>创建。绘制器路径是由许多图形构建基块（如矩形、椭圆、线条和曲线）组成的对象。</p>
@@ -230,7 +230,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">qp.drawPath(path)<br></code></pre></td></tr></table></figure>
 
 <p>最后路径使用<code>drawPath()</code>方法绘制。</p>
-<p><img src="/Painting-in-PyQt5/image-20200820211503379.png" alt="image-20200820211503379"></p>
+<p><img src="image-20200820211503379.png" alt="image-20200820211503379"></p>
 <center>图：贝塞尔曲线</center>
 
 <p>在 PyQt5 教程的这一部分中，我们做了一些基本的绘画。</p>

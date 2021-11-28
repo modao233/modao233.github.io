@@ -137,7 +137,7 @@
 		<p>Unix网络编程-第5章 TCP客户/服务器程序示例</p>
 <span id="more"></span>
 
-<h2 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h2><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.1.png" alt="image-20200212163819379"></p>
+<h2 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h2><p><img src="5.1.png" alt="image-20200212163819379"></p>
 <h2 id="5-6-正常启动"><a href="#5-6-正常启动" class="headerlink" title="5.6 正常启动"></a>5.6 正常启动</h2><p>使用<code>netstat -a</code>检查服务器套接字的状态</p>
 <p>在目前众多较新的 Linux 发行版中，已经移除了 net-tools 套件，ifconfig、route、netstat、arp 等一系列工具均无法使用。</p>
 <p>新的工具<em>ss</em> 代替了 netstat。</p>
@@ -178,8 +178,8 @@
 <h3 id="signal函数"><a href="#signal函数" class="headerlink" title="signal函数"></a>signal函数</h3><p>建立信号处置的POSIX方法就是调用sigaction函数，但是有点复杂，因为该函数的参数之一是我们必须分配并填写的结构。简答些的方法是调用signal函数，其第一个参数是信号名，第二个参数或为指向函数的指针，或为常值SIG_IGN或SIG_DFL。</p>
 <p>signal函数是早于POSIX出现的历史悠久的函数，不同的实现提供不同的信号语义以达成后向兼容。</p>
 <p>POSIX则明确规定了调用sigaction时的信号语义。我们定义了自己的signal函数，它只是调用POSIX的sigaction函数，这就以所期望的POSIX语义提供一个简答的接口。</p>
-<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8.png" alt="image-20200212205315625"></p>
-<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8_2.png" alt="image-20200212210809188"></p>
+<p><img src="5.8.png" alt="image-20200212205315625"></p>
+<p><img src="5.8_2.png" alt="image-20200212210809188"></p>
 <h3 id="POSIX信号语义"><a href="#POSIX信号语义" class="headerlink" title="POSIX信号语义"></a>POSIX信号语义</h3><ul>
 <li>  一旦安装了信号处理函数，便一直安装着（早期系统执行一次便拆除）</li>
 <li>  在一个信号处理函数运行期间，正被递交的信号是阻塞的，而且sa_mask信号集中指定的任何额外信号也被阻塞</li>
@@ -222,7 +222,7 @@
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//处理accept返回EINIT的TCP服务器程序最终（正确）版</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>	<span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>					listenfd, connfd;<br>    <span class="hljs-keyword">pid_t</span>				childpid;<br>    <span class="hljs-keyword">socklen_t</span>			clilen;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>	<span class="hljs-title">cliaddr</span>, <span class="hljs-title">servaddr</span>;</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span>				<span class="hljs-title">sig_chld</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br><br>    listenfd = Socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family      = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port        = htons(SERV_PORT);<br><br>    Bind(listenfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    Listen(listenfd, LISTENQ);<br><br>    Signal(SIGCHLD, sig_chld);	<span class="hljs-comment">/* must call waitpid() */</span><br><br>    <span class="hljs-keyword">for</span> ( ; ; ) &#123;<br>        clilen = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>        <span class="hljs-keyword">if</span> ( (connfd = accept(listenfd, (SA *) &amp;cliaddr, &amp;clilen)) &lt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">if</span> (errno == EINTR)<br>                <span class="hljs-keyword">continue</span>;		<span class="hljs-comment">/* back to for() */</span><br>            <span class="hljs-keyword">else</span><br>                err_sys(<span class="hljs-string">&quot;accept error&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> ( (childpid = Fork()) == <span class="hljs-number">0</span>) &#123;	<span class="hljs-comment">/* child process */</span><br>            Close(listenfd);	<span class="hljs-comment">/* close listening socket */</span><br>            str_echo(connfd);	<span class="hljs-comment">/* process the request */</span><br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>        &#125;<br>        Close(connfd);			<span class="hljs-comment">/* parent closes connected socket */</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="5-11-accept返回前连接中止"><a href="#5-11-accept返回前连接中止" class="headerlink" title="5.11 accept返回前连接中止"></a>5.11 accept返回前连接中止</h2><p>三次握手完成建立连接后，客户TCP却发送RST，服务器端该连接已由TCP排队，在等待accept时RST到达，稍后服务器进程调用accept。</p>
-<p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.11.png" alt="image-20200213115625378"></p>
+<p><img src="5.11.png" alt="image-20200213115625378"></p>
 <p>处理连接中止依赖于不同的实现，大多数返回一个错误给服务器，作为accept的返回结果，POSIX指出返回的<strong>errno值必须是ECONNABORTED</strong>（“software caused connection abort”，软件引起的连接中止）。遇到此错误，服务器可以选择忽略它，再次调用accept函数。</p>
 <h2 id="5-12-服务器进程终止"><a href="#5-12-服务器进程终止" class="headerlink" title="5.12 服务器进程终止"></a>5.12 服务器进程终止</h2><p>启动客户/服务器，然后杀死服务器子进程，模拟服务器进程崩溃时的情况：</p>
 <ol>
@@ -262,8 +262,8 @@
 <li>  如果我们忽略SIGTERM信号，我们的服务器将由SIGKILL信号终止</li>
 <li>  如果我们不捕获也不忽略SIGTERM信号，那么起作用的是SIGTERM的默认处置（终止进程），那么服务器将被SIGTERM信号终止，SIGKILL信号不可能再发送给服务器</li>
 </ul>
-<h2 id="5-17-TCP程序例子小结"><a href="#5-17-TCP程序例子小结" class="headerlink" title="5.17 TCP程序例子小结"></a>5.17 TCP程序例子小结</h2><h3 id="从客户角度总结TCP客户-服务器"><a href="#从客户角度总结TCP客户-服务器" class="headerlink" title="从客户角度总结TCP客户/服务器"></a>从客户角度总结TCP客户/服务器</h3><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.17.1.png" alt="image-20200218171852426"></p>
-<h3 id="从服务器角度总结TCP客户-服务器"><a href="#从服务器角度总结TCP客户-服务器" class="headerlink" title="从服务器角度总结TCP客户/服务器"></a>从服务器角度总结TCP客户/服务器</h3><p><img src="/./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.17.2.png" alt="image-20200218172026706"></p>
+<h2 id="5-17-TCP程序例子小结"><a href="#5-17-TCP程序例子小结" class="headerlink" title="5.17 TCP程序例子小结"></a>5.17 TCP程序例子小结</h2><h3 id="从客户角度总结TCP客户-服务器"><a href="#从客户角度总结TCP客户-服务器" class="headerlink" title="从客户角度总结TCP客户/服务器"></a>从客户角度总结TCP客户/服务器</h3><p><img src="5.17.1.png" alt="image-20200218171852426"></p>
+<h3 id="从服务器角度总结TCP客户-服务器"><a href="#从服务器角度总结TCP客户-服务器" class="headerlink" title="从服务器角度总结TCP客户/服务器"></a>从服务器角度总结TCP客户/服务器</h3><p><img src="5.17.2.png" alt="image-20200218172026706"></p>
 <h2 id="5-18-数据格式"><a href="#5-18-数据格式" class="headerlink" title="5.18 数据格式"></a>5.18 数据格式</h2><p>传递二进制数据可能存在的问题：</p>
 <ol>
 <li> 不同的实现以不同的格式存储二进制数，大端字节序和小端字节序</li>

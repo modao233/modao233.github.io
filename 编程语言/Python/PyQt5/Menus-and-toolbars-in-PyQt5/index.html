@@ -178,7 +178,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">impAct = QAction(&#x27;Import mail&#x27;, self)<br>impMenu.addAction(impAct)<br></code></pre></td></tr></table></figure>
 
 <p>使用<code>addAction()</code>将操作添加到子菜单中。</p>
-<p><img src="/Menus-and-toolbars-in-PyQt5/image-20200819095428995.png" alt="image-20200819095428995"></p>
+<p><img src="image-20200819095428995.png" alt="image-20200819095428995"></p>
 <center>图：子菜单</center>
 
  
@@ -197,7 +197,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def toggleMenu(self, state):<br><br>    if state:<br>        self.statusbar.show()<br>    else:<br>        self.statusbar.hide()<br></code></pre></td></tr></table></figure>
 
 <p>根据操作的状态，我们显示或隐藏状态栏。</p>
-<p><img src="/Menus-and-toolbars-in-PyQt5/image-20200819095908844.png" alt="image-20200819095908844"></p>
+<p><img src="image-20200819095908844.png" alt="image-20200819095908844"></p>
 <center>图：复选菜单</center>
 
 <h2 id="PyQt5-上下文菜单"><a href="#PyQt5-上下文菜单" class="headerlink" title="PyQt5 上下文菜单"></a>PyQt5 上下文菜单</h2><p>上下文菜单（也称为弹出式菜单）是出现在某些上下文中的命令列表（<strong>常见为右键菜单</strong>）。例如，在 浏览器中，当我们右键单击网页时，我们会获得上下文菜单，可以重新加载页面、返回或查看页面源。如果我们右键单击工具栏，我们会获得用于管理工具栏的另一个上下文菜单。</p>
@@ -222,7 +222,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.toolbar = self.addToolBar(&#x27;Exit&#x27;)<br>self.toolbar.addAction(exitAction)<br></code></pre></td></tr></table></figure>
 
 <p>使用<code>addToolBar()</code>方法创建工具栏。我们使用<code>addAction()</code>将操作对象添加到工具栏中。</p>
-<p><img src="/Menus-and-toolbars-in-PyQt5/image-20200819101135395.png" alt="image-20200819101135395"></p>
+<p><img src="image-20200819101135395.png" alt="image-20200819101135395"></p>
 <center>图：工具栏</center>
 
 <h2 id="PyQt5-主窗口"><a href="#PyQt5-主窗口" class="headerlink" title="PyQt5 主窗口"></a>PyQt5 主窗口</h2><p>在本节的最后一个示例中，我们创建一个菜单栏、工具栏和状态栏，我们还创建一个中央部件。</p>
@@ -233,7 +233,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">textEdit = QTextEdit()<br>self.setCentralWidget(textEdit)<br></code></pre></td></tr></table></figure>
 
 <p>在这里，我们创建一个文本编辑部件，并将其设置为<code>QMainWindow</code>的中心部件。中央部件占用所有剩下的空间。</p>
-<p><img src="/Menus-and-toolbars-in-PyQt5/image-20200819101604469.png" alt="image-20200819101604469"></p>
+<p><img src="image-20200819101604469.png" alt="image-20200819101604469"></p>
 <center>图：主窗口</center>
 
 <p>在 PyQt5 教程的这一部分中，我们使用菜单、工具栏、状态栏和主应用程序窗口。</p>

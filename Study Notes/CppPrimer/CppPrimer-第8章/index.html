@@ -141,13 +141,13 @@
 <h2 id="8-1-IO类"><a href="#8-1-IO类" class="headerlink" title="8.1 IO类"></a>8.1 IO类</h2><p><code>iostream</code>定义了用于读写流的基本类型</p>
 <p><code>fstream</code>定义了读写命名文件的类型</p>
 <p><code>sstream</code>定义了读写内层string对象的类型</p>
-<p><img src="/CppPrimer-%E7%AC%AC8%E7%AB%A0/image-20210115163953518.png" alt="image-20210115163953518"></p>
+<p><img src="image-20210115163953518.png" alt="image-20210115163953518"></p>
 <p>为了支持使用宽字符的语言，标准库定义了一组类型和对象来操纵 wchar_t 类型的数据，宽字符版本的类型和函数的名字以一个w开始。</p>
 <p>标准库通过继承机制，使我们能忽略不同类型的流之间的差异。</p>
 <h3 id="8-1-1-IO对象无拷贝或赋值"><a href="#8-1-1-IO对象无拷贝或赋值" class="headerlink" title="8.1.1 IO对象无拷贝或赋值"></a>8.1.1 IO对象无拷贝或赋值</h3><p>不能将形参或返回类型设置为流类型。</p>
 <p>进行IO操作的函数通常以引用方式传递和返回流。读写一个IO对象会改变其状态，因此传递和返回的引用不能是const的。</p>
 <h3 id="8-1-2-条件状态"><a href="#8-1-2-条件状态" class="headerlink" title="8.1.2 条件状态"></a>8.1.2 条件状态</h3><p>IO操作可能发生错误，IO类定义了一些函数和标志，帮助我们访问和操纵流的条件状态。</p>
-<p><img src="/CppPrimer-%E7%AC%AC8%E7%AB%A0/image-20210115164926483.png" alt="image-20210115164926483"><img src="/CppPrimer-%E7%AC%AC8%E7%AB%A0/image-20210115164941636.png" alt="image-20210115164941636"></p>
+<p><img src="image-20210115164926483.png" alt="image-20210115164926483"><img src="image-20210115164941636.png" alt="image-20210115164941636"></p>
 <p>一个流一旦发生错误，其后续的IO操纵都会失败。只有当一个流处于无措状态时，我们才可以从它读取数据，向它写入数据。</p>
 <p>由于流可能处于错误状态，代码通常需要在使用之前检查其状态：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(cin &gt;&gt; word)<br>    <span class="hljs-comment">//ok: 读操作成功</span><br></code></pre></td></tr></table></figure>
@@ -201,7 +201,7 @@
 <li>  <code>fstream</code>：可以读写给定文件</li>
 </ul>
 <p>fstream继承了来自iostream的操作，还定义了特有的操作。</p>
-<p><img src="/CppPrimer-%E7%AC%AC8%E7%AB%A0/image-20210115230137796.png" alt="image-20210115230137796"></p>
+<p><img src="image-20210115230137796.png" alt="image-20210115230137796"></p>
 <p>在新C++标准中，文件名既可以是库类型string对象，也可以是C风格字符数组。旧版本只允许C风格字符数组。</p>
 <p>在要求使用基类型对象的地方，可以用继承类型的对象来代替，因此可以用fstream代替iostream&amp;，ofstream代替ostream&amp;，ifstream代替istream&amp;。</p>
 <p>如果定义了一个空文件流对象，可以随后调用open来将它与文件关联起来。如果open失败，failbit会被置位。如果open成功，则open会设置流的状态使得good()返回true。</p>
@@ -209,7 +209,7 @@
 <p>对一个已经打开的文件流调用open会失败，并导致failbit被置位，随后的试图使用文件流的操作都会失败。要将打开的文件流关联到另外一个文件，必须先用close()关闭文件。</p>
 <p>fstream会自动构造和析构，当一个ifstream对象被销毁时，close会自动被调用。</p>
 <p>每个流都有一个关联的文件模式，用来指出如何使用文件。</p>
-<p><img src="/CppPrimer-%E7%AC%AC8%E7%AB%A0/image-20210115231618727.png" alt="image-20210115231618727"></p>
+<p><img src="image-20210115231618727.png" alt="image-20210115231618727"></p>
 <p>指定文件模式有如下限制：</p>
 <ul>
 <li>  只可以对ofstream或fstream对象设定out模式</li>
@@ -235,7 +235,7 @@
 <li>  <code>stringstream</code>：既可从string读数据也可以向string写数据</li>
 </ul>
 <p>头文件sstream中定义的类型都继承自iostream头文件中定义的类型，除了继承得来的操作外，还有特有的操作。</p>
-<p><img src="/CppPrimer-%E7%AC%AC8%E7%AB%A0/image-20210115235132958.png" alt="image-20210115235132958"></p>
+<p><img src="image-20210115235132958.png" alt="image-20210115235132958"></p>
 <p>使用istringstream的例子：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/*</span><br><span class="hljs-comment">输入文件：</span><br><span class="hljs-comment">morgan 201552368 862550123</span><br><span class="hljs-comment">drew 973550130</span><br><span class="hljs-comment">lee 609550132 201550175 8005550000</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//设置数据结构</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PersonInfo</span>&#123;</span><br>    string name;<br>    vector&lt;string&gt; phones;<br>&#125;<br><br>string line, word;<span class="hljs-comment">//分别保存来自输入的一行和单词</span><br>vector&lt;PersonInfo&gt; people;<span class="hljs-comment">//保存来自输入的所有记录</span><br><span class="hljs-comment">//祖杭从输入读取数据，直至cin遇到文件尾（或其它错误）</span><br><span class="hljs-keyword">while</span>(<span class="hljs-built_in">getline</span>(cin, line))&#123;<br>    PersonInfo info;<br>    <span class="hljs-function">istringstream <span class="hljs-title">record</span><span class="hljs-params">(line)</span></span>;<span class="hljs-comment">//将记录绑定到刚读入的行</span><br>    record &gt;&gt; info.name;<br>    <span class="hljs-keyword">while</span>(record &gt;&gt; word)<br>        info.phones.<span class="hljs-built_in">push_back</span>(word);<br>    people.<span class="hljs-built_in">push_back</span>(info);<br>&#125;<br></code></pre></td></tr></table></figure>
 

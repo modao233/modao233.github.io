@@ -154,7 +154,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">lbl1 = QLabel(&#x27;ZetCode&#x27;, self)<br>lbl1.move(15, 10)<br></code></pre></td></tr></table></figure>
 
 <p>标签小部件位于<code>x=15</code>和<code>y=10</code>。</p>
-<p><img src="/Layout-management-in-PyQt5/image-20200819104258956.png" alt="image-20200819104258956"></p>
+<p><img src="image-20200819104258956.png" alt="image-20200819104258956"></p>
 <center>图：绝对定位</center>
 
 <h2 id="PyQt5-QHBoxLayout"><a href="#PyQt5-QHBoxLayout" class="headerlink" title="PyQt5 QHBoxLayout"></a>PyQt5 QHBoxLayout</h2><p><code>QHBoxLayout</code>和<code>QVBoxLayout</code>是水平和垂直排列部件的基本布局类。</p>
@@ -175,7 +175,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.setLayout(vbox)<br></code></pre></td></tr></table></figure>
 
 <p>最后，我们设置了窗口的主布局。</p>
-<p><img src="/Layout-management-in-PyQt5/image-20200819104612728.png" alt="image-20200819104612728"></p>
+<p><img src="image-20200819104612728.png" alt="image-20200819104612728"></p>
 <center>图：按钮</center> 
 
 <h2 id="PyQt5-QGridLayout"><a href="#PyQt5-QGridLayout" class="headerlink" title="PyQt5 QGridLayout"></a>PyQt5 QGridLayout</h2><p>栅格布局类<code>QGridLayout</code>是最通用的布局类。它将空间划分为行和列。</p>
@@ -195,7 +195,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">for position, name in zip(positions, names):<br>    <br>    if name == &#x27;&#x27;:<br>        continue<br>    button = QPushButton(name)<br>    grid.addWidget(button, *position)<br></code></pre></td></tr></table></figure>
 
 <p>创建按钮并使用<code>addWidget()</code>方法将按钮添加到布局中。</p>
-<p><img src="/Layout-management-in-PyQt5/image-20200819105047246.png" alt="image-20200819105047246"></p>
+<p><img src="image-20200819105047246.png" alt="image-20200819105047246"></p>
 <center>图：计算器骨架</center>
 
 <h2 id="Review-示例"><a href="#Review-示例" class="headerlink" title="Review 示例"></a>Review 示例</h2><p>部件可以跨越网格中的多个列或行。在下面的示例中，我们说明了这一点。</p>
@@ -209,7 +209,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">grid.addWidget(reviewEdit, 3, 1, 5, 1)<br></code></pre></td></tr></table></figure>
 
 <p>如果我们向网格添加部件，我们可以提供部件的行范围和列范围。在我们的案例中，我们使<code>reviewEdit</code>部件跨越 5 行。</p>
-<p><img src="/Layout-management-in-PyQt5/image-20200819105433312.png" alt="image-20200819105433312"></p>
+<p><img src="image-20200819105433312.png" alt="image-20200819105433312"></p>
 <center>图：查看示例</center>
 
 <p>PyQt5 教程的这一部分专门介绍布局管理。</p>

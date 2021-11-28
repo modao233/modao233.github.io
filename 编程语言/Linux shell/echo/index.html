@@ -145,7 +145,7 @@
 <h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>如果<code>-e</code>选项开启，则以下转义字符有独特含义</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">\\		反斜杠字符<br><br>\a		蜂鸣器警告声<br><br>\b		退格操作<br><br>\c		打印完不换行（遇到\c后<span class="hljs-built_in">echo</span>结束）<br><br>\f		文本换行，光标不换行<br><br>\n		标准换行<br><br>\r		不换行，光标移至行首（遇到\r后<span class="hljs-built_in">echo</span>结束）<br><br>\t		水平制表符<br><br>\v		垂直制表符<br><br>\0NNN	(数字0开头)打印八进制字符<br><br>\xHH	十六进制字符<br><br>\e[nm 	(n为数字代码，多个以“;”隔开)打印带特效的文字<br>    文字颜色码: <br>    重置=0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37<br><br>    背景颜色码: <br>    重置=0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47<br><br>    其他数字参数：<br>    0 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐<br></code></pre></td></tr></table></figure>
 
-<p><img src="/echo/image-20210224170351368.png" alt="image-20210224170351368"></p>
+<p><img src="image-20210224170351368.png" alt="image-20210224170351368"></p>
 <h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">&gt;	输出覆盖<br>&gt;&gt;	输出追加<br></code></pre></td></tr></table></figure>
 
 

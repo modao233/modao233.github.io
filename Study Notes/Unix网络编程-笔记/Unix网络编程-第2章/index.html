@@ -141,7 +141,7 @@
 <p>UDP：一个简单、不可靠的数据报协议</p>
 <p>TCP：一个复杂、可靠的字节流协议</p>
 <p>SCTP：一个可靠的传输协议，提供消息边界、传输级别多宿支持以及将头端阻塞减少到最小的一种方法</p>
-<h2 id="2-2-总图"><a href="#2-2-总图" class="headerlink" title="2.2 总图"></a>2.2 总图</h2><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.1.jpg" alt="2.1"></p>
+<h2 id="2-2-总图"><a href="#2-2-总图" class="headerlink" title="2.2 总图"></a>2.2 总图</h2><p><img src="2.1.jpg" alt="2.1"></p>
 <p>IPv4：网际协议版本4，使用32位ip地址</p>
 <p>IPv6：网际协议版本6，使用128位ip地址</p>
 <p>TCP：传输控制协议，是一个面向连接的协议，为用户提供可靠的全双工字节流。TCP套接字是一种流套接字</p>
@@ -183,7 +183,7 @@
 <li><p> 客户确认服务器的SYN</p>
 </li>
 </ol>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.2.jpg" alt="image-20200603104007120"></p>
+<p><img src="2.2.jpg" alt="image-20200603104007120"></p>
 <p>客户的初始序列号为<code>J</code>，服务器的初始序列号为<code>K</code></p>
 <h3 id="TCP选项"><a href="#TCP选项" class="headerlink" title="TCP选项"></a>TCP选项</h3><p>每个SYN可以含有多个TCP选项，常用选项如下：</p>
 <ol>
@@ -198,11 +198,11 @@
 <li> 接收最终FIN的原发送端TCP确认这个FIN（ACK）</li>
 </ol>
 <p><em>步骤2和3发送都出自被动关闭一端，可能被合并成一个分节</em></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.3.jpg" alt="image-20200603110023257"></p>
-<h3 id="TCP状态转换图"><a href="#TCP状态转换图" class="headerlink" title="TCP状态转换图"></a>TCP状态转换图</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231516055.png" alt="image-20200806231516055"></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.4.jpg" alt="image-20200603110518695"></p>
-<h3 id="分组交换图"><a href="#分组交换图" class="headerlink" title="分组交换图"></a>分组交换图</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231656389.png" alt="image-20200806231656389"></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.5.jpg" alt="image-20200603110704379"></p>
+<p><img src="2.3.jpg" alt="image-20200603110023257"></p>
+<h3 id="TCP状态转换图"><a href="#TCP状态转换图" class="headerlink" title="TCP状态转换图"></a>TCP状态转换图</h3><p><img src="image-20200806231516055.png" alt="image-20200806231516055"></p>
+<p><img src="2.4.jpg" alt="image-20200603110518695"></p>
+<h3 id="分组交换图"><a href="#分组交换图" class="headerlink" title="分组交换图"></a>分组交换图</h3><p><img src="image-20200806231656389.png" alt="image-20200806231656389"></p>
+<p><img src="2.5.jpg" alt="image-20200603110704379"></p>
 <p>服务器对客户请求的确认是伴随其应答发送的，这种做法称为<em>捎带</em>，通常在服务器处理请求并产生应答的时间少于200ms时发生。</p>
 <h2 id="2-7-TIME-WAIT状态"><a href="#2-7-TIME-WAIT状态" class="headerlink" title="2.7 TIME_WAIT状态"></a>2.7 TIME_WAIT状态</h2><p>执行主动关闭的端点需要经历TIME_WAIT状态，该端点停留在这个状态的持续时间是最长分节生命期（MSL）的2倍，有时候称为<code>2MSL</code>。</p>
 <p>任何TCP实现都必须为MSL选择一个值，MSL是任何IP数据报能够在因特网中存活的最长时间。</p>
@@ -226,16 +226,16 @@
 </ol>
 <p><em>步骤4和5可能捆绑了用户数据</em></p>
 <p>四路握手过程结束时，两端各自选择一个<strong>主目的地址</strong>，当不存在网络故障时，主目的地址将用作数据要发送到的默认目的地址。</p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2.6.jpg" alt="image-20200603115544233"></p>
+<p><img src="2.6.jpg" alt="image-20200603115544233"></p>
 <p>在关联的有效期内，验证标记Ta、Tz必须出现在对端发送的每个分组中出现。</p>
 <p>cookie包含设置本SCTP关联所需的所有状态，服务器的SCTP栈就不必保存所关联客户的有关信息。</p>
 <h3 id="关联终止"><a href="#关联终止" class="headerlink" title="关联终止"></a>关联终止</h3><p>SCTP不像TCP那样允许“半关闭”的关联，当一端关闭某个关联时，另一端必须停止发送新的数据，如果另一端有已经排队的数据，则发送完后完成关联关闭。</p>
 <p><strong>SCTP没有TIME_WAIT状态，因为SCTP使用了验证标记。</strong></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-7.jpg" alt="image-20200603152055341"></p>
-<h3 id="SCTP状态转换图"><a href="#SCTP状态转换图" class="headerlink" title="SCTP状态转换图"></a>SCTP状态转换图</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231816959.png" alt="image-20200806231816959"></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-8.jpg" alt="image-20200603152253351"></p>
-<h3 id="分组交换过程"><a href="#分组交换过程" class="headerlink" title="分组交换过程"></a>分组交换过程</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/image-20200806231945414.png" alt="image-20200806231945414"></p>
-<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-9.jpg" alt="image-20200603152326277"></p>
+<p><img src="2-7.jpg" alt="image-20200603152055341"></p>
+<h3 id="SCTP状态转换图"><a href="#SCTP状态转换图" class="headerlink" title="SCTP状态转换图"></a>SCTP状态转换图</h3><p><img src="image-20200806231816959.png" alt="image-20200806231816959"></p>
+<p><img src="2-8.jpg" alt="image-20200603152253351"></p>
+<h3 id="分组交换过程"><a href="#分组交换过程" class="headerlink" title="分组交换过程"></a>分组交换过程</h3><p><img src="image-20200806231945414.png" alt="image-20200806231945414"></p>
+<p><img src="2-9.jpg" alt="image-20200603152326277"></p>
 <p><em>SCTP分组中信息的单位称为块（chunk）</em></p>
 <h2 id="2-9-端口号"><a href="#2-9-端口号" class="headerlink" title="2.9 端口号"></a>2.9 端口号</h2><p>TCP、UDP和SCTP都使用16位整数的端口号来区分进程。</p>
 <p>TCP、UDP和SCTP定义了一组众所周知的端口，用于标识众所周知的服务</p>
@@ -277,9 +277,9 @@
 </li>
 <li>  SCTP基于到对端所有地址发现的最小路径MTU保持一个分片点</li>
 </ul>
-<h3 id="TCP输出"><a href="#TCP输出" class="headerlink" title="TCP输出"></a>TCP输出</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-15.jpg" alt="image-20200603171709141"></p>
-<h3 id="UDP输出"><a href="#UDP输出" class="headerlink" title="UDP输出"></a>UDP输出</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-16.jpg" alt="image-20200603171727856"></p>
-<h3 id="SCTP输出"><a href="#SCTP输出" class="headerlink" title="SCTP输出"></a>SCTP输出</h3><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC2%E7%AB%A0/2-17.jpg" alt="image-20200603171751011"></p>
+<h3 id="TCP输出"><a href="#TCP输出" class="headerlink" title="TCP输出"></a>TCP输出</h3><p><img src="2-15.jpg" alt="image-20200603171709141"></p>
+<h3 id="UDP输出"><a href="#UDP输出" class="headerlink" title="UDP输出"></a>UDP输出</h3><p><img src="2-16.jpg" alt="image-20200603171727856"></p>
+<h3 id="SCTP输出"><a href="#SCTP输出" class="headerlink" title="SCTP输出"></a>SCTP输出</h3><p><img src="2-17.jpg" alt="image-20200603171751011"></p>
 
 	</div>
 </div>

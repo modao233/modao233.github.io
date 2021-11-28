@@ -134,17 +134,17 @@
 
 <h2 id="1-设置Update-exe的代理"><a href="#1-设置Update-exe的代理" class="headerlink" title="1. 设置Update.exe的代理"></a>1. 设置Update.exe的代理</h2><p>桌面的Discord图标并不直接启动Discord.exe，而是先运行Update.exe程序进行升级检测，然后才启动Discord.exe，所以要先把Update.exe设置代理。</p>
 <p>先看看这个exe是什么语言写的</p>
-<p><img src="/PC%E7%AB%AFDiscord%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/v2-e4eb45bebf4c127120c24ce2bf47cbec_r.jpg" alt="preview"></p>
+<p><img src="v2-e4eb45bebf4c127120c24ce2bf47cbec_r.jpg" alt="preview"></p>
 <p>好的，是c#，所有c#程序都支持使用.config配置项来配置代理，将如下内容保存为 <strong>Update.exe.config</strong> 存放在Update.exe的同目录下，来给其设置代理。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br>&lt;configuration&gt;<br>  &lt;configSections&gt;<br>  &lt;/configSections&gt;<br>  &lt;system.net&gt;<br>    &lt;!--Configure fiddler local proxy--&gt;<br>    &lt;defaultProxy&gt;<br>      &lt;proxy autoDetect=&quot;false&quot; bypassonlocal=&quot;false&quot; proxyaddress=&quot;http://127.0.0.1:1080&quot; usesystemdefault=&quot;false&quot; /&gt;<br>    &lt;/defaultProxy&gt;<br>  &lt;/system.net&gt;<br>&lt;/configuration&gt;<br></code></pre></td></tr></table></figure>
 
 <p>注：127.0.0.1:1080 是小飞机默认的本地代理地址，如使用其他代理工具，请根据实际情况填写。</p>
 <h2 id="2-设置Discord-exe的代理"><a href="#2-设置Discord-exe的代理" class="headerlink" title="2. 设置Discord.exe的代理"></a>2. 设置Discord.exe的代理</h2><p>Discord是electron框架编写的，理论支持chrome的命令行参数，所以直接改快捷方式命令行即可，反编译看了一下Update.exe的源码，发现了Discord.exe增加启动参数的方法。</p>
-<p><img src="/PC%E7%AB%AFDiscord%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/v2-c0ffed0763335677490b6a1eaf82fb57_720w.jpg" alt="img"></p>
+<p><img src="v2-c0ffed0763335677490b6a1eaf82fb57_720w.jpg" alt="img"></p>
 <p>所以我们使用a=参数增加代理，复制下面的内容添加到“目标”的尾部。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">--a=--proxy-server=http://127.0.0.1:1080<br></code></pre></td></tr></table></figure>
 
-<p><img src="/PC%E7%AB%AFDiscord%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/v2-7d45ffef5cb3359a79fb1d49878a11d6_720w.jpg" alt="img"></p>
+<p><img src="v2-7d45ffef5cb3359a79fb1d49878a11d6_720w.jpg" alt="img"></p>
 <p>以上两项修改完，你可以运行快捷方式无需全局代理启动Discord了。</p>
 <p><strong>V2RayN默认没开http代理，你要打开http代理才行。 另外HTTP代理端口号是SOCKS5代理端口号+1，也就是说如果默认是10808，那么HTTP代理打开后，端口号是10809</strong></p>
 

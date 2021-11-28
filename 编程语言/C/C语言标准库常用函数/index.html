@@ -151,7 +151,7 @@
 <p><strong>错误处理</strong></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clearerr</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">feof</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ferror</span><span class="hljs-params">(FILE *stream)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">perror</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *s)</span></span>;<br></code></pre></td></tr></table></figure>
 
-<h2 id="字符类别测试：-lt-ctype-h-gt"><a href="#字符类别测试：-lt-ctype-h-gt" class="headerlink" title="字符类别测试：&lt;ctype.h&gt;"></a>字符类别测试：&lt;ctype.h&gt;</h2><p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214151154168.png" alt="image-20210214151154168"></p>
+<h2 id="字符类别测试：-lt-ctype-h-gt"><a href="#字符类别测试：-lt-ctype-h-gt" class="headerlink" title="字符类别测试：&lt;ctype.h&gt;"></a>字符类别测试：&lt;ctype.h&gt;</h2><p><img src="image-20210214151154168.png" alt="image-20210214151154168"></p>
 <ul>
 <li>参数类型：<ul>
 <li>  unsigned char类型</li>
@@ -160,7 +160,7 @@
 </li>
 <li>  返回值类型：int</li>
 </ul>
-<h2 id="字符串函数：-lt-string-h-gt"><a href="#字符串函数：-lt-string-h-gt" class="headerlink" title="字符串函数：&lt;string.h&gt;"></a>字符串函数：&lt;string.h&gt;</h2><p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214153144129.png" alt="image-20210214153144129"></p>
+<h2 id="字符串函数：-lt-string-h-gt"><a href="#字符串函数：-lt-string-h-gt" class="headerlink" title="字符串函数：&lt;string.h&gt;"></a>字符串函数：&lt;string.h&gt;</h2><p><img src="image-20210214153144129.png" alt="image-20210214153144129"></p>
 <ul>
 <li>参数类型：<ul>
 <li>  变量s和t：char *</li>
@@ -170,7 +170,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214153638159.png" alt="image-20210214153638159"></p>
+<p><img src="image-20210214153638159.png" alt="image-20210214153638159"></p>
 <p>以mem开头的函数按照字符数组的方式操作对象，主要目的是提供一个高效的函数接口。</p>
 <p>参数顺序是：目标s = 源ct</p>
 <p>参数类型：</p>
@@ -180,7 +180,7 @@
 <li>  n：size_t</li>
 <li>  c：int（将被转换为unsigned char类型）</li>
 </ul>
-<h2 id="数学函数：-lt-math-h-gt"><a href="#数学函数：-lt-math-h-gt" class="headerlink" title="数学函数：&lt;math.h&gt;"></a>数学函数：&lt;math.h&gt;</h2><p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214154006707.png" alt="image-20210214154006707"></p>
+<h2 id="数学函数：-lt-math-h-gt"><a href="#数学函数：-lt-math-h-gt" class="headerlink" title="数学函数：&lt;math.h&gt;"></a>数学函数：&lt;math.h&gt;</h2><p><img src="image-20210214154006707.png" alt="image-20210214154006707"></p>
 <p>参数类型;</p>
 <ul>
 <li>  x和y：double</li>
@@ -211,13 +211,13 @@
 
 <h2 id="日期和时间函数：-lt-time-h-gt"><a href="#日期和时间函数：-lt-time-h-gt" class="headerlink" title="日期和时间函数：&lt;time.h&gt;"></a>日期和时间函数：&lt;time.h&gt;</h2><p>表示时间的算术类型：clock_t和time_t</p>
 <p>日历时间结构体tm，其成员包括：</p>
-<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214195337120.png" alt="image-20210214195337120"></p>
+<p><img src="image-20210214195337120.png" alt="image-20210214195337120"></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">clock_t</span> <span class="hljs-title">clock</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">time_t</span> <span class="hljs-title">time</span><span class="hljs-params">(<span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">difftime</span><span class="hljs-params">(<span class="hljs-keyword">time_t</span> time2, <span class="hljs-keyword">time_t</span> time1)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">time_t</span> <span class="hljs-title">mktime</span><span class="hljs-params">(struct tm *tp)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">asctime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> struct tm *tp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">char</span> *<span class="hljs-title">ctime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><span class="hljs-function">struct tm *<span class="hljs-title">gmtime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><span class="hljs-function">struct tm *<span class="hljs-title">localtime</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">time_t</span> *tp)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">size_t</span> <span class="hljs-title">strftime</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *s, <span class="hljs-keyword">size_t</span> smax, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *fmt, <span class="hljs-keyword">const</span> struct tm *tp)</span></span>;<br></code></pre></td></tr></table></figure>
 
 <h2 id="与具体实现相关的限制：-lt-limits-h-gt-和-lt-float-h-gt"><a href="#与具体实现相关的限制：-lt-limits-h-gt-和-lt-float-h-gt" class="headerlink" title="与具体实现相关的限制：&lt;limits.h&gt;和&lt;float.h&gt;"></a>与具体实现相关的限制：&lt;limits.h&gt;和&lt;float.h&gt;</h2><p>头文件&lt;limits.h&gt;定义了一些表示整型大小的常量。列出的值是可接受的最小值。</p>
-<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214201600788.png" alt="image-20210214201600788"></p>
+<p><img src="image-20210214201600788.png" alt="image-20210214201600788"></p>
 <p>下表列出的名字是&lt;float.h&gt;的子集，表示与浮点算术运算相关的一些常量，给出的每个值代表相应量的最小取值。</p>
-<p><img src="/C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/image-20210214201640885.png" alt="image-20210214201640885"></p>
+<p><img src="image-20210214201640885.png" alt="image-20210214201640885"></p>
 
 	</div>
 </div>

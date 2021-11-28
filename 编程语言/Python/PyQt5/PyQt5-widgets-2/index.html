@@ -164,7 +164,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def onChanged(self, text):<br>    <br>    self.lbl.setText(text)<br>    self.lbl.adjustSize() <br></code></pre></td></tr></table></figure>
 
 <p>在<code>onChanged</code>方法内，我们将键入的文本设置为标签部件的内容。我们调用<code>adjustSize</code>方法将标签的大小调整到文本的长度。</p>
-<p><img src="/PyQt5-widgets-2/image-20200820164758002.png" alt="image-20200820164758002"></p>
+<p><img src="image-20200820164758002.png" alt="image-20200820164758002"></p>
 <center>图： QlineEdit</center>
 
 <h2 id="PyQt5-QSplitter"><a href="#PyQt5-QSplitter" class="headerlink" title="PyQt5 QSplitter"></a>PyQt5 QSplitter</h2><p><code>QSplitter</code>允许用户通过拖动子部件之间的边界来控制子部件的大小。在我们的示例中，我们显示了三个<code>QFrame</code>部件被两个拆分器拆分开来。</p>
@@ -181,7 +181,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">splitter2 = QSplitter(Qt.Vertical)<br>splitter2.addWidget(splitter1)<br></code></pre></td></tr></table></figure>
 
 <p>我们还可以在拆分器部件里添加拆分器。</p>
-<p><img src="/PyQt5-widgets-2/image-20200820165311876.png" alt="image-20200820165311876"></p>
+<p><img src="image-20200820165311876.png" alt="image-20200820165311876"></p>
 <center>图： QSplitter 小部件</center> 
 
 <h2 id="PyQt5-QComboBox"><a href="#PyQt5-QComboBox" class="headerlink" title="PyQt5 QComboBox"></a>PyQt5 QComboBox</h2><p><code>QComboBox</code>是允许用户从选项列表中进行选择的部件。</p>
@@ -198,7 +198,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def onActivated(self, text):<br>  <br>    self.lbl.setText(text)<br>    self.lbl.adjustSize() <br></code></pre></td></tr></table></figure>
 
 <p>在方法内，我们将所选项目的文本设置为标签部件的内容。我们调整标签的大小。</p>
-<p><img src="/PyQt5-widgets-2/image-20200820165603513.png" alt="image-20200820165603513"></p>
+<p><img src="image-20200820165603513.png" alt="image-20200820165603513"></p>
 <center>图： QComboBox</center>
 	</div>
 </div>

@@ -150,7 +150,7 @@
 <li>  security表:<strong><code>input,forward,output</code></strong></li>
 </ul>
 <p>默认的 <code>filter</code> 表包含 <code>INPUT</code>， <code>OUTPUT</code> 和 <code>FORWARD</code> 3条内建的链，这3条链作用于数据包过滤过程中的不同时间点，如该<a target="_blank" rel="noopener" href="https://www.frozentux.net/iptables-tutorial/chunkyhtml/images/tables_traverse.jpg">流程图</a>所示。</p>
-<p><img src="/iptables%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE_pic/tables_traverse.jpg" alt="image-20210531162801258"></p>
+<p><img src="tables_traverse.jpg" alt="image-20210531162801258"></p>
 <p>默认情况下，任何链中都没有规则。可以向链中添加自己想用的规则。链的默认规则通常设置为 <code>ACCEPT</code>，如果想确保任何包都不能通过规则集，那么可以重置为 <code>DROP</code>。默认的规则总是在一条链的最后生效，所以在默认规则生效前数据包需要通过所有存在的规则。</p>
 <p>用户可以加入自己定义的链，从而使规则集更有效并且易于修改。</p>
 <h3 id="规则-（Rules）"><a href="#规则-（Rules）" class="headerlink" title="规则 （Rules）"></a>规则 （Rules）</h3><p>数据包的过滤基于 <strong>规则</strong>。<strong>规则</strong>由一个<em>目标</em>（数据包包匹配所有条件后的动作）和很多<em>匹配</em>（导致该规则可以应用的数据包所满足的条件）指定。</p>

@@ -141,7 +141,7 @@
 <p>在本章中，我们将创建一个俄罗斯方块的游戏模仿。</p>
 <h2 id="俄罗斯方块"><a href="#俄罗斯方块" class="headerlink" title="俄罗斯方块"></a>俄罗斯方块</h2><p>俄罗斯方块 游戏是有史以来最受欢迎的电脑游戏之一。最初的游戏是由俄罗斯程序员阿列克谢·帕吉特诺夫在1985年设计和编程的。自那时起，俄罗斯方块 几乎在每个计算机平台上都有各种变化。</p>
 <p>俄罗斯方块被称为下降块益智游戏。在这个游戏中，我们有七种不同的形状称为四角形：一个S形，一个Z形，一个T形，一个L形，一个线形，一个镜像L形状，和一个方形。这些形状中每个形状都用四个正方形组成。形状从木板上掉下来了。俄罗斯方块游戏的对象是移动和旋转形状，以便它们尽可能适合。如果我们设法形成一个行，行被摧毁，我们得分。我们玩俄罗斯方块游戏， 直到我们顶部溢出。</p>
-<p><img src="/Tetris-in-PyQt5/image-20200820214701778.png" alt="image-20200820214701778"></p>
+<p><img src="image-20200820214701778.png" alt="image-20200820214701778"></p>
 <center>图： 特特罗米诺</center>
 
 <p>PyQt5 是一个旨在创建应用程序的工具包。还有其他库旨在创建计算机游戏。然而，PyQt5 和其他应用程序工具包可用于创建简单的游戏。</p>
@@ -238,12 +238,12 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.coords = [[0,0] for i in range(4)]<br></code></pre></td></tr></table></figure>
 
 <p>创建时，我们创建一个空坐标列表。列表将保存四分块的坐标。</p>
-<p><img src="http://zetcode.com/img/gui/pyqt5/coordinates.png" alt="Coordinates">图：坐标</p>
+<p><img src="coordinates.png" alt="Coordinates">图：坐标</p>
 <p>上图将有助于更好地理解坐标值。例如，元对 （0， -1）， （0， 0）， （-1， 0）， （-1， -1） 表示 Z 形状。该图说明了形状。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def rotateLeft(self):<br>    &quot;&quot;&quot;rotates shape to the left&quot;&quot;&quot;<br><br>    if self.pieceShape == Tetrominoe.SquareShape:<br>        return self<br><br>    result = Shape()<br>    result.pieceShape = self.pieceShape<br><br>    for i in range(4):<br><br>        result.setX(i, self.y(i))<br>        result.setY(i, -self.x(i))<br><br>    return result<br></code></pre></td></tr></table></figure>
 
 <p><code>rotateLeft</code>方法将一块向左旋转。广场不必旋转。这就是为什么我们只返回对当前对象的引用。将创建一个新作品，其坐标设置为旋转件的坐标。</p>
-<p><img src="/Tetris-in-PyQt5/image-20200820220337438.png" alt="image-20200820220337438"></p>
+<p><img src="image-20200820220337438.png" alt="image-20200820220337438"></p>
 <center>图： 特瑞斯</center>
 
 <p>这是 Pyqt5 中的特瑞斯游戏。</p>
