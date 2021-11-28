@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+
+</div>
+
+<div class="content-area">
+	<div class="title">
+		uint8_t、uint16_t、uint32_t、uint64_t
+	</div>
+	
+	<div class="page-date">
+		2021-03-06
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C">C</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>uint8_t、uint16_t、uint32_t、uint64_t</p>
+<span id="more"></span>
+
+<p>uint8_t / uint16_t / uint32_t /uint64_t 这些数据类型是 C99 中定义的，具体定义在：/usr/include/stdint.h   </p>
+<p>ISO C99: 7.18 Integer types &lt;stdint.h&gt;</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* There is some amount of overlap with &lt;sys/types.h&gt; as known by inet code */</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> __int8_t_defined</span><br><span class="hljs-meta"># <span class="hljs-meta-keyword">define</span> __int8_t_defined</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">signed</span> <span class="hljs-keyword">char</span>             <span class="hljs-keyword">int8_t</span>; <br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">short</span> <span class="hljs-keyword">int</span>               <span class="hljs-keyword">int16_t</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">int</span>                     <span class="hljs-keyword">int32_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">if</span> __WORDSIZE == 64</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>                <span class="hljs-keyword">int64_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">else</span></span><br>__extension__<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>           <span class="hljs-keyword">int64_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br> <br><span class="hljs-comment">/* Unsigned.  */</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>           <span class="hljs-keyword">uint8_t</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> <span class="hljs-keyword">int</span>      <span class="hljs-keyword">uint16_t</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> __uint32_t_defined</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>            <span class="hljs-keyword">uint32_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">define</span> __uint32_t_defined</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> __WORDSIZE == 64</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>       <span class="hljs-keyword">uint64_t</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>__extension__<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>  <span class="hljs-keyword">uint64_t</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<p>格式化输出：</p>
+<p>unit64_t：%llu   </p>
+<p>unit32_t：%u</p>
+<p>unit16_t：%hu</p>
+<p>注意：必须小心 uint8_t 类型变量的输出</p>
+<p>uint8_t fieldID = 67;<br>cerr&lt;&lt; “field=” &lt;&lt; fieldID &lt;&lt;endl;</p>
+<p>结果发现是：field=C 而 不是 field=67</p>
+<p>这是由于 typedef unsigned char uint8_t;</p>
+<p>uint8_t 实际是一个 char，cerr &lt;&lt; 会输出 ASCII 码是 67 的字符，而不是 67 这个数字。因此，输出 uint8_t 类型的变量实际输出的是其对应的字符, 而不是真实数字，若要输出 67，则可以这样：</p>
+<p>cerr&lt;&lt; “field=” &lt;&lt; (uint16_t) fieldID &lt;&lt;endl;</p>
+<p>结果是：field=67</p>
+<p>同样，uint8_t 类型变量转化为字符串以及字符串转化为 uint8_t 类型变量都要注意</p>
+<ul>
+<li>  uint8_t类型变量转化为字符串时得到的会是ASCII码对应的字符</li>
+<li>  字符串转化为 uint8_t 变量时, 会将字符串的第一个字符赋值给变量</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdint.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sstream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br> <br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">uint8_t</span> fieldID = <span class="hljs-number">67</span>;<br> <br>    <span class="hljs-comment">// uint8_t --&gt; string</span><br>    string s;<br>    ostringstream strOStream;<br>    strOStream &lt;&lt; fieldID;<br>    s = strOStream.<span class="hljs-built_in">str</span>();<br>    cerr &lt;&lt; s &lt;&lt; endl;<br>    <br>    <span class="hljs-comment">// string --&gt; uint8_t</span><br>    s = <span class="hljs-string">&quot;65&quot;</span>; <br>    stringstream strStream;<br>    strStream &lt;&lt; s;<br>    strStream &gt;&gt; fieldID;<br>    strStream.<span class="hljs-built_in">clear</span>();<br>    cerr &lt;&lt; fieldID &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">c</span><br><span class="hljs-comment">6</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C/uint8_t%E3%80%81uint16_t%E3%80%81%20uint32_t%E3%80%81uint64_t/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

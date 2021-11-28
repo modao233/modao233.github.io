@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-text">一、简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%AF%A6%E8%A7%A3"><span class="toc-text">二、详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%AD%90Shell"><span class="toc-text">1、子Shell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Shell%E7%9A%84%E9%99%90%E5%88%B6%E6%A8%A1%E5%BC%8F"><span class="toc-text">2、Shell的限制模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86"><span class="toc-text">3、进程处理</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		(转载)关于子shell
+	</div>
+	
+	<div class="page-date">
+		2020-11-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Shell">Shell</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/taiyang1987912/article/details/39529291">shell浅谈之九子shell与进程处理</a></p>
+<p>作者：<a target="_blank" rel="noopener" href="https://me.csdn.net/taiyang1987912">乌托邦2号</a></p>
+<span id="more"></span>
+
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Linux是一种用户控制的多作业操作系统，系统允许多个系统用户同时提交作业，而一个系统用户又可能用多个shell登录，每个系统用户可以用一个shell提交多个作业。</p>
+<p>了解Bash Shell在多作业管理和进程处理方面的命名和机制有助于理解多用户、多作业的系统。</p>
+<h2 id="二、详解"><a href="#二、详解" class="headerlink" title="二、详解"></a>二、详解</h2><h3 id="1、子Shell"><a href="#1、子Shell" class="headerlink" title="1、子Shell"></a>1、子Shell</h3><p>父子Shell是相对的，它描述了两个Shell进程的fork关系，父Shell指在终端模拟器的shell进程，子Shell是由父Shell创建的进程。父Shell创建子Shell调用的是fork函数。</p>
+<p>创建子shell的情况：</p>
+<ul>
+<li>  使用外部命令</li>
+<li>  使用圆括号结构，强制将其中的命令运行在子shell中，bash3后定义了内部变量BASH_SUBSHELL记录子shell的层次。</li>
+</ul>
+<p>Shell命令可以分为</p>
+<ul>
+<li>  内建命令（Shell本身执行的命令），不创建子Shell。内建命令是包含在Shell工具包中的命令，其中保留字对Shell有特殊含义，保留字本身不是一个命令而是命令结构的一部分。</li>
+<li>  外部命令（fork创建出来的子shell执行的命令），创建子Shell。</li>
+</ul>
+<p>冒号是Shell中一个特殊的符号</p>
+<ul>
+<li>  冒号可以表示永真（相当于TRUE关键字）如<code>while  :;do...done</code>（while循环的条件始终为真）</li>
+<li>  冒号可以清空一个文件，<code>:&gt;log</code>将冒号重定向到文件，log文件内容被清空，所 以<code>:&gt;</code>命名是常用的清空文件的命令</li>
+<li>  冒号最重要的用法是：不做任何事，<strong>只做参数展开</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#圆括号结构用法</span><br><span class="hljs-comment">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Father Shell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span>      <span class="hljs-comment">#打印父shell的层次，为0</span><br>outervar=OUTER                              <span class="hljs-comment">#父shell的变量outervar</span><br><br>(                                           <span class="hljs-comment">#利用圆括号结构创建子shell</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;SubShell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span>        <span class="hljs-comment">#子shell的层次为1</span><br>(<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;GrandSubShell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span> <span class="hljs-comment">#孙shell的层次为2</span><br>) <br>innervar=INNER                            <span class="hljs-comment">#子shell的变量</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;innervar=<span class="hljs-variable">$innervar</span>&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;outervar=<span class="hljs-variable">$outervar</span>&quot;</span>                 <span class="hljs-comment">#outervar继承了符shell所赋给它的值</span><br>)                                           <span class="hljs-comment">#回到父shell</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Father Shell is: <span class="hljs-variable">$BASH_SUBSHELL</span>&quot;</span>   <br><br><span class="hljs-keyword">if</span> [ -z <span class="hljs-string">&quot;<span class="hljs-variable">$innervar</span>&quot;</span> ]                      <span class="hljs-comment">#子shell中定义变量为空，则说明</span><br><span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;The \$innervar is not defined in main body.&quot;</span><br><span class="hljs-keyword">else</span><br>   <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;The \$innervar is defined in main body.&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140925143613826" alt="img"></p>
+<p><strong>子shell不影响父shell的环境：</strong></p>
+<ul>
+<li>  子shell中变量的作用域不能在父Shell中生效</li>
+<li>  在子shell中将变量export成环境变量，子shell对变量的更改仍然对父shell不可见</li>
+</ul>
+<p><strong>子shell能继承父shell的一些属性，且子shell不能反过来改变父shell的属性：</strong></p>
+<ul>
+<li><p>  子shell能够从父shell继承得来的属性有：当前的工作目录、环境变量、标准输入输出和错误输出、所有已打开的文件描述符、忽略的信号。</p>
+</li>
+<li><p>  子shell不能从父shell继承得来的属性是：除了环境变量 和.bashrc文件中定义变量之外的shell变量、未被忽略的信号处理。</p>
+</li>
+</ul>
+<p>shell是允许嵌套调用的，可以在函数或圆括号结构内再次调用圆括号结构创建子shell</p>
+<p>利用子shell测试变量是否已经定义的例子：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-keyword">if</span> (<span class="hljs-built_in">set</span> -u; : <span class="hljs-variable">$var</span>)  <span class="hljs-comment">#冒号与$间有空格</span><br><span class="hljs-keyword">then</span> <br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Variable is set.&quot;</span><br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+
+<p>set -u命令用于设置shell选项，u是nounset表示当使用未定义的变量时，输出错误信息并强制退出。</p>
+<p><code>:  $var</code>中冒号是不做任何事只是参数展开，若没有冒号则<code>$var</code>被解释成shell命令，shell试图去执行var变量的值。加上冒号，shell试图将var变量进行参数展开但不会试图去执行var变量的值。</p>
+<p>shell可以接收到父shell从管道传送过来的数据，例：<code>cat /etc/passwd | (grep &#39;root&#39;)</code>，使用管道符向子shell发送数据，符shell将cat的结果通过管道发送给子shell，子shell执行grep命令。</p>
+<p>shell应用将一个计算量较大的任务分成若干个小任务并行执行。</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#子shell用于并行计算的用法</span><br><span class="hljs-comment">#!/bin/bash</span><br><br><span class="hljs-comment">#用圆括号结构创建三个子shell同时执行</span><br>(grep -r <span class="hljs-string">&quot;root&quot;</span> /etc/* | sort &gt; part1)       &amp;       <span class="hljs-comment">#与root关键字匹配的行，排序后输出到某文件</span><br>(grep -r <span class="hljs-string">&quot;root&quot;</span> /usr/<span class="hljs-built_in">local</span>/* | sort &gt; part2) &amp;<br>(grep -r <span class="hljs-string">&quot;root&quot;</span> /lib/* | sort &gt; part3)       &amp;<br><br><span class="hljs-built_in">wait</span>                                                 <span class="hljs-comment">#等待后台执行的作业全部完成</span><br>cat part1 part2 part3 | sort &gt; parttotal<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Run time of this script is:<span class="hljs-variable">$SECONDS</span>&quot;</span>           <span class="hljs-comment">#输出该脚本执行时间</span><br></code></pre></td></tr></table></figure>
+
+<p><code>grep  -r</code>递归搜索，搜索时的计算量比较大，对每个目录创建一个子shell进行并行处理，然后合并。</p>
+<p>每个圆括号之外有一个&amp;符号，表示此命令放在后台执行，继续执行下一条命令；若无&amp;符号则需要一条命令执行完毕后再执行下一条命令，就没真正实现并行计算。</p>
+<p>wait是一个内建命令，用于等待后台执行的作业全部完成后再执行下面的命令；若没有wait，脚本将三个子shell放在后台执行后直接执行合并临时文件的命令，三个子shell可能并未执行完毕，此时临时文件中的结果不完整，合并后也将产生不完整的结果。</p>
+<h3 id="2、Shell的限制模式"><a href="#2、Shell的限制模式" class="headerlink" title="2、Shell的限制模式"></a>2、Shell的限制模式</h3><p>处于限制模式下的shell运行一个脚本或脚本片段，将会禁用一些命令或操作。shell的限制模式是Linux系统基于安全方面的考虑，目的为了限制脚本用户的权限，并尽可能地减小脚本所带来的危害。</p>
+<p>的限制模式限制的操作有：用cd命令更改当前工作目录、更改重要的环境变量的值<code>（$PATH、$SHELL、$BASH_ENV、$ENV 和$SHELLOPTS）</code>、输出重定向符号<code>（&gt;、&gt;&gt;、&gt;|、&gt;&amp;、&lt;&gt;和&amp;&gt;）</code>、调用含有一个或多个斜杠的命令名称、使用内建命令exec、使用set+r等命令关闭限制模式。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#正常模式和限制模式的区别</span><br><span class="hljs-comment">#!/bin/bash</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Changing current work directory&quot;</span> <br><span class="hljs-built_in">cd</span> /etc                                    <span class="hljs-comment">#正常模式下改变当前工作目录</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Now in <span class="hljs-variable">$PWD</span>&quot;</span><br><br><span class="hljs-built_in">set</span> -r                                     <span class="hljs-comment">#shell选项使代码运行在限制模式下（r是restricted）</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;------IN RESTRICTED MODE---------&quot;</span>   <span class="hljs-comment">#开始运行在限制模式下</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Trying to change directory&quot;</span><br><span class="hljs-built_in">cd</span> /usr/<span class="hljs-built_in">local</span>                              <span class="hljs-comment">#cd命令出错，被限制了</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;\$SHELLOPTS=<span class="hljs-variable">$SHELLOPTS</span>&quot;</span>              <span class="hljs-comment">#可以读取$SHELLOPTS变量的值</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Now in `pwd`&quot;</span>                        <span class="hljs-comment">#还是/etc为当前目录</span><br><span class="hljs-built_in">echo</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Trying to change \$SHELL&quot;</span><br>SHELL=<span class="hljs-string">&quot;/bin/sh&quot;</span>                            <span class="hljs-comment">#$SHELL变量在限制模式下只读</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;\$SHELL=<span class="hljs-variable">$SHELL</span>&quot;</span>              <br><span class="hljs-built_in">echo</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Trying to redirect output to a file&quot;</span><br>who &gt; outputnull                          <span class="hljs-comment">#输出重定向失败，被限制了</span><br>ls -l outputnull                          <span class="hljs-comment">#outputnull没有被创建</span><br></code></pre></td></tr></table></figure>
+
+<p>开启shell的restricted选项进入限制模式，两种方式：</p>
+<ol>
+<li> <code>set -r</code></li>
+<li> <code>#!/bin/bash -r</code></li>
+</ol>
+<h3 id="3、进程处理"><a href="#3、进程处理" class="headerlink" title="3、进程处理"></a>3、进程处理</h3><p><strong>进程角度看shell执行</strong></p>
+<p>内建命令是由shell本身执行的命令，而外部命令则需要创建新的进程来执行。从进程角度归纳shell执行内建命令和外部命令的过程。</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926135700456" alt="img"></p>
+<p>当shell命令不是内建命令时，linux利用fork对一个子进程执行该命令，父进程处于等待状态。若该命令或脚本中包含编译过的可执行文件，则内核将新程序装载到内存，并覆盖子进程，执行结束退出子进程，父进程被重新激活开始读取shell的后一条命令。</p>
+<p>fork是系统调用，fork创建的子进程是父进程的副本，两个进程具有同样的环境、打开的文件、用户标志符、当前工作目录和信号等。</p>
+<p>fork后exec，重新装载另一个程序。</p>
+<p><strong>进程和作业</strong></p>
+<p>作业是用户层面的概念，而进程是操作系统层面的概念。其区别：一个正在执行的进程称为作业，一个作业可以包含多个进程，用户提交作业到操作系统，作业的完成可能依赖于启动多个进程。</p>
+<p>进程的三种基本状态：</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926141255187" alt="img"></p>
+<p>作业号标识的是在该shell下运行的所有进程，而进程号就标识整个系统下正在运行的所有进程。</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926142025238" alt="img"></p>
+<p>其中[1]是作业号，7574是进程号。</p>
+<p><strong>作业控制</strong></p>
+<p>作业是针对shell而言的，有前台运行和后台运行。内建命令fg可将后台运行的作业放到前台，而&amp;符号使得作业在后台运行。</p>
+<p>fg可以指定作业的方法（Ctrl+Z组合键可将正在运行的作业阻塞）：</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926143152484" alt="img"></p>
+<p>bg命令可将阻塞状态的作业转入后台运行。</p>
+<p>jobs查看作业列表。</p>
+<p>disown用于从shell的作业表中删除作业。</p>
+<p>wait命令用与等待后台作业完成。</p>
+<p><strong>信号</strong></p>
+<p>信号是在软件层次上对中断机制的一种模拟，原理上一个进程收到一个信号与处理器收到一个中断请求是一样的。</p>
+<p>信号事件的来源：硬件来源（比如按下键盘或其他 硬件故障）、软件来源（比如系统函数kill、raise、alarm、setitimer和sigqueue函数）。</p>
+<p>信号是进程间通信机制中唯一的异步通信机制。</p>
+<p>向进程发送信号大多通过Ctrl键加上一些功能键来实现。</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926145812843" alt="img"></p>
+<p>除了利用组合键发送信号外，内建命令kill可用于向进程发送TERM（即terminal）信号，功能和INT信号类似用于停止进程。kill可以通过进程号、作业号（kill %n）或进程命令名想任何作业发送信号。kill杀掉自己本身的进程（记录了运行该脚本的进程号），其中大于128的退出码表示脚本是被系统强行结束的。kill -l可看出，kill命令一共能发出64种信号。</p>
+<p><strong>trap命令</strong></p>
+<p>trap是Linux的内建命令，用于捕捉信号，trap命令可以指定收到某种信号时所执行的命令。trap命令的格式如下：trap command sig1 sig2 … sigN，当接收到sinN中任意一个信号时，执行command命令，command命令完成后继续接收到信号前的操作，直到脚本结束。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">trap</span> <span class="hljs-string">&quot;echo &#x27;You hit Ctrl+c!&#x27;&quot;</span> INT<br><br><span class="hljs-keyword">while</span> :; <span class="hljs-keyword">do</span><br>  <span class="hljs-built_in">let</span> count=count+1<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This is the <span class="hljs-variable">$count</span> sleep&quot;</span><br>  sleep 5<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<p> <img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926152749436" alt="img"></p>
+<p>利用trap命令捕捉INT信号（即与Ctrl+c绑定的中断信号）。trap还可以忽略某些信号，将command用空字符串代替即可，如trap “” TERM INT，忽略kill %n和Ctrl+c发送的信号（kill发送的是TERM信号）。LInux更强劲的杀死进程的命令：kill -9 进程号（或kill -9 %n作业号）等价与kill -KILL 进程号。</p>
+<p><strong>子shell的信号</strong></p>
+<p>子shell能继承父shell所忽略的信号，但是不能继承父shell未忽略的信号。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><br><span class="hljs-built_in">trap</span> <span class="hljs-string">&quot;&quot;</span> QUIT            <span class="hljs-comment">#忽略kill -3信号，并且子shell能继承父shell所忽略的信号</span><br><span class="hljs-built_in">trap</span> <span class="hljs-string">&quot;echo &#x27;You want to kill me&#x27;&quot;</span> TERM    <span class="hljs-comment">#父shell处理的信号，子shell不能继承</span><br>(                       <span class="hljs-comment">#子shell，子进程号比父进程号大1</span><br><span class="hljs-keyword">while</span> :; <span class="hljs-keyword">do</span><br><span class="hljs-built_in">let</span> count=count+1<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;This is the <span class="hljs-variable">$count</span> sleep&quot;</span><br>sleep 5<br><span class="hljs-keyword">done</span><br>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926164007320" alt="img"></p>
+<p>父shell忽略QUIT信号但不忽略TERM信号，9987为父 shell进程号9988为子shell进程号，kill -3 9987向父shell发送3信号和kill -3  9988向子shell发送3信号，均未退出，可以看出子shell对QUIT的忽略是从父shell继承而来的。</p>
+<p>kill  9987向父shell发送TERM信号，父shell仍存活（因处理了TERM信号），kill  9988向子shell发送TERM信号，子shell退出，随后父shell执行完毕结束。TERM信号能杀掉子shell，说明子shell不能继承 父shel未忽略的信号。</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/20140926164031984" alt="img"></p>
+<p>最后出现父shell响应TERM信号的输出，是因为子shell执行fork一个子进程后父shell处于等待状态，只有子shell退出后父shell才会被激活执行输出。</p>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Linux%20shell/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E4%B9%9D%E5%AD%90shell%E4%B8%8E%E8%BF%9B%E7%A8%8B%E5%A4%84%E7%90%86/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

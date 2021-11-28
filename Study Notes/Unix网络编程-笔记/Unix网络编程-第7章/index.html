@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">7.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-getsockopt%E5%92%8Csetsockopt%E5%87%BD%E6%95%B0"><span class="toc-text">7.2 getsockopt和setsockopt函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-3-%E6%A3%80%E6%9F%A5%E9%80%89%E9%A1%B9%E6%98%AF%E5%90%A6%E5%8F%97%E6%94%AF%E6%8C%81%E5%B9%B6%E8%8E%B7%E5%8F%96%E9%BB%98%E8%AE%A4%E5%80%BC"><span class="toc-text">7.3 检查选项是否受支持并获取默认值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-4-%E5%A5%97%E6%8E%A5%E5%AD%97%E7%8A%B6%E6%80%81"><span class="toc-text">7.4 套接字状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-5-%E9%80%9A%E7%94%A8%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">7.5 通用套接字选项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SO-BROADCAST%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">SO_BROADCAST套接字选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SO-DEBUG%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">SO_DEBUG套接字选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SO-DONTROUTE%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">SO_DONTROUTE套接字选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SO-ERROR%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">SO_ERROR套接字选项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-6-ipv4%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">7.6 ipv4套接字选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-7-icmpv6%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">7.7 icmpv6套接字选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-8-ipv6%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">7.8 ipv6套接字选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-9-tcp%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">7.9 tcp套接字选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-10-sctp%E5%A5%97%E6%8E%A5%E5%AD%97%E9%80%89%E9%A1%B9"><span class="toc-text">7.10 sctp套接字选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-11-fcntl%E5%87%BD%E6%95%B0"><span class="toc-text">7.11 fcntl函数</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Unix网络编程-第7章 套接字选项
+	</div>
+	
+	<div class="page-date">
+		2019-12-26
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Unix网络编程">Unix网络编程</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>第7章 套接字选项</p>
+<span id="more"></span>
+
+<h2 id="7-1-概述"><a href="#7-1-概述" class="headerlink" title="7.1 概述"></a>7.1 概述</h2><p>获取和设置套接字选项的方法：</p>
+<ul>
+<li>  getsockopt和setsockopt函数</li>
+<li>  fcntl函数</li>
+<li>  ioctl函数</li>
+</ul>
+<h2 id="7-2-getsockopt和setsockopt函数"><a href="#7-2-getsockopt和setsockopt函数" class="headerlink" title="7.2 getsockopt和setsockopt函数"></a>7.2 getsockopt和setsockopt函数</h2><p>这两个函数仅用于套接字：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">//若成功都返回0，出错都返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getsockopt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">int</span> level, <span class="hljs-keyword">int</span> optname, <span class="hljs-keyword">void</span> *optval, <span class="hljs-keyword">socklen_t</span> *optlen)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">setsockopt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">int</span> level, <span class="hljs-keyword">int</span> optname, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *optval, <span class="hljs-keyword">socklen_t</span> optlen)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  sockfd：指向一个打开的套接字</li>
+<li>  level：指定系统中解释选项的代码，为通用套接字代码或某个特定于协议的代码（IPv4、IPv6、TCP、SCTP）</li>
+<li>optval：指向某个变量（*optval）的指针，大小由最后一个参数指定<ul>
+<li>  setsockopt从中取得选项待设置的新值，是一个值参数</li>
+<li>  getsockopt把已获取的选项当前值存放到*optval中，是一个值-结果参数</li>
+</ul>
+</li>
+</ul>
+<p>套接字选项粗分为两大基本类型：</p>
+<ul>
+<li>启用或禁止某个特性的二元选项（称为标志选项）<ul>
+<li>  getsockopt：*optval是一个整数，返回的值为0表示相应选项被禁止，不为0表示相应选项被启用</li>
+<li>  setsockopt：*optval是一个整数，不为0的值表示启用选项，为0的值表示禁止选项</li>
+</ul>
+</li>
+<li>  取得并返回我们可以设置或检查的特定值的选项（称为值选项）</li>
+</ul>
+<h2 id="7-3-检查选项是否受支持并获取默认值"><a href="#7-3-检查选项是否受支持并获取默认值" class="headerlink" title="7.3 检查选项是否受支持并获取默认值"></a>7.3 检查选项是否受支持并获取默认值</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* include checkopts1 */</span><br><span class="hljs-comment">/* *INDENT-OFF* */</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&lt;netinet/tcp.h&gt;</span>        <span class="hljs-comment">/* for TCP_xxx defines */</span></span><br><br><span class="hljs-comment">//getsockopt的每个可能的返回值，union类型中都有一个成员</span><br><span class="hljs-class"><span class="hljs-keyword">union</span> <span class="hljs-title">val</span> &#123;</span><br>  <span class="hljs-keyword">int</span>                i_val;<br>  <span class="hljs-keyword">long</span>                l_val;<br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">linger</span>        <span class="hljs-title">linger_val</span>;</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">timeval</span>    <span class="hljs-title">timeval_val</span>;</span><br>&#125; val;<br><br><span class="hljs-comment">//用于输出给定套接字选项的值的4个函数的原型</span><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *<span class="hljs-title">sock_str_flag</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *, <span class="hljs-keyword">int</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *<span class="hljs-title">sock_str_int</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *, <span class="hljs-keyword">int</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *<span class="hljs-title">sock_str_linger</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *, <span class="hljs-keyword">int</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *<span class="hljs-title">sock_str_timeval</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *, <span class="hljs-keyword">int</span>)</span></span>;<br><br><span class="hljs-comment">//定义结构体，声明并定义结构体数组</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sock_opts</span> &#123;</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>       *opt_str;<br>  <span class="hljs-keyword">int</span>        opt_level;<br>  <span class="hljs-keyword">int</span>        opt_name;<br>  <span class="hljs-keyword">char</span>   *(*opt_val_str)(<span class="hljs-keyword">union</span> val *, <span class="hljs-keyword">int</span>);    <span class="hljs-comment">//函数指针，指向输出函数</span><br>&#125; sock_opts[] = &#123;<br>    &#123; <span class="hljs-string">&quot;SO_BROADCAST&quot;</span>,        SOL_SOCKET,    SO_BROADCAST,    sock_str_flag &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_DEBUG&quot;</span>,            SOL_SOCKET,    SO_DEBUG,        sock_str_flag &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_DONTROUTE&quot;</span>,        SOL_SOCKET,    SO_DONTROUTE,    sock_str_flag &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_ERROR&quot;</span>,            SOL_SOCKET,    SO_ERROR,        sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_KEEPALIVE&quot;</span>,        SOL_SOCKET,    SO_KEEPALIVE,    sock_str_flag &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_LINGER&quot;</span>,            SOL_SOCKET,    SO_LINGER,        sock_str_linger &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_OOBINLINE&quot;</span>,        SOL_SOCKET,    SO_OOBINLINE,    sock_str_flag &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_RCVBUF&quot;</span>,            SOL_SOCKET,    SO_RCVBUF,        sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_SNDBUF&quot;</span>,            SOL_SOCKET,    SO_SNDBUF,        sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_RCVLOWAT&quot;</span>,        SOL_SOCKET,    SO_RCVLOWAT,    sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_SNDLOWAT&quot;</span>,        SOL_SOCKET,    SO_SNDLOWAT,    sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_RCVTIMEO&quot;</span>,        SOL_SOCKET,    SO_RCVTIMEO,    sock_str_timeval &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_SNDTIMEO&quot;</span>,        SOL_SOCKET,    SO_SNDTIMEO,    sock_str_timeval &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_REUSEADDR&quot;</span>,        SOL_SOCKET,    SO_REUSEADDR,    sock_str_flag &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    SO_REUSEPORT</span><br>    &#123; <span class="hljs-string">&quot;SO_REUSEPORT&quot;</span>,        SOL_SOCKET,    SO_REUSEPORT,    sock_str_flag &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;SO_REUSEPORT&quot;</span>,        <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>    &#123; <span class="hljs-string">&quot;SO_TYPE&quot;</span>,            SOL_SOCKET,    SO_TYPE,        sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;SO_USELOOPBACK&quot;</span>,        SOL_SOCKET,    SO_USELOOPBACK,    sock_str_flag &#125;,<br>    &#123; <span class="hljs-string">&quot;IP_TOS&quot;</span>,                IPPROTO_IP,    IP_TOS,            sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;IP_TTL&quot;</span>,                IPPROTO_IP,    IP_TTL,            sock_str_int &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    IPV6_DONTFRAG</span><br>    &#123; <span class="hljs-string">&quot;IPV6_DONTFRAG&quot;</span>,        IPPROTO_IPV6,IPV6_DONTFRAG,    sock_str_flag &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;IPV6_DONTFRAG&quot;</span>,        <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    IPV6_UNICAST_HOPS</span><br>    &#123; <span class="hljs-string">&quot;IPV6_UNICAST_HOPS&quot;</span>,    IPPROTO_IPV6,IPV6_UNICAST_HOPS,sock_str_int &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;IPV6_UNICAST_HOPS&quot;</span>,    <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    IPV6_V6ONLY</span><br>    &#123; <span class="hljs-string">&quot;IPV6_V6ONLY&quot;</span>,        IPPROTO_IPV6,IPV6_V6ONLY,    sock_str_flag &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;IPV6_V6ONLY&quot;</span>,        <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>    &#123; <span class="hljs-string">&quot;TCP_MAXSEG&quot;</span>,            IPPROTO_TCP,TCP_MAXSEG,        sock_str_int &#125;,<br>    &#123; <span class="hljs-string">&quot;TCP_NODELAY&quot;</span>,        IPPROTO_TCP,TCP_NODELAY,    sock_str_flag &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    SCTP_AUTOCLOSE</span><br>    &#123; <span class="hljs-string">&quot;SCTP_AUTOCLOSE&quot;</span>,        IPPROTO_SCTP,SCTP_AUTOCLOSE,sock_str_int &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;SCTP_AUTOCLOSE&quot;</span>,        <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    SCTP_MAXBURST</span><br>    &#123; <span class="hljs-string">&quot;SCTP_MAXBURST&quot;</span>,        IPPROTO_SCTP,SCTP_MAXBURST,    sock_str_int &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;SCTP_MAXBURST&quot;</span>,        <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    SCTP_MAXSEG</span><br>    &#123; <span class="hljs-string">&quot;SCTP_MAXSEG&quot;</span>,        IPPROTO_SCTP,SCTP_MAXSEG,    sock_str_int &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;SCTP_MAXSEG&quot;</span>,        <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    SCTP_NODELAY</span><br>    &#123; <span class="hljs-string">&quot;SCTP_NODELAY&quot;</span>,        IPPROTO_SCTP,SCTP_NODELAY,    sock_str_flag &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>    &#123; <span class="hljs-string">&quot;SCTP_NODELAY&quot;</span>,        <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;,<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>    &#123; <span class="hljs-literal">NULL</span>,                    <span class="hljs-number">0</span>,            <span class="hljs-number">0</span>,                <span class="hljs-literal">NULL</span> &#125;<br>&#125;;<br><span class="hljs-comment">/* *INDENT-ON* */</span><br><span class="hljs-comment">/* end checkopts1 */</span><br><br><span class="hljs-comment">/* include checkopts2 */</span><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                    fd;<br>    <span class="hljs-keyword">socklen_t</span>            len;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sock_opts</span>    *<span class="hljs-title">ptr</span>;</span><br><br>    <span class="hljs-keyword">for</span> (ptr = sock_opts; ptr-&gt;opt_str != <span class="hljs-literal">NULL</span>; ptr++) &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s: &quot;</span>, ptr-&gt;opt_str);<br>        <span class="hljs-keyword">if</span> (ptr-&gt;opt_val_str == <span class="hljs-literal">NULL</span>)<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;(undefined)\n&quot;</span>);<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">switch</span>(ptr-&gt;opt_level) &#123;<br>            <span class="hljs-keyword">case</span> SOL_SOCKET:<br>            <span class="hljs-keyword">case</span> IPPROTO_IP:<br>            <span class="hljs-keyword">case</span> IPPROTO_TCP:<br>                fd = Socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br>                <span class="hljs-keyword">break</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    IPV6</span><br>            <span class="hljs-keyword">case</span> IPPROTO_IPV6:<br>                fd = Socket(AF_INET6, SOCK_STREAM, <span class="hljs-number">0</span>);<br>                <span class="hljs-keyword">break</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span>    IPPROTO_SCTP</span><br>            <span class="hljs-keyword">case</span> IPPROTO_SCTP:<br>                fd = Socket(AF_INET, SOCK_SEQPACKET, IPPROTO_SCTP);<br>                <span class="hljs-keyword">break</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br>            <span class="hljs-keyword">default</span>:<br>                err_quit(<span class="hljs-string">&quot;Can&#x27;t create fd for level %d\n&quot;</span>, ptr-&gt;opt_level);<br>            &#125;<br><br>            len = <span class="hljs-keyword">sizeof</span>(val);<br>            <span class="hljs-comment">//不支持的选项应该会引发一个ENOPROTOOPT错误</span><br>            <span class="hljs-keyword">if</span> (getsockopt(fd, ptr-&gt;opt_level, ptr-&gt;opt_name,<br>                           &amp;val, &amp;len) == <span class="hljs-number">-1</span>) &#123;<br>                err_ret(<span class="hljs-string">&quot;getsockopt error&quot;</span>);<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;default = %s\n&quot;</span>, (*ptr-&gt;opt_val_str)(&amp;val, len));<br>            &#125;<br>            close(fd);<br>        &#125;<br>    &#125;<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br><span class="hljs-comment">/* end checkopts2 */</span><br><br><span class="hljs-comment">/* include checkopts3 */</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    strres[<span class="hljs-number">128</span>];<br><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *</span><br><span class="hljs-function"><span class="hljs-title">sock_str_flag</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *ptr, <span class="hljs-keyword">int</span> len)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-comment">/* *INDENT-OFF* */</span><br>    <span class="hljs-keyword">if</span> (len != <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>))<br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres), <span class="hljs-string">&quot;size (%d) not sizeof(int)&quot;</span>, len);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres),<br>                 <span class="hljs-string">&quot;%s&quot;</span>, (ptr-&gt;i_val == <span class="hljs-number">0</span>) ? <span class="hljs-string">&quot;off&quot;</span> : <span class="hljs-string">&quot;on&quot;</span>);<br>    <span class="hljs-keyword">return</span>(strres);<br><span class="hljs-comment">/* *INDENT-ON* */</span><br>&#125;<br><span class="hljs-comment">/* end checkopts3 */</span><br><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *</span><br><span class="hljs-function"><span class="hljs-title">sock_str_int</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *ptr, <span class="hljs-keyword">int</span> len)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (len != <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">int</span>))<br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres), <span class="hljs-string">&quot;size (%d) not sizeof(int)&quot;</span>, len);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres), <span class="hljs-string">&quot;%d&quot;</span>, ptr-&gt;i_val);<br>    <span class="hljs-keyword">return</span>(strres);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *</span><br><span class="hljs-function"><span class="hljs-title">sock_str_linger</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *ptr, <span class="hljs-keyword">int</span> len)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">linger</span>    *<span class="hljs-title">lptr</span> =</span> &amp;ptr-&gt;linger_val;<br><br>    <span class="hljs-keyword">if</span> (len != <span class="hljs-keyword">sizeof</span>(struct linger))<br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres),<br>                 <span class="hljs-string">&quot;size (%d) not sizeof(struct linger)&quot;</span>, len);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres), <span class="hljs-string">&quot;l_onoff = %d, l_linger = %d&quot;</span>,<br>                 lptr-&gt;l_onoff, lptr-&gt;l_linger);<br>    <span class="hljs-keyword">return</span>(strres);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span>    *</span><br><span class="hljs-function"><span class="hljs-title">sock_str_timeval</span><span class="hljs-params">(<span class="hljs-keyword">union</span> val *ptr, <span class="hljs-keyword">int</span> len)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">timeval</span>    *<span class="hljs-title">tvptr</span> =</span> &amp;ptr-&gt;timeval_val;<br><br>    <span class="hljs-keyword">if</span> (len != <span class="hljs-keyword">sizeof</span>(struct timeval))<br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres),<br>                 <span class="hljs-string">&quot;size (%d) not sizeof(struct timeval)&quot;</span>, len);<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-built_in">snprintf</span>(strres, <span class="hljs-keyword">sizeof</span>(strres), <span class="hljs-string">&quot;%d sec, %d usec&quot;</span>,<br>                 tvptr-&gt;tv_sec, tvptr-&gt;tv_usec);<br>    <span class="hljs-keyword">return</span>(strres);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-4-套接字状态"><a href="#7-4-套接字状态" class="headerlink" title="7.4 套接字状态"></a>7.4 套接字状态</h2><p>对于某些套接字选项，针对套接字的状态，什么时候设置或获取选项有时序上的考虑。</p>
+<p>TCP已连接套接字选项从监听套接字继承的选项：SO_DEBUG、SO_DONTROUTE、SO_KEEPALIVE、SO_LINGER、SO_OOBINLINE、SO_RCVBUF、SO_RCVLOWAT、SO_SNDBUF、SO_SNDLOWAT、TCP_MAXSEG和TCP_NODELAY。</p>
+<p>因为accept一直要到三次握手完成时，才会给服务器返回已连接套接字，如果想在三次握手完成时确保这些套接字选项中的某一个是给已连接套接字设置的，那么必须先给监听套接字设置该选项。</p>
+<h2 id="7-5-通用套接字选项"><a href="#7-5-通用套接字选项" class="headerlink" title="7.5 通用套接字选项"></a>7.5 通用套接字选项</h2><p>通用套接字选项是协议无关的，由内核中协议无关代码处理。某些通用套接字选项只能应用到某些特定类型的套接字中。</p>
+<h3 id="SO-BROADCAST套接字选项"><a href="#SO-BROADCAST套接字选项" class="headerlink" title="SO_BROADCAST套接字选项"></a>SO_BROADCAST套接字选项</h3><p>开启或禁止进程发送广播消息的能力，只有数据报套接字支持广播，并且还必须在支持广播消息的网络上。</p>
+<h3 id="SO-DEBUG套接字选项"><a href="#SO-DEBUG套接字选项" class="headerlink" title="SO_DEBUG套接字选项"></a>SO_DEBUG套接字选项</h3><p>仅由TCP支持，开启本选项时，内核将为TCP在该套接字发送和接收的所有分组保留详细跟踪信息。</p>
+<h3 id="SO-DONTROUTE套接字选项"><a href="#SO-DONTROUTE套接字选项" class="headerlink" title="SO_DONTROUTE套接字选项"></a>SO_DONTROUTE套接字选项</h3><p>本选项规定外出的分组将绕过底层协议的正常路由机制。</p>
+<h3 id="SO-ERROR套接字选项"><a href="#SO-ERROR套接字选项" class="headerlink" title="SO_ERROR套接字选项"></a>SO_ERROR套接字选项</h3><h2 id="7-6-ipv4套接字选项"><a href="#7-6-ipv4套接字选项" class="headerlink" title="7.6 ipv4套接字选项"></a>7.6 ipv4套接字选项</h2><h2 id="7-7-icmpv6套接字选项"><a href="#7-7-icmpv6套接字选项" class="headerlink" title="7.7 icmpv6套接字选项"></a>7.7 icmpv6套接字选项</h2><h2 id="7-8-ipv6套接字选项"><a href="#7-8-ipv6套接字选项" class="headerlink" title="7.8 ipv6套接字选项"></a>7.8 ipv6套接字选项</h2><h2 id="7-9-tcp套接字选项"><a href="#7-9-tcp套接字选项" class="headerlink" title="7.9 tcp套接字选项"></a>7.9 tcp套接字选项</h2><h2 id="7-10-sctp套接字选项"><a href="#7-10-sctp套接字选项" class="headerlink" title="7.10 sctp套接字选项"></a>7.10 sctp套接字选项</h2><h2 id="7-11-fcntl函数"><a href="#7-11-fcntl函数" class="headerlink" title="7.11 fcntl函数"></a>7.11 fcntl函数</h2>
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/Study%20Notes/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%94%E8%AE%B0/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC7%E7%AB%A0/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

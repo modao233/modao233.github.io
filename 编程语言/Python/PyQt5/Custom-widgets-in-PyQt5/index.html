@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PyQt5-%E5%88%BB%E5%BD%95%E5%B0%8F%E9%83%A8%E4%BB%B6"><span class="toc-text">PyQt5 刻录小部件</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		PyQt5 中的自定义部件
+	</div>
+	
+	<div class="page-date">
+		2020-08-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/PyQt5">PyQt5</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="http://zetcode.com/gui/pyqt5/customwidgets/">翻译自原文：Custom widgets in PyQt5</a></p>
+<p>翻译时间 2020 年 8 月 20 日</p>
+<span id="more"></span>
+
+<p>PyQt5 有一组丰富的部件。但是，没有任何工具包可以提供程序员在应用程序中可能需要的所有部件。工具包通常只提供最常见的部件，如按钮、文本部件或滑块。如果需要更专业的部件，我们必须自己创建它。</p>
+<p>使用工具包提供的绘图工具创建自定义部件。有两个基本的可能性：程序员可以修改或增强现有的部件，或者他可以从头开始创建自定义部件。</p>
+<h2 id="PyQt5-刻录小部件"><a href="#PyQt5-刻录小部件" class="headerlink" title="PyQt5 刻录小部件"></a>PyQt5 刻录小部件</h2><p>这是一个部件，我们可以在 Nero、K3B 或其他 CD/DVD 刻录软件中看到。</p>
+<p>custom_widget.py</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">from PyQt5.QtWidgets import (QWidget, QSlider, QApplication,<br>                             QHBoxLayout, QVBoxLayout)<br>from PyQt5.QtCore import QObject, Qt, pyqtSignal<br>from PyQt5.QtGui import QPainter, QFont, QColor, QPen<br>import sys<br><br><br>class Communicate(QObject):<br>    updateBW = pyqtSignal(int)<br><br><br>class BurningWidget(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br><br>        self.setMinimumSize(1, 30)<br>        self.value = 75<br>        self.num = [75, 150, 225, 300, 375, 450, 525, 600, 675]<br><br>    def setValue(self, value):<br><br>        self.value = value<br><br>    def paintEvent(self, e):<br><br>        qp = QPainter()<br>        qp.begin(self)<br>        self.drawWidget(qp)<br>        qp.end()<br><br>    def drawWidget(self, qp):<br><br>        MAX_CAPACITY = 700<br>        OVER_CAPACITY = 750<br><br>        font = QFont(&#x27;Serif&#x27;, 7, QFont.Light)<br>        qp.setFont(font)<br><br>        size = self.size()<br>        w = size.width()<br>        h = size.height()<br><br>        step = int(round(w / 10))<br><br>        till = int(((w / OVER_CAPACITY) * self.value))<br>        full = int(((w / OVER_CAPACITY) * MAX_CAPACITY))<br><br>        if self.value &gt;= MAX_CAPACITY:<br><br>            qp.setPen(QColor(255, 255, 255))<br>            qp.setBrush(QColor(255, 255, 184))<br>            qp.drawRect(0, 0, full, h)<br>            qp.setPen(QColor(255, 175, 175))<br>            qp.setBrush(QColor(255, 175, 175))<br>            qp.drawRect(full, 0, till - full, h)<br><br>        else:<br><br>            qp.setPen(QColor(255, 255, 255))<br>            qp.setBrush(QColor(255, 255, 184))<br>            qp.drawRect(0, 0, till, h)<br><br>        pen = QPen(QColor(20, 20, 20), 1,<br>                   Qt.SolidLine)<br><br>        qp.setPen(pen)<br>        qp.setBrush(Qt.NoBrush)<br>        qp.drawRect(0, 0, w - 1, h - 1)<br><br>        j = 0<br><br>        for i in range(step, 10 * step, step):<br><br>            qp.drawLine(i, 0, i, 5)<br>            metrics = qp.fontMetrics()<br>            fw = metrics.width(str(self.num[j]))<br><br>            x, y = int(i - fw/2), int(h / 2)<br>            qp.drawText(x, y, str(self.num[j]))<br>            j = j + 1<br><br><br>class Example(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br><br>        self.initUI()<br><br>    def initUI(self):<br><br>        OVER_CAPACITY = 750<br><br>        sld = QSlider(Qt.Horizontal, self)<br>        sld.setFocusPolicy(Qt.NoFocus)<br>        sld.setRange(1, OVER_CAPACITY)<br>        sld.setValue(75)<br>        sld.setGeometry(30, 40, 150, 30)<br><br>        self.c = Communicate()<br>        self.wid = BurningWidget()<br>        self.c.updateBW[int].connect(self.wid.setValue)<br><br>        sld.valueChanged[int].connect(self.changeValue)<br>        hbox = QHBoxLayout()<br>        hbox.addWidget(self.wid)<br>        vbox = QVBoxLayout()<br>        vbox.addStretch(1)<br>        vbox.addLayout(hbox)<br>        self.setLayout(vbox)<br><br>        self.setGeometry(300, 300, 390, 210)<br>        self.setWindowTitle(&#x27;Burning widget&#x27;)<br>        self.show()<br><br>    def changeValue(self, value):<br>        self.c.updateBW.emit(value)<br>        self.wid.repaint()<br><br><br>def main():<br>    app = QApplication(sys.argv)<br>    ex = Example()<br>    sys.exit(app.exec_())<br><br><br>if __name__ == &#x27;__main__&#x27;:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>在我们的示例中，我们有一个<code>QSlider</code>和一个自定义部件。滑块控制自定义部件。此部件以图形方式显示介质的总容量和可用的可用空间。我们自定义部件的最小值为 1，最大值为OVER_CAPACITY。如果我们达到价值MAX_CAPACITY，我们开始以红色绘制。这通常表示过度燃烧。</p>
+<p>刻录部件放置在窗口底部。这是通过使用<code>QHBoxLayout</code>和<code>QVBoxLayout</code>实现的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">class BurningWidget(QWidget):<br><br>    def __init__(self):<br>        super().__init__()<br></code></pre></td></tr></table></figure>
+
+<p>表示燃烧的刻录条部件，它基于<code>QWidget</code>部件。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">self.setMinimumSize(1, 30)<br></code></pre></td></tr></table></figure>
+
+<p>我们更改小部件的最小大小（高度）。默认值对我们来说有点小。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">font = QFont(&#x27;Serif&#x27;, 7, QFont.Light)<br>qp.setFont(font)<br></code></pre></td></tr></table></figure>
+
+<p>我们使用的字体比默认字体小。这更符合我们的需要。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">size = self.size()<br>w = size.width()<br>h = size.height()<br><br>step = int(round(w / 10))<br><br><br>till = int(((w / OVER_CAPACITY) * self.value))<br>full = int(((w / OVER_CAPACITY) * MAX_CAPACITY))<br></code></pre></td></tr></table></figure>
+
+<p>我们动态绘制部件。窗口更大，刻录部件更大，反之亦然。这就是为什么我们绘制自定义部件的时候必须计算小部件的大小。<code>till</code>参数确定要绘制的总大小，此值来自滑块部件，它是整个区域的一部分。<code>full</code>参数确定我们开始以红色绘制的点。</p>
+<p>实际绘图由三个步骤组成。我们绘制黄色或红色和黄色矩形。然后，我们绘制垂直线，将小部件分成几个部分。最后，我们绘制指示介质容量的数字。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">metrics = qp.fontMetrics()<br>fw = metrics.width(str(self.num[j]))<br><br>x, y = int(i - fw/2), int(h / 2)<br>qp.drawText(x, y, str(self.num[j]))<br></code></pre></td></tr></table></figure>
+
+<p>我们使用字体指标来绘制文本。我们必须知道文本的宽度，以便以垂直线为中心。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">def changeValue(self, value):<br><br>    self.c.updateBW.emit(value)<br>    self.wid.repaint()<br></code></pre></td></tr></table></figure>
+
+<p>当我们移动滑块时，将调用<code>changeValue()</code>该方法。在方法内，我们发送一个带参数的自定义信号<code>updateBW</code>。参数是滑块的当前值，该值稍后用于计算要绘制的刻录小部件的容量，然后重新绘制自定义小部件。</p>
+<p><img src="/Custom-widgets-in-PyQt5/image-20200820214024211.png" alt="image-20200820214024211"></p>
+<center>图：刻录小部件</center>
+
+<p>在 PyQt5 教程的这一部分中，我们创建了一个自定义部件。</p>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/PyQt5/Custom-widgets-in-PyQt5/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#strptime-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">strptime 的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%87%8C%E6%99%A8%E6%97%B6%E9%97%B4"><span class="toc-text">获取凌晨时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%97%B6%E9%97%B4%E6%AF%94%E5%A4%A7%E5%B0%8F"><span class="toc-text">格式化时间比大小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%88-%E6%97%A5%E5%8F%AA%E5%8F%96%E6%95%B4%E6%95%B0"><span class="toc-text">月,日只取整数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%98%A8%E5%A4%A9%EF%BC%8C%E6%98%8E%E5%A4%A9%E7%AD%89%E6%97%B6%E9%97%B4"><span class="toc-text">获取昨天，明天等时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%88%B3%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%97%B6%E9%97%B4"><span class="toc-text">时间戳格式化时间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%89%B9%E6%AE%8A%E6%97%B6%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2-%E2%80%9C2020-10-16T17-36-00-08-00%E2%80%9D"><span class="toc-text">格式化特殊时间字符串 “2020-10-16T17:36:00+08:00”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E6%88%B3%E8%BF%98%E5%8E%9F%E6%88%90datetime%E5%AF%B9%E8%B1%A1"><span class="toc-text">时间戳还原成datetime对象</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		(转载)Python 时间操作
+	</div>
+	
+	<div class="page-date">
+		2021-03-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>原文：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/CharmCode/p/14142843.html">Python 时间操作</a></p>
+<span id="more"></span>
+
+<h2 id="strptime-的使用"><a href="#strptime-的使用" class="headerlink" title="strptime 的使用"></a>strptime 的使用</h2><p><code>strptime</code>是python <code>datetime</code>库中的函数，用于将一个日期字符串转成datetime日期格式便于后期处理</p>
+<p><strong>使用格式</strong>为<code>datetime.strptime(date_string, format)</code></p>
+<ul>
+<li>  <code>date_string</code>：要转成日期的字符串</li>
+<li>  <code>format</code>：匹配格式，根据<code>date_string</code>的不同而不同</li>
+</ul>
+<p><code>format</code> 有以下格式：</p>
+<p><img src="/Python%E6%97%B6%E9%97%B4%E6%93%8D%E4%BD%9C/20160627170308271" alt="img"></p>
+<h2 id="获取凌晨时间"><a href="#获取凌晨时间" class="headerlink" title="获取凌晨时间"></a>获取凌晨时间</h2><p>网上查的大部分都是用时间戳相减，或者用时区的方式，总感觉不是很好</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法一 获取凌晨时间戳</span><br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-comment"># 思路特别简单 </span><br>dt = time.strftime(<span class="hljs-string">&quot;%Y-%m-%d&quot;</span>)<br><span class="hljs-built_in">print</span>(dt)  <span class="hljs-comment"># 先得到前缀 2019-12-13 这种，然后在拼接成2019-12-13 00:00:00</span><br>time_array = time.strptime(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;dt&#125;</span> 00:00:00&quot;</span>, <span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<br><span class="hljs-comment"># 然后转化为时间戳，思路特别简单</span><br>timestamp = time.mktime(time_array)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(timestamp) * <span class="hljs-number">1000</span>)<br><br><br><span class="hljs-comment"># 方法二 刚搜出来的，感觉不错</span><br>day_time = time.mktime(datetime.date.today().timetuple())<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">int</span>(day_time) * <span class="hljs-number">1000</span>)<br></code></pre></td></tr></table></figure>
+
+<h2 id="格式化时间比大小"><a href="#格式化时间比大小" class="headerlink" title="格式化时间比大小"></a>格式化时间比大小</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> datetime<br><br>d1 = datetime.datetime.strptime(<span class="hljs-string">&#x27;2020-01-05 18:22:22&#x27;</span>, <span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>d2 = datetime.datetime.strptime(<span class="hljs-string">&#x27;2020-01-01 12:24:15&#x27;</span>, <span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br><span class="hljs-comment"># 判断大小</span><br><span class="hljs-built_in">print</span>(d2 &gt; d1)  <span class="hljs-comment"># False</span><br><span class="hljs-built_in">print</span>(d2 &lt; d1)  <span class="hljs-comment"># True</span><br><span class="hljs-comment"># 计算间隔天数</span><br>delta = d1 - d2<br><span class="hljs-built_in">print</span>(delta.days)  <span class="hljs-comment"># 输出 4 </span><br></code></pre></td></tr></table></figure>
+
+<h2 id="月-日只取整数"><a href="#月-日只取整数" class="headerlink" title="月,日只取整数"></a>月,日只取整数</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><br>dt = time.strftime(<span class="hljs-string">&quot;%Y-%m-%d&quot;</span>)<br><span class="hljs-built_in">print</span>(dt) <span class="hljs-comment"># 输出 2020-05-05</span><br><br><span class="hljs-comment"># 但是我只想要 2020-5-5这样的格式， %后母加- 如 %-m  %-d</span><br>dt = time.strftime(<span class="hljs-string">&quot;%Y-%-m-%-d&quot;</span>)<br><span class="hljs-built_in">print</span>(dt) <span class="hljs-comment"># 输出 2020-5-5</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="获取昨天，明天等时间"><a href="#获取昨天，明天等时间" class="headerlink" title="获取昨天，明天等时间"></a>获取昨天，明天等时间</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 当前参考时间为 2020/4/27</span><br><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> timedelta, date<br><span class="hljs-comment"># 获取昨日时间对象</span><br>yesterday_obj = date.today() + timedelta(days=-<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(yesterday_obj)  <span class="hljs-comment"># 输出昨日凌晨对象 class: datetime.date(2020, 4, 26)</span><br><br><span class="hljs-comment"># 获取昨天时间格式</span><br>yesterday_str = (date.today() + timedelta(days=-<span class="hljs-number">1</span>)).strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<br><span class="hljs-built_in">print</span>(yesterday_str)  <span class="hljs-comment"># 输出昨日凌晨时间 str:&#x27;2020-04-26 00:00:00&#x27;</span><br><br><span class="hljs-comment"># 获取前天 直接days=-2</span><br><br><br><span class="hljs-comment"># 获取明日时间对象</span><br>tomorrow_obj = date.today() + timedelta(days=+<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(tomorrow_obj)   <span class="hljs-comment"># 输出明日时间对象 class: datetime.date(2020, 4, 28)</span><br><br><span class="hljs-comment"># 获取民日时间格式化字符串</span><br>tomorrow_str = (date.today() + timedelta(days=+<span class="hljs-number">1</span>)).strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<br><span class="hljs-built_in">print</span>(tomorrow_str)   <span class="hljs-comment"># 输出明日凌晨时间 str:&#x27;2020-04-28 00:00:00&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="时间戳格式化时间"><a href="#时间戳格式化时间" class="headerlink" title="时间戳格式化时间"></a>时间戳格式化时间</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><br>time.strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime(<span class="hljs-number">1605781931</span>))<br><span class="hljs-comment"># 输出 &#x27;2020-11-19 18:32:11&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="格式化特殊时间字符串-“2020-10-16T17-36-00-08-00”"><a href="#格式化特殊时间字符串-“2020-10-16T17-36-00-08-00”" class="headerlink" title="格式化特殊时间字符串 “2020-10-16T17:36:00+08:00”"></a>格式化特殊时间字符串 “2020-10-16T17:36:00+08:00”</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> datetime<br>t = <span class="hljs-string">&quot;2020-10-16T17:36:00+08:00&quot;</span><br><br>new_t = datetime.datetime.strptime(t,<span class="hljs-string">&quot;%Y-%m-%dT%H:%M:%S+08:00&quot;</span>).strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<br><span class="hljs-comment"># &#x27;2020-10-16 17:36:00&#x27;</span><br><br><br>t2 = <span class="hljs-string">&quot;2020-10-16T17:36:00Z&quot;</span><br>new_t2 = datetime.datetime.strptime(t2,<span class="hljs-string">&quot;%Y-%m-%dT%H:%M:%SZ&quot;</span>).strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>)<br><span class="hljs-comment"># &#x27;2020-10-16 17:36:00&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="时间戳还原成datetime对象"><a href="#时间戳还原成datetime对象" class="headerlink" title="时间戳还原成datetime对象"></a>时间戳还原成<code>datetime</code>对象</h2><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><br>ts = <span class="hljs-number">1608902287.504388</span><br><br>d = datetime.fromtimestamp(t)<br><span class="hljs-comment"># datetime.datetime(2020, 12, 25, 21, 18, 7, 504388)</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>  发现其他博客也介绍的很详细,留下链接以便日后查看</p>
+</blockquote>
+<ul>
+<li>  <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/17594298/date-time-formats-in-python">StackOverflow 格式化时间</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/wto882dim/article/details/102898632">CSDN Python时间戳</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/wto882dim/article/details/102898632">https://blog.csdn.net/wto882dim/article/details/102898632</a></li>
+</ul>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/Python%E6%97%B6%E9%97%B4%E6%93%8D%E4%BD%9C/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

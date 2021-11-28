@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">6.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-I-O%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.2 I&#x2F;O模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-1-%E9%98%BB%E5%A1%9E%E5%BC%8FI-O%E9%98%BB%E5%A1%9E"><span class="toc-text">6.2.1 阻塞式I&#x2F;O阻塞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-2-%E9%9D%9E%E9%98%BB%E5%A1%9E%E5%BC%8FI-O%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.2.2 非阻塞式I&#x2F;O模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-3-I-O%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.2.3 I&#x2F;O复用模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-4-%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8%E5%BC%8FI-O%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.2.4 信号驱动式I&#x2F;O模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-5-%E5%BC%82%E6%AD%A5I-O%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.2.5 异步I&#x2F;O模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-6-%E5%90%84%E7%A7%8DI-O%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">6.2.6 各种I&#x2F;O模型的比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-select%E5%87%BD%E6%95%B0"><span class="toc-text">6.3 select函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-1-%E6%8F%8F%E8%BF%B0%E7%AC%A6%E5%B0%B1%E7%BB%AA%E6%9D%A1%E4%BB%B6"><span class="toc-text">6.3.1 描述符就绪条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-2-select%E7%9A%84%E6%9C%80%E5%A4%A7%E6%8F%8F%E8%BF%B0%E7%AC%A6%E6%95%B0"><span class="toc-text">6.3.2 select的最大描述符数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-str-cli%E5%87%BD%E6%95%B0%EF%BC%88%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89"><span class="toc-text">6.4 str_cli函数（修订版）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-%E6%89%B9%E9%87%8F%E8%BE%93%E5%85%A5"><span class="toc-text">6.5 批量输入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-shutdown%E5%87%BD%E6%95%B0"><span class="toc-text">6.6 shutdown函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-7-str-cli%E5%87%BD%E6%95%B0%EF%BC%88%E5%86%8D%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89"><span class="toc-text">6.7 str_cli函数（再修订版）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-8-TCP%E5%9B%9E%E5%B0%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F%EF%BC%88%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89"><span class="toc-text">6.8 TCP回射服务器程序（修订版）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-9-pselect%E5%87%BD%E6%95%B0"><span class="toc-text">6.9 pselect函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-10-poll%E5%87%BD%E6%95%B0"><span class="toc-text">6.10 poll函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-11-TCP%E5%9B%9E%E5%B0%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F%EF%BC%88%E5%86%8D%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89"><span class="toc-text">6.11 TCP回射服务器程序（再修订版）</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Unix网络编程-第6章 I/O复用：select和poll函数
+	</div>
+	
+	<div class="page-date">
+		2019-12-24
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Unix网络编程">Unix网络编程</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>第6章 I/O复用：select和poll函数</p>
+<span id="more"></span>
+
+<h2 id="6-1-概述"><a href="#6-1-概述" class="headerlink" title="6.1 概述"></a>6.1 概述</h2><p>内核一旦发现进程指定的一个或多个I/O条件就绪（也就是说输入已准备好被读取，或者描述符已能承接更多的输出），它就通知进程，这个能力称为I/O复用。</p>
+<p>I/O复用由select和poll两个函数支持，前者较新的称为pselect的POSIX变种。</p>
+<p>I/O复用并非只限于网络编程，I/O复用典型使用在下列网络应用场合：</p>
+<ul>
+<li>  当客户处理多个描述符（通常是交互式输入和网络套接字）时，必须使用I/O复用</li>
+<li>  一个客户同时处理多个套接字是可能的，不过比较少见</li>
+<li>  如果一个TCP服务器既要处理监听套接字，又要处理已连接套接字，一般就要使用I/O复用</li>
+<li>  如果一个服务器既要处理TCP，又要处理UDP，一般就要使用I/O复用</li>
+<li>  如果一个服务器要处理多个服务或者多个协议，一般就要使用I/O复用</li>
+</ul>
+<h2 id="6-2-I-O模型"><a href="#6-2-I-O模型" class="headerlink" title="6.2 I/O模型"></a>6.2 I/O模型</h2><p>Unix下可用的I/O模型有五种：</p>
+<ul>
+<li>  阻塞式I/O</li>
+<li>  非阻塞式I/O</li>
+<li>  I/O复用（select和poll）</li>
+<li>  信号驱动式I/O（SIGIO）</li>
+<li>  异步I/O（POSIX的aio_系列函数）</li>
+</ul>
+<p>一个输入操作通常包括两个不同的阶段：</p>
+<ol>
+<li> 等待数据准备好</li>
+<li> 从内核向进程复制数据</li>
+</ol>
+<p>对于一个套接字上的输入操作：</p>
+<ol>
+<li> 第一步通常涉及等待数据从网络中到达，当所等待的分组到达时，它被复制到内核中的某个缓冲区</li>
+<li> 把数据从内核缓冲区复制到应用进程缓冲区</li>
+</ol>
+<h3 id="6-2-1-阻塞式I-O阻塞"><a href="#6-2-1-阻塞式I-O阻塞" class="headerlink" title="6.2.1 阻塞式I/O阻塞"></a>6.2.1 阻塞式I/O阻塞</h3><p>最流行的I/O模型是阻塞式I/O模型。默认情况下，所有套接字都是阻塞的。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.1.1.png" alt="image-20200220142525476"></p>
+<h3 id="6-2-2-非阻塞式I-O模型"><a href="#6-2-2-非阻塞式I-O模型" class="headerlink" title="6.2.2 非阻塞式I/O模型"></a>6.2.2 非阻塞式I/O模型</h3><p>进程把一个套接字设置为非阻塞是在通知内核：当所请求的I/O操作非把本进程投入睡眠才能完成时，不要把本进程投入睡眠，而是返回一个错误。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.2.png" alt="image-20200220143123892"></p>
+<p>**轮询（polling)**：应用进程持续轮询内核，以查看某个操作是否就绪，这样做往往耗费大量CPU时间。</p>
+<h3 id="6-2-3-I-O复用模型"><a href="#6-2-3-I-O复用模型" class="headerlink" title="6.2.3 I/O复用模型"></a>6.2.3 I/O复用模型</h3><p>通过调用select或poll，阻塞在这两个系统调用中的某一个之上，而不是阻塞在真正的I/O调用上</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.3.png" alt="image-20200220211237813"></p>
+<p>I/O复用需要两个系统调用</p>
+<p>优势：可以等待多个描述符就绪</p>
+<h3 id="6-2-4-信号驱动式I-O模型"><a href="#6-2-4-信号驱动式I-O模型" class="headerlink" title="6.2.4 信号驱动式I/O模型"></a>6.2.4 信号驱动式I/O模型</h3><p>使用信号，让内核在描述符就绪时发送SIGIO信号通知我们，这种模式为信号驱动式I/O。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.4.png" alt="image-20200220211730610"></p>
+<p>优势：等待数据报到达期间进程不被阻塞，主循环可以继续执行，只要等待来自信号处理函数的通知：既可以是数据已经准备好被处理，也可以是数据报已准备好被读取</p>
+<h3 id="6-2-5-异步I-O模型"><a href="#6-2-5-异步I-O模型" class="headerlink" title="6.2.5 异步I/O模型"></a>6.2.5 异步I/O模型</h3><p>异步I/O由POSIX规范定义。</p>
+<p>异步函数的工作机制是：告知内核启动某个操作，并让内核在整个操作（包括将数据从内核复制到我们自己的缓冲区）完成后通知我们。</p>
+<p>与信号驱动模型的主要区别在于：信号驱动式I/O是由内核通知我们何时可以启动一个I/O操作，而异步I/O模型是由内核通知我们I/O操作何时完成。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.5.png" alt="image-20200220222137004"></p>
+<p>POSIX异步函数以aio_或lio_开头。</p>
+<p>这里调用aio_read函数，给内核传递描述符、缓冲区指针、缓冲区大小（与read相同的三个参数）和文件偏移（与lseek类似），并告诉内核当整个操作完成时如何通知我们。该系统调用立即返回，而且在等待I/O完成期间，进程不被阻塞。</p>
+<h3 id="6-2-6-各种I-O模型的比较"><a href="#6-2-6-各种I-O模型的比较" class="headerlink" title="6.2.6 各种I/O模型的比较"></a>6.2.6 各种I/O模型的比较</h3><p>POSIX定义：</p>
+<ul>
+<li><p>  同步I/O操作：导致请求进程阻塞，知道I/O操作完成</p>
+</li>
+<li><p>  异步I/O操作：不导致请求进程阻塞</p>
+</li>
+</ul>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.6.png" alt="image-20200220222618152"></p>
+<p>前4种模型都是同步I/O模型，因为其中真正的I/O操作（recvfrom）将进程阻塞。只有异步I/O模型与POSIX定义的异步I/O相匹配。</p>
+<h2 id="6-3-select函数"><a href="#6-3-select函数" class="headerlink" title="6.3 select函数"></a>6.3 select函数</h2><p>该函数允许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒它。</p>
+<p>select函数告知内核对哪些描述符（就读、写或异常条件）感兴趣以及等待多长时间。描述符不局限于套接字，任何描述符都可以使用select来测试。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/select.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/time.h&gt;</span></span><br><br><span class="hljs-comment">//若有就绪描述符则返回其数目，若超时则返回0，若出错则返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">select</span><span class="hljs-params">(<span class="hljs-keyword">int</span> maxfdp1, fd_set *readset, fd_set *writeset, </span></span><br><span class="hljs-params"><span class="hljs-function">           fd_set *exceptset, <span class="hljs-keyword">const</span> struct timeval *timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>参数解析：</p>
+<ol>
+<li><p>timeout：告知内核等待所指定描述符中的任何一个就绪可花多长时间</p>
+ <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">timeval</span>&#123;</span><br>    <span class="hljs-keyword">long</span>     tv_sec;    <span class="hljs-comment">//秒数</span><br>    <span class="hljs-keyword">long</span>     tv_usec;   <span class="hljs-comment">//微秒数</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> 该参数有三种情况：</p>
+<ul>
+<li>  永远等待下去：仅在有一个描述符准备好I/O时才返回，此时将该参数设置为空指针</li>
+<li>  等待一段固定时间：在有一个描述符准备好I/O时返回，但是不超过由该参数所指向的timeval结构中指定的秒数和微秒数</li>
+<li>  根本不等待：检测描述符后立即返回，这称为轮询。该参数指向timeval结构，其中定时器的值必须为0</li>
+</ul>
+<p> 前两种情况的等待通常会被进程在等待期间捕获的信号中断，并从信号处理函数返回。</p>
+<p> timeval结构允许我们指定一个微秒级的分辨率，然而内核支持的真实分辨率往往粗糙得多，许多Unix内核把超时值向上舍入成10ms的倍数，另外内核还需要额外的调度延迟。</p>
+<p> timeout参数的const限定词表示它在函数返回时不会被select修改，无法通过该参数计算出实际等待时间。</p>
+</li>
+<li><p>中间三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述符</p>
+<ul>
+<li><p>目前支持的异常条件只有两个：</p>
+<ol>
+<li> 某个套接字的带外数据的到达</li>
+<li> 某个已置为分组模式的伪终端存在可从其主端读取的控制状态信息</li>
+</ol>
+</li>
+<li><p>select使用<strong>描述符集</strong>来给3个参数中的每一个参数指定一个或多个描述符值，通常是一个整数数组，其中<strong>每个整数中的每一位</strong>对应一个描述符。具体实现与应用程序无关，隐藏在数据类型fd_set和以下四个宏中：</p>
+  <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">FD_ZERO</span><span class="hljs-params">(fd_set *fdset)</span></span>;		<span class="hljs-comment">//clear all bits of fdset</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">FD_SET</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, fd_set *fdset)</span></span>;	<span class="hljs-comment">//turn on the bit for fd in fdset</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">FD_CLR</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, fd_set *fdset)</span></span>;	<span class="hljs-comment">//turn off the bit for fd in fdset</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">FD_ISSET</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fd, fd_set *fdset)</span></span>;<span class="hljs-comment">//is the bit for fd on fdset ?</span><br></code></pre></td></tr></table></figure>
+
+<p>  我们分配一个fd_set类型的描述符集，并用这些宏设置和测试集合中的每一位，也可以使用赋值语句将它赋值成另一个描述符集：</p>
+  <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">fd_set rset;<br><br>FD_ZERO(&amp;rset);	<span class="hljs-comment">//初始化</span><br>FD_SET(<span class="hljs-number">1</span>, &amp;rset);<br>FD_SET(<span class="hljs-number">4</span>, &amp;rset);<br>FD_SET(<span class="hljs-number">5</span>, &amp;rset);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li> maxfdpl参数指定待测试的描述符的个数，它的值是待测试的最大描述符加1，描述符0，1，2……一直到maxfdpl-1均将被测试</li>
+<li> 头文件&lt;sys/select.h&gt;中定义的FD_SETSIZE常值是数据类型fd_set中描述符总数，通常是1024，通常使用不了那么多</li>
+<li> select函数修改由指针readset、writeset和exceptset所指向的描述符集，因此这三个参数都是值-结果传参。函数返回时，指示哪些描述符已就绪，描述符集内任何与未就绪描述符对应的位返回时均清零，因此每次重新调用select函数时，都需要重新为关心的位均置1。</li>
+</ol>
+</li>
+</ol>
+<h3 id="6-3-1-描述符就绪条件"><a href="#6-3-1-描述符就绪条件" class="headerlink" title="6.3.1 描述符就绪条件"></a>6.3.1 描述符就绪条件</h3><p>满足下列条件之一，则套接字准备好读：</p>
+<ol>
+<li> 该套接字的接收缓冲区中的数据字节数大于等于套接字接收缓冲区低水位标记SO_RCVLOWAT的当前大小，对该套接字读操作不阻塞并返回一个大于0的值</li>
+<li> 该连接的读半部关闭（也就是接收了FIN的TCP连接），读操作不阻塞并返回0</li>
+<li> 该套接字是一个监听套接字，且已完成的连接数不为0，不阻塞</li>
+<li> 其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件。此时可以使用getsockopt来读取和清除该错误</li>
+</ol>
+<p>满足下列条件之一，则套接字准备好写：</p>
+<ol>
+<li> 该套接字的发送缓冲区中的可用空间字节数大于等于套接字发送缓冲区低水位标记的当前大小，并且该套接字已经连接或者不需要连接（如UDP套接字），对该套接字写操作不阻塞并返回一个大于0的值</li>
+<li> 该连接的写半部关闭，对这样的套接字的写操作将产生SIGPIPE信号</li>
+<li> 使用非阻塞式connect的套接字已建立连接，或者connect已经以失败告终</li>
+<li> 其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件</li>
+</ol>
+<p>如果一个套接字存在带外数据或者仍处于带外标记，那么它有异常条件待处理。当某个套接字上发生错误时，它将由select标记为既可读又可写。</p>
+<blockquote>
+<p>  接收低水位标记和发送低水位标记的目的在于：允许应用进程控制在select返回可读或可写条件之前有多少数据可读或有多大空间可用于写。</p>
+<p>  举例：当数据少于64字节时，应用程序没有任何有效工作可做，则把接收低水位标记设置为64，以防少于64字节的数据准备好时select唤醒程序。</p>
+<p>  任何UDP套接字只要其发送低水位标记小于等于发送缓冲区大小（默认关系）就总是可写的，这是因为UDP套接字不需要连接。</p>
+</blockquote>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200805213132250.png" alt="image-20200805213132250"></p>
+<h3 id="6-3-2-select的最大描述符数"><a href="#6-3-2-select的最大描述符数" class="headerlink" title="6.3.2 select的最大描述符数"></a>6.3.2 select的最大描述符数</h3><p>最初设计select时，操作系统通常对每个进程可用的最大描述符数设置了上限，select就使用了相同的限制。</p>
+<p>当今的Unix版本允许每个进程使用事实上无数目限制的描述符（往往仅受限于内存总量和管理性限制）。</p>
+<p>表面上可以通过将FD_SETSIZE定义为某个更大的值，实际上却行不通，首先它是内核集成的，修改后需要重新编译内核，其次可能存在扩展性问题。</p>
+<p>有些应用程序开始改用poll代替select，典型例子是需要复选大量描述符的事件驱动型服务器程序，所需描述符量超过1024个</p>
+<h2 id="6-4-str-cli函数（修订版）"><a href="#6-4-str-cli函数（修订版）" class="headerlink" title="6.4 str_cli函数（修订版）"></a>6.4 str_cli函数（修订版）</h2><p>原先版本可能阻塞于fgets调用，新版改为阻塞于select调用，或是等待标准输入可读，或是等待套接字可读。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200805220011258.png" alt="image-20200805220011258"></p>
+<p>客户的套接字上的三个条件处理如下：</p>
+<ul>
+<li>  如果对端TCP发送数据，那么该套接字变为可读，并且read返回一个大于0的值（读入数据的字节数）</li>
+<li>  如果对端TCP发送一个FIN（对端进程终止），那么该套接字变为可读，并且read返回0（EOF）</li>
+<li>  如果对端TCP发送一个RST（对端主机崩溃并重新启动），那么该套接字变为可读，并且read返回-1，而errno中含有确切的错误码</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">str_cli</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> sockfd)</span></span>&#123;<br>    <span class="hljs-keyword">int</span> 	maxfdpl;<br>    fd_set	rset;<br>    <span class="hljs-keyword">char</span>	sendline[MAXLINE], recvline[MAXLINE];<br>    <br>    <span class="hljs-built_in">FD_ZERO</span>(&amp;rset);<br>    <span class="hljs-keyword">for</span>( ; ; )&#123;<br>        <span class="hljs-built_in">FD_SET</span>(<span class="hljs-built_in">fileno</span>(fp), &amp;rset);<br>        <span class="hljs-built_in">FD_SET</span>(sockfd, &amp;rset);<br>        <span class="hljs-comment">//fileno函数把标准I/O文件指针转换为对应的描述符</span><br>        maxfdpl = <span class="hljs-built_in">max</span>(<span class="hljs-built_in">fileno</span>(fp), sockfd) + <span class="hljs-number">1</span>;<br>        <span class="hljs-built_in">Select</span>(maxfdpl, &amp;rset, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br>        <br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">FD_ISSET</span>(sockfd, &amp;rset))&#123;		<span class="hljs-comment">//socket is readable</span><br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">Readline</span>(sockfd, recvline, MAXLINE) == <span class="hljs-number">0</span>)<br>                <span class="hljs-built_in">err_quit</span>(<span class="hljs-string">&quot;str_cli: server terminated prematurely&quot;</span>);<br>            <span class="hljs-built_in">Fputs</span>(recvline, stdout);<br>        &#125;<br>        <br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">FD_ISSET</span>(<span class="hljs-built_in">fileno</span>(fp), &amp;rset))&#123;	<span class="hljs-comment">//input is readable</span><br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">Fgets</span>(sendline, MAXLINE, fp) == <span class="hljs-literal">NULL</span>)<br>                <span class="hljs-keyword">return</span>;<br>            <span class="hljs-built_in">Writen</span>(sockfd, sendline, <span class="hljs-built_in">strlen</span>(sendline));<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-5-批量输入"><a href="#6-5-批量输入" class="headerlink" title="6.5 批量输入"></a>6.5 批量输入</h2><p>当客户端使用停-等方式工作时，虽然对交互式使用是合适的，但是却不能实现对通信管道的高效利用。</p>
+<p>如果把客户与服务器之间的网络作为全双工管道考虑，请求从客户想服务器发送，应答从服务器向客户发送，则停-等方式如下图：</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806100510176.png" alt="image-20200806100510176"></p>
+<p>在Unix的shell环境下，很容易实现重定向标准输入和标准输出，从而可以批量运行客户。当我们把标准输入和标准输出重定向到文件来运行新的客户程序时，却发现输出文件总是小于输入文件（对于回射服务器而言理应相等）。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806101504809.png" alt="image-20200806101504809"></p>
+<p>当运行一个客户程序时，标准输入的EOF同时意味着完成从套接字的读入。批量运行客户程序时，客户程序写完请求时，并不能立即关闭连接，因为管道中还有其它的请求和应答，但是修订版的str_cli函数对标准输入EOF的处理却是返回到main函数，而main函数随后终止。</p>
+<p>我们需要的是一种关闭TCP连接其中一半的方法，即给服务器发送一个FIN告诉它我们已经完成了数据发送，但仍然保持套接字描述符打开以便读取。由shutdown函数完成。</p>
+<p>为了提升性能而引入的缓冲机制增加了网络应用程序的复杂性：</p>
+<ul>
+<li><p>  fgets读取输入，将数据存放在stdio缓冲区，但是fgets只返回其中一行，其余仍在缓冲区。select处理完一行后再次被调用等待新的工作，并不知道stdio使用了缓冲区——它只是从read系统的角度指出是否有数据可读，而不是从fgets之类的调用角度</p>
+</li>
+<li><p>  readline调用时，select不可见的数据隐藏在readline自己的缓冲区中</p>
+</li>
+</ul>
+<h2 id="6-6-shutdown函数"><a href="#6-6-shutdown函数" class="headerlink" title="6.6 shutdown函数"></a>6.6 shutdown函数</h2><p>终止网络连接的通常方法是调用close函数，不过close函数有两个限制，却可以使用shutdown来避免：</p>
+<ul>
+<li>  close把描述符引用计数减1，仅在计数变为0时才关闭套接字。shutdown可以不管引用计数就激发TCP的正常连接终止序列</li>
+<li>  close终止读和写两个方向的数据传送。既然TCP连接是全双工的，有时候我们需要告知对端已经完成数据发送，即使对端仍有数据要发送给我们。</li>
+</ul>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806105214830.png" alt="image-20200806105214830"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">//成功返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">shutdown</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">int</span> howto)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>函数行为依赖于<code>howto</code>参数的值：</p>
+<ul>
+<li>  SHUT_RD：关闭连接的读一半——套接字中不再有数据可接收，套接字接收缓冲区中的现有数据都被丢弃。进程不能再对套接字调用任何读函数。TCP套接字调用shutdown函数后，由该套接字接收的来自对端的任何数据都将被确认，然后悄然丢弃</li>
+<li>  SHUT_WR：关闭连接的写一半——对于TCP套接字，这称为半关闭。当前留在套接字发送缓冲区的数据将被发送掉，后跟TCP正常连接终止序列。不能再对套接字调用任何写函数</li>
+<li>  SHUT_RDWR：连接的读半部和写半部都关闭——等效于调用两次shutdown，第一次指定SHUT_RD，第二次指定SHUT_WR</li>
+</ul>
+<blockquote>
+<p>  这三个SHUT_XXX名字由POSIX规范定义，howto参数的典型值将会是0（关闭读半部）、1（关闭写半部）和2（读半部和写半部都关闭）。</p>
+</blockquote>
+<h2 id="6-7-str-cli函数（再修订版）"><a href="#6-7-str-cli函数（再修订版）" class="headerlink" title="6.7 str_cli函数（再修订版）"></a>6.7 str_cli函数（再修订版）</h2><p>改进（且正确）版本：</p>
+<ul>
+<li>  服务器一关闭它那一端的连接立马得到通知</li>
+<li>  可以正确处理批量输入</li>
+<li>  废弃以文本行为中心，改而针对缓冲区操作</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">str_cli</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> sockfd)</span></span>&#123;<br>    <span class="hljs-keyword">int</span> 	maxfdpl, stdineof;<br>    fd_set	rset;<br>    <span class="hljs-keyword">char</span>	buf[MAXLINE];<br>    <span class="hljs-keyword">int</span> n;<br>    <br>    stdineof = <span class="hljs-number">0</span>;<br>    FD_ZERO(&amp;rset);<br>    <span class="hljs-keyword">for</span>( ; ; )&#123;<br>        <span class="hljs-keyword">if</span>(stdineof == <span class="hljs-number">0</span>)<br>            FD_SET(fileno(fp), &amp;rset);<br>        FD_SET(sockfd, &amp;rset);<br>        <span class="hljs-comment">//fileno函数把标准I/O文件指针转换为对应的描述符</span><br>        maxfdpl = max(fileno(fp), sockfd) + <span class="hljs-number">1</span>;<br>        Select(maxfdpl, &amp;rset, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br>        <br>        <span class="hljs-keyword">if</span>(FD_ISSET(sockfd, &amp;rset))&#123;		<span class="hljs-comment">//socket is readable</span><br>            <span class="hljs-keyword">if</span>( (n = Read(sockfd, buf, MAXLINE)) == <span class="hljs-number">0</span>)&#123;<br>                <span class="hljs-keyword">if</span>(stdineof == <span class="hljs-number">1</span>)<br>                    <span class="hljs-keyword">return</span>;<br>                <span class="hljs-keyword">else</span><br>                    err_quit(<span class="hljs-string">&quot;str_cli: server terminated prematurely&quot;</span>);<br>            &#125;<br>            Write(fileno(<span class="hljs-built_in">stdout</span>), buf, n)<br>        &#125;<br>        <br>        <span class="hljs-keyword">if</span>(FD_ISSET(fileno(fp), &amp;rset))&#123;	<span class="hljs-comment">//input is readable</span><br>            <span class="hljs-keyword">if</span>( (n = Read(fileno(fp), buf, MAXLINE)) == <span class="hljs-number">0</span>)&#123;<br>                stdineof = <span class="hljs-number">1</span>;<br>                Shutdown(sockfd, SHUT_WR);<br>                FD_CLR(fileno(fp), &amp;rset);<br>                <span class="hljs-keyword">continue</span>;<br>            &#125;<br>            Writen(sockfd, buf, n);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-8-TCP回射服务器程序（修订版）"><a href="#6-8-TCP回射服务器程序（修订版）" class="headerlink" title="6.8 TCP回射服务器程序（修订版）"></a>6.8 TCP回射服务器程序（修订版）</h2><p>使用select来处理任意个客户的单进程程序，而不是为每个客户派生一个子进程。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>&#123;<br>    <span class="hljs-keyword">int</span>		i, maxi, maxfd, listenfd, connfd, sockfd;<br>    <span class="hljs-comment">//服务器所能处理的最大客户数目的限制是：</span><br>    <span class="hljs-comment">//	min[FD_SETSIZE, 内核允许本进程打开的最大描述符数]</span><br>    <span class="hljs-comment">//进程能打开的描述符数数目上已经无限制，只受资源和内存限制</span><br>    <span class="hljs-keyword">int</span>		nready, client[FD_SETSIZE];<br>    <span class="hljs-keyword">ssize_t</span>	n;<br>    fd_set	rset, allset;<br>    <span class="hljs-keyword">char</span>	buf[MAXLINE];<br>    <span class="hljs-keyword">socklen_t</span>	clilen;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">cliaddr</span>, <span class="hljs-title">servaddr</span>;</span><br>    <br>    listenfd = Socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br>    <br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port = htons(SERV_PORT);<br>    <br>    Bind(listenfd, (SA*)&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    <br>    Listen(listenfd, LISTENQ);<br>    <br>    <span class="hljs-comment">//描述符集前三位分别被设置为：标准输入、标准输出和标准错误输出</span><br>    <span class="hljs-comment">//select第一个参数为：maxfd+1</span><br>    maxfd = listenfd;<br>    maxi = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; FD_SETSIZE; i++)<br>        client[i] = <span class="hljs-number">-1</span>;<br>    FD_ZERO(&amp;allset);<br>    FD_SET(listenfd, &amp;allset);<br>    <br>    <span class="hljs-keyword">for</span>( ; ; )&#123;<br>        rset = allset;<br>        nready = Select(maxfd+<span class="hljs-number">1</span>, &amp;rset, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br>        <br>        <span class="hljs-keyword">if</span>(FD_ISSET(listenfd, &amp;rset))&#123;<br>            clilen = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>            connfd = Accept(listenfd, (SA*) &amp;cliaddr, &amp;clilen);<br>            <br>            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; FD_SETSIZE; i++)&#123;<br>                <span class="hljs-keyword">if</span>(client[i] &lt; <span class="hljs-number">0</span>)&#123;<br>                    client[i] = connfd;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(i == FD_SETSIZE)<br>                err_quit(<span class="hljs-string">&quot;too many clients&quot;</span>);<br>            FD_SET(connfd, &amp;allset);<br>            <span class="hljs-keyword">if</span>(connfd &gt; maxfd)<br>                maxfd = connfd;<br>            <span class="hljs-keyword">if</span>(i &gt; maxi)<br>                maxi = i;<br>            <span class="hljs-keyword">if</span>(--nready &lt;= <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt;= maxi; i++)&#123;<br>            <span class="hljs-keyword">if</span>((sockfd = client[i]) &lt; <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-keyword">if</span>(FD_ISSET(sockfd, &amp;rset))&#123;<br>                <span class="hljs-keyword">if</span>((n = Read(sockfd, buf, MAXLINE)) == <span class="hljs-number">0</span>)&#123;<br>                    Close(sockfd);<br>                    FD_CLR(sockfd, &amp;allset);<br>                    client[i] = <span class="hljs-number">-1</span>;<br>                &#125;<span class="hljs-keyword">else</span><br>                    Writen(sockfd, buf, n);<br>                <span class="hljs-keyword">if</span>(--nready &lt;= <span class="hljs-number">0</span>)<br>                    <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>面向文本行服务器程序存在一个问题：如果一个恶意的客户连接到服务器，发送一个字节的数据（不是换行符）后进入睡眠，服务器将会调用readline从客户读入这个单字节的数据，然后阻塞于下一个read（readline内部的read）调用，等待客户其它数据。服务器因此阻塞而不能再为其它客户提供服务，直到那个恶意的客户发出一个换行符或终止为止。</p>
+<p>当前版本的服务器程序已经弃用面向文本行的方法，等待换行输入或EOF而引起的拒绝服务攻击已经不复存在。</p>
+<blockquote>
+<p>  拒绝服务型攻击：当一个服务器在处理多个客户时，它绝对不能阻塞于只与单个客户相关的某个函数调用。否则可能导致服务器被挂起，拒绝为所有其它客户提供服务。</p>
+<p>  可能的解决办法：</p>
+<ul>
+<li>  使用非阻塞式I/O</li>
+<li>  让每个客户由单独的控制线程提供服务</li>
+<li>  对I/O操作设置一个超时</li>
+</ul>
+</blockquote>
+<h2 id="6-9-pselect函数"><a href="#6-9-pselect函数" class="headerlink" title="6.9 pselect函数"></a>6.9 pselect函数</h2><p>pselect函数是由POSIX发明的，如今许多Unix变种支持它</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/select.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-comment">//若有就绪描述符则返回其数目，超时返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">pselect</span><span class="hljs-params">(<span class="hljs-keyword">int</span> maxfdpl, fd_set *readset, </span></span><br><span class="hljs-params"><span class="hljs-function">            fd_set *writeset, fd_set *exceptset,</span></span><br><span class="hljs-params"><span class="hljs-function">            <span class="hljs-keyword">const</span> struct timespec *timeout, <span class="hljs-keyword">const</span> <span class="hljs-keyword">sigset_t</span> *sigmark)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p>pselect相对于通常的select有两个变化：</p>
+<ul>
+<li><p>pselect使用timespec结构（POSIX的一个发明），不使用timeval结构</p>
+  <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">timespec</span>&#123;</span><br>    <span class="hljs-keyword">time_t</span>	tv_sec;<br>    <span class="hljs-comment">//新结构第二个成员指定纳秒数，旧结构指定微秒数</span><br>    <span class="hljs-keyword">long</span>	tv_nsec;<br>&#125;;<br></code></pre></td></tr></table></figure></li>
+<li><p>  pselect函数增加了第六个参数：一个指向信号掩码的指针。该参数允许程序先禁止递交某些信号，再测试由这些当前被禁止信号的信号处理函数设置的全局变量，然后调用pselect，然后告诉它重新设置信号掩码</p>
+</li>
+</ul>
+<h2 id="6-10-poll函数"><a href="#6-10-poll函数" class="headerlink" title="6.10 poll函数"></a>6.10 poll函数</h2><p>poll函数起源于SVR3，最初局限于流设备，SVR4取消了这种限制，允许poll工作在任何描述符上。</p>
+<p>poll提供的功能与select类似，不过在处理流设备时，它能够提供额外的信息。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;poll.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pollfd</span>&#123;</span><br>    <span class="hljs-keyword">int</span>		fd;<br>    <span class="hljs-keyword">short</span>	events;	<span class="hljs-comment">//指定要测试的条件</span><br>    <span class="hljs-keyword">short</span>	revents;<span class="hljs-comment">//返回描述符的状态</span><br>&#125;<br><span class="hljs-comment">//若有就绪描述符返回其数目，超时返回0，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">poll</span><span class="hljs-params">(struct pollfd *fdarray, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> nfds, <span class="hljs-keyword">int</span> timeout)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20210122225638690.png" alt="image-20210122225638690"></p>
+<p>图分为三个部分：</p>
+<ul>
+<li>  第一部分：处理输入的四个常值</li>
+<li>  第二部分：处理输出的三个常值</li>
+<li>  第三部分：处理错误的三个常值，不能在events中设置，但是当相应条件存在时就在revents中返回</li>
+</ul>
+<p>poll识别三类数据：普通（normal）、优先级带（priority band）、高优先级（high priority）</p>
+<p>就TCP和UDP套接字而言，以下条件引起poll返回特定的revent。不幸的是，POSIX在其poll的实现中留了许多空洞（即有多种方法可返回相同的条件）：</p>
+<ul>
+<li>  所有正规的TCP数据和所有UDP数据都被认为是普通数据</li>
+<li>  TCP的带外数据被认为是优先级带数据</li>
+<li>  当TCP连接的读半部关闭时，也被认为是普通数据，随后读操作返回0</li>
+<li>  TCP连接存在错误既可以认为是普通数据，也可以是错误（POLLERR）。读操作后都将返回-1，并设置errno，可用于收到RST或发生超时等条件</li>
+<li>  在监听套接字上有新的连接可用既可以认为是普通数据，也可以认为是优先级数据。大多数实现视为普通数据</li>
+<li>  非阻塞connect的完成被认为是使相应套接字可写</li>
+</ul>
+<p>参数nfds指定结构数组中元素的个数；timeout参数指定poll函数返回前等待多长时间，它是一个指定应等待毫秒数的正值。</p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806153002725.png" alt="image-20200806153002725"></p>
+<blockquote>
+<p>  INFTIM常值被定义为一个负值，如果系统不能提供毫秒级精度的定时器，该值就向上舍入到最接近的支持值。</p>
+</blockquote>
+<p>两种方法用来（也许只是暂时的）关闭对单个文件描述符的检查，而不需要重新建立整个fds列表：</p>
+<ul>
+<li>  将events设为0</li>
+<li>  如果不再关心某个特定描述符，那么可以把与它对应的pollfd结构的fd成员设置成一个负值，poll函数将忽略这样的pollfd结构的events成员，返回时将它的revents成员的值设置为0。</li>
+</ul>
+<h2 id="6-11-TCP回射服务器程序（再修订版）"><a href="#6-11-TCP回射服务器程序（再修订版）" class="headerlink" title="6.11 TCP回射服务器程序（再修订版）"></a>6.11 TCP回射服务器程序（再修订版）</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;limits.h&gt;</span>	<span class="hljs-comment">//for OPEN_MAX</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span>&#123;<br>    <span class="hljs-keyword">int</span>		i, maxi, listenfd, connfd, sockfd;<br>    <span class="hljs-keyword">int</span>		nready;<br>    <span class="hljs-keyword">ssize_t</span>	n;<br>    <span class="hljs-keyword">char</span>	buf[MAXLINE];<br>    <span class="hljs-keyword">socklen_t</span>	clilen;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pollfd</span> <span class="hljs-title">client</span>[<span class="hljs-title">OPEN_MAX</span>];</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span> <span class="hljs-title">cliaddr</span>, <span class="hljs-title">servaddr</span>;</span><br>    <br>    listenfd = Socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br>    <br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port = htons(SERV_PORT);<br>    <br>    Bind(listenfd, (SA*)&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    <br>    Listen(listenfd, LISTENQ);<br>    <br>    client[<span class="hljs-number">0</span>].fd = listenfd;<br>    client[<span class="hljs-number">1</span>].events = POLLRDNORM;<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">1</span>; i &lt; OPEN_MAX; i++)<br>        client[i].fd = <span class="hljs-number">-1</span>;<br>    maxi = <span class="hljs-number">0</span>;	<span class="hljs-comment">//含义client数组当前正在使用的最大下标值</span><br>    <br>    <span class="hljs-keyword">for</span>( ; ; )&#123;<br>        nready = Poll(client, maxi + <span class="hljs-number">1</span>, INFTIM);<br>        <br>        <span class="hljs-keyword">if</span>(client[<span class="hljs-number">0</span>].revents &amp; POLLRDNORM)&#123;<br>            clilen = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>            connfd = Accept(listenfd, (SA*) &amp;cliaddr, &amp;clilen);<br>            <br>            <span class="hljs-keyword">for</span>(i = <span class="hljs-number">1</span>; i &lt; OPEN_MAX; i++)&#123;<br>                <span class="hljs-keyword">if</span>(client[i].fd &lt; <span class="hljs-number">0</span>)&#123;<br>                    client[i].fd = connfd;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(i == OPEN_MAX)<br>                err_quit(<span class="hljs-string">&quot;too many clients&quot;</span>);<br>            client[i].events = POLLRDNORM;<br>            <span class="hljs-keyword">if</span>(i &gt; maxfi)<br>                maxfi = i;<br>            <span class="hljs-keyword">if</span>(i &gt; maxi)<br>                maxi = i;<br>            <span class="hljs-keyword">if</span>(--nready &lt;= <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">continue</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">1</span>; i &lt;= maxi; i++)&#123;<br>            <span class="hljs-keyword">if</span>((sockfd = client[i].fd) &lt; <span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-keyword">if</span>(client[i].revents &amp; (POLLRDNORM | POLLERR))&#123;<br>                <span class="hljs-keyword">if</span>((n = Read(sockfd, buf, MAXLINE)) &lt; <span class="hljs-number">0</span>)&#123;<br>                    <span class="hljs-keyword">if</span>(errno == ECONNRESET)&#123;<br>                        Close(sockfd);<br>                        client[i].fd = <span class="hljs-number">-1</span>;<br>                    &#125;<span class="hljs-keyword">else</span><br>                        err_SYS(<span class="hljs-string">&quot;read error&quot;</span>);<br>                &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(n == <span class="hljs-number">0</span>)&#123;<br>                    Close(sockfd);<br>                    client[i].fd = <span class="hljs-number">-1</span>;<br>                &#125;<span class="hljs-keyword">else</span><br>                    Writen(sockfd, buf, n);<br>                <span class="hljs-keyword">if</span>(--nready &lt;= <span class="hljs-number">0</span>)<br>                    <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/Study%20Notes/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%94%E8%AE%B0/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

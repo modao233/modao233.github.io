@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Source"><span class="toc-text">Source</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install"><span class="toc-text">Install</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using"><span class="toc-text">Using</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Platform-Support"><span class="toc-text">Platform Support</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Contributing"><span class="toc-text">Contributing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Performance-Improvements"><span class="toc-text">Performance Improvements</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		(转载)libeatmydata
+	</div>
+	
+	<div class="page-date">
+		2020-12-28
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>原文：<a target="_blank" rel="noopener" href="https://www.flamingspork.com/projects/libeatmydata/">https://www.flamingspork.com/projects/libeatmydata/</a></p>
+<span id="more"></span>
+
+<p>libeatmydata is a small LD_PRELOAD library designed to (transparently) disable fsync (and friends, like open(O_SYNC)). This has two side-effects: making software that writes data safely to disk a lot quicker and making this software no longer crash safe.</p>
+<p><strong>DO NOT use libeatmydata on software where you care about what it stores</strong>. It’s called lib<strong>EAT-MY-DATA</strong> for a <strong>reason</strong>.</p>
+<h2 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h2><p>I’ve recently been migrating things over to git from the old BZR repository.</p>
+<p>Git repositories are on <a target="_blank" rel="noopener" href="https://code.launchpad.net/libeatmydata">launchpad</a> and <a target="_blank" rel="noopener" href="https://github.com/stewartsmith/libeatmydata">github</a></p>
+<p>Grab the latest by just doing <code>git clone https://github.com/stewartsmith/libeatmydata.git</code> - although most Linux distros package libeatmydata as eatmydata</p>
+<p>Download: The <a target="_blank" rel="noopener" href="https://launchpad.net/libeatmydata/+download">launchpad download page</a> has all the latest libeatmydata downloads.</p>
+<p>You can also download the source tarball from here: <a target="_blank" rel="noopener" href="https://www.flamingspork.com/projects/libeatmydata/libeatmydata-105.tar.gz">libeatmydata-105.tar.gz</a> and GPG signature: <a target="_blank" rel="noopener" href="https://www.flamingspork.com/projects/libeatmydata/libeatmydata-105.tar.gz.asc">libeatmydata-105.tar.gz.asc</a>.</p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><p>If installing from source, do the following:</p>
+<ol>
+<li> <code>git clone https://github.com/stewartsmith/libeatmydata.git</code> (or extract from source tarball)</li>
+<li> <code>cd libeatmydata</code></li>
+<li> <code>autoreconf -i</code> (if building from git only)</li>
+<li> <code>./configure</code></li>
+<li> <code>make</code></li>
+<li> <code>make check</code></li>
+<li> <code>sudo make install</code></li>
+</ol>
+<h2 id="Using"><a href="#Using" class="headerlink" title="Using"></a>Using</h2><p>Once libeatmydata is installed (either from a package or from source like above, simply run the eatmydata wrapper script:</p>
+<ul>
+<li>  <code>eatmydata foo</code></li>
+</ul>
+<h2 id="Platform-Support"><a href="#Platform-Support" class="headerlink" title="Platform Support"></a>Platform Support</h2><p>I use it primarily on Linux. Others have reported success on MacOS X, OpenSolaris, Solaris, Debian GNU/kFreeBSD. Patches welcome!</p>
+<h2 id="Contributing"><a href="#Contributing" class="headerlink" title="Contributing"></a>Contributing</h2><p>You can email me directly with patches. Development is hosted on <a target="_blank" rel="noopener" href="http://www.launchpad.net/libeatmydata">launchpad</a> and has been transitioning to <a target="_blank" rel="noopener" href="https://github.com/stewartsmith/libeatmydata">github</a>.</p>
+<h2 id="Performance-Improvements"><a href="#Performance-Improvements" class="headerlink" title="Performance Improvements"></a>Performance Improvements</h2><p>Running mysql-test-run –do-test=innodb without/with libeatmydata:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">TEST                           RESULT         TIME (ms)   TIME (with libeatmydata)<br>----------------------------------------------------------------------------------<br><br>main.innodb-lock               [ pass ]           4523     4323<br>main.innodb-replace            [ pass ]            102       56<br>main.innodb-ucs2               [ pass ]           5786     1084<br>main.innodb                    [ pass ]          78306    24900<br>main.innodb_gis                [ pass ]           2647     1544<br>main.innodb_mysql              [ pass ]          86810    68579<br>main.innodb_notembedded        [ pass ]            198      150<br>main.innodb_timeout_rollback   [ pass ]           2990     2750<br>main.innodb_trx_weight         [ pass ]           1608      841<br>---------------------------------------------------------------<br>Stopping All Servers<br>All 9 tests were successful.<br>The servers were restarted 7 times<br><br>WITHOUT: Spent 182.97 seconds actually executing testcases<br>WITH   : Spent 104.227 seconds actually executing testcases<br><br>WITHOUT:               WITH:<br>real    3m36.053s      real    2m10.610s<br>user    0m42.323s      user    0m41.939s<br>sys     0m2.844s       sys     0m2.356s<br></code></pre></td></tr></table></figure>
+
+<p>This saves us about a third of the total runtime!</p>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/Software/Linux/libeatmydata/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

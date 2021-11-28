@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#8-1-%E6%A6%82%E8%BF%B0"><span class="toc-text">8.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-2-recvfrom%E5%92%8Csendto%E5%87%BD%E6%95%B0"><span class="toc-text">8.2 recvfrom和sendto函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-3-UDP%E5%9B%9E%E5%B0%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F%EF%BC%9Amain%E5%87%BD%E6%95%B0"><span class="toc-text">8.3 UDP回射服务器程序：main函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-4-UDP%E5%9B%9E%E6%94%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F%EF%BC%9Adg-echo%E5%87%BD%E6%95%B0"><span class="toc-text">8.4 UDP回收服务器程序：dg_echo函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-5-UDP%E5%9B%9E%E5%B0%84%E5%AE%A2%E6%88%B7%E7%A8%8B%E5%BA%8F%EF%BC%9Amain%E5%87%BD%E6%95%B0"><span class="toc-text">8.5 UDP回射客户程序：main函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-6-UDP%E5%9B%9E%E5%B0%84%E5%AE%A2%E6%88%B7%E7%A8%8B%E5%BA%8F%EF%BC%9Adg-cli%E5%87%BD%E6%95%B0"><span class="toc-text">8.6 UDP回射客户程序：dg_cli函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-7-%E6%95%B0%E6%8D%AE%E6%8A%A5%E7%9A%84%E4%B8%A2%E5%A4%B1"><span class="toc-text">8.7 数据报的丢失</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-8-%E9%AA%8C%E8%AF%81%E6%8E%A5%E6%94%B6%E5%88%B0%E7%9A%84%E5%93%8D%E5%BA%94"><span class="toc-text">8.8 验证接收到的响应</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-9-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E7%A8%8B%E6%9C%AA%E8%BF%90%E8%A1%8C"><span class="toc-text">8.9 服务器进程未运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-10-UDP%E7%A8%8B%E5%BA%8F%E4%BE%8B%E5%AD%90%E5%B0%8F%E7%BB%93"><span class="toc-text">8.10 UDP程序例子小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-11-UDP%E7%9A%84connect%E5%87%BD%E6%95%B0"><span class="toc-text">8.11 UDP的connect函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-11-1-%E7%BB%99%E4%B8%80%E4%B8%AAUDP%E5%A5%97%E6%8E%A5%E5%AD%97%E5%A4%9A%E6%AC%A1%E8%B0%83%E7%94%A8connect"><span class="toc-text">8.11.1 给一个UDP套接字多次调用connect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-11-2-%E6%80%A7%E8%83%BD"><span class="toc-text">8.11.2 性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-12-dg-cli%E5%87%BD%E6%95%B0%EF%BC%88%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89"><span class="toc-text">8.12 dg_cli函数（修订版）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-13-UDP%E7%BC%BA%E4%B9%8F%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-text">8.13 UDP缺乏流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-14-udp%E4%B8%AD%E7%9A%84%E5%A4%96%E5%87%BA%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%A1%AE%E5%AE%9A"><span class="toc-text">8.14 udp中的外出接口的确定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-15-%E4%BD%BF%E7%94%A8select%E5%87%BD%E6%95%B0%E7%9A%84tcp%E5%92%8Cudp%E5%9B%9E%E5%B0%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">8.15 使用select函数的tcp和udp回射服务器程序</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Unix网络编程-第8章 基本UDP套接字编程
+	</div>
+	
+	<div class="page-date">
+		2019-12-30
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Study Notes">Study Notes</a>
+				
+				</div>
+				」
+			 
+				「
+				<div class="category">
+					<a href="/categories/Unix网络编程">Unix网络编程</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>第8章 基本UDP套接字编程</p>
+<span id="more"></span>
+
+<h2 id="8-1-概述"><a href="#8-1-概述" class="headerlink" title="8.1 概述"></a>8.1 概述</h2><p>UDP是无连接不可靠的数据报协议，非常不同于TCP提供的面向连接的可靠字节流。</p>
+<p>有些场合确实适合使用UDP，常见的应用程序有：</p>
+<ul>
+<li>  DNS：域名系统</li>
+<li>  NFS：网络文件系统</li>
+<li>  SNMP：简单网络管理协议</li>
+</ul>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815203716894.png" alt="image-20200815203716894"></p>
+<h2 id="8-2-recvfrom和sendto函数"><a href="#8-2-recvfrom和sendto函数" class="headerlink" title="8.2 recvfrom和sendto函数"></a>8.2 recvfrom和sendto函数</h2><p>类似于标准的read和write函数，不过需要三个额外的参数：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">//成功则均返回读或写的字节数，出错返回-1</span><br><span class="hljs-function"><span class="hljs-keyword">ssize_t</span> <span class="hljs-title">recvfrom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">void</span> *buff, <span class="hljs-keyword">size_t</span> nbytes, <span class="hljs-keyword">int</span> flags,</span></span><br><span class="hljs-params"><span class="hljs-function">                struct sockadd *from, <span class="hljs-keyword">socklen_t</span> *addrlen)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">ssize_t</span> <span class="hljs-title">sendto</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">void</span> *buff, <span class="hljs-keyword">size_t</span> nbytes, <span class="hljs-keyword">int</span> flags,</span></span><br><span class="hljs-params"><span class="hljs-function">              <span class="hljs-keyword">const</span> struct sockaddr *to, <span class="hljs-keyword">socklen_t</span> addrlen)</span></span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>  前三个参数sockfd、buff和nbytes等同于read和write函数的三个参数：描述符、指向读入或写出缓冲区的指针和读写字节数。</p>
+</li>
+<li><p>  flags总是置0</p>
+</li>
+<li><p>  sendto的to参数指向一个含有数据报接收者的协议地址（例如IP地址及端口号）的套接字地址结构，大小由addrlen参数指定（<strong>是一个整数值</strong>）</p>
+</li>
+<li><p>  recvfrom的from参数指向一个将由该函数在返回时填写数据报发送者的协议地址（例如IP地址及端口号）的套接字地址结构，该套接字地址中填写的字节数存放在addrlen参数所指的整数中返回给调用者（<strong>是一个指向整数值的指针（值-结果传参）</strong>）</p>
+</li>
+</ul>
+<blockquote>
+<p>  recvfrom最后两个参数类似accept最后两个参数：返回时其中套接字地址结构内容告诉我们是谁发送了数据报（UPD情况下）或是谁发起了连接（TCP情况下）。</p>
+<p>  sendto的最后两个参数类似于connect最后两个参数：调用时其中套接字地址结构被我们填入数据报发往（UDP情况下）或与之建立连接（TCP情况下）的协议地址</p>
+</blockquote>
+<p><strong>写一个长度为0的数据报是可行的。</strong>在UDP情况下，会形成一个只包含IP首部和UDP首部而没有数据的IP数据报，即recvfrom返回0值是可接受的。</p>
+<p>UDP是无连接的，不存在关闭连接之类的事情。</p>
+<h2 id="8-3-UDP回射服务器程序：main函数"><a href="#8-3-UDP回射服务器程序：main函数" class="headerlink" title="8.3 UDP回射服务器程序：main函数"></a>8.3 UDP回射服务器程序：main函数</h2><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815211416476.png" alt="image-20200815211416476"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                    sockfd;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>     <span class="hljs-title">servaddr</span>, <span class="hljs-title">cliaddr</span>;</span><br><br>    <span class="hljs-comment">//通过指定SOCK_DGRAM，创建一个UDP套接字</span><br>    sockfd = Socket(AF_INET, SOCK_DGRAM, <span class="hljs-number">0</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family      = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port        = htons(SERV_PORT);<br><br>    Bind(sockfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    dg_echo(sockfd, (SA *) &amp;cliaddr, <span class="hljs-keyword">sizeof</span>(cliaddr));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-4-UDP回收服务器程序：dg-echo函数"><a href="#8-4-UDP回收服务器程序：dg-echo函数" class="headerlink" title="8.4 UDP回收服务器程序：dg_echo函数"></a>8.4 UDP回收服务器程序：dg_echo函数</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">dg_echo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, SA *pcliaddr, <span class="hljs-keyword">socklen_t</span> clilen)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>            n;<br>    <span class="hljs-keyword">socklen_t</span>      len;<br>    <span class="hljs-keyword">char</span>           mesg[MAXLINE];<br><br>    <span class="hljs-comment">//迭代服务器，永不终止，无连接</span><br>    <span class="hljs-keyword">for</span> ( ; ; ) &#123;<br>        len = clilen;<br>        n = Recvfrom(sockfd, mesg, MAXLINE, <span class="hljs-number">0</span>, pcliaddr, &amp;len);<br><br>        Sendto(sockfd, mesg, n, <span class="hljs-number">0</span>, pcliaddr, len);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>大多数TCP服务器是并发的，大多数UDP服务器是迭代的。每个UDP套接字都有一个接收缓冲区，到达该套接字的每个数据报都进入这个套接字接收缓冲区，当进程调用recvfrom函数时，缓冲区中的下一个数据报以FIFO顺序返回给进程。</p>
+<blockquote>
+<p>  dg_echo函数是协议无关的：调用者分配一个正确大小的套接字地址结构，将其地址指针和大小传参给dg_echo，dg_echo绝不查看该结构的内容，而是把一个指向该结构的指针传递给recvfrom和sendto。</p>
+</blockquote>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815212534596.png" alt="image-20200815212534596"></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815212550160.png" alt="image-20200815212550160"></p>
+<h2 id="8-5-UDP回射客户程序：main函数"><a href="#8-5-UDP回射客户程序：main函数" class="headerlink" title="8.5 UDP回射客户程序：main函数"></a>8.5 UDP回射客户程序：main函数</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                    sockfd;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>     <span class="hljs-title">servaddr</span>;</span><br><br>    <span class="hljs-keyword">if</span> (argc != <span class="hljs-number">2</span>)<br>        err_quit(<span class="hljs-string">&quot;usage: udpcli &lt;IPaddress&gt;&quot;</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family = AF_INET;<br>    servaddr.sin_port = htons(SERV_PORT);<br>    Inet_pton(AF_INET, argv[<span class="hljs-number">1</span>], &amp;servaddr.sin_addr);<br><br>    sockfd = Socket(AF_INET, SOCK_DGRAM, <span class="hljs-number">0</span>);<br><br>    dg_cli(<span class="hljs-built_in">stdin</span>, sockfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-6-UDP回射客户程序：dg-cli函数"><a href="#8-6-UDP回射客户程序：dg-cli函数" class="headerlink" title="8.6 UDP回射客户程序：dg_cli函数"></a>8.6 UDP回射客户程序：dg_cli函数</h2><p>dg_cli函数也是协议无关的，不过main函数都是协议相关的。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">dg_cli</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">const</span> SA *pservaddr, <span class="hljs-keyword">socklen_t</span> servlen)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>     n;<br>    <span class="hljs-keyword">char</span>    sendline[MAXLINE], recvline[MAXLINE + <span class="hljs-number">1</span>];<br><br>    <span class="hljs-keyword">while</span> (Fgets(sendline, MAXLINE, fp) != <span class="hljs-literal">NULL</span>) &#123;<br><br>        <span class="hljs-comment">//首次调用sendto时没有绑定一个本地接口，内核在此时为它选择一个临时端口</span><br>        Sendto(sockfd, sendline, <span class="hljs-built_in">strlen</span>(sendline), <span class="hljs-number">0</span>, pservaddr, servlen);<br><br>        <span class="hljs-comment">//最后两个参数是空指针，表示并不关心应答数据报由谁发送</span><br>        <span class="hljs-comment">//任何接收的数据报均被认为是服务器的内容</span><br>        n = Recvfrom(sockfd, recvline, MAXLINE, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br><br>        recvline[n] = <span class="hljs-number">0</span>;    <span class="hljs-comment">/* null terminate */</span><br>        Fputs(recvline, <span class="hljs-built_in">stdout</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-7-数据报的丢失"><a href="#8-7-数据报的丢失" class="headerlink" title="8.7 数据报的丢失"></a>8.7 数据报的丢失</h2><p>UDP客户/服务器例子是不可靠的：如果客户数据报到达服务器，但是服务器的应答丢失了，则客户将永远阻塞于dg_cli函数的recvfrom调用，等待一个永远不会到达的服务器应答。</p>
+<p>防止永久阻塞的一般方法是给客户的recvfrom调用设置一个超时，但是这并不是完整的解决办法。</p>
+<h2 id="8-8-验证接收到的响应"><a href="#8-8-验证接收到的响应" class="headerlink" title="8.8 验证接收到的响应"></a>8.8 验证接收到的响应</h2><p>知道客户临时端口的任何进程都可以往客户发送数据报，而这些数据报会与正常的服务器应答混杂。</p>
+<p>通过在dg_cli函数的recvfrom调用中，通知内核返回数据报发送者的地址，通过比较recvfrom在值-结果传参中返回的长度，然后用memcmp比较套接字地址结构本身，验证接收到的响应。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">dg_cli</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">const</span> SA *pservaddr, <span class="hljs-keyword">socklen_t</span> servlen)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                    n;<br>    <span class="hljs-keyword">char</span>                sendline[MAXLINE], recvline[MAXLINE + <span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">socklen_t</span>              len;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr</span>        *<span class="hljs-title">preply_addr</span>;</span><br><br>    preply_addr = Malloc(servlen);<br><br>    <span class="hljs-keyword">while</span> (Fgets(sendline, MAXLINE, fp) != <span class="hljs-literal">NULL</span>) &#123;<br><br>        Sendto(sockfd, sendline, <span class="hljs-built_in">strlen</span>(sendline), <span class="hljs-number">0</span>, pservaddr, servlen);<br><br>        len = servlen;<br>        n = Recvfrom(sockfd, recvline, MAXLINE, <span class="hljs-number">0</span>, preply_addr, &amp;len);<br>        <span class="hljs-keyword">if</span> (len != servlen || <span class="hljs-built_in">memcmp</span>(pservaddr, preply_addr, len) != <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;reply from %s (ignored)\n&quot;</span>,<br>                    Sock_ntop(preply_addr, len));<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br><br>        recvline[n] = <span class="hljs-number">0</span>;    <span class="hljs-comment">/* null terminate */</span><br>        Fputs(recvline, <span class="hljs-built_in">stdout</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果服务器运行在只有单个IP的主机上，那么新版的客户将正常工作，如果服务器主机是多宿的，该客户可能失败：发送到服务器数据的地址和接收服务器数据的地址可能不同。</p>
+<p>解决办法：</p>
+<ul>
+<li>  将返回的IP地址通过DNS中查找服务器主机的名字来验证主机的域名</li>
+<li>  为服务器每个IP绑定一个套接字，在所有套接字上使用select，使应答的套接字上绑定的IP地址就是客户请求的目的IP地址</li>
+</ul>
+<h2 id="8-9-服务器进程未运行"><a href="#8-9-服务器进程未运行" class="headerlink" title="8.9 服务器进程未运行"></a>8.9 服务器进程未运行</h2><p>服务器进程不启动的情况下，客户永远阻塞在它的recvfrom调用，等待一个永不出现的服务器应答：</p>
+<ul>
+<li>  客户主机进行ARP请求后获取服务器地址</li>
+<li>  客户发送数据后，返回“端口不可达”的ICMP消息，但该消息不会返回给客户进程</li>
+</ul>
+<p>这个ICMP错误称为<strong>异步错误</strong>，该错误由sendto引起，但是sendto本身却成功返回。UDP输出操作成功后仅仅返回表示在接口输出队列中具有存放所形成IP数据报的空间，该ICMP错误直到后来才返回，故称其为异步。</p>
+<p>一个基本的规则：对于一个UDP套接字，由它引起的异步错误却并不返回给它，除非它已连接。ICMP出错信息包含引起错误的数据报的IP首部和UDP首部，而recvfrom可以返回的信息只有errno值，没法返回出错数据报的目的IP地址和目的UDP端口号，因此做出决定：仅在进程已将其UDP套接字连接到恰恰一个对端后，这些异步错误才返回给进程。</p>
+<blockquote>
+<p>  只要SO_BSDCOMPAT套记者选项没有开启，Linux甚至对未连接的套接字也返回大多数ICMP “destination unreachable”错误。</p>
+</blockquote>
+<h2 id="8-10-UDP程序例子小结"><a href="#8-10-UDP程序例子小结" class="headerlink" title="8.10 UDP程序例子小结"></a>8.10 UDP程序例子小结</h2><p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816101704301.png" alt="image-20200816101704301"></p>
+<ul>
+<li>  客户临时端口是在第一次调用sendto时一次性选定，不能改变</li>
+<li>  客户的IP地址可以随客户发送的每个UDP数据报而变动</li>
+</ul>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816101727333.png" alt="image-20200816101727333"></p>
+<ul>
+<li>  对于UDP套接字来是，目的IP地址只能通过为IPv4设置IP_RECVDSTADDR套接字选项（或为IPv6设置IPV6_PKTINFO套接字选项）然后调用recvmsg取得。</li>
+</ul>
+<h2 id="8-11-UDP的connect函数"><a href="#8-11-UDP的connect函数" class="headerlink" title="8.11 UDP的connect函数"></a>8.11 UDP的connect函数</h2><p>UDP套接字的connect没有三路握手过程，内核只是检查是否存在立即可知的错误，记录对端的IP地址和端口号，然后立即返回到调用进程：</p>
+<ul>
+<li>  未连接UDP套接字，新创建的UDP套接字默认如此</li>
+<li>  已连接UDP套接字，对UDP套接字调用connect的结果</li>
+</ul>
+<p>已连接UDP套接字对比默认的未连接套接字的三个变化：</p>
+<ul>
+<li><p>不能给输出操作指定目的IP地址和端口号，而是改用write或send</p>
+<ul>
+<li>  不使用sendto</li>
+<li>  使用sendto，但是不能指定目的地址，sendto的第五个参数为空指针，第六个参数为0</li>
+</ul>
+<blockquote>
+<p>  POSIX规范指出当第五个参数是空指针时，第六个参数的取值就不再考虑</p>
+</blockquote>
+</li>
+<li><p>不必使用recvfrom以获悉数据报的发送者，而改用read、recv或recvmsg。限制一个已连接UDP套接字能且仅能与一个对端交换数据报。</p>
+<ul>
+<li>  准确说是仅能与一个IP地址交换数据报，可能connect到多播或广播地址</li>
+</ul>
+</li>
+<li><p>  已连接UDP套接字的异步错误会返回给它们所在的进程，而未连接UDP套接字不接受任何异步错误</p>
+</li>
+</ul>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816103351241.png" alt="image-20200816103351241"></p>
+<p><img src="/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816103527775.png" alt="image-20200816103527775"></p>
+<p>UDP客户进程或服务进程只在使用自己的UDP套接字与确定的唯一对端进行通信时，才可以调用connect，调用connect的通常是UDP客户，不过有些网络应用中的UDP服务器会与单个客户长时间通信（如TFTP），这种情况下，客户和服务器都可能调用connect。</p>
+<h3 id="8-11-1-给一个UDP套接字多次调用connect"><a href="#8-11-1-给一个UDP套接字多次调用connect" class="headerlink" title="8.11.1 给一个UDP套接字多次调用connect"></a>8.11.1 给一个UDP套接字多次调用connect</h3><p>一个已连接UDP套接字的进程可由下列两个目的再次调用connect：</p>
+<ul>
+<li>指定新的IP地址和端口号<ul>
+<li>  TCP套接字connect只能调用一次</li>
+</ul>
+</li>
+<li>断开套接字<ul>
+<li>  为了断开一个已连接UDP套接字，我们再次调用connect时把套接字地址结构的地址族成员（对于IPv4为sin_family，对于IPv6为sin6_family）设置为AF_UNSPEC，这样做可能会返回一个EAFNOSUPPORT错误，不过没关系</li>
+<li>  有些系统可以用空的套接字地址结构指针调用connect，POSIX规范和BSD手册只是提示必须使用一个空地址而没有提到出错返回值。最便于移植的解决办法是：<strong>清零一个地址结构后把它的地址族成员设置为AF_UNSPEC，再把它传递给connect</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="8-11-2-性能"><a href="#8-11-2-性能" class="headerlink" title="8.11.2 性能"></a>8.11.2 性能</h3><p>在一个未连接UDP套接字上给两个数据报调用sendto函数涉及6个步骤（源自Berkeley内核）：</p>
+<ul>
+<li>  连接套接字（第一次很可能搜索路由表）</li>
+<li>  输出第一个数据报</li>
+<li>  断开套接字连接</li>
+<li>  连接套接字（第二次的目的地址可能等同第一次，则无需搜索路由表）</li>
+<li>  输出第二个数据报</li>
+<li>  断开套接字连接</li>
+</ul>
+<p>当应用进程知道自己要给同一目的地址发送多个数据报时，显示连接套接字效率更高，调用connect后调用两次write涉及内核的执行步骤如下：</p>
+<ul>
+<li>  连接套接字</li>
+<li>  输出第一个数据报</li>
+<li>  输出第二个数据报</li>
+</ul>
+<h2 id="8-12-dg-cli函数（修订版）"><a href="#8-12-dg-cli函数（修订版）" class="headerlink" title="8.12 dg_cli函数（修订版）"></a>8.12 dg_cli函数（修订版）</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">dg_cli</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">const</span> SA *pservaddr, <span class="hljs-keyword">socklen_t</span> servlen)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>            n;<br>    <span class="hljs-keyword">char</span>        sendline[MAXLINE], recvline[MAXLINE + <span class="hljs-number">1</span>];<br><br>    Connect(sockfd, (SA *) pservaddr, servlen);<br><br>    <span class="hljs-keyword">while</span> (Fgets(sendline, MAXLINE, fp) != <span class="hljs-literal">NULL</span>) &#123;<br><br>        Write(sockfd, sendline, <span class="hljs-built_in">strlen</span>(sendline));<br><br>        n = Read(sockfd, recvline, MAXLINE);<br><br>        recvline[n] = <span class="hljs-number">0</span>;    <span class="hljs-comment">/* null terminate */</span><br>        Fputs(recvline, <span class="hljs-built_in">stdout</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>函数不查看传递给connect的套接字地址结构的内容，仍是协议无关的。</p>
+<h2 id="8-13-UDP缺乏流量控制"><a href="#8-13-UDP缺乏流量控制" class="headerlink" title="8.13 UDP缺乏流量控制"></a>8.13 UDP缺乏流量控制</h2><p><strong>UDP套接字接收缓冲区</strong>：由UDP给某个特定套接字排队的UDP数据报数目受限于该套接字接收缓冲区的大小，可以使用SO_RCVBUF套接字选项修改改制。</p>
+<p>增加流量控制的UDP示例：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span>    NDG        2000    <span class="hljs-comment">/* datagrams to send */</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span>    DGLEN    1400    <span class="hljs-comment">/* length of each datagram */</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">dg_cli</span><span class="hljs-params">(FILE *fp, <span class="hljs-keyword">int</span> sockfd, <span class="hljs-keyword">const</span> SA *pservaddr, <span class="hljs-keyword">socklen_t</span> servlen)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>        i;<br>    <span class="hljs-keyword">char</span>    sendline[DGLEN];<br><br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; NDG; i++) &#123;<br>        Sendto(sockfd, sendline, DGLEN, <span class="hljs-number">0</span>, pservaddr, servlen);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span>    <span class="hljs-title">recvfrom_int</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>    count;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">dg_echo</span><span class="hljs-params">(<span class="hljs-keyword">int</span> sockfd, SA *pcliaddr, <span class="hljs-keyword">socklen_t</span> clilen)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>            n;<br>    <span class="hljs-keyword">socklen_t</span>      len;<br>    <span class="hljs-keyword">char</span>           mesg[MAXLINE];<br><br>    Signal(SIGINT, recvfrom_int);<br><br>    n = <span class="hljs-number">220</span> * <span class="hljs-number">1024</span>;<br>    Setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &amp;n, <span class="hljs-keyword">sizeof</span>(n));<br><br>    <span class="hljs-keyword">for</span> ( ; ; ) &#123;<br>        len = clilen;<br>        Recvfrom(sockfd, mesg, MAXLINE, <span class="hljs-number">0</span>, pcliaddr, &amp;len);<br><br>        count++;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span></span><br><span class="hljs-function"><span class="hljs-title">recvfrom_int</span><span class="hljs-params">(<span class="hljs-keyword">int</span> signo)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\nreceived %d datagrams\n&quot;</span>, count);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-14-udp中的外出接口的确定"><a href="#8-14-udp中的外出接口的确定" class="headerlink" title="8.14 udp中的外出接口的确定"></a>8.14 udp中的外出接口的确定</h2><p>已连接UDP套接字还可以用来确定用于某个特定目的地址的外出接口。因为connect函数应用到UDP套接字时有一个副作用：内核选择本地IP地址（未使用bind），这个本地IP地址通过为目的地址搜索路由表得到外出接口，然后选用该接口的主IP地址而选定。</p>
+<p>在UDP套接字上调用connect并不给对端主机发送任何信息，它完全是一个本地操作，只是保存对端的IP地址和端口号。</p>
+<p>在一个未绑定端口号的UDP套接字上调用connect同时也给该套接字指派一个临时端口。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//使用connect来确定输出接口的UDP程序</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                        sockfd;<br>    <span class="hljs-keyword">socklen_t</span>                  len;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>         <span class="hljs-title">cliaddr</span>, <span class="hljs-title">servaddr</span>;</span><br><br>    <span class="hljs-keyword">if</span> (argc != <span class="hljs-number">2</span>)<br>        err_quit(<span class="hljs-string">&quot;usage: udpcli &lt;IPaddress&gt;&quot;</span>);<br><br>    sockfd = Socket(AF_INET, SOCK_DGRAM, <span class="hljs-number">0</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family = AF_INET;<br>    servaddr.sin_port = htons(SERV_PORT);<br>    Inet_pton(AF_INET, argv[<span class="hljs-number">1</span>], &amp;servaddr.sin_addr);<br><br>    Connect(sockfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    len = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>    Getsockname(sockfd, (SA *) &amp;cliaddr, &amp;len);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;local address %s\n&quot;</span>, Sock_ntop((SA *) &amp;cliaddr, len));<br><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-15-使用select函数的tcp和udp回射服务器程序"><a href="#8-15-使用select函数的tcp和udp回射服务器程序" class="headerlink" title="8.15 使用select函数的tcp和udp回射服务器程序"></a>8.15 使用select函数的tcp和udp回射服务器程序</h2><p>将并发TCP回射服务器程序与迭代UDP回射服务器程序组合成单个使用select来复用TCP和UDP套接字的服务器程序。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* include udpservselect01 */</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span>    <span class="hljs-meta-string">&quot;unp.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span></span><br><span class="hljs-function"><span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span>                    listenfd, connfd, udpfd, nready, maxfdp1;<br>    <span class="hljs-keyword">char</span>                   mesg[MAXLINE];<br>    <span class="hljs-keyword">pid_t</span>                  childpid;<br>    fd_set                 rset;<br>    <span class="hljs-keyword">ssize_t</span>                n;<br>    <span class="hljs-keyword">socklen_t</span>              len;<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span>              on = <span class="hljs-number">1</span>;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">sockaddr_in</span>     <span class="hljs-title">cliaddr</span>, <span class="hljs-title">servaddr</span>;</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span>                   <span class="hljs-title">sig_chld</span><span class="hljs-params">(<span class="hljs-keyword">int</span>)</span></span>;<br><br>        <span class="hljs-comment">/* create listening TCP socket */</span><br>    listenfd = Socket(AF_INET, SOCK_STREAM, <span class="hljs-number">0</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family      = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port        = htons(SERV_PORT);<br><br>    <span class="hljs-comment">//设置SO_REUSEADDR套接字选项防止该端口上已有连接存在</span><br>    Setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &amp;on, <span class="hljs-keyword">sizeof</span>(on));<br>    Bind(listenfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><br>    Listen(listenfd, LISTENQ);<br><br>        <span class="hljs-comment">/* create UDP socket */</span><br>    udpfd = Socket(AF_INET, SOCK_DGRAM, <span class="hljs-number">0</span>);<br><br>    bzero(&amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br>    servaddr.sin_family      = AF_INET;<br>    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);<br>    servaddr.sin_port        = htons(SERV_PORT);<br><br>    Bind(udpfd, (SA *) &amp;servaddr, <span class="hljs-keyword">sizeof</span>(servaddr));<br><span class="hljs-comment">/* end udpservselect01 */</span><br><br><span class="hljs-comment">/* include udpservselect02 */</span><br>    <span class="hljs-comment">//给SIGCHLD建立信号处理程序，因为TCP连接将由某个子进程处理</span><br>    Signal(SIGCHLD, sig_chld);    <span class="hljs-comment">/* must call waitpid() */</span><br><br>    FD_ZERO(&amp;rset);<br>    maxfdp1 = max(listenfd, udpfd) + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> ( ; ; ) &#123;<br>        FD_SET(listenfd, &amp;rset);<br>        FD_SET(udpfd, &amp;rset);<br>        <span class="hljs-keyword">if</span> ( (nready = select(maxfdp1, &amp;rset, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>)) &lt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">if</span> (errno == EINTR)<br>                <span class="hljs-keyword">continue</span>;        <span class="hljs-comment">/* back to for() */</span><br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-comment">//sig_chld信号处理程序可能会中断select调用，需要处理EINTR错误</span><br>                err_sys(<span class="hljs-string">&quot;select error&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (FD_ISSET(listenfd, &amp;rset)) &#123;<br>            len = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>            connfd = Accept(listenfd, (SA *) &amp;cliaddr, &amp;len);<br>    <br>            <span class="hljs-keyword">if</span> ( (childpid = Fork()) == <span class="hljs-number">0</span>) &#123;    <span class="hljs-comment">/* child process */</span><br>                Close(listenfd);    <span class="hljs-comment">/* close listening socket */</span><br>                str_echo(connfd);    <span class="hljs-comment">/* process the request */</span><br>                <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>            &#125;<br>            Close(connfd);            <span class="hljs-comment">/* parent closes connected socket */</span><br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (FD_ISSET(udpfd, &amp;rset)) &#123;<br>            len = <span class="hljs-keyword">sizeof</span>(cliaddr);<br>            n = Recvfrom(udpfd, mesg, MAXLINE, <span class="hljs-number">0</span>, (SA *) &amp;cliaddr, &amp;len);<br><br>            Sendto(udpfd, mesg, n, <span class="hljs-number">0</span>, (SA *) &amp;cliaddr, len);<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-comment">/* end udpservselect02 */</span><br><br></code></pre></td></tr></table></figure>
+
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/Study%20Notes/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%94%E8%AE%B0/Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+
+</div>
+
+<div class="content-area">
+	<div class="title">
+		将两个list合并和一个dict
+	</div>
+	
+	<div class="page-date">
+		2019-12-10
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>有时候需要将两个list合并成一个dict，python内置函数zip可以提供此功能</p>
+<span id="more"></span>
+
+<ol>
+<li><p>两个list长度相等，直接使用内置函数：zip()：</p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">l1 = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>l2 = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>];<br>d = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">zip</span>(l1, l2))<br><span class="hljs-built_in">print</span>(d)	//&#123;<span class="hljs-string">&#x27;1&#x27;</span>:<span class="hljs-string">&#x27;a&#x27;</span>, ...&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>当两个list的长度不一样</p>
+<ol>
+<li> 可以截取长度长的list使其等于另一个list</li>
+<li> 直接合并，自动匹配，省去多余部分</li>
+</ol>
+ <figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">l1 = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]<br>l2 = [<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>];<br>l3 = l2[<span class="hljs-number">0</span>:<span class="hljs-built_in">len</span>(l1)]<br>d = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">zip</span>(l1, l3))<br><span class="hljs-built_in">print</span>(d)	//&#123;<span class="hljs-string">&#x27;1&#x27;</span>:<span class="hljs-string">&#x27;a&#x27;</span>, ...&#125;<br><br>d = <span class="hljs-built_in">dict</span>(<span class="hljs-built_in">zip</span>(l1, l2))<br><span class="hljs-built_in">print</span>(d)	//&#123;<span class="hljs-string">&#x27;1&#x27;</span>:<span class="hljs-string">&#x27;a&#x27;</span>, ...&#125;<br></code></pre></td></tr></table></figure></li>
+</ol>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/python-%E5%B0%86%E4%B8%A4%E4%B8%AAlist%E5%90%88%E5%B9%B6%E5%92%8C%E4%B8%80%E4%B8%AAdict/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="toc-text">通用命名规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%85%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">包命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">类命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">接口命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">方法命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">变量命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">常量命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">通用类型命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">枚举命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">注释命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E5%AE%83%E6%9C%89%E7%94%A8%E7%9A%84%E8%A7%84%E8%8C%83"><span class="toc-text">其它有用的规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Java命名规范
+	</div>
+	
+	<div class="page-date">
+		2020-12-30
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Java">Java</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<span id="more"></span>
+
+<h2 id="通用命名规则"><a href="#通用命名规则" class="headerlink" title="通用命名规则"></a>通用命名规则</h2><ol>
+<li> 命名要有描述性，易于理解，少用缩写，避免不规范缩写</li>
+<li> 英文、拼音不混用</li>
+</ol>
+<h2 id="包命名约定"><a href="#包命名约定" class="headerlink" title="包命名约定"></a>包命名约定</h2><p>包名使用<strong>小写字母的单词(单数形式)</strong></p>
+<p>如果名称包含多个单词，则应使用点（.）分隔</p>
+<p>根据组织自己的内部命名约定，包名称的后续部分可能不同。</p>
+<h2 id="类命名约定"><a href="#类命名约定" class="headerlink" title="类命名约定"></a>类命名约定</h2><p>类名使用大驼峰命名法</p>
+<ul>
+<li>  抽象类命名使用 Abstract 或 Base 开头</li>
+<li>  异常类命名使用 Exception 结尾</li>
+<li>  测试类命名以它要测试的类的名称开始，以 Test 结尾</li>
+<li>  例外：DO / BO / DTO / VO / AO / PO / UID 等。</li>
+</ul>
+<h2 id="接口命名约定"><a href="#接口命名约定" class="headerlink" title="接口命名约定"></a>接口命名约定</h2><p>接口使用大驼峰命名法</p>
+<p>在相同的情况下，接口也可以是名词，当它们呈现一系列类别时，例如List和Map。</p>
+<h2 id="方法命名约定"><a href="#方法命名约定" class="headerlink" title="方法命名约定"></a>方法命名约定</h2><p>方法使用小驼峰命名法</p>
+<h2 id="变量命名约定"><a href="#变量命名约定" class="headerlink" title="变量命名约定"></a>变量命名约定</h2><p>变量（参数变量、成员变量、局部变量）都使用小驼峰命名法</p>
+<p>如果是临时变量，可以是单个字符，如x，y，z</p>
+<h2 id="常量命名约定"><a href="#常量命名约定" class="headerlink" title="常量命名约定"></a>常量命名约定</h2><p>常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">正例：MAX_STOCK_COUNT / CACHE_EXPIRED_TIME<br>反例：MAX_COUNT / EXPIRED_TIME<br></code></pre></td></tr></table></figure>
+
+<h2 id="通用类型命名约定"><a href="#通用类型命名约定" class="headerlink" title="通用类型命名约定"></a>通用类型命名约定</h2><p>通用类型参数名称应为大写单个字母。通常建议使用<code>T</code>类型字母。</p>
+<p>在JDK类中，<code>E</code>用于集合元素，<code>S</code>用于服务加载器，<code>K</code>和<code>V</code>用于映射键和值。</p>
+<h2 id="枚举命名约定"><a href="#枚举命名约定" class="headerlink" title="枚举命名约定"></a>枚举命名约定</h2><p>枚举使用大驼峰命名法，枚举类名带上 <code>Enum</code> 后缀</p>
+<p>枚举成员名称使用全大写，单词间用下划线隔开。 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Direction</span> </span>&#123;NORTH, EAST, SOUTH, WEST&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="注释命名约定"><a href="#注释命名约定" class="headerlink" title="注释命名约定"></a>注释命名约定</h2><p> 注释名称遵循标题案例表示法。它们可以是基于要求的形容词，动词或名词。<br> public @interface FunctionalInterface {}<br> public @interface Deprecated {}<br> public @interface Documented {}<br> public @Asyn Documented {}<br> public @Test Documented {}</p>
+<p> 总结：在任何编程语言中编写干净代码，命名约定都是非常重要的，标准Java命名约定使代码更易读和可维护。</p>
+<h2 id="其它有用的规范"><a href="#其它有用的规范" class="headerlink" title="其它有用的规范"></a>其它有用的规范</h2><p>类型与中括号紧挨相连来表示数组</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">正例：定义整形数组 int[] arrayDemo。<br>反例：在 main 参数中，使用 String args[]来定义<br></code></pre></td></tr></table></figure>
+
+<p>POJO 类中的任何布尔类型的变量，都不要加 is 前缀，否则部分框架解析会引起序列 化错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">说明：在本文 MySQL 规约中的建表约定第一条，表达是与否的变量采用 is_xxx 的命名方式，所以，需要在&lt;resultMap&gt;设置从 is_xxx 到 xxx 的映射关系。<br>反例：定义为基本数据类型 Boolean isDeleted 的属性，它的方法也是 isDeleted()，框架在反向解析的时候，“误以为”对应的属性名称是 deleted，导致属性获取不到，进而抛出异常。<br></code></pre></td></tr></table></figure>
+
+<p>避免在子父类的成员变量之间、或者不同代码块的局部变量之间采用完全相同的命名， 使可理解性降低。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">说明：子类、父类成员变量名相同，即使是 public 类型的变量也能够通过编译，另外，局部变量在同一方法内的不同代码块中同名也是合法的，这些情况都要避免。对于非 setter/getter 的参数名称也要避免与成员变量名称相同。<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">//反例</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ConfusingName</span> </span>&#123;<br> <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> stock;<br> <span class="hljs-comment">// 非 setter/getter 的参数名称，不允许与本类成员变量同名</span><br> <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">get</span><span class="hljs-params">(String alibaba)</span> </span>&#123;<br> <span class="hljs-keyword">if</span> (condition) &#123;<br> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> money = <span class="hljs-number">666</span>;<br> <span class="hljs-comment">// ...</span><br> &#125;<br> <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br> <span class="hljs-comment">// 在同一方法体中，不允许与其它代码块中的 money 命名相同</span><br> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> money = <span class="hljs-number">15978</span>;<br> <span class="hljs-comment">// ...</span><br> &#125;<br> &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Son</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ConfusingName</span> </span>&#123;<br> <span class="hljs-comment">// 不允许与父类的成员变量名称相同</span><br> <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> stock;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在常量与变量的命名时，表示类型的名词放在词尾，以提升辨识度。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">正例：startTime / workQueue / nameList / TERMINATED_THREAD_COUNT<br>反例：startedAt / QueueOfWork / listName / COUNT_TERMINATED_THREAD<br></code></pre></td></tr></table></figure>
+
+<p>如果模块、接口、类、方法使用了设计模式，在命名时需体现出具体模式。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">说明：将设计模式体现在名字中，有利于阅读者快速理解架构设计理念。<br>正例： public class OrderFactory;<br>      public class LoginProxy;<br>      public class ResourceObserver;<br></code></pre></td></tr></table></figure>
+
+<p>接口类中的方法和属性不要加任何修饰符号（public 也不要加），保持代码的简洁 性，并加上有效的 Javadoc 注释。尽量不要在接口里定义变量，如果一定要定义变量，确定 与接口方法相关，并且是整个应用的基础常量。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">正例：接口方法签名 void commit();<br> 	 接口基础常量 String COMPANY = &quot;alibaba&quot;;<br>反例：接口方法定义 public abstract void f();<br>说明：JDK8 中接口允许有默认实现，那么这个 default 方法，是对所有实现类都有价值的默认实现。<br></code></pre></td></tr></table></figure>
+
+<p>接口和实现类的命名有两套规则：</p>
+<ol>
+<li><p>对于 Service 和 DAO 类，基于 SOA 的理念，暴露出来的服务一定是接口，内部的实现类用 Impl 的后缀与接口区别</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">正例：CacheServiceImpl 实现 CacheService 接口。<br></code></pre></td></tr></table></figure></li>
+<li><p> 如果是形容能力的接口名称，取对应的形容词为接口名（通常是–able 的形容词）。 正例：AbstractTranslator 实现 Translatable 接口</p>
+</li>
+</ol>
+<p>各层命名规约：</p>
+<ul>
+<li>Service/DAO 层方法命名规约<ul>
+<li>  获取单个对象的方法用 get 做前缀</li>
+<li>  获取多个对象的方法用 list 做前缀，复数结尾，如：listObjects</li>
+<li>  获取统计值的方法用 count 做前缀</li>
+<li>  插入的方法用 save/insert 做前缀</li>
+<li>  删除的方法用 remove/delete 做前缀</li>
+<li>  修改的方法用 update 做前缀</li>
+</ul>
+</li>
+<li>领域模型命名规约<ul>
+<li>  数据对象：xxxDO，xxx 即为数据表名</li>
+<li>  数据传输对象：xxxDTO，xxx 为业务领域相关的名称</li>
+<li>  展示对象：xxxVO，xxx 一般为网页名称</li>
+<li>  POJO 是 DO/DTO/BO/VO 的统称，禁止命名成 xxxPOJO。</li>
+</ul>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/zixiao_love/article/details/90368561">https://blog.csdn.net/zixiao_love/article/details/90368561</a></li>
+<li>  阿里开发手册</li>
+</ul>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Java/Java%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

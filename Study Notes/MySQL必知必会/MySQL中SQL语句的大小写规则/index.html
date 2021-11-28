@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-SQL-%E5%85%B3%E9%94%AE%E5%AD%97%E5%92%8C%E5%87%BD%E6%95%B0%E5%90%8D"><span class="toc-text">1) SQL 关键字和函数名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E3%80%81%E8%A1%A8%E5%90%8D%E5%92%8C%E8%A7%86%E5%9B%BE%E5%90%8D"><span class="toc-text">2) 数据库名、表名和视图名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AD%98%E5%82%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%90%8D%E5%AD%97"><span class="toc-text">3) 存储程序的名字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%88%97%E5%90%8D%E5%92%8C%E7%B4%A2%E5%BC%95%E5%90%8D"><span class="toc-text">4) 列名和索引名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%88%AB%E5%90%8D%E7%9A%84%E5%90%8D%E5%AD%97"><span class="toc-text">5) 别名的名字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-text">6) 总结</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		MySQL中SQL语句的大小写规则
+	</div>
+	
+	<div class="page-date">
+		2021-02-01
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/MySQL">MySQL</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kle-cola/articles/14018465.html">MySQL中SQL语句的大小写规则</a>转载<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/7178.html">http://c.biancheng.net/view/7178.html</a></p>
+<span id="more"></span>
+
+<p>SQL 语句的大小写规则与语句组成元素、引用内容和服务器所使用的操作系统有关。</p>
+<h2 id="1-SQL-关键字和函数名"><a href="#1-SQL-关键字和函数名" class="headerlink" title="1) SQL 关键字和函数名"></a>1) SQL 关键字和函数名</h2><p>SQL 的关键字和函数名<strong>不区分大小写</strong>。例如，下面这些语句都是等价的：</p>
+<p>SELECT NOW();<br>select now();<br>sElEcT nOw();</p>
+<h2 id="2-数据库名、表名和视图名"><a href="#2-数据库名、表名和视图名" class="headerlink" title="2) 数据库名、表名和视图名"></a>2) 数据库名、表名和视图名</h2><p>MySQL用服务器主机的<strong>底层文件系统</strong>所包含的目录和文件来表示数据库和表。因此，数据库名和表名的默认大小写取决于服务器主机的操作系统在命名方面的规定。</p>
+<p><strong>Windows 系统</strong>的文件名<strong>不区分</strong>大小写，所以运行在 Windows 系统上面的 MySQL  服务器也不用区分数据库名和表名的大小写。</p>
+<p><strong>Linux 系统</strong>的文件名<strong>区分</strong>大小写，所以运行在 Linux 系统上的 MySQL  服务器需要区分数据库名和表名的大小写。</p>
+<p><strong>Mac OS X 平台</strong>，其文件系统中的名字是个例外，它们<strong>不区分</strong>大小写。</p>
+<p>MySQL 会使用一个文件来表示一个视图，所以以上与表有关的也同样适用于视图。</p>
+<h2 id="3-存储程序的名字"><a href="#3-存储程序的名字" class="headerlink" title="3) 存储程序的名字"></a>3) 存储程序的名字</h2><p><strong>存储函数、存储过程和事件</strong>的名字都<strong>不区分</strong>大小写。</p>
+<p><strong>触发器</strong>的名字要<strong>区分</strong>大小写，这一点与标准 SQL 的行为有所不同。</p>
+<h2 id="4-列名和索引名"><a href="#4-列名和索引名" class="headerlink" title="4) 列名和索引名"></a>4) 列名和索引名</h2><p>在 MySQL 里，<strong>列名和索引名</strong>都<strong>不区分</strong>大小写。例如，下面这些语句都是等价的：</p>
+<p>SELECT name FROM student ;<br>SELECT NAME FROM student ;<br>SELECT nAmE FROM student ;</p>
+<h2 id="5-别名的名字"><a href="#5-别名的名字" class="headerlink" title="5) 别名的名字"></a>5) 别名的名字</h2><p>默认情况下，<strong>表的别名</strong>要<strong>区分</strong>大小写。</p>
+<p>SQL 语句中可以使用任意的大小写（大写、小写或大小写混用）来指定一个别名。</p>
+<p>如果需要在同一条语句里多次用到同一个别名，则必须让它们的大小写保持一致。 </p>
+<p>下表总结了 SQL 元素在 Windows 和 Linux 系统是否区分大小写。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Windows</th>
+<th>Linux</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据库名</td>
+<td>否（忽略大小写）</td>
+<td>是</td>
+</tr>
+<tr>
+<td>表名</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>表别名</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>列名</td>
+<td>否（忽略大小写）</td>
+<td></td>
+</tr>
+<tr>
+<td>列别名</td>
+<td>否（忽略大小写）</td>
+<td></td>
+</tr>
+<tr>
+<td>变量名</td>
+<td>是</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6) 总结"></a>6) 总结</h2><p>在 Linux 服务器下创建数据库和表时，应该认真考虑大小写的问题，比如它们以后是否会迁移到 Windows 服务器上。</p>
+<p>假设你在 Linux 服务器上创建了 abc 和 ABC 两个表，当把这两个表迁移到 Windows 服务器上时，就会出现问题；因为 Windows  系统并不区分大小写，abc 和 ABC 无差别。如果把表从 Linux 服务器迁移到 Windows 服务器时，也同样会遇到问题。</p>
+<p>想要避免大小写问题，可以先<strong>选定一种大小写方案</strong>，然后一直<strong>按照该方案去创建数据库和表</strong>。</p>
+<p>在阿里巴巴 <a target="_blank" rel="noopener" href="http://c.biancheng.net/java/">Java</a> 开发手册的 MySql 建表规约里提到：</p>
+<blockquote>
+<p>  【强制】表名、字段名必须使用小写字母或数字，禁止出现数字开头，禁止两个下划线中间只出现数字。数据库字段名的修改代价很大，因为无法进行预发布，所以字段名称需要慎重考虑。</p>
+</blockquote>
+<p>通俗的说就是，MySQL 在 Windows 系统下不区分大小写，但在 Linux 系统下默认区分大小写。因此，数据库名、表名和字段名，都不允许出现任何大写字母，避免节外生枝。</p>
+<p>一般建议统一使用小写字母，并且 <strong>InnoDB</strong> 引擎在其<strong>内部</strong>都是<strong>以小写字母方式</strong>来<strong>存储</strong>数据库名和表名的。这样可以有效的防止 MySQL 产生大小写问题。</p>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/Study%20Notes/MySQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/MySQL%E4%B8%ADSQL%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99%E8%A7%84%E5%88%99/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

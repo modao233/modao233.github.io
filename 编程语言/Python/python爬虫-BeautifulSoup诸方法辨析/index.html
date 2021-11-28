@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E7%AE%80%E4%BB%8B"><span class="toc-text">方法简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#find-all"><span class="toc-text">find_all()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE%E5%90%8D%E6%9F%A5%E6%89%BE"><span class="toc-text">通过标签名查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%B1%BB%E5%90%8D%E6%9F%A5%E6%89%BE"><span class="toc-text">通过类名查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87id%E5%90%8D%E6%9F%A5%E6%89%BE"><span class="toc-text">通过id名查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89a%E6%A0%87%E7%AD%BE%E7%9A%84href%E5%B1%9E%E6%80%A7"><span class="toc-text">获取所有a标签的href属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E7%9A%84%E8%81%8C%E4%BD%8D%E4%BF%A1%E6%81%AF-%E6%89%80%E6%9C%89%E6%96%87%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-text">获取所有的职位信息(所有文本信息)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E9%9D%9E%E6%A0%87%E8%AE%B0%E6%80%A7%E5%AD%97%E7%AC%A6"><span class="toc-text">获取所有非标记性字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E9%9D%9E%E7%A9%BA%E5%AD%97%E7%AC%A6"><span class="toc-text">获取所有非空字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-text-%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E8%81%8C%E4%BD%8D%E4%BF%A1%E6%81%AF"><span class="toc-text">get_text 获取所有职位信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#select"><span class="toc-text">select()</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE%E5%90%8D%E6%9F%A5%E6%89%BE-1"><span class="toc-text">通过标签名查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E7%B1%BB%E5%90%8D%E6%9F%A5%E6%89%BE-1"><span class="toc-text">通过类名查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AEid%E5%90%8D%E6%9F%A5%E6%89%BE"><span class="toc-text">根据id名查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E6%9F%A5%E6%89%BE"><span class="toc-text">属性查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E6%9F%A5%E6%89%BE"><span class="toc-text">组合查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%8F%96%E6%89%80%E6%9C%89a%E6%A0%87%E7%AD%BE%E7%9A%84href%E5%B1%9E%E6%80%A7"><span class="toc-text">提取所有a标签的href属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E7%9A%84%E8%81%8C%E4%BD%8D%E4%BF%A1%E6%81%AF"><span class="toc-text">获取所有的职位信息</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		python爬虫-BeautifulSoup诸方法辨析
+	</div>
+	
+	<div class="page-date">
+		2019-10-12
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>记录下BeautifulSoup 的 find、find_all、select 方法的区别及各自的用处。</p>
+<span id="more"></span>
+
+<h2 id="方法简介"><a href="#方法简介" class="headerlink" title="方法简介"></a>方法简介</h2><ul>
+<li>  find()：返回找到的第一个标签</li>
+<li>  find_all()：以list的形式返回找到的所有标签</li>
+<li>  limit()：指定返回的标签个数</li>
+<li>  attrs()：将标签属性放到一个字典中</li>
+<li>  string：获取标签下的非标签字符串(值), 返回字符串</li>
+<li>  strings：获取标签下的所有非标签字符串， 返回生成器。</li>
+<li>  stripped_strings：获取标签下的所有非标签字符串，并剔除空白字符，返回生成器。</li>
+<li>  get_text：获取标签下的所有非标签字符串,返回字符串格式</li>
+<li>  contents：返回某个标签下的直接子元素，包含字符串，返回的是一个列表</li>
+<li>  children：返回某个标签下的直接子元素，包含字符串，返回的是一个生成器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">//构建html用于解析<br><span class="hljs-keyword">from</span> bs4 <span class="hljs-keyword">import</span> BeautifulSoup<br>html = <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">&lt;table&gt;</span><br><span class="hljs-string">&lt;tr class=&#x27;a1&#x27;&gt;</span><br><span class="hljs-string">    &lt;td&gt;职位名称&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;职位类别&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;时间&lt;/td&gt;</span><br><span class="hljs-string">&lt;/tr&gt;</span><br><span class="hljs-string">&lt;tr class=&#x27;a1&#x27;&gt;</span><br><span class="hljs-string">    &lt;td&gt;&lt;a id=&#x27;test&#x27; class=&#x27;test&#x27; target=&#x27;_blank&#x27; href=&#x27;https://www.baidu.com/&#x27;&gt;职位一&lt;/a&gt;&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;类别一&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;时间1&lt;/td&gt;</span><br><span class="hljs-string">&lt;/tr&gt;</span><br><span class="hljs-string">&lt;tr class=&#x27;a2&#x27;&gt;</span><br><span class="hljs-string">    &lt;td&gt;&lt;a id=&#x27;test&#x27; class=&#x27;test&#x27; target=&#x27;_blank&#x27; href=&#x27;https://www.baidu.com/&#x27;&gt;职位二&lt;/a&gt;&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;类别二&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;时间2&lt;/td&gt;</span><br><span class="hljs-string">&lt;/tr class=&#x27;a3&#x27;&gt;</span><br><span class="hljs-string">&lt;tr&gt;</span><br><span class="hljs-string">    &lt;td&gt;&lt;a id=&#x27;test&#x27; class=&#x27;test&#x27; target=&#x27;_blank&#x27; href=&#x27;https://www.baidu.com/&#x27;&gt;职位3&lt;/a&gt;&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;类别3&lt;/td&gt;</span><br><span class="hljs-string">    &lt;td&gt;时间3&lt;/td&gt;</span><br><span class="hljs-string">&lt;/tr&gt;</span><br><span class="hljs-string">&lt;/table&gt;</span><br><span class="hljs-string">&lt;div&gt;</span><br><span class="hljs-string">这是一个div</span><br><span class="hljs-string">&lt;p&gt;</span><br><span class="hljs-string">&lt;!-- 这是一个注释 --&gt;</span><br><span class="hljs-string">&lt;/p&gt;</span><br><span class="hljs-string">&lt;/div&gt;</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br>soup = BeautifulSoup(html,<span class="hljs-string">&#x27;lxml&#x27;</span>) <span class="hljs-comment"># 解析html</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>select 方法和find_all极其相似</strong></p>
+<h2 id="find-all"><a href="#find-all" class="headerlink" title="find_all()"></a>find_all()</h2><h3 id="通过标签名查找"><a href="#通过标签名查找" class="headerlink" title="通过标签名查找"></a>通过标签名查找</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(soup.select(<span class="hljs-string">&#x27;title&#x27;</span>))<br><span class="hljs-comment"># [&lt;title&gt;The Dormouse&#x27;s story&lt;/title&gt;]</span><br><br><span class="hljs-built_in">print</span>(soup.select(<span class="hljs-string">&#x27;a&#x27;</span>))<br><span class="hljs-comment"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;&lt;!-- Elsie --&gt;&lt;/a&gt;, &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;, &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br><br><span class="hljs-built_in">print</span>(soup.select(<span class="hljs-string">&#x27;b&#x27;</span>))<br><span class="hljs-comment"># [&lt;b&gt;The Dormouse&#x27;s story&lt;/b&gt;]</span><br></code></pre></td></tr></table></figure>
+
+<p>find 返回找到的第一个标签，find_all 以list的形式返回找到的所有标签</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>) <span class="hljs-comment"># 返回列表</span><br>n=<span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> trs: <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;个tr标签：&#x27;</span>.<span class="hljs-built_in">format</span>(n)) <br>    <span class="hljs-built_in">print</span>(i)<br>    n+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>limit 可指定返回的标签数量</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>,limit=<span class="hljs-number">2</span>)[<span class="hljs-number">1</span>]  <span class="hljs-comment"># 从列表中获取第二个元素，limit 获取标签个数</span><br><span class="hljs-built_in">print</span>(trs)<br></code></pre></td></tr></table></figure>
+
+<h3 id="通过类名查找"><a href="#通过类名查找" class="headerlink" title="通过类名查找"></a>通过类名查找</h3><p>方法一： class_</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>,class_=<span class="hljs-string">&#x27;a1&#x27;</span>)<br>n=<span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> trs: <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;个class=&#x27;</span><span class="hljs-string">&#x27;a1&#x27;</span><span class="hljs-string">&#x27;的tr标签：&#x27;</span>.<span class="hljs-built_in">format</span>(n)) <span class="hljs-built_in">print</span>(i)<br>    n+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>方法二：attrs 将标签属性放到一个字典中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>,attrs=&#123;<span class="hljs-string">&#x27;class&#x27;</span>:<span class="hljs-string">&#x27;a1&#x27;</span>&#125;)<br>n=<span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> trs:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;个class=&#x27;</span><span class="hljs-string">&#x27;a1&#x27;</span><span class="hljs-string">&#x27;的tr标签：&#x27;</span>.<span class="hljs-built_in">format</span>(n))<br>    <span class="hljs-built_in">print</span>(i)<br>    n+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="通过id名查找"><a href="#通过id名查找" class="headerlink" title="通过id名查找"></a>通过id名查找</h3><p>方法一：id和class_</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">alist = soup.find_all(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-built_in">id</span>=<span class="hljs-string">&#x27;test&#x27;</span>,class_=<span class="hljs-string">&#x27;test&#x27;</span>)<br>n=<span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> alist:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;个id=&#x27;</span><span class="hljs-string">&#x27;test&#x27;</span><span class="hljs-string">&#x27;且class=&#x27;</span><span class="hljs-string">&#x27;test&#x27;</span><span class="hljs-string">&#x27;的a标签：&#x27;</span>.<span class="hljs-built_in">format</span>(n))<br>    <span class="hljs-built_in">print</span>(i)<br>    n+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<p>方法二：attrs</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">alist = soup.find_all(<span class="hljs-string">&#x27;a&#x27;</span>,attrs=&#123;<span class="hljs-string">&#x27;id&#x27;</span>:<span class="hljs-string">&#x27;test&#x27;</span>,<span class="hljs-string">&#x27;class&#x27;</span>:<span class="hljs-string">&#x27;test&#x27;</span>&#125;)<br>n=<span class="hljs-number">1</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> alist: <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;第&#123;&#125;个id=&#x27;</span><span class="hljs-string">&#x27;test&#x27;</span><span class="hljs-string">&#x27;且class=&#x27;</span><span class="hljs-string">&#x27;test&#x27;</span><span class="hljs-string">&#x27;的a标签：&#x27;</span>.<span class="hljs-built_in">format</span>(n)) <br>    <span class="hljs-built_in">print</span>(i)<br>    n+=<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="获取所有a标签的href属性"><a href="#获取所有a标签的href属性" class="headerlink" title="获取所有a标签的href属性"></a>获取所有a标签的href属性</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">alist = soup.find_all(<span class="hljs-string">&#x27;a&#x27;</span>) <span class="hljs-comment">#方法一：通过下标获取</span><br><span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> alist:<br>    href = a[<span class="hljs-string">&#x27;href&#x27;</span>] <br>    <span class="hljs-built_in">print</span>(href) <span class="hljs-comment">#方法二： 通过attrs获取</span><br><span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> alist:<br>    href = a.attrs[<span class="hljs-string">&#x27;href&#x27;</span>] <br>    <span class="hljs-built_in">print</span>(href)<br></code></pre></td></tr></table></figure>
+
+<h3 id="获取所有的职位信息-所有文本信息"><a href="#获取所有的职位信息-所有文本信息" class="headerlink" title="获取所有的职位信息(所有文本信息)"></a>获取所有的职位信息(所有文本信息)</h3><p>string 获取标签下的非标签字符串(值), 返回字符串</p>
+<p>注：第一个tr为标题信息，不获取。从第二个tr开始获取。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>)[<span class="hljs-number">1</span>:]<br>movies = [] <br><span class="hljs-keyword">for</span> tr <span class="hljs-keyword">in</span> trs:<br>    move = &#123;&#125;<br>    tds = tr.find_all(<span class="hljs-string">&#x27;td&#x27;</span>)<br>    move[<span class="hljs-string">&#x27;td1&#x27;</span>] = tds[<span class="hljs-number">0</span>].string  <span class="hljs-comment"># string 取td的值</span><br>    move[<span class="hljs-string">&#x27;td2&#x27;</span>] = tds[<span class="hljs-number">1</span>].string<br>    move[<span class="hljs-string">&#x27;td3&#x27;</span>] = tds[<span class="hljs-number">2</span>].string<br>    movies.append(move)<br><span class="hljs-built_in">print</span>(movies)<br></code></pre></td></tr></table></figure>
+
+<h3 id="获取所有非标记性字符"><a href="#获取所有非标记性字符" class="headerlink" title="获取所有非标记性字符"></a>获取所有非标记性字符</h3><p>strings 获取标签下的所有非标签字符串， 返回生成器。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>)[<span class="hljs-number">1</span>:] <br><span class="hljs-keyword">for</span> tr <span class="hljs-keyword">in</span> trs:<br>    infos = <span class="hljs-built_in">list</span>(tr.strings)  <span class="hljs-comment"># 获取所有非标记性字符，包含换行、空格</span><br>    <span class="hljs-built_in">print</span>(infos)<br></code></pre></td></tr></table></figure>
+
+<h3 id="获取所有非空字符"><a href="#获取所有非空字符" class="headerlink" title="获取所有非空字符"></a>获取所有非空字符</h3><p>stripped_strings 获取标签下的所有非标签字符串，并剔除空白字符，返回生成器。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>)[<span class="hljs-number">1</span>:]<br><span class="hljs-keyword">for</span> tr <span class="hljs-keyword">in</span> trs:<br>    infos = <span class="hljs-built_in">list</span>(tr.stripped_strings)  <span class="hljs-comment"># 获取所有非空字符，不包含换行、空格</span><br>    <span class="hljs-built_in">print</span>(infos)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># stripped_strings 获取所有职位信息</span><br>trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>)[<span class="hljs-number">1</span>:]<br>movies = [] <br><span class="hljs-keyword">for</span> tr <span class="hljs-keyword">in</span> trs:<br>    move = &#123;&#125;<br>    infos = <span class="hljs-built_in">list</span>(tr.stripped_strings)<br>    move[<span class="hljs-string">&#x27;职位&#x27;</span>] = infos[<span class="hljs-number">0</span>]<br>    move[<span class="hljs-string">&#x27;类别&#x27;</span>] = infos[<span class="hljs-number">1</span>]<br>    move[<span class="hljs-string">&#x27;时间&#x27;</span>] = infos[<span class="hljs-number">2</span>]<br>    movies.append(move) <br><span class="hljs-built_in">print</span>(movies)<br></code></pre></td></tr></table></figure>
+
+<h3 id="get-text-获取所有职位信息"><a href="#get-text-获取所有职位信息" class="headerlink" title="get_text 获取所有职位信息"></a>get_text 获取所有职位信息</h3><p>get_text  获取标签下的所有非标签字符串，返回字符串格式</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.find_all(<span class="hljs-string">&#x27;tr&#x27;</span>)[<span class="hljs-number">1</span>]<br>text = trs.get_text() <span class="hljs-comment"># 返回字符串格式</span><br><span class="hljs-built_in">print</span>(text)<br></code></pre></td></tr></table></figure>
+<h2 id="select"><a href="#select" class="headerlink" title="select()"></a>select()</h2><p>返回类型是list</p>
+<h3 id="通过标签名查找-1"><a href="#通过标签名查找-1" class="headerlink" title="通过标签名查找"></a>通过标签名查找</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.select(<span class="hljs-string">&#x27;tr&#x27;</span>) <br></code></pre></td></tr></table></figure>
+
+<p>获取第二个tr标签</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.select(<span class="hljs-string">&#x27;tr&#x27;</span>)[<span class="hljs-number">1</span>] <br></code></pre></td></tr></table></figure>
+
+<h3 id="通过类名查找-1"><a href="#通过类名查找-1" class="headerlink" title="通过类名查找"></a>通过类名查找</h3><p>Python爬虫用select方法提取的标签的<strong>属性带有空格</strong>的解决方法：把空格的位置换成<code>.</code>就可以了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法一：</span><br>trs = soup.select(<span class="hljs-string">&#x27;tr.a1&#x27;</span>)  <span class="hljs-comment"># tr标签的class属性</span><br><span class="hljs-comment"># 方法二：</span><br>trs = soup.select(<span class="hljs-string">&#x27;tr[class=&quot;a1&quot;]&#x27;</span>)  <span class="hljs-comment"># tr标签的class属性</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="根据id名查找"><a href="#根据id名查找" class="headerlink" title="根据id名查找"></a>根据id名查找</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">alist = soup.select(<span class="hljs-string">&#x27;#test&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="属性查找"><a href="#属性查找" class="headerlink" title="属性查找"></a>属性查找</h3><p>查找时还可以加入属性元素，属性需要用中括号括起来，注意属性和标签属于同一节点，所以中间不能加空格，否则会无法匹配到。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">alist = soup.select(<span class="hljs-string">&#x27;a[href=&quot;https://www.baidu.com/&quot;]&#x27;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="组合查找"><a href="#组合查找" class="headerlink" title="组合查找"></a>组合查找</h3><p>组合查找是使用以上4种查找方式，查询条件使用空格分隔。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">alist = soup.select(<span class="hljs-string">&#x27;tr #test&#x27;</span>);<span class="hljs-comment"># tr标签中，id为test的标签</span><br>alist = soup.select(<span class="hljs-string">&#x27;table &gt; tr&#x27;</span>);<span class="hljs-comment"># 子标签查找</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="提取所有a标签的href属性"><a href="#提取所有a标签的href属性" class="headerlink" title="提取所有a标签的href属性"></a>提取所有a标签的href属性</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法一：</span><br>a = soup.select(<span class="hljs-string">&#x27;a&#x27;</span>) <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a: <br>    <span class="hljs-built_in">print</span>(i[<span class="hljs-string">&#x27;href&#x27;</span>]) <br><span class="hljs-comment"># 方法二：</span><br>a = soup.select(<span class="hljs-string">&#x27;a&#x27;</span>) <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> a: <br>    <span class="hljs-built_in">print</span>(i.attrs[<span class="hljs-string">&#x27;href&#x27;</span>])<br></code></pre></td></tr></table></figure>
+
+<h3 id="获取所有的职位信息"><a href="#获取所有的职位信息" class="headerlink" title="获取所有的职位信息"></a>获取所有的职位信息</h3><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python">trs = soup.select(<span class="hljs-string">&#x27;tr&#x27;</span>) <br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> trs: <br>    <span class="hljs-built_in">print</span>(<span class="hljs-built_in">list</span>(i.stripped_strings))<br></code></pre></td></tr></table></figure>
+
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/python%E7%88%AC%E8%99%AB-BeautifulSoup%E8%AF%B8%E6%96%B9%E6%B3%95%E8%BE%A8%E6%9E%90/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

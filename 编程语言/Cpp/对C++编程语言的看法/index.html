@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E7%9A%84%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF"><span class="toc-text">C++的发展趋势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9C-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E7%9C%8B%E6%B3%95"><span class="toc-text">对C++编程语言的看法</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		对C++编程语言的看法
+	</div>
+	
+	<div class="page-date">
+		2020-12-17
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>对C++编程语言的看法</p>
+<span id="more"></span>
+
+<h2 id="C-的发展趋势"><a href="#C-的发展趋势" class="headerlink" title="C++的发展趋势"></a>C++的发展趋势</h2><p>C++是一门门槛高、见效慢的语言，而且应用领域在被其他语言逐渐蚕食。C++近年来更新频繁，内容越来越多，有人觉得C++20出来后C++能翻身，具体怎样还得继续观摩。</p>
+<p>C++20标准已经出炉，C++ Primer 6th 也快出版了。</p>
+<p><img src="/%E5%AF%B9C++%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E7%9C%8B%E6%B3%95/image-20201228202032714.png" alt="image-20201228202032714"></p>
+<p>10年以后，C++的表现明显弱势是真的，大家都会选择更快捷的语言去开发。</p>
+<p>C++呈现弱势的原因有很多：</p>
+<ol>
+<li> c++本身语言特性不足导致太难用是其中一点</li>
+<li> 更多的因为处理器性能翻翻导致的</li>
+</ol>
+<h2 id="对C-编程语言的看法"><a href="#对C-编程语言的看法" class="headerlink" title="对C++编程语言的看法"></a>对C++编程语言的看法</h2><p>不太建议<strong>没有充足的学习时间</strong>的人去学习C++，比方说工作后再专攻C++、转行学C++等等。</p>
+<p>在学校里没学好，出了社会再学好不太现实，因为再难直接接触到**真正需要C++**的东西了。</p>
+<p>建议去学一些其他的语言，例如Java，C#，都是门槛低，见效快的语言。</p>
+<p>C++目前的应用领域，我个人感觉就只有：</p>
+<ol>
+<li> 高性能轮子。这一点是建立在C语言强大的统治地位之下的。</li>
+<li> 对性能有极限要求的项目，特别是大型项目。对性能没有<strong>极限</strong>要求的话，Java或者C#都可以做得更好得多。而且随着Java性能的提升，不少领域在逐渐被Java蚕食。</li>
+</ol>
+<p>如果没机会接触这两种东西之一，那么学C++会很尴尬</p>
+<p>不去用那些 OS specified或者compiler specified或者libc specified的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#ifdef WIN32<br>xxxx<br>#else<br>xxxx<br>#endif<br><br>#if defined(_WIN32)<br>  ...<br>#elif defined(__unix__)<br>  ...<br>#else<br>#  error &quot;wtf platform?&quot;<br></code></pre></td></tr></table></figure>
+
+<p>我發現我寫的類別總是會很多 getter / setter 只是傳回和設值 什麼都不做 我覺得這些很多餘 但是直接 public 更不好 那應該怎樣處理這些成員呢，C++ 有類似 property 的東西嗎</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">AccountName</span>;</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Account</span> &#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">const</span> AccountName&amp; <span class="hljs-title">getAccountName</span><span class="hljs-params">()</span></span>;<br>&#125;;<br><span class="hljs-keyword">auto</span> &amp; name = account.<span class="hljs-built_in">getAccountName</span>();<br></code></pre></td></tr></table></figure>
+
+<p>有个用rust写的电报bot叫exloli，可以用来监控并定时爬🙊</p>
+<p>高效率 QQ 机器人框架：<a target="_blank" rel="noopener" href="https://github.com/mamoe/mirai">https://github.com/mamoe/mirai</a></p>
+<p><img src="/%E5%AF%B9C++%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E7%9C%8B%E6%B3%95/image-20201223135221433.png" alt="image-20201223135221433"></p>
+<p>這是我見過最神的代碼了<br>真的量子疊代器</p>
+<p>全程除了自增没有别的 value write</p>
+<p>甚至还尝试 delete 一下</p>
+<p>“你只管写 bug，剩下的交给运气”</p>
+<p>内卷：</p>
+<p>据悉，在小学阶段就实现了</p>
+<ol>
+<li>四六级左右英语水平</li>
+<li>对OOP之类的编程概念的理解</li>
+<li>熟练掌握swift语法</li>
+<li>基本开发技巧</li>
+</ol>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Cpp/%E5%AF%B9C++%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E7%9C%8B%E6%B3%95/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

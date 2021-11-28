@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#gcc%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-text">gcc编译器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gdb%E8%B0%83%E8%AF%95%E5%99%A8"><span class="toc-text">gdb调试器</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		gcc编译器、gdb调试器
+	</div>
+	
+	<div class="page-date">
+		2020-08-10
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>著名的GNU家族的著名编译器gcc，著名调试器gdb。</p>
+<span id="more"></span>
+
+<h2 id="gcc编译器"><a href="#gcc编译器" class="headerlink" title="gcc编译器"></a>gcc编译器</h2><p>GCC : GNU Compiler Collection(GUN 编译器集合)，它可以编译C、C++、JAV、Fortran、Pascal、Object-C、Ada等语言。</p>
+<p>gcc是GCC中的GUN C Compiler（C 编译器）</p>
+<p>g++是GCC中的GUN C++ Compiler（C++编译器）</p>
+<p>gcc和g++的使用区别：</p>
+<ul>
+<li><p>  gcc：对于.c后缀的文件当C程序，对于.cpp后缀的文件当C++程序</p>
+</li>
+<li><p>  g++：对于.c后缀的文件和.cpp后缀的文件，都当做C++程序</p>
+</li>
+<li><p>gcc和g++在编译C++程序时：</p>
+<ul>
+<li>  g++会自动链接标准库STL</li>
+<li>  gcc不会自动链接标准库STL，需要加参数 –lstdc++ </li>
+</ul>
+</li>
+<li><p>  gcc在编译C程序时，可使用的预定义宏是比较少的</p>
+</li>
+<li><p>gcc在编译C++程序时、g++在编译C程序和C++程序时，会加入一些额外的宏：</p>
+  <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __GXX_WEAK__ 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __cplusplus 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __DEPRECATED 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __GNUG__ 4</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __EXCEPTIONS 1</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> __private_extern__ extern</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p> gcc/g++ 在执行编译时，需要4步：</p>
+<ol>
+<li><p>预处理（.i文件）（-E参数：仅作预处理，不进行编译、汇编或链接）</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -E hello.cpp -o hello.i<br></code></pre></td></tr></table></figure></li>
+<li><p>编译生成汇编文件（.s文件）（-S参数：编译到汇编语言，不进行汇编和链接）</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -S hello.i<br></code></pre></td></tr></table></figure>
+
+<p> 不用指定输出文件，生成同名.s文件</p>
+</li>
+<li><p>汇编生成目标代码文件（.o文件）（-c参数：编译、汇编到目标代码，不进行链接）</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -c hello.s<br></code></pre></td></tr></table></figure>
+
+<p> 不用指定输出文件，生成同名.s文件</p>
+</li>
+<li><p>链接生成可执行文件（.out文件）</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ hello.o<br></code></pre></td></tr></table></figure>
+
+<p> 若不指定输出文件，则默认生成a.out，多次生成会覆盖</p>
+<p> <strong>链接可分为动态链接和静态链接：</strong></p>
+<ol>
+<li><p>动态链接使用动态链接库进行链接，生成的程序在执行的时候需要加载所需的动态库才能运行。</p>
+<p> 动态链接生成的程序小巧，但是必须依赖动态库，否则无法执行。</p>
+<p> Linux 下的动态链接库实际是共享目标文件（shared object），一般是.so 文件，作用类似于 Windows 下的.dll 文件</p>
+</li>
+<li><p>静态链接使用静态库进行链接，生成的程序包含程序运行所需要的全部库，可以直接运行，不过体积较大。</p>
+<p> Linux 下静态库是汇编产生的.o 文件的集合，一般以.a 文件形式出现。</p>
+</li>
+</ol>
+<p> gcc 默认是动态链接，加上-static 参数则采用静态链接。</p>
+<p> 查看链接过程：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -v -o hello hello.o<br></code></pre></td></tr></table></figure>
+
+<p> 不链接系统标准启动文件和标准库文件：</p>
+<p> (常用于裸机/bootloader、linux内核等程序，因为它们不需要启动文件、标准库文件)</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -v -nostdlib -o hello hello.o<br></code></pre></td></tr></table></figure>
+
+<p> 不链接系统标准启动文件，而标准库文件仍然正常使用：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">g++ -v -nostartfiles -o hello hello.o<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="gdb调试器"><a href="#gdb调试器" class="headerlink" title="gdb调试器"></a>gdb调试器</h2><p>想要进行gdb调试，在编译时需要使用参数<code>-g</code>生成调试信息</p>
+<blockquote>
+<p>  gcc参数-g：产生符号调试工具（GNU的gdb）所必要的符号信息，想要对源代码进行调试，就必须加入这个选项</p>
+</blockquote>
+<p>启动gdb：<code>gdb a.out</code></p>
+<p><strong>运行指令：</strong></p>
+<ul>
+<li>  <strong>run（简写r）:</strong> 运行程序，当遇到断点后，程序会在断点处停止运行，等待用户输入下一步命令</li>
+<li>  <strong>continue（简写c）</strong> : 继续执行，到下一个断点停止（或运行结束）</li>
+<li>  <strong>next（简写n）</strong> : 单步跟踪程序，当遇到函数调用时，也不进入此函数体；此命令同 step 的主要区别是，step 遇到用户自定义的函数，将步进到函数中去运行，而 next 则直接调用函数，不会进入到函数体内。</li>
+<li>  <strong>step （简写s）</strong>：单步调试如果有函数调用，则进入函数；与命令n不同，n是不进入调用的函数的</li>
+<li>  <strong>until（简写u）</strong>：当你厌倦了在一个循环体内单步跟踪时，这个命令可以运行程序直到退出循环体。</li>
+<li>  <strong>until+行号</strong>： 运行至某行，不仅仅用来跳出循环</li>
+<li>  <strong>finish</strong>： 运行程序，直到当前函数完成返回，并打印函数返回时的堆栈地址和返回值及参数值等信息。</li>
+<li>  **call 函数（参数)**：调用程序中可见的函数，并传递“参数”，如：call gdb_test(55)</li>
+<li>  <strong>quit（简写q）</strong> : 退出gdb</li>
+</ul>
+<p><strong>设置断点：</strong></p>
+<ul>
+<li>  <strong>break n （简写b n）:在第n行处设置断点</strong>（可以带上代码路径和代码名称： b OAGUPDATE.cpp:578）</li>
+<li>  <strong>b fn1 if a＞b</strong>：条件断点设置</li>
+<li>  <strong>break func（break缩写为b）</strong>：在函数func()的入口处设置断点，如：break cb_button</li>
+<li>  <strong>delete 断点号n</strong>：删除第n个断点</li>
+<li>  <strong>disable 断点号n</strong>：暂停第n个断点</li>
+<li>  <strong>enable 断点号n</strong>：开启第n个断点</li>
+<li>  <strong>clear 行号n</strong>：清除第n行的断点</li>
+<li>  <strong>info b （info breakpoints）</strong> ：显示当前程序的断点设置情况</li>
+<li>  <strong>delete breakpoints</strong>：清除所有断点：</li>
+</ul>
+<p><strong>查看源代码：</strong></p>
+<ul>
+<li>  <strong>list</strong> ：简记为 l ，其作用就是列出程序的源代码，默认每次显示10行。</li>
+<li>  <strong>list 行号</strong>：将显示当前文件以“行号”为中心的前后10行代码，如：list 12</li>
+<li>  <strong>list 函数名</strong>：将显示“函数名”所在函数的源代码，如：list main</li>
+<li>  <strong>list</strong> ：不带参数，将接着上一次 list 命令的，输出下边的内容。</li>
+</ul>
+<p><strong>打印表达式</strong></p>
+<ul>
+<li>  <strong>print 表达式（简记p）</strong>: 其中“表达式”可以是任何当前正在被测试程序的有效表达式，比如当前正在调试C语言的程序，那么“表达式”可以是任何C语言的有效表达式，包括数字，变量甚至是函数调用。</li>
+<li>  <strong>print a</strong>：将显示整数 a 的值</li>
+<li>  <strong>print ++a</strong>：将把 a 中的值加1,并显示出来</li>
+<li>  <strong>print name</strong>：将显示字符串 name 的值</li>
+<li>  **print gdb_test(22)**：将以整数22作为参数调用 gdb_test() 函数</li>
+<li>  **print gdb_test(a)**：将以变量 a 作为参数调用 gdb_test() 函数</li>
+<li>  <strong>display 表达式</strong>：在单步运行时将非常有用，使用display命令设置一个表达式后，它将在每次单步进行指令后，紧接着输出被设置的表达式及值。如： display a</li>
+<li>  <strong>watch 表达式</strong>：设置一个监视点，一旦被监视的“表达式”的值改变，gdb将强行终止正在被调试的程序。如： watch a</li>
+<li>  <strong>whatis</strong> ：查询变量或函数</li>
+<li>  <strong>info function</strong>： 查询函数</li>
+<li>  <strong>扩展info locals</strong>： 显示当前堆栈页的所有变量</li>
+</ul>
+<p><strong>查询运行信息</strong></p>
+<ul>
+<li>  <strong>where/bt</strong> ：当前运行的堆栈列表；</li>
+<li>  <strong>bt backtrace</strong> 显示当前调用堆栈</li>
+<li>  <strong>up/down</strong> 改变堆栈显示的深度</li>
+<li>  <strong>set args 参数</strong>:指定运行时的参数</li>
+<li>  <strong>show args</strong>：查看设置好的参数</li>
+<li>  <strong>info program</strong>： 来查看程序的是否在运行，进程号，被暂停的原因。</li>
+</ul>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Cpp/gcc%E5%92%8Cgdb/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

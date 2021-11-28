@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E7%AE%80%E4%BB%8B"><span class="toc-text">流程简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="toc-text">相关知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		Linux启动流程
+	</div>
+	
+	<div class="page-date">
+		2021-05-30
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>Linux启动流程</p>
+<span id="more"></span>
+
+<h2 id="流程简介"><a href="#流程简介" class="headerlink" title="流程简介"></a>流程简介</h2><p>操作系统启动过程分四阶段：</p>
+<ol>
+<li> BIOS启动。CPU通电后PC计数器初始化为一个特定的内存地址，指向ROM中BIOS的起始地址，由BIOS执行硬件的基本初始化，最先找到的设备的最开始的几个扇区将被加载到内存，BIOS执行其中的初始化代码并将系统控制权转交引导加载程序。</li>
+<li> 引导加载程序。由BIOS启动，负责将系统内核映像和initrd映像加载到内存并转交控制权。</li>
+<li> initrd 或 initramfs 系统。在内存中运行系统内核和根文件系统，init 程序是内存中的根文件系统上执行的第一个程序，这个程序在用户空间把内核初始化，并把控制权交给下一阶段。</li>
+<li> 实际系统。根文件系统将由内存切换到实际的硬盘文件系统上，init 程序是系统执行的第一个程序（PID=1），它启动其它各种程序以完成主引导流程。</li>
+</ol>
+<h2 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h2><p>initrd 映像是根文件系统映像：</p>
+<ul>
+<li>  initrd是指一个临时文件系统，它在启动阶段被Linux内核调用</li>
+<li>  initrd主要用于当“根”文件系统被挂载之前，进行准备工作</li>
+</ul>
+<p>initramfs是initrd的替代品：</p>
+<ul>
+<li>  initrd是一个被加载的块设备，内部有ext2一类文件系统的存在，于是由于Linux内核的缓存机制，其中的内容还会被缓存到内存上，造成一定的内存空间浪费</li>
+<li>  initramfs本身就是一个tmpfs的RAM disk，拥有最小化的设计，绕过了缓存机制，也消除了多余的内存占用。initramfs的生成方式也远比initrd简单。</li>
+</ul>
+<p>PC上运行的Linux系统，它启动后从BIOS开始，进入bootloader，有bootloader加载内核，进入内核初始化。内核启动的最后一步就是创建一个pid为1的init进程。这是系统的第一个进程，它负责生产其他所有用户进程。</p>
+<p>init程序流派：</p>
+<ul>
+<li>  SysV：shell脚本控制</li>
+<li>  systemd：目前主流，但饱受争议</li>
+<li>  openrc：容易上手</li>
+<li>  upstart</li>
+<li>  busybox：嵌入式系统上使用</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><p>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/rikeyone/article/details/51525269">嵌入式linux init系统（busybox init）</a></p>
+</li>
+<li><p>  <a target="_blank" rel="noopener" href="http://www.voidcn.com/article/p-ziomedvd-bnm.html">现代 Linux 的五大初始化系统（1992-2015）</a></p>
+</li>
+</ul>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/Linux/Linux%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>

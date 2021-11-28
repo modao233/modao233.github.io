@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>modao</title>
+	
+	<script type="text/javascript" charset="utf-8">
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?36479f1e15841da95f9e92a25b010d23";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+  <body>
+	
+      
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<div class="navigatebar">
+	<div class="navigatebar-button navigatebar-mine">
+    <a href="/">modao</a>
+	</div>
+	
+	
+        <div class="navigatebar-button">
+          <a href="/">Home</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/categories">Categories</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/links">Friends</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/sites">Sites</a>
+        </div>
+	
+        <div class="navigatebar-button">
+          <a href="/stars">Stars</a>
+        </div>
+	
+</div>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2F12%E6%88%96%E5%8F%B3%E9%94%AE%E6%A3%80%E6%9F%A5"><span class="toc-text">禁止F12或右键检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#debugger"><span class="toc-text">debugger</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="toc-text">参考文章</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		python爬虫-JS监听开发者工具是否打开
+	</div>
+	
+	<div class="page-date">
+		2021-02-11
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/python">python</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>写爬虫时，浏览器开发者工具可谓是非常重要的。现在很多网站为了反爬，对开发者工具的使用设置了一些限制。</p>
+<span id="more"></span>
+
+<h2 id="禁止F12或右键检查"><a href="#禁止F12或右键检查" class="headerlink" title="禁止F12或右键检查"></a>禁止F12或右键检查</h2><p>这种情况比较常见，也比较容易解决：</p>
+<ul>
+<li>  打开一个普通页面，提前打开开发者工具</li>
+<li>  复制目标网址到打开了开发者工具的页面打开</li>
+</ul>
+<h2 id="debugger"><a href="#debugger" class="headerlink" title="debugger"></a>debugger</h2><p>浏览器在打开开发者工具时会检测到debugger标签。</p>
+<p>就我遇到的情况分析：</p>
+<ul>
+<li><p><code>https://www.vmgirls.com/</code>网站需要提前打开开发者工具，但是</p>
+<ul>
+<li>  火狐浏览器：正常检查元素</li>
+<li>  谷歌浏览器：返回空页面</li>
+</ul>
+</li>
+<li><p><code>http://flzy.xyz/</code>网站会循环进入断点程序</p>
+<p>  <img src="/python%E7%88%AC%E8%99%AB-JS%E7%9B%91%E5%90%AC%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80/784924-20180704231334677-1292537348.png" alt="image"></p>
+<ul>
+<li><p>谷歌浏览器：开发者工具 -&gt; Sources -&gt; Deactivate breakpoints</p>
+<p>  <img src="/python%E7%88%AC%E8%99%AB-JS%E7%9B%91%E5%90%AC%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80/image-20210211232254738.png" alt="image-20210211232254738"></p>
+<p>  此时点一下蓝色的“Resume script execution”程序会继续执行，且不会进入断点程序循环</p>
+</li>
+<li><p>火狐浏览器：火狐的没有谷歌的好用</p>
+<p>  <img src="/python%E7%88%AC%E8%99%AB-JS%E7%9B%91%E5%90%AC%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80/image-20210211232715763.png" alt="image-20210211232715763"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cc11001100/p/9265945.html">爬虫笔记之JS检测浏览器开发者工具是否打开</a></p>
+
+	</div>
+</div>
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+<script>
+    function setClipboardText(event){
+        
+        let clipboardData = event.clipboardData || window.clipboardData;
+        
+        if (!clipboardData) { return; }
+        event.preventDefault();
+        
+        let text = window.getSelection().toString();
+		    
+        if (text) {
+            
+            event.preventDefault();
+            
+            var copyright = '\n\n'
+            + '\n作品采用 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议 进行许可'
+            + '\n著作权归作者所有，商业转载请联系作者获得授权，非商业转载请注明出处。'
+            + '\n作者: modao'
+            + '\n邮箱: rustacean@aliyun.com'
+            + '\n原文地址: https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Python/python%E7%88%AC%E8%99%AB-JS%E7%9B%91%E5%90%AC%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%E6%98%AF%E5%90%A6%E6%89%93%E5%BC%80/'
+			
+            clipboardData.setData('text/plain', text + copyright);
+    
+        }
+    };
+	
+    var contents = document.getElementsByClassName("content-area");
+   
+    contents[0].addEventListener('copy',function(e){
+        setClipboardText(e);
+    });
+
+</script>
+    
+  </body>
+</html>
