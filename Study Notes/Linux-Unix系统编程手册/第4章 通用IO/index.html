@@ -81,7 +81,7 @@
 
 	</div>
 	<div class="slogan">
-		「生活可以更简单, 欢迎来到我的开源世界」
+		「工作日还有多少天，休息日还剩几小时」
 	</div>
 </header>
 
@@ -106,11 +106,11 @@
 
 <div class="content-area">
 	<div class="title">
-		laster-plan
+		
 	</div>
 	
 	<div class="page-date">
-		2021-11-07
+		2021-11-28
 	</div>
 	
 	<div class="category-area">
@@ -120,13 +120,9 @@
 	</div>
 	
 	<div class="content">
-		<p>C++并发编程实战</p>
-<p>Effective C++</p>
-<p>完成webserver项目，添加循环缓冲区</p>
-<p>Rust</p>
-<p>muduo网络库</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">C++服务器编程路线：<br>服务器的话差不多就可以看陈硕那本书，然后自己写个 libevent 的库就行了。当然考虑到已经可以用 c++20了，那显然陈硕那个基于 callback 的就入不了各位的眼睛了，于是再把它给 coro 一下。<br>然后又发现epoll的已经不流行了，将来大势一定是 io_uring，于是可以写个 io_uring 的版本，当然这个更好写。但是写得好的不多，可以参考 libunifex。<br><br>然后干完上面任意一件事情之后就可以糊个 web 服务器了，然后就会涉及到缓存、http 协议。<br><br>然后缓存这边就是个坑了，可以深入一下。磁盘缓存、纯内存缓存怎么搞，nvme的又怎么搞<br><br>facebook的那个 haystack 可以参考一下<br><br>我感觉 http 还是比较简单的吧，当然你想实现http2就是另一回事了<br><br>咱就基于 libevent 的那个 http server 自己加了点功能<br></code></pre></td></tr></table></figure>
-
+		<p>所有执行IO操作的系统调用都以文件描述符来指代打开的文件。<br>文件描述符是非负整数</p>
+<p>每个进程，文件描述符都自成一套。</p>
+<p>shell进程默认打开3个文件描述符：0、1、2<br>程序继承shell文件描述符副本，所以也默认打开。</p>
 
 	</div>
 </div>

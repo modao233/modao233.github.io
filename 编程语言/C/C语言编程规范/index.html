@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「工作日还有多少天，休息日还剩几小时」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83"><span class="toc-text">代码命名规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%92%8C%E8%AF%AD%E4%B9%89"><span class="toc-text">语法和语义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E6%88%96%E5%B9%B3%E5%8F%B0%E7%9B%B8%E5%85%B3"><span class="toc-text">机器或平台相关</span></a></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		
+	</div>
+	
+	<div class="page-date">
+		2021-12-05
+	</div>
+	
+	<div class="category-area">
+		
+			
+		
+	</div>
+	
+	<div class="content">
+		<h2 id="代码命名规范"><a href="#代码命名规范" class="headerlink" title="代码命名规范"></a>代码命名规范</h2><p>通用规范：</p>
+<ul>
+<li>类型名用大写，变量名和常量名用小写</li>
+<li>变量名前加变量类型，如u16count，ptext</li>
+<li>所有宏定义、枚举项、结构体成员、联合体成员一定要加注释，并使用块注释</li>
+</ul>
+<p>具体规范：</p>
+<ul>
+<li><p>宏：</p>
+<ul>
+<li>采用大写下划线，如果宏定义的是函数可以采用小写</li>
+<li>为了更好地区分宏所属的模块，建议加模块前缀</li>
+</ul>
+</li>
+<li><p>枚举</p>
+<ul>
+<li>枚举类型名使用大写，如若使用typedef定义枚举名，则枚举类型名后面加_E后缀</li>
+<li>枚举成员名使用大写</li>
+<li>枚举成员名最好添加模块前缀</li>
+</ul>
+</li>
+<li><p>结构体、联合体</p>
+<ul>
+<li>类型名使用大写，如若使用typedef定义枚举名，则枚举类型名后面加_S后缀</li>
+<li>成员变量名使用小写，且需要相应注释</li>
+</ul>
+</li>
+<li><p>全局变量：一律使用小写</p>
+<ul>
+<li>仅文件内部使用：添加s_um_前缀</li>
+<li>文件外部能访问：添加g_um_前缀</li>
+</ul>
+</li>
+<li><p>函数：一律使用小写下划线</p>
+<ul>
+<li>仅供文件内部调用：可以不添加前缀</li>
+<li>允许文件外部调用：添加um前缀</li>
+<li>强调内部使用：添加__（双下划线）前缀</li>
+</ul>
+</li>
+<li><p>局部变量：一律使用小写下划线</p>
+</li>
+<li><p>基本类型：类型名使用大写</p>
+</li>
+<li><p>编译器版本间的兼容：有内联需求的，应使用<code>__inline</code>而非直接<code>inline</code></p>
+</li>
+</ul>
+<h2 id="语法和语义"><a href="#语法和语义" class="headerlink" title="语法和语义"></a>语法和语义</h2><ol>
+<li><p>变量定义后一定要初始化</p>
+</li>
+<li><p>删除未使用变量，去除编译时警告</p>
+</li>
+<li><p>函数无返回值则返回类型为void，函数无参数则参数类型为void，对有返回值的函数一定要处理返回值</p>
+</li>
+<li><p>声明统一放头文件或源文件最前面</p>
+</li>
+<li><p>debug版本中，函数传入的参数要使用assert进行检测，便于调试时排错</p>
+</li>
+<li><p>使用显示数据类型转换，避免编译器隐式转换</p>
+</li>
+<li><p>减少全局变量的使用</p>
+</li>
+<li><p>函数名和变量名不要同名，局部变量和全局变量不要同名</p>
+</li>
+<li><p>关于内存：</p>
+<ul>
+<li>指针变量一定要初始化，无指向对象时先初始化为NULL，防止使用了野指针</li>
+<li>动态分配内存要判断结果是否成功</li>
+<li>malloc和free要配套使用</li>
+<li>释放内存后，要将指针指向NULL，防止野指针</li>
+</ul>
+</li>
+<li><p>常量</p>
+<ul>
+<li>对外公开的放在头文件中，不公开的放在定义文件的头部</li>
+<li>常量之间有密切联系时，应该在定义中显示出来，避免给出一些孤立的值</li>
+<li>C++中有两种定义常量的方式：<ul>
+<li>const：有数据类型，编译器对其进行安全类型检查，可调试</li>
+<li>define：无数据类型，编译器不对其进行安全类型检查，不可调试</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>宏</p>
+<ul>
+<li>使用宏定义表达式时，要使用完备的括号</li>
+<li>宏定义有多条表达式，则表达式应该放在大括号中</li>
+<li>使用宏时，不允许参数发生变化（自增自减）</li>
+</ul>
+</li>
+<li><p>const关键字</p>
+<ul>
+<li>使用const修饰函数参数时，只能修饰输入参数</li>
+<li>C语言中，const修饰的是只读变量，C语言中定义常量的方法是宏define和枚举enum</li>
+</ul>
+</li>
+<li><p>变量：定义时一定要初始化，尽管全局变量和静态变量会有默认的初始值</p>
+</li>
+<li><p>避免使用bool参数，原因：</p>
+<ul>
+<li>bool参数值无意义，true/false的含义非常模糊，在调用时很难知道参数传达的意思</li>
+<li>bool参数值不利于扩充</li>
+</ul>
+</li>
+<li><p>关键字使用和语句使用规范</p>
+<ul>
+<li><p>if语句</p>
+<ul>
+<li>使用<code>if(NULL == p)</code>代替<code>if(p == NULL)</code>，避免写少了等号</li>
+<li>多个if语句判断时，将能预测到的最多情况放在第一个if语句中，从而提高效率</li>
+</ul>
+</li>
+<li><p>for语句</p>
+<ul>
+<li><p>不可在循环体内修改循环控制变量，防止for循环失去控制</p>
+</li>
+<li><p>建议for语句的循环控制变量的取值采用“半开半闭区间”写法，采用“半开半闭区间”写法能够减少错误，例如防止数组越界</p>
+</li>
+<li><p>在多重循环中，如果有可能，应当将最长的循环放在最内层，最短的循环放在最外层，以减少CPU跨切循环层的次数</p>
+</li>
+<li><p><strong>如果循环体内存在逻辑判断，并且循环次数很大，宜将逻辑判断移到循环体的外面</strong>(不是很懂)</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>; i&lt;N; i++)<br>&#123;<br><span class="hljs-keyword">if</span> (condition)<br>DoSomething();<br><span class="hljs-keyword">else</span><br>DoOtherthing();<br>&#125;<br><span class="hljs-comment">//如果N非常大的话，应该采用右边的方法提高效率</span><br><span class="hljs-keyword">if</span> (condition)<br>&#123;<br><span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>; i&lt;N; i++)<br>DoSomething();<br>&#125;<br><span class="hljs-keyword">else</span><br>&#123;<br><span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>; i&lt;N; i++)<br>DoOtherthing();<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>对于一次性的计算，不要放在for语句中</p>
+</li>
+</ul>
+</li>
+<li><p>switch语句</p>
+<ul>
+<li>每个case语句的结尾不要忘记加break</li>
+<li>不要忘记缺省分支default，即使不需要也应添加<code>default:break;</code></li>
+<li>case后面的值只能是整形或字符型常量/常量表达式</li>
+<li>case语句排列顺序：<ul>
+<li>按字母或数字排序</li>
+<li>正常情况放前面，异常情况放后面</li>
+<li>按执行频率排列</li>
+</ul>
+</li>
+<li>case语句中不能使用continue</li>
+</ul>
+</li>
+<li><p>goto语句：少用、慎用</p>
+</li>
+<li><p>inline关键字：内联，空间换时间</p>
+<ul>
+<li>必须与函数定义体放在一起才能使函数内联</li>
+<li>以下情况不宜使用inline<ul>
+<li>函数体代码较长</li>
+<li>函数体内有循环</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>volatile关键字：修饰被不同线程访问和修改的变量，即修饰易变变量，保证每次读取时都重新读取</p>
+</li>
+<li><p>extern关键字：调用其他模块的变量或函数，要在本模块中用extern进行<strong>外部声明</strong></p>
+</li>
+<li><p>void关键字</p>
+<ul>
+<li>函数没有返回值或没有参数时，应声明为void类型</li>
+<li>函数参数为任意指针类型时，声明为void *</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="机器或平台相关"><a href="#机器或平台相关" class="headerlink" title="机器或平台相关"></a>机器或平台相关</h2>
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>
