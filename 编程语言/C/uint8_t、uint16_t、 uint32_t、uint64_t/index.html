@@ -130,27 +130,36 @@
 		<p>uint8_t、uint16_t、uint32_t、uint64_t</p>
 <span id="more"></span>
 
-<p>uint8_t / uint16_t / uint32_t /uint64_t 这些数据类型是 C99 中定义的，具体定义在：/usr/include/stdint.h   </p>
+<p>uint8_t、uint16_t、uint32_t、uint64_t 这些数据类型是 C99 中定义的，具体定义在：/usr/include/stdint.h   </p>
 <p>ISO C99: 7.18 Integer types &lt;stdint.h&gt;</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* There is some amount of overlap with &lt;sys/types.h&gt; as known by inet code */</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> __int8_t_defined</span><br><span class="hljs-meta"># <span class="hljs-meta-keyword">define</span> __int8_t_defined</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">signed</span> <span class="hljs-keyword">char</span>             <span class="hljs-keyword">int8_t</span>; <br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">short</span> <span class="hljs-keyword">int</span>               <span class="hljs-keyword">int16_t</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">int</span>                     <span class="hljs-keyword">int32_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">if</span> __WORDSIZE == 64</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>                <span class="hljs-keyword">int64_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">else</span></span><br>__extension__<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>           <span class="hljs-keyword">int64_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br> <br><span class="hljs-comment">/* Unsigned.  */</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>           <span class="hljs-keyword">uint8_t</span>;<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span> <span class="hljs-keyword">int</span>      <span class="hljs-keyword">uint16_t</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> __uint32_t_defined</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>            <span class="hljs-keyword">uint32_t</span>;<br><span class="hljs-meta"># <span class="hljs-meta-keyword">define</span> __uint32_t_defined</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> __WORDSIZE == 64</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>       <span class="hljs-keyword">uint64_t</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br>__extension__<br><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">int</span>  <span class="hljs-keyword">uint64_t</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
 
 <p>格式化输出：</p>
-<p>unit64_t：%llu   </p>
-<p>unit32_t：%u</p>
-<p>unit16_t：%hu</p>
+<ul>
+<li><p>unit64_t：%llu   </p>
+</li>
+<li><p>unit32_t：%u</p>
+</li>
+<li><p>unit16_t：%hu</p>
+</li>
+</ul>
 <p>注意：必须小心 uint8_t 类型变量的输出</p>
-<p>uint8_t fieldID = 67;<br>cerr&lt;&lt; “field=” &lt;&lt; fieldID &lt;&lt;endl;</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">uint8_t</span> fieldID = <span class="hljs-number">67</span>;<br>cerr&lt;&lt; <span class="hljs-string">&quot;field=&quot;</span> &lt;&lt; fieldID &lt;&lt;endl;<br></code></pre></td></tr></table></figure>
+
 <p>结果发现是：field=C 而 不是 field=67</p>
-<p>这是由于 typedef unsigned char uint8_t;</p>
+<p>这是由于<code> typedef unsigned char uint8_t;</code></p>
 <p>uint8_t 实际是一个 char，cerr &lt;&lt; 会输出 ASCII 码是 67 的字符，而不是 67 这个数字。因此，输出 uint8_t 类型的变量实际输出的是其对应的字符, 而不是真实数字，若要输出 67，则可以这样：</p>
-<p>cerr&lt;&lt; “field=” &lt;&lt; (uint16_t) fieldID &lt;&lt;endl;</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">cerr&lt;&lt; <span class="hljs-string">&quot;field=&quot;</span> &lt;&lt; (<span class="hljs-keyword">uint16_t</span>) fieldID &lt;&lt;endl;<br></code></pre></td></tr></table></figure>
+
 <p>结果是：field=67</p>
 <p>同样，uint8_t 类型变量转化为字符串以及字符串转化为 uint8_t 类型变量都要注意</p>
 <ul>
 <li>  uint8_t类型变量转化为字符串时得到的会是ASCII码对应的字符</li>
 <li>  字符串转化为 uint8_t 变量时, 会将字符串的第一个字符赋值给变量</li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdint.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sstream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br> <br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">uint8_t</span> fieldID = <span class="hljs-number">67</span>;<br> <br>    <span class="hljs-comment">// uint8_t --&gt; string</span><br>    string s;<br>    ostringstream strOStream;<br>    strOStream &lt;&lt; fieldID;<br>    s = strOStream.<span class="hljs-built_in">str</span>();<br>    cerr &lt;&lt; s &lt;&lt; endl;<br>    <br>    <span class="hljs-comment">// string --&gt; uint8_t</span><br>    s = <span class="hljs-string">&quot;65&quot;</span>; <br>    stringstream strStream;<br>    strStream &lt;&lt; s;<br>    strStream &gt;&gt; fieldID;<br>    strStream.<span class="hljs-built_in">clear</span>();<br>    cerr &lt;&lt; fieldID &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">c</span><br><span class="hljs-comment">6</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdint.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sstream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br> <br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">uint8_t</span> fieldID = <span class="hljs-number">67</span>;<br> <br>    <span class="hljs-comment">// uint8_t --&gt; string</span><br>    string s;<br>    ostringstream strOStream;<br>    strOStream &lt;&lt; fieldID;<br>    s = strOStream.<span class="hljs-built_in">str</span>();<br>    cerr &lt;&lt; s &lt;&lt; endl;<br>    <br>    <span class="hljs-comment">// string --&gt; uint8_t</span><br>    s = <span class="hljs-string">&quot;65&quot;</span>; <br>    stringstream strStream;<br>    strStream &lt;&lt; s;<br>    strStream &gt;&gt; fieldID;<br>    strStream.<span class="hljs-built_in">clear</span>();<br>    cerr &lt;&lt; fieldID &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">c<br>6<br>*<br></code></pre></td></tr></table></figure>
 
 
 	</div>

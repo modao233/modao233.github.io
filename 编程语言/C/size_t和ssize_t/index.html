@@ -130,13 +130,18 @@
 		<p>size_t和ssize_t</p>
 <span id="more"></span>
 
-<h2 id="size-t和int"><a href="#size-t和int" class="headerlink" title="size_t和int"></a>size_t和int</h2><p>size_t是一些C/C++标准在stddef.h中定义的。这个类型足以用来表示对象的大小。size_t的真实类型与操作系统有关。</p>
-<p>在32位架构中被普遍定义为：</p>
-<p>typedef unsigned int size_t;</p>
-<p>而在64位架构中被定义为：<br>typedef unsigned long size_t;</p>
+<h2 id="size-t和int"><a href="#size-t和int" class="headerlink" title="size_t和int"></a>size_t和int</h2><p>size_t是一些C/C++标准在stddef.h中定义的。这个类型足以用来表示对象的大小。</p>
+<p>size_t的真实类型与操作系统有关：</p>
+<ul>
+<li><p>32位架构中定义为：<code>typedef unsigned int size_t;</code></p>
+</li>
+<li><p>64位架构中定义为：<code>typedef unsigned long size_t;</code></p>
+</li>
+</ul>
 <p>size_t在32位架构上是4字节，在64位架构上是8字节，在不同架构上进行编译时需要注意这个问题。</p>
-<p>int在不同架构下都是4字节，与size_t不同；且int为带符号数，size_t为无符号数。</p>
-<h2 id="ssize-t"><a href="#ssize-t" class="headerlink" title="ssize_t"></a>ssize_t</h2><p>ssize_t是有符号整型，在32位机器上等同与int，在64位机器上等同与long int.</p>
+<p>int在不同架构（32或64）下都是4字节，与size_t不同</p>
+<p>int为带符号数，size_t为无符号数。</p>
+<h2 id="ssize-t"><a href="#ssize-t" class="headerlink" title="ssize_t"></a>ssize_t</h2><p>ssize_t是有符号整型，在32位机器上等同与int，在64位机器上等同与long int</p>
 <h2 id="size-t和ssize-t作用"><a href="#size-t和ssize-t作用" class="headerlink" title="size_t和ssize_t作用"></a>size_t和ssize_t作用</h2><p>size_t一般用来表示一种计数，比如有多少东西被拷贝等。</p>
 <p>例如：sizeof操作符的结果类型是size_t，该类型保证能容纳实现所建立的最大对象的字节大小。它的意义大致是“适于计量内存中可容纳的数据项目个数的无符号整数类型”。所以，它在数组下标和内存管理函数之类的地方广泛使用。</p>
 <p>ssize_t这个数据类型用来表示可以被执行读写操作的数据块的大小.它和size_t类似,但必需是signed。意即：它表示的是signed size_t类型的。</p>
