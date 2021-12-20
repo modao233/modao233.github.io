@@ -130,7 +130,11 @@
 		<p>原文：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38422016/article/details/90067243">https://blog.csdn.net/qq_38422016/article/details/90067243</a></p>
 <span id="more"></span>
 
-<p>固定最常用的方法就是对其进行定位。<br> 但在定位的时候需要注意：<br> ①如果想固定在屏幕的某处，那么确定被固定的元素的父元素是body；<br> ②为固定元素设置宽高。</p>
+<p>固定最常用的方法就是对其进行定位。<br>但在定位的时候需要注意：</p>
+<ol>
+<li>如果想固定在屏幕的某处，那么确定被固定的元素的父元素是body；</li>
+<li>为固定元素设置宽高。</li>
+</ol>
 <p>比如给你的footer的class添加如下代码：</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&lt;style type=&quot;text/css&quot;&gt;<br>    <span class="hljs-selector-class">.shopping_cart</span> &#123;<br>    <span class="hljs-attribute">position</span>: fixed;<br>    <span class="hljs-attribute">left</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">bottom</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>    <span class="hljs-attribute">height</span>: <span class="hljs-number">60px</span>;<br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#eee</span>;<br>    <span class="hljs-attribute">z-index</span>: <span class="hljs-number">10</span>;<br>    &#125;<br>&lt;/style&gt; <br></code></pre></td></tr></table></figure>
 

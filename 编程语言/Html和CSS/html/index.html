@@ -101,26 +101,35 @@
 
 
 <div class="toc">
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#html%E9%A1%B5%E9%9D%A2%E9%80%9A%E8%BF%87id%E5%9C%A8%E9%A1%B5%E9%9D%A2%E5%86%85%E8%B7%B3%E8%BD%AC"><span class="toc-text">html页面通过id在页面内跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#table%E8%A1%A8%E6%A0%BC%E5%AE%BD%E5%BA%A6%E5%9B%BA%E5%AE%9A%EF%BC%8C%E9%9C%80td%E5%86%85%E5%AE%B9%E8%BF%87%E9%95%BF%E4%B9%9F%E4%B8%8D%E4%BC%9A%E8%A2%AB%E6%92%91%E5%BC%80%E6%97%B6%EF%BC%8C%E8%AE%BE%E7%BD%AE%E5%A6%82%E4%B8%8Bcss%EF%BC%9A"><span class="toc-text">table表格宽度固定，需td内容过长也不会被撑开时，设置如下css：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#table-%E8%A1%A8%E6%A0%BC-td-%E9%95%BF%E5%BA%A6%E5%9B%BA%E5%AE%9A%E3%80%81%E5%86%85%E5%AE%B9%E8%BF%87%E9%95%BF%E3%80%81%E8%B6%85%E8%BF%87%E9%83%A8%E5%88%86%E8%AE%BE%E7%BD%AE"><span class="toc-text">table 表格 td 长度固定、内容过长、超过部分设置</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#html%E9%A1%B5%E9%9D%A2%E9%80%9A%E8%BF%87id%E5%9C%A8%E9%A1%B5%E9%9D%A2%E5%86%85%E8%B7%B3%E8%BD%AC"><span class="toc-text">html页面通过id在页面内跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#table%E8%A1%A8%E6%A0%BC%E5%AE%BD%E5%BA%A6%E5%9B%BA%E5%AE%9A%EF%BC%8C%E9%9C%80td%E5%86%85%E5%AE%B9%E8%BF%87%E9%95%BF%E4%B9%9F%E4%B8%8D%E4%BC%9A%E8%A2%AB%E6%92%91%E5%BC%80%E6%97%B6%EF%BC%8C%E8%AE%BE%E7%BD%AE%E5%A6%82%E4%B8%8Bcss%EF%BC%9A"><span class="toc-text">table表格宽度固定，需td内容过长也不会被撑开时，设置如下css：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#table-%E8%A1%A8%E6%A0%BC-td-%E9%95%BF%E5%BA%A6%E5%9B%BA%E5%AE%9A%E3%80%81%E5%86%85%E5%AE%B9%E8%BF%87%E9%95%BF%E3%80%81%E8%B6%85%E8%BF%87%E9%83%A8%E5%88%86%E8%AE%BE%E7%BD%AE"><span class="toc-text">table 表格 td 长度固定、内容过长、超过部分设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Flexbox-Layout"><span class="toc-text">Flexbox Layout</span></a></li></ol>
 </div>
 
 <div class="content-area">
 	<div class="title">
-		
+		html的一些记录
 	</div>
 	
 	<div class="page-date">
-		2021-11-07
+		2020-07-19
 	</div>
 	
 	<div class="category-area">
 		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Html">Html</a>
+				
+				</div>
+				」
 			
 		
 	</div>
 	
 	<div class="content">
-		<h2 id="html页面通过id在页面内跳转"><a href="#html页面通过id在页面内跳转" class="headerlink" title="html页面通过id在页面内跳转"></a>html页面通过id在页面内跳转</h2><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;links&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#a1&quot;</span>&gt;</span>jump to a1<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#a2&quot;</span>&gt;</span>jump to a2<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#a3&quot;</span>&gt;</span>jump to a3<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a1&quot;</span>&gt;</span>a1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a2&quot;</span>&gt;</span>a2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a3&quot;</span>&gt;</span>a3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+		<span id="more"></span>
+
+<h2 id="html页面通过id在页面内跳转"><a href="#html页面通过id在页面内跳转" class="headerlink" title="html页面通过id在页面内跳转"></a>html页面通过id在页面内跳转</h2><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;links&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#a1&quot;</span>&gt;</span>jump to a1<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#a2&quot;</span>&gt;</span>jump to a2<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;#a3&quot;</span>&gt;</span>jump to a3<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a1&quot;</span>&gt;</span>a1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a2&quot;</span>&gt;</span>a2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;a3&quot;</span>&gt;</span>a3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="table表格宽度固定，需td内容过长也不会被撑开时，设置如下css："><a href="#table表格宽度固定，需td内容过长也不会被撑开时，设置如下css：" class="headerlink" title="table表格宽度固定，需td内容过长也不会被撑开时，设置如下css："></a>table表格宽度固定，需td内容过长也不会被撑开时，设置如下css：</h2><figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">table</span>&#123;<span class="hljs-attribute">table-layout</span>:fixed;<span class="hljs-attribute">word-break</span>:break-all;&#125;<br></code></pre></td></tr></table></figure>
 
@@ -133,6 +142,10 @@
 <p>td 方式二：（省略号代替）</p>
 <figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.mytable</span> <span class="hljs-selector-tag">tr</span> <span class="hljs-selector-tag">td</span> &#123;<br>    <span class="hljs-comment">/* for IE */</span>  <br>    <span class="hljs-attribute">text-overflow</span>: ellipsis;<br>    <span class="hljs-comment">/* for Firefox,mozilla */</span> <br>    -moz-<span class="hljs-attribute">text-overflow</span>: ellipsis;<br>    <span class="hljs-attribute">overflow</span>: hidden;  <br>    <span class="hljs-attribute">white-space</span>: nowrap;  <br>    <span class="hljs-attribute">text-align</span>: left  <br>&#125;  <br></code></pre></td></tr></table></figure>
 
+<h2 id="Flexbox-Layout"><a href="#Flexbox-Layout" class="headerlink" title="Flexbox Layout"></a>Flexbox Layout</h2><p><a target="_blank" rel="noopener" href="https://www.softwhy.com/article-10038-1.html">https://www.softwhy.com/article-10038-1.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties">https://scotch.io/tutorials/a-visual-guide-to-css3-flexbox-properties</a></p>
+<p><a target="_blank" rel="noopener" href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">https://css-tricks.com/snippets/css/a-guide-to-flexbox/</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html">http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html</a></p>
 
 	</div>
 </div>
