@@ -130,7 +130,7 @@
 		<p>typedef与struct结构体定义</p>
 <span id="more"></span>
 
-<h2 id="定义结构体别名"><a href="#定义结构体别名" class="headerlink" title="定义结构体别名"></a>定义结构体别名</h2><p>结构体名不可单独作类型使用，而别名可当类型直接使用</p>
+<h2 id="定义结构体别名"><a href="#定义结构体别名" class="headerlink" title="定义结构体别名"></a>定义结构体别名</h2><p>C语言中结构体名不可单独作类型使用，而别名可当类型直接使用</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span></span><br><span class="hljs-class">&#123;</span><br>   <span class="hljs-keyword">int</span> 	cnt;<br>   <span class="hljs-keyword">char</span> name[<span class="hljs-number">12</span>];<br>&#125;Student;<br><br>Student stu;<span class="hljs-comment">//stu是变量，其类型是Student</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span> <span class="hljs-title">stu</span>;</span><span class="hljs-comment">//stu是变量，其类型是struct Student</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
@@ -138,16 +138,11 @@
 </blockquote>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//匿名结构体，定义时绑定别名，不推荐</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>   <span class="hljs-keyword">int</span> 	cnt;<br>   <span class="hljs-keyword">char</span> name[<span class="hljs-number">12</span>];<br>&#125;Student;<br><br>Student stu;<span class="hljs-comment">//stu是变量，其类型是Student</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span></span><br><span class="hljs-class">&#123;</span><br>   <span class="hljs-keyword">int</span> 	cnt;<br>   <span class="hljs-keyword">char</span> name[<span class="hljs-number">12</span>];<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span> <span class="hljs-title">stu</span>;</span><span class="hljs-comment">//stu是变量，其类型是struct Student</span><br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span> <span class="hljs-title">Student</span>;</span><br>Student stu;<span class="hljs-comment">//stu是变量，其类型是Student</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span></span><br><span class="hljs-class">&#123;</span><br>   <span class="hljs-keyword">int</span> 	cnt;<br>   <span class="hljs-keyword">char</span> name[<span class="hljs-number">12</span>];<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span> <span class="hljs-title">stu</span>;</span><span class="hljs-comment">//stu是变量，其类型是struct Student</span><br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span> <span class="hljs-title">Student</span>;</span><br>Student stu;<span class="hljs-comment">//stu是变量，其类型是Student</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="声明结构体变量"><a href="#声明结构体变量" class="headerlink" title="声明结构体变量"></a>声明结构体变量</h2><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Student</span></span><br><span class="hljs-class">&#123;</span><br>   <span class="hljs-keyword">int</span> 	cnt;<br>   <span class="hljs-keyword">char</span> name[<span class="hljs-number">12</span>];<br>&#125;Stu;<br><br><span class="hljs-keyword">int</span> a = Stu.cnt;<span class="hljs-comment">//Stu是结构体类型的变量</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="匿名结构体"><a href="#匿名结构体" class="headerlink" title="匿名结构体"></a>匿名结构体</h2><blockquote>
-<p>  此部分内容来自：</p>
-<p>  作者：胖财<br>  链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/52192165/answer/186769538">https://www.zhihu.com/question/52192165/answer/186769538</a><br>  来源：知乎<br>  著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-<p>  作者：暮无井见铃<br>  链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/52192165/answer/188270223">https://www.zhihu.com/question/52192165/answer/188270223</a><br>  来源：知乎<br>  著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
-</blockquote>
-<p>在 C++11 中，没有名字的类是没法显式写构造的，由于有C++11的non-static member in-class initialization，通常情况下可以直接写：</p>
+<h2 id="匿名结构体"><a href="#匿名结构体" class="headerlink" title="匿名结构体"></a>匿名结构体</h2><p>在 C++11 中，没有名字的类是没法显式写构造的，由于有C++11的non-static member in-class initialization，通常情况下可以直接写：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>    <span class="hljs-keyword">int</span>  count = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">bool</span> done  = <span class="hljs-literal">false</span>;<br>&#125; abc;<br></code></pre></td></tr></table></figure>
 
 <p>如果坚持要在构造里做点事情：根据C++ RAII的精神，构造和析构是对成员递归的，可以构造一个成员来帮忙执行一段函数：</p>

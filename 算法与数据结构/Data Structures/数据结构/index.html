@@ -182,7 +182,13 @@
 <li> 若插入/删除仅发生在表的两端，宜采用带尾指针的循环链表</li>
 </ol>
 </blockquote>
-<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一种特殊的线性表，仅能在线性表的一端操作，栈顶允许操作，栈底不允许操作。 栈的特点是：先进后出，或者说是后进先出，从栈顶放入元素的操作叫入栈，取出元素叫出栈。 </p>
+<h3 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h3><p>栈是一种特殊的线性表，仅能在线性表的一端操作，栈顶允许操作，栈底不允许操作。 栈的特点是：先进后出，或者说是后进先出，从栈顶放入元素的操作叫入栈，取出元素叫出栈。</p>
+<p>栈的实现方式：</p>
+<ul>
+<li>  数组形式：静态栈</li>
+<li>  链表形式：动态栈</li>
+</ul>
+<p>只能对栈顶元素进行操作。</p>
 <h4 id="顺序栈"><a href="#顺序栈" class="headerlink" title="顺序栈"></a>顺序栈</h4><p>使用数组实现，有固定大小。</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">seqStack</span>&#123;</span><br><span class="hljs-keyword">private</span>:<br>    T* elements;<br>    <span class="hljs-keyword">int</span> top;<br>    <span class="hljs-keyword">int</span> size;<br>    <span class="hljs-keyword">int</span> increment;<br>&#125;<br></code></pre></td></tr></table></figure>
 

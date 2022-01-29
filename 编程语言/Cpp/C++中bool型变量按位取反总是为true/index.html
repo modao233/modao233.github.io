@@ -106,21 +106,31 @@
 
 <div class="content-area">
 	<div class="title">
-		
+		C++中bool型变量按位取反总是为true
 	</div>
 	
 	<div class="page-date">
-		2021-12-05
+		2020-07-08
 	</div>
 	
 	<div class="category-area">
 		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
 			
 		
 	</div>
 	
 	<div class="content">
-		<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">bool</span> a = <span class="hljs-literal">false</span>;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>    a = ~a;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>    a = ~a;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+		<p>C++中bool型变量按位取反总是为true</p>
+<span id="more"></span>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">bool</span> a = <span class="hljs-literal">false</span>;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>    a = ~a;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>    a = ~a;<br>    cout &lt;&lt; a &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">0<br>1<br>1<br></code></pre></td></tr></table></figure>
 

@@ -101,12 +101,12 @@
 
 
 <div class="toc">
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%BC%E6%8E%A5%E9%A3%8E%E6%A0%BC"><span class="toc-text">拼接风格</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="toc-text">C++类型转换函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#int%E8%BD%AC%E6%8D%A2%E6%88%90string"><span class="toc-text">int转换成string</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#string%E8%BD%AC%E6%8D%A2%E6%88%90int"><span class="toc-text">string转换成int</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%9F%E5%8A%A9%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B5%81%E8%BD%AC%E6%8D%A2"><span class="toc-text">借助字符串流转换</span></a></li></ol>
 </div>
 
 <div class="content-area">
 	<div class="title">
-		拼接成字符串string
+		多类型拼接成string，类型转换
 	</div>
 	
 	<div class="page-date">
@@ -127,12 +127,55 @@
 	</div>
 	
 	<div class="content">
-		<p>拼接成字符串string</p>
+		<p>多类型拼接成string</p>
 <span id="more"></span>
 
-<figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstdlib&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sstream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;cstring&gt;</span> </span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br> <br><span class="hljs-comment">//C风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">char</span> *s = <span class="hljs-string">&quot;dong&quot;</span>;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">52</span>;<br>    <span class="hljs-keyword">float</span> b = <span class="hljs-number">.1314</span>;<br>    <span class="hljs-keyword">char</span> *buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-built_in">strlen</span>(s) + <span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(a) + <span class="hljs-number">1</span>];<br>    <span class="hljs-built_in">sprintf</span>(buf, <span class="hljs-string">&quot;%s%d%.4f&quot;</span>, s, a, b);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, buf);<br>&#125;<br><span class="hljs-comment">//半C半C++风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test1</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string s = <span class="hljs-string">&quot;dong&quot;</span>;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">520</span>;<br>    <span class="hljs-keyword">char</span> *buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-number">10</span>];<span class="hljs-comment">//2147483647 int最大值</span><br>    _itoa(a, buf, <span class="hljs-number">10</span>);      <span class="hljs-comment">//itoa虽然可以转化为各种进制，但是注意不能是float或者double</span><br>    cout &lt;&lt; s + buf &lt;&lt; <span class="hljs-string">&quot; | &quot;</span>;<br>    _itoa(a, buf, <span class="hljs-number">16</span>);<br>    cout &lt;&lt; s + buf &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">//纯C++风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test2</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    string s = <span class="hljs-string">&quot;陈明东&quot;</span>;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">52</span>;<br>    <span class="hljs-keyword">double</span> b = <span class="hljs-number">.1314</span>;<br>    ostringstream oss;<br>    oss &lt;&lt; s &lt;&lt; a &lt;&lt; b;<br>    cout &lt;&lt; oss.<span class="hljs-built_in">str</span>() &lt;&lt; endl;<br>&#125;<br><span class="hljs-comment">//C++11新特性</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">test3</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> a = <span class="hljs-number">520</span>;<br>    <span class="hljs-keyword">float</span> b = <span class="hljs-number">5.20</span>;<br>    string str = <span class="hljs-string">&quot;dong&quot;</span>;<br>    string res = str + <span class="hljs-built_in">to_string</span>(a);<br>    cout &lt;&lt; res &lt;&lt; endl;<br>    res = str + <span class="hljs-built_in">to_string</span>(b);<br>    res.<span class="hljs-built_in">resize</span>(<span class="hljs-number">8</span>);<br>    cout &lt;&lt; res &lt;&lt; endl;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">test</span>();<br>    <span class="hljs-built_in">test1</span>();<br>    <span class="hljs-built_in">test2</span>();<br>    <span class="hljs-built_in">test3</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">dong520.1314</span><br><span class="hljs-comment">dong520 | dong208</span><br><span class="hljs-comment">陈明东520.1314</span><br><span class="hljs-comment">dong520</span><br><span class="hljs-comment">dong5.20</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<h2 id="拼接风格"><a href="#拼接风格" class="headerlink" title="拼接风格"></a>拼接风格</h2><figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sstream&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><br><span class="hljs-comment">//C风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testC</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">char</span> a[] = <span class="hljs-string">&quot;hello&quot;</span>;<br>    <span class="hljs-keyword">int</span> b = <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">double</span> c = <span class="hljs-number">6.6</span>;<br><br>    <span class="hljs-keyword">char</span> buf[<span class="hljs-number">100</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>    <span class="hljs-built_in">sprintf</span>(buf, <span class="hljs-string">&quot;%s%d%lf&quot;</span>, a, b, c);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, buf);<br>&#125;<br><br><span class="hljs-comment">//Cpp风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testCpp</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">char</span> a[] = <span class="hljs-string">&quot;hello&quot;</span>;<br>    <span class="hljs-keyword">int</span> b = <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">double</span> c = <span class="hljs-number">6.6</span>;<br><br>    std::ostringstream out;<br>    out &lt;&lt; a &lt;&lt; b &lt;&lt; c;<br>    cout &lt;&lt; out.<span class="hljs-built_in">str</span>() &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-comment">//Cpp11风格</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testCpp11</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">char</span> a[] = <span class="hljs-string">&quot;hello&quot;</span>;<br>    <span class="hljs-keyword">int</span> b = <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">double</span> c = <span class="hljs-number">6.6</span>;<br><br>    std::string res = a + std::<span class="hljs-built_in">to_string</span>(b) + std::<span class="hljs-built_in">to_string</span>(c);<br>    cout &lt;&lt; res &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">testC</span>();		<span class="hljs-comment">//hello106.600000</span><br>    <span class="hljs-built_in">testCpp</span>();		<span class="hljs-comment">//hello106.6</span><br>    <span class="hljs-built_in">testCpp11</span>();	<span class="hljs-comment">//hello106.600000</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/program_anywhere/article/details/63720261">C++中4种方式把字符串和数字连接起来</a></p>
+<h2 id="C-类型转换函数"><a href="#C-类型转换函数" class="headerlink" title="C++类型转换函数"></a>C++类型转换函数</h2><h3 id="int转换成string"><a href="#int转换成string" class="headerlink" title="int转换成string"></a>int转换成string</h3><p>c++11标准增加了全局函数std::to_string，包括九种重载实现：</p>
+<ul>
+<li>string to_string (int val);</li>
+<li>string to_string (long val);</li>
+<li>string to_string (long long val);</li>
+<li>string to_string (unsigned val);</li>
+<li>string to_string (unsigned long val);</li>
+<li>string to_string (unsigned long long val);</li>
+<li>string to_string (float val);</li>
+<li>string to_string (double val);</li>
+<li>string to_string (long double val);</li>
+</ul>
+<h3 id="string转换成int"><a href="#string转换成int" class="headerlink" title="string转换成int"></a>string转换成int</h3><p>标准库函数：</p>
+<ul>
+<li><p>整形：<code>atoi()</code></p>
+</li>
+<li><p>浮点型：<code>atof()</code></p>
+</li>
+<li><p>长整型：<code>atol()</code></p>
+</li>
+</ul>
+<p><strong>Example：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">std::string str = <span class="hljs-string">&quot;123&quot;</span>;<br><span class="hljs-keyword">int</span> n = <span class="hljs-built_in">atoi</span>(str.<span class="hljs-built_in">c_str</span>());<br>cout&lt;&lt;n; <span class="hljs-comment">//123</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="借助字符串流转换"><a href="#借助字符串流转换" class="headerlink" title="借助字符串流转换"></a>借助字符串流转换</h2><p>标准库定义了三种类型字符串流（在sstream头文件）：</p>
+<ul>
+<li><code>istringstream</code>：输入字符串流</li>
+<li><code>ostringstream</code>：输出字符串流</li>
+<li><code>stringstream</code>：字符串流，可输入输出</li>
+</ul>
+<p>除了从iostream继承来的操作</p>
+<ol>
+<li>sstream类型定义了一个有string形参的构造函数<ul>
+<li>stringstream stream(s)：创建了存储s副本的stringstream对象，s为string类型对象</li>
+</ul>
+</li>
+<li>定义了名为str的成员，用来读取或设置stringstream对象所操纵的string值：<ul>
+<li>stream.str()：返回stream中存储的string类型对象</li>
+<li>stream.str(s)：将string类型的s复制给stream，返回void</li>
+</ul>
+</li>
+</ol>
+<p><strong>Example：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">int</span> aa = <span class="hljs-number">30</span>;<br>stringstream ss;<br>ss&lt;&lt;aa; <br>string s1 = ss.<span class="hljs-built_in">str</span>();<br>cout &lt;&lt; s1 &lt;&lt; endl; <span class="hljs-comment">// 30</span><br><br><span class="hljs-function">istringstream <span class="hljs-title">is</span><span class="hljs-params">(<span class="hljs-string">&quot;12&quot;</span>)</span></span>; <span class="hljs-comment">//构造输入字符串流，流的内容初始化为“12”的字符串   </span><br><span class="hljs-keyword">int</span> i;   <br>is &gt;&gt; i; <span class="hljs-comment">//从is流中读入一个int整数存入i中  </span><br></code></pre></td></tr></table></figure>
 
 	</div>
 </div>

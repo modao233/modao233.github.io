@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「工作日还有多少天，休息日还剩几小时」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8sshd"><span class="toc-text">启动sshd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">安装过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Arch-Linux%E4%B8%8B%E8%A7%A3%E5%86%B3zip%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">Arch Linux下解决zip解压乱码的方法</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		ArchLinux配置
+	</div>
+	
+	<div class="page-date">
+		2022-01-12
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>rufus：U盘写镜像时要用dd<br>插网线，不用连wifi步骤</p>
+<h2 id="启动sshd"><a href="#启动sshd" class="headerlink" title="启动sshd"></a>启动sshd</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启动sshd服务</span><br>systemctl start sshd.service<br><span class="hljs-comment"># 设置ssh登录的root密码</span><br>passwd<br><span class="hljs-comment"># 查看ip</span><br>ip add<br></code></pre></td></tr></table></figure>
+
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>分区，格式化，挂载，设置镜像源，安装系统，生成分区表（检查），chroot。</p>
+<p>这次将 根分区 格式化成xfs了，启用了交换分区</p>
+<p>pacstrap安装时，多加了</p>
+<ul>
+<li>xfsprogs：包含了管理 XFS 文件系统所需的必要工具</li>
+<li>intel-ucode：CPU微码更新</li>
+</ul>
+<p>进入新系统，进行一系列配置后，安装引导，退出chroot，umount，重启</p>
+<h2 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h2><p>进入系统，安装sudo，创建新用户，并使其加入wheel组<br>执行<code>SUDO_EDITOR=nano visudo</code>编辑 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Sudo">sudo</a> 配置文件，删除<code># %wheel ALL=(ALL) ALL</code>行前面的<code>#</code>以便让 wheel 用户组可以使用<code>sudo</code>获取 root 权限。</p>
+<p>添加archlinuxcn源</p>
+<p>安装显示管理器和桌面环境：<br><code>sudo pacman -S --noconfirm plasma sddm konsole noto-fonts noto-fonts-cjk noto-fonts-emoji</code></p>
+<p>安装 Plasma 可选依赖（使其更好的工作）：<code>sudo pacman -S --asdeps gst-plugins-good packagekit-qt5 xsettingsd</code></p>
+<p>卸载无用软件包：<code>sudo pacman -Rns bluedevil drkonqi kgamma5 ksshaskpass plasma-browser-integration plasma-firewall plasma-sdk plasma-thunderbolt plasma-vault plasma-workspace-wallpapers</code></p>
+<p>更改显示管理器（SSDM）本地化环境（可选）：<br>如果要让 SDDM 的本地化环境为非英文，可以执行以下更改。<br>PS：本地化环境除了影响语言显示，还有时间格式。</p>
+<p>执行<code>sudo SYSTEMD_EDITOR=nano systemctl edit sddm</code>编辑 SDDM 服务单元，在文件底部添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">[Service]<br>Environment=LANG=zh_CN.UTF-8<br></code></pre></td></tr></table></figure>
+<p>如果是其他语言用户，可以把<code>zh_CN</code>替换为你需要的本地化。</p>
+<p>执行<code>sudo systemctl enable sddm</code>启用 SDDM</p>
+<p>执行<code>sudo reboot</code>重启系统，重启后应该会看到如下图所示的界面，输入密码登陆桌面环境。</p>
+<p>dolphin = 文件管理器、ark = 压缩工具、kwrite = 文本编辑器、gwenview = 图片浏览器，这些软件都属于 KDE 家族，搭配 KDE Plasma 桌面使用更佳。</p>
+<p>firefox: 火狐浏览器<br>firefox-i18n-zh-cn firefox-i18n-zh-tw: 简繁中文语言包，可以只安装需要的语言包。</p>
+<p>安装 yay 步骤：</p>
+<p>使用 git 克隆存储库：<code>git clone https://aur.archlinux.org/yay.git /var/tmp/yay</code></p>
+<p>转到存储库目录：<code>pushd /var/tmp/yay</code></p>
+<p>构建软件包并安装：<code>makepkg -i -r -s</code>，构建过程很慢，设置go的下载镜像可以解决</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># [golang 设置代理](https://www.cnblogs.com/feiquan/p/13357971.html)<br>1<br>`go env` `-``w GOPROXY``=``https:``/``/``goproxy.cn,direct`<br>-   阿里云  <br>    配置如下：<br>export GOPROXY=https://mirrors.aliyun.com/goproxy/<br>-   nexus社区提供的  <br>    配置如下：<br>export GOPROXY=https://gonexus.dev<br>-   goproxy.io 的  <br>    配置如下：<br>export GOPROXY=https://goproxy.io/<br>-   基于athens的公共服务  <br>    配置如下：<br>export GOPROXY=https://athens.azurefd.net  <br>-   官方提供的(jfrog,golang)<br>export GOPROXY=https://gocenter.io<br>export GOPROXY=https://proxy.golang.org  <br>-   七牛云赞助支持的<br>export GOPROXY=https://goproxy.cn<br></code></pre></td></tr></table></figure>
+
+<p>清理工作：<code>pushd &amp;&amp; rm -rf /var/tmp/yay</code></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.mivm.cn/archlinux-installation-guide-simple">https://www.mivm.cn/archlinux-installation-guide-simple</a></li>
+</ul>
+<p>设置软件源时，最好只设置一个<br><a target="_blank" rel="noopener" href="https://mirrors.ustc.edu.cn/help/archlinuxcn.html">https://mirrors.ustc.edu.cn/help/archlinuxcn.html</a></p>
+<p>安装wine时，有依赖错误，需要启用32位软件源：<br>执行<code>sudo nano /etc/pacman.conf</code>编辑 Pacman 配置文件，删除以下行前面的<code>#</code>以启用 32 位系统库支持。</p>
+<p>#[multilib]<br>#Include = /etc/pacman.d/mirrorlist</p>
+<p>保存后执行<code>sudo pacman -Sy</code>更新软件数据库</p>
+<p>配置kde时，从主题网站下载了压缩包，使用方法：<br>下载对应的压缩包，解压之后移动到对应的目录：</p>
+<p>/home/hzt/.local/share/plasma/desktoptheme 这是存放plasma主题<br>/home/hzt/.local/share/plasma/look-and-feel/ 存放全局主题<br>/home/hzt/.local/share/plasma/plasmoids/ 存放插件<br>以上目录如果没有就自行创建</p>
+<p>手动安装字体，详见archwiki：<br>要在系统范围内（对所有用户有效）安装字体，请将文件夹移动到 /usr/share/fonts/ 目录。这些文件需要对每个用户而言都是可读的，使用 chmod 来设置合理的权限 (比如，文件至少为 0444 ，而目录至少为 0555)。要为单个用户安装字体，请使用 <del>/.local/share/fonts (</del>/.fonts/ 现在已经过时了)。 要让 Xserver 能直接载入字体（而不使用某些字体服务），就需要将新增字体的目录加入到 FontPath 中。它位于您的 Xorg 设置目录中（例如 /etc/X11/xorg.conf 或 /etc/xorg.conf) 中。</p>
+<p>然后更新 fontconfig 的字体缓存：fc-cache -vf</p>
+<p>安装nginx，默认启动用户是http，这样会导致权限问题访问不了</p>
+<p>archlinux 解压zip文件乱码问题解决：<br>在尝试p7z unrar convmv 等命令均无法实现正确显示问题，找到以下解决办法。<br>一：安装 sudo pacman -S unarchiver<br>二：使用unar -e GBK file.zip命令解压文件</p>
+<h3 id="Arch-Linux下解决zip解压乱码的方法"><a href="#Arch-Linux下解决zip解压乱码的方法" class="headerlink" title="Arch Linux下解决zip解压乱码的方法"></a>Arch Linux下解决zip解压乱码的方法</h3><p>安装unarchiver，用unar解压zip文件</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

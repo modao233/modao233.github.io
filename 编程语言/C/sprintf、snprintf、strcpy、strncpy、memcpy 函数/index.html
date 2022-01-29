@@ -101,7 +101,7 @@
 
 
 <div class="toc">
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sprintf%E5%87%BD%E6%95%B0"><span class="toc-text">sprintf函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#snprintf%E5%87%BD%E6%95%B0"><span class="toc-text">snprintf函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strcpy%E5%87%BD%E6%95%B0"><span class="toc-text">strcpy函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strncpy%E5%87%BD%E6%95%B0"><span class="toc-text">strncpy函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#memcpy%E5%87%BD%E6%95%B0"><span class="toc-text">memcpy函数</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#sprintf%E5%87%BD%E6%95%B0"><span class="toc-text">sprintf函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#snprintf%E5%87%BD%E6%95%B0"><span class="toc-text">snprintf函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strcpy%E5%87%BD%E6%95%B0"><span class="toc-text">strcpy函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#strncpy%E5%87%BD%E6%95%B0"><span class="toc-text">strncpy函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#memcpy%E5%87%BD%E6%95%B0"><span class="toc-text">memcpy函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB%E8%A7%A3%E6%9E%90"><span class="toc-text">区别解析</span></a></li></ol>
 </div>
 
 <div class="content-area">
@@ -175,6 +175,30 @@
 <li>  返回值：返回一个指向dest的指针</li>
 <li>  注意：src和dest所指向的内存区域不能重叠；与strcpy相比，memcpy并不是遇到结束符就停止拷贝，而是一定会拷贝完n个字节</li>
 </ul>
+<h2 id="区别解析"><a href="#区别解析" class="headerlink" title="区别解析"></a>区别解析</h2><table>
+<thead>
+<tr>
+<th>函数名称</th>
+<th>操作对象</th>
+<th>简单分析</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>strcpy</td>
+<td>对字符串进行操作</td>
+<td>调用简单，效率较高</td>
+</tr>
+<tr>
+<td>sprintf</td>
+<td>操作对象可以是字符串，但不限于字符串，可以是任意基本类型</td>
+<td>需要对指定格式符并且进行格式转换，调用较为烦琐且效率不高</td>
+</tr>
+<tr>
+<td>memcpy</td>
+<td>对内存的拷贝，不考虑类型</td>
+<td>高效，但需指定拷贝内存的长度</td>
+</tr>
+</tbody></table>
 
 	</div>
 </div>

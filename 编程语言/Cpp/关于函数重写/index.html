@@ -106,7 +106,7 @@
 
 <div class="content-area">
 	<div class="title">
-		关于函数重写
+		运行时多态：函数重写
 	</div>
 	
 	<div class="page-date">
@@ -127,7 +127,7 @@
 	</div>
 	
 	<div class="content">
-		<p>关于函数重写</p>
+		<p>普通重写和虚函数重写，一般情况区别不大，得涉及指针或者引用才会动态分发</p>
 <span id="more"></span>
 
 <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;atomic&gt;</span></span><br><br><span class="hljs-keyword">using</span> std::cin;<br><span class="hljs-keyword">using</span> std::cout;<br><span class="hljs-keyword">using</span> std::endl;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">People</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">say</span><span class="hljs-params">()</span> </span>&#123; cout &lt;&lt; <span class="hljs-string">&quot;people say&quot;</span> &lt;&lt; endl;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span>&#123;&#125;;<br>&#125;;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Man</span> :</span> <span class="hljs-keyword">public</span> People &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">say</span><span class="hljs-params">()</span> </span>&#123; cout &lt;&lt; <span class="hljs-string">&quot;man say&quot;</span> &lt;&lt; endl;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span> </span>&#123; cout &lt;&lt; <span class="hljs-string">&quot;man eat&quot;</span> &lt;&lt; endl;&#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span>&#123;<br>    Man man;<br>    man.<span class="hljs-built_in">say</span>();<span class="hljs-comment">/*man say */</span><br>    man.<span class="hljs-built_in">eat</span>();<span class="hljs-comment">/*man eat */</span><br><br>    People* man2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Man</span>();<br>    man2 -&gt; <span class="hljs-built_in">say</span>();<span class="hljs-comment">/*people say */</span><br>    man2 -&gt; <span class="hljs-built_in">eat</span>();<span class="hljs-comment">/*man eat */</span><br><br>    People&amp; man3 = man;<br>    man3.<span class="hljs-built_in">say</span>();<span class="hljs-comment">/*people say */</span><br>    man3.<span class="hljs-built_in">eat</span>();<span class="hljs-comment">/*man eat */</span><br><br>    People&amp; man4 = *man2;<br>    man4.<span class="hljs-built_in">say</span>();<span class="hljs-comment">/*people say */</span><br>    man4.<span class="hljs-built_in">eat</span>();<span class="hljs-comment">/*man eat */</span><br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>

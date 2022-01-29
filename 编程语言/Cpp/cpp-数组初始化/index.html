@@ -206,7 +206,7 @@
 <p>运行结果</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">测试一维数组<br>0 0 0 0 0 0 0 0 0 0 <br>测试二维数组<br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0 <br>0 0 0 0 0 0 0 0 0 0<br></code></pre></td></tr></table></figure>
 
-<p><strong>按道理二维数组这样初始化只能初始化第一行，但是结果却复现不出来:joy:，但还是记录下比较稳妥的方法</strong>：</p>
+<p><strong>按道理二维数组这样初始化只能初始化第一行，但是结果却复现不出来，但还是记录下比较稳妥的方法</strong>：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//最简单粗暴的方法就是逐个赋值，我就不写了</span><br><span class="hljs-keyword">int</span>* b[<span class="hljs-number">10</span>];<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt; <span class="hljs-number">10</span>; i++)b[i] = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">10</span>]&#123;<span class="hljs-number">0</span>&#125;;<br>...<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt; <span class="hljs-number">10</span>; i++)<span class="hljs-keyword">delete</span>[] b[i];<br></code></pre></td></tr></table></figure>
 
 

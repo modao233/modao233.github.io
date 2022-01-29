@@ -101,7 +101,7 @@
 
 
 <div class="toc">
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C"><span class="toc-text">C++</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#const"><span class="toc-text">const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static"><span class="toc-text">static</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this%E6%8C%87%E9%92%88"><span class="toc-text">this指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="toc-text">类的静态成员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inline"><span class="toc-text">inline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E5%8F%AF%E4%BB%A5%E6%98%AF%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E5%90%97%EF%BC%9F"><span class="toc-text">虚函数可以是内联函数吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile%EF%BC%88C-11%E4%BB%A5%E5%90%8E%EF%BC%89"><span class="toc-text">volatile（C++11以后）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#assert"><span class="toc-text">assert()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%92%8C%E6%8C%87%E9%92%88%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">数组和指针的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">指针和引用的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E4%BA%86%E6%8C%87%E9%92%88%E8%BF%98%E8%A6%81%E5%BC%95%E5%85%A5%E5%BC%95%E7%94%A8%EF%BC%9F"><span class="toc-text">C++为什么有了指针还要引入引用？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A2%E7%84%B6%E5%BC%95%E5%85%A5%E4%BA%86%E5%BC%95%E7%94%A8%EF%BC%8C%E4%B8%BA%E4%BD%95%E4%B8%8D%E6%8A%9B%E5%BC%83%E6%8C%87%E9%92%88%E5%91%A2%EF%BC%9F"><span class="toc-text">既然引入了引用，为何不抛弃指针呢？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sizeof%E5%92%8Cstrlen%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">sizeof和strlen的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-text">区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6"><span class="toc-text">进阶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pragma-pack-n"><span class="toc-text">#pragma pack(n)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E5%9F%9F"><span class="toc-text">位域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extern-%E2%80%9CC%E2%80%9D"><span class="toc-text">extern “C”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#struct-%E5%92%8C-typedef-struct"><span class="toc-text">struct 和 typedef struct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E4%B8%AD-struct-%E5%92%8C-class"><span class="toc-text">C++ 中 struct 和 class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#union-%E8%81%94%E5%90%88"><span class="toc-text">union 联合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E5%AE%9E%E7%8E%B0-C-%E7%B1%BB"><span class="toc-text">C 实现 C++ 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#explicit%EF%BC%88%E6%98%BE%E5%BC%8F%EF%BC%89%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">explicit（显式）关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#friend-%E5%8F%8B%E5%85%83%E7%B1%BB%E5%92%8C%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-text">friend 友元类和友元函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#using"><span class="toc-text">using</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#using-%E5%A3%B0%E6%98%8E"><span class="toc-text">using 声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#using-%E6%8C%87%E4%BB%A4"><span class="toc-text">using 指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4%E8%A7%A3%E6%9E%90%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">:: 范围解析运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#enum-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="toc-text">enum 枚举类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decltype"><span class="toc-text">decltype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-text">引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A6%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-text">左值引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-text">右值引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0"><span class="toc-text">引用折叠</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8F"><span class="toc-text">宏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8"><span class="toc-text">成员初始化列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#initializer-list-%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">initializer_list 列表初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-text">面向对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">封装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-text">继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%80%81"><span class="toc-text">多态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%A4%9A%E6%80%81%EF%BC%88%E7%BC%96%E8%AF%91%E6%9C%9F-%E6%97%A9%E7%BB%91%E5%AE%9A%EF%BC%89"><span class="toc-text">静态多态（编译期&#x2F;早绑定）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%A4%9A%E6%80%81%EF%BC%88%E8%BF%90%E8%A1%8C%E6%9C%9F%E6%9C%9F-%E6%99%9A%E7%BB%91%E5%AE%9A%EF%BC%89"><span class="toc-text">动态多态（运行期期&#x2F;晚绑定）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-text">虚析构函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">纯虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E3%80%81%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">虚函数、纯虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E3%80%81%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8"><span class="toc-text">虚函数指针、虚函数表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E7%BB%A7%E6%89%BF"><span class="toc-text">虚继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E7%BB%A7%E6%89%BF%E3%80%81%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">虚继承、虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E3%80%81%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF%E3%80%81%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">模板类、成员模板、虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB%E3%80%81%E6%8E%A5%E5%8F%A3%E7%B1%BB%E3%80%81%E8%81%9A%E5%90%88%E7%B1%BB"><span class="toc-text">抽象类、接口类、聚合类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%92%8C%E7%AE%A1%E7%90%86"><span class="toc-text">内存分配和管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#malloc%E3%80%81calloc%E3%80%81realloc%E3%80%81alloca"><span class="toc-text">malloc、calloc、realloc、alloca</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#malloc%E3%80%81free"><span class="toc-text">malloc、free</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#new%E3%80%81delete"><span class="toc-text">new、delete</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#placement-new"><span class="toc-text">placement new</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#new%E4%B8%8Emalloc%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8Cdelete%E5%92%8Cfree%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">new与malloc的区别，delete和free的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delete-this-%E5%90%88%E6%B3%95%E5%90%97%EF%BC%9F"><span class="toc-text">delete this 合法吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%8F%AA%E8%83%BD%E5%9C%A8%E5%A0%86%E4%B8%8A%EF%BC%88%E6%A0%88%E4%B8%8A%EF%BC%89%E7%94%9F%E6%88%90%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%B1%BB%EF%BC%9F"><span class="toc-text">如何定义一个只能在堆上（栈上）生成对象的类？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AA%E8%83%BD%E5%9C%A8%E5%A0%86%E4%B8%8A"><span class="toc-text">只能在堆上</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AA%E8%83%BD%E5%9C%A8%E6%A0%88%E4%B8%8A"><span class="toc-text">只能在栈上</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-text">智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E6%A0%87%E5%87%86%E5%BA%93%EF%BC%88STL%EF%BC%89%E4%B8%AD"><span class="toc-text">C++ 标准库（STL）中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-98"><span class="toc-text">C++ 98</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-11%EF%BC%88%E5%AE%9E%E9%99%85%E6%84%8F%E4%B9%89%E4%B8%8A%E7%9A%84%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89"><span class="toc-text">C++ 11（实际意义上的智能指针）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#auto-ptr"><span class="toc-text">auto_ptr</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#auto-ptr-%E4%B8%8E-unique-ptr-%E6%AF%94%E8%BE%83"><span class="toc-text">auto_ptr 与 unique_ptr 比较</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">强制类型转换运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bad-cast"><span class="toc-text">bad_cast</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E7%B1%BB%E5%9E%8B%E4%BF%A1%E6%81%AF-RTTI"><span class="toc-text">运行时类型信息 (RTTI)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dynamic-cast"><span class="toc-text">dynamic_cast</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#typeid"><span class="toc-text">typeid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type-info"><span class="toc-text">type_info</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Effective-C"><span class="toc-text">Effective C++</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#More-Effective-C"><span class="toc-text">More Effective C++</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-C-Style-Guide"><span class="toc-text">Google C++ Style Guide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%EF%BC%88Algorithm%EF%BC%89"><span class="toc-text">算法（Algorithm）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8E%E5%88%86%E6%B2%BB"><span class="toc-text">递归与分治</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8E%E8%BF%AD%E4%BB%A3"><span class="toc-text">递归与迭代</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-text">排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE"><span class="toc-text">查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E6%90%9C%E7%B4%A2"><span class="toc-text">图搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5"><span class="toc-text">算法策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">操作系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="toc-text">Unix网络编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">常用数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-SQL-%E6%93%8D%E4%BD%9C"><span class="toc-text">常用 SQL 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">关系型数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95"><span class="toc-text">索引</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">数据库完整性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA"><span class="toc-text">关系数据理论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8C%83%E5%BC%8F"><span class="toc-text">范式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D"><span class="toc-text">数据库恢复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="toc-text">并发控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-text">设计模式的六大原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E8%A3%85%E8%BD%BD%E5%BA%93"><span class="toc-text">链接装载库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E3%80%81%E6%A0%88%E3%80%81%E5%A0%86"><span class="toc-text">内存、栈、堆</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88"><span class="toc-text">栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86"><span class="toc-text">堆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%80%9C%E6%AE%B5%E9%94%99%E8%AF%AF%EF%BC%88segment-fault%EF%BC%89%E2%80%9D-%E6%88%96-%E2%80%9C%E9%9D%9E%E6%B3%95%E6%93%8D%E4%BD%9C%EF%BC%8C%E8%AF%A5%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E4%B8%8D%E8%83%BD-read-write%E2%80%9D"><span class="toc-text">“段错误（segment fault）” 或 “非法操作，该内存地址不能 read&#x2F;write”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5"><span class="toc-text">编译链接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">各平台文件格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B"><span class="toc-text">编译链接过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-text">目标文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">目标文件格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">目标文件存储结构</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E7%9A%84%E6%8E%A5%E5%8F%A3%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E7%AC%A6%E5%8F%B7"><span class="toc-text">链接的接口————符号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E7%9A%84%E5%85%B1%E4%BA%AB%E5%BA%93%EF%BC%88Shared-Library%EF%BC%89"><span class="toc-text">Linux 的共享库（Shared Library）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E5%90%8D"><span class="toc-text">命名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84"><span class="toc-text">路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#so-%E5%85%B1%E4%BA%AB%E5%BA%93%E7%9A%84%E7%BC%96%E5%86%99"><span class="toc-text">so 共享库的编写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#so-%E5%85%B1%E4%BA%AB%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E8%A2%AB%E5%8F%AF%E6%89%A7%E8%A1%8C%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%94%A8%EF%BC%89"><span class="toc-text">so 共享库的使用（被可执行项目调用）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0"><span class="toc-text">Windows 应用程序入口函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows-%E7%9A%84%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%88Dynamic-Link-Library%EF%BC%89"><span class="toc-text">Windows 的动态链接库（Dynamic-Link Library）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E5%A4%84"><span class="toc-text">用处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-text">注意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD-Windows-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%90%9C%E7%B4%A2%E9%A1%BA%E5%BA%8F"><span class="toc-text">加载 Windows 程序的搜索顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DLL-%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0"><span class="toc-text">DLL 入口函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BD%E5%85%A5%E5%8D%B8%E8%BD%BD%E5%BA%93"><span class="toc-text">载入卸载库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%BE%E7%A4%BA%E5%9C%B0%E9%93%BE%E6%8E%A5%E5%88%B0%E5%AF%BC%E5%87%BA%E7%AC%A6%E5%8F%B7"><span class="toc-text">显示地链接到导出符号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DumpBin-exe-%E6%9F%A5%E7%9C%8B-DLL-%E4%BF%A1%E6%81%AF"><span class="toc-text">DumpBin.exe 查看 DLL 信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LoadLibrary-%E4%B8%8E-FreeLibrary-%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-text">LoadLibrary 与 FreeLibrary 流程图</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#LoadLibrary"><span class="toc-text">LoadLibrary</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#FreeLibrary"><span class="toc-text">FreeLibrary</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DLL-%E5%BA%93%E7%9A%84%E7%BC%96%E5%86%99%EF%BC%88%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA-DLL-%E6%A8%A1%E5%9D%97%EF%BC%89"><span class="toc-text">DLL 库的编写（导出一个 DLL 模块）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DLL-%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E8%BF%90%E8%A1%8C%E6%97%B6%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5-DLL%EF%BC%89"><span class="toc-text">DLL 库的使用（运行时动态链接 DLL）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E5%BA%93%EF%BC%88Runtime-Library%EF%BC%89"><span class="toc-text">运行库（Runtime Library）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="toc-text">典型程序运行步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#glibc-%E5%85%A5%E5%8F%A3"><span class="toc-text">glibc 入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MSVC-CRT-%E5%85%A5%E5%8F%A3"><span class="toc-text">MSVC CRT 入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E8%AF%AD%E8%A8%80%E8%BF%90%E8%A1%8C%E5%BA%93%EF%BC%88CRT%EF%BC%89"><span class="toc-text">C 语言运行库（CRT）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%EF%BC%88ANSI-C%EF%BC%89"><span class="toc-text">C语言标准库（ANSI C）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A6%E7%B1%8D"><span class="toc-text">书籍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80"><span class="toc-text">语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-text">算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F"><span class="toc-text">系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-text">网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96-1"><span class="toc-text">其他</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-C-%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="toc-text">C&#x2F;C++发展方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">后台&#x2F;服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">桌面客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E6%B8%B8%E6%88%8F-VR-AR"><span class="toc-text">图形学&#x2F;游戏&#x2F;VR&#x2F;AR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91"><span class="toc-text">测试开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E9%80%86%E5%90%91"><span class="toc-text">网络安全&#x2F;逆向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F-%E7%89%A9%E8%81%94%E7%BD%91"><span class="toc-text">嵌入式&#x2F;物联网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91-%E6%B5%81%E5%AA%92%E4%BD%93-SDK"><span class="toc-text">音视频&#x2F;流媒体&#x2F;SDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-text">计算机视觉&#x2F;机器学习</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C"><span class="toc-text">C++</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%86%85%E5%A3%B0%E6%98%8E%E7%B1%BB%E5%A4%96%E5%AE%9A%E4%B9%89"><span class="toc-text">类内声明类外定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#const"><span class="toc-text">const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#static"><span class="toc-text">static</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this%E6%8C%87%E9%92%88"><span class="toc-text">this指针</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="toc-text">类的静态成员</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inline"><span class="toc-text">inline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E4%B8%8E%E5%86%85%E8%81%94"><span class="toc-text">虚函数与内联</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile%EF%BC%88C-11%E4%BB%A5%E5%90%8E%EF%BC%89"><span class="toc-text">volatile（C++11以后）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#assert"><span class="toc-text">assert()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%92%8C%E6%8C%87%E9%92%88%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">数组和指针的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">指针和引用的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E4%BA%86%E6%8C%87%E9%92%88%E8%BF%98%E8%A6%81%E6%9C%89%E5%BC%95%E7%94%A8"><span class="toc-text">为什么有了指针还要有引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E4%BA%86%E5%BC%95%E7%94%A8%E8%BF%98%E8%A6%81%E6%9C%89%E6%8C%87%E9%92%88"><span class="toc-text">为什么有了引用还要有指针</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sizeof%E5%92%8Cstrlen%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">sizeof和strlen的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-text">语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB"><span class="toc-text">区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6"><span class="toc-text">进阶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pragma-pack-n"><span class="toc-text">#pragma pack(n)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E5%9F%9F"><span class="toc-text">位域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extern-%E2%80%9CC%E2%80%9D"><span class="toc-text">extern “C”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#struct-%E5%92%8C-typedef-struct"><span class="toc-text">struct 和 typedef struct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E4%B8%AD-struct-%E5%92%8C-class"><span class="toc-text">C++ 中 struct 和 class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#union-%E8%81%94%E5%90%88"><span class="toc-text">union 联合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-%E5%AE%9E%E7%8E%B0-C-%E7%B1%BB"><span class="toc-text">C 实现 C++ 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#explicit%EF%BC%88%E6%98%BE%E5%BC%8F%EF%BC%89%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">explicit（显式）关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#friend-%E5%8F%8B%E5%85%83%E7%B1%BB%E5%92%8C%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0"><span class="toc-text">friend 友元类和友元函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#using"><span class="toc-text">using</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#using-%E5%A3%B0%E6%98%8E"><span class="toc-text">using 声明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#using-%E6%8C%87%E4%BB%A4"><span class="toc-text">using 指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8C%83%E5%9B%B4%E8%A7%A3%E6%9E%90%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">:: 范围解析运算符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#enum-%E6%9E%9A%E4%B8%BE%E7%B1%BB%E5%9E%8B"><span class="toc-text">enum 枚举类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decltype"><span class="toc-text">decltype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-text">引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A6%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-text">左值引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%B3%E5%80%BC%E5%BC%95%E7%94%A8"><span class="toc-text">右值引用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E6%8A%98%E5%8F%A0"><span class="toc-text">引用折叠</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8F"><span class="toc-text">宏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%91%98%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8"><span class="toc-text">成员初始化列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#initializer-list-%E5%88%97%E8%A1%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">initializer_list 列表初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-text">面向对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">封装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%A7%E6%89%BF"><span class="toc-text">继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%80%81"><span class="toc-text">多态</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E6%97%B6%E5%A4%9A%E6%80%81"><span class="toc-text">编译时多态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%A4%9A%E6%80%81"><span class="toc-text">运行时多态</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E5%88%86%E7%BB%A7%E6%89%BF%E3%80%81%E8%A6%86%E7%9B%96%E3%80%81%E9%9A%90%E8%97%8F%E3%80%81%E9%87%8D%E8%BD%BD"><span class="toc-text">区分继承、覆盖、隐藏、重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-text">虚析构函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">纯虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E3%80%81%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">虚函数、纯虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E3%80%81%E8%99%9A%E5%87%BD%E6%95%B0%E8%A1%A8"><span class="toc-text">虚函数指针、虚函数表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E7%BB%A7%E6%89%BF"><span class="toc-text">虚继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E7%BB%A7%E6%89%BF%E3%80%81%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">虚继承、虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BB%E3%80%81%E6%88%90%E5%91%98%E6%A8%A1%E6%9D%BF%E3%80%81%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">模板类、成员模板、虚函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB%E3%80%81%E6%8E%A5%E5%8F%A3%E7%B1%BB%E3%80%81%E8%81%9A%E5%90%88%E7%B1%BB"><span class="toc-text">抽象类、接口类、聚合类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%92%8C%E7%AE%A1%E7%90%86"><span class="toc-text">内存分配和管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C%E7%9A%84%E7%94%B3%E8%AF%B7%E5%86%85%E5%AD%98"><span class="toc-text">C的申请内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E7%9A%84%E7%94%B3%E8%AF%B7%E5%86%85%E5%AD%98"><span class="toc-text">C++的申请内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#placement-new"><span class="toc-text">placement new</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#new%E4%B8%8Emalloc%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8Cdelete%E5%92%8Cfree%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">new与malloc的区别，delete和free的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#delete-this-%E6%98%AF%E5%90%A6%E5%90%88%E6%B3%95"><span class="toc-text">delete this 是否合法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E7%B1%BB%E5%AF%B9%E8%B1%A1%E7%94%9F%E6%88%90"><span class="toc-text">控制类对象生成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AA%E8%83%BD%E5%9C%A8%E5%A0%86%E4%B8%8A"><span class="toc-text">只能在堆上</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AA%E8%83%BD%E5%9C%A8%E6%A0%88%E4%B8%8A"><span class="toc-text">只能在栈上</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="toc-text">智能指针</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E6%A0%87%E5%87%86%E5%BA%93%EF%BC%88STL%EF%BC%89%E4%B8%AD"><span class="toc-text">C++ 标准库（STL）中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-98"><span class="toc-text">C++ 98</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-11%EF%BC%88%E5%AE%9E%E9%99%85%E6%84%8F%E4%B9%89%E4%B8%8A%E7%9A%84%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%EF%BC%89"><span class="toc-text">C++ 11（实际意义上的智能指针）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#auto-ptr"><span class="toc-text">auto_ptr</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#auto-ptr-%E4%B8%8E-unique-ptr-%E6%AF%94%E8%BE%83"><span class="toc-text">auto_ptr 与 unique_ptr 比较</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%88%B6%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">强制类型转换运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bad-cast"><span class="toc-text">bad_cast</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E7%B1%BB%E5%9E%8B%E4%BF%A1%E6%81%AF-RTTI"><span class="toc-text">运行时类型信息 (RTTI)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dynamic-cast"><span class="toc-text">dynamic_cast</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#typeid"><span class="toc-text">typeid</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type-info"><span class="toc-text">type_info</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Effective-C"><span class="toc-text">Effective C++</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#More-Effective-C"><span class="toc-text">More Effective C++</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-C-Style-Guide"><span class="toc-text">Google C++ Style Guide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%EF%BC%88Algorithm%EF%BC%89"><span class="toc-text">算法（Algorithm）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8E%E5%88%86%E6%B2%BB"><span class="toc-text">递归与分治</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8E%E8%BF%AD%E4%BB%A3"><span class="toc-text">递归与迭代</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-text">排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE"><span class="toc-text">查找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E6%90%9C%E7%B4%A2"><span class="toc-text">图搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E7%AD%96%E7%95%A5"><span class="toc-text">算法策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">操作系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B"><span class="toc-text">Unix网络编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B"><span class="toc-text">常用数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-SQL-%E6%93%8D%E4%BD%9C"><span class="toc-text">常用 SQL 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">关系型数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95"><span class="toc-text">索引</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">数据库完整性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E7%90%86%E8%AE%BA"><span class="toc-text">关系数据理论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8C%83%E5%BC%8F"><span class="toc-text">范式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%81%A2%E5%A4%8D"><span class="toc-text">数据库恢复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="toc-text">并发控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="toc-text">设计模式的六大原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E8%A3%85%E8%BD%BD%E5%BA%93"><span class="toc-text">链接装载库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E3%80%81%E6%A0%88%E3%80%81%E5%A0%86"><span class="toc-text">内存、栈、堆</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%88"><span class="toc-text">栈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A0%86"><span class="toc-text">[堆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%80%9C%E6%AE%B5%E9%94%99%E8%AF%AF%EF%BC%88segment-fault%EF%BC%89%E2%80%9D-%E6%88%96-%E2%80%9C%E9%9D%9E%E6%B3%95%E6%93%8D%E4%BD%9C%EF%BC%8C%E8%AF%A5%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E4%B8%8D%E8%83%BD-read-write%E2%80%9D"><span class="toc-text">“段错误（segment fault）” 或 “非法操作，该内存地址不能 read&#x2F;write”</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5"><span class="toc-text">编译链接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">各平台文件格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B"><span class="toc-text">编译链接过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-text">目标文件</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">目标文件格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84"><span class="toc-text">目标文件存储结构</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E7%9A%84%E6%8E%A5%E5%8F%A3%E2%80%94%E2%80%94%E7%AC%A6%E5%8F%B7"><span class="toc-text">链接的接口——符号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-%E7%9A%84%E5%85%B1%E4%BA%AB%E5%BA%93%EF%BC%88Shared-Library%EF%BC%89"><span class="toc-text">Linux 的共享库（Shared Library）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E5%90%8D"><span class="toc-text">命名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84"><span class="toc-text">路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#so-%E5%85%B1%E4%BA%AB%E5%BA%93%E7%9A%84%E7%BC%96%E5%86%99"><span class="toc-text">so 共享库的编写</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#so-%E5%85%B1%E4%BA%AB%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E8%A2%AB%E5%8F%AF%E6%89%A7%E8%A1%8C%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%94%A8%EF%BC%89"><span class="toc-text">so 共享库的使用（被可执行项目调用）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%BA%93%EF%BC%88Runtime-Library%EF%BC%89"><span class="toc-text">运行时库（Runtime Library）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="toc-text">典型程序运行步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#glibc-%E5%85%A5%E5%8F%A3"><span class="toc-text">glibc 入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MSVC-CRT-%E5%85%A5%E5%8F%A3"><span class="toc-text">MSVC CRT 入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C-%E8%AF%AD%E8%A8%80%E8%BF%90%E8%A1%8C%E5%BA%93%EF%BC%88CRT%EF%BC%89"><span class="toc-text">C 语言运行库（CRT）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#C%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%EF%BC%88ANSI-C%EF%BC%89"><span class="toc-text">C语言标准库（ANSI C）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-C-%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="toc-text">C&#x2F;C++发展方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%8F%B0-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">后台&#x2F;服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%8C%E9%9D%A2%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">桌面客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E6%B8%B8%E6%88%8F-VR-AR"><span class="toc-text">图形学&#x2F;游戏&#x2F;VR&#x2F;AR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91"><span class="toc-text">测试开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8-%E9%80%86%E5%90%91"><span class="toc-text">网络安全&#x2F;逆向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8F-%E7%89%A9%E8%81%94%E7%BD%91"><span class="toc-text">嵌入式&#x2F;物联网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%B3%E8%A7%86%E9%A2%91-%E6%B5%81%E5%AA%92%E4%BD%93-SDK"><span class="toc-text">音视频&#x2F;流媒体&#x2F;SDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-text">计算机视觉&#x2F;机器学习</span></a></li></ol></li></ol>
 </div>
 
 <div class="content-area">
@@ -131,7 +131,24 @@
 <p>遵循 CC BY-NC-SA 4.0（署名 - 非商业性使用 - 相同方式共享） 协议，转载请注明出处，不得用于商业目的。</p>
 <span id="more"></span>
 
-<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p><strong>作用：</strong></p>
+<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="类内声明类外定义"><a href="#类内声明类外定义" class="headerlink" title="类内声明类外定义"></a>类内声明类外定义</h3><p>inline</p>
+<ul>
+<li>  类内定义的默认为inline</li>
+<li>  类外定义的，类内声明为inline，类外定义可省略inline</li>
+</ul>
+<p>static</p>
+<ul>
+<li>  类内声明static成员，类外初始化时无需（不能）重复声明static</li>
+</ul>
+<p>const</p>
+<ul>
+<li>  类内声明const，类外定义也要带const</li>
+</ul>
+<p>virtual</p>
+<ul>
+<li>virtual只能出现在类内部的声明语句之前，不能用于类外部的函数定义</li>
+</ul>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><p><strong>作用：</strong></p>
 <ol>
 <li> 修饰变量，说明该变量不可以被改变</li>
 <li>修饰指针<ul>
@@ -228,13 +245,10 @@
 <li> inline 函数无法随着函数库升级而升级。inline函数的改变需要重新编译，不像 non-inline 可以直接链接。</li>
 <li> 是否内联，程序员不可控。内联函数只是对编译器的建议，是否对函数内联，决定权在于编译器。</li>
 </ol>
-<h3 id="虚函数可以是内联函数吗？"><a href="#虚函数可以是内联函数吗？" class="headerlink" title="虚函数可以是内联函数吗？"></a>虚函数可以是内联函数吗？</h3><blockquote>
-<p>  <a target="_blank" rel="noopener" href="http://www.cs.technion.ac.il/users/yechiel/c++-faq/inline-virtuals.html">Are “inline virtual” member functions ever actually “inlined”?</a></p>
-</blockquote>
-<ul>
+<h3 id="虚函数与内联"><a href="#虚函数与内联" class="headerlink" title="虚函数与内联"></a>虚函数与内联</h3><ul>
 <li>  虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。</li>
 <li>  内联是在编译器建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。</li>
-<li>  <code>inline virtual</code> 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 <code>Base::who()</code>），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li>
+<li>  虚函数唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 <code>Base::who()</code>），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li>
 </ul>
 <p>虚函数内联使用</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span>  </span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">who</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;I am Base\n&quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Base</span>() &#123;&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Derived</span> :</span> <span class="hljs-keyword">public</span> Base<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-keyword">void</span> <span class="hljs-title">who</span><span class="hljs-params">()</span>  <span class="hljs-comment">// 不写inline时隐式内联</span></span><br><span class="hljs-function">	</span>&#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;I am Derived\n&quot;</span>;<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// 此处的虚函数 who()，是通过类（Base）的具体对象（b）来调用的，编译期间就能确定了，所以它可以是内联的，但最终是否内联取决于编译器。 </span><br>    Base b;<br>    b.<span class="hljs-built_in">who</span>();<br><br>    <span class="hljs-comment">// 此处的虚函数是通过指针调用的，呈现多态性，需要在运行时期间才能确定，所以不能为内联。  </span><br>    Base *ptr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Derived</span>();<br>    ptr-&gt;<span class="hljs-built_in">who</span>();<br><br>    <span class="hljs-comment">// 因为Base有虚析构函数（virtual ~Base() &#123;&#125;），所以 delete 时，会先调用派生类（Derived）析构函数，再调用基类（Base）析构函数，防止内存泄漏。</span><br>    <span class="hljs-keyword">delete</span> ptr;<br>    ptr = <span class="hljs-literal">nullptr</span>;<br><br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
@@ -282,13 +296,15 @@
 </ul>
 </li>
 </ol>
+<p>数组名是数组对象的名字，其值等于数组首元素存放的地址，由于数组存储空间是连续的，其值也就等于存放数组的地址。</p>
+<p>数组名的值是一个地址，可存放到一个指针变量里。</p>
 <h3 id="指针和引用的区别"><a href="#指针和引用的区别" class="headerlink" title="指针和引用的区别"></a>指针和引用的区别</h3><p>引用是一个已经存在的对象的别名，指针存放某个对象的地址。</p>
 <p>指针是对象，引用不是对象，程序为指针变量分配内存区域，而不为引用分配内存区域。</p>
 <p>定义引用时必须初始化，之后无法改变。指针无须定义时赋初值，指针本身就是一个对象，允许指针赋值和拷贝，可以修改指向。因此没有空引用而有空指针，且指针总是应该被测试是否为空。</p>
-<p>对引用使用“sizeof”得到的是所指向的变量(对象)的大小，对指针使用“sizeof”得到的是指针本身的大小。</p>
-<p>引用是对象的别名，且引用不是对象，所以不存在引用的引用。可以有指针的指针。</p>
+<p>对引用使用<code>sizeof()</code>得到的是所指向的变量(对象)在内存空间的大小，对指针使用<code>sizeof()</code>得到的是指针变量在内存空间的大小。</p>
+<p>引用是对象的别名，且引用不是对象，所以不存在引用的引用；可以有指针的指针。</p>
 <p>++引用作用到引用所指的对象，++指针作用到指针自身，使指针指向下一个对象，而不是改变所指对象的内容。</p>
-<h4 id="C-为什么有了指针还要引入引用？"><a href="#C-为什么有了指针还要引入引用？" class="headerlink" title="C++为什么有了指针还要引入引用？"></a>C++为什么有了指针还要引入引用？</h4><p>引用的底层也是指针实现的，引用和指针在编译结束之后汇编指令是一样的，引用会占用和指针相同大小的数据空间。</p>
+<h4 id="为什么有了指针还要有引用"><a href="#为什么有了指针还要有引用" class="headerlink" title="为什么有了指针还要有引用"></a>为什么有了指针还要有引用</h4><p>引用的底层也是指针实现的，引用和指针在编译结束之后汇编指令是一样的，引用会占用和指针相同大小的数据空间。</p>
 <p>引用传递，只是明面上，没有使用值传递，值传递本身是不可避免的。编译器，暗地里通过指针（或者其他可以替代指针的数据类型）的值传递，替换了引用传递。</p>
 <p>引用能实现的基本上指针都可以实现，那为什么C++还需要引入引用呢？</p>
 <p><strong>直接原因</strong>：是为了支持运算符重载。</p>
@@ -311,8 +327,8 @@
 </ol>
 <p><strong>人为保证变为了编译器来保证，更加安全</strong>。</p>
 <p><strong>注意事项：</strong></p>
-<p>用户自定义的类型最好用引用传参，这样可以避免不必要的构造函数和析构函数调用，但是对于像int,long,char一类的<strong>内置类型，按值传参会比按引用传参更高效。</strong></p>
-<h4 id="既然引入了引用，为何不抛弃指针呢？"><a href="#既然引入了引用，为何不抛弃指针呢？" class="headerlink" title="既然引入了引用，为何不抛弃指针呢？"></a>既然引入了引用，为何不抛弃指针呢？</h4><p>答：为了兼容C语言,必然要支持指针</p>
+<p>用户自定义的类型最好用引用传参，这样可以避免不必要的构造函数和析构函数调用，但是对于像int、long、char一类的<strong>内置类型，按值传参会比按引用传参更高效。</strong></p>
+<h4 id="为什么有了引用还要有指针"><a href="#为什么有了引用还要有指针" class="headerlink" title="为什么有了引用还要有指针"></a>为什么有了引用还要有指针</h4><p>为了兼容C语言，必然要支持指针</p>
 <h3 id="sizeof和strlen的区别"><a href="#sizeof和strlen的区别" class="headerlink" title="sizeof和strlen的区别"></a>sizeof和strlen的区别</h3><p>sizeof 运算符：查询对象或类型的大小，在必须知道对象实际大小时使用。</p>
 <ul>
 <li>  sizeof 对数组，得到整个数组所占空间大小。</li>
@@ -396,6 +412,7 @@
 </ul>
 </li>
 </ul>
+<p>C++中匿名结构体不会生成默认构造函数，但可用RAII实现构造功能。</p>
 <h3 id="union-联合"><a href="#union-联合" class="headerlink" title="union 联合"></a>union 联合</h3><p>联合（union）是一种节省空间的特殊的类，一个 union 可以有多个数据成员，但是在<strong>任意时刻只有一个数据成员可以有值</strong>。当某个成员被赋值后其他成员变为未定义状态。</p>
 <p>联合有如下<strong>特点：</strong></p>
 <ul>
@@ -416,9 +433,6 @@
 <li>  继承：结构体嵌套</li>
 <li>  多态：父类与子类方法的函数指针不同</li>
 </ul>
-<blockquote>
-<p>  [Can you write object-oriented code in C? <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/351745">closed]</a></p>
-</blockquote>
 <h3 id="explicit（显式）关键字"><a href="#explicit（显式）关键字" class="headerlink" title="explicit（显式）关键字"></a>explicit（显式）关键字</h3><p>【详见C++ Primer第7章笔记】</p>
 <ul>
 <li>  explicit 修饰构造函数时，可以防止隐式转换和复制初始化</li>
@@ -501,7 +515,8 @@
 <li>  <code>X&amp; &amp;</code>、<code>X&amp; &amp;&amp;</code>、<code>X&amp;&amp; &amp;</code> 可折叠成 <code>X&amp;</code></li>
 <li>  <code>X&amp;&amp; &amp;&amp;</code> 可折叠成 <code>X&amp;&amp;</code></li>
 </ul>
-<h3 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h3><p>宏定义可以实现类似于函数的功能，但是它终归不是函数，而宏定义中括弧中的“参数”也不是真的参数，在宏展开的时候对 “参数” 进行的是一对一的<strong>替换</strong>。</p>
+<h3 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h3><p>预处理阶段实现替换。</p>
+<p>宏定义可以实现类似于函数的功能，但是它终归不是函数，而宏定义中括弧中的“参数”也不是真的参数，在宏展开的时候对 “参数” 进行的是一对一的<strong>替换</strong>。</p>
 <h3 id="成员初始化列表"><a href="#成员初始化列表" class="headerlink" title="成员初始化列表"></a>成员初始化列表</h3><p>好处</p>
 <ul>
 <li>  更高效：少了一次调用默认构造函数的过程。</li>
@@ -544,13 +559,10 @@
 </ul>
 </li>
 </ul>
-<blockquote>
-<p>  <a target="_blank" rel="noopener" href="https://catonmat.net/cpp-polymorphism">The Four Polymorphisms in C++</a></p>
-</blockquote>
-<h4 id="静态多态（编译期-早绑定）"><a href="#静态多态（编译期-早绑定）" class="headerlink" title="静态多态（编译期/早绑定）"></a>静态多态（编译期/早绑定）</h4><p>函数重载</p>
+<h4 id="编译时多态"><a href="#编译时多态" class="headerlink" title="编译时多态"></a>编译时多态</h4><p>函数重载</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">do</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">do</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<h4 id="动态多态（运行期期-晚绑定）"><a href="#动态多态（运行期期-晚绑定）" class="headerlink" title="动态多态（运行期期/晚绑定）"></a>动态多态（运行期期/晚绑定）</h4><ul>
+<h4 id="运行时多态"><a href="#运行时多态" class="headerlink" title="运行时多态"></a>运行时多态</h4><ul>
 <li>  虚函数：用 virtual 修饰成员函数，使其成为虚函数</li>
 </ul>
 <p><strong>注意：</strong></p>
@@ -563,32 +575,31 @@
 <p>动态多态使用</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Shape</span>                     // 形状类</span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">double</span> <span class="hljs-title">calcArea</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        ...<br>    &#125;<br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Shape</span>();<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Circle</span> :</span> <span class="hljs-keyword">public</span> Shape     <span class="hljs-comment">// 圆形类</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">double</span> <span class="hljs-title">calcArea</span><span class="hljs-params">()</span></span>;<br>    ...<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rect</span> :</span> <span class="hljs-keyword">public</span> Shape       <span class="hljs-comment">// 矩形类</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">double</span> <span class="hljs-title">calcArea</span><span class="hljs-params">()</span></span>;<br>    ...<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Shape * shape1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Circle</span>(<span class="hljs-number">4.0</span>);<br>    Shape * shape2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Rect</span>(<span class="hljs-number">5.0</span>, <span class="hljs-number">6.0</span>);<br>    shape1-&gt;<span class="hljs-built_in">calcArea</span>();         <span class="hljs-comment">// 调用圆形类里面的方法</span><br>    shape2-&gt;<span class="hljs-built_in">calcArea</span>();         <span class="hljs-comment">// 调用矩形类里面的方法</span><br>    <span class="hljs-keyword">delete</span> shape1;<br>    shape1 = <span class="hljs-literal">nullptr</span>;<br>    <span class="hljs-keyword">delete</span> shape2;<br>    shape2 = <span class="hljs-literal">nullptr</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
+<h3 id="区分继承、覆盖、隐藏、重载"><a href="#区分继承、覆盖、隐藏、重载" class="headerlink" title="区分继承、覆盖、隐藏、重载"></a>区分继承、覆盖、隐藏、重载</h3><p><strong>继承</strong>：子类继承父类的部分成员变量和成员函数</p>
+<p><strong>覆盖</strong>：父类存在虚函数，子类重新实现该虚函数，可用override显示声明</p>
+<p><strong>隐藏</strong>：子类同名成员隐藏父类同名成员</p>
+<p><strong>重载</strong>：相同作用域中的不同函数（函数声明不同，但函数名相同）</p>
 <h3 id="虚析构函数"><a href="#虚析构函数" class="headerlink" title="虚析构函数"></a>虚析构函数</h3><p>虚析构函数是为了解决<strong>基类的指针</strong>指向<strong>派生类对象</strong>，并用基类的指针删除派生类对象。</p>
 <p>虚析构函数使用</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Shape</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">Shape</span>();                    <span class="hljs-comment">// 构造函数不能是虚函数</span><br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">double</span> <span class="hljs-title">calcArea</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Shape</span>();           <span class="hljs-comment">// 虚析构函数</span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Circle</span> :</span> <span class="hljs-keyword">public</span> Shape     <span class="hljs-comment">// 圆形类</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">double</span> <span class="hljs-title">calcArea</span><span class="hljs-params">()</span></span>;<br>    ...<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Shape * shape1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Circle</span>(<span class="hljs-number">4.0</span>);<br>    shape1-&gt;<span class="hljs-built_in">calcArea</span>();    <br>    <span class="hljs-keyword">delete</span> shape1;  <span class="hljs-comment">// 因为Shape有虚析构函数，所以delete释放内存时，先调用子类析构函数，再调用基类析构函数，防止内存泄漏。</span><br>    shape1 = <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>；<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h3><p>纯虚函数是一种特殊的虚函数，在基类中不能对虚函数给出有意义的实现，而把它声明为纯虚函数，它的实现留给该基类的派生类去做。</p>
+<p>含有纯虚函数的类不能实例化。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">int</span> <span class="hljs-title">A</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
 
 <h3 id="虚函数、纯虚函数"><a href="#虚函数、纯虚函数" class="headerlink" title="虚函数、纯虚函数"></a>虚函数、纯虚函数</h3><ul>
 <li>  类里如果声明了虚函数，这个函数是实现的，哪怕是空实现，它的作用就是为了能让这个函数在它的子类里面<strong>可以被覆盖</strong>（override），这样的话，编译器就可以使用后期绑定来达到多态了。纯虚函数只是一个接口，是个函数的声明而已，它要留到子类里去实现。 </li>
 <li>  虚函数在子类里面可以不重写；但纯虚函数必须在子类实现才可以实例化子类。</li>
 <li>  虚函数的类用于 “实作继承”，继承接口的同时也继承了父类的实现。纯虚函数关注的是接口的统一性，实现由子类完成。 </li>
-<li>  带纯虚函数的类叫抽象类，这种类不能直接生成对象，而只有被继承，并重写其虚函数后，才能使用。抽象类被继承后，子类可以继续是抽象类，也可以是普通类。</li>
-<li>  虚基类是虚继承中的基类，具体见下文虚继承。</li>
+<li>  带纯虚函数的类叫抽象类，这种类不能直接生成对象，而只有被继承，并实现覆盖纯虚函数后，才能使用。抽象类被继承后，子类可以继续是抽象类，也可以是普通类。</li>
+<li>  虚基类是虚继承中的基类</li>
 </ul>
-<blockquote>
-<p>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/u012260238/article/details/53610462">CSDN . C++ 中的虚函数、纯虚函数区别和联系</a></p>
-</blockquote>
 <h3 id="虚函数指针、虚函数表"><a href="#虚函数指针、虚函数表" class="headerlink" title="虚函数指针、虚函数表"></a>虚函数指针、虚函数表</h3><ul>
-<li>  虚函数指针：在含有虚函数类的对象中，指向虚函数表，在运行时确定。</li>
-<li>  虚函数表：在程序只读数据段（<code>.rodata section</code>，见：<a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84">目标文件存储结构</a>），存放虚函数指针，如果派生类实现了基类的某个虚函数，则在虚表中覆盖原本基类的那个虚函数指针，在编译时根据类的声明创建。</li>
+<li>  虚函数指针：存在含有虚函数的类的<strong>对象</strong>中，指向虚函数表，在运行时确定。</li>
+<li>  虚函数表：在程序只读数据段（<code>.rodata section</code>），存放虚函数指针，如果派生类实现了基类的某个虚函数，则在虚表中覆盖原本基类的那个虚函数指针，在编译时根据类的声明创建。</li>
 </ul>
-<blockquote>
-<p>  <a target="_blank" rel="noopener" href="https://blog.twofei.com/496/">C++中的虚函数(表)实现机制以及用C语言对其进行的模拟实现</a></p>
-</blockquote>
 <h3 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h3><p>虚继承用于解决多继承条件下的菱形继承问题（浪费存储空间、存在二义性）。</p>
-<p>底层实现原理与编译器相关，一般通过<strong>虚基类指针</strong>和<strong>虚基类表</strong>实现，每个虚继承的子类都有一个虚基类指针（占用一个指针的存储空间，4字节）和虚基类表（不占用类对象的存储空间）（需要强调的是，虚基类依旧会在子类里面存在拷贝，只是仅仅最多存在一份而已，并不是不在子类里面了）；当虚继承的子类被当做父类继承时，虚基类指针也会被继承。</p>
+<p>底层实现原理与编译器相关，一般通过<strong>虚基类指针</strong>和<strong>虚基类表</strong>实现，每个虚继承的子类都有一个虚基类指针（占用一个指针的存储空间）和虚基类表（不占用类对象的存储空间）（需要强调的是，虚基类依旧会在子类里面存在拷贝，只是仅仅最多存在一份而已，并不是不在子类里面了）；当虚继承的子类被当做父类继承时，虚基类指针也会被继承。</p>
 <p>实际上，vbptr 指的是虚基类表指针（virtual base table pointer），该指针指向了一个虚基类表（virtual  table），虚表中记录了虚基类与本类的偏移地址；通过偏移地址，这样就找到了虚基类成员，而虚继承也不用像普通多继承那样维持着公共基类（虚基类）的两份同样的拷贝，节省了存储空间。</p>
 <h3 id="虚继承、虚函数"><a href="#虚继承、虚函数" class="headerlink" title="虚继承、虚函数"></a>虚继承、虚函数</h3><ul>
 <li>  相同之处：都利用了虚指针（均占用类的存储空间）和虚表（均不占用类的存储空间）</li>
@@ -621,29 +632,29 @@
 </ul>
 </li>
 </ul>
-<h3 id="内存分配和管理"><a href="#内存分配和管理" class="headerlink" title="内存分配和管理"></a>内存分配和管理</h3><h4 id="malloc、calloc、realloc、alloca"><a href="#malloc、calloc、realloc、alloca" class="headerlink" title="malloc、calloc、realloc、alloca"></a>malloc、calloc、realloc、alloca</h4><ol>
+<h3 id="内存分配和管理"><a href="#内存分配和管理" class="headerlink" title="内存分配和管理"></a>内存分配和管理</h3><h4 id="C的申请内存"><a href="#C的申请内存" class="headerlink" title="C的申请内存"></a>C的申请内存</h4><ol>
 <li> malloc：申请指定字节数的内存。申请到的内存中的初始值不确定。</li>
 <li> calloc：为指定长度的对象，分配能容纳其指定个数的内存。申请到的内存的每一位（bit）都初始化为 0。</li>
 <li> realloc：更改以前分配的内存长度（增加或减少）。当增加长度时，可能需将以前分配区的内容移到另一个足够大的区域，而新增区域内的初始值则不确定。</li>
 <li> alloca：在栈上申请内存。程序在出栈的时候，会自动释放内存。但是需要注意的是，alloca 不具可移植性, 而且在没有传统堆栈的机器上很难实现。alloca 不宜使用在必须广泛移植的程序中。C99 中支持变长数组  (VLA)，可以用来替代 alloca。</li>
 </ol>
-<h4 id="malloc、free"><a href="#malloc、free" class="headerlink" title="malloc、free"></a>malloc、free</h4><p>用于分配、释放内存</p>
-<p>malloc、free 使用</p>
-<p>申请内存，确认是否申请成功</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">char</span> *str = (<span class="hljs-keyword">char</span>*) <span class="hljs-built_in">malloc</span>(<span class="hljs-number">100</span>);<br><span class="hljs-built_in">assert</span>(str != <span class="hljs-literal">nullptr</span>);<br></code></pre></td></tr></table></figure>
-
-<p>释放内存后指针置空</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">free</span>(p); <br>p = <span class="hljs-literal">nullptr</span>;<br></code></pre></td></tr></table></figure>
-
-<h4 id="new、delete"><a href="#new、delete" class="headerlink" title="new、delete"></a>new、delete</h4><ol>
+<blockquote>
+<p>malloc后要判断是否申请成功</p>
+<p>free后要将指针置空</p>
+</blockquote>
+<p>malloc：</p>
+<ul>
+<li>若分配成功，则返回指向分配内存块最低位（首位）字节的，为任何拥有基础对齐的对象类型对齐的指针。</li>
+<li>若 <code>size</code> 为零，则行为是实现定义的（可返回空指针，或返回不会用于访问存储但必须传递给 <code>free</code>的非空指针）。使用完后必须用 <code>free()</code>或 <code>realloc()</code> 解分配返回的指针</li>
+<li><code>malloc</code> 是线程安全的：它表现得如同只访问通过其参数可见的内存区域，而非任何静态存储。</li>
+</ul>
+<h4 id="C-的申请内存"><a href="#C-的申请内存" class="headerlink" title="C++的申请内存"></a>C++的申请内存</h4><ol>
 <li> new / new[]：完成两件事，先底层调用 malloc <strong>分配</strong>了内存，然后调用<strong>构造</strong>函数（创建对象）。</li>
 <li> delete/delete[]：也完成两件事，先调用<strong>析构</strong>函数（清理资源），然后底层调用 free <strong>释放</strong>空间。</li>
 <li> new 在申请内存时会自动计算所需字节数，而 malloc 则需我们自己输入申请内存空间的字节数。</li>
 </ol>
 <p>new、delete 使用</p>
-<p>申请内存，确认new是否申请成功无法通过判空判断</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    T* t = <span class="hljs-keyword">new</span> <span class="hljs-built_in">T</span>();     <span class="hljs-comment">// 先内存分配 ，再构造函数</span><br>    <span class="hljs-keyword">delete</span> t;           <span class="hljs-comment">// 先析构函数，再内存释放</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<p>申请内存，<strong>确认new是否申请成功无法通过判空判断</strong></p>
 <h4 id="placement-new"><a href="#placement-new" class="headerlink" title="placement new"></a>placement new</h4><p>定位 new（placement new）允许我们向 new 传递额外的地址参数，从而在预先指定的内存区域创建对象。</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">new</span> (place_address) type<br><span class="hljs-built_in"><span class="hljs-keyword">new</span></span> (place_address) <span class="hljs-built_in">type</span> (initializers)<br><span class="hljs-built_in"><span class="hljs-keyword">new</span></span> (place_address) type [size]<br><span class="hljs-built_in"><span class="hljs-keyword">new</span></span> (place_address) type [size] &#123; braced initializer list &#125;<br></code></pre></td></tr></table></figure>
 
@@ -656,23 +667,14 @@
 <li> malloc/free是c/c++标准库的函数，只负责动态地申请和释放内存。new会先调用operator new函数，申请足够的内存（通常底层使用malloc实现），然后调用类型的构造函数，初始化成员变量，最后返回自定义类型指针。delete先调用析构函数，然后调用operator delete函数释放内存（通常底层使用free实现）。</li>
 <li> malloc/free需要手动计算类型大小且返回值是void*，new/delete可以自己计算类型大小，返回对应的指针。</li>
 </ol>
-<blockquote>
-<p>  <strong>如果问到malloc，还有可能问你memcpy等realloc函数能不能在C++中使用，绝对不能，因为这些函数进行的都是内存值拷贝（也就是对象的浅拷贝），会发生浅拷贝这个严重的问题！</strong></p>
-</blockquote>
-<h3 id="delete-this-合法吗？"><a href="#delete-this-合法吗？" class="headerlink" title="delete this 合法吗？"></a>delete this 合法吗？</h3><blockquote>
-<p>  <a target="_blank" rel="noopener" href="https://isocpp.org/wiki/faq/freestore-mgmt#delete-this">Is it legal (and moral) for a member function to say delete this?</a></p>
-</blockquote>
-<p>合法，但：</p>
+<h3 id="delete-this-是否合法"><a href="#delete-this-是否合法" class="headerlink" title="delete this 是否合法"></a>delete this 是否合法</h3><p>合法，但：</p>
 <ol>
 <li> 必须保证 this 对象是通过 <code>new</code>（不是 <code>new[]</code>、不是 placement new、不是栈上、不是全局、不是其他对象成员）分配的</li>
 <li> 必须保证调用 <code>delete this</code> 的成员函数是最后一个调用 this 的成员函数</li>
 <li> 必须保证成员函数的 <code>delete this </code> 后面没有调用 this 了</li>
 <li> 必须保证 <code>delete this</code> 后没有人使用了</li>
 </ol>
-<h3 id="如何定义一个只能在堆上（栈上）生成对象的类？"><a href="#如何定义一个只能在堆上（栈上）生成对象的类？" class="headerlink" title="如何定义一个只能在堆上（栈上）生成对象的类？"></a>如何定义一个只能在堆上（栈上）生成对象的类？</h3><blockquote>
-<p>  <a target="_blank" rel="noopener" href="https://www.nowcoder.com/questionTerminal/0a584aa13f804f3ea72b442a065a7618">如何定义一个只能在堆上（栈上）生成对象的类?</a></p>
-</blockquote>
-<h4 id="只能在堆上"><a href="#只能在堆上" class="headerlink" title="只能在堆上"></a>只能在堆上</h4><p>方法：将析构函数设置为私有</p>
+<h3 id="控制类对象生成"><a href="#控制类对象生成" class="headerlink" title="控制类对象生成"></a>控制类对象生成</h3><h4 id="只能在堆上"><a href="#只能在堆上" class="headerlink" title="只能在堆上"></a>只能在堆上</h4><p>方法：将析构函数设置为私有</p>
 <p>原因：C++ 是静态绑定语言，编译器管理栈上对象的生命周期，编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性。若析构函数不可访问，则不能在栈上创建对象。</p>
 <h4 id="只能在栈上"><a href="#只能在栈上" class="headerlink" title="只能在栈上"></a>只能在栈上</h4><p>方法：将 new 和 delete 重载为私有</p>
 <p>原因：在堆上生成对象，使用 new 关键词操作，其过程分为两阶段：第一阶段，使用 new 在堆上寻找可用内存，分配给对象；第二阶段，调用构造函数生成对象。将 new 操作设置为私有，那么第一阶段就无法完成，就不能够在堆上生成对象。</p>
@@ -710,9 +712,6 @@
 <li>  auto_ptr 对象不能管理数组（析构调用 <code>delete</code>），unique_ptr 可以管理数组（析构调用 <code>delete[]</code> ）；</li>
 </ul>
 <h3 id="强制类型转换运算符"><a href="#强制类型转换运算符" class="headerlink" title="强制类型转换运算符"></a>强制类型转换运算符</h3><p><a href="CppPrimer-%E7%AC%AC4%E7%AB%A0.md#4%2011%203%20%E6%98%BE%E7%A4%BA%E8%BD%AC%E6%8D%A2">显示转换</a></p>
-<blockquote>
-<p>  <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/zh-CN/library/5f6c9f8h.aspx">MSDN . 强制转换运算符</a></p>
-</blockquote>
 <p><strong>static_cast</strong></p>
 <ul>
 <li>  用于非多态类型的转换</li>
@@ -1052,32 +1051,38 @@
 <h2 id="链接装载库"><a href="#链接装载库" class="headerlink" title="链接装载库"></a>链接装载库</h2><blockquote>
 <p>  本节部分知识点来自《程序员的自我修养——链接装载库》</p>
 </blockquote>
-<h3 id="内存、栈、堆"><a href="#内存、栈、堆" class="headerlink" title="内存、栈、堆"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%86%85%E5%AD%98%E3%80%81%E6%A0%88%E3%80%81%E5%A0%86">内存、栈、堆</a></h3><p>一般应用程序内存空间有如下区域：</p>
+<h3 id="内存、栈、堆"><a href="#内存、栈、堆" class="headerlink" title="内存、栈、堆"></a>内存、栈、堆</h3><p>一般应用程序内存空间有如下区域：</p>
 <ul>
 <li>  栈：由操作系统自动分配释放，存放函数的参数值、局部变量等的值，用于维护函数调用的上下文</li>
-<li>  堆：一般由程序员分配释放，若程序员不释放，程序结束时可能由操作系统回收，用来容纳应用程序动态分配的内存区域</li>
+<li>  堆：一般由程序员分配释放，若程序员不释放，程序结束时由操作系统回收，用来容纳应用程序动态分配的内存区域</li>
 <li>  可执行文件映像：存储着可执行文件在内存中的映像，由装载器装载是将可执行文件的内存读取或映射到这里</li>
 <li>  保留区：保留区并不是一个单一的内存区域，而是对内存中受到保护而禁止访问的内存区域的总称，如通常 C 语言讲无效指针赋值为 0（NULL），因此 0 地址正常情况下不可能有效的访问数据</li>
 </ul>
-<h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E6%A0%88">栈</a></h4><p>栈保存了一个函数调用所需要的维护信息，常被称为堆栈帧（Stack Frame）或活动记录（Activate Record），一般包含以下几方面：</p>
+<h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><p>栈保存了一个函数调用所需要的维护信息，常被称为堆栈帧（Stack Frame）或活动记录（Activate Record），一般包含以下几方面：</p>
 <ul>
 <li>  函数的返回地址和参数</li>
 <li>  临时变量：包括函数的非静态局部变量以及编译器自动生成的其他临时变量</li>
 <li>  保存上下文：包括函数调用前后需要保持不变的寄存器</li>
 </ul>
-<h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%A0%86">堆</a></h4><p>堆分配算法：</p>
+<h4 id="堆"><a href="#堆" class="headerlink" title="[堆"></a>[堆</h4><p>堆分配算法：</p>
 <ul>
 <li>  空闲链表（Free List）</li>
 <li>  位图（Bitmap）</li>
 <li>  对象池</li>
 </ul>
-<h4 id="“段错误（segment-fault）”-或-“非法操作，该内存地址不能-read-write”"><a href="#“段错误（segment-fault）”-或-“非法操作，该内存地址不能-read-write”" class="headerlink" title="“段错误（segment fault）” 或 “非法操作，该内存地址不能 read/write”"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E6%AE%B5%E9%94%99%E8%AF%AF%EF%BC%88segment-fault%EF%BC%89-%E6%88%96-%E9%9D%9E%E6%B3%95%E6%93%8D%E4%BD%9C%EF%BC%8C%E8%AF%A5%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E4%B8%8D%E8%83%BD-readwrite">“段错误（segment fault）” 或 “非法操作，该内存地址不能 read/write”</a></h4><p>典型的非法指针解引用造成的错误。当指针指向一个不允许读写的内存地址，而程序却试图利用指针来读或写该地址时，会出现这个错误。</p>
+<blockquote>
+<ul>
+<li>栈使用的是一级缓存， 他们通常都是被调用时处于存储空间中，调用完毕立即释放。</li>
+<li>堆则是存放在二级缓存中，生命周期由虚拟机的垃圾回收算法来决定（并不是一旦成为孤儿对象就能被回收）。所以调用这些对象的速度要相对来得低一些。</li>
+</ul>
+</blockquote>
+<h4 id="“段错误（segment-fault）”-或-“非法操作，该内存地址不能-read-write”"><a href="#“段错误（segment-fault）”-或-“非法操作，该内存地址不能-read-write”" class="headerlink" title="“段错误（segment fault）” 或 “非法操作，该内存地址不能 read/write”"></a>“段错误（segment fault）” 或 “非法操作，该内存地址不能 read/write”</h4><p>典型的非法指针解引用造成的错误。当指针指向一个不允许读写的内存地址，而程序却试图利用指针来读或写该地址时，会出现这个错误。</p>
 <p>普遍原因：</p>
 <ul>
 <li>  将指针初始化为 NULL，之后没有给它一个合理的值就开始使用指针</li>
 <li>  没用初始化栈中的指针，指针的值一般会是随机数，之后就直接开始使用指针</li>
 </ul>
-<h3 id="编译链接"><a href="#编译链接" class="headerlink" title="编译链接"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5">编译链接</a></h3><h4 id="各平台文件格式"><a href="#各平台文件格式" class="headerlink" title="各平台文件格式"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%90%84%E5%B9%B3%E5%8F%B0%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F">各平台文件格式</a></h4><table>
+<h3 id="编译链接"><a href="#编译链接" class="headerlink" title="编译链接"></a>编译链接</h3><h4 id="各平台文件格式"><a href="#各平台文件格式" class="headerlink" title="各平台文件格式"></a>各平台文件格式</h4><table>
 <thead>
 <tr>
 <th>平台</th>
@@ -1109,7 +1114,7 @@
 <td>a、framework</td>
 </tr>
 </tbody></table>
-<h4 id="编译链接过程"><a href="#编译链接过程" class="headerlink" title="编译链接过程"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%BC%96%E8%AF%91%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B">编译链接过程</a></h4><ol>
+<h4 id="编译链接过程"><a href="#编译链接过程" class="headerlink" title="编译链接过程"></a>编译链接过程</h4><ol>
 <li> 预编译（预编译器处理如 <code>#include</code>、<code>#define</code> 等预编译指令，生成 <code>.i</code> 或 <code>.ii</code> 文件）</li>
 <li> 编译（编译器进行词法分析、语法分析、语义分析、中间代码生成、目标代码生成、优化，生成 <code>.s</code> 文件）</li>
 <li> 汇编（汇编器把汇编码翻译成机器码，生成 <code>.o</code> 文件）</li>
@@ -1121,11 +1126,11 @@
 <blockquote>
 <p>  MSVC 编译环境，编译器 cl、连接器 link、可执行文件查看器 dumpbin</p>
 </blockquote>
-<h4 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6">目标文件</a></h4><p>编译器编译源代码后生成的文件叫做目标文件。目标文件从结构上讲，它是已经编译后的可执行文件格式，只是还没有经过链接的过程，其中可能有些符号或有些地址还没有被调整。</p>
+<h4 id="目标文件"><a href="#目标文件" class="headerlink" title="目标文件"></a>目标文件</h4><p>编译器编译源代码后生成的文件叫做目标文件。目标文件从结构上讲，它是已经编译后的可执行文件格式，只是还没有经过链接的过程，其中可能有些符号或有些地址还没有被调整。</p>
 <blockquote>
 <p>  可执行文件（Windows 的 <code>.exe</code> 和 Linux 的 <code>ELF</code>）、动态链接库（Windows 的 <code>.dll</code> 和 Linux 的 <code>.so</code>）、静态链接库（Windows 的 <code>.lib</code> 和 Linux 的 <code>.a</code>）都是按照可执行文件格式存储（Windows 按照 PE-COFF，Linux 按照 ELF）</p>
 </blockquote>
-<h5 id="目标文件格式"><a href="#目标文件格式" class="headerlink" title="目标文件格式"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F">目标文件格式</a></h5><ul>
+<h5 id="目标文件格式"><a href="#目标文件格式" class="headerlink" title="目标文件格式"></a>目标文件格式</h5><ul>
 <li>  Windows 的 PE（Portable Executable），或称为 PE-COFF，<code>.obj</code> 格式</li>
 <li>  Linux 的 ELF（Executable Linkable Format），<code>.o</code> 格式</li>
 <li>  Intel/Microsoft 的 OMF（Object Module Format）</li>
@@ -1135,7 +1140,7 @@
 <blockquote>
 <p>  PE 和 ELF 都是 COFF（Common File Format）的变种</p>
 </blockquote>
-<h5 id="目标文件存储结构"><a href="#目标文件存储结构" class="headerlink" title="目标文件存储结构"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84">目标文件存储结构</a></h5><table>
+<h5 id="目标文件存储结构"><a href="#目标文件存储结构" class="headerlink" title="目标文件存储结构"></a>目标文件存储结构</h5><table>
 <thead>
 <tr>
 <th>段</th>
@@ -1174,7 +1179,7 @@
 <blockquote>
 <p>  其他段略</p>
 </blockquote>
-<h4 id="链接的接口————符号"><a href="#链接的接口————符号" class="headerlink" title="链接的接口————符号"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E9%93%BE%E6%8E%A5%E7%9A%84%E6%8E%A5%E5%8F%A3%E7%AC%A6%E5%8F%B7">链接的接口————符号</a></h4><p>在链接中，目标文件之间相互拼合实际上是目标文件之间对地址的引用，即对函数和变量的地址的引用。我们将函数和变量统称为符号（Symbol），函数名或变量名就是符号名（Symbol Name）。</p>
+<h4 id="链接的接口——符号"><a href="#链接的接口——符号" class="headerlink" title="链接的接口——符号"></a>链接的接口——符号</h4><p>在链接中，目标文件之间相互拼合实际上是目标文件之间对地址的引用，即对函数和变量的地址的引用。我们将函数和变量统称为符号（Symbol），函数名或变量名就是符号名（Symbol Name）。</p>
 <p>如下符号表（Symbol Table）：</p>
 <table>
 <thead>
@@ -1196,16 +1201,16 @@
 <td>…</td>
 </tr>
 </tbody></table>
-<h3 id="Linux-的共享库（Shared-Library）"><a href="#Linux-的共享库（Shared-Library）" class="headerlink" title="Linux 的共享库（Shared Library）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=linux-%E7%9A%84%E5%85%B1%E4%BA%AB%E5%BA%93%EF%BC%88shared-library%EF%BC%89">Linux 的共享库（Shared Library）</a></h3><p>Linux 下的共享库就是普通的 ELF 共享对象。</p>
+<h3 id="Linux-的共享库（Shared-Library）"><a href="#Linux-的共享库（Shared-Library）" class="headerlink" title="Linux 的共享库（Shared Library）"></a>Linux 的共享库（Shared Library）</h3><p>Linux 下的共享库就是普通的 ELF 共享对象。</p>
 <p>共享库版本更新应该保证二进制接口 ABI（Application Binary Interface）的兼容</p>
-<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%91%BD%E5%90%8D">命名</a></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">libname.so.x.y.z<br></code></pre></td></tr></table></figure>
+<h4 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">libname.so.x.y.z<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li>  x：主版本号，不同主版本号的库之间不兼容，需要重新编译</li>
 <li>  y：次版本号，高版本号向后兼容低版本号</li>
 <li>  z：发布版本号，不对接口进行更改，完全兼容</li>
 </ul>
-<h4 id="路径"><a href="#路径" class="headerlink" title="路径"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E8%B7%AF%E5%BE%84">路径</a></h4><p>大部分包括 Linux 在内的开源系统遵循 FHS（File Hierarchy Standard）的标准，这标准规定了系统文件如何存放，包括各个目录结构、组织和作用。</p>
+<h4 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h4><p>大部分包括 Linux 在内的开源系统遵循 FHS（File Hierarchy Standard）的标准，这标准规定了系统文件如何存放，包括各个目录结构、组织和作用。</p>
 <ul>
 <li>  <code>/lib</code>：存放系统最关键和最基础的共享库，如动态链接器、C 语言运行库、数学库等</li>
 <li>  <code>/usr/lib</code>：存放非系统运行时所需要的关键性的库，主要是开发库</li>
@@ -1214,12 +1219,12 @@
 <blockquote>
 <p>  动态链接器会在 <code>/lib</code>、<code>/usr/lib</code> 和由 <code>/etc/ld.so.conf</code> 配置文件指定的，目录中查找共享库</p>
 </blockquote>
-<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">环境变量</a></h4><ul>
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><ul>
 <li>  <code>LD_LIBRARY_PATH</code>：临时改变某个应用程序的共享库查找路径，而不会影响其他应用程序</li>
 <li>  <code>LD_PRELOAD</code>：指定预先装载的一些共享库甚至是目标文件</li>
 <li>  <code>LD_DEBUG</code>：打开动态链接器的调试功能</li>
 </ul>
-<h4 id="so-共享库的编写"><a href="#so-共享库的编写" class="headerlink" title="so 共享库的编写"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=so-%E5%85%B1%E4%BA%AB%E5%BA%93%E7%9A%84%E7%BC%96%E5%86%99">so 共享库的编写</a></h4><p>使用 CLion 编写共享库</p>
+<h4 id="so-共享库的编写"><a href="#so-共享库的编写" class="headerlink" title="so 共享库的编写"></a>so 共享库的编写</h4><p>使用 CLion 编写共享库</p>
 <p>创建一个名为 MySharedLib 的共享库</p>
 <p>CMakeLists.txt</p>
 <figure class="highlight cmake"><table><tr><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.10</span>)<br><span class="hljs-keyword">project</span>(MySharedLib)<br><br><span class="hljs-keyword">set</span>(CMAKE_CXX_STANDARD <span class="hljs-number">11</span>)<br><br><span class="hljs-keyword">add_library</span>(MySharedLib SHARED library.cpp library.h)<br></code></pre></td></tr></table></figure>
@@ -1230,7 +1235,7 @@
 <p>library.cpp</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;library.h&quot;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hello</span><span class="hljs-params">()</span> </span>&#123;<br>    std::cout &lt;&lt; <span class="hljs-string">&quot;Hello, World!&quot;</span> &lt;&lt; std::endl;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h4 id="so-共享库的使用（被可执行项目调用）"><a href="#so-共享库的使用（被可执行项目调用）" class="headerlink" title="so 共享库的使用（被可执行项目调用）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=so-%E5%85%B1%E4%BA%AB%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E8%A2%AB%E5%8F%AF%E6%89%A7%E8%A1%8C%E9%A1%B9%E7%9B%AE%E8%B0%83%E7%94%A8%EF%BC%89">so 共享库的使用（被可执行项目调用）</a></h4><p>使用 CLion 调用共享库</p>
+<h4 id="so-共享库的使用（被可执行项目调用）"><a href="#so-共享库的使用（被可执行项目调用）" class="headerlink" title="so 共享库的使用（被可执行项目调用）"></a>so 共享库的使用（被可执行项目调用）</h4><p>使用 CLion 调用共享库</p>
 <p>创建一个名为 TestSharedLib 的可执行项目</p>
 <p>CMakeLists.txt</p>
 <figure class="highlight cmake"><table><tr><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.10</span>)<br><span class="hljs-keyword">project</span>(TestSharedLib)<br><br><span class="hljs-comment"># C++11 编译</span><br><span class="hljs-keyword">set</span>(CMAKE_CXX_STANDARD <span class="hljs-number">11</span>)<br><br><span class="hljs-comment"># 头文件路径</span><br><span class="hljs-keyword">set</span>(INC_DIR /home/xx/code/clion/MySharedLib)<br><span class="hljs-comment"># 库文件路径</span><br><span class="hljs-keyword">set</span>(LIB_DIR /home/xx/code/clion/MySharedLib/cmake-build-debug)<br><br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;INC_DIR&#125;</span>)<br><span class="hljs-keyword">link_directories</span>(<span class="hljs-variable">$&#123;LIB_DIR&#125;</span>)<br><span class="hljs-keyword">link_libraries</span>(MySharedLib)<br><br><span class="hljs-keyword">add_executable</span>(TestSharedLib main.cpp)<br><br><span class="hljs-comment"># 链接 MySharedLib 库</span><br><span class="hljs-keyword">target_link_libraries</span>(TestSharedLib MySharedLib)<br></code></pre></td></tr></table></figure>
@@ -1241,100 +1246,7 @@
 <p>执行结果</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Hello, World!<br>1 + 2 = 3<br>1 + 2 + 3 = 6<br></code></pre></td></tr></table></figure>
 
-<h3 id="Windows-应用程序入口函数"><a href="#Windows-应用程序入口函数" class="headerlink" title="Windows 应用程序入口函数"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=windows-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0">Windows 应用程序入口函数</a></h3><ul>
-<li>  GUI（Graphical User Interface）应用，链接器选项：<code>/SUBSYSTEM:WINDOWS</code></li>
-<li>  CUI（Console User Interface）应用，链接器选项：<code>/SUBSYSTEM:CONSOLE</code></li>
-</ul>
-<p>_tWinMain 与 _tmain 函数声明</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">Int WINAPI _tWinMain(<br>    HINSTANCE hInstanceExe,<br>    HINSTANCE,<br>    PTSTR pszCmdLine,<br>    <span class="hljs-keyword">int</span> nCmdShow);<br><br><span class="hljs-keyword">int</span> _tmain(<br>    <span class="hljs-keyword">int</span> argc,<br>    TCHAR *argv[],<br>    TCHAR *envp[]);<br></code></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>应用程序类型</th>
-<th>入口点函数</th>
-<th>嵌入可执行文件的启动函数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>处理ANSI字符（串）的GUI应用程序</td>
-<td>_tWinMain(WinMain)</td>
-<td>WinMainCRTSartup</td>
-</tr>
-<tr>
-<td>处理Unicode字符（串）的GUI应用程序</td>
-<td>_tWinMain(wWinMain)</td>
-<td>wWinMainCRTSartup</td>
-</tr>
-<tr>
-<td>处理ANSI字符（串）的CUI应用程序</td>
-<td>_tmain(Main)</td>
-<td>mainCRTSartup</td>
-</tr>
-<tr>
-<td>处理Unicode字符（串）的CUI应用程序</td>
-<td>_tmain(wMain)</td>
-<td>wmainCRTSartup</td>
-</tr>
-<tr>
-<td>动态链接库（Dynamic-Link Library）</td>
-<td>DllMain</td>
-<td>_DllMainCRTStartup</td>
-</tr>
-</tbody></table>
-<h3 id="Windows-的动态链接库（Dynamic-Link-Library）"><a href="#Windows-的动态链接库（Dynamic-Link-Library）" class="headerlink" title="Windows 的动态链接库（Dynamic-Link Library）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=windows-%E7%9A%84%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%88dynamic-link-library%EF%BC%89">Windows 的动态链接库（Dynamic-Link Library）</a></h3><blockquote>
-<p>  部分知识点来自《Windows 核心编程（第五版）》</p>
-</blockquote>
-<h4 id="用处"><a href="#用处" class="headerlink" title="用处"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%94%A8%E5%A4%84">用处</a></h4><ul>
-<li>  扩展了应用程序的特性</li>
-<li>  简化了项目管理</li>
-<li>  有助于节省内存</li>
-<li>  促进了资源的共享</li>
-<li>  促进了本地化</li>
-<li>  有助于解决平台间的差异</li>
-<li>  可以用于特殊目的</li>
-</ul>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E6%B3%A8%E6%84%8F">注意</a></h4><ul>
-<li>  创建 DLL，事实上是在创建可供一个可执行模块调用的函数</li>
-<li>  当一个模块提供一个内存分配函数（malloc、new）的时候，它必须同时提供另一个内存释放函数（free、delete）</li>
-<li>  在使用 C 和 C++ 混编的时候，要使用 extern “C” 修饰符</li>
-<li>  一个 DLL 可以导出函数、变量（避免导出）、C++ 类（导出导入需要同编译器，否则避免导出）</li>
-<li>  DLL 模块：cpp 文件中的 __declspec(dllexport) 写在 include 头文件之前</li>
-<li>  调用 DLL 的可执行模块：cpp 文件的 __declspec(dllimport) 之前不应该定义 MYLIBAPI</li>
-</ul>
-<h4 id="加载-Windows-程序的搜索顺序"><a href="#加载-Windows-程序的搜索顺序" class="headerlink" title="加载 Windows 程序的搜索顺序"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%8A%A0%E8%BD%BD-windows-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%90%9C%E7%B4%A2%E9%A1%BA%E5%BA%8F">加载 Windows 程序的搜索顺序</a></h4><ol>
-<li> 包含可执行文件的目录</li>
-<li> Windows 的系统目录，可以通过 GetSystemDirectory 得到</li>
-<li> 16 位的系统目录，即 Windows 目录中的 System 子目录</li>
-<li> Windows 目录，可以通过 GetWindowsDirectory 得到</li>
-<li> 进程的当前目录</li>
-<li> PATH 环境变量中所列出的目录</li>
-</ol>
-<h4 id="DLL-入口函数"><a href="#DLL-入口函数" class="headerlink" title="DLL 入口函数"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=dll-%E5%85%A5%E5%8F%A3%E5%87%BD%E6%95%B0">DLL 入口函数</a></h4><p>DllMain 函数</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">BOOL WINAPI <span class="hljs-title">DllMain</span><span class="hljs-params">(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in"><span class="hljs-keyword">switch</span></span>(fdwReason)<br>    &#123;<br>    <span class="hljs-keyword">case</span> DLL_PROCESS_ATTACH:<br>        <span class="hljs-comment">// 第一次将一个DLL映射到进程地址空间时调用</span><br>        <span class="hljs-comment">// The DLL is being mapped into the process&#x27; address space.</span><br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> DLL_THREAD_ATTACH:<br>        <span class="hljs-comment">// 当进程创建一个线程的时候，用于告诉DLL执行与线程相关的初始化（非主线程执行）</span><br>        <span class="hljs-comment">// A thread is bing created.</span><br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> DLL_THREAD_DETACH:<br>        <span class="hljs-comment">// 系统调用 ExitThread 线程退出前，即将终止的线程通过告诉DLL执行与线程相关的清理</span><br>        <span class="hljs-comment">// A thread is exiting cleanly.</span><br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> DLL_PROCESS_DETACH:<br>        <span class="hljs-comment">// 将一个DLL从进程的地址空间时调用</span><br>        <span class="hljs-comment">// The DLL is being unmapped from the process&#x27; address space.</span><br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> (TRUE); <span class="hljs-comment">// Used only for DLL_PROCESS_ATTACH</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="载入卸载库"><a href="#载入卸载库" class="headerlink" title="载入卸载库"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E8%BD%BD%E5%85%A5%E5%8D%B8%E8%BD%BD%E5%BA%93">载入卸载库</a></h4><p>LoadLibrary、LoadLibraryExA、LoadPackagedLibrary、FreeLibrary、FreeLibraryAndExitThread 函数声明</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 载入库</span><br><span class="hljs-function">HMODULE WINAPI <span class="hljs-title">LoadLibrary</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  _In_ LPCTSTR lpFileName</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br><span class="hljs-function">HMODULE <span class="hljs-title">LoadLibraryExA</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  LPCSTR lpLibFileName,</span></span><br><span class="hljs-params"><span class="hljs-function">  HANDLE hFile,</span></span><br><span class="hljs-params"><span class="hljs-function">  DWORD  dwFlags</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br><span class="hljs-comment">// 若要在通用 Windows 平台（UWP）应用中加载 Win32 DLL，需要调用 LoadPackagedLibrary，而不是 LoadLibrary 或 LoadLibraryEx</span><br><span class="hljs-function">HMODULE <span class="hljs-title">LoadPackagedLibrary</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  LPCWSTR lpwLibFileName,</span></span><br><span class="hljs-params"><span class="hljs-function">  DWORD   Reserved</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br><br><span class="hljs-comment">// 卸载库</span><br><span class="hljs-function">BOOL WINAPI <span class="hljs-title">FreeLibrary</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  _In_ HMODULE hModule</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br><span class="hljs-comment">// 卸载库和退出线程</span><br><span class="hljs-function">VOID WINAPI <span class="hljs-title">FreeLibraryAndExitThread</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  _In_ HMODULE hModule,</span></span><br><span class="hljs-params"><span class="hljs-function">  _In_ DWORD   dwExitCode</span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br></code></pre></td></tr></table></figure>
-
-<h4 id="显示地链接到导出符号"><a href="#显示地链接到导出符号" class="headerlink" title="显示地链接到导出符号"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E6%98%BE%E7%A4%BA%E5%9C%B0%E9%93%BE%E6%8E%A5%E5%88%B0%E5%AF%BC%E5%87%BA%E7%AC%A6%E5%8F%B7">显示地链接到导出符号</a></h4><p>GetProcAddress 函数声明</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">FARPROC <span class="hljs-title">GetProcAddress</span><span class="hljs-params">(</span></span><br><span class="hljs-params"><span class="hljs-function">  HMODULE hInstDll,</span></span><br><span class="hljs-params"><span class="hljs-function">  PCSTR pszSymbolName  <span class="hljs-comment">// 只能接受 ANSI 字符串，不能是 Unicode</span></span></span><br><span class="hljs-params"><span class="hljs-function">)</span></span>;<br></code></pre></td></tr></table></figure>
-
-<h4 id="DumpBin-exe-查看-DLL-信息"><a href="#DumpBin-exe-查看-DLL-信息" class="headerlink" title="DumpBin.exe 查看 DLL 信息"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=dumpbinexe-%E6%9F%A5%E7%9C%8B-dll-%E4%BF%A1%E6%81%AF">DumpBin.exe 查看 DLL 信息</a></h4><p>在 <code>VS 的开发人员命令提示符</code> 使用 <code>DumpBin.exe</code> 可查看 DLL 库的导出段（导出的变量、函数、类名的符号）、相对虚拟地址（RVA，relative virtual address）。如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">DUMPBIN -exports D:\mydll.dll<br></code></pre></td></tr></table></figure>
-
-<h4 id="LoadLibrary-与-FreeLibrary-流程图"><a href="#LoadLibrary-与-FreeLibrary-流程图" class="headerlink" title="LoadLibrary 与 FreeLibrary 流程图"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=loadlibrary-%E4%B8%8E-freelibrary-%E6%B5%81%E7%A8%8B%E5%9B%BE">LoadLibrary 与 FreeLibrary 流程图</a></h4><p>LoadLibrary 与 FreeLibrary 流程图</p>
-<h5 id="LoadLibrary"><a href="#LoadLibrary" class="headerlink" title="LoadLibrary"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=loadlibrary">LoadLibrary</a></h5><p><img src="WindowsLoadLibrary.png" alt="WindowsLoadLibrary"></p>
-<h5 id="FreeLibrary"><a href="#FreeLibrary" class="headerlink" title="FreeLibrary"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=freelibrary">FreeLibrary</a></h5><p><img src="WindowsFreeLibrary.png" alt="WindowsFreeLibrary"></p>
-<h4 id="DLL-库的编写（导出一个-DLL-模块）"><a href="#DLL-库的编写（导出一个-DLL-模块）" class="headerlink" title="DLL 库的编写（导出一个 DLL 模块）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=dll-%E5%BA%93%E7%9A%84%E7%BC%96%E5%86%99%EF%BC%88%E5%AF%BC%E5%87%BA%E4%B8%80%E4%B8%AA-dll-%E6%A8%A1%E5%9D%97%EF%BC%89">DLL 库的编写（导出一个 DLL 模块）</a></h4><p>DLL 库的编写（导出一个 DLL 模块） DLL 头文件</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// MyLib.h</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> MYLIBAPI</span><br><br><span class="hljs-comment">// MYLIBAPI 应该在全部 DLL 源文件的 include &quot;Mylib.h&quot; 之前被定义</span><br><span class="hljs-comment">// 全部函数/变量正在被导出</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span><br><br><span class="hljs-comment">// 这个头文件被一个exe源代码模块包含，意味着全部函数/变量被导入</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MYLIBAPI extern <span class="hljs-meta-string">&quot;C&quot;</span> __declspec(dllimport)</span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><br><span class="hljs-comment">// 这里定义任何的数据结构和符号</span><br><br><span class="hljs-comment">// 定义导出的变量（避免导出变量）</span><br>MYLIBAPI <span class="hljs-keyword">int</span> g_nResult;<br><br><span class="hljs-comment">// 定义导出函数原型</span><br><span class="hljs-function">MYLIBAPI <span class="hljs-keyword">int</span> <span class="hljs-title">Add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nLeft, <span class="hljs-keyword">int</span> nRight)</span></span>;<br></code></pre></td></tr></table></figure>
-
-<p>DLL 源文件</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// MyLibFile1.cpp</span><br><br><span class="hljs-comment">// 包含标准Windows和C运行时头文件</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><br><span class="hljs-comment">// DLL源码文件导出的函数和变量</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MYLIBAPI extern <span class="hljs-meta-string">&quot;C&quot;</span> __declspec(dllexport)</span><br><br><span class="hljs-comment">// 包含导出的数据结构、符号、函数、变量</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;MyLib.h&quot;</span></span><br><br><span class="hljs-comment">// 将此DLL源代码文件的代码放在此处</span><br><span class="hljs-keyword">int</span> g_nResult;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nLeft, <span class="hljs-keyword">int</span> nRight)</span></span><br><span class="hljs-function"></span>&#123;<br>    g_nResult = nLeft + nRight;<br>    <span class="hljs-keyword">return</span> g_nResult;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="DLL-库的使用（运行时动态链接-DLL）"><a href="#DLL-库的使用（运行时动态链接-DLL）" class="headerlink" title="DLL 库的使用（运行时动态链接 DLL）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=dll-%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E8%BF%90%E8%A1%8C%E6%97%B6%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5-dll%EF%BC%89">DLL 库的使用（运行时动态链接 DLL）</a></h4><p>DLL 库的使用（运行时动态链接 DLL）</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// A simple program that uses LoadLibrary and </span><br><span class="hljs-comment">// GetProcAddress to access myPuts from Myputs.dll. </span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span> </span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span> </span><br><br><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">int</span> <span class="hljs-params">(__cdecl *MYPROC)</span><span class="hljs-params">(LPWSTR)</span></span>; <br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">( <span class="hljs-keyword">void</span> )</span> </span><br><span class="hljs-function"></span>&#123; <br>    HINSTANCE hinstLib; <br>    MYPROC ProcAdd; <br>    BOOL fFreeResult, fRunTimeLinkSuccess = FALSE; <br><br>    <span class="hljs-comment">// Get a handle to the DLL module.</span><br><br>    hinstLib = <span class="hljs-built_in">LoadLibrary</span>(<span class="hljs-built_in">TEXT</span>(<span class="hljs-string">&quot;MyPuts.dll&quot;</span>)); <br><br>    <span class="hljs-comment">// If the handle is valid, try to get the function address.</span><br><br>    <span class="hljs-keyword">if</span> (hinstLib != <span class="hljs-literal">NULL</span>) <br>    &#123; <br>        ProcAdd = (MYPROC) <span class="hljs-built_in">GetProcAddress</span>(hinstLib, <span class="hljs-string">&quot;myPuts&quot;</span>); <br><br>        <span class="hljs-comment">// If the function address is valid, call the function.</span><br><br>        <span class="hljs-keyword">if</span> (<span class="hljs-literal">NULL</span> != ProcAdd) <br>        &#123;<br>            fRunTimeLinkSuccess = TRUE;<br>            (ProcAdd) (<span class="hljs-string">L&quot;Message sent to the DLL function\n&quot;</span>); <br>        &#125;<br>        <span class="hljs-comment">// Free the DLL module.</span><br><br>        fFreeResult = <span class="hljs-built_in">FreeLibrary</span>(hinstLib); <br>    &#125; <br><br>    <span class="hljs-comment">// If unable to call the DLL function, use an alternative.</span><br>    <span class="hljs-keyword">if</span> (! fRunTimeLinkSuccess) <br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Message printed from executable\n&quot;</span>); <br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="运行库（Runtime-Library）"><a href="#运行库（Runtime-Library）" class="headerlink" title="运行库（Runtime Library）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E8%BF%90%E8%A1%8C%E5%BA%93%EF%BC%88runtime-library%EF%BC%89">运行库（Runtime Library）</a></h3><h4 id="典型程序运行步骤"><a href="#典型程序运行步骤" class="headerlink" title="典型程序运行步骤"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%85%B8%E5%9E%8B%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%AD%A5%E9%AA%A4">典型程序运行步骤</a></h4><ol>
+<h3 id="运行时库（Runtime-Library）"><a href="#运行时库（Runtime-Library）" class="headerlink" title="运行时库（Runtime Library）"></a>运行时库（Runtime Library）</h3><h4 id="典型程序运行步骤"><a href="#典型程序运行步骤" class="headerlink" title="典型程序运行步骤"></a>典型程序运行步骤</h4><ol>
 <li> 操作系统创建进程，把控制权交给程序的入口（往往是运行库中的某个入口函数）</li>
 <li> 入口函数对运行库和程序运行环境进行初始化（包括堆、I/O、线程、全局变量构造等等）。</li>
 <li> 入口函数初始化后，调用 main 函数，正式开始执行程序主体部分。</li>
@@ -1343,10 +1255,10 @@
 <blockquote>
 <p>  一个程序的 I/O 指代程序与外界的交互，包括文件、管程、网络、命令行、信号等。更广义地讲，I/O 指代操作系统理解为 “文件” 的事物。</p>
 </blockquote>
-<h4 id="glibc-入口"><a href="#glibc-入口" class="headerlink" title="glibc 入口"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=glibc-%E5%85%A5%E5%8F%A3">glibc 入口</a></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">_start -&gt; __libc_start_main -&gt; exit -&gt; _exit<br></code></pre></td></tr></table></figure>
+<h4 id="glibc-入口"><a href="#glibc-入口" class="headerlink" title="glibc 入口"></a>glibc 入口</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">_start -&gt; __libc_start_main -&gt; exit -&gt; _exit<br></code></pre></td></tr></table></figure>
 
 <p>其中 <code>main(argc, argv, __environ)</code> 函数在 <code>__libc_start_main</code> 里执行。</p>
-<h4 id="MSVC-CRT-入口"><a href="#MSVC-CRT-入口" class="headerlink" title="MSVC CRT 入口"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=msvc-crt-%E5%85%A5%E5%8F%A3">MSVC CRT 入口</a></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">int mainCRTStartup(void)<br></code></pre></td></tr></table></figure>
+<h4 id="MSVC-CRT-入口"><a href="#MSVC-CRT-入口" class="headerlink" title="MSVC CRT 入口"></a>MSVC CRT 入口</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">int mainCRTStartup(void)<br></code></pre></td></tr></table></figure>
 
 <p>执行如下操作：</p>
 <ol>
@@ -1358,7 +1270,7 @@
 <li> 调用 main 并记录返回值。</li>
 <li> 检查错误并将 main 的返回值返回。</li>
 </ol>
-<h4 id="C-语言运行库（CRT）"><a href="#C-语言运行库（CRT）" class="headerlink" title="C 语言运行库（CRT）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=c-%E8%AF%AD%E8%A8%80%E8%BF%90%E8%A1%8C%E5%BA%93%EF%BC%88crt%EF%BC%89">C 语言运行库（CRT）</a></h4><p>大致包含如下功能：</p>
+<h4 id="C-语言运行库（CRT）"><a href="#C-语言运行库（CRT）" class="headerlink" title="C 语言运行库（CRT）"></a>C 语言运行库（CRT）</h4><p>大致包含如下功能：</p>
 <ul>
 <li>  启动与退出：包括入口函数及入口函数所依赖的其他函数等。</li>
 <li>  标准函数：有 C 语言标准规定的C语言标准库所拥有的函数实现。</li>
@@ -1367,7 +1279,7 @@
 <li>  语言实现：语言中一些特殊功能的实现。</li>
 <li>  调试：实现调试功能的代码。</li>
 </ul>
-<h4 id="C语言标准库（ANSI-C）"><a href="#C语言标准库（ANSI-C）" class="headerlink" title="C语言标准库（ANSI C）"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=c%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86%E5%BA%93%EF%BC%88ansi-c%EF%BC%89">C语言标准库（ANSI C）</a></h4><p>包含：</p>
+<h4 id="C语言标准库（ANSI-C）"><a href="#C语言标准库（ANSI-C）" class="headerlink" title="C语言标准库（ANSI C）"></a>C语言标准库（ANSI C）</h4><p>包含：</p>
 <ul>
 <li>  标准输入输出（stdio.h）</li>
 <li>  文件操作（stdio.h）</li>
@@ -1382,36 +1294,10 @@
 <li>  变长参数（stdarg.h）</li>
 <li>  非局部跳转（setjmp.h）</li>
 </ul>
-<h2 id="书籍"><a href="#书籍" class="headerlink" title="书籍"></a>书籍</h2><p>【详见plan分类】</p>
-<h3 id="语言"><a href="#语言" class="headerlink" title="语言"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E8%AF%AD%E8%A8%80">语言</a></h3><ul>
-<li>  《C++ Primer》</li>
-<li>  《Effective C++》</li>
-<li>  《More Effective C++》</li>
-<li>  《深度探索 C++ 对象模型》</li>
-<li>  《深入理解 C++11》</li>
-<li>  《STL 源码剖析》</li>
-</ul>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%AE%97%E6%B3%95-1">算法</a></h3><ul>
-<li>  《剑指 Offer》</li>
-<li>  《编程珠玑》</li>
-<li>  《程序员面试宝典》</li>
-</ul>
-<h3 id="系统"><a href="#系统" class="headerlink" title="系统"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%B3%BB%E7%BB%9F">系统</a></h3><ul>
-<li>  《深入理解计算机系统》</li>
-<li>  《Windows 核心编程》</li>
-<li>  《Unix 环境高级编程》</li>
-</ul>
-<h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%BD%91%E7%BB%9C">网络</a></h3><ul>
-<li>  《Unix 网络编程》</li>
-<li>  《TCP/IP 详解》</li>
-</ul>
-<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%85%B6%E4%BB%96-1">其他</a></h3><ul>
-<li>  《程序员的自我修养》</li>
-</ul>
 <h2 id="C-C-发展方向"><a href="#C-C-发展方向" class="headerlink" title="C/C++发展方向"></a>C/C++发展方向</h2><blockquote>
 <p>  C/C++ 发展方向甚广，包括不限于以下方向， 以下列举一些大厂校招岗位要求。</p>
 </blockquote>
-<h3 id="后台-服务器"><a href="#后台-服务器" class="headerlink" title="后台/服务器"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8">后台/服务器</a></h3><p>【后台开发】</p>
+<h3 id="后台-服务器"><a href="#后台-服务器" class="headerlink" title="后台/服务器"></a>后台/服务器</h3><p>【后台开发】</p>
 <ul>
 <li>  编程基本功扎实，掌握 C/C++/JAVA 等开发语言、常用算法和数据结构；</li>
 <li>  熟悉 TCP/UDP 网络协议及相关编程、进程间通讯编程；</li>
@@ -1420,7 +1306,7 @@
 <li>  全面、扎实的软件知识结构，掌握操作系统、软件工程、设计模式、数据结构、数据库系统、网络安全等专业知识；</li>
 <li>  了解分布式系统设计与开发、负载均衡技术，系统容灾设计，高可用系统等知识。</li>
 </ul>
-<h3 id="桌面客户端"><a href="#桌面客户端" class="headerlink" title="桌面客户端"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E6%A1%8C%E9%9D%A2%E5%AE%A2%E6%88%B7%E7%AB%AF">桌面客户端</a></h3><p>【PC 客户端开发】</p>
+<h3 id="桌面客户端"><a href="#桌面客户端" class="headerlink" title="桌面客户端"></a>桌面客户端</h3><p>【PC 客户端开发】</p>
 <ul>
 <li>  计算机软件相关专业本科或以上学历，热爱编程，基础扎实，理解算法和数据结构相关知识；  </li>
 <li>  熟悉 windows 操作系统的内存管理、文件系统、进程线程调度； </li>
@@ -1428,7 +1314,7 @@
 <li>  熟练掌握 Windows 客户端开发、调试，有 Windows 应用软件开发经验优先；</li>
 <li>  对于创新及解决具有挑战性的问题充满激情，具有良好的算法基础及系统分析能力。</li>
 </ul>
-<h3 id="图形学-游戏-VR-AR"><a href="#图形学-游戏-VR-AR" class="headerlink" title="图形学/游戏/VR/AR"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%9B%BE%E5%BD%A2%E5%AD%A6%E6%B8%B8%E6%88%8Fvrar">图形学/游戏/VR/AR</a></h3><p>【游戏客户端开发】</p>
+<h3 id="图形学-游戏-VR-AR"><a href="#图形学-游戏-VR-AR" class="headerlink" title="图形学/游戏/VR/AR"></a>图形学/游戏/VR/AR</h3><p>【游戏客户端开发】</p>
 <ul>
 <li>  计算机科学/工程相关专业本科或以上学历，热爱编程，基础扎实，理解算法、数据结构、软件设计相关知识；</li>
 <li>  至少掌握一种游戏开发常用的编程语言，具 C++/C# 编程经验优先；</li>
@@ -1438,7 +1324,7 @@
 <li>  具阅读英文技术文档能力；</li>
 <li>  热爱游戏。</li>
 </ul>
-<h3 id="测试开发"><a href="#测试开发" class="headerlink" title="测试开发"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E6%B5%8B%E8%AF%95%E5%BC%80%E5%8F%91">测试开发</a></h3><p>【测试开发】</p>
+<h3 id="测试开发"><a href="#测试开发" class="headerlink" title="测试开发"></a>测试开发</h3><p>【测试开发】</p>
 <ul>
 <li>  计算机或相关专业本科及以上学历；</li>
 <li>  一至两年的 C/C++/Python 或其他计算机语言的编程经验；</li>
@@ -1447,7 +1333,7 @@
 <li>  具备定位调查产品缺陷能力、以及代码级别调试缺陷的能力；</li>
 <li>  工作主动积极，有责任心，具有良好的团队合作精神。</li>
 </ul>
-<h3 id="网络安全-逆向"><a href="#网络安全-逆向" class="headerlink" title="网络安全/逆向"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%80%86%E5%90%91">网络安全/逆向</a></h3><p>【安全技术】</p>
+<h3 id="网络安全-逆向"><a href="#网络安全-逆向" class="headerlink" title="网络安全/逆向"></a>网络安全/逆向</h3><p>【安全技术】</p>
 <ul>
 <li>  热爱互联网，对操作系统和网络安全有狂热的追求，专业不限；</li>
 <li>  熟悉漏洞挖掘、网络安全攻防技术，了解常见黑客攻击手法；  </li>
@@ -1455,14 +1341,14 @@
 <li>  对数据库、操作系统、网络原理有较好掌握；  </li>
 <li>  具有软件逆向，网络安全攻防或安全系统开发经验者优先。</li>
 </ul>
-<h3 id="嵌入式-物联网"><a href="#嵌入式-物联网" class="headerlink" title="嵌入式/物联网"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%89%A9%E8%81%94%E7%BD%91">嵌入式/物联网</a></h3><p>【嵌入式应用开发】</p>
+<h3 id="嵌入式-物联网"><a href="#嵌入式-物联网" class="headerlink" title="嵌入式/物联网"></a>嵌入式/物联网</h3><p>【嵌入式应用开发】</p>
 <ul>
 <li>  有良好的编程基础，熟练掌握 C/C++ 语言；</li>
 <li>  掌握操作系统、数据结构等软件开发必备知识；</li>
 <li>  具备较强的沟通理解能力及良好的团队合作意识；</li>
 <li>  有 Linux/Android 系统平台的开发经验者优先。</li>
 </ul>
-<h3 id="音视频-流媒体-SDK"><a href="#音视频-流媒体-SDK" class="headerlink" title="音视频/流媒体/SDK"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E9%9F%B3%E8%A7%86%E9%A2%91%E6%B5%81%E5%AA%92%E4%BD%93sdk">音视频/流媒体/SDK</a></h3><p>【音视频编解码】</p>
+<h3 id="音视频-流媒体-SDK"><a href="#音视频-流媒体-SDK" class="headerlink" title="音视频/流媒体/SDK"></a>音视频/流媒体/SDK</h3><p>【音视频编解码】</p>
 <ol>
 <li> 硕士及以上学历，计算机、信号处理、数学、信息类及相关专业和方向； </li>
 <li> 视频编解码基础扎实，熟常用的 HEVC 或 H264，有较好的数字信号处理基础； </li>
@@ -1470,7 +1356,7 @@
 <li> 较强的英文文献阅读能力； </li>
 <li> 学习能力强，具有团队协作精神，有较强的抗压能力。</li>
 </ol>
-<h3 id="计算机视觉-机器学习"><a href="#计算机视觉-机器学习" class="headerlink" title="计算机视觉/机器学习"></a><a target="_blank" rel="noopener" href="https://interview.huihut.com/#/?id=%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">计算机视觉/机器学习</a></h3><p>【计算机视觉研究】</p>
+<h3 id="计算机视觉-机器学习"><a href="#计算机视觉-机器学习" class="headerlink" title="计算机视觉/机器学习"></a>计算机视觉/机器学习</h3><p>【计算机视觉研究】</p>
 <ul>
 <li>  计算机、应用数学、模式识别、人工智能、自控、统计学、运筹学、生物信息、物理学/量子计算、神经科学、社会学/心理学等专业，图像处理、模式识别、机器学习相关研究方向，本科及以上，博士优先；</li>
 <li>  熟练掌握计算机视觉和图像处理相关的基本算法及应用；</li>

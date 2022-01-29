@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「工作日还有多少天，休息日还剩几小时」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+
+</div>
+
+<div class="content-area">
+	<div class="title">
+		条件运算符返回类型
+	</div>
+	
+	<div class="page-date">
+		2022-01-29
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/C++">C++</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>可以使用条件运算符统一返回类型：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T1, <span class="hljs-keyword">typename</span> T2&gt;<br><span class="hljs-function"><span class="hljs-keyword">auto</span> <span class="hljs-title">max</span><span class="hljs-params">(T1 a, T2 b)</span> -&gt; <span class="hljs-title">decltype</span><span class="hljs-params">(<span class="hljs-literal">true</span> ? a : b)</span> </span>&#123;      <span class="hljs-comment">// true ? a : b</span><br>  <span class="hljs-keyword">return</span> b &lt; a ? a : b;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a href="https://link.zhihu.com/?target=https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2012/e4213hs1(v=vs.110)?redirectedfrom=MSDN">Conditional Operator: ? :</a>：</p>
+<p>条件运算符 (<strong>:?:</strong>) 是一个三元运算符 (它采用三个操作数)。条件运算符工作如下所示:</p>
+<ul>
+<li>第一个操作数隐式转换为 bool。它进行计算，然后任何副作用在继续之前完成。</li>
+<li>如果第一个操作数计算结果为 <strong>true</strong> (1)，第二个操作数对象进行计算。</li>
+<li>  如果第一个操作数计算结果为 <strong>错误</strong> (0)，第三个操作数计算。</li>
+</ul>
+<p>条件表达式具有从右向左的结合性。第一个操作数必须是整型或指针类型。下列规则适用于第二个和第三个表达式:</p>
+<ul>
+<li>如果两个表达式的类型相同，则结果是该类型。</li>
+<li>如果两个表达式都为算术或枚举类型，通常算术转换执行转换通用类型。</li>
+<li>如果两个表达式是指针类型，或者一个是指针类型和其他是计算结果为 0 的常数表达式，指针转换执行转换通用类型。</li>
+<li>如果两个表达式引用类型，引用转换执行转换通用类型。</li>
+<li>如果两个表达式都为类型无效，常见类型是的类型无效。</li>
+<li>如果两个表达式都为特定类类型，常见类型是该类类型。</li>
+</ul>
+<p>第二个和第三个操作数的任意组合不在上述列表是非法的。该结果的类型通用类型，因此，它是左值; 如果第二个和第三个操作数是同一类型，它们都是左值。</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「工作日还有多少天，休息日还剩几小时」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vsftpd-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%8F%82%E6%95%B0%E8%AF%A6%E8%A7%A3"><span class="toc-text">vsftpd 常用功能参数配置及参数详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%85%8D%E7%BD%AE%E8%B6%85%E7%BA%A7%E6%9C%8D%E5%8A%A1"><span class="toc-text">1 配置超级服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E5%8C%BF%E5%90%8D%E7%94%A8%E6%88%B7"><span class="toc-text">2 配置匿名用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95"><span class="toc-text">3 配置本地用户登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95"><span class="toc-text">4 配置虚拟用户登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BD%BF%E7%94%A8SSL%E7%99%BB%E5%85%A5"><span class="toc-text">5 使用SSL登入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6"><span class="toc-text">6 日志文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%BC%A0%E8%BE%93%E6%A8%A1%E5%BC%8F"><span class="toc-text">7 传输模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BC%A0%E8%BE%93%E9%80%9F%E7%8E%87%E8%AE%BE%E7%BD%AE"><span class="toc-text">8 传输速率设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E8%B6%85%E6%97%B6%E8%AE%BE%E7%BD%AE"><span class="toc-text">9 超时设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E7%94%A8%E6%88%B7%E5%88%9B%E5%BB%BA%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E6%9D%83%E9%99%90"><span class="toc-text">10 用户创建的文件的权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E8%BF%9E%E6%8E%A5%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="toc-text">11 连接数设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E7%AB%AF%E5%8F%A3%E8%AE%BE%E7%BD%AE"><span class="toc-text">12 端口设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E7%94%A8%E6%88%B7%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="toc-text">13 用户访问权限</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		vsftpd配置项说明
+	</div>
+	
+	<div class="page-date">
+		2022-01-29
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/halberd-lee/p/11734363.html">https://www.cnblogs.com/halberd-lee/p/11734363.html</a></p>
+<h1 id="vsftpd-常用功能参数配置及参数详解"><a href="#vsftpd-常用功能参数配置及参数详解" class="headerlink" title="vsftpd 常用功能参数配置及参数详解"></a>vsftpd 常用功能参数配置及参数详解</h1><h2 id="1-配置超级服务"><a href="#1-配置超级服务" class="headerlink" title="1 配置超级服务"></a>1 <strong>配置超级服务</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plain">vi /etc/xinetd.d/vsftpd<br>service ftp<br>&#123;<br>    disable           = no<br>    socket_type       = stream<br>    wait              = no<br>    user              = root server            = /usr/sbin/vsftpd<br>    server_args       = /etc/vsftpd/vsftpd.conf<br># 上面这个 server 的设定请依照您的主机环境来设定！<br># 至于 server_args 则请写入您的 vsftpd 的配置文件完整名称即可！<br>    per_source        = 5     &lt;==与同一 IP 的联机数目有关<br>    instances         = 200   &lt;==同一时间最多的联机数目<br>    no_access         = 192.168.1.3<br>    banner_fail       = /etc/vsftpd/vsftpd.busy_banner<br># 上面这个文件就是当主机忙碌中，则在 Client 端显示的内容！<br>    log_on_success    += PID HOST DURATION<br>    log_on_failure    += HOST<br>&#125;<br><br>[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf<br>listen=NO<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-配置匿名用户"><a href="#2-配置匿名用户" class="headerlink" title="2 配置匿名用户"></a>2 <strong>配置匿名用户</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plain">[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf<br>anonymous_enable=YES<br></code></pre></td></tr></table></figure>
+
+<p>Table 1: 匿名用户配置  </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>anonymous_enable=YES</td>
+<td>是否允许匿名登录 yes=允许 no= 不允许</td>
+</tr>
+<tr>
+<td>ftp_username=ftp</td>
+<td>设置ftp匿名登录时的用户名，默认 ftp</td>
+</tr>
+<tr>
+<td>no_anon_password=YES</td>
+<td>匿名用户登录不需要输入密码 默认 YES</td>
+</tr>
+<tr>
+<td>deny_email_enable=YES</td>
+<td>以banned_email_file里面的电子邮件为密码的匿名用户不能登录</td>
+</tr>
+<tr>
+<td>anon_root</td>
+<td>匿名用户登录后的默认目录，不设置，默认为/var/ftp</td>
+</tr>
+<tr>
+<td>anon_upload_enable=YES</td>
+<td>允许匿名登录用户上传文件 默认NO</td>
+</tr>
+<tr>
+<td>anon_mkdir_write_enable=YES</td>
+<td>允许匿名登录用户创建目录 默认NO</td>
+</tr>
+<tr>
+<td>anon_other_write_enable=NO</td>
+<td>允许匿名用户有较高的写权限包括 删除目录和重命名等 默认NO</td>
+</tr>
+<tr>
+<td>anon_world_readable_only=YES</td>
+<td>允许匿名用户下载可读文件 默认YES , 设置为yes时只能下载不能直接在Ftp中阅读。</td>
+</tr>
+<tr>
+<td>chown_uploads=YES</td>
+<td>设置是否改变匿名用户上传文件（非目录）的属主。默认值为NO。</td>
+</tr>
+</tbody></table>
+<h2 id="3-配置本地用户登录"><a href="#3-配置本地用户登录" class="headerlink" title="3 配置本地用户登录"></a>3 <strong>配置本地用户登录</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plain">[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf<br>#下面是允许某些用户登入的项目  存在user_list文件中的用户不允许登入<br>userlist_enable=YES<br>userlist_deny=YES #如果这里改为NO  反过来只能存在user_list文件中的用户允许登入<br>userlist_file=/etc/vsftpd/user_list<br>anonymous_enable=NO<br><br>#下面是限制用户只能访问自己的主目录  存在chroot_list文件中的用户只能访问自己的主目录<br>chroot_local_user=YES<br>chroot_list_enable=YES<br>chroot_list_file=/etc/vsftpd/chroot_list<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-配置虚拟用户登录"><a href="#4-配置虚拟用户登录" class="headerlink" title="4 配置虚拟用户登录"></a>4 <strong>配置虚拟用户登录</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plain">#创建虚拟用户的专用目录<br>[root@localhost ~]# mkdir /home/vsftpd/admin<br><br><br>[root@localhost ~]# vi /etc/vsftpd/loginuser.txt<br>#加入两个用户  奇数行代表用户名 偶数行代表密码<br>admin<br>admin123<br><br>#执行命令 生成虚拟数据库<br>[root@localhost ~]# db_load -T -t hash -f /etc/vsftpd/loginuser.txt /etc/vsftpd/login.db<br>#设置数据库文件的访问权限<br>[root@localhost ~]# chmod 600 /etc/vsftpd/login.db<br>[root@localhost ~]# vi /etc/pam.d/vsftpd<br>#将以下内容增加的原文件前面两行：<br>auth    required        pam_userdb.so db=/etc/vsftpd/login<br>account required        pam_userdb.so db=/etc/vsftpd/login<br>auth    sufficient      pam_userdb.so db=/etc/vsftpd/login<br>account sufficient      pam_userdb.so db=/etc/vsftpd/login<br>#我们建立的虚拟用户将采用PAM进行验证，这是通过/etc/vsftpd.conf文件中的 语句pam_service_name=vsftpd 来启用的。<br><br>#auth       required     pam_listfile.so item=user sense=deny file=/etc/vsftpd.ftpusers onerr=succeed<br>#auth       required     pam_stack.so service=system-auth<br>#auth       required     pam_shells.so<br>#account    required     pam_stack.so service=system-auth<br>#session    required     pam_stack.so service=system-auth<br><br>可以看出前面两行是对虚拟用户的验证，后面是对系统用户的验证。 为了安全我一般把系统用户的登入关闭  使用虚拟账号登入ftp<br>对虚拟用户的验证使用了sufficient这个控制标志。<br>这个标志的含义是如果这个模块验证通过，就不必使用后面的层叠模块进行验证了；但如果失败了，<br>就继续后面的认证，也就是使用系统真实用户的验证。<br>虚拟用户创建本地系统用户<br><br>#新建一个系统用户vsftpd, 用户登录终端设为/bin/false(即使之不能登录系统)<br>[root@localhost ~]# useradd vsftpd -d /home/vsftpd -s /bin/false<br>[root@localhost ~]# chown vsftpd:vsftpd /home/vsftpd #改变目录所属用户组<br><br>根据需要创建/etc/vsftpd/vsftpd.conf，以下设置：<br>listen=YES                             #监听为专用模式<br>anonymous_enable=NO                    #禁用匿名登入<br>dirmessage_enable=YES<br>xferlog_enable=YES<br>xferlog_file=/var/log/vsftpd.log       #记录ftp操作日志<br>xferlog_std_format=YES<br>chroot_local_user=YES                  #对用户访问只限制在主目录 不能访问其他目录<br>guest_enable=YES                       #启用guest<br>guest_username=vsftpd                  #使用虚拟账号形式<br>user_config_dir=/etc/vsftpd/user_conf  #虚拟账号配置目录<br>pam_service_name=vsftpd                #对vsftpd的用户使用pam认证<br>local_enable=YES<br><br>#执行以下命令<br>[root@localhost ~]# mkdir /etc/vsftpd/user_conf<br>[root@localhost ~]# cd /etc/vsftpd/user_conf<br>[root@localhost ~]# vi /etc/vsftpd/user_conf/admin<br>#加入以下内容 拥有所有权限<br>write_enable=YES<br>anon_world_readable_only=NO<br>anon_upload_enable=YES<br>anon_mkdir_write_enable=YES<br>anon_other_write_enable=YES<br>local_root=/home/vsftpd/admin<br><br>#如果不能读写操作 可能是目录权限不够需要设置权限 试试看<br>[root@localhost ~]# chmod 777 /home/vsftpd/admin<br></code></pre></td></tr></table></figure>
+
+<h2 id="5-使用SSL登入"><a href="#5-使用SSL登入" class="headerlink" title="5 使用SSL登入"></a>5 <strong>使用SSL登入</strong></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plain">[root@localhost ~]# cd /etc/pki/tls/certs/<br>[root@localhost ~]# openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem<br>[root@localhost ~]#vi /usr/local/etc/vsftpd.conf<br>ssl_enable=YES(开启vsftpd对ssl协议的支持)<br>ssl_sslv2=YES（支持SSL v2 protocol）<br>ssl_sslv3=YES（支持SSL v3 protocol）<br>ssl_tlsv1=YES（支持TSL v1）<br>rsa_cert_file=/etc/pki/tls/certs/vsftpd.pem（证书的路径）<br><br>ssl_enable=YES<br>ssl_sslv2=YES<br>ssl_sslv3=YES<br>ssl_tlsv1=YES<br></code></pre></td></tr></table></figure>
+
+<p>这样重启vsftpd 就可以用客户端来尝试进行SSL加密连接了 。</p>
+<p>相关参数说明:</p>
+<p>Table 2: ssl 加密协议配置  </p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>allow_anon_ssl=NO</td>
+<td>是否允许SSL连接，启用SSL后才可以使用此参数，默认NO</td>
+</tr>
+<tr>
+<td>ssl_enable=NO</td>
+<td>是否启用ssl 安全连接 默认NO 如果设置为yes,vsftpd。</td>
+</tr>
+<tr>
+<td></td>
+<td>将启用openSSL，通过SSL支持安全连接和数据传输</td>
+</tr>
+<tr>
+<td>force_local_logins_ssl=YES</td>
+<td>是否对非匿名用户登录加密 默认yes</td>
+</tr>
+<tr>
+<td>force_local_data_ssl=YES</td>
+<td>是否对非匿名用户传输加密 默认yes</td>
+</tr>
+<tr>
+<td>force_anon_logins_ssl=NO</td>
+<td>匿名用户登录时是否加密 默认为no</td>
+</tr>
+<tr>
+<td>force_anon_data_ssl=NO</td>
+<td>匿名用户数据传输时是否加密 默认为no</td>
+</tr>
+<tr>
+<td>ssl_sslv2=NO</td>
+<td>是否开户sslv2协议。 默认NO ，如果设置为yes,</td>
+</tr>
+<tr>
+<td></td>
+<td>前提为ssl_enable=YES</td>
+</tr>
+<tr>
+<td>ssl_sslv3=NO</td>
+<td>是否开户sslv3协议。 默认NO ，如果设置为yes,</td>
+</tr>
+<tr>
+<td></td>
+<td>前提为ssl_enable=YES</td>
+</tr>
+<tr>
+<td>dsa_cert_file</td>
+<td>为ssl加密连接指定dsa证书位置 默认 无</td>
+</tr>
+<tr>
+<td>ssl_ciphers</td>
+<td>是否指定加密方式 默认 DES-CBC3-SHA</td>
+</tr>
+</tbody></table>
+<h2 id="6-日志文件"><a href="#6-日志文件" class="headerlink" title="6 日志文件"></a>6 <strong>日志文件</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dual_log_enable=NO</td>
+<td># 是否启用双日志,默认NO 如果设置为yes，则分别在/var/log/xferlog、</td>
+</tr>
+<tr>
+<td></td>
+<td>var/log/vsftpd.log里记录日志。前一个为wu-ftpd格式，可被通用工具</td>
+</tr>
+<tr>
+<td></td>
+<td>分析，后一个为vsftpd的专用格式</td>
+</tr>
+<tr>
+<td>xferlog_enable=YES</td>
+<td># 激活上传和下传的日志 依赖 参数xferlog_std_format的设置</td>
+</tr>
+<tr>
+<td>xferlog_std_format=YES</td>
+<td># 使用标准格式记录上传、下传日志</td>
+</tr>
+<tr>
+<td>syslog_enable=NO</td>
+<td># 是否关闭vsftpd的日志并记录系统日志 默认NO ，如果设置为YES,系</td>
+</tr>
+<tr>
+<td></td>
+<td>统日志会记录到/var/log/vsftpd.log,而VSFTPD的日志进程将停止。</td>
+</tr>
+</tbody></table>
+<h2 id="7-传输模式"><a href="#7-传输模式" class="headerlink" title="7 传输模式"></a>7 <strong>传输模式</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ascii_download_enable=YES</td>
+<td>是否启用ascii模式下载文件 默认 NO</td>
+</tr>
+<tr>
+<td>ascii_upload_enable=YES</td>
+<td>是否启用ascii模式上传文件 默认 NO</td>
+</tr>
+<tr>
+<td>async_abor_enable=NO</td>
+<td>是否启用强制中止传输文件 默认 NO 启用此参数是为了</td>
+</tr>
+<tr>
+<td></td>
+<td>免中止传输时的客户端挂死。只有特殊情况下才使用。</td>
+</tr>
+<tr>
+<td>background=NO</td>
+<td>是否后台启动vsftpd监听 默认 NO 启用后，VSFTPD将</td>
+</tr>
+<tr>
+<td></td>
+<td>监听进程置于后台，当访问vsftpd服务时，console 会返</td>
+</tr>
+<tr>
+<td></td>
+<td>回到shell 模式</td>
+</tr>
+<tr>
+<td>check_shell=YES</td>
+<td>检测是否有可用的shell环境 默认 YES</td>
+</tr>
+<tr>
+<td>userlist_enable=YES</td>
+<td>启用user_list 文件的检查 默认 NO 为YES时检查</td>
+</tr>
+<tr>
+<td></td>
+<td>user_list文件中的用户列表,为NO 时不检测该文件</td>
+</tr>
+<tr>
+<td>userlist_deny=NO</td>
+<td>只有在userlist_enable 启用时有效，默认YES .</td>
+</tr>
+<tr>
+<td></td>
+<td>YES: 表示user_list文件中的用户不允许登录ftp</td>
+</tr>
+<tr>
+<td></td>
+<td>NO: 表示只允许user_list文件中的用户登录FTP</td>
+</tr>
+</tbody></table>
+<h2 id="8-传输速率设置"><a href="#8-传输速率设置" class="headerlink" title="8 传输速率设置"></a>8 <strong>传输速率设置</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>anon_max_rate</td>
+<td>匿名用户允许的最大传输速率</td>
+<td>0秒</td>
+</tr>
+<tr>
+<td>local_max_rate</td>
+<td>本地认证用户的最大传输速率</td>
+<td>0秒</td>
+</tr>
+</tbody></table>
+<h2 id="9-超时设置"><a href="#9-超时设置" class="headerlink" title="9 超时设置"></a>9 <strong>超时设置</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>accept_timeout</td>
+<td>尝试连接时间</td>
+<td>60s</td>
+</tr>
+<tr>
+<td>data_connection_timeout</td>
+<td>数据传输延迟的最大时间，超过限制，会话将被终止</td>
+<td>300s</td>
+</tr>
+<tr>
+<td>idle_session_timeout</td>
+<td>连接建立后，两次ftp命令之间的时间间隔，超时会话将被终止</td>
+<td>300s</td>
+</tr>
+</tbody></table>
+<h2 id="10-用户创建的文件的权限"><a href="#10-用户创建的文件的权限" class="headerlink" title="10 用户创建的文件的权限"></a>10 <strong>用户创建的文件的权限</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>anon_umask</td>
+<td>匿名用户创建的文件的默认权限</td>
+<td>022</td>
+</tr>
+<tr>
+<td>local_umas</td>
+<td>本地用户创建的文件的默认权限</td>
+<td>022</td>
+</tr>
+</tbody></table>
+<h2 id="11-连接数设置"><a href="#11-连接数设置" class="headerlink" title="11 连接数设置"></a>11 <strong>连接数设置</strong></h2><table frame="hsides" rules="groups" cellspacing="0" cellpadding="6" border="2"><colgroup><col class="org-left"> <col class="org-left"> <col class="org-right"></colgroup><tbody><tr><td class="org-left">参数</td><td class="org-left">说明</td><td class="org-right">默认值</td></tr><tr><td class="org-left">max_clients</td><td class="org-left">允许的最大连接数</td><td class="org-right">0</td></tr><tr><td class="org-left">max_per_ip</td><td class="org-left">单个IP允许的最大连接数</td><td class="org-right">0</td></tr></tbody></table>
+
+<h2 id="12-端口设置"><a href="#12-端口设置" class="headerlink" title="12 端口设置"></a>12 <strong>端口设置</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>listen_port=21</td>
+<td>FTP服务器建立连接所侦听的端口</td>
+<td>21</td>
+</tr>
+<tr>
+<td>ftp_data_port</td>
+<td>数据传输所使用的默认端口</td>
+<td>20</td>
+</tr>
+<tr>
+<td>connect_from_port_20=YES</td>
+<td>指定FTP数据传输连接使用20端口,设置为NO时，则进</td>
+<td>NO</td>
+</tr>
+<tr>
+<td></td>
+<td>行数据连接时，所使用的端口由ftp_data_port指定</td>
+<td></td>
+</tr>
+<tr>
+<td>pasv_max_port=0</td>
+<td>passive 模式下数据传输使用的端口上限</td>
+<td>0</td>
+</tr>
+<tr>
+<td>pasv_mim_port=0</td>
+<td>passive 模式下数据传输使用的端口下限</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h2 id="13-用户访问权限"><a href="#13-用户访问权限" class="headerlink" title="13 用户访问权限"></a>13 <strong>用户访问权限</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>chroot_list_enable=YES</td>
+<td>是否改变用户的根目录, 默认 NO。 当设置为YES时，需要以root</td>
+</tr>
+<tr>
+<td></td>
+<td>用户做如下操作:</td>
+</tr>
+<tr>
+<td></td>
+<td>mkdir /etc/vsftpd/userconf;</td>
+</tr>
+<tr>
+<td></td>
+<td>cat &gt;&gt;$username&lt;&lt;eof</td>
+</tr>
+<tr>
+<td></td>
+<td>local_root=$path</td>
+</tr>
+<tr>
+<td></td>
+<td>EOF</td>
+</tr>
+<tr>
+<td></td>
+<td>说明 “$username” 是需要改变默认根目录的用户比如用户aaa</td>
+</tr>
+<tr>
+<td></td>
+<td>，$path 为你想要用户aaa默认访问的路径 ，比如/data/aaa</td>
+</tr>
+<tr>
+<td>chroot_list_enable=YES</td>
+<td>设置是否启用chroot_list_file配置项指定的用户列表文件。</td>
+</tr>
+<tr>
+<td></td>
+<td>默认值为NO</td>
+</tr>
+<tr>
+<td>chroot_list_file=/etc/vsftpd/chroot_list</td>
+<td>用于指定存储用户列表文件，该文件用于控制哪些用户只可以</td>
+</tr>
+<tr>
+<td></td>
+<td>访问自己的根目录，不可以访问根路径的上级路径目录</td>
+</tr>
+<tr>
+<td>chroot_local_user=YES</td>
+<td>用于指定用户列表文件中的用户是否允许切换到上级目录。默认值为NO。</td>
+</tr>
+<tr>
+<td></td>
+<td>通过搭配能实现以下多种效果。见表格下方。</td>
+</tr>
+</tbody></table>
+<p>①当chroot_list_enable=YES，chroot_local_user=YES时，在/etc/vsftpd/chroot_list文件中列出的用户，可以切换到根路径的上级路径；未在文件中列出的用户，则不能切换。</p>
+<p>②当chroot_list_enable=YES，chroot_local_user=NO时，在/etc/vsftpd/chroot_list文件中列出的用户，不能切换到根路径的上级路径；未在文件中列出的用户，则可以切换。</p>
+<p>③当chroot_list_enable=NO，chroot_local_user=YES时，所有的用户均不能切换到用户根路径的上级路径</p>
+<p>④当chroot_list_enable=NO，chroot_local_user=NO时，所有的用户均可以切换到用户根路径的上级路径</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>

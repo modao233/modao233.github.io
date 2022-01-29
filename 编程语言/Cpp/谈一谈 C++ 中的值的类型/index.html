@@ -106,7 +106,7 @@
 
 <div class="content-area">
 	<div class="title">
-		(转载)谈一谈 C++ 中的值的类型
+		左值、右值、move
 	</div>
 	
 	<div class="page-date">
@@ -133,8 +133,7 @@
 <h2 id="C-98"><a href="#C-98" class="headerlink" title="C++98"></a>C++98</h2><p>历史上，我们把值分为两类，左值 ( lvalue ) 和右值 ( rvalue )。</p>
 <p>右值，就是只能在等号右边的值，比如字面量。</p>
 <p>左值，就是在等号左边出现的值，当然在等号右边也能出现。</p>
-<p>比如</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp"> a = <span class="hljs-number">1</span>; <span class="hljs-comment">// a 是左值, 1 是右值</span><br><span class="hljs-comment">// 这个 1 被称作字面量</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><code class="hljs cpp">a = <span class="hljs-number">1</span>; <span class="hljs-comment">// a 是左值, 1 是右值，这个 1 被称作字面量</span><br></code></pre></td></tr></table></figure>
 
 <p>但是这样的分类方法，在遇到 const int 这样的类型时，就发现一个 const int 既不能分为左值，也不能分类为右值。（有且只有初始化时才能在等号左边出现）</p>
 <p>所以在 C 中，左值，就是表示了一个“对象”(object) 的值，比如一个变量，一个指针等等。在 C++98 中，还把函数变成了左值。</p>
