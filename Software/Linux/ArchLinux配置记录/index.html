@@ -101,7 +101,7 @@
 
 
 <div class="toc">
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8sshd"><span class="toc-text">启动sshd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">安装过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Arch-Linux%E4%B8%8B%E8%A7%A3%E5%86%B3zip%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">Arch Linux下解决zip解压乱码的方法</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8sshd"><span class="toc-text">启动sshd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">安装过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Arch-Linux%E4%B8%8B%E8%A7%A3%E5%86%B3zip%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">Arch Linux下解决zip解压乱码的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8Archlinux%E4%B8%8A%E6%8C%82%E8%BD%BD%E5%8F%AF%E8%AF%BB%E5%86%99%E7%9A%84ntfs"><span class="toc-text">在Archlinux上挂载可读写的ntfs</span></a></li></ol></li></ol>
 </div>
 
 <div class="content-area">
@@ -172,6 +172,26 @@
 <p>安装nginx，默认启动用户是http，这样会导致权限问题访问不了</p>
 <p>archlinux 解压zip文件乱码问题解决：<br>在尝试p7z unrar convmv 等命令均无法实现正确显示问题，找到以下解决办法。<br>一：安装 sudo pacman -S unarchiver<br>二：使用unar -e GBK file.zip命令解压文件</p>
 <h3 id="Arch-Linux下解决zip解压乱码的方法"><a href="#Arch-Linux下解决zip解压乱码的方法" class="headerlink" title="Arch Linux下解决zip解压乱码的方法"></a>Arch Linux下解决zip解压乱码的方法</h3><p>安装unarchiver，用unar解压zip文件</p>
+<h3 id="在Archlinux上挂载可读写的ntfs"><a href="#在Archlinux上挂载可读写的ntfs" class="headerlink" title="在Archlinux上挂载可读写的ntfs"></a>在Archlinux上挂载可读写的ntfs</h3><p><a target="_blank" rel="noopener" href="https://zzzsy.top/notes/essay/archlinux-mount-ntfs-rw/">https://zzzsy.top/notes/essay/archlinux-mount-ntfs-rw/</a></p>
+<p>今天想把在linux上下载的一个文件放到公共的分区Data时，发现它是不可写的。</p>
+<p>于是整开/etc/fstab在挂载语句后面加上rw，变成</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">UUID=6A268974849B /home/username/Data ntfs-3g rw,uid=1000,gid=users,umask=0022 0 0<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中参数意义参见 fstab</p>
+</blockquote>
+<p>先取消挂载：sudo umount /home/username/Data<br>重新挂载：mount -a</p>
+<p>爆出错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Error mounting: mount exited with exit code 1: helper failed with:<br>Unprivileged user can not mount NTFS block devices using the external FUSE<br>library. Either mount the volume as root, or rebuild NTFS-3G with integrated<br>FUSE support and make it setuid root. Please see more information at<br>http://tuxera.com/community/ntfs-3g-faq/#unprivileged<br></code></pre></td></tr></table></figure>
+<p>大概意思是非特权用户不能加载使用了额外FUSE库的NTFS文件系统</p>
+<p>使用sudo命令，发现又有新的错误</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">The disk contains an unclean file system (0, 0).<br>Metadata kept in Windows cache, refused to mount.<br>Falling back to read-only mount because the NTFS partition is in an<br>unsafe state. Please resume and shutdown Windows fully (no hibernation<br>or fast restarting.)<br></code></pre></td></tr></table></figure>
+<p>意思是元数据保存在其中，拒绝挂载</p>
+<p>查找了一下解决办法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">yay -Sy ntfsprogs<br>sudo ntfsfix /dev/nvme0n1p4<br>sudo umount /home/username/Data<br>sudo mount -a<br></code></pre></td></tr></table></figure>
+<p>成功解决</p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/NTFS-3G_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E6%8D%9F%E5%9D%8F%E7%9A%84NTFS%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">NTFS-3G (简体中文)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhishuai/p/7822810.html">kali 2016：mount ntfs 分区只读</a></p>
 
 	</div>
 </div>
