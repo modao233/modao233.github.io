@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<!-- html页面布局的head -->
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title>
+		modao
+	</title>
+
+	<!-- 百度统计代码 -->
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?902dc461fe0d25f09e74e0d04677b6d8";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N2WTGJE0M5');
+	</script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+
+    <!-- 文章详情页模板 -->
+
+<!-- 主页标题栏 -->
+
+<link rel="stylesheet" href="/css/navigatebar.css">
+
+
+<header class="header">
+	<div class="topbar">
+		<div class="topbar-button topbar-mine">
+			<a href="/">
+				modao
+			</a>
+		</div>
+		
+			<div class="topbar-button">
+				<a href="/">
+					Home
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/categories">
+					Categories
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/links">
+					Friends
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/sites">
+					Sites
+				</a>
+			</div>
+		
+			<div class="topbar-button">
+				<a href="/stars">
+					Stars
+				</a>
+			</div>
+		
+
+	</div>
+	<div class="slogan">
+		「工作日还有多少天，休息日还剩几小时」
+	</div>
+</header>
+
+
+<link rel="stylesheet" href="/css/font.css">
+
+
+<link rel="stylesheet" href="/css/post.css" media="screen and (min-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/post_mobile.css" media="screen and (max-width: 600px)">
+
+
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+
+
+<div class="toc">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8sshd"><span class="toc-text">启动sshd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">安装过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%B1%87%E6%80%BB"><span class="toc-text">命令汇总</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="toc-text">配置软件源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%A1%8C%E9%9D%A2"><span class="toc-text">配置桌面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85xorg"><span class="toc-text">安装xorg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEawesome-wm%E4%B8%BB%E9%A2%98"><span class="toc-text">配置awesome-wm主题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEzsh"><span class="toc-text">配置zsh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E5%B1%8F%E5%B9%95%E5%88%86%E8%BE%A8%E7%8E%87%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">调整屏幕分辨率（可选）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E4%B8%AD%E7%94%9F%E6%95%88"><span class="toc-text">会话中生效</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B0%B8%E4%B9%85%E7%94%9F%E6%95%88"><span class="toc-text">永久生效</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87feh%E8%AE%BE%E7%BD%AE%E5%A3%81%E7%BA%B8"><span class="toc-text">通过feh设置壁纸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87picom%E8%AE%BE%E7%BD%AE%E7%AA%97%E5%8F%A3%E9%80%8F%E6%98%8E"><span class="toc-text">通过picom设置窗口透明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2beep%E5%A3%B0%E9%9F%B3%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">禁止beep声音（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7net-tools"><span class="toc-text">网络工具net-tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7-axel"><span class="toc-text">多线程下载工具 axel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86"><span class="toc-text">代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7-conky%EF%BC%88%E5%8F%AF%E9%80%89"><span class="toc-text">系统监控工具 conky（可选)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8ranger"><span class="toc-text">终端文件管理器ranger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6%E5%90%8D%E6%95%B0%E6%8D%AE%E5%BA%93mlocate"><span class="toc-text">搜索文件名数据库mlocate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vscode"><span class="toc-text">vscode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85fcitx5%EF%BC%8C%E9%85%8D%E7%BD%AE%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95"><span class="toc-text">安装fcitx5，配置中文输入法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#arch%E6%89%93%E5%8C%85%E7%9A%84oss%E7%89%88%E7%9A%84vscode%E9%BB%98%E8%AE%A4%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E5%B8%82%E5%9C%BA"><span class="toc-text">arch打包的oss版的vscode默认不使用官方市场</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E7%A2%8E%E8%AE%B0%E5%BD%95"><span class="toc-text">杂碎记录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD%E7%9B%B8%E5%85%B3"><span class="toc-text">挂载相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%8C%BA%E7%9B%B8%E5%85%B3"><span class="toc-text">分区相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E7%9B%B8%E5%85%B3"><span class="toc-text">依赖相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Archlinux%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8"><span class="toc-text">Archlinux编译内核</span></a></li></ol></li></ol>
+</div>
+
+<div class="content-area">
+	<div class="title">
+		ArchLinux安装
+	</div>
+	
+	<div class="page-date">
+		2020-07-12
+	</div>
+	
+	<div class="category-area">
+		
+			 
+				「
+				<div class="category">
+					<a href="/categories/Linux">Linux</a>
+				
+				</div>
+				」
+			
+		
+	</div>
+	
+	<div class="content">
+		<p>虚拟机安装ArchLinux的过程，使用ssh方便复制粘贴。</p>
+<span id="more"></span>
+
+<h2 id="启动sshd"><a href="#启动sshd" class="headerlink" title="启动sshd"></a>启动sshd</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启动sshd服务</span><br>systemctl start sshd.service<br><span class="hljs-comment"># 设置ssh登录的root密码</span><br>passwd<br><span class="hljs-comment"># 查看ip</span><br>ip add<br></code></pre></td></tr></table></figure>
+
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">root@archiso ~ <span class="hljs-comment"># ls</span><br>install.txt<br>root@archiso ~ <span class="hljs-comment"># ls /sys/firmware/efi/efivars</span><br>root@archiso ~ <span class="hljs-comment"># timedatectl set-ntp true</span><br>root@archiso ~ <span class="hljs-comment"># fdisk -l</span><br>Disk /dev/sda: 20 GiB, 21474836480 bytes, 41943040 sectors<br>Disk model: VMware Virtual S<br>Units: sectors of 1 * 512 = 512 bytes<br>Sector size (logical/physical): 512 bytes / 512 bytes<br>I/O size (minimum/optimal): 512 bytes / 512 bytes<br><br><br>Disk /dev/loop0: 529.67 MiB, 555380736 bytes, 1084728 sectors<br>Units: sectors of 1 * 512 = 512 bytes<br>Sector size (logical/physical): 512 bytes / 512 bytes<br>I/O size (minimum/optimal): 512 bytes / 512 bytes<br><br><br>root@archiso ~ <span class="hljs-comment"># fdisk /dev/sda</span><br><br>Welcome to fdisk (util-linux 2.35.2).<br>Changes will remain <span class="hljs-keyword">in</span> memory only, until you decide to write them.<br>Be careful before using the write <span class="hljs-built_in">command</span>.<br><br>Device does not contain a recognized partition table.<br>Created a new DOS disklabel with disk identifier 0xb921b361.<br><br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): m<br><br>Help:<br><br>  DOS (MBR)<br>   a   toggle a bootable flag<br>   b   edit nested BSD disklabel<br>   c   toggle the dos compatibility flag<br><br>  Generic<br>   d   delete a partition<br>   F   list free unpartitioned space<br>   l   list known partition types<br>   n   add a new partition<br>   p   <span class="hljs-built_in">print</span> the partition table<br>   t   change a partition <span class="hljs-built_in">type</span><br>   v   verify the partition table<br>   i   <span class="hljs-built_in">print</span> information about a partition<br><br>  Misc<br>   m   <span class="hljs-built_in">print</span> this menu<br>   u   change display/entry units<br>   x   extra functionality (experts only)<br><br>  Script<br>   I   load disk layout from sfdisk script file<br>   O   dump disk layout to sfdisk script file<br><br>  Save &amp; Exit<br>   w   write table to disk and <span class="hljs-built_in">exit</span><br>   q   quit without saving changes<br><br>  Create a new label<br>   g   create a new empty GPT partition table<br>   G   create a new empty SGI (IRIX) partition table<br>   o   create a new empty DOS partition table<br>   s   create a new empty Sun partition table<br><br><br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): g<br>Created a new GPT disklabel (GUID: B4CE73D7-CB8E-E84F-B3BD-5721A8CECAE0).<br><br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): n<br>Partition number (1-128, default 1):<br>First sector (2048-41943006, default 2048):<br>Last sector, +/-sectors or +/-size&#123;K,M,G,T,P&#125; (2048-41943006, default 41943006): +256M<br><br>Created a new partition 1 of <span class="hljs-built_in">type</span> <span class="hljs-string">&#x27;Linux filesystem&#x27;</span> and of size 256 MiB.<br><br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): n<br>Partition number (2-128, default 2):<br>First sector (526336-41943006, default 526336):<br>Last sector, +/-sectors or +/-size&#123;K,M,G,T,P&#125; (526336-41943006, default 41943006):<br><br>Created a new partition 2 of <span class="hljs-built_in">type</span> <span class="hljs-string">&#x27;Linux filesystem&#x27;</span> and of size 19.8 GiB.<br><br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): m<br><br>Help:<br><br>  GPT<br>   M   enter protective/hybrid MBR<br><br>  Generic<br>   d   delete a partition<br>   F   list free unpartitioned space<br>   l   list known partition types<br>   n   add a new partition<br>   p   <span class="hljs-built_in">print</span> the partition table<br>   t   change a partition <span class="hljs-built_in">type</span><br>   v   verify the partition table<br>   i   <span class="hljs-built_in">print</span> information about a partition<br><br>  Misc<br>   m   <span class="hljs-built_in">print</span> this menu<br>   x   extra functionality (experts only)<br><br>  Script<br>   I   load disk layout from sfdisk script file<br>   O   dump disk layout to sfdisk script file<br><br>  Save &amp; Exit<br>   w   write table to disk and <span class="hljs-built_in">exit</span><br>   q   quit without saving changes<br><br>  Create a new label<br>   g   create a new empty GPT partition table<br>   G   create a new empty SGI (IRIX) partition table<br>   o   create a new empty DOS partition table<br>   s   create a new empty Sun partition table<br><br><br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): t<br>Partition number (1,2, default 2): 1<br>Partition <span class="hljs-built_in">type</span> (<span class="hljs-built_in">type</span> L to list all types): 1<br>Changed <span class="hljs-built_in">type</span> of partition <span class="hljs-string">&#x27;Linux filesystem&#x27;</span> to <span class="hljs-string">&#x27;EFI System&#x27;</span>.<br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): t<br>Partition number (1,2, default 2):<br>Partition <span class="hljs-built_in">type</span> (<span class="hljs-built_in">type</span> L to list all types): 24<br>Changed <span class="hljs-built_in">type</span> of partition <span class="hljs-string">&#x27;Linux filesystem&#x27;</span> to <span class="hljs-string">&#x27;Linux root (x86-64)&#x27;</span>.<br>Command (m <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>): w<br>The partition table has been altered.<br>Calling ioctl() to re-read partition table.<br>Syncing disks.<br><br>root@archiso ~ <span class="hljs-comment"># mkfs.ext4 /dev/sda2</span><br>mke2fs 1.45.6 (20-Mar-202:0)<br>Creating filesystem with 5177083 4k blocks and 1294336 inodes<br>Filesystem UUID: 0a6eccbf-2065-4d0e-aa66-d8851133f007<br>Superblock backups stored on blocks:<br>        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,<br>        4096000<br><br>Allocating group tables: <span class="hljs-keyword">done</span><br>Writing inode tables: <span class="hljs-keyword">done</span><br>Creating journal (32768 blocks): <span class="hljs-keyword">done</span><br>Writing superblocks and filesystem accounting information: <span class="hljs-keyword">done</span><br><br>root@archiso ~ <span class="hljs-comment"># mkfs.fat /dev/sda1</span><br>mkfs.fat 4.1 (2017-01-24)<br>root@archiso ~ <span class="hljs-comment"># mount /dev/sda1 /mnt/boot</span><br>mount: /mnt/boot: mount point does not exist.<br>32 root@archiso ~ <span class="hljs-comment"># mount /dev/sda2 /mnt</span><br>root@archiso ~ <span class="hljs-comment"># mkdir /mnt/boot</span><br>root@archiso ~ <span class="hljs-comment"># mount /dev/sda1 /mnt/boot</span><br>root@archiso ~ <span class="hljs-comment"># vim /etc/pacman.d/mirrorlist</span><br>Server = http://mirrors.ustc.edu.cn/archlinux/<span class="hljs-variable">$repo</span>/os/<span class="hljs-variable">$arch</span><br><br>root@archiso ~ <span class="hljs-comment"># pacstrap /mnt base linux linux-firmware dhcpcd vim</span><br>root@archiso ~ <span class="hljs-comment"># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br>root@archiso ~ <span class="hljs-comment"># cat /mnt/etc/fstab</span><br><span class="hljs-comment"># Static information about the filesystems.</span><br><span class="hljs-comment"># See fstab(5) for details.</span><br><br><span class="hljs-comment"># &lt;file system&gt; &lt;dir&gt; &lt;type&gt; &lt;options&gt; &lt;dump&gt; &lt;pass&gt;</span><br><span class="hljs-comment"># /dev/sda2</span><br>UUID=0a6eccbf-2065-4d0e-aa66-d8851133f007       /               ext4           rw,relatime      0 1<br><br><span class="hljs-comment"># /dev/sda1</span><br>UUID=0AD1-7225          /boot           vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro       0 2<br><br>root@archiso ~ <span class="hljs-comment"># arch-chroot /mnt</span><br>[root@archiso /]<span class="hljs-comment"># ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br>[root@archiso /]<span class="hljs-comment"># hwclock --systohc</span><br>[root@archiso /]<span class="hljs-comment"># vim /etc/locale.gen</span><br>    en_US.UTF-8 UTF-8<br>    zh_CN.UTF-8 UTF-8<br>    zh_TW.UTF-8 UTF-8<br>    <br>[root@archiso /]<span class="hljs-comment"># locale-gen</span><br>Generating locales...<br>  en_US.UTF-8... <span class="hljs-keyword">done</span><br>  zh_CN.UTF-8... <span class="hljs-keyword">done</span><br>  zh_TW.UTF-8... <span class="hljs-keyword">done</span><br>Generation complete.<br>[root@archiso /]<span class="hljs-comment"># echo LANG=en_US.UTF-8 &gt; /etc/locale.conf</span><br>[root@archiso /]<span class="hljs-comment"># echo modao &gt; /etc/hostname</span><br>[root@archiso /]<span class="hljs-comment"># vim /etc/hosts</span><br><span class="hljs-comment"># /etc/hosts</span><br>127.0.0.1	localhost<br>::1		localhost<br>127.0.1.1	modao.localdomain	modao<br><br>[root@archiso /]<span class="hljs-comment"># passwd</span><br><br>[root@archiso /]<span class="hljs-comment"># pacman -S grub</span><br>[root@archiso /]<span class="hljs-comment"># pacman -S efibootmgr</span><br>[root@archiso /]<span class="hljs-comment"># grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCHLINUX</span><br>Installing <span class="hljs-keyword">for</span> x86_64-efi platform.<br>Installation finished. No error reported.<br>[root@archiso /]<span class="hljs-comment"># grub-mkconfig -o /boot/grub/grub.cfg</span><br>Generating grub configuration file ...<br>Found linux image: /boot/vmlinuz-linux<br>Found initrd image: /boot/initramfs-linux.img<br>Found fallback initrd image(s) <span class="hljs-keyword">in</span> /boot: initramfs-linux-fallback.img<br><span class="hljs-keyword">done</span><br>[root@archiso /]<span class="hljs-comment"># exit</span><br><span class="hljs-built_in">exit</span><br>arch-chroot /mnt  8.17s user 2.01s system 1% cpu 11:43.60 total<br>root@archiso ~ <span class="hljs-comment"># umount -R /mnt</span><br>root@archiso ~ <span class="hljs-comment"># reboot</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="命令汇总"><a href="#命令汇总" class="headerlink" title="命令汇总"></a>命令汇总</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ls /sys/firmware/efi/efivars<br>timedatectl set-ntp <span class="hljs-literal">true</span><br>fdisk -l<br>fdisk /dev/sda<br>mkfs.ext4 /dev/sda2<br>mkfs.fat /dev/sda1<br>mount /dev/sda2 /mnt<br>mkdir /mnt/boot<br>mount /dev/sda1 /mnt/boot<br><span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;Server = http://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch&quot;</span> &gt; /etc/pacman.d/mirrorlist<br>pacstrap /mnt base linux linux-firmware dhcpcd vim<br>genfstab -U /mnt &gt;&gt; /mnt/etc/fstab<br>cat /mnt/etc/fstab<br>arch-chroot /mnt<br>ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime<br>hwclock --systohc<br><span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;en_US.UTF-8 UTF-8\nzh_CN.UTF-8 UTF-8\nzh_TW.UTF-8 UTF-8&quot;</span> &gt;  /etc/locale.gen<br>locale-gen<br><span class="hljs-built_in">echo</span> LANG=en_US.UTF-8 &gt; /etc/locale.conf<br><span class="hljs-built_in">echo</span> modao &gt; /etc/hostname<br><span class="hljs-built_in">echo</span> -e <span class="hljs-string">&quot;127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\tmodao.localdomain\tmodao&quot;</span> &gt; /etc/hosts<br>passwd<br>pacman -S grub<br>pacman -S efibootmgr<br>grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ARCHLINUX<br>grub-mkconfig -o /boot/grub/grub.cfg<br><span class="hljs-built_in">exit</span><br>umount -R /mnt<br>reboot<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置软件源"><a href="#配置软件源" class="headerlink" title="配置软件源"></a>配置软件源</h2><p><a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/help/archlinux.html">中科大-Arch Linux 源使用帮助</a></p>
+<p><a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/help/archlinuxcn.html">中科大-Arch Linux CN 源使用帮助</a></p>
+<p>更新软件数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -Syy<br></code></pre></td></tr></table></figure>
+
+<p>安装 <code>archlinuxcn-keyring</code> 包以导入 GPG key</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -S archlinuxcn-keyring<br></code></pre></td></tr></table></figure>
+
+<p>更新系统</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -Syu<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置桌面"><a href="#配置桌面" class="headerlink" title="配置桌面"></a>配置桌面</h2><h3 id="安装xorg"><a href="#安装xorg" class="headerlink" title="安装xorg"></a>安装xorg</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pacman -S xorg<br>pacman -S xorg-xinit<br>cp /etc/X11/xinit/xinitrc ~/.xinitrc<br>pacman -S awesome<br>pacman -S xterm<br></code></pre></td></tr></table></figure>
+
+<h3 id="配置awesome-wm主题"><a href="#配置awesome-wm主题" class="headerlink" title="配置awesome-wm主题"></a>配置awesome-wm主题</h3><p>下载主题时：git clone –recursive 用于循环克隆git子项目</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/4ban/awesome-ban">Awesome WM 4.x Ban theme</a></p>
+<ul>
+<li>  启动不成功，将配置文件（rc.lua和theme.lua）里的<code>“/home”</code>改成了<code>“/”</code></li>
+<li>  修改默认终端为xterm（全小写）</li>
+<li>  修改主题配置文件里的字体大小</li>
+<li>  修改rc.lua的快捷键绑定</li>
+</ul>
+<h3 id="配置zsh"><a href="#配置zsh" class="headerlink" title="配置zsh"></a>配置zsh</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pacman -S zsh<br>chsh -s /bin/zsh<br>pacman -S oh-my-zsh-git<br>cp /usr/share/oh-my-zsh/zshrc ~/.zshrc<br><span class="hljs-comment">## 修改主题后，重新加载</span><br><span class="hljs-built_in">source</span> ~/.zshrc<br><span class="hljs-comment">## 安装字体</span><br>pacman -S ttf-monaco<br>pacman -S wqy-microhei<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">! .Xresources<br>! Xterm settings<br>! XTerm*vt100*reverseVideo: true<br><br>XTerm*vt100.background: black<br>XTerm*vt100.foreground: white<br><br>! copy &amp; paste <br>XTerm*VT100.translations: #override &lt;Btn1Up&gt;: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) <br><br>! English font <br>xterm*faceName: Monaco:antialias=True:pixelsize=15<br>! Chinese font <br>xterm*faceNameDoublesize:WenQuanYi Micro Hei:antialias=True:pixelsize=15<br><br>!input method <br>XTerm*inputMethod:fcitx <br><br>! scrollbar <br>XTerm*scrollBar: true <br>XTerm*rightScrollBar: true <br>XTerm*SaveLines: 4096<br><br>! Xterm*faceSize: 20<br>Xterm*VT100*geometry: 100x30<br></code></pre></td></tr></table></figure>
+
+<h3 id="调整屏幕分辨率（可选）"><a href="#调整屏幕分辨率（可选）" class="headerlink" title="调整屏幕分辨率（可选）"></a>调整屏幕分辨率（可选）</h3><h4 id="会话中生效"><a href="#会话中生效" class="headerlink" title="会话中生效"></a>会话中生效</h4><blockquote>
+<p>  <em>xrandr</em> 作出的改变只在本次会话中有效</p>
+<p>  分辨率后面带有一个***<strong>号和一个</strong>+**号</p>
+</blockquote>
+<p>从已有分辨率中选择</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">xrandr --output HDMI-1 --mode 1920x1080<br>xrandr --output HDMI-1 --mode 1920x1080 --rate 60<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>  <code>--ouput</code>：可用的显示输出设备</li>
+<li>  <code>--mode</code>：已有的分辨率</li>
+<li>  <code>--rate</code>：刷新速率</li>
+</ul>
+<p>添加未被检测到的有效分辨率</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># 首先，运行gtf或者cvt，查询某分辨率的有效扫描频率。 <br>cvt 1280 1024<br>1280x1024 59.89 Hz (CVT 1.31M4) hsync: 63.67 kHz; pclk: 109.00 MHz <br>Modeline &quot;1280x1024_60.00&quot;  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync <br><br># 然后通过--newmode参数新建一种xrandr模式，输入上面所得到的查询结果，其中Modeline关键词自然需要被省略。<br>xrandr --newmode &quot;1280x1024_60.00&quot;  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync<br><br># 新建模式后，我们需要把这模式添加到当前的输出设备（假定为VGA1）上。由于一些参数已经事先设置，只需输入模式名称即可，即1280x1024_60.00。<br>xrandr --addmode VGA1 1280x1024_60.00<br><br># 最后，再把VGA1的分辨率指定为刚刚添加的新模式。<br>xrandr --output VGA1 --mode 1280x1024_60.00   <br></code></pre></td></tr></table></figure>
+
+<h4 id="永久生效"><a href="#永久生效" class="headerlink" title="永久生效"></a>永久生效</h4><p>使xrandr定制永久生效的方案有：(详见Arch wiki)</p>
+<ul>
+<li>  <code>xorg.conf</code>（推荐）</li>
+<li>  <code>.xprofile</code></li>
+<li>  kdm/gdm</li>
+</ul>
+<p>在<code>xorg.conf</code>设置分辨率：</p>
+<p>可以通过 <code>/etc/X11/xorg.conf</code> 配置 Xorg，用下面命令可以生成 <code>xorg.conf</code> 模板:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Xorg :0 -configure<br></code></pre></td></tr></table></figure>
+
+<p>执行后会在 <code>/root/</code> 生成 <code>xorg.conf.new</code> 文件，然后你可以将它复制到 <code>/etc/X11/xorg.conf</code>。</p>
+<blockquote>
+<p>   如果已经运行了 X 服务器，请使用不同的 display，例如 <code>Xorg :2 -configure</code>。</p>
+</blockquote>
+<p>利用<code>gtf</code>计算参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">gtf 1920 1080 60<br></code></pre></td></tr></table></figure>
+
+<p>得到结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># 1920x1080 @ 60.00 Hz (GTF) hsync: 67.08 kHz; pclk: 172.80 MHz<br>Modeline &quot;1920x1080_60.00&quot;  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync<br></code></pre></td></tr></table></figure>
+
+<p>修改<code>xorg.conf</code>文件：</p>
+<ul>
+<li><p>在Section “Monitor”中，加入：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Modeline &quot;1920x1080_60.00&quot;  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync<br></code></pre></td></tr></table></figure></li>
+<li><p>在Section “Screen”中的 SubSection “Display”中，加入一行：</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Modes   &quot;1920x1080_60.00&quot;<br></code></pre></td></tr></table></figure></li>
+<li><p>最终xorg.conf文件看上去是这样的（无关的Section可以删掉）</p>
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">......(省略)<br><br>Section &quot;Monitor&quot;<br>    Identifier   &quot;Monitor0&quot;<br>    Modeline &quot;1920x1080_60.00&quot;  172.80  1920 2040 2248 2576  1080 1081 1084 1118      -HSync +Vsync<br>    Modeline &quot;1888x1020_60.00&quot;  160.17  1888 2008 2208 2528  1020 1021 1024 1056      -HSync +Vsync<br>    Modeline &quot;1600x860_60.00&quot;  112.78  1600 1688 1856 2112  860 861 864 890  -HSync +Vsync<br>    VendorName   &quot;Monitor Vendor&quot;<br>    ModelName    &quot;Monitor Model&quot;<br>EndSection<br><br>......(省略)<br><br>Section &quot;Screen&quot;<br>    Identifier &quot;Screen0&quot;<br>    Device     &quot;Card0&quot;<br>    Monitor    &quot;Monitor0&quot;<br>    SubSection &quot;Display&quot;<br>        Viewport   0 0<br>        Modes   &quot;1920x1080_60.00&quot;<br>        Depth     24<br>    EndSubSection<br>    SubSection &quot;Display&quot;<br>        Viewport   0 0<br>        Modes   &quot;1888x1020_60.00&quot;<br>        Depth     24<br>    EndSubSection<br>    SubSection &quot;Display&quot;<br>        Viewport   0 0<br>        Modes   &quot;1600x860_60.00&quot;<br>        Depth     24<br>    EndSubSection<br>EndSection<br><br>......(省略)<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>参考资料</strong>：</p>
+<ul>
+<li>  <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Xrandr_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E4%BD%BFxrandr%E6%89%80%E6%9B%B4%E6%94%B9%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87%E8%AE%BE%E7%BD%AE%E6%B0%B8%E4%B9%85%E7%94%9F%E6%95%88">在xorg.conf设置分辨率（推荐）</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Xorg_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E4%BD%BF%E7%94%A8_xorg.conf">使用 xorg.conf</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://jlk.fjfi.cvut.cz/arch/manpages/man/xorg.conf.5">xorg.conf(5)</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://feichashao.com/xorg_resolution/">xorg.conf：修改屏幕分辨率</a></li>
+</ul>
+<h3 id="通过feh设置壁纸"><a href="#通过feh设置壁纸" class="headerlink" title="通过feh设置壁纸"></a>通过feh设置壁纸</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -S feh<br>feh --bg-fill master.jpg<br></code></pre></td></tr></table></figure>
+
+<h3 id="通过picom设置窗口透明"><a href="#通过picom设置窗口透明" class="headerlink" title="通过picom设置窗口透明"></a>通过picom设置窗口透明</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -S picom<br>cp /etc/xdg/picom.conf ~/.config/<br>vim ~/.config/picom.conf<br>picom&amp;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"># 修改配置，添加规则<br># picom.conf<br><br># 非活跃窗口透明度（非当前窗口）<br>inactive-opacity = 0.5;<br># 框体透明度，窗口的标题栏等<br>frame-opacity = 0.6;<br># 默认<br>inactive-opacity-override = false;<br># 活跃窗口透明度（当前窗口）<br>active-opacity = 0.7<br><br>opacity-rule = [<br>    &quot;100:class_g = &#x27;Xterm&#x27;&quot;,<br>    &quot;100:class_g = &#x27;feh&#x27;&quot;<br>];<br></code></pre></td></tr></table></figure>
+
+<h3 id="禁止beep声音（可选）"><a href="#禁止beep声音（可选）" class="headerlink" title="禁止beep声音（可选）"></a>禁止beep声音（可选）</h3><p><code>/etc/modprobe.d</code>中加入<code>no-beep.conf</code> 文件，内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">blacklist pcspkr<br></code></pre></td></tr></table></figure>
+
+<p>禁掉该模块就不会发出 beep 的声音了。</p>
+<h3 id="网络工具net-tools"><a href="#网络工具net-tools" class="headerlink" title="网络工具net-tools"></a>网络工具net-tools</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -S net-tools<br></code></pre></td></tr></table></figure>
+
+<p>校园网Linux客户端依赖<code>ifconfig</code>（没装显示无效网卡），尽管在arch中已经有<code>ip addr</code>代替</p>
+<h3 id="多线程下载工具-axel"><a href="#多线程下载工具-axel" class="headerlink" title="多线程下载工具 axel"></a>多线程下载工具 axel</h3><p>more</p>
+<h3 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h3><p>proxychains    privxy</p>
+<h3 id="系统监控工具-conky（可选"><a href="#系统监控工具-conky（可选" class="headerlink" title="系统监控工具 conky（可选)"></a>系统监控工具 conky（可选)</h3><p>more</p>
+<h3 id="终端文件管理器ranger"><a href="#终端文件管理器ranger" class="headerlink" title="终端文件管理器ranger"></a>终端文件管理器ranger</h3><h3 id="搜索文件名数据库mlocate"><a href="#搜索文件名数据库mlocate" class="headerlink" title="搜索文件名数据库mlocate"></a>搜索文件名数据库mlocate</h3><p>archlinux不自带locate，提供mlocate</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">//安装并初始化数据库，需要root<br>pacman -S mlocate<br>updatedb<br></code></pre></td></tr></table></figure>
+
+<h3 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h3><p>arch可以有多个版本的vscode供选择：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">pacman -S code<br></code></pre></td></tr></table></figure>
+
+<p>arch打包的oss版的vscode默认不使用官方市场</p>
+<p>可以手动修改product.json让oss版使用官方市场，修改这个字段：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;extensionsGallery&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;serviceUrl&quot;</span>: <span class="hljs-string">&quot;https://marketplace.visualstudio.com/_apis/public/gallery&quot;</span>,<br>      <span class="hljs-attr">&quot;cacheUrl&quot;</span>: <span class="hljs-string">&quot;https://vscode.blob.core.windows.net/gallery/index&quot;</span>,<br>      <span class="hljs-attr">&quot;itemUrl&quot;</span>: <span class="hljs-string">&quot;https://marketplace.visualstudio.com/items&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/37848793/install-extensions-after-building-vscode-from-source">可参考stackoverflow</a></p>
+<h3 id="安装fcitx5，配置中文输入法"><a href="#安装fcitx5，配置中文输入法" class="headerlink" title="安装fcitx5，配置中文输入法"></a>安装fcitx5，配置中文输入法</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">//安装输入法框架和配置工具<br>pacman -S fcitx5 fcitx5-configtool<br>//配置启动fcitx5必要的环境变量，并重新登陆<br>//~/.pam_environment<br>GTK_IM_MODULE DEFAULT=fcitx<br>QT_IM_MODULE  DEFAULT=fcitx<br>XMODIFIERS    DEFAULT=\@im=fcitx<br>SDL_IM_MODULE DEFAULT=fcitx<br>//安装中文输入法引擎<br>pacman -S fcitx5-rime<br>//安装词库：四叶草拼音输入方案<br>//https://github.com/fkxxyz/rime-cloverpinyin<br>//切换普通用户<br>yay -S rime-cloverpinyin<br>//fcitx5-rime的用户资料文件夹：~/.local/share/fcitx5/rime<br>//在用户资料夹下创建 default.custom.yaml ，内容为<br>patch:<br>  &quot;menu/page_size&quot;: 8<br>  schema_list:<br>    - schema: clover<br>//其中 8 表示打字的时候输入面板的每一页的候选词数目，可以设置成 1~9 任意数字。<br>//写好该文件之后，点击右下角托盘图标右键菜单，点“重新部署”<br><br>//配置startx启动时自动启动fcitx5<br>vim ~/.config/awesome/rc.lua<br><br>添加一条autorun为fcitx5即可<br></code></pre></td></tr></table></figure>
+
+<h3 id="arch打包的oss版的vscode默认不使用官方市场"><a href="#arch打包的oss版的vscode默认不使用官方市场" class="headerlink" title="arch打包的oss版的vscode默认不使用官方市场"></a>arch打包的oss版的vscode默认不使用官方市场</h3><p>可以手动修改product.json让oss版使用官方市场，修改这个字段：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-string">&quot;extensionsGallery&quot;</span>: &#123;<br>      <span class="hljs-attr">&quot;serviceUrl&quot;</span>: <span class="hljs-string">&quot;https://marketplace.visualstudio.com/_apis/public/gallery&quot;</span>,<br>      <span class="hljs-attr">&quot;cacheUrl&quot;</span>: <span class="hljs-string">&quot;https://vscode.blob.core.windows.net/gallery/index&quot;</span>,<br>      <span class="hljs-attr">&quot;itemUrl&quot;</span>: <span class="hljs-string">&quot;https://marketplace.visualstudio.com/items&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/37848793/install-extensions-after-building-vscode-from-source">可供参考</a></p>
+<h2 id="杂碎记录"><a href="#杂碎记录" class="headerlink" title="杂碎记录"></a>杂碎记录</h2><h3 id="挂载相关"><a href="#挂载相关" class="headerlink" title="挂载相关"></a>挂载相关</h3><p>Linux和手机传输文件：<br>mtpfs手动挂载<br>jmtpfs<br>df -iT查看能否识别</p>
+<h3 id="分区相关"><a href="#分区相关" class="headerlink" title="分区相关"></a>分区相关</h3><p>从性能角度考虑，/var/home 比较科学<br>把配置文件放在 /var 分区，速度更快<br>/home 单独分区，读写配置文件会比较慢<br>/var 如果没单独分区，那就在根分区，也不必如此操作</p>
+<p>所以一般情况建议 /var /home 都还是留在根分区。<br>如果根分区在固态硬盘，则 /var 分到机械硬盘，/home 挪进 /var 分区。<br>我是根分区和 /boot 分区在固态，平时是只读挂载，提高安全性。/var 在机械硬盘，/home 挪入 /var。<br>第一，离根分区较远，磁头摆动大。<br>第二，单独的分区，不能和根分区集中进行布局优化。<br>第三，单独的主分区，必然会放一些七七八八的数据，磁盘碎片化严重。</p>
+<p>软连接部分文件，配置文件和home都该放到根分区<br>较大的文件可以移走 然后软连接回来</p>
+<h3 id="依赖相关"><a href="#依赖相关" class="headerlink" title="依赖相关"></a>依赖相关</h3><p>先安装该包还是先安装其依赖？<br>直接apt install ./deb，可以自动装依赖</p>
+<p>dpkg -i xxx.deb<br>aptitude install<br>dpkg 安装时缺少依赖就是返回非 0 值的<br>apt 只在 dpkg 失败时才补充</p>
+<p>dpkg最差，pkg其次（arch属于pkg），rpm最舒服<br>dpkg主要问题是推荐和依赖分不清</p>
+<h3 id="Archlinux编译内核"><a href="#Archlinux编译内核" class="headerlink" title="Archlinux编译内核"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mc-r/articles/12238345.html">Archlinux编译内核</a></h3><p><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Kernel_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Traditional_compilation_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Kernel_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Traditional_compilation_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)</a></p>
+<p>archlinux可以使用 zcat命令获取当前运行内核的config文件。其它发行版的config文件可能直接放在/boot目录中。</p>
+<p>$ zcat /proc/config.gz &gt; .config</p>
+
+	</div>
+</div>
+<!-- 返回顶部模块 -->
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;font-size:26px;background-color:#8590a6">
+	<a title="返回顶部" style="color:#04fa9f"><⇧></a>
+</div>
+<script src="/js/totop.js"></script>
+
+  </body>
+
+</html>
