@@ -101,7 +101,7 @@
 
 
 <div class="toc">
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8sshd"><span class="toc-text">启动sshd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">安装过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Arch-Linux%E4%B8%8B%E8%A7%A3%E5%86%B3zip%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">Arch Linux下解决zip解压乱码的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8Archlinux%E4%B8%8A%E6%8C%82%E8%BD%BD%E5%8F%AF%E8%AF%BB%E5%86%99%E7%9A%84ntfs"><span class="toc-text">在Archlinux上挂载可读写的ntfs</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8Dgrub%E5%BC%95%E5%AF%BC"><span class="toc-text">修复grub引导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8sshd"><span class="toc-text">启动sshd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="toc-text">安装过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Arch-Linux%E4%B8%8B%E8%A7%A3%E5%86%B3zip%E8%A7%A3%E5%8E%8B%E4%B9%B1%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">Arch Linux下解决zip解压乱码的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8Archlinux%E4%B8%8A%E6%8C%82%E8%BD%BD%E5%8F%AF%E8%AF%BB%E5%86%99%E7%9A%84ntfs"><span class="toc-text">在Archlinux上挂载可读写的ntfs</span></a></li></ol></li></ol>
 </div>
 
 <div class="content-area">
@@ -128,6 +128,10 @@
 	
 	<div class="content">
 		<p>rufus：U盘写镜像时要用dd<br>插网线，不用连wifi步骤</p>
+<h2 id="修复grub引导"><a href="#修复grub引导" class="headerlink" title="修复grub引导"></a>修复grub引导</h2><p>archiso烧录U盘，挂载，先挂根分区<br>挂载自己的系统盘（先挂根目录）</p>
+<p>如有错误，使用fsck.ext4修复</p>
+<p>arch-chroot 到挂载点</p>
+<p>grub-install –target=i386-pc –recheck /dev/sda （根据实际情况修改）<br>grub-mkconfig -o /boot/grub/grub.cfg</p>
 <h2 id="启动sshd"><a href="#启动sshd" class="headerlink" title="启动sshd"></a>启动sshd</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 启动sshd服务</span><br>systemctl start sshd.service<br><span class="hljs-comment"># 设置ssh登录的root密码</span><br>passwd<br><span class="hljs-comment"># 查看ip</span><br>ip add<br></code></pre></td></tr></table></figure>
 
 <h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><p>分区，格式化，挂载，设置镜像源，安装系统，生成分区表（检查），chroot。</p>
