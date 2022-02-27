@@ -1,0 +1,32 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Linux/nftables/>nftables</a></h1><div class=post-meta-inline><span class=post-date> 2021-09-04 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a></span><div class=post-content><p>nttables 由三个主要组件组成： + 内核实现 + libnl netlink通信 + nftables用户空间前端<p>nftables 使用时会接触到四个概念：簇、表、链、规则。<p>nftables簇与iptables相应的程序对应：<table><thead><tr><th align=center>nftables簇<th align=center>iptables实用程序<tbody><tr><td align=center>ip<td align=center>iptables<tr><td align=center>ip6<td align=center>ip6tables<tr><td align=center>inet<td align=center>iptables和ip6tables<tr><td align=center>arp<td align=center>arptables<tr><td align=center>bridge<td align=center>ebtables</table><p>ip是默认簇，未指定时即为默认；inet是ip+ip6，inet不能用于nat链，只能用于filter链。<p>nftables 没有内置表，不限制表的创建，但是每个表属于一个簇(family)，即只能适用于该簇的数据包。<p>链的目的是保存规则。与iptables中的链不同，nftables没有内置链。这意味着与iptables不同，如果链没有使用netfilter框架中的任何类型或钩子，则流经这些链的数据包不会被nftables触及。<p>链有两种类型 + <strong>基本链</strong>是来自网络栈的数据包的入口点，需要指定钩子和优先级值。 + <strong>常规链</strong>可以作为更好地处理的跳转目标。<p>规则由语句或表达式构成，包含在链中。<p>表达式由三部分组成：匹配 -> 判断 -> 处理，例如匹配某个协议的数据包，对其判断后，可以决定丢弃还是继续。<p>可用匹配的部分列表：<ul><li>meta （元属性，如接口）<li>icmp （ICMP协议）<li>icmpv6 （ICMPv6协议）<li>ip （IP协议）<li>ip6 （IPv6协议）<li>tcp （TCP协议）<li>udp （UDP协议）<li>sctp （SCTP协议）<li>ct （链接跟踪）</ul><h2 id=shi-yong-shi-li>使用示例</h2><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span># 创建表
+</span><span>nft add table [family] [table-name]
+</span><span># 列出表
+</span><span>nft list tables
+</span><span># 列出表中的链和规则
+</span><span>nft list table [family] [table-name]
+</span><span># 清空表，清空一个表中的所有规则
+</span><span>nft flush table [family] [table-name]
+</span><span># 删除一个表，只能删除不包含链的表
+</span><span>nft flush table [family] [table-name]
+</span><span>
+</span><span># 创建链：常规链
+</span><span>nft add chain [family] [table-name] [chain-name]
+</span><span># 创建链：基本链
+</span><span>nft add chain [family] [table-name] [chain-name] { type [type-name] hook [hook-name] priority [num] \; }
+</span><span># 列出一个链中的所有规则
+</span><span>nft list chain [family] [table-name] [chain-name]
+</span><span># 编辑链：要编辑一个链，只需按名称调用并定义要更改的规则
+</span><span>nft chain [family] [table-name] [chain-name] { [ type [type-name] hook [hook-name] device [device] priority [num] \; policy [默认行为] \; ] }
+</span><span># 清空链：清空一个链的规则
+</span><span>nft flush chain [family] [table-name] [chain-name]
+</span><span># 删除链：要删除的链不能包含任何规则或者跳转目标
+</span><span>nft delete chain [family] [table-name] [chain-name]
+</span><span>
+</span><span># 添加规则
+</span><span>nft add rule [family] [table-name] [chain-name] handle [插入位置] [规则表达式]
+</span><span># 删除单个规则：使用句柄删除
+</span><span>nft delete rule [family] [table-name] [chain-name] handle [num]
+</span><span># 确定规则的句柄
+</span><span>nft --handle list
+</span><span># 
+</span></code></pre><h2 id=can-kao>参考</h2><ul><li><a href=https://wiki.archlinux.org/title/Nftables>nftables</a><li><a href=https://www.mankier.com/8/nft>nft - Man Page</a><li><a href=https://www.netfilter.org/projects/nftables/manpage.html>Man page of NFT (netfilter.org)</a><li><a href=https://wiki.nftables.org/wiki-nftables/index.php/Main_Page>nftables wiki</a><li><a href=https://cloud.tencent.com/developer/article/1585873>nftables初体验 - 云+社区 - 腾讯云 (tencent.com)</a><li><a href=https://www.cnblogs.com/fochive/p/10051880.html>简单明了的nftables防火墙配置（arch为例） - fochive - 博客园 (cnblogs.com)</a><li><a href=https://www.cnblogs.com/nan-ye/p/5626169.html>折腾nftables的那点事儿 （一）</a></ul></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

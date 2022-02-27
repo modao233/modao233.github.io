@@ -1,0 +1,91 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Interview/sizeofhe-strlende-qu-bie/>sizeof和strlen的区别</a></h1><div class=post-meta-inline><span class=post-date> 2020-06-29 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/interview/>#Interview</a></span><div class=post-content><p>sizeof 运算符：查询对象或类型的大小，在必须知道对象实际大小时使用。<p>strlen函数：位于头文件&LTstring.h>，查询空终止字节字符串 <code>str</code> 的长度。<h2 id=yu-fa>语法</h2><ol><li><p>sizeof 运算符</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>//返回 size_t 类型值
+</span><span>sizeof(类型);
+</span><span>sizeof 表达式;
+</span></code></pre> <ol><li>返回 类型 的对象表示的字节大小<li>返回 表达式 类型的对象表示的字节大小，不应用隐式转换到表达式</ol> <p><strong>不能用于函数类型、不完整类型（含void）或位域左值</strong></p><li><p>strlen函数</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>size_t </span><span style=color:#8fa1b3;>strlen</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>str</span><span>);
+</span></code></pre> <p>返回<strong>空终止字节字符串</strong> <code>str</code> 的长度。</p></ol><h2 id=qu-bie>区别</h2><ol><li>strlen计算的是字符串的字符个数<li>sizeof计算的是分配空间的字节数<li>strlen是函数，在程序运行时计算，要求字符串以空字符（‘\0’）结尾<li>sizeof是关键字，在程序编译时计算，<del>不能用于返回动态分配的内存空间大小</del>(没想到测试用例，可能意思是用sizeof得不到想要的结果，但是语法上是可以的)</ol><p><strong>32位机器上，一个指针占4个字节；64位机器上，一个指针占8个字节</strong><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>d#include &LTiostream>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>t1</span><span>() {
+</span><span>    cout << "</span><span style=color:#a3be8c;>hello</span><span>";
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>t2</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>1</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>#pragma</span><span> pack(push) </span><span style=color:#65737e;>//保存对齐状态
+</span><span style=color:#b48ead;>#pragma</span><span> pack(4)</span><span style=color:#65737e;>//设定为4字节对齐
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>t3 </span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>char</span><span style=color:#eff1f5;> c;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> a;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>double</span><span style=color:#eff1f5;> b;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>t4</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>a</span><span>[</span><span style=color:#d08770;>10</span><span>]) {
+</span><span>    cout << sizeof(a) << endl;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>t5</span><span>(</span><span style=color:#b48ead;>char </span><span style=color:#bf616a;>a</span><span>[</span><span style=color:#d08770;>10</span><span>]) {
+</span><span>    cout << sizeof(a) << endl;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]) {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a[</span><span style=color:#d08770;>10</span><span>] = { </span><span style=color:#d08770;>0 </span><span>};
+</span><span>    </span><span style=color:#b48ead;>int</span><span>* b = </span><span style=color:#b48ead;>new int</span><span>[</span><span style=color:#d08770;>10</span><span>]{ </span><span style=color:#d08770;>0 </span><span>};
+</span><span>    </span><span style=color:#b48ead;>char</span><span> c[] = "</span><span style=color:#a3be8c;>hello,world</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char</span><span> d[</span><span style=color:#d08770;>3</span><span>] = { '</span><span style=color:#a3be8c;>a</span><span>', '</span><span style=color:#a3be8c;>b</span><span>', '</span><span style=color:#a3be8c;>c</span><span>' };
+</span><span>    t3* i = </span><span style=color:#b48ead;>new</span><span> t3[</span><span style=color:#d08770;>10</span><span>]{ </span><span style=color:#d08770;>0</span><span>, </span><span style=color:#d08770;>0 </span><span>};
+</span><span>
+</span><span>    cout << sizeof(a) << endl;  </span><span style=color:#65737e;>//输出：40     数组所占字节数
+</span><span>    cout << sizeof(b) << endl;  </span><span style=color:#65737e;>//输出：4      指针所占字节数
+</span><span>    cout << </span><span style=color:#96b5b4;>strlen</span><span>(c) << endl;  </span><span style=color:#65737e;>//输出：11     第一个'\0'字符前面的字符个数
+</span><span>    cout << sizeof(c) << endl;  </span><span style=color:#65737e;>//输出：12     字符串（包括'\0'字符）所占字节数
+</span><span>    cout << </span><span style=color:#96b5b4;>strlen</span><span>(d) << endl;  </span><span style=color:#65737e;>//输出：23     结果随机，无法预料，无意义
+</span><span>    cout << sizeof(d) << endl;  </span><span style=color:#65737e;>//输出：3      数组所占字节数
+</span><span>    cout << sizeof(</span><span style=color:#b48ead;>int</span><span>) << endl;</span><span style=color:#65737e;>//输出：4      int类型的对象所占的字节数
+</span><span>    </span><span style=color:#65737e;>//cout << sizeof(t1) << endl;   无法将函数作为参数，无论返回值是void还是int之类的
+</span><span>    </span><span style=color:#65737e;>//cout << sizeof(t2) << endl;
+</span><span>    cout << sizeof(*i) << endl; </span><span style=color:#65737e;>//输出：16     对象所占的字节数
+</span><span>    </span><span style=color:#65737e;>//数组传递给函数作参数时，已经隐式转换成指针了
+</span><span>    </span><span style=color:#bf616a;>t4</span><span>(a);  </span><span style=color:#65737e;>//输出：4      指针所占字节数
+</span><span>    </span><span style=color:#bf616a;>t4</span><span>(b);  </span><span style=color:#65737e;>//输出：4      指针所占字节数
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>t5</span><span>(c);  </span><span style=color:#65737e;>//输出：4      指针所占字节数
+</span><span>    </span><span style=color:#bf616a;>t5</span><span>(d);  </span><span style=color:#65737e;>//输出：4      指针所占字节数
+</span><span>    </span><span style=color:#b48ead;>delete[]</span><span> i;
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=jin-jie>进阶</h2><p>空类型的实例仍会占据内存空间，应为声明空类型实例时，必须在内存占有一定空间，否则无法使用这些实例。占多少内存由编译器决定。<p>Visual Studio中，每个空类型的的实例占用1字节的空间。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Y1 </span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Y2 </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Y2</span><span style=color:#eff1f5;>() </span><span>= </span><span style=color:#b48ead;>default</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>~Y2</span><span style=color:#eff1f5;>() </span><span>= </span><span style=color:#b48ead;>default</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Y3 </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>virtual </span><span style=color:#8fa1b3;>~Y3</span><span style=color:#eff1f5;>() {}
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]) {
+</span><span>    Y1 a;
+</span><span>    Y2 b;
+</span><span>    Y3 c;
+</span><span>    cout << sizeof(a) << endl;  </span><span style=color:#65737e;>//1
+</span><span>    cout << sizeof(b) << endl;  </span><span style=color:#65737e;>//1
+</span><span>    cout << sizeof(c) << endl;  </span><span style=color:#65737e;>//4
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>C++的编译器一旦发现一个类型中有虚函数，就会为该类型生成虚函数表，并在该类型的每个实例中添加一个指向虚函数表的指针。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

@@ -1,0 +1,264 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Linux/tmux/>终端复用——Tmux</a></h1><div class=post-meta-inline><span class=post-date> 2020-12-05 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a></span><div class=post-content><p>tmux是一个优秀的终端复用软件，可以使窗口和会话分离。<p>配置部分来自：tmux的使用方法和个性化配置 and Archwiki<p>使用部分来自：Tmux 使用教程<p>原文链接已放在文末参考里<h2 id=jian-jie>简介</h2><p>SSH登录时：打开窗口，会话开始；关闭窗口，会话结束，会话内部的进程也会随之终止<p>tmux解决了这个问题，让会话与窗口可以"解绑"：窗口关闭时，会话并不终止，而是继续运行，等到以后需要的时候，再让会话"绑定"其他窗口。<p>根据tmux的定义，在开启了tmux服务器后，会首先创建一个会话，而这个会话则会首先创建一个窗口，其中仅包含一个面板；也就是说，这里看到的所谓终端控制台应该称作tmux的一个面板， 虽然其使用方法与终端控制台完全相同。<p>tmux使用C/S模型构建，主要包括以下单元模块：<ul><li>server服务器。输入tmux命令时就开启了一个服务器。<li>session会话。一个服务器可以包含多个会话<li>window窗口。一个会话可以包含多个窗口。<li>pane面板。一个窗口可以包含多个面板。</ul><p>类似的终端复用器还有 GNU Screen。Tmux 与它功能相似，但是更易用，也更强大。<h2 id=pei-zhi>配置</h2><p>tmux默认绑定的前缀按键为Ctrl-b：<ul><li>C-b ? 显示快捷键帮助<li>C-b C-o 调换窗口位置，类似与vim 里的C-w<li>C-b 空格键 采用下一个内置布局<li>C-b ! 把当前窗口变为新窗口<li>C-b “ 横向分隔窗口<li>C-b % 纵向分隔窗口<li>C-b q 显示分隔窗口的编号<li>C-b o 跳到下一个分隔窗口<li>C-b 上下键 上一个及下一个分隔窗口<li>C-b C-方向键 调整分隔窗口大小<li>C-b c 创建新窗口<li>C-b 0~9 选择几号窗口<li>C-b c 创建新窗口<li>C-b n 选择下一个窗口<li>C-b l 切换到最后使用的窗口<li>C-b p 选择前一个窗口<li>C-b w 以菜单方式显示及选择窗口<li>C-b t 显示时钟<li>C-b ; 切换到最后一个使用的面板<li>C-b x 关闭面板<li>C-b & 关闭窗口<li>C-b s 以菜单方式显示和选择会话<li>C-b d 退出tumx，并保存当前会话，这时，tmux仍在后台运行，可以通过tmux attach进入 到指定的会话</ul><p>tmux的配置文件：<ul><li>用户私人配置文件在<code>~/.tmux.conf</code><li>全局配置文件在 <code>/etc/tmux.conf</code>。</ul><p>快捷键前缀可以用<code>tmux.conf</code>中的bind和unbind命令修改。比如你可以在配置文件中增加下面命令,把前缀<code>Ctrl-b</code>改成<code>Ctrl-a</code>：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>unbind C-b
+</span><span>set -g prefix C-a
+</span><span>bind C-a send-prefix
+</span><span>
+</span><span># 设置最多回滚的行数 
+</span><span>set -g history-limit 10000
+</span></code></pre><blockquote><p><strong>提示：</strong> 使用特殊字符作为前缀，你必须使用<code>Alt</code>键(Meta键)代替<code>Ctrl</code>键。例如：<code>set -g prefix m-'\'</code></blockquote><p>如果使用的是 256 色的终端，必须在 tmux 的配置文件 <code>tmux.conf</code> 中将终端设置为 <code>tmux</code> 或 <code>tmux-256color</code>:<pre style=background-color:#2b303b;color:#c0c5ce;><code><span> set -g default-terminal "tmux-256color"  
+</span></code></pre><p><strong>不用重启tmux就能加载新的配置</strong><p>如果对tmux的配置文件<code>~/.tmux.conf</code>做了修改, 默认情况下tmux是不会自动重新加载的, 除非关闭所有正在运行的tmux会话. 如果不想关闭会话而手动加载tmux的配置文件, 可以在命令行下输入:<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>tmux source-file &LTpath>
+</span></code></pre><p>也可以在配置文件 <code>~/.tmux.conf</code> 中加入下面配置(这样下次输入 ctrl+b r就可以加载新的配置文件了):<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>bind r source-file &LTpath>
+</span></code></pre><p>还有一种做法是输入前缀+冒号(ctrl+b :),然后输入如下命令:<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>source .tmux.conf
+</span></code></pre><p>配置vim的移动方式：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#up
+</span><span>bind-key k select-pane -U
+</span><span>#down
+</span><span>bind-key j select-pane -D
+</span><span>#left
+</span><span>bind-key h select-pane -L
+</span><span>#right
+</span><span>bind-key l select-pane -R
+</span></code></pre><p>上面的最后一条语句会更改C-x l的功能，我挺喜欢这个功能的，因为我们很时候都是在两个窗 口或这两个面板中切换，所以我又加入如下语句<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#select last window
+</span><span>bind-key C-l select-window -l
+</span></code></pre><p>现在我的l键可不能随便按了，Ctrl+x l是切换面板，Ctrl+x Ctrl+l切换窗口，Ctrl+l清屏。<p><strong>复制模式copy-mode</strong><ul><li>前缀 [ 进入复制模式<li>按 space 开始复制，移动光标选择复制区域<li>按 Enter 复制并退出copy-mode。<li>将光标移动到指定位置，按 PREIFX ] 粘贴</ul><p>如果把tmux比作vim的话，那么我们大部分时间都是处于编辑模式，我们复制的时候可不可以像 vim一样移动呢？只需要在配置文件(<code>~/.tmux.conf</code>)中加入如下行即可。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#copy-mode 将快捷键设置为vi 模式
+</span><span>setw -g mode-keys vi
+</span></code></pre><p><strong>会话</strong><ul><li>C-x s 以菜单的方式查看并选择会话<li>C-x :new-session 新建一个会话<li>C-x d 退出并保存会话<li>终端运行 tmux attach 返回会话</ul><p><strong><a href=https://github.com/xuxiaodong/tmuxen>命名会话</a></strong><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>tmux new -s session
+</span><span>tmux new -s session -d #在后台建立会话
+</span><span>tmux ls #列出会话
+</span><span>tmux attach -t session #进入某个会话
+</span></code></pre><p><strong>使当前pane 最大化</strong><p>从我用vim开始，就相信这世界上有些人比你自己还了解你自己想要什么，所以乔老爷子才能做 出让世人尖叫的产品，所以我经常浏览高手的.vimrc文件，我用了tmux不到3天就发现，它怎么 不能最大化当前pane?就像vim里的ZommWinPlugin.vim插件一样，你按下某键，当前窗口就最大 化了，获得最大可视界面。当目前为止，就还没有发现我有需求而别人没有的，同样，已有前人 找到的解决办法，方法如下：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span># zoom pane &LT-> window
+</span><span>#http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh
+</span><span>bind ^z run "tmux-zoom"
+</span><span>##
+</span></code></pre><p><strong>滚屏</strong><p>滚屏要进入copy-mode，即前缀+[，然后就可以用上下键来滚动屏幕，配置了vi快捷键模式，就 可以像操作vi一样来滚动屏幕，非常的方便。退出直接按‘q’键即可。<p><strong>其他配置</strong><p>下面是从<a href=https://github.com/xuxiaodong/tmuxen>别人</a>那里摘录过来的配置，反正我是用不着，留着以后参考吧，或许屏幕前的你 有需要呢。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#
+</span><span># author   : Xu Xiaodong &LTxxdlhy@gmail.com>
+</span><span># modified : 2012 Jul 22
+</span><span>#
+</span><span>
+</span><span>#-- base settings --#
+</span><span>set -g default-terminal "screen-256color"
+</span><span>set -g display-time 3000
+</span><span>set -g escape-time 0
+</span><span>set -g history-limit 65535
+</span><span>set -g base-index 1
+</span><span>set -g pane-base-index 1
+</span><span>
+</span><span>#-- bindkeys --#
+</span><span># prefix key (Ctrl+a)
+</span><span>set -g prefix ^a
+</span><span>unbind ^b
+</span><span>bind a send-prefix
+</span><span>
+</span><span># split window
+</span><span>unbind '"'
+</span><span># vertical split (prefix -)
+</span><span>bind - splitw -v
+</span><span>unbind %
+</span><span>bind | splitw -h # horizontal split (prefix |)
+</span><span>
+</span><span># select pane
+</span><span>bind k selectp -U # above (prefix k)
+</span><span>bind j selectp -D # below (prefix j)
+</span><span>bind h selectp -L # left (prefix h)
+</span><span>bind l selectp -R # right (prefix l)
+</span><span>
+</span><span># resize pane
+</span><span>bind -r ^k resizep -U 10 # upward (prefix Ctrl+k)
+</span><span>bind -r ^j resizep -D 10 # downward (prefix Ctrl+j)
+</span><span>bind -r ^h resizep -L 10 # to the left (prefix Ctrl+h)
+</span><span>bind -r ^l resizep -R 10 # to the right (prefix Ctrl+l)
+</span><span>
+</span><span># swap pane
+</span><span># swap with the previous pane (prefix Ctrl+u)
+</span><span>bind ^u swapp -U
+</span><span># swap with the next pane (prefix Ctrl+d)
+</span><span>bind ^d swapp -D
+</span><span>
+</span><span># misc
+</span><span># select the last pane (prefix e)
+</span><span>bind e lastp
+</span><span># select the last window (prefix Ctrl+e)
+</span><span>bind ^e last
+</span><span># kill pane (prefix q)
+</span><span>bind q killp
+</span><span># kill window (prefix Ctrl+q)
+</span><span>bind ^q killw
+</span><span>
+</span><span># copy mode
+</span><span># enter copy mode (prefix Escape)
+</span><span>bind Escape copy-mode
+</span><span># paste buffer (prefix Ctrl+p)
+</span><span>bind ^p pasteb
+</span><span># select (v)
+</span><span>bind -t vi-copy v begin-selection
+</span><span># copy (y)
+</span><span>bind -t vi-copy y copy-selection
+</span><span>
+</span><span># zoom pane &LT-> window
+</span><span>#http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux-zoom.sh
+</span><span>bind ^z run "tmux-zoom"
+</span><span>
+</span><span># app
+</span><span># htop (prefix !)
+</span><span>bind ! splitw htop
+</span><span># man (prefix m)
+</span><span>bind m command-prompt "splitw 'exec man %%'"
+</span><span># perl func (prefix @)
+</span><span>bind @ command-prompt "splitw 'exec perldoc -t -f %%'"
+</span><span># perl var (prefix *)
+</span><span>bind * command-prompt "splitw 'exec perldoc -t -v %%'"
+</span><span># perl doc (prefix %)
+</span><span>bind % command-prompt "splitw 'exec perldoc -t %%'"
+</span><span># ruby doc (prefix /)
+</span><span>bind / command-prompt "splitw 'exec ri %%'"
+</span><span>
+</span><span># reload config (prefix r)
+</span><span>bind r source ~/.tmux.conf \; display "Configuration reloaded!"
+</span><span>
+</span><span>#-- statusbar --#
+</span><span>set -g status-utf8 on
+</span><span>set -g status-interval 1
+</span><span>set -g status-keys vi
+</span><span>
+</span><span>setw -g mode-keys vi
+</span><span>setw -g automatic-rename off
+</span><span>
+</span><span>#-- colorscheme --#
+</span><span>#https://github.com/daethorian/conf-tmux/blob/master/colors/zenburn.conf
+</span><span>
+</span><span># modes
+</span><span>setw -g clock-mode-colour colour223
+</span><span>setw -g mode-attr bold
+</span><span>setw -g mode-fg colour223
+</span><span>setw -g mode-bg colour235
+</span><span>
+</span><span># panes
+</span><span>set -g pane-border-bg colour234
+</span><span>set -g pane-border-fg colour234
+</span><span>set -g pane-active-border-bg colour232
+</span><span>set -g pane-active-border-fg colour232
+</span><span>
+</span><span># statusbar
+</span><span>set -g status-justify centre
+</span><span>set -g status-bg colour235
+</span><span>set -g status-fg colour248
+</span><span>set -g status-attr dim
+</span><span>#[default]» #[fg=colour187]#S #[default]• #[fg=colour187]w#I.p#P#[default]"
+</span><span>set -g status-left "
+</span><span>set -g status-left-attr bright
+</span><span>set -g status-left-length 20
+</span><span>#[fg=colour174]#(/home/xiaodong/bin/uptime) #[default]• #[fg=colour174]#(cut -d ' ' -f 1-3 /proc/loadavg)"
+</span><span>set -g status-right "
+</span><span>set -g status-right-attr bright
+</span><span>set -g status-right-length 80
+</span><span>
+</span><span>setw -g window-status-current-fg colour223
+</span><span>setw -g window-status-current-bg colour237
+</span><span>setw -g window-status-current-attr bold
+</span><span>setw -g window-status-current-format "#I:#W#F"
+</span><span>
+</span><span>#setw -g window-status-alert-attr bold
+</span><span>#setw -g window-status-alert-fg colour255
+</span><span>#setw -g window-status-alert-bg colour160
+</span><span>
+</span><span># messages
+</span><span>set -g message-attr bold
+</span><span>set -g message-fg colour223
+</span><span>set -g message-bg colour235
+</span></code></pre><p>set -g visual-activity on<p><strong>快速启动tmux</strong><p>如果觉得每次都要打开tmux，然后在打开几个窗口和面板很麻烦，那么下面这个脚本你一定会 喜欢。参考<a href=https://github.com/xuxiaodong/tmuxen/blob/master/tmuxen>这里</a><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#!/bin/sh
+</span><span>#
+</span><span># name     : tmuxen， tmux environment made easy
+</span><span># author   : Xu Xiaodong xxdlhy@gmail.com
+</span><span># license  : GPL
+</span><span># created  : 2012 Jul 01
+</span><span># modified : 2012 Jul 02
+</span><span>#
+</span><span>
+</span><span>cmd=$(which tmux) # tmux path
+</span><span>session=codefun   # session name
+</span><span>
+</span><span>if [ -z $cmd ]; then
+</span><span>  echo "You need to install tmux."
+</span><span>  exit 1
+</span><span>fi
+</span><span>
+</span><span>$cmd has -t $session
+</span><span>
+</span><span>if [ $? != 0 ]; then
+</span><span>  $cmd new -d -n vim -s $session "vim"
+</span><span>  $cmd splitw -v -p 20 -t $session "pry"
+</span><span>  $cmd neww -n mutt -t $session "mutt"
+</span><span>  $cmd neww -n irssi -t $session "irssi"
+</span><span>  $cmd neww -n cmus -t $session "cmus"
+</span><span>  $cmd neww -n zsh -t $session "zsh"
+</span><span>  $cmd splitw -h -p 50 -t $session "zsh"
+</span><span>  $cmd selectw -t $session:5
+</span><span>fi
+</span><span>
+</span><span>$cmd att -t $session
+</span><span>
+</span><span>exit 0
+</span></code></pre><p>如果还有其他需要，可以去<a href=http://linuxtoy.org/archives/scripting-tmux.html>这里</a>看看，当然了，最全的参考文档，就是man tmux。 happy tmux!<h2 id=shi-yong>使用</h2><h3 id=qi-dong-he-guan-bi>启动和关闭</h3><p>安装完成后，键入<code>tmux</code>命令，就进入了 Tmux 窗口。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> tmux
+</span></code></pre><p>上面命令会启动 Tmux 窗口，底部有一个状态栏。状态栏的左侧是窗口信息（编号和名称），右侧是系统信息。<p>按下<code>Ctrl+d</code>或者显式输入<code>exit</code>命令，就可以退出 Tmux 窗口。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> exit
+</span></code></pre><h3 id=hui-hua-guan-li>会话管理</h3><p><strong>新建会话</strong><p>第一个启动的 Tmux 窗口，编号是<code>0</code>，第二个窗口的编号是<code>1</code>，以此类推。这些窗口对应的会话，就是 0 号会话、1 号会话。<p>使用编号区分会话，不太直观，更好的方法是为会话起名。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> tmux new</span><span style=color:#bf616a;> -s </span><span>&LTsession-name>
+</span></code></pre><p>上面命令新建一个指定名称的会话。<p><strong>分离会话</strong><p>在 Tmux 窗口中，按下<code>Ctrl+b d</code>或者输入<code>tmux detach</code>命令，就会将当前会话与窗口分离。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> tmux detach
+</span></code></pre><p>上面命令执行后，就会退出当前 Tmux 窗口，但是会话和里面的进程仍然在后台运行。<p><code>tmux ls</code>命令可以查看当前所有的 Tmux 会话。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> tmux ls
+</span><span style=color:#65737e;># or
+</span><span style=color:#bf616a;>$</span><span> tmux list-session
+</span></code></pre><p><strong>接入会话</strong><p><code>tmux attach</code>命令用于重新接入某个已存在的会话。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 使用会话编号
+</span><span style=color:#bf616a;>$</span><span> tmux attach</span><span style=color:#bf616a;> -t</span><span> 0
+</span><span>
+</span><span style=color:#65737e;># 使用会话名称
+</span><span style=color:#bf616a;>$</span><span> tmux attach</span><span style=color:#bf616a;> -t </span><span>&LTsession-name>
+</span></code></pre><p><strong>杀死会话</strong><p><code>tmux kill-session</code>命令用于杀死某个会话。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 使用会话编号
+</span><span style=color:#bf616a;>$</span><span> tmux kill-session</span><span style=color:#bf616a;> -t</span><span> 0
+</span><span>
+</span><span style=color:#65737e;># 使用会话名称
+</span><span style=color:#bf616a;>$</span><span> tmux kill-session</span><span style=color:#bf616a;> -t </span><span>&LTsession-name>
+</span></code></pre><p><strong>切换会话</strong><p><code>tmux switch</code>命令用于切换会话。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 使用会话编号
+</span><span style=color:#bf616a;>$</span><span> tmux switch</span><span style=color:#bf616a;> -t</span><span> 0
+</span><span>
+</span><span style=color:#65737e;># 使用会话名称
+</span><span style=color:#bf616a;>$</span><span> tmux switch</span><span style=color:#bf616a;> -t </span><span>&LTsession-name>
+</span></code></pre><p><strong>重命名会话</strong><p><code>tmux rename-session</code>命令用于重命名会话。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> tmux rename-session</span><span style=color:#bf616a;> -t</span><span> 0 &LTnew-name>
+</span></code></pre><p>上面命令将0号会话重命名。<p><strong>会话快捷键</strong><p>下面是一些会话相关的快捷键。<ul><li><code>Ctrl+b d</code>：分离当前会话。<li><code>Ctrl+b s</code>：列出所有会话。<li><code>Ctrl+b $</code>：重命名当前会话。</ul><h3 id=chuang-ge-cao-zuo>窗格操作</h3><p>Tmux 可以将窗口分成多个窗格（pane），每个窗格运行不同的命令。以下命令都是在 Tmux 窗口中执行。<p><strong>划分窗格</strong><p><code>tmux split-window</code>命令用来划分窗格。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 划分上下两个窗格
+</span><span style=color:#bf616a;>$</span><span> tmux split-window
+</span><span>
+</span><span style=color:#65737e;># 划分左右两个窗格
+</span><span style=color:#bf616a;>$</span><span> tmux split-window</span><span style=color:#bf616a;> -h
+</span></code></pre><p><strong>移动光标</strong><p><code>tmux select-pane</code>命令用来移动光标位置。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 光标切换到上方窗格
+</span><span style=color:#bf616a;>$</span><span> tmux select-pane</span><span style=color:#bf616a;> -U
+</span><span>
+</span><span style=color:#65737e;># 光标切换到下方窗格
+</span><span style=color:#bf616a;>$</span><span> tmux select-pane</span><span style=color:#bf616a;> -D
+</span><span>
+</span><span style=color:#65737e;># 光标切换到左边窗格
+</span><span style=color:#bf616a;>$</span><span> tmux select-pane</span><span style=color:#bf616a;> -L
+</span><span>
+</span><span style=color:#65737e;># 光标切换到右边窗格
+</span><span style=color:#bf616a;>$</span><span> tmux select-pane</span><span style=color:#bf616a;> -R
+</span></code></pre><p><strong>交换窗格位置</strong><p><code>tmux swap-pane</code>命令用来交换窗格位置。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 当前窗格上移
+</span><span style=color:#bf616a;>$</span><span> tmux swap-pane</span><span style=color:#bf616a;> -U
+</span><span>
+</span><span style=color:#65737e;># 当前窗格下移
+</span><span style=color:#bf616a;>$</span><span> tmux swap-pane</span><span style=color:#bf616a;> -D
+</span></code></pre><p><strong>窗格快捷键</strong><p>下面是一些窗格操作的快捷键。<ul><li><code>Ctrl+b %</code>：划分左右两个窗格。<li><code>Ctrl+b "</code>：划分上下两个窗格。<li><code>Ctrl+b &LTarrow key></code>：光标切换到其他窗格。<code>&LTarrow key></code>是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键<code>↓</code>。<li><code>Ctrl+b ;</code>：光标切换到上一个窗格。<li><code>Ctrl+b o</code>：光标切换到下一个窗格。<li><code>Ctrl+b {</code>：当前窗格与上一个窗格交换位置。<li><code>Ctrl+b }</code>：当前窗格与下一个窗格交换位置。<li><code>Ctrl+b Ctrl+o</code>：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。<li><code>Ctrl+b Alt+o</code>：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。<li><code>Ctrl+b x</code>：关闭当前窗格。<li><code>Ctrl+b !</code>：将当前窗格拆分为一个独立窗口。<li><code>Ctrl+b z</code>：当前窗格全屏显示，再使用一次会变回原来大小。<li><code>Ctrl+b Ctrl+&LTarrow key></code>：按箭头方向调整窗格大小。<li><code>Ctrl+b q</code>：显示窗格编号。</ul><h3 id=chuang-kou-guan-li>窗口管理</h3><p>除了将一个窗口划分成多个窗格，Tmux 也允许新建多个窗口。<p><strong>新建窗口</strong><p><code>tmux new-window</code>命令用来创建新窗口。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> tmux new-window
+</span><span>
+</span><span style=color:#65737e;># 新建一个指定名称的窗口
+</span><span style=color:#bf616a;>$</span><span> tmux new-window</span><span style=color:#bf616a;> -n </span><span>&LTwindow-name>
+</span></code></pre><p><strong>切换窗口</strong><p><code>tmux select-window</code>命令用来切换窗口。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 切换到指定编号的窗口
+</span><span style=color:#bf616a;>$</span><span> tmux select-window</span><span style=color:#bf616a;> -t </span><span>&LTwindow-number>
+</span><span>
+</span><span style=color:#65737e;># 切换到指定名称的窗口
+</span><span style=color:#bf616a;>$</span><span> tmux select-window</span><span style=color:#bf616a;> -t </span><span>&LTwindow-name>
+</span></code></pre><p><strong>重命名窗口</strong><p><code>tmux rename-window</code>命令用于为当前窗口起名（或重命名）。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> tmux rename-window &LTnew-name>
+</span></code></pre><p><strong>窗口快捷键</strong><p>下面是一些窗口操作的快捷键。<ul><li><code>Ctrl+b c</code>：创建一个新窗口，状态栏会显示多个窗口的信息。<li><code>Ctrl+b p</code>：切换到上一个窗口（按照状态栏上的顺序）。<li><code>Ctrl+b n</code>：切换到下一个窗口。<li><code>Ctrl+b &LTnumber></code>：切换到指定编号的窗口，其中的<code>&LTnumber></code>是状态栏上的窗口编号。<li><code>Ctrl+b w</code>：从列表中选择窗口。<li><code>Ctrl+b ,</code>：窗口重命名。</ul><h3 id=qi-ta-ming-ling>其他命令</h3><p>下面是一些其他命令。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 列出所有快捷键，及其对应的 Tmux 命令
+</span><span style=color:#bf616a;>$</span><span> tmux list-keys
+</span><span>
+</span><span style=color:#65737e;># 列出所有 Tmux 命令及其参数
+</span><span style=color:#bf616a;>$</span><span> tmux list-commands
+</span><span>
+</span><span style=color:#65737e;># 列出当前所有 Tmux 会话的信息
+</span><span style=color:#bf616a;>$</span><span> tmux info
+</span><span>
+</span><span style=color:#65737e;># 重新加载当前的 Tmux 配置
+</span><span style=color:#bf616a;>$</span><span> tmux source-file </span><span style=color:#bf616a;>~</span><span>/.tmux.conf
+</span></code></pre><h2 id=can-kao>参考</h2><ul><li><a href=http://www.ruanyifeng.com/blog/2019/10/tmux.html>Tmux 使用教程</a><li><a href=https://wiki.archlinux.org/index.php/Tmux>archwiki-tmux</a></ul><ul><li><a href=http://mingxinglai.com/cn/2012/09/tmux/>tmux的使用方法和个性化配置</a></ul></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>
