@@ -4,6 +4,10 @@
         <loc>https://modao.site/</loc>
     </url>
     <url>
+        <loc>https://modao.site/C++/cpp11/</loc>
+        <lastmod>2022-03-06</lastmod>
+    </url>
+    <url>
         <loc>https://modao.site/Interview/c-ji-zhu-mian-shi-ji-chu-zhi-shi-zong-jie/</loc>
         <lastmod>2020-12-30</lastmod>
     </url>
@@ -130,6 +134,9 @@
     </url>
     <url>
         <loc>https://modao.site/tags/</loc>
+    </url>
+    <url>
+        <loc>https://modao.site/tags/cpp/</loc>
     </url>
     <url>
         <loc>https://modao.site/tags/interview/</loc>
