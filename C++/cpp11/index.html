@@ -155,4 +155,56 @@
 </span></code></pre><h2 id=yuan-shi-zi-fu-chuan-zi-mian-liang>原始字符串字面量</h2><p>和C一样，C++使用反斜杠作为转义字符，如果在字符串字面量中使用反斜杠，需要使用双反斜杠。<p>通常的正则表达式模式广泛使用反斜杠和双引号，所以模式很快变得混乱和容易出错。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//美国邮政编码
 </span><span>regex pattern1 {"</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>w{2}</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>s*</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>d{5}(-</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>d{4})?</span><span>"};	</span><span style=color:#65737e;>//普通字符串字面量
 </span><span>regex pattern2 {</span><span style=color:#b48ead;>R</span><span>"(</span><span style=color:#a3be8c;>\w{2}\s*\d{5}(-\d{4})?</span><span>)"};	</span><span style=color:#65737e;>//原始字符串字面量
+</span></code></pre><h2 id=lambdabiao-da-shi>lambda表达式</h2><p>C++11的lambda只支持捕获值或引用，C++14添加了移动捕获和泛型lambda<p>lambda表达式的中括号表示从周围环境捕获变量，小括号表示参数，返回值可以从返回语句推导出来，如果没有返回语句则不会返回任何东西。<p>声明捕获有三种方式：<ul><li>隐式捕获：<code>&</code>捕获引用，<code>=</code>捕获值<li>显示捕获列表<li>声明隐式捕获，并声明显示捕获列表：显示捕获列表的捕获方式同隐式捕获相反</ul><p>有特别的捕获方式：<ul><li><code>[this]</code>：通过引用捕获<code>*this</code>（它是对象的左值），而不是通过值捕获指针<li><code>[*this]</code>：捕获本地实体的值</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>algorithm</span><span>>   </span><span style=color:#65737e;>// sort函数模板、for_each函数模板
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>>
+</span><span> 
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span> 
+</span><span>
+</span><span style=color:#65737e;>//[capture list](parameter list)-> return type {function body}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main </span><span>( )
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f1 = []() { cout << "</span><span style=color:#a3be8c;>lambda test</span><span>" << endl; };
+</span><span>    </span><span style=color:#bf616a;>f1</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//use paramter list
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f2 = [](</span><span style=color:#b48ead;>int</span><span> a, </span><span style=color:#b48ead;>int</span><span> b) { cout << a << ' ' << b << endl; };
+</span><span>    </span><span style=color:#bf616a;>f2</span><span>(</span><span style=color:#d08770;>3</span><span>, </span><span style=color:#d08770;>4</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//use capture list
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f3 = [a]() { cout << a << endl; }; </span><span style=color:#65737e;>//值捕获
+</span><span>    </span><span style=color:#bf616a;>f3</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f4 = [&a]() { a++; cout << a << endl; };</span><span style=color:#65737e;>//引用捕获
+</span><span>    </span><span style=color:#bf616a;>f4</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f5 = [&]() { a++; cout << a << endl; };</span><span style=color:#65737e;>//隐式捕获引用
+</span><span>    </span><span style=color:#bf616a;>f5</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f6 = [=]() { cout << a << endl; };</span><span style=color:#65737e;>//隐式捕获值
+</span><span>    </span><span style=color:#bf616a;>f6</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f7 = [=]() </span><span style=color:#b48ead;>mutable </span><span>{ a++; cout << a << endl; }; </span><span style=color:#65737e;>//隐式捕获值，可变lambda，捕获的值在函数体改变不影响外面变量
+</span><span>    </span><span style=color:#bf616a;>f7</span><span>();
+</span><span>    cout << "</span><span style=color:#a3be8c;>after mutable</span><span>" << a << endl;
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f8 = [&,a]() { cout << a << endl; };
+</span><span>    </span><span style=color:#bf616a;>f8</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f9 = [=, &a]() { a++; cout << a << endl; };
+</span><span>    </span><span style=color:#bf616a;>f9</span><span>();
+</span><span>}
+</span></code></pre><h2 id=yuan-zu-tuple>元组tuple</h2><p>元组是大小固定而成员类型可以不同的容器。可用于：<ul><li>作为返回类型，用于需要超过一个返回类型的函数<li>同时赋值多个</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>use</span><span>() {
+</span><span>    string a, aa;
+</span><span>    vector b, bb;
+</span><span>    </span><span style=color:#b48ead;>double</span><span> c, cc;
+</span><span>    </span><span style=color:#65737e;>/* ... */
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> r = </span><span style=color:#bf616a;>make_tuple</span><span>(a, b, c);	</span><span style=color:#65737e;>// 创建元组
+</span><span>    </span><span style=color:#bf616a;>tie</span><span>(aa, bb, cc) = r;			</span><span style=color:#65737e;>// 解包元组
+</span><span>    
+</span><span>    </span><span style=color:#65737e;>// C++14后，可以逐个获取
+</span><span>    aa = </span><span style=color:#bf616a;>get</span><span><</span><span style=color:#d08770;>0</span><span>>(r);
+</span><span>    bb = </span><span style=color:#bf616a;>get</span><span><</span><span style=color:#d08770;>1</span><span>>(r);
+</span><span>    cc = </span><span style=color:#bf616a;>get</span><span><</span><span style=color:#d08770;>2</span><span>>(r);
+</span><span>    
+</span><span>    </span><span style=color:#65737e;>// C++17后，添加了结构化绑定，真正意义上的解包
+</span><span>    </span><span style=color:#b48ead;>auto </span><span>[aaa, bbb, ccc] = r;
+</span><span>    
+</span><span>}
 </span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>
