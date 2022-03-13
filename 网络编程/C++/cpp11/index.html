@@ -1,0 +1,210 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/C++/cpp11/>cpp11</a></h1><div class=post-meta-inline><span class=post-date> 2022-03-06 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/cpp/>#cpp</a></span><div class=post-content><h2 id=tong-yi-chu-shi-hua>统一初始化</h2><p>cpp11以前：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int</span><span> x;			</span><span style=color:#65737e;>//全局作用域时，默认初始化
+</span><span style=color:#b48ead;>int</span><span> x = </span><span style=color:#d08770;>7</span><span>;		</span><span style=color:#65737e;>//值初始化
+</span><span style=color:#b48ead;>int</span><span> a[] = {</span><span style=color:#d08770;>7</span><span>, </span><span style=color:#d08770;>8</span><span>};	</span><span style=color:#65737e;>//聚合初始化
+</span><span>string s;		</span><span style=color:#65737e;>//默认构造函数初始化
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#8fa1b3;>v</span><span>(</span><span style=color:#d08770;>10</span><span>);	</span><span style=color:#65737e;>//构造函数初始化
+</span></code></pre><p>cpp11后：统一初始化方式，让内置类型和自定义类型可以使用一样的初始化方式<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int </span><span style=color:#bf616a;>a</span><span>{</span><span style=color:#d08770;>5</span><span>};
+</span><span style=color:#b48ead;>int</span><span> a = {</span><span style=color:#d08770;>5</span><span>};
+</span><span style=color:#b48ead;>int</span><span> a[] {</span><span style=color:#d08770;>7</span><span>, </span><span style=color:#d08770;>8</span><span>};
+</span><span style=color:#b48ead;>int</span><span> a[] = {</span><span style=color:#d08770;>7</span><span>, </span><span style=color:#d08770;>8</span><span>};
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>> v = {</span><span style=color:#d08770;>7</span><span>, </span><span style=color:#d08770;>8</span><span>};
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#bf616a;>v</span><span>{</span><span style=color:#d08770;>7</span><span>, </span><span style=color:#d08770;>8</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>func</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>>);
+</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#bf616a;>func</span><span>({</span><span style=color:#d08770;>1</span><span>,</span><span style=color:#d08770;>2</span><span>,</span><span style=color:#d08770;>3</span><span>});
+</span><span>
+</span><span style=color:#b48ead;>struct </span><span>X {
+</span><span>    vector<</span><span style=color:#b48ead;>int</span><span>> v;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a[];
+</span><span>    </span><span style=color:#8fa1b3;>X</span><span>() : </span><span style=color:#bf616a;>v</span><span>{</span><span style=color:#d08770;>1</span><span>, </span><span style=color:#d08770;>2</span><span>}, </span><span style=color:#bf616a;>a</span><span>{</span><span style=color:#d08770;>3</span><span>, </span><span style=color:#d08770;>4</span><span>} {}</span><span style=color:#65737e;>//成员初始化器
+</span><span>}
+</span><span>
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>>* p = </span><span style=color:#b48ead;>new</span><span> vector<</span><span style=color:#b48ead;>int</span><span>>{</span><span style=color:#d08770;>1</span><span>,</span><span style=color:#d08770;>2</span><span>,</span><span style=color:#d08770;>3</span><span>,</span><span style=color:#d08770;>4</span><span>};</span><span style=color:#65737e;>//new表达式
+</span><span>X x {};</span><span style=color:#65737e;>//默认初始化
+</span><span>
+</span><span>tempalte<</span><span style=color:#b48ead;>typename</span><span> T> </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>foo</span><span>(</span><span style=color:#bf616a;>T</span><span>);
+</span><span style=color:#b48ead;>int</span><span> z = </span><span style=color:#bf616a;>foo</span><span>{</span><span style=color:#bf616a;>X</span><span>{</span><span style=color:#d08770;>1</span><span>}};</span><span style=color:#65737e;>//显示构造
+</span><span>
+</span><span style=color:#65737e;>//花括号初始化不允许窄化转换
+</span><span style=color:#b48ead;>double</span><span> d = </span><span style=color:#d08770;>7.2</span><span>;
+</span><span style=color:#b48ead;>int</span><span> x = d;	</span><span style=color:#65737e;>//OK，x = 7
+</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>y</span><span>{d};	</span><span style=color:#65737e;>//error
+</span><span>
+</span><span style=color:#65737e;>//自定义类型可以通过将标准库类型 initializer_list 用作`初始化器列表构造函数`的参数，实现统一初始化
+</span><span>tempalte <</span><span style=color:#b48ead;>typename</span><span> T>
+</span><span style=color:#b48ead;>class</span><span> vector {
+</span><span>public:
+</span><span>    </span><span style=color:#bf616a;>vector</span><span>(initializer_list&LTT>);</span><span style=color:#65737e;>//初始化器列表构造函数
+</span><span>}
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>> v3 {</span><span style=color:#d08770;>1</span><span>,</span><span style=color:#d08770;>2</span><span>,</span><span style=color:#d08770;>3</span><span>};
+</span></code></pre><h2 id=lei-xing-tui-dao-autohe-decltype>类型推导auto和decltype</h2><p>使用推导类型可以缩减类型名称。<p>使用auto来避免类型名称的多余重复。<p>C++11的auto仅支持推导变量类型，和弱化的支持函数返回类型推导<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>auto</span><span> X {
+</span><span>public:
+</span><span>    </span><span style=color:#b48ead;>auto </span><span style=color:#bf616a;>f</span><span>() -> </span><span style=color:#bf616a;>int</span><span>;
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>use</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>x</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>p</span><span>){
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> x2 = x*</span><span style=color:#d08770;>2</span><span>;
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> ch = p[x];
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> p2 = p+</span><span style=color:#d08770;>2</span><span>;
+</span><span>}
+</span></code></pre><p>auto推导不出引用类型，需要手动声明；或者使用decltype<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>template</span><span><</span><span style=color:#b48ead;>typename</span><span> T> </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(T& </span><span style=color:#bf616a;>r</span><span>){
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> v = r;			</span><span style=color:#65737e;>//v 是 T
+</span><span>    </span><span style=color:#b48ead;>decltype</span><span>(r) r2 = r; </span><span style=color:#65737e;>//r2是 T&
+</span><span>    </span><span style=color:#b48ead;>auto </span><span>&r3 = r;		</span><span style=color:#65737e;>//r3是 T&
+</span><span>}
+</span></code></pre><p>auto<strong>一般</strong>会忽略顶层const，保留底层const。<p>特殊：<ul><li>当原变量被取地址时，它的顶层const会变成底层const，从而得到保留<li>当原变量被引用时，它的顶层const也会保留</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>const int</span><span> ci = </span><span style=color:#d08770;>32</span><span>, &cr = ci;
+</span><span style=color:#b48ead;>auto</span><span> b = ci;	</span><span style=color:#65737e;>// b is int
+</span><span style=color:#b48ead;>auto</span><span> c = cr;	</span><span style=color:#65737e;>// c is int
+</span><span style=color:#b48ead;>auto</span><span> d = &ci;	</span><span style=color:#65737e;>// d is const int *，这里是底层const
+</span><span>
+</span><span style=color:#b48ead;>auto </span><span>&q = ci;	</span><span style=color:#65737e;>// q is int& const
+</span><span style=color:#b48ead;>auto </span><span>&w = </span><span style=color:#d08770;>32</span><span>;	</span><span style=color:#65737e;>//error：w is int&，32 need const int&
+</span><span style=color:#b48ead;>const auto </span><span>&e = </span><span style=color:#d08770;>32</span><span>;	</span><span style=color:#65737e;>//e is const int&
+</span></code></pre><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>const int</span><span> ci = </span><span style=color:#d08770;>32</span><span>, &cr = ci;
+</span><span style=color:#b48ead;>auto</span><span> b = ci;	</span><span style=color:#65737e;>// b is int
+</span><span style=color:#b48ead;>auto</span><span> c = cr;	</span><span style=color:#65737e;>// c is int
+</span><span style=color:#b48ead;>auto</span><span> d = &ci;	</span><span style=color:#65737e;>// d is const int *，这里是底层const
+</span><span>
+</span><span style=color:#b48ead;>auto </span><span>&q = ci;	</span><span style=color:#65737e;>// q is int& const
+</span><span style=color:#b48ead;>auto </span><span>&w = </span><span style=color:#d08770;>32</span><span>;	</span><span style=color:#65737e;>//error：w is int&，32 need const int&
+</span><span style=color:#b48ead;>const auto </span><span>&e = </span><span style=color:#d08770;>32</span><span>;	</span><span style=color:#65737e;>//e is const int&
+</span></code></pre><blockquote><p>顶层const：描述变量本身<p>底层const：描述变量指向内容</blockquote><p>auto推导时要有一致性：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>const int</span><span> i = </span><span style=color:#d08770;>32</span><span>;
+</span><span style=color:#b48ead;>int</span><span> j = </span><span style=color:#d08770;>32</span><span>;
+</span><span style=color:#b48ead;>auto</span><span> a = i, &b = j;	</span><span style=color:#65737e;>//OK: a is int, b is int&, auto is int
+</span><span style=color:#b48ead;>auto </span><span>&c = i, *p1 = &i;	</span><span style=color:#65737e;>//OK: c is int& const, p1 is const int*, auto is const int(or int const)
+</span><span style=color:#b48ead;>auto </span><span>&d = j, *p2 = &i;	</span><span style=color:#65737e;>//error: d is int&, p2 is const int*, 
+</span><span>						</span><span style=color:#65737e;>//auto is different: int 、const int
+</span></code></pre><p>decltype的结果类型与表达式形式密切相关：<ul><li>使用不加括号的变量，返回变量的类型<li>使用加括号的变量，返回表达式的类型</ul><blockquote><p>变量是一种可以作为赋值语句左值的特俗表达式</blockquote><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>;
+</span><span style=color:#b48ead;>decltype</span><span>(i) d;</span><span style=color:#65737e;>//d is int
+</span><span style=color:#b48ead;>decltype</span><span>((i)) e = i;</span><span style=color:#65737e;>//e is int&
+</span></code></pre><p><strong>decltype((variable))（注意是双层括号）的结果永远是引用，而decltype(variable)结果只有当variable本身就是一个引用时才是引用</strong><h2 id=fan-wei-for>范围for</h2><p>范围for可以避免一些错误<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>use</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>>& </span><span style=color:#bf616a;>v</span><span>, list&LTstring>& </span><span style=color:#bf616a;>list</span><span>) {
+</span><span>	</span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> x : v) cout << x << "</span><span style=color:#96b5b4;>\n</span><span>";
+</span><span>    </span><span style=color:#b48ead;>int</span><span> sum = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>auto</span><span> i : {</span><span style=color:#d08770;>1</span><span>,</span><span style=color:#d08770;>2</span><span>,</span><span style=color:#d08770;>3</span><span>,</span><span style=color:#d08770;>4</span><span>,</span><span style=color:#d08770;>5</span><span>}) sum+=i;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(string& s: list) s+="</span><span style=color:#a3be8c;>.cpp</span><span>";
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>error_use</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>>& </span><span style=color:#bf616a;>v</span><span>, list&LTstring>& </span><span style=color:#bf616a;>list</span><span>) {
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>; i < imax; ++i)
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> j = </span><span style=color:#d08770;>0</span><span>; i < imax; ++j){}	</span><span style=color:#65737e;>//错误的嵌套循环
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>; i <= imax; ++i){}	</span><span style=color:#65737e;>//多循环了一次的错误
+</span><span>}
+</span></code></pre><h2 id=yi-dong-yu-yi>移动语义</h2><p>调用函数时，参数按值传递，会产生拷贝，尽管通过使用 const &可以巧妙避免传入参数的拷贝，但对返回值还是存在拷贝行为。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//连续加法的需求，让其返回值不能是指针
+</span><span>Matrix </span><span style=color:#8fa1b3;>operator+</span><span>(</span><span style=color:#b48ead;>const</span><span> Matrix&, </span><span style=color:#b48ead;>const</span><span> Matrix&);
+</span></code></pre><p>为了避免返回值时进行大量的数据复制，需要确保在实现返回时，构造函数复制的只是（指向自由存储区上的数据的）句柄，而不是所有元素。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Matrix </span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>double</span><span>*</span><span style=color:#eff1f5;> elements;	</span><span style=color:#65737e;>//指向所有元素的指针
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Matrix</span><span style=color:#eff1f5;>(Matrix</span><span>&& </span><span style=color:#bf616a;>a</span><span style=color:#eff1f5;>)	</span><span style=color:#65737e;>//移动构造
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        elements </span><span>=</span><span style=color:#eff1f5;> a.</span><span style=color:#bf616a;>elements</span><span style=color:#eff1f5;>;	</span><span style=color:#65737e;>//复制句柄
+</span><span style=color:#eff1f5;>        a.</span><span style=color:#bf616a;>elements </span><span>= </span><span style=color:#d08770;>nullptr</span><span style=color:#eff1f5;>;	</span><span style=color:#65737e;>//现在 a 的析构函数不用做任何事情了
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}
+</span></code></pre><p>当用于初始化或赋值的源对象马上就会被销毁时，<strong>移动</strong>比<strong>拷贝</strong>要更好。<p>&&表示构造函数是一个<strong>移动构造函数</strong>，Matrix&& 称作<strong>右值引用</strong>，当用于模板参数时，右值引用的符号&&被叫做<strong>转发引用</strong>。<p>移动语义蕴含着性能上的重大好处：它消除了代价高昂的临时变量。<blockquote><p>xvalue、lvalue、prvalue的区别：<a href=https://zhuanlan.zhihu.com/p/265815272>谈一谈 C++ 中的值的类型 - 知乎 (zhihu.com)</a></blockquote><h2 id=zi-yuan-guan-li-zhi-zhen-zhi-neng-zhi-zhen>资源管理指针（智能指针）</h2><p>C++11提供了智能指针：<ul><li>shared_ptr——代表共享所有权<li>unique_ptr——代表独占所有权（取代C++98中的auto_ptr）</ul><p>智能指针作用：减少资源泄露和悬空指针<p>shared_ptr是传统的计数指针：指向同一对象的所有指针共享一个计数器。往往需要wead_ptr的配合。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>ole_use</span><span>(Args </span><span style=color:#bf616a;>a</span><span>){
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> q = </span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>Blob</span><span>(a);
+</span><span>	</span><span style=color:#65737e;>//...
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(foo) </span><span style=color:#b48ead;>throw </span><span style=color:#bf616a;>Bad</span><span>();</span><span style=color:#65737e;>//会泄露
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(bar) </span><span style=color:#b48ead;>return</span><span>;		</span><span style=color:#65737e;>//会泄露
+</span><span>    </span><span style=color:#65737e;>//...
+</span><span>    </span><span style=color:#b48ead;>delete</span><span> q;			</span><span style=color:#65737e;>//容易遗忘
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>newer_sue</span><span>(Args </span><span style=color:#bf616a;>a</span><span>){
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> p = </span><span style=color:#bf616a;>unique_ptr</span><span>&LTBlob>(</span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>Blob</span><span>(a));
+</span><span>    </span><span style=color:#65737e;>//...
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(foo) </span><span style=color:#b48ead;>throw </span><span style=color:#bf616a;>Bad</span><span>();</span><span style=color:#65737e;>//不会泄露
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(bar) </span><span style=color:#b48ead;>return</span><span>;		</span><span style=color:#65737e;>//不会泄露
+</span><span>    </span><span style=color:#65737e;>//...
+</span><span>}
+</span><span style=color:#65737e;>// 除非真的需要指针，否则，简单地使用局部变量会更好
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>simplest_use</span><span>(Args </span><span style=color:#bf616a;>a</span><span>){
+</span><span>    Blob </span><span style=color:#bf616a;>b</span><span>(a);
+</span><span>    </span><span style=color:#65737e;>//...
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(foo) </span><span style=color:#b48ead;>throw </span><span style=color:#bf616a;>Bad</span><span>();</span><span style=color:#65737e;>//不会泄露
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(bar) </span><span style=color:#b48ead;>return</span><span>;		</span><span style=color:#65737e;>//不会泄露
+</span><span>    </span><span style=color:#65737e;>//...
+</span><span>}
+</span></code></pre><h2 id=nullptr>nullptr</h2><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int</span><span>* p = </span><span style=color:#d08770;>99</span><span>-</span><span style=color:#d08770;>55</span><span>-</span><span style=color:#d08770;>44</span><span>;	</span><span style=color:#65737e;>//空指针
+</span><span style=color:#b48ead;>int</span><span>* q = </span><span style=color:#d08770;>2</span><span>;			</span><span style=color:#65737e;>//错误：2是int，不是int*
+</span></code></pre><p>C++继承了C语言的NULL，但NULL在C++中定义为0。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int</span><span> p0 = </span><span style=color:#d08770;>nullptr</span><span>;
+</span><span style=color:#b48ead;>int</span><span>* p1 = </span><span style=color:#d08770;>99</span><span>-</span><span style=color:#d08770;>55</span><span>-</span><span style=color:#d08770;>44</span><span>;	</span><span style=color:#65737e;>//可以，为了兼容性
+</span><span style=color:#b48ead;>int</span><span>* p2 = </span><span style=color:#d08770;>NULL</span><span>;		</span><span style=color:#65737e;>//可以，为了兼容性
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#b48ead;>char</span><span>*);
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> x1 = </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#d08770;>nullptr</span><span>);	</span><span style=color:#65737e;>//f(char*)
+</span><span style=color:#b48ead;>int</span><span> x2 = </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#d08770;>0</span><span>);			</span><span style=color:#65737e;>//f(int)
+</span></code></pre><h2 id=constexprhan-shu>constexpr函数</h2><p>C++11之前进行常量表达式求值还是用的（无类型的）宏，与C一样。<p>constexpr的目的：<ul><li>让编译期计算达到类型安全<li>在编译期计算，提高效率<li>支持嵌入式系统编程（尤其是ROM）<li>支持元编程（非模板元编程）<li>让编译期编程与“普通编程”非常相似</ul><p>允许常量表达式中使用constexpr函数；允许在常量表达式中使用简单用户定义类型，叫字面量类型。<p>constexpr函数可以在编译期进行求值，无法访问非本地对象。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>struct </span><span>LengthInKM {
+</span><span>    </span><span style=color:#b48ead;>constexpr explicit </span><span style=color:#8fa1b3;>LengthInKM</span><span>(</span><span style=color:#b48ead;>double </span><span style=color:#bf616a;>d</span><span>) : </span><span style=color:#bf616a;>val</span><span>(d) { }
+</span><span>    </span><span style=color:#b48ead;>constexpr double </span><span style=color:#8fa1b3;>getValue</span><span>() { </span><span style=color:#b48ead;>return</span><span> val; }
+</span><span style=color:#b48ead;>private</span><span>:
+</span><span>    </span><span style=color:#b48ead;>double</span><span> val;
+</span><span>};
+</span><span>
+</span><span>LengthInKM marks[] = { </span><span style=color:#bf616a;>LengthInKM</span><span>(</span><span style=color:#d08770;>2.3</span><span>), </span><span style=color:#bf616a;>LengthInKM</span><span>(</span><span style=color:#d08770;>0.76</span><span>) };
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>x</span><span>) {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> y1 = x;
+</span><span>    </span><span style=color:#b48ead;>constexpr int</span><span> y2 = x;	</span><span style=color:#65737e;>//错误，x不是常量，编译期x还不存在
+</span><span>    </span><span style=color:#b48ead;>constexpr int</span><span> y3 = </span><span style=color:#d08770;>77</span><span>;	</span><span style=color:#65737e;>//正确
+</span><span>}
+</span></code></pre><h2 id=yong-hu-ding-yi-zi-mian-liang>用户定义字面量</h2><p>内建类型有字面量，用户定义类型可通过重载<strong>字面量运算符</strong>（<code>operator""</code>）实现自己的字面量，其本质是显示地使用构造函数。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>constexpr</span><span> Imaginary </span><span style=color:#8fa1b3;>operator""i</span><span>(</span><span style=color:#b48ead;>long double </span><span style=color:#bf616a;>x</span><span>) {
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>Imaginary</span><span>(x);
+</span><span>}
+</span><span>
+</span><span>Imaginary a = </span><span style=color:#d08770;>3.14</span><span style=color:#b48ead;>i</span><span>; </span><span style=color:#65737e;>//从而complex&LTdouble>(1.2,3.4) == 1.2+3.4i;
+</span></code></pre><h2 id=yuan-shi-zi-fu-chuan-zi-mian-liang>原始字符串字面量</h2><p>和C一样，C++使用反斜杠作为转义字符，如果在字符串字面量中使用反斜杠，需要使用双反斜杠。<p>通常的正则表达式模式广泛使用反斜杠和双引号，所以模式很快变得混乱和容易出错。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//美国邮政编码
+</span><span>regex pattern1 {"</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>w{2}</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>s*</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>d{5}(-</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>d{4})?</span><span>"};	</span><span style=color:#65737e;>//普通字符串字面量
+</span><span>regex pattern2 {</span><span style=color:#b48ead;>R</span><span>"(</span><span style=color:#a3be8c;>\w{2}\s*\d{5}(-\d{4})?</span><span>)"};	</span><span style=color:#65737e;>//原始字符串字面量
+</span></code></pre><h2 id=lambdabiao-da-shi>lambda表达式</h2><p>C++11的lambda只支持捕获值或引用，C++14添加了移动捕获和泛型lambda<p>lambda表达式的中括号表示从周围环境捕获变量，小括号表示参数，返回值可以从返回语句推导出来，如果没有返回语句则不会返回任何东西。<p>声明捕获有三种方式：<ul><li>隐式捕获：<code>&</code>捕获引用，<code>=</code>捕获值<li>显示捕获列表<li>声明隐式捕获，并声明显示捕获列表：显示捕获列表的捕获方式同隐式捕获相反</ul><p>有特别的捕获方式：<ul><li><code>[this]</code>：通过引用捕获<code>*this</code>（它是对象的左值），而不是通过值捕获指针<li><code>[*this]</code>：捕获本地实体的值</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>algorithm</span><span>>   </span><span style=color:#65737e;>// sort函数模板、for_each函数模板
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>>
+</span><span> 
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span> 
+</span><span>
+</span><span style=color:#65737e;>//[capture list](parameter list)-> return type {function body}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main </span><span>( )
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f1 = []() { cout << "</span><span style=color:#a3be8c;>lambda test</span><span>" << endl; };
+</span><span>    </span><span style=color:#bf616a;>f1</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//use paramter list
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f2 = [](</span><span style=color:#b48ead;>int</span><span> a, </span><span style=color:#b48ead;>int</span><span> b) { cout << a << ' ' << b << endl; };
+</span><span>    </span><span style=color:#bf616a;>f2</span><span>(</span><span style=color:#d08770;>3</span><span>, </span><span style=color:#d08770;>4</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//use capture list
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f3 = [a]() { cout << a << endl; }; </span><span style=color:#65737e;>//值捕获
+</span><span>    </span><span style=color:#bf616a;>f3</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f4 = [&a]() { a++; cout << a << endl; };</span><span style=color:#65737e;>//引用捕获
+</span><span>    </span><span style=color:#bf616a;>f4</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f5 = [&]() { a++; cout << a << endl; };</span><span style=color:#65737e;>//隐式捕获引用
+</span><span>    </span><span style=color:#bf616a;>f5</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f6 = [=]() { cout << a << endl; };</span><span style=color:#65737e;>//隐式捕获值
+</span><span>    </span><span style=color:#bf616a;>f6</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f7 = [=]() </span><span style=color:#b48ead;>mutable </span><span>{ a++; cout << a << endl; }; </span><span style=color:#65737e;>//隐式捕获值，可变lambda，捕获的值在函数体改变不影响外面变量
+</span><span>    </span><span style=color:#bf616a;>f7</span><span>();
+</span><span>    cout << "</span><span style=color:#a3be8c;>after mutable</span><span>" << a << endl;
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f8 = [&,a]() { cout << a << endl; };
+</span><span>    </span><span style=color:#bf616a;>f8</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f9 = [=, &a]() { a++; cout << a << endl; };
+</span><span>    </span><span style=color:#bf616a;>f9</span><span>();
+</span><span>}
+</span></code></pre><h2 id=yuan-zu-tuple>元组tuple</h2><p>元组是大小固定而成员类型可以不同的容器。可用于：<ul><li>作为返回类型，用于需要超过一个返回类型的函数<li>同时赋值多个</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>use</span><span>() {
+</span><span>    string a, aa;
+</span><span>    vector b, bb;
+</span><span>    </span><span style=color:#b48ead;>double</span><span> c, cc;
+</span><span>    </span><span style=color:#65737e;>/* ... */
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> r = </span><span style=color:#bf616a;>make_tuple</span><span>(a, b, c);	</span><span style=color:#65737e;>// 创建元组
+</span><span>    </span><span style=color:#bf616a;>tie</span><span>(aa, bb, cc) = r;			</span><span style=color:#65737e;>// 解包元组
+</span><span>    
+</span><span>    </span><span style=color:#65737e;>// C++14后，可以逐个获取
+</span><span>    aa = </span><span style=color:#bf616a;>get</span><span><</span><span style=color:#d08770;>0</span><span>>(r);
+</span><span>    bb = </span><span style=color:#bf616a;>get</span><span><</span><span style=color:#d08770;>1</span><span>>(r);
+</span><span>    cc = </span><span style=color:#bf616a;>get</span><span><</span><span style=color:#d08770;>2</span><span>>(r);
+</span><span>    
+</span><span>    </span><span style=color:#65737e;>// C++17后，添加了结构化绑定，真正意义上的解包
+</span><span>    </span><span style=color:#b48ead;>auto </span><span>[aaa, bbb, ccc] = r;
+</span><span>    
+</span><span>}
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

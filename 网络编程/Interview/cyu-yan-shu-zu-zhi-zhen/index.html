@@ -1,0 +1,62 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Interview/cyu-yan-shu-zu-zhi-zhen/>C语言-数组指针</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-25 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/interview/>#Interview</a></span><div class=post-content><p>C语言-数组指针<h2 id=sizeof>sizeof()</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> str1[] = {'</span><span style=color:#a3be8c;>a</span><span>', '</span><span style=color:#a3be8c;>b</span><span>', '</span><span style=color:#a3be8c;>c</span><span>', '</span><span style=color:#a3be8c;>d</span><span>', '</span><span style=color:#a3be8c;>e</span><span>'};
+</span><span style=color:#b48ead;>char</span><span> str2[] = "</span><span style=color:#a3be8c;>abcde</span><span>";
+</span><span style=color:#b48ead;>char </span><span>*str3 = "</span><span style=color:#a3be8c;>abcde</span><span>";
+</span><span style=color:#b48ead;>char</span><span> str4[][</span><span style=color:#d08770;>80</span><span>]={"</span><span style=color:#a3be8c;>计算机应用基础</span><span>","</span><span style=color:#a3be8c;>C语言</span><span>","</span><span style=color:#a3be8c;>C++程序设计</span><span>","</span><span style=color:#a3be8c;>数据结构</span><span>"};
+</span></code></pre><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>sizeof(str1) == </span><span style=color:#d08770;>5</span><span>;</span><span style=color:#65737e;>//数组，5个元素
+</span><span>sizeof(str2) == </span><span style=color:#d08770;>6</span><span>;</span><span style=color:#65737e;>//C语言字符串类型以'\0'结尾
+</span><span>sizeof(str3) == </span><span style=color:#d08770;>4</span><span>;</span><span style=color:#65737e;>//指针类型，占一个字大小
+</span><span>sizeof(str4) == </span><span style=color:#d08770;>320</span><span>;
+</span><span>sizeof(str4[</span><span style=color:#d08770;>0</span><span>]) == </span><span style=color:#d08770;>80</span><span>;
+</span></code></pre><h2 id=strlen>strlen()</h2><p>strlen()是C语言标准库的一个函数，包含在&LTstring.h>头文件中，可以计算string类型所包含的字符个数。<p>因为设计是为string类型使用，而string类型均以‘\0’结尾，所以该函数的实现为遍历stirng，直至<strong>遇到‘\0’返回</strong>。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> arrayA[] = {'</span><span style=color:#a3be8c;>a</span><span>','</span><span style=color:#a3be8c;>b</span><span>','</span><span style=color:#a3be8c;>c</span><span>','</span><span style=color:#96b5b4;>\0</span><span>','</span><span style=color:#a3be8c;>d</span><span>','</span><span style=color:#a3be8c;>e</span><span>'};
+</span><span style=color:#b48ead;>char</span><span> arrayB[] = {'</span><span style=color:#a3be8c;>a</span><span>','</span><span style=color:#a3be8c;>b</span><span>','</span><span style=color:#a3be8c;>c</span><span>','</span><span style=color:#a3be8c;>d</span><span>','</span><span style=color:#a3be8c;>e</span><span>'};
+</span><span style=color:#b48ead;>char</span><span> arrayC[</span><span style=color:#d08770;>6</span><span>] = {'</span><span style=color:#a3be8c;>a</span><span>','</span><span style=color:#a3be8c;>b</span><span>','</span><span style=color:#a3be8c;>c</span><span>','</span><span style=color:#a3be8c;>d</span><span>','</span><span style=color:#a3be8c;>e</span><span>'};
+</span><span style=color:#b48ead;>char </span><span>*str = "</span><span style=color:#a3be8c;>abcde</span><span>";
+</span></code></pre><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#bf616a;>strlen</span><span>(arrayA) == </span><span style=color:#d08770;>3</span><span>;</span><span style=color:#65737e;>//遇到'\0'返回
+</span><span style=color:#bf616a;>strlen</span><span>(arrayB);</span><span style=color:#65737e;>//不存在'\0'结束符，结果未知
+</span><span style=color:#bf616a;>strlen</span><span>(arrayC) == </span><span style=color:#d08770;>5</span><span>;</span><span style=color:#65737e;>//指定了数组长度且有剩余空间，数组多余地方补'\0'
+</span><span style=color:#bf616a;>strlen</span><span>(str) == </span><span style=color:#d08770;>5</span><span>;
+</span></code></pre><h2 id=zi-fu-shu-zu-he-zi-fu-zhi-zhen>字符数组和字符指针</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> str[] = "</span><span style=color:#a3be8c;>hello</span><span>";
+</span><span style=color:#b48ead;>char </span><span>*str2 = "</span><span style=color:#a3be8c;>hello</span><span>";
+</span><span>
+</span><span>str[</span><span style=color:#d08770;>0</span><span>] = '</span><span style=color:#a3be8c;>a</span><span>';</span><span style=color:#65737e;>//合法，数组内容在栈空间，编译时分配
+</span><span>str2[</span><span style=color:#d08770;>0</span><span>]= '</span><span style=color:#a3be8c;>a</span><span>';</span><span style=color:#65737e;>//不合法，指针指向字符串常量，字符串常量在静态数据区域
+</span></code></pre><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> str1[] = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span style=color:#b48ead;>char</span><span> str2[] = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span>
+</span><span style=color:#b48ead;>const char</span><span> str3[] = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span style=color:#b48ead;>const char</span><span> str4[] = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span>
+</span><span style=color:#b48ead;>const char </span><span>*str5 = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span style=color:#b48ead;>const char </span><span>*str6 = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span>
+</span><span style=color:#b48ead;>char </span><span>*str7 = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span style=color:#b48ead;>char </span><span>*str8 = "</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span>
+</span><span>cout << ( str1 == str2 ) << endl;
+</span><span>cout << ( str3 == str4 ) << endl;
+</span><span>cout << ( str5 == str6 ) << endl;
+</span><span>cout << ( str7 == str8 ) << endl;
+</span><span style=color:#65737e;>//0 0 1 1
+</span></code></pre><blockquote><p>栈空间的数据在变量离开作用域时会被销毁，静态数据区域的数据在程序执行结束时销毁</blockquote><h2 id=jin-shen-zhi-chuan-can>谨慎值传参</h2><p>普通值传参：<ul><li>函数使用的是值的副本，修改该副本不影响原值<li>改进：将指向值的指针作为参数，通过指针使用该值</ul><p>指针值传参：<ul><li>传递指针给函数，但并不是使用指针指向的值，而是将指针当值使用，则对指针对象的修改不影响原指针<li>改进：将指向指针的指针作为参数，通过二次指针使用指针</ul><h2 id=constxian-ding-fu-yu-zhi-zhen>const限定符与指针</h2><p>顶层const：限定指针<p>底层const：限定指针指向对象<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>const char </span><span>*p;</span><span style=color:#65737e;>//p为指针，指向对象的类型是const char，底层const
+</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#b48ead;>const</span><span> p;</span><span style=color:#65737e;>//p为const指针，指向对象的类型是char，顶层const
+</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#b48ead;>const</span><span> p;</span><span style=color:#65737e;>//p为const指针，指向对象的类型是const char
+</span><span>
+</span><span style=color:#b48ead;>const char</span><span>* *p;</span><span style=color:#65737e;>//p为指针，指向const char*类型，p非const，(*p)非const， (**p)为const
+</span><span style=color:#b48ead;>const char</span><span>* </span><span style=color:#b48ead;>const </span><span>*p;</span><span style=color:#65737e;>//p为指针，指向const char*类型，p非const，(*p)为const， (**p)为const
+</span><span style=color:#b48ead;>const char</span><span>* </span><span style=color:#b48ead;>const </span><span>*</span><span style=color:#b48ead;>const</span><span> p;</span><span style=color:#65737e;>//p为const指针，指向const char*类型，p为const，(*p)为const， (**p)为const
+</span></code></pre><h2 id=jie-yin-yong-fu-yun-suan-fu-he-di-zeng-yun-suan-fu>解引用符(*运算符)和递增运算符</h2><p>注意：<ul><li>后置递增/递减优先级 > 前置递增/递减优先级 = 解引用优先级<li>三者均为<strong>右结合</strong><li>后置递增/递减<strong>返回值是原对象</strong></ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>int int</span><span> a[</span><span style=color:#d08770;>5</span><span>]={</span><span style=color:#d08770;>1</span><span>, </span><span style=color:#d08770;>2</span><span>, </span><span style=color:#d08770;>3</span><span>, </span><span style=color:#d08770;>4</span><span>, </span><span style=color:#d08770;>5</span><span>};
+</span><span style=color:#b48ead;>int </span><span>*p = a;
+</span><span>
+</span><span style=color:#65737e;>//先解引用，再对p自增
+</span><span>cout << *p++;</span><span style=color:#65737e;>//1
+</span><span>cout << (*p++);</span><span style=color:#65737e;>//1
+</span><span style=color:#65737e;>//p先解引用，对解引用后的值自增
+</span><span>cout << ++*p;</span><span style=color:#65737e;>//2
+</span><span>cout << (++*p);</span><span style=color:#65737e;>//2
+</span><span style=color:#65737e;>//先解引用，再对p指向的对象进行自增
+</span><span>cout << (*p)++;</span><span style=color:#65737e;>//1
+</span><span>cout << ((*p)++);</span><span style=color:#65737e;>//2
+</span><span style=color:#65737e;>//p先自增，自增后的值再解引用
+</span><span>cout << *++p;</span><span style=color:#65737e;>//2
+</span><span>cout <<(*++p)</span><span style=color:#65737e;>//2
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

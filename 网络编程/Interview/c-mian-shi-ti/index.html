@@ -1,0 +1,245 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Interview/c-mian-shi-ti/>C++面试题</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-25 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/interview/>#Interview</a></span><div class=post-content><p>一些面试题的记录。<p>博主何海涛对本博客文章享有版权。网络转载请注明出处http://zhedahht.blog.163.com/。<h2 id=ti-mu-yi>题目（一）</h2><p>我们可以用static修饰一个类的成员函数，也可以用const修饰类的成员函数（写在函数的最后表示不能修改成员变量，不是指写在前面表示返回值为常量）。请问：能不能同时用static和const修饰类的成员函数？<p>**分析：*<em>答案是不可以。C++编译器在实现const的成员函数的时候为了确保该函数不能修改类的实例的状态，会在函数中添加一个隐式的参数const this</em>。但当一个成员为static的时候，该函数是没有this指针的。也就是说此时static的用法和static是冲突的。<p>我们也可以这样理解：两者的语意是矛盾的。static的作用是表示该函数只作用在类型的静态变量上，与类的实例没有关系；而const的作用是确保函数不能修改类的实例的状态，与类型的静态变量没有关系。因此不能同时用它们。<h2 id=ti-mu-er>题目（二）</h2><p>运行下面的代码，输出是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span> 
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>     </span><span style=color:#8fa1b3;>B</span><span style=color:#eff1f5;>() {}
+</span><span style=color:#eff1f5;>     </span><span style=color:#8fa1b3;>~B</span><span style=color:#eff1f5;>() {}
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>C</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>     </span><span style=color:#8fa1b3;>C</span><span style=color:#eff1f5;>() {}
+</span><span style=color:#eff1f5;>     </span><span style=color:#b48ead;>virtual </span><span style=color:#8fa1b3;>~C</span><span style=color:#eff1f5;>() {}
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>     </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>, </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>, </span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", sizeof(A), sizeof(B), sizeof(C));
+</span><span>     </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>**分析：**答案是1, 1, 4。class A是一个空类型，它的实例不包含任何信息，本来求sizeof应该是0。但当我们声明该类型的实例的时候，它必须在内存中占有一定的空间，否则无法使用这些实例。至于占用多少内存，由编译器决定。Visual Studio 2008中每个空类型的实例占用一个byte的空间。<p>class B在class A的基础上添加了构造函数和析构函数。由于构造函数和析构函数的调用与类型的实例无关（调用它们只需要知道函数地址即可），在它的实例中不需要增加任何信息。所以sizeof(B)和sizeof(A)一样，在Visual Studio 2008中都是1。<p>class C在class B的基础上把析构函数标注为虚拟函数。C++的编译器一旦发现一个类型中有虚拟函数，就会为该类型生成虚函数表，并在该类型的每一个实例中添加一个指向虚函数表的指针。在32位的机器上，一个指针占4个字节的空间，因此sizeof(C)是4。<h2 id=ti-mu-san>题目（三）</h2><p>运行下面中的代码，得到的结果是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>     </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>m_value</span><span style=color:#eff1f5;>;
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>     </span><span style=color:#8fa1b3;>A</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>value</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>     {
+</span><span style=color:#eff1f5;>         </span><span style=color:#bf616a;>m_value </span><span>=</span><span style=color:#eff1f5;> value;
+</span><span style=color:#eff1f5;>     }
+</span><span style=color:#eff1f5;>     </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Print1</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>     {
+</span><span style=color:#eff1f5;>         </span><span style=color:#96b5b4;>printf</span><span style=color:#eff1f5;>(</span><span>"</span><span style=color:#a3be8c;>hello world</span><span>"</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>     }
+</span><span style=color:#eff1f5;>     </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Print2</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>     {
+</span><span style=color:#eff1f5;>         </span><span style=color:#96b5b4;>printf</span><span style=color:#eff1f5;>(</span><span>"</span><span style=color:#d08770;>%d</span><span>"</span><span style=color:#eff1f5;>, </span><span style=color:#bf616a;>m_value</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>     }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>     A* pA = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>     pA-></span><span style=color:#bf616a;>Print1</span><span>();
+</span><span>     pA-></span><span style=color:#bf616a;>Print2</span><span>();
+</span><span>     </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>**分析：**答案是Print1调用正常，打印出hello world，但运行至Print2时，程序崩溃。调用Print1时，并不需要pA的地址，因为Print1的函数地址是固定的。编译器会给Print1传入一个this指针，该指针为NULL，但在Print1中该this指针并没有用到。只要程序运行时没有访问不该访问的内存就不会出错，因此运行正常。在运行print2时，需要this指针才能得到m_value的值。由于此时this指针为NULL，因此程序崩溃了。<h2 id=ti-mu-si>题目（四）</h2><p>运行下面中的代码，得到的结果是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>     </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>m_value</span><span style=color:#eff1f5;>;
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>     </span><span style=color:#8fa1b3;>A</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>value</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>     {
+</span><span style=color:#eff1f5;>         </span><span style=color:#bf616a;>m_value </span><span>=</span><span style=color:#eff1f5;> value;
+</span><span style=color:#eff1f5;>     }
+</span><span style=color:#eff1f5;>     </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Print1</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>     {
+</span><span style=color:#eff1f5;>         </span><span style=color:#96b5b4;>printf</span><span style=color:#eff1f5;>(</span><span>"</span><span style=color:#a3be8c;>hello world</span><span>"</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>     }
+</span><span style=color:#eff1f5;>     </span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>Print2</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>     {
+</span><span style=color:#eff1f5;>         </span><span style=color:#96b5b4;>printf</span><span style=color:#eff1f5;>(</span><span>"</span><span style=color:#a3be8c;>hello world</span><span>"</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>     }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>     A* pA = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>     pA-></span><span style=color:#bf616a;>Print1</span><span>();
+</span><span>     pA-></span><span style=color:#bf616a;>Print2</span><span>();
+</span><span> 
+</span><span>     </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>**分析：**答案是Print1调用正常，打印出hello world，但运行至Print2时，程序崩溃。Print1的调用情况和上面的题目一样，不在赘述。由于Print2是虚函数。C++调用虚函数的时候，要根据实例（即this指针指向的实例）中虚函数表指针得到虚函数表，再从虚函数表中找到函数的地址。由于这一步需要访问实例的地址（即this指针），而此时this指针为空指针，因此导致内存访问出错。<h2 id=ti-mu-wu>题目（五）</h2><p>静态成员函数能不能同时也是虚函数？<p>**分析：**答案是不能。调用静态成员函数不要实例。但调用虚函数需要从一个实例中指向虚函数表的指针以得到函数的地址，因此调用虚函数需要一个实例。两者相互矛盾。<h2 id=ti-mu-12>题目（12）</h2><p>运行下图中的C++代码，输出是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> n1;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> n2;
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>        </span><span style=color:#8fa1b3;>A</span><span style=color:#eff1f5;>(): </span><span style=color:#bf616a;>n2</span><span style=color:#eff1f5;>(</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>), </span><span style=color:#bf616a;>n1</span><span style=color:#eff1f5;>(n2 </span><span>+ </span><span style=color:#d08770;>2</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Print</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>             std::cout </span><span><< "</span><span style=color:#a3be8c;>n1: </span><span>" <<</span><span style=color:#eff1f5;> n1 </span><span><< "</span><span style=color:#a3be8c;>, n2: </span><span>" <<</span><span style=color:#eff1f5;> n2 </span><span><<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>        A a;
+</span><span>        a.</span><span style=color:#bf616a;>Print</span><span>();
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>
+</span><span>}
+</span></code></pre><p><strong>答案</strong>：输出n1是一个随机的数字，n2为0。在C++中，成员变量的初始化顺序与变量在类型中的申明顺序相同，而与它们在构造函数的初始化列表中的顺序无关。因此在这道题中，会首先初始化n1，而初始n1的参数n2还没有初始化，是一个随机值，因此n1就是一个随机值。初始化n2时，根据参数0对其初始化，故n2=0。<h2 id=ti-mu-13>题目（13）</h2><p>编译运行下图中的C++代码，结果是什么？（A）编译错误；（B）编译成功，运行时程序崩溃；（C）编译运行正常，输出10。请选择正确答案并分析原因。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> value;
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>        </span><span style=color:#8fa1b3;>A</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>n</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>                value </span><span>=</span><span style=color:#eff1f5;> n;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#8fa1b3;>A</span><span style=color:#eff1f5;>(A </span><span style=color:#bf616a;>other</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>                value </span><span>=</span><span style=color:#eff1f5;> other.</span><span style=color:#bf616a;>value</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Print</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>                std::cout </span><span><<</span><span style=color:#eff1f5;> value </span><span><<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>        A a = </span><span style=color:#d08770;>10</span><span>;
+</span><span>        A b = a;
+</span><span>        b.</span><span style=color:#bf616a;>Print</span><span>();
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>
+</span><span>}
+</span></code></pre><p><strong>答案</strong>：编译错误。在复制构造函数中传入的参数是A的一个实例。由于是传值，把形参拷贝到实参会调用复制构造函数。因此如果允许复制构造函数传值，那么会形成永无休止的递归并造成栈溢出。因此C++的标准不允许复制构造函数传值参数，而必须是传引用或者常量引用。在Visual Studio和GCC中，都将编译出错。<h2 id=ti-mu-14>题目（14）</h2><p>运行下图中的C++代码，输出是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>SizeOf</span><span>(</span><span style=color:#b48ead;>char </span><span style=color:#bf616a;>pString</span><span>[])
+</span><span>{
+</span><span>        </span><span style=color:#b48ead;>return </span><span>sizeof(pString);
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>        </span><span style=color:#b48ead;>char</span><span>* pString1 = "</span><span style=color:#a3be8c;>google</span><span>";
+</span><span>        </span><span style=color:#b48ead;>int</span><span> size1 = sizeof(pString1);
+</span><span>        </span><span style=color:#b48ead;>int</span><span> size2 = sizeof(*pString1);
+</span><span> 
+</span><span>        </span><span style=color:#b48ead;>char</span><span> pString2[</span><span style=color:#d08770;>100</span><span>] = "</span><span style=color:#a3be8c;>google</span><span>";
+</span><span>        </span><span style=color:#b48ead;>int</span><span> size3 = sizeof(pString2);
+</span><span>        </span><span style=color:#b48ead;>int</span><span> size4 = </span><span style=color:#bf616a;>SizeOf</span><span>(pString2);
+</span><span> 
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>, </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>, </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>, </span><span style=color:#d08770;>%d</span><span>", size1, size2, size3, size4);
+</span><span> 
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p><strong>答案</strong>：4, 1, 100, 4。pString1是一个指针。在32位机器上，任意指针都占4个字节的空间。*pString1是字符串pString1的第一个字符。一个字符占一个字节。pString2是一个数组，sizeof(pString2)是求数组的大小。这个数组包含100个字符，因此大小是100个字节。而在函数SizeOf中，虽然传入的参数是一个字符数组，当数组作为函数的参数进行传递时，数组就自动退化为同类型的指针。因此size4也是一个指针的大小，为4.<h2 id=ti-mu-15>题目（15）</h2><p>运行下图中代码，输出的结果是什么？这段代码有什么问题？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>        </span><span style=color:#8fa1b3;>A</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>               std::cout </span><span><< "</span><span style=color:#a3be8c;>A is created.</span><span>" <<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#8fa1b3;>~A</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>                std::cout </span><span><< "</span><span style=color:#a3be8c;>A is deleted.</span><span>" <<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span> 
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B </span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>A
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>        </span><span style=color:#8fa1b3;>B</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>                std::cout </span><span><< "</span><span style=color:#a3be8c;>B is created.</span><span>" <<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>         </span><span style=color:#8fa1b3;>~B</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>                std::cout </span><span><< "</span><span style=color:#a3be8c;>B is deleted.</span><span>" <<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>        A* pA = </span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>B</span><span>();
+</span><span>        </span><span style=color:#b48ead;>delete</span><span> pA;
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p><strong>答案</strong>：输出三行，分别是：A is created. B is created. A is deleted。用new创建B时，回调用B的构造函数。在调用B的构造函数的时候，会先调用A的构造函数。因此先输出A is created. B is created.<p>接下来运行delete语句时，会调用析构函数。由于pA被声明成类型A的指针，同时基类A的析构函数没有标上virtual，因此只有A的析构函数被调用到，而不会调用B的析构函数。<p>由于pA实际上是指向一个B的实例的指针，但在析构的时候只调用了基类A的析构函数，却没有调用B的析构函数。这就是一个问题。如果在类型B中创建了一些资源，比如文件句柄、内存等，在这种情况下都得不到释放，从而导致资源泄漏。<p><strong>因此需要把基类的析构函数声明为虚函数</strong><h2 id=ti-mu-16>题目（16）</h2><p>运行如下的C++代码，输出是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>Fun</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>number </span><span>= </span><span style=color:#d08770;>10</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>A::Fun with number </span><span>" <<</span><span style=color:#eff1f5;> number;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B</span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>A
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>Fun</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>number </span><span>= </span><span style=color:#d08770;>20</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>B::Fun with number </span><span>" <<</span><span style=color:#eff1f5;> number;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    B b;
+</span><span>    A &a = b;
+</span><span>    a.</span><span style=color:#bf616a;>Fun</span><span>();
+</span><span>}
+</span></code></pre><p><strong>答案</strong>：输出B::Fun with number 10。由于a是一个指向B实例的引用，因此在运行的时候会调用B::Fun。但<strong>缺省参数是在编译期决定的</strong>。在编译的时候，编译器只知道a是一个类型a的引用，具体指向什么类型在编译期是不能确定的，因此会按照A::Fun的声明把缺省参数number设为10。<p>​ 这一题的关键在于理解确定缺省参数的值是在编译的时候，但确定引用、指针的虚函数调用哪个类型的函数是在运行的时候。<h2 id=ti-mu-17>题目（17）</h2><p>运行如下的C代码，输出是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>char</span><span>* </span><span style=color:#8fa1b3;>GetString1</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> p[] = "</span><span style=color:#a3be8c;>Hello World</span><span>";
+</span><span>    </span><span style=color:#b48ead;>return</span><span> p;
+</span><span>}
+</span><span> 
+</span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#8fa1b3;>GetString2</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*p = "</span><span style=color:#a3be8c;>Hello World</span><span>";
+</span><span>    </span><span style=color:#b48ead;>return</span><span> p;
+</span><span>}
+</span><span> 
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>GetString1 returns: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>. </span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>GetString1</span><span>());
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>GetString2 returns: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>. </span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>GetString2</span><span>());
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p><strong>答案</strong>：输出两行，第一行GetString1 returns: 后面跟的是一串随机的内容，而第二行GetString2 returns: Hello World. 两个函数的区别在于GetString1中是一个数组，而GetString2中是一个指针。<p>当运行到GetString1时，p是一个数组，会开辟一块内存，并拷贝"Hello World"初始化该数组。接着返回数组的首地址并退出该函数。由于p是GetString1内的一个局部变量，当运行到这个函数外面的时候，这个数组的内存会被释放掉。因此在_tmain函数里再去访问这个数组的内容时，结果是随机的。<p>当运行到GetString2时，p是一个指针，它指向的是字符串常量区的一个常量字符串。该常量字符串是一个全局的，并不会因为退出函数GetString2而被释放掉。因此在_tmain中仍然根据GetString2返回的地址得到字符串"Hello World"。<h2 id=ti-mu-19>题目（19）</h2><p>运行下图中C代码，输出的结果是什么？<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_tmain</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, _TCHAR* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> str1[] = "</span><span style=color:#a3be8c;>hello world</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char</span><span> str2[] = "</span><span style=color:#a3be8c;>hello world</span><span>";
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>char</span><span>* str3 = "</span><span style=color:#a3be8c;>hello world</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char</span><span>* str4 = "</span><span style=color:#a3be8c;>hello world</span><span>";
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(str1 == str2)
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>str1 and str2 are same.</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>    </span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>str1 and str2 are not same.</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(str3 == str4)
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>str3 and str4 are same.</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>    </span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>str3 and str4 are not same.</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p><strong>答案</strong>：输出两行。第一行是str1 and str2 are not same，第二行是str3 and str4 are same。<p>str1和str2是两个字符串数组。我们会为它们分配两个长度为12个字节的空间，并把"hello world"的内容分别拷贝到数组中去。这是两个初始地址不同的数组，因此比较str1和str2的值，会不相同。str3和str4是两个指针，我们无需为它们分配内存以存储字符串的内容，而只需要把它们指向"hello world“在内存中的地址就可以了。由于"hello world”是常量字符串，它在内存中只有一个拷贝，因此str3和str4指向的是同一个地址。因此比较str3和str4的值，会是相同的。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>
