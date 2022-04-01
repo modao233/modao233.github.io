@@ -1,0 +1,83 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/C++/book note/Effective C++/item4-que-bao-dui-xiang-zai-shi-yong-qian-bei-chu-shi-hua/">Item4-确保对象在使用前被初始化</a></h1><div class=post-meta-inline><span class=post-date> 2021-01-06 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/effective-c/>#Effective C++</a></span><div class=post-content><p>Item 4: 确保对象被使用前已先被初始化<h2 id=dui-xiang-chu-shi-hua-fang-fa>对象初始化方法</h2><p>对象的初始化动作何时一定发生，何时不一定发生。初始化规则很复杂，最佳的处理方法就是：永远在使用对象之前先将它初始化。<p>对于内置类型的非成员对象，初始化必须手动完成：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int</span><span> x = </span><span style=color:#d08770;>0</span><span>;  </span><span style=color:#65737e;>// manual initialization of an int
+</span><span style=color:#b48ead;>const char </span><span>* text = "</span><span style=color:#a3be8c;>A C-style string</span><span>";   </span><span style=color:#65737e;>// manual initialization of a pointer
+</span><span style=color:#b48ead;>double</span><span> d;
+</span><span>std::cin >> d;  </span><span style=color:#65737e;>// "initialization" by reading from an input stream
+</span></code></pre><p>除了内置类型，其它类型的初始化由构造函数完成，其规则是：确保每一个构造函数初始化所有的对象成员。该规则很容易遵守，但需要注意不要混淆<strong>赋值</strong>和<strong>初始化</strong>。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>PhoneNumber </span><span style=color:#eff1f5;>{ </span><span>... </span><span style=color:#eff1f5;>}</span><span>;
+</span><span style=color:#65737e;>//@ ABEntry = "Address Book Entry"
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>ABEntry </span><span style=color:#eff1f5;>{   
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>  </span><span style=color:#8fa1b3;>ABEntry</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::string</span><span>& </span><span style=color:#bf616a;>name</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::string</span><span>& </span><span style=color:#bf616a;>address</span><span style=color:#eff1f5;>,
+</span><span style=color:#eff1f5;>          </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::list&LTPhoneNumber></span><span>& </span><span style=color:#bf616a;>phones</span><span style=color:#eff1f5;>);
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>  std::string theName;
+</span><span style=color:#eff1f5;>  std::string theAddress;
+</span><span style=color:#eff1f5;>  std::list&LTPhoneNumber> thePhones;
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> numTimesConsulted;
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span>ABEntry::</span><span style=color:#8fa1b3;>ABEntry</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string& </span><span style=color:#bf616a;>name</span><span>, </span><span style=color:#b48ead;>const</span><span> std::string& </span><span style=color:#bf616a;>address</span><span>,
+</span><span>                 </span><span style=color:#b48ead;>const</span><span> std::list&LTPhoneNumber>& </span><span style=color:#bf616a;>phones</span><span>)
+</span><span>{
+</span><span>  </span><span style=color:#65737e;>//这些都是赋值，不是初始化
+</span><span>  theName = name;                       
+</span><span>  theAddress = address;                
+</span><span>  thePhones = phones;
+</span><span>  numTimesConsulted = </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>C++规定：对象的成员变量的初始化动作发生在进入<strong>构造函数本体</strong>之前<ul><li>在 ABEntry 的构造函数内，theName，theAddress 和 thePhones 不是被初始化，而是被赋值。<li>初始化发生得更早——在进入 ABEntry 的构造函数的函数体之前，它们的 default 的构造函数已经被自动调用。但不包括 numTimesConsulted，因为它是一个 内建类型。不能保证它在被赋值之前被初始化。</ul><p>一个更好的写 ABEntry 构造函数的方法是用<strong>成员初始化列表</strong>来代替赋值：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>ABEntry::</span><span style=color:#8fa1b3;>ABEntry</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string& </span><span style=color:#bf616a;>name</span><span>, </span><span style=color:#b48ead;>const</span><span> std::string& </span><span style=color:#bf616a;>address</span><span>,
+</span><span>                 </span><span style=color:#b48ead;>const</span><span> std::list&LTPhoneNumber>& </span><span style=color:#bf616a;>phones</span><span>)
+</span><span>: </span><span style=color:#bf616a;>theName</span><span>(name),
+</span><span>  </span><span style=color:#bf616a;>theAddress</span><span>(address),                  </span><span style=color:#65737e;>//@ these are now all initializations
+</span><span>  </span><span style=color:#bf616a;>thePhones</span><span>(phones),
+</span><span>  </span><span style=color:#bf616a;>numTimesConsulted</span><span>(</span><span style=color:#d08770;>0</span><span>)
+</span><span>{}   </span><span style=color:#65737e;>//@ the ctor body is now empty
+</span></code></pre><p>基于赋值的版本会首先调用 default 构造函数初始化 theName，theAddress 和 thePhones，然而很快又在 default 构造的值之上赋予新值。那些 default 构造函数所做的工作被浪费了。<p>成员初始化列表的方法避免了这个问题，因为初始化列表中的参数就可以作为各种数据成员的构造函数所使用的参数。在这种情况下，theName 从 name 中 copy-constructed（拷贝构造），theAddress 从 address 中 copy-constructed（拷贝构造），thePhones 从 phones 中 copy-constructed（拷贝构造）。<p>对于大多数类型来说，只调用一次拷贝构造函数的效率比先调用一次缺省构造函数再调用一次拷贝赋值运算符的效率要高（有时会高很多）。<p>内建类型的初始化和赋值没有什么不同，但为了统一性，最好由成员初始化来初始化每一个对象成员。<p>类似地，当你只想 default 构造一个数据成员时也可以使用成员初始化列表，只是不必指定初始化参数而已。假设 ABEntry 有一个无参数的构造函数，它可以像这样实现：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>ABEntry::</span><span style=color:#8fa1b3;>ABEntry</span><span>()
+</span><span>:</span><span style=color:#bf616a;>theName</span><span>(),                         </span><span style=color:#65737e;>//@ call theName's default ctor;
+</span><span> </span><span style=color:#bf616a;>theAddress</span><span>(),                      </span><span style=color:#65737e;>//@ do the same for theAddress;
+</span><span> </span><span style=color:#bf616a;>thePhones</span><span>(),                       </span><span style=color:#65737e;>//@ and for thePhones;
+</span><span> </span><span style=color:#bf616a;>numTimesConsulted</span><span>(</span><span style=color:#d08770;>0</span><span>)               </span><span style=color:#65737e;>//@ but explicitly initialize
+</span><span>{}
+</span></code></pre><p>编译器会为用户自定义类型的成员变量自动调用default构造函数。虽然如此，但还是立下一个规则：必须在初始化列表中列出所有的成员变量，以免还得记住哪些成员变量可以无需初值（如果它们在初始化类别中被遗漏的话）。<p>因为 numTimesConsulted 属于内置类型，如果成员初始化列表遗漏了它 ，可能会导致<strong>未定义行为</strong>。<p>有些情况下，即使面对的成员变量属于内置类型（初始化和赋值成本相同），也一定得使用初始化列表赋值：如果成员变量是 const 或 references，它们就一定需要初值，不能被赋值。<p>许多 class 拥有多个构造函数，每个构造函数有自己的初始化列表，如果这种 class 存在许多成员变量和/或 base classes，多份初始化列表就会存在大量重复，这种情况可以在初始化列表中合理地遗漏那些“赋值表现像初始化一样好”的成员变量，改用它们的赋值操作，并将赋值操作移到某个函数中（通常是private）供构造函数调用。这种做法在“成员变量的初始值由文件或数据库读入”时特别有用。然而，初始化列表完成的“真正的初始化”仍然比通过赋值操作完成的“伪初始化”更加可取。<p>C++ 对象的数据被初始化的顺序总是相同的：<ul><li>基类在派生类之前被初始化<li>在一个类内部，数据成员按照它们被声明的顺序被初始化，即使在初始化列表中的顺序与声明顺序不一致（建议一致）</ul><h2 id=bu-tong-bian-yi-dan-yuan-nei-ding-yi-zhi-non-local-staticdui-xiang>不同编译单元内定义之non-local static对象</h2><p><strong>局部静态对象</strong>一个静态对象的生存期是从被构造出来直到程序结束为止。程序结束时 static 对象会被自动销毁，也就是它们的析构函数会在 main() 结束时被自动调用。<p>静态对象按照定义的位置可以分为：<ul><li><strong>局部静态对象</strong>：在函数内部的静态对象称为<li><strong>非局部静态对象</strong>：全局对象、定义在命名空间范围内的对象、在类内部声明为静态的对象、在文件范围内被声明为静态的对象</ul><p><strong>编译单元（translation unit）</strong>：指产出单一目标文件的那些源码，基本上是一个单独的源文件，加上其所含的头文件。<p>问题：某编译单元内的某个 non-local static 对象的初始化使用了另一个编译单元内的某个 non-local static 对象，它所使用的这个对象可能尚未被初始化，因为C++对“定义于不同编译单元内的 non-local static 对象”的初始化顺序并无明确定义。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>FileSystem </span><span style=color:#eff1f5;>{ 
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>  </span><span>...
+</span><span style=color:#eff1f5;>  std::size_t </span><span style=color:#8fa1b3;>numDisks</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;  
+</span><span style=color:#eff1f5;>  </span><span>...
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span style=color:#b48ead;>extern</span><span> FileSystem tfs;  </span><span style=color:#65737e;>//@ object for clients to use;"tfs" = "the file system"
+</span></code></pre><p>现在假设一些客户为一个文件系统中的目录创建了一个类，他们的类使用了对象：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Directory </span><span style=color:#eff1f5;>{ 
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>   </span><span style=color:#bf616a;>Directory</span><span style=color:#eff1f5;>(params);
+</span><span style=color:#eff1f5;>  </span><span>...
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span>Directory::</span><span style=color:#8fa1b3;>Directory</span><span>(</span><span style=color:#bf616a;>params</span><span>)
+</span><span>{
+</span><span>  ...
+</span><span>  std::size_t disks = tfs.</span><span style=color:#bf616a;>numDisks</span><span>();   </span><span style=color:#65737e;>//@ use the tfs object
+</span><span>  ...
+</span><span>}
+</span></code></pre><p>进一步假设，这个客户决定为临时文件创建一个单独的目录对象：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>Directory </span><span style=color:#8fa1b3;>tempDir</span><span>(</span><span style=color:#bf616a;>params</span><span>); </span><span style=color:#65737e;>//@ directory for temporary files
+</span></code></pre><p>现在初始化顺序的重要性变得明显了：除非 tfs 在 tempDir 之前初始化，否则，tempDir 的构造函数就会在 tfs 被初始化之前试图使用它。但是，tfs 和 tempDir 是被不同的人于不同的时间在不同的源文件中创建的，它们是定义在不同编译单元中的 non-local static 对象。因此，无法确定它们的初始化顺序。<p>正确的做法是将每一个非局部静态对象移到它自己的函数中，该对象在函数内被声明为静态。这些函数返回它所包含的对象的引用。换一种说法，就是用局部静态对象取代非局部静态对象。这是Singleton模式（单例模式）的一个常见实现手法：该手法的基础在于，C++ 保证函数内的 local static 对象会在函数首次被调用时，通过该对象的定义式初始化，不仅解决了初始化顺序的问题，还具有惰性求值的特性。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>FileSystem </span><span style=color:#eff1f5;>{ </span><span>... </span><span style=color:#eff1f5;>}</span><span>;          
+</span><span>
+</span><span>FileSystem& </span><span style=color:#8fa1b3;>tfs</span><span>()                   
+</span><span>{                                  
+</span><span>  </span><span style=color:#b48ead;>static</span><span> FileSystem fs;          
+</span><span>  </span><span style=color:#b48ead;>return</span><span> fs;                      
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Directory </span><span style=color:#eff1f5;>{ </span><span>... </span><span style=color:#eff1f5;>}</span><span>;           
+</span><span>
+</span><span>Directory::</span><span style=color:#8fa1b3;>Directory</span><span>( </span><span style=color:#bf616a;>params </span><span>)     
+</span><span>{                                
+</span><span>  ...
+</span><span>  std::size_t disks = </span><span style=color:#bf616a;>tfs</span><span>().</span><span style=color:#bf616a;>numDisks</span><span>();
+</span><span>  ...
+</span><span>}
+</span><span>
+</span><span>Directory& </span><span style=color:#8fa1b3;>tempDir</span><span>()             
+</span><span>{                                  
+</span><span>  </span><span style=color:#b48ead;>static</span><span> Directory td;              
+</span><span>  </span><span style=color:#b48ead;>return</span><span> td;                      
+</span><span>}
+</span></code></pre><p>这些函数体非常单纯的函数非常适合 inline ，如果频繁被调用的话。<p>这些函数“内含 static 对象”的事实使它们在多线程中带有不确定性，任何一种 non-const static 对象，不论是 local 还是 non-local，在多线程环境下“等待某事发生”都会有麻烦。处理这个麻烦的一种做法是：在程序的单线程启动阶段手工调用所有 reference-returning 函数，这可消除与初始化有关的“竞态条件（race conditions）”。<h2 id=zong-jie>总结</h2><ul><li>对象初始化 <ul><li>手动初始化内建类型的对象，因为 C++ 不保证初始化它们。<li>C++ 的规则规定一个对象的数据成员在进入构造函数的函数体之前被初始化。<li>列表初始化通常比在构造函数中赋值效率更高。<li>在构造函数中，用成员初始化列表代替函数体中的赋值初始化，列表中数据成员的排列顺序（最好）要与它们在类中被声明的顺序相同。<li>列表初始化时要初始化每一个成员，防止遗漏。<li>类中的 const 成员和引用成员必须使用初始化列表初始化。</ul><li>静态对象 <ul><li>定义在不同编译单元内的非局部静态对象的初始化的相对顺序是未定义的。<li>通过用局部静态对象代替非局部静态对象来避免跨编译单元的初始化顺序问题。</ul></ul></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

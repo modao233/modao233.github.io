@@ -1,0 +1,68 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/C++/book note/Effective C++/item9-jue-bu-zai-gou-zao-he-xi-gou-guo-cheng-zhong-diao-yong-virtualhan-shu/">item9-绝不在构造和析构过程中调用virtual函数</a></h1><div class=post-meta-inline><span class=post-date> 2021-01-06 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/effective-c/>#Effective C++</a></span><div class=post-content><p>item9-绝不在构造和析构过程中调用virtual函数<h2 id=lei-gou-zao-he-xi-gou-qi-jian-bu-hui-fa-sheng-xiang-xia-diao-yong>类构造和析构期间不会发生向下调用</h2><p>假设你有一套 class 继承体系用来模拟股票交易的类继承体系，例如，购入订单，出售订单等：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//@ 基类</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Transaction </span><span style=color:#eff1f5;>{                              </span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>	</span><span style=color:#8fa1b3;>Transaction</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>logTransaction</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span>Transaction::</span><span style=color:#8fa1b3;>Transaction</span><span>()</span><span>
+</span><span>{</span><span>
+</span><span>    ...</span><span>
+</span><span>	</span><span style=color:#bf616a;>logTransaction</span><span>();</span><span>
+</span><span>}</span><span>
+</span><span>
+</span><span style=color:#65737e;>//@ 买家派生类 </span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>BuyTransaction </span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>Transaction </span><span style=color:#eff1f5;>{    </span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>logTransaction</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span style=color:#65737e;>//@ 卖家派生类 </span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>SellTransaction </span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>Transaction </span><span style=color:#eff1f5;>{    </span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>logTransaction</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span></code></pre><p>当执行：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>BuyTransaction b;</span><span>
+</span></code></pre><p>base class 的构造函数先于 derived class 的构造函数执行，而 base class 的构造函数里调用了一个 virtual 函数，此时该虚函数调用的是 base class 版本的，而不是 derived class 版本的，即使目前即将建立的类型是 derived class的。<p>这样的原因是：由于 base class 的构造函数的执行早于 derived class 构造函数，当 base class 构造函数执行时， derived class 的成员变量尚未初始化。如果此期间调用的 virtual 函数下降至 derived class 阶层，则函数几乎必然会用到 local 成员变量，而那些变量尚未初始化，将会产生未定义行为。<p>更根本的原因是：在derived class 对象的 base class构造期间，对象的类型是base class 而不是 derived class，不只 virtual 函数会被编译器解析至 base class，若使用运行期类型信息，也会把对象视为 base class类型。对象在 derived class构造函数开始执行前不会成为一个 derived class对象。<p>相同的道理适用于析构函数。一旦 derived class 析构函数开始执行，对象内的derived class 成员变量便呈现未定义值，所以C++视它们仿佛不再存在。进入 base class析构函数后对象成为一个 base class对象，而C++的任何部分包括 virtual 函数、dynamic_casts 等等也就那么看待它。<p>一般构造/析构函数里使用virtual 函数编译器会发出警告。因为 logTransaction 函数是个纯虚函数，除非被定义（不太有希望，但是可能）否则程序无法连接。<p>侦测构造函数或析构函数运行期间是否调用 virtual 函数并不是总是这般轻松，当因为存在多个构造函数都执行某些相同的工作时，为避免代码重复而将共同代码（包括调用 virtual函数）放进一个初始化函数 init 内供构造函数调用。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Transaction </span><span style=color:#eff1f5;>{                              </span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>	</span><span style=color:#8fa1b3;>Transaction</span><span style=color:#eff1f5;>(){</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>init</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>logTransaction</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const </span><span style=color:#eff1f5;>{ </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>base class</span><span>" <<</span><span style=color:#eff1f5;> std::endl;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>init</span><span style=color:#eff1f5;>(){</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>logTransaction</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span></code></pre><p>类中构造函数间接调用了virtual函数，通常不会引发任何编译器和连接器的报错或警告，但实际仍然存在相应问题。<h2 id=jiang-bi-yao-de-gou-zao-xin-xi-xiang-shang-chuan-di>将必要的构造信息向上传递</h2><p>无法使用 virtual 函数从base class 向下调用，在构造期间，可以通过“令 derived class 将必要的构造信息向上传递至base class构造函数”作为替换和弥补策略。<p>首先将base class 内的 logTransaction 函数改为 non-virtual，然后要求 derived class 构造函数传递必要的信息给 base class 构造函数，而后 base class构造函数便可安全地调用 non-virtual logTransaction。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Transaction </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>explicit </span><span style=color:#8fa1b3;>Transaction</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::string</span><span>& </span><span style=color:#bf616a;>logInfo</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>logTransaction</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::string</span><span>& </span><span style=color:#bf616a;>logInfo</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;   </span><span style=color:#65737e;>// now a non-</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>                                                           </span><span style=color:#65737e;>// virtual func</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>  </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span>Transaction::</span><span style=color:#8fa1b3;>Transaction</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string& </span><span style=color:#bf616a;>logInfo</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>  ...</span><span>
+</span><span>  </span><span style=color:#bf616a;>logTransaction</span><span>(logInfo);                                 </span><span style=color:#65737e;>// now a non-</span><span style=color:#65737e;>
+</span><span>}                                                          </span><span style=color:#65737e;>// virtual call</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>BuyTransaction</span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>Transaction </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;> </span><span style=color:#bf616a;>BuyTransaction</span><span style=color:#eff1f5;>(parameters)</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;> </span><span>: </span><span style=color:#bf616a;>Transaction</span><span style=color:#eff1f5;>(</span><span style=color:#bf616a;>createLogString</span><span style=color:#eff1f5;>( parameters ))              </span><span style=color:#65737e;>// pass log info</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>  { </span><span>... </span><span style=color:#eff1f5;>}                                                  </span><span style=color:#65737e;>// to base class</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>   </span><span>...                                                     </span><span style=color:#65737e;>// constructor</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>static</span><span style=color:#eff1f5;> std::string </span><span style=color:#8fa1b3;>createLogString</span><span style=color:#eff1f5;>( </span><span style=color:#bf616a;>parameters </span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span></code></pre><p>注意private static函数 createLogString 的运用，比起在初始化列表内给予 base class 所需数据，利用辅助构造函数创建一个值传给 base class构造函数往往比较方便（也比较可读）。<h2 id=zong-jie>总结</h2><ul><li>在构造或析构期间不要调用虚函数，因为这类调用从不下降至 derived class<li>不能在基类的构造过程中使用虚函数向下匹配，可以改为让派生类将必要的构造信息上传给基类构造函数作为补偿</ul></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

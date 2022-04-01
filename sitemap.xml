@@ -4,6 +4,62 @@
         <loc>https://modao.site/</loc>
     </url>
     <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item1-shi-c-wei-yi-ge-yu-yan-lian-bang/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item10-ling-operator-fan-hui-yi-ge-dui-xiang-yin-yong/</loc>
+        <lastmod>2022-03-21</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item11-zai-operator-zhong-chu-li-zi-wo-fu-zhi/</loc>
+        <lastmod>2022-03-21</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item12-fu-zhi-dui-xiang-shi-yao-fu-zhi-suo-you-cheng-yuan/</loc>
+        <lastmod>2022-03-22</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item2-jin-liang-shi-yong-const-enum-inlinedeng-ti-huan-define/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item3-jin-ke-neng-shi-yong-const/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item4-que-bao-dui-xiang-zai-shi-yong-qian-bei-chu-shi-hua/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item5-liao-jie-c-mo-ren-tian-jia-he-diao-yong-de-han-shu/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item6-ruo-bu-xiang-shi-yong-bian-yi-qi-zi-dong-sheng-cheng-de-han-shu-jiu-gai-ming-que-ju-jue/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item7-wei-duo-tai-ji-lei-sheng-ming-virtualxi-gou-han-shu/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item8-bie-rang-yi-chang-tao-chi-xi-gou-han-shu/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/item9-jue-bu-zai-gou-zao-he-xi-gou-guo-cheng-zhong-diao-yong-virtualhan-shu/</loc>
+        <lastmod>2021-01-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/part3-zi-yuan-guan-li/</loc>
+        <lastmod>2022-03-28</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/book note/Effective C++/part4-she-ji-yu-sheng-ming/</loc>
+        <lastmod>2022-03-30</lastmod>
+    </url>
+    <url>
         <loc>https://modao.site/C++/cpp11/</loc>
         <lastmod>2022-03-06</lastmod>
     </url>
@@ -228,6 +284,9 @@
     </url>
     <url>
         <loc>https://modao.site/tags/cpp/</loc>
+    </url>
+    <url>
+        <loc>https://modao.site/tags/effective-c/</loc>
     </url>
     <url>
         <loc>https://modao.site/tags/interview/</loc>
