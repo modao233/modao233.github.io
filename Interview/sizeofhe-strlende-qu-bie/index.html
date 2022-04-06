@@ -2,7 +2,7 @@
 </span><span>sizeof(类型);
 </span><span>sizeof 表达式;
 </span></code></pre> <ol><li>返回 类型 的对象表示的字节大小<li>返回 表达式 类型的对象表示的字节大小，不应用隐式转换到表达式</ol> <p><strong>不能用于函数类型、不完整类型（含void）或位域左值</strong></p><li><p>strlen函数</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>size_t </span><span style=color:#8fa1b3;>strlen</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>str</span><span>);
-</span></code></pre> <p>返回<strong>空终止字节字符串</strong> <code>str</code> 的长度。</p></ol><h2 id=qu-bie>区别</h2><ol><li>strlen计算的是字符串的字符个数<li>sizeof计算的是分配空间的字节数<li>strlen是函数，在程序运行时计算，要求字符串以空字符（‘\0’）结尾<li>sizeof是关键字，在程序编译时计算，<del>不能用于返回动态分配的内存空间大小</del>(没想到测试用例，可能意思是用sizeof得不到想要的结果，但是语法上是可以的)</ol><p><strong>32位机器上，一个指针占4个字节；64位机器上，一个指针占8个字节</strong><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>d#include &LTiostream>
+</span></code></pre> <p>返回<strong>空终止字节字符串</strong> <code>str</code> 的长度。</p></ol><h2 id=qu-bie>区别</h2><ol><li>strlen计算的是字符串的字符个数<li>sizeof计算的是分配空间的字节数<li>strlen是函数，在程序运行时计算，要求字符串以空字符（‘\0’）结尾<li>sizeof是关键字，在程序编译时计算，不能用于返回动态分配的内存空间大小</ol><p><strong>32位机器上，一个指针占4个字节；64位机器上，一个指针占8个字节</strong><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>d#include &LTiostream>
 </span><span>
 </span><span style=color:#b48ead;>using</span><span> std::cin;
 </span><span style=color:#b48ead;>using</span><span> std::cout;

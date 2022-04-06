@@ -4,6 +4,14 @@
         <loc>https://modao.site/</loc>
     </url>
     <url>
+        <loc>https://modao.site/C++/Cpp  language/cpp11/</loc>
+        <lastmod>2022-03-06</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/Cpp  language/cpp14/</loc>
+        <lastmod>2022-03-09</lastmod>
+    </url>
+    <url>
         <loc>https://modao.site/C++/book note/Effective C++/item1-shi-c-wei-yi-ge-yu-yan-lian-bang/</loc>
         <lastmod>2021-01-06</lastmod>
     </url>
@@ -60,12 +68,16 @@
         <lastmod>2022-03-30</lastmod>
     </url>
     <url>
-        <loc>https://modao.site/C++/cpp11/</loc>
-        <lastmod>2022-03-06</lastmod>
+        <loc>https://modao.site/C++/c-zhong-boolxing-bian-liang-an-wei-qu-fan-zong-shi-wei-true/</loc>
+        <lastmod>2020-07-08</lastmod>
     </url>
     <url>
-        <loc>https://modao.site/C++/cpp14/</loc>
-        <lastmod>2022-03-09</lastmod>
+        <loc>https://modao.site/C++/tiao-jian-yun-suan-fu-fan-hui-lei-xing/</loc>
+        <lastmod>2022-01-29</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/C++/urlbian-ma-jie-ma/</loc>
+        <lastmod>2021-04-01</lastmod>
     </url>
     <url>
         <loc>https://modao.site/Interview/c-ji-zhu-mian-shi-ji-chu-zhi-shi-zong-jie/</loc>
@@ -108,10 +120,6 @@
         <lastmod>2020-07-09</lastmod>
     </url>
     <url>
-        <loc>https://modao.site/Linux/fang-ji-zhang-linuxsi-wei-dao-tu/</loc>
-        <lastmod>2020-07-16</lastmod>
-    </url>
-    <url>
         <loc>https://modao.site/Linux/history/</loc>
         <lastmod>2021-07-16</lastmod>
     </url>
@@ -121,18 +129,6 @@
     </url>
     <url>
         <loc>https://modao.site/Linux/linuxji-chu-ming-ling/</loc>
-        <lastmod>2021-01-03</lastmod>
-    </url>
-    <url>
-        <loc>https://modao.site/Linux/linuxji-chu/</loc>
-        <lastmod>2021-07-16</lastmod>
-    </url>
-    <url>
-        <loc>https://modao.site/Linux/linuxnei-he-si-ku-quan-shu/</loc>
-        <lastmod>2020-09-04</lastmod>
-    </url>
-    <url>
-        <loc>https://modao.site/Linux/linuxnei-he/</loc>
         <lastmod>2021-01-03</lastmod>
     </url>
     <url>
@@ -150,10 +146,6 @@
     <url>
         <loc>https://modao.site/Linux/regex/</loc>
         <lastmod>2020-12-08</lastmod>
-    </url>
-    <url>
-        <loc>https://modao.site/Linux/shell/</loc>
-        <lastmod>2020-09-04</lastmod>
     </url>
     <url>
         <loc>https://modao.site/Linux/tmux/</loc>
