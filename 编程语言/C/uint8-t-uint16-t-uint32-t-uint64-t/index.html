@@ -1,0 +1,59 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/C/uint8-t-uint16-t-uint32-t-uint64-t/>uint8_t、uint16_t、uint32_t、uint64_t</a></h1><div class=post-meta-inline><span class=post-date> 2021-03-06 </span></div><div class=post-content><p>uint8_t、uint16_t、uint32_t、uint64_t<p>uint8_t、uint16_t、uint32_t、uint64_t 这些数据类型是 C99 中定义的，具体定义在：/usr/include/stdint.h<p>ISO C99: 7.18 Integer types &LTstdint.h><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>/* There is some amount of overlap with &LTsys/types.h> as known by inet code */
+</span><span style=color:#b48ead;>#ifndef</span><span> __int8_t_defined
+</span><span style=color:#b48ead;># define </span><span>__int8_t_defined
+</span><span style=color:#b48ead;>typedef signed char             </span><span>int8_t; 
+</span><span style=color:#b48ead;>typedef short int               </span><span>int16_t;
+</span><span style=color:#b48ead;>typedef int                     </span><span>int32_t;
+</span><span style=color:#b48ead;># if</span><span> __WORDSIZE == 64
+</span><span style=color:#b48ead;>typedef long int                </span><span>int64_t;
+</span><span style=color:#b48ead;># else
+</span><span>__extension__
+</span><span>typedef </span><span style=color:#b48ead;>long long int           </span><span>int64_t;
+</span><span style=color:#b48ead;># endif
+</span><span style=color:#b48ead;>#endif
+</span><span> 
+</span><span style=color:#65737e;>/* Unsigned.  */
+</span><span style=color:#b48ead;>typedef unsigned char           </span><span>uint8_t;
+</span><span style=color:#b48ead;>typedef unsigned short int      </span><span>uint16_t;
+</span><span style=color:#b48ead;>#ifndef</span><span> __uint32_t_defined
+</span><span style=color:#b48ead;>typedef unsigned int            </span><span>uint32_t;
+</span><span style=color:#b48ead;># define </span><span>__uint32_t_defined
+</span><span style=color:#b48ead;>#endif
+</span><span style=color:#b48ead;>#if</span><span> __WORDSIZE == 64
+</span><span style=color:#b48ead;>typedef unsigned long int       </span><span>uint64_t;
+</span><span style=color:#b48ead;>#else
+</span><span>__extension__
+</span><span>typedef </span><span style=color:#b48ead;>unsigned long long int  </span><span>uint64_t;
+</span><span style=color:#b48ead;>#endif
+</span></code></pre><p>格式化输出：<ul><li><p>unit64_t：%llu</p><li><p>unit32_t：%u</p><li><p>unit16_t：%hu</p></ul><p>注意：必须小心 uint8_t 类型变量的输出<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>uint8_t fieldID = </span><span style=color:#d08770;>67</span><span>;
+</span><span>cerr<< "</span><span style=color:#a3be8c;>field=</span><span>" << fieldID <&LTendl;
+</span></code></pre><p>结果发现是：field=C 而 不是 field=67<p>这是由于<code> typedef unsigned char uint8_t;</code><p>uint8_t 实际是一个 char，cerr << 会输出 ASCII 码是 67 的字符，而不是 67 这个数字。因此，输出 uint8_t 类型的变量实际输出的是其对应的字符, 而不是真实数字，若要输出 67，则可以这样：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>cerr<< "</span><span style=color:#a3be8c;>field=</span><span>" << (uint16_t) fieldID <&LTendl;
+</span></code></pre><p>结果是：field=67<p>同样，uint8_t 类型变量转化为字符串以及字符串转化为 uint8_t 类型变量都要注意<ul><li>uint8_t类型变量转化为字符串时得到的会是ASCII码对应的字符<li>字符串转化为 uint8_t 变量时, 会将字符串的第一个字符赋值给变量</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdint.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sstream</span><span>>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span> 
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    uint8_t fieldID = </span><span style=color:#d08770;>67</span><span>;
+</span><span> 
+</span><span>    </span><span style=color:#65737e;>// uint8_t --> string
+</span><span>    string s;
+</span><span>    ostringstream strOStream;
+</span><span>    strOStream << fieldID;
+</span><span>    s = strOStream.</span><span style=color:#bf616a;>str</span><span>();
+</span><span>    cerr << s << endl;
+</span><span>    
+</span><span>    </span><span style=color:#65737e;>// string --> uint8_t
+</span><span>    s = "</span><span style=color:#a3be8c;>65</span><span>"; 
+</span><span>    stringstream strStream;
+</span><span>    strStream << s;
+</span><span>    strStream >> fieldID;
+</span><span>    strStream.</span><span style=color:#bf616a;>clear</span><span>();
+</span><span>    cerr << fieldID << endl;
+</span><span>}
+</span></code></pre><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>c
+</span><span>6
+</span><span>*
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

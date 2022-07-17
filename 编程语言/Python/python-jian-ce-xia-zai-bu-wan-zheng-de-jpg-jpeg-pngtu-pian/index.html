@@ -1,0 +1,68 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/python-jian-ce-xia-zai-bu-wan-zheng-de-jpg-jpeg-pngtu-pian/>(转载)Python检测下载不完整的JPG、JPEG、PNG图片</a></h1><div class=post-meta-inline><span class=post-date> 2020-12-11 </span></div><div class=post-content><p>原文：https://www.pianshen.com/article/6042331539/<p>爬取图片下载到本地的时候，总有一些图片显示不完全<h3 id=chu-xian-zhe-chong-wen-ti-de-yuan-yin-shi-shi-yao-ni>出现这种问题的原因是什么呢？</h3><p>1、网络问题：网络不稳定，接收到的图片信息不完整。也就是说response有问题； 2、本地磁盘满了：有时候接收到的图片信息完整，但是本地磁盘存不下了，毕竟一个图片也要好几Mb呢。<h3 id=ru-he-jian-ce-cuo-wu-tu-pian-ni>如何检测错误图片呢？</h3><p>试了很多方法，一个较好的方法就是判断jpg、jpeg、png文件结尾的标识。<blockquote><p>JPG文件结尾标识：\xff\xd9 JPEG文件结尾标识：\xff\xd9 PNG文件结尾标识：\xaeB`\x82</blockquote><h3 id=jian-ce-bu-wan-zheng-tu-pian-dai-ma>检测不完整图片代码</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>"""</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>检测图片完整性</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>"""</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>CheckImage</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>object</span><span style=color:#eff1f5;>):</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>, </span><span style=color:#bf616a;>img</span><span>):</span><span>
+</span><span>        </span><span style=color:#b48ead;>with </span><span style=color:#96b5b4;>open</span><span>(img, "</span><span style=color:#a3be8c;>rb</span><span>") </span><span style=color:#b48ead;>as </span><span>f:</span><span>
+</span><span>            f.</span><span style=color:#bf616a;>seek</span><span>(-</span><span style=color:#d08770;>2</span><span>, </span><span style=color:#d08770;>2</span><span>)</span><span>
+</span><span>            </span><span style=color:#bf616a;>self</span><span>.img_text = f.</span><span style=color:#bf616a;>read</span><span>()</span><span>
+</span><span>            f.</span><span style=color:#bf616a;>close</span><span>()</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>check_jpg_jpeg</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#65737e;>"""检测jpg图片完整性，完整返回True，不完整返回False"""</span><span>
+</span><span>        buf = </span><span style=color:#bf616a;>self</span><span>.img_text</span><span>
+</span><span>        </span><span style=color:#b48ead;>return </span><span>buf.</span><span style=color:#bf616a;>endswith</span><span>(</span><span style=color:#b48ead;>b</span><span>'</span><span style=color:#96b5b4;>\xff\xd9</span><span>')</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>check_png</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#65737e;>"""检测png图片完整性，完整返回True，不完整返回False"""</span><span>
+</span><span>
+</span><span>        buf = </span><span style=color:#bf616a;>self</span><span>.img_text</span><span>
+</span><span>        </span><span style=color:#b48ead;>return </span><span>buf.</span><span style=color:#bf616a;>endswith</span><span>(</span><span style=color:#b48ead;>b</span><span>'</span><span style=color:#96b5b4;>\xae</span><span style=color:#a3be8c;>B`</span><span style=color:#96b5b4;>\x82</span><span>')</span><span>
+</span></code></pre><h3 id=jian-ce-mou-ge-wen-jian-jia-xia-bu-wan-zheng-de-tu-pian-bing-shan-chu>检测某个文件夹下不完整的图片，并删除</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>"""</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>检测某个文件夹中不完整的图片，并删除</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>"""</span><span>
+</span><span style=color:#b48ead;>import </span><span>os</span><span>
+</span><span style=color:#b48ead;>from </span><span>CheckImage </span><span style=color:#b48ead;>import </span><span>CheckImage</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>CheckBrockImage</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>object</span><span style=color:#eff1f5;>):</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>, </span><span style=color:#bf616a;>train_dir</span><span>):</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.train_dir = train_dir</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.completeFile = </span><span style=color:#d08770;>0</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.incompleteFile = </span><span style=color:#d08770;>0</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>get_imgs</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#65737e;>"""遍历某个文件夹下的所有图片"""</span><span>
+</span><span>        </span><span style=color:#b48ead;>for </span><span>file </span><span style=color:#b48ead;>in </span><span>os.</span><span style=color:#bf616a;>listdir</span><span>(</span><span style=color:#bf616a;>self</span><span>.train_dir):</span><span>
+</span><span>            </span><span style=color:#b48ead;>if </span><span>os.path.</span><span style=color:#bf616a;>splitext</span><span>(file)[</span><span style=color:#d08770;>1</span><span>].</span><span style=color:#bf616a;>lower</span><span>() == '</span><span style=color:#a3be8c;>.jpg</span><span>' or os.path.</span><span style=color:#bf616a;>splitext</span><span>(file)[</span><span style=color:#d08770;>1</span><span>].</span><span style=color:#bf616a;>lower</span><span>() == "</span><span style=color:#a3be8c;>.jpeg</span><span>":</span><span>
+</span><span>                ret = </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>check_img</span><span>(file)</span><span>
+</span><span>                </span><span style=color:#b48ead;>if </span><span>ret:</span><span>
+</span><span>                    </span><span style=color:#bf616a;>self</span><span>.completeFile += </span><span style=color:#d08770;>1</span><span>
+</span><span>
+</span><span>                </span><span style=color:#b48ead;>else</span><span>:</span><span>
+</span><span>                    </span><span style=color:#bf616a;>self</span><span>.incompleteFile = </span><span style=color:#bf616a;>self</span><span>.incompleteFile + </span><span style=color:#d08770;>1</span><span>
+</span><span>                    </span><span style=color:#65737e;># self.img_remove(file)  # 删除不完整图片</span><span style=color:#65737e;>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>img_remove</span><span>(</span><span style=color:#bf616a;>self</span><span>, </span><span style=color:#bf616a;>file</span><span>):</span><span>
+</span><span>        </span><span style=color:#65737e;>"""删除图片"""</span><span>
+</span><span>        os.</span><span style=color:#bf616a;>remove</span><span>(</span><span style=color:#bf616a;>self</span><span>.train_dir + file)</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>check_img</span><span>(</span><span style=color:#bf616a;>self</span><span>, </span><span style=color:#bf616a;>img_file</span><span>):</span><span>
+</span><span>        </span><span style=color:#65737e;>"""检测图片完整性，图片完整返回True,图片不完整返回False"""</span><span>
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>CheckImage</span><span>(</span><span style=color:#bf616a;>self</span><span>.train_dir + img_file).</span><span style=color:#bf616a;>check_jpg_jpeg</span><span>()</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>run</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#65737e;>"""执行文件"""</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>get_imgs</span><span>()</span><span>
+</span><span>        </span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>不完整图片 : </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>个</span><span>' % </span><span style=color:#bf616a;>self</span><span>.incompleteFile)</span><span>
+</span><span>        </span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>完整图片 : </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>个</span><span>' % </span><span style=color:#bf616a;>self</span><span>.completeFile)</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>__name__ == '</span><span style=color:#a3be8c;>__main__</span><span>':</span><span>
+</span><span>    train_dir = '</span><span style=color:#a3be8c;>C:/Users/79993/Desktop/BrockImg/TextImg/</span><span>'  </span><span style=color:#65737e;># 检测文件夹</span><span style=color:#65737e;>
+</span><span>    imgs = </span><span style=color:#bf616a;>CheckBrockImage</span><span>(train_dir)</span><span>
+</span><span>    imgs.</span><span style=color:#bf616a;>run</span><span>()</span><span>
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

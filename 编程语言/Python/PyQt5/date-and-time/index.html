@@ -1,0 +1,182 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/date-and-time/>PyQt5 日期和时间</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-18 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/datetime/>翻译自原文：PyQt5 date and time</a><p>翻译时间 2020 年 8 月 18 日<p>PyQt5 教程的这一部分演示了如何使用 PyQt5 中的日期和时间。<h2 id=qdate-qtime-qdatetime>QDate， QTime， QDateTime</h2><p>PyQt5 具有<code>QDate</code>, <code>QDateTime</code>, <code>QTime</code>类要处理日期和时间： + <code>QDate</code>是用于处理公历中的日历日期的类。它具有确定日期、比较或操作日期的方法 + <code>QTime</code>类使用时钟时间。它提供了比较时间、确定时间和各种其他时间操作方法的方法 + <code>QDateTime</code>是将<code>QDate</code>和<code>QDate</code>对象合并到一个对象的类<h2 id=dang-qian-ri-qi-he-shi-jian>当前日期和时间</h2><p>PyQt5 具有<code>currentDate</code>，<code>currentTime</code>和<code>currentDateTime</code>用于确定当前日期和时间的方法。<p>current_date_time. py：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDate, QTime, QDateTime, Qt</span><span>
+</span><span>
+</span><span>now = QDate.</span><span style=color:#bf616a;>currentDate</span><span>()</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(now.</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate))</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(now.</span><span style=color:#bf616a;>toString</span><span>(Qt.DefaultLocaleLongDate))</span><span>
+</span><span>
+</span><span>datetime = QDateTime.</span><span style=color:#bf616a;>currentDateTime</span><span>()</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(datetime.</span><span style=color:#bf616a;>toString</span><span>())</span><span>
+</span><span>
+</span><span>time = QTime.</span><span style=color:#bf616a;>currentTime</span><span>()</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(time.</span><span style=color:#bf616a;>toString</span><span>(Qt.DefaultLocaleLongDate))</span><span>
+</span></code></pre><p>该示例以各种格式打印当前日期、日期和时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>now = QDate.currentDate()</span><span>
+</span></code></pre><p><code>currentDate</code>方法返回当前日期。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>print(now.toString(Qt.ISODate))</span><span>
+</span><span>print(now.toString(Qt.DefaultLocaleLongDate))</span><span>
+</span></code></pre><p>通过传递值<code>Qt.ISODate</code>和<code>Qt.DefaultLocaleLongDate</code>给<code>toString</code>方法，以两种不同的格式打印日期。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>datetime = QDateTime.currentDateTime()</span><span>
+</span></code></pre><p><code>currentDateTime</code>方法返回当前日期和时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>time = QTime.currentTime()</span><span>
+</span></code></pre><p><code>currentTime</code>方法返回当前时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./current_date_time.py </span><span>
+</span><span>2020-05-16</span><span>
+</span><span>
+</span><span>Saturday, May 16, 2020</span><span>
+</span><span>Sat May 16 09:53:37 2020</span><span>
+</span><span>9:53:37 AM CEST</span><span>
+</span></code></pre><p>这是输出。<h2 id=utc-shi-jian>UTC 时间</h2><p>我们的星球是一个球体，它围绕其轴旋转。地球向东旋转，所以太阳在不同的时间在不同的地点升起。地球大约24小时内旋转一次，因此，世界被划分为24个时区。在每个时区中，都有不同的本地时间。夏令时通常进一步修改此本地时间。<p>需要一个全球时间。一个全局时间有助于避免时区和夏令时混淆。UTC（通用协调时间）被选为主要时间标准。UTC 用于航空、天气预报、飞行计划、空中交通管制许可和地图。与当地时间不同，UTC 不会随着季节的变化而变化。<p>utc_local. py：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDateTime, Qt</span><span>
+</span><span>
+</span><span>now = QDateTime.</span><span style=color:#bf616a;>currentDateTime</span><span>()</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>Local datetime: </span><span>', now.</span><span style=color:#bf616a;>toLocalTime</span><span>().</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate))</span><span>
+</span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>Universal datetime: </span><span>', now.</span><span style=color:#bf616a;>toUTC</span><span>().</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate))</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>The offset from UTC is: </span><span>{now.</span><span style=color:#bf616a;>offsetFromUtc</span><span>()}</span><span style=color:#a3be8c;> seconds</span><span>')</span><span>
+</span></code></pre><p>该示例确定当前通用和本地日期和时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>print('Local datetime: ', now.toLocalTime().toString(Qt.ISODate))</span><span>
+</span></code></pre><p><code>currentDateTime</code>方法返回以本地时间表示的当前日期和时间。我们可以使用<code>toLocalTime</code>将通用时间转换为本地时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>print('Universal datetime: ', now.toUTC().toString(Qt.ISODate))</span><span>
+</span></code></pre><p>通过<code>toUTC</code>方法从日期时间对象获取通用时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>print(f'The offset from UTC is: {now.offsetFromUtc()} seconds')</span><span>
+</span></code></pre><p><code>offsetFromUtc</code>方法给出通用时间和本地时间之间的差值（以秒为单位）。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./utc_local.py </span><span>
+</span><span>Local datetime:  2020-05-16</span><span>
+</span><span>T09:56:23</span><span>
+</span><span>Universal datetime:  2020-05-16</span><span>
+</span><span>T07:56:23Z</span><span>
+</span><span>The offset from UTC is: 7200 seconds</span><span>
+</span></code></pre><p>这是输出。<h2 id=tian-shu>天数</h2><p>特定月份中的天数由<code>daysInMonth</code>方法返回，一年中的天数由<code>daysInYear</code>方法返回。<p>n_of_days. py：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDate, Qt</span><span>
+</span><span>
+</span><span>now = QDate.</span><span style=color:#bf616a;>currentDate</span><span>()</span><span>
+</span><span>
+</span><span>d = </span><span style=color:#bf616a;>QDate</span><span>(</span><span style=color:#d08770;>1945</span><span>, </span><span style=color:#d08770;>5</span><span>, </span><span style=color:#d08770;>7</span><span>)</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Days in month: </span><span>{d.</span><span style=color:#bf616a;>daysInMonth</span><span>()}')</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Days in year: </span><span>{d.</span><span style=color:#bf616a;>daysInYear</span><span>()}')</span><span>
+</span></code></pre><p>该示例打印所选日期的一个月和一年的天数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./n_of_days.py </span><span>
+</span><span>Days in month: 31</span><span>
+</span><span>Days in year: 365</span><span>
+</span></code></pre><p>这是输出。<h2 id=tian-shu-chai-yi>天数差异</h2><p><code>daysTo</code>方法返回从日期到另一个日期的天数。<p>xmas.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDate</span><span>
+</span><span>
+</span><span>xmas1 = </span><span style=color:#bf616a;>QDate</span><span>(</span><span style=color:#d08770;>2019</span><span>, </span><span style=color:#d08770;>12</span><span>, </span><span style=color:#d08770;>24</span><span>)</span><span>
+</span><span>xmas2 = </span><span style=color:#bf616a;>QDate</span><span>(</span><span style=color:#d08770;>2020</span><span>, </span><span style=color:#d08770;>12</span><span>, </span><span style=color:#d08770;>24</span><span>)</span><span>
+</span><span>
+</span><span>now = QDate.</span><span style=color:#bf616a;>currentDate</span><span>()</span><span>
+</span><span>
+</span><span>dayspassed = xmas1.</span><span style=color:#bf616a;>daysTo</span><span>(now)</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'{dayspassed}</span><span style=color:#a3be8c;> days have passed since last XMas</span><span>')</span><span>
+</span><span>
+</span><span>nofdays = now.</span><span style=color:#bf616a;>daysTo</span><span>(xmas2)</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>There are </span><span>{nofdays}</span><span style=color:#a3be8c;> days until next XMas</span><span>')</span><span>
+</span></code></pre><p>该示例计算从上次圣诞节经过的天数以及到下一个圣诞节的天数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./xmas.py </span><span>
+</span><span>144 days have passed since last XMas</span><span>
+</span><span>There are 222 days until next XMas</span><span>
+</span></code></pre><p>这是输出。<h2 id=ri-qi-shi-jian-suan-zhu>日期时间算术</h2><p>我们经常需要将天、秒或年加或减为日期时间值。<p>arithmetic.py：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDateTime, Qt</span><span>
+</span><span>
+</span><span>now = QDateTime.</span><span style=color:#bf616a;>currentDateTime</span><span>()</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Today:</span><span>', now.</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate))</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Adding 12 days: </span><span>{now.</span><span style=color:#bf616a;>addDays</span><span>(</span><span style=color:#d08770;>12</span><span>).</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate)}')</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Subtracting 22 days: </span><span>{now.</span><span style=color:#bf616a;>addDays</span><span>(-</span><span style=color:#d08770;>22</span><span>).</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate)}')</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Adding 50 seconds: </span><span>{now.</span><span style=color:#bf616a;>addSecs</span><span>(</span><span style=color:#d08770;>50</span><span>).</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate)}')</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Adding 3 months: </span><span>{now.</span><span style=color:#bf616a;>addMonths</span><span>(</span><span style=color:#d08770;>3</span><span>).</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate)}')</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Adding 12 years: </span><span>{now.</span><span style=color:#bf616a;>addYears</span><span>(</span><span style=color:#d08770;>12</span><span>).</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate)}')</span><span>
+</span></code></pre><p>该示例确定当前日期时间，并添加或减去天、秒、月和年。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./arithmetic.py </span><span>
+</span><span>Today: 2020-05-16</span><span>
+</span><span>T10:11:56</span><span>
+</span><span>Adding 12 days: 2020-05-28</span><span>
+</span><span>T10:11:56</span><span>
+</span><span>Subtracting 22 days: 2020-04-24</span><span>
+</span><span>T10:11:56</span><span>
+</span><span>Adding 50 seconds: 2020-05-16</span><span>
+</span><span>T10:12:46</span><span>
+</span><span>Adding 3 months: 2020-08-16</span><span>
+</span><span>T10:11:56</span><span>
+</span><span>Adding 12 years: 2032-05-16</span><span>
+</span><span>T10:11:56</span><span>
+</span></code></pre><p>这是示例输出。<h2 id=xia-ling-shi>夏令时</h2><p>夏令时 （DST） 是在夏季推进时钟，以便晚上日光持续更长时间的做法。时间在春季初向前调整一小时，在秋季向后调整为标准时间。<p>daylight_saving. py：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDateTime, QTimeZone, Qt</span><span>
+</span><span>
+</span><span>now = QDateTime.</span><span style=color:#bf616a;>currentDateTime</span><span>()</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Time zone: </span><span>{now.</span><span style=color:#bf616a;>timeZoneAbbreviation</span><span>()}')</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>now.</span><span style=color:#bf616a;>isDaylightTime</span><span>():</span><span>
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>The current date falls into DST time</span><span>')</span><span>
+</span><span style=color:#b48ead;>else</span><span>:</span><span>
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>The current date does not fall into DST time</span><span>')</span><span>
+</span></code></pre><p>该示例检查日期时间是否位于夏令时。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>print(f'Time zone: {now.timeZoneAbbreviation()}')</span><span>
+</span></code></pre><p><code>timeZoneAbbreviation()</code>方法返回日期时间的时区缩写。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if now.isDaylightTime():</span><span>
+</span><span>...</span><span>
+</span></code></pre><p>如果日期时间落在夏令时，则<code>isDaylightTime()</code>返回true。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./daylight_saving.py </span><span>
+</span><span>Time zone: CEST</span><span>
+</span><span>The current date falls into DST time</span><span>
+</span></code></pre><h2 id=unix-ji-yuan>Unix 纪元</h2><p>一个时代是选择作为特定时代起源的瞬间时间。例如，在西方基督教国家，时间时代从第0天开始，耶稣出生的时候。另一个例子是法国共和历，它使用了十二年。这个纪元是1792年9月22日宣布的第一个共和国和君主制废除的共和国时代的开始。<p>计算机也有他们的时代。其中最流行的是Unix时代。Unix 纪元是 1970 年 1 月 1 日 00：00：00 UTC 的时间（或 1970- 01-01T00：00：00Z ISO 8601）。计算机中的日期和时间根据自该计算机或平台的已定义纪元以来经过的秒数或时钟刻度确定。<p>Unix 时间是自 Unix 纪元以来经过的秒数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ date +%s</span><span>
+</span><span>1589617100</span><span>
+</span></code></pre><p>Unix 日期命令可用于获取 Unix 时间。在这个特殊的时刻，1589617100秒已经过去了，因为Unix时代。<p>unix_time. py：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python3</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDateTime, Qt</span><span>
+</span><span>
+</span><span>now = QDateTime.</span><span style=color:#bf616a;>currentDateTime</span><span>()</span><span>
+</span><span>
+</span><span>unix_time = now.</span><span style=color:#bf616a;>toSecsSinceEpoch</span><span>() </span><span>
+</span><span style=color:#96b5b4;>print</span><span>(unix_time)</span><span>
+</span><span>
+</span><span>d = QDateTime.</span><span style=color:#bf616a;>fromSecsSinceEpoch</span><span>(unix_time)</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(d.</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate))</span><span>
+</span></code></pre><p>该示例打印 Unix 时间并将其转换回<code>QDateTime</code>类型。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>now = QDateTime.currentDateTime()</span><span>
+</span></code></pre><p>首先，我们检索当前日期和时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>unix_time = now.toSecsSinceEpoch() </span><span>
+</span></code></pre><p><code>toSecsSinceEpoch()</code>返回 Unix 时间。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>d = QDateTime.fromSecsSinceEpoch(unix_time)</span><span>
+</span></code></pre><p>使用<code>fromSecsSinceEpoch()</code>，我们将 Unix 时间转换为 <code>QDateTime</code>。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./unix_time.py </span><span>
+</span><span>1589617144</span><span>
+</span><span>2020-05-16</span><span>
+</span><span>T10:19:04</span><span>
+</span></code></pre><p>这是输出。<h2 id=julian-day-zhu-li-an-ri>Julian day（朱利安日）</h2><p>朱利安日是指自朱利安时期开始以来的连续数天数。它主要用于天文学家。它不应该与朱利安历法混淆。儒略时期开始于2713年。儒略日 0 被分配到从 4713 年 1 月 1 日中午开始的一天。<p>朱利安日数 （JDN） 是自此期间开始以来经过的天数。任何瞬间的朱利安日期 （JD） 是前一个中午的朱利安日数加上从该瞬间开始当天的分数（Qt 不计算此分数）。除了天文学，朱利安日期经常被军事和大型机程序使用。<p>julian_day. py：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDate, Qt</span><span>
+</span><span>
+</span><span>now = QDate.</span><span style=color:#bf616a;>currentDate</span><span>()</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>Gregorian date for today:</span><span>', now.</span><span style=color:#bf616a;>toString</span><span>(Qt.ISODate))</span><span>
+</span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>Julian day for today:</span><span>', now.</span><span style=color:#bf616a;>toJulianDay</span><span>()) </span><span>
+</span></code></pre><p>在示例中，我们计算今天公历日期和朱利安日。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>print('Julian day for today:', now.toJulianDay())</span><span>
+</span></code></pre><p><code>toJulianDay()</code>方法返回朱利安日。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./julian_day.py </span><span>
+</span><span>Gregorian date for today: 2020-05-16</span><span>
+</span><span>
+</span><span>Julian day for today: 2458986</span><span>
+</span></code></pre><p>这是输出。<h2 id=li-shi-zhan-yi>历史战役</h2><p>与朱利安日使用有关的可能做跨越几个世纪的计算。<p>battles.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QDate, Qt</span><span>
+</span><span>
+</span><span>borodino_battle = </span><span style=color:#bf616a;>QDate</span><span>(</span><span style=color:#d08770;>1812</span><span>, </span><span style=color:#d08770;>9</span><span>, </span><span style=color:#d08770;>7</span><span>)</span><span>
+</span><span>slavkov_battle = </span><span style=color:#bf616a;>QDate</span><span>(</span><span style=color:#d08770;>1805</span><span>, </span><span style=color:#d08770;>12</span><span>, </span><span style=color:#d08770;>2</span><span>)</span><span>
+</span><span>
+</span><span>now = QDate.</span><span style=color:#bf616a;>currentDate</span><span>()</span><span>
+</span><span>
+</span><span>j_today = now.</span><span style=color:#bf616a;>toJulianDay</span><span>()</span><span>
+</span><span>j_borodino = borodino_battle.</span><span style=color:#bf616a;>toJulianDay</span><span>()</span><span>
+</span><span>j_slavkov = slavkov_battle.</span><span style=color:#bf616a;>toJulianDay</span><span>()</span><span>
+</span><span>
+</span><span>d1 = j_today - j_slavkov</span><span>
+</span><span>d2 = j_today - j_borodino</span><span>
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Days since Slavkov battle: </span><span>{d1}')</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#b48ead;>f</span><span>'</span><span style=color:#a3be8c;>Days since Borodino battle: </span><span>{d2}')</span><span>
+</span></code></pre><p>该示例计算自两个历史事件以来的天数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>borodino_battle = QDate(1812, 9, 7)</span><span>
+</span><span>slavkov_battle = QDate(1805, 12, 2)</span><span>
+</span></code></pre><p>我们有拿破仑时代的两个战斗日期。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>j_today = now.toJulianDay()</span><span>
+</span><span>j_borodino = borodino_battle.toJulianDay()</span><span>
+</span><span>j_slavkov = slavkov_battle.toJulianDay()</span><span>
+</span></code></pre><p>我们计算今天和斯拉夫科夫和博罗迪诺战役的朱利安时代。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>d1 = j_today - j_slavkov</span><span>
+</span><span>d2 = j_today - j_borodino</span><span>
+</span></code></pre><p>我们计算两次战斗以来的天数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>$ ./battles.py </span><span>
+</span><span>Days since Slavkov battle: 78328</span><span>
+</span><span>Days since Borodino battle: 75857</span><span>
+</span></code></pre><p>当我们运行这个脚本，78328天已经过去，因为斯拉夫科夫战斗，75857自博罗迪诺战斗。<p>在 PyQt5 教程的这一部分中，我们处理过日期和时间。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

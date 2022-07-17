@@ -1,0 +1,104 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/算法与数据结构/algorithm/suan-fa-cha-zhao/>算法-查找</a></h1><div class=post-meta-inline><span class=post-date> 2020-06-29 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/algorithm/>#Algorithm</a></span><div class=post-content><p>学习并记录下查找算法，方便回顾。<p>查找算法 | 平均时间复杂度 | 空间复杂度 | 查找条件 ---|---|---|+++ 顺序查找 | O(n) | O(1) | 无序 二分查找（折半查找）| O(log<sub>2</sub>n)| O(1) | 有序 分块查找（索引顺序查找）| | | 插值查找 | O(log<sub>2</sub>(log<sub>2</sub>n)) | O(1) | 有序 斐波那契查找 | O(log<sub>2</sub>n) | O(1) | 有序 哈希查找| O(1) | O(n) | 无序 二叉查找树（二叉搜索树查找） |O(log<sub>2</sub>n) | | 红黑树|O(log<sub>2</sub>n) | | 2-3树 | O(log<sub>2</sub>n - log<sub>3</sub>n) | | B树/B+树 |O(log<sub>2</sub>n) | |<h2 id=shun-xu-cha-zhao>顺序查找</h2><p>顺序查找适合于存储结构为顺序存储或链接存储的线性表，属于无序查找算法。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>SeqSearch</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>> &</span><span style=color:#bf616a;>v</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span>){
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>; i < v.</span><span style=color:#bf616a;>size</span><span>(); ++i){
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(v[i] == val)</span><span style=color:#b48ead;>return</span><span> i;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>}
+</span></code></pre><h2 id=er-fen-cha-zhao>二分查找</h2><p>元素必须是有序的，如果是无序的则要先进行排序操作，属于有序查找算法。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>//迭代方式
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>BinarySearch</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>> &</span><span style=color:#bf616a;>v</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>low</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>high</span><span>){
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(v.</span><span style=color:#bf616a;>size</span><span>() <= </span><span style=color:#d08770;>0</span><span>)</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>while</span><span>(low <= high){
+</span><span>        </span><span style=color:#b48ead;>int</span><span> mid = low + (high - low)/</span><span style=color:#d08770;>2</span><span>;
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(v[mid] == val)</span><span style=color:#b48ead;>return</span><span> mid;
+</span><span>        </span><span style=color:#b48ead;>else if</span><span>(v[mid] > val)high = mid - </span><span style=color:#d08770;>1</span><span>;
+</span><span>        </span><span style=color:#b48ead;>else</span><span> low = mid + </span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#65737e;>//递归方式
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>BinarySearch</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>> &</span><span style=color:#bf616a;>v</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>low</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>high</span><span>){
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(v.</span><span style=color:#bf616a;>size</span><span>() <= </span><span style=color:#d08770;>0</span><span>)</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(low > high)
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> mid = low + (high - low)/</span><span style=color:#d08770;>2</span><span>;
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(v[mid] == val)
+</span><span>        </span><span style=color:#b48ead;>return</span><span> mid;
+</span><span>    </span><span style=color:#b48ead;>else if</span><span>(v[mid] > val)
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>BinarySearch</span><span>(v, val, low, mid - </span><span style=color:#d08770;>1</span><span>);
+</span><span>	</span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>BinarySearch</span><span>(v, val, mid + </span><span style=color:#d08770;>1</span><span>, high);
+</span><span>}
+</span></code></pre><h2 id=fen-kuai-cha-zhao>分块查找</h2><h2 id=cha-zhi-cha-zhao>插值查找</h2><p>基于二分查找算法，将查找点的选择改进为自适应选择，可以提高查找效率，属于有序查找。<p>二分查找：$mid = low + {1 \over 2}(high - low) $<p>插值查找：$mid = low + {val - v[low] \over v[high] - v[low]}(high - low) $<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>//迭代方式
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>InsertSearch</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>> &</span><span style=color:#bf616a;>v</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>low</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>high</span><span>){
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(v.</span><span style=color:#bf616a;>size</span><span>() <= </span><span style=color:#d08770;>0</span><span>)</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>while</span><span>(low <= high){
+</span><span>        </span><span style=color:#b48ead;>int</span><span> mid = low + (val - v[low])/(v[high] - v[low]) *  (high - low);
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(v[mid] == val)</span><span style=color:#b48ead;>return</span><span> mid;
+</span><span>        </span><span style=color:#b48ead;>else if</span><span>(v[mid] > val)high = mid - </span><span style=color:#d08770;>1</span><span>;
+</span><span>        </span><span style=color:#b48ead;>else</span><span> low = mid + </span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#65737e;>//递归方式
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>InsertSearch</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>> &</span><span style=color:#bf616a;>v</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>low</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>high</span><span>){
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(v.</span><span style=color:#bf616a;>size</span><span>() <= </span><span style=color:#d08770;>0</span><span>)</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(low > high)</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>int</span><span> mid = low + (val - v[low])/(v[high] - v[low]) *  (high - low);
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(v[mid] == val)
+</span><span>        </span><span style=color:#b48ead;>return</span><span> mid;
+</span><span>    </span><span style=color:#b48ead;>else if</span><span>(v[mid] > val)
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>InsertSearch</span><span>(v, val, low, mid - </span><span style=color:#d08770;>1</span><span>);
+</span><span>	</span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>InsertSearch</span><span>(v, val, mid + </span><span style=color:#d08770;>1</span><span>, high);
+</span><span>}
+</span></code></pre><h2 id=fei-bo-na-qi-cha-zhao>斐波那契查找</h2><p>基于二分查找算法，通过运用黄金比例的概念选择点进行查找，提高查找效率，属于有序查找算法。<p>随着斐波那契数列的递增，前后两个数的比值会越来越接近0.618，利用这个特性，将黄金比例运用到查找技术中。<p>要求开始表中记录的个数为某个斐波那契数小1，及<code>n=F(k)-1</code><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>int</span><span> f[</span><span style=color:#d08770;>20</span><span>];
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Fibonacci</span><span>(){
+</span><span>    f[</span><span style=color:#d08770;>0</span><span>] = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    f[</span><span style=color:#d08770;>1</span><span>] = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>2</span><span>; i < </span><span style=color:#d08770;>20</span><span>; ++i)
+</span><span>        f[i] = f[i-</span><span style=color:#d08770;>1</span><span>] + f[i-</span><span style=color:#d08770;>2</span><span>];
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>FibonacciSearch</span><span>(vector<</span><span style=color:#b48ead;>int</span><span>> &</span><span style=color:#bf616a;>v</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>n</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span>){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> low = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> high = n - </span><span style=color:#d08770;>1</span><span>;
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>int</span><span> k = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>while</span><span>(n > f[k] - </span><span style=color:#d08770;>1</span><span>)++k;
+</span><span>    
+</span><span>    vector<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#bf616a;>temp</span><span>(v);
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i = n; i < f[k] - </span><span style=color:#d08770;>1</span><span>; ++i)
+</span><span>        temp.</span><span style=color:#bf616a;>push_back</span><span>(v[n-</span><span style=color:#d08770;>1</span><span>]);
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>while</span><span>(low <= high){
+</span><span>        </span><span style=color:#b48ead;>int</span><span> mid = low + f[k-</span><span style=color:#d08770;>1</span><span>] - </span><span style=color:#d08770;>1</span><span>;
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(val < temp[mid]){
+</span><span>            high = mid - </span><span style=color:#d08770;>1</span><span>;
+</span><span>            k -= </span><span style=color:#d08770;>1</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>else if</span><span>(val > temp[mid]){
+</span><span>            low = mid + </span><span style=color:#d08770;>1</span><span>;
+</span><span>            k -= </span><span style=color:#d08770;>2</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>else</span><span>{	</span><span style=color:#65737e;>//判断是否扩展的数值
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(mid < n)</span><span style=color:#b48ead;>return</span><span> mid;
+</span><span>            </span><span style=color:#b48ead;>else return</span><span> n - </span><span style=color:#d08770;>1</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>}
+</span></code></pre><h2 id=er-cha-shu-cha-zhao>二叉树查找</h2><p>在二叉搜索树b中查找x的过程为：<ul><li>若b是空树，则搜索失败，否则：<li>若x等于b的根节点的数据域之值，则查找成功；否则：<li>若x小于b的根节点的数据域之值，则搜索左子树；否则：<li>查找右子树</ul><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>BSTNode *</span><span style=color:#8fa1b3;>BSTSearch</span><span>(BSTNode *</span><span style=color:#bf616a;>node</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span>){
+</span><span>    </span><span style=color:#b48ead;>while</span><span>(node != </span><span style=color:#d08770;>NULL</span><span>){
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(val < node -> </span><span style=color:#bf616a;>val</span><span>)node = node -> </span><span style=color:#bf616a;>left</span><span>;
+</span><span>        </span><span style=color:#b48ead;>else if</span><span>(val > node -> </span><span style=color:#bf616a;>val</span><span>)node = node -> </span><span style=color:#bf616a;>right</span><span>;
+</span><span>        </span><span style=color:#b48ead;>else return</span><span> node;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>nullptr</span><span>;
+</span><span>}
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

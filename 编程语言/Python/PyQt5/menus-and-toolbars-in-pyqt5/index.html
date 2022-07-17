@@ -1,0 +1,309 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/menus-and-toolbars-in-pyqt5/>PyQt5 中的菜单和工具栏</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-19 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/menustoolbars/>翻译自原文：Menus and toolbars in PyQt5</a><p>翻译时间 2020 年 8 月 19 日<p>在 PyQt5 教程的这一部分中，我们创建一个状态栏、菜单栏和一个工具栏。<ul><li>菜单是位于菜单栏中的一组命令。<li>工具栏具有应用程序中带有一些常见命令的按钮。<li>状态栏显示状态信息，通常在应用程序窗口的底部。</ul><h2 id=qmainwindow>QmainWindow</h2><p><code>QMainWindow</code>类提供主应用程序窗口。这样可以创建具有状态栏、工具栏和菜单栏的经典应用程序骨架。<h2 id=zhuang-tai-lan>状态栏</h2><p>状态栏是用于显示状态信息的部件。<p>statusbar.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>import </span><span>sys</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtWidgets </span><span style=color:#b48ead;>import </span><span>QMainWindow, QApplication</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Example</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>QMainWindow</span><span style=color:#eff1f5;>):</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#96b5b4;>super</span><span>().</span><span style=color:#96b5b4;>__init__</span><span>()</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>initUI</span><span>()</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>initUI</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>statusBar</span><span>().</span><span style=color:#bf616a;>showMessage</span><span>('</span><span style=color:#a3be8c;>Ready</span><span>')</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setGeometry</span><span>(</span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>250</span><span>, </span><span style=color:#d08770;>150</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setWindowTitle</span><span>('</span><span style=color:#a3be8c;>Statusbar</span><span>')</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>show</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>main</span><span>():</span><span>
+</span><span>    app = </span><span style=color:#bf616a;>QApplication</span><span>(sys.argv)</span><span>
+</span><span>    ex = </span><span style=color:#bf616a;>Example</span><span>()</span><span>
+</span><span>    sys.</span><span style=color:#bf616a;>exit</span><span>(app.</span><span style=color:#bf616a;>exec_</span><span>())</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>__name__ == '</span><span style=color:#a3be8c;>__main__</span><span>':</span><span>
+</span><span>    </span><span style=color:#bf616a;>main</span><span>()</span><span>
+</span></code></pre><p>状态栏是在<code>QMainWindow</code>部件的帮助下创建的。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.statusBar().showMessage('Ready')</span><span>
+</span></code></pre><p>为了获取状态栏，我们调用<code>QtWidgets.QMainWindow</code>类的<code>statusBar()</code>方法。方法的首次调用将创建一个状态栏，后续调用返回状态栏对象。<code>showMessage()</code>在状态栏上显示一条消息。<h2 id=pyqt5-jian-yi-cai-dan>PyQt5 简易菜单</h2><p>菜单栏是 GUI 应用程序的常见部分，它是一组位于各种菜单中的命令。（Mac OS 对菜单栏的对待方式不同。为了获得类似的结果，我们可以添加以下行：<code>menubar.setNativeMenuBar(False)</code> ）<p>simple_menu.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import sys</span><span>
+</span><span>from PyQt5.QtWidgets import QMainWindow, QAction, qApp, QApplication</span><span>
+</span><span>from PyQt5.QtGui import QIcon</span><span>
+</span><span>from PyQt5.QtCore import QFileInfo</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QMainWindow):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        root = QFileInfo(__file__).absolutePath()</span><span>
+</span><span>        exitAct = QAction(QIcon(root + '/exit.png'), '&Exit', self)</span><span>
+</span><span>        exitAct.setShortcut('Ctrl+Q')</span><span>
+</span><span>        exitAct.setStatusTip('Exit application')</span><span>
+</span><span>        exitAct.triggered.connect(qApp.quit)</span><span>
+</span><span>
+</span><span>        self.statusBar()</span><span>
+</span><span>
+</span><span>        menubar = self.menuBar()</span><span>
+</span><span>        fileMenu = menubar.addMenu('&File')</span><span>
+</span><span>        fileMenu.addAction(exitAct)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 300, 200)</span><span>
+</span><span>        self.setWindowTitle('Simple menu')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在上面的示例中，我们创建一个包含一个菜单的菜单栏。此菜单包含一个操作，如果选中，该操作将终止应用程序。还创建了状态栏。可以使用 Ctrl+Q 快捷方式访问该操作。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>root = QFileInfo(__file__).absolutePath()</span><span>
+</span><span>exitAct = QAction(QIcon(root + '/exit.png'), '&Exit', self)</span><span>
+</span><span>exitAct.setShortcut('Ctrl+Q')</span><span>
+</span><span>exitAct.setStatusTip('Exit application')</span><span>
+</span></code></pre><p><code>QAction</code>是使用菜单栏、工具栏或自定义键盘快捷方式<strong>执行的操作</strong>的<strong>抽象</strong>。在上面四行中，我们创建一个带有特定图标和"退出"标签的操作。此外，为此操作定义了一个快捷方式。第四行创建状态提示，当我们将鼠标指针悬停在菜单项上时，状态栏中将显示该提示。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>exitAct.triggered.connect(qApp.quit)</span><span>
+</span></code></pre><p>当我们选择此特定操作时，将发出触发信号。信号连接到<code>QApplication</code>部件的<code>quit()</code>方法。这将终止应用程序。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>menubar = self.menuBar()</span><span>
+</span><span>fileMenu = menubar.addMenu('&File')</span><span>
+</span><span>fileMenu.addAction(exitAction)</span><span>
+</span></code></pre><p><code>menuBar()</code>方法创建一个菜单栏。我们使用<code>addMenu()</code>创建“File”菜单，并添加<code>addAction()</code>操作。<h2 id=pyqt5-zi-cai-dan>PyQt5 子菜单</h2><p>子菜单是位于另一个菜单中的菜单。<p>submenu.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>import </span><span>sys</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtWidgets </span><span style=color:#b48ead;>import </span><span>QMainWindow, QAction, QMenu, QApplication</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Example</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>QMainWindow</span><span style=color:#eff1f5;>):</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#96b5b4;>super</span><span>().</span><span style=color:#96b5b4;>__init__</span><span>()</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>initUI</span><span>()</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>initUI</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>
+</span><span>        menubar = </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>menuBar</span><span>()</span><span>
+</span><span>        fileMenu = menubar.</span><span style=color:#bf616a;>addMenu</span><span>('</span><span style=color:#a3be8c;>File</span><span>')</span><span>
+</span><span>
+</span><span>        impMenu = </span><span style=color:#bf616a;>QMenu</span><span>('</span><span style=color:#a3be8c;>Import</span><span>', </span><span style=color:#bf616a;>self</span><span>)</span><span>
+</span><span>        impAct = </span><span style=color:#bf616a;>QAction</span><span>('</span><span style=color:#a3be8c;>Import mail</span><span>', </span><span style=color:#bf616a;>self</span><span>)</span><span>
+</span><span>        impMenu.</span><span style=color:#bf616a;>addAction</span><span>(impAct)</span><span>
+</span><span>
+</span><span>        newAct = </span><span style=color:#bf616a;>QAction</span><span>('</span><span style=color:#a3be8c;>New</span><span>', </span><span style=color:#bf616a;>self</span><span>)</span><span>
+</span><span>
+</span><span>        fileMenu.</span><span style=color:#bf616a;>addAction</span><span>(newAct)</span><span>
+</span><span>        fileMenu.</span><span style=color:#bf616a;>addMenu</span><span>(impMenu)</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setGeometry</span><span>(</span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>200</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setWindowTitle</span><span>('</span><span style=color:#a3be8c;>Submenu</span><span>')</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>show</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>main</span><span>():</span><span>
+</span><span>    app = </span><span style=color:#bf616a;>QApplication</span><span>(sys.argv)</span><span>
+</span><span>    ex = </span><span style=color:#bf616a;>Example</span><span>()</span><span>
+</span><span>    sys.</span><span style=color:#bf616a;>exit</span><span>(app.</span><span style=color:#bf616a;>exec_</span><span>())</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>__name__ == '</span><span style=color:#a3be8c;>__main__</span><span>':</span><span>
+</span><span>    </span><span style=color:#bf616a;>main</span><span>()</span><span>
+</span></code></pre><p>在示例中，我们有两个菜单项：一个位于"File"菜单中，另一个位于“File”的"Import"子菜单中。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>impMenu = QMenu('Import', self)</span><span>
+</span></code></pre><p>使用<code>QMenu</code>创建新菜单。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>impAct = QAction('Import mail', self)</span><span>
+</span><span>impMenu.addAction(impAct)</span><span>
+</span></code></pre><p>使用<code>addAction()</code>将操作添加到子菜单中。<p><img alt=image-20200819095428995 src=Menus-and-toolbars-in-PyQt5/image-20200819095428995.png></p><center>图：子菜单</center><h2 id=pyqt5-fu-xuan-cai-dan>PyQt5 复选菜单</h2><p>在下面的示例中，我们创建一个可以选中和取消选中的菜单。<p>check_menu.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>import </span><span>sys</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtWidgets </span><span style=color:#b48ead;>import </span><span>QMainWindow, QAction, QApplication</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Example</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>QMainWindow</span><span style=color:#eff1f5;>):</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#96b5b4;>super</span><span>().</span><span style=color:#96b5b4;>__init__</span><span>()</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>initUI</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>initUI</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.statusbar = </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>statusBar</span><span>()</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.statusbar.</span><span style=color:#bf616a;>showMessage</span><span>('</span><span style=color:#a3be8c;>Ready</span><span>')</span><span>
+</span><span>
+</span><span>        menubar = </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>menuBar</span><span>()</span><span>
+</span><span>        viewMenu = menubar.</span><span style=color:#bf616a;>addMenu</span><span>('</span><span style=color:#a3be8c;>View</span><span>')</span><span>
+</span><span>
+</span><span>        viewStatAct = </span><span style=color:#bf616a;>QAction</span><span>('</span><span style=color:#a3be8c;>View statusbar</span><span>', </span><span style=color:#bf616a;>self</span><span>, </span><span style=color:#bf616a;>checkable</span><span>=</span><span style=color:#d08770;>True</span><span>)</span><span>
+</span><span>        viewStatAct.</span><span style=color:#bf616a;>setStatusTip</span><span>('</span><span style=color:#a3be8c;>View statusbar</span><span>')</span><span>
+</span><span>        viewStatAct.</span><span style=color:#bf616a;>setChecked</span><span>(</span><span style=color:#d08770;>True</span><span>)</span><span>
+</span><span>        viewStatAct.triggered.</span><span style=color:#bf616a;>connect</span><span>(</span><span style=color:#bf616a;>self</span><span>.toggleMenu)</span><span>
+</span><span>
+</span><span>        viewMenu.</span><span style=color:#bf616a;>addAction</span><span>(viewStatAct)</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setGeometry</span><span>(</span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>200</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setWindowTitle</span><span>('</span><span style=color:#a3be8c;>Check menu</span><span>')</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>show</span><span>()</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>toggleMenu</span><span>(</span><span style=color:#bf616a;>self</span><span>, </span><span style=color:#bf616a;>state</span><span>):</span><span>
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>state:</span><span>
+</span><span>            </span><span style=color:#bf616a;>self</span><span>.statusbar.</span><span style=color:#bf616a;>show</span><span>()</span><span>
+</span><span>        </span><span style=color:#b48ead;>else</span><span>:</span><span>
+</span><span>            </span><span style=color:#bf616a;>self</span><span>.statusbar.</span><span style=color:#bf616a;>hide</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>main</span><span>():</span><span>
+</span><span>    app = </span><span style=color:#bf616a;>QApplication</span><span>(sys.argv)</span><span>
+</span><span>    ex = </span><span style=color:#bf616a;>Example</span><span>()</span><span>
+</span><span>    sys.</span><span style=color:#bf616a;>exit</span><span>(app.</span><span style=color:#bf616a;>exec_</span><span>())</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>__name__ == '</span><span style=color:#a3be8c;>__main__</span><span>':</span><span>
+</span><span>    </span><span style=color:#bf616a;>main</span><span>()</span><span>
+</span></code></pre><p>代码示例创建一个包含一个操作的"View"菜单，该操作显示或隐藏状态栏。当将菜单项选中时，状态栏可见。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>viewStatAct = QAction('View statusbar', self, checkable=True)</span><span>
+</span></code></pre><p>通过<code>checkable</code>选项，我们创建一个可检查菜单。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>viewStatAct.setChecked(True)</span><span>
+</span></code></pre><p>由于状态栏从一开始就可见，因此我们使用<code>setChecked()</code>方法将复选菜单设置为选中状态。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def toggleMenu(self, state):</span><span>
+</span><span>
+</span><span>    if state:</span><span>
+</span><span>        self.statusbar.show()</span><span>
+</span><span>    else:</span><span>
+</span><span>        self.statusbar.hide()</span><span>
+</span></code></pre><p>根据操作的状态，我们显示或隐藏状态栏。<p><img alt=image-20200819095908844 src=Menus-and-toolbars-in-PyQt5/image-20200819095908844.png></p><center>图：复选菜单</center><h2 id=pyqt5-shang-xia-wen-cai-dan>PyQt5 上下文菜单</h2><p>上下文菜单（也称为弹出式菜单）是出现在某些上下文中的命令列表（<strong>常见为右键菜单</strong>）。例如，在 浏览器中，当我们右键单击网页时，我们会获得上下文菜单，可以重新加载页面、返回或查看页面源。如果我们右键单击工具栏，我们会获得用于管理工具栏的另一个上下文菜单。<p>context_menu.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;>#!/usr/bin/python</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>import </span><span>sys</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtWidgets </span><span style=color:#b48ead;>import </span><span>QMainWindow, qApp, QMenu, QApplication</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Example</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>QMainWindow</span><span style=color:#eff1f5;>):</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#96b5b4;>super</span><span>().</span><span style=color:#96b5b4;>__init__</span><span>()</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>initUI</span><span>()</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>initUI</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setGeometry</span><span>(</span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>200</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setWindowTitle</span><span>('</span><span style=color:#a3be8c;>Context menu</span><span>')</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>show</span><span>()</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>contextMenuEvent</span><span>(</span><span style=color:#bf616a;>self</span><span>, </span><span style=color:#bf616a;>event</span><span>):</span><span>
+</span><span>        cmenu = </span><span style=color:#bf616a;>QMenu</span><span>(</span><span style=color:#bf616a;>self</span><span>)</span><span>
+</span><span>
+</span><span>        newAct = cmenu.</span><span style=color:#bf616a;>addAction</span><span>("</span><span style=color:#a3be8c;>New</span><span>")</span><span>
+</span><span>        openAct = cmenu.</span><span style=color:#bf616a;>addAction</span><span>("</span><span style=color:#a3be8c;>Open</span><span>")</span><span>
+</span><span>        quitAct = cmenu.</span><span style=color:#bf616a;>addAction</span><span>("</span><span style=color:#a3be8c;>Quit</span><span>")</span><span>
+</span><span>        action = cmenu.</span><span style=color:#bf616a;>exec_</span><span>(</span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>mapToGlobal</span><span>(event.</span><span style=color:#bf616a;>pos</span><span>()))</span><span>
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>action == quitAct:</span><span>
+</span><span>            qApp.</span><span style=color:#bf616a;>quit</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>main</span><span>():</span><span>
+</span><span>    app = </span><span style=color:#bf616a;>QApplication</span><span>(sys.argv)</span><span>
+</span><span>    ex = </span><span style=color:#bf616a;>Example</span><span>()</span><span>
+</span><span>    sys.</span><span style=color:#bf616a;>exit</span><span>(app.</span><span style=color:#bf616a;>exec_</span><span>())</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>__name__ == '</span><span style=color:#a3be8c;>__main__</span><span>':</span><span>
+</span><span>    </span><span style=color:#bf616a;>main</span><span>()</span><span>
+</span></code></pre><p>若要使用上下文菜单，我们必须重新实现<code>contextMenuEvent()</code>方法。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>action = cmenu.exec_(self.mapToGlobal(event.pos()))</span><span>
+</span></code></pre><p>上下文菜单与<code>exec_()</code>方法一起显示。<code>event.pos()</code>从事件对象获取鼠标指针的坐标，并用<code>mapToGlobal()</code>方法将部件坐标转换为全局屏幕坐标。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if action == quitAct:</span><span>
+</span><span>    qApp.quit()</span><span>
+</span></code></pre><p>如果从上下文菜单返回的操作等于退出操作，我们将终止应用程序。<h2 id=pyqt5-gong-ju-lan>PyQt5 工具栏</h2><p>菜单对应用程序可以使用的所有命令进行分组。工具栏提供对最常用的命令的快速访问。<p>toolbar.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#b48ead;>import </span><span>sys</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtWidgets </span><span style=color:#b48ead;>import </span><span>QMainWindow, QAction, qApp, QApplication</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtGui </span><span style=color:#b48ead;>import </span><span>QIcon</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QFileInfo</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Example</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>QMainWindow</span><span style=color:#eff1f5;>):</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#96b5b4;>super</span><span>().</span><span style=color:#96b5b4;>__init__</span><span>()</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>initUI</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>initUI</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        root = </span><span style=color:#bf616a;>QFileInfo</span><span>(__file__).</span><span style=color:#bf616a;>absolutePath</span><span>()</span><span>
+</span><span>        exitAct = </span><span style=color:#bf616a;>QAction</span><span>(</span><span style=color:#bf616a;>QIcon</span><span>(root + '</span><span style=color:#a3be8c;>/exit.png</span><span>'), '</span><span style=color:#a3be8c;>Exit</span><span>', </span><span style=color:#bf616a;>self</span><span>)</span><span>
+</span><span>        exitAct.</span><span style=color:#bf616a;>setShortcut</span><span>('</span><span style=color:#a3be8c;>Ctrl+Q</span><span>')</span><span>
+</span><span>        exitAct.triggered.</span><span style=color:#bf616a;>connect</span><span>(qApp.quit)</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.toolbar = </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>addToolBar</span><span>('</span><span style=color:#a3be8c;>Exit</span><span>')</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.toolbar.</span><span style=color:#bf616a;>addAction</span><span>(exitAct)</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setGeometry</span><span>(</span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>200</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setWindowTitle</span><span>('</span><span style=color:#a3be8c;>Toolbar</span><span>')</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>show</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>main</span><span>():</span><span>
+</span><span>    app = </span><span style=color:#bf616a;>QApplication</span><span>(sys.argv)</span><span>
+</span><span>    ex = </span><span style=color:#bf616a;>Example</span><span>()</span><span>
+</span><span>    sys.</span><span style=color:#bf616a;>exit</span><span>(app.</span><span style=color:#bf616a;>exec_</span><span>())</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>__name__ == '</span><span style=color:#a3be8c;>__main__</span><span>':</span><span>
+</span><span>    </span><span style=color:#bf616a;>main</span><span>()</span><span>
+</span></code></pre><p>在上面的示例中，我们创建一个简单的工具栏。工具栏有一个工具操作，一个退出操作，在触发时终止应用程序。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>root = QFileInfo(__file__).absolutePath()</span><span>
+</span><span>exitAct = QAction(QIcon(root + '/exit.png'), 'Exit', self)</span><span>
+</span><span>exitAct.setShortcut('Ctrl+Q')</span><span>
+</span><span>exitAct.triggered.connect(qApp.quit)</span><span>
+</span></code></pre><p>与上面的菜单栏示例类似，我们创建一个操作对象。对象具有标签、图标和快捷键绑定。<code>QtGui.QMainWindow</code>的<code>quit()</code>方法连接到操作对象的触发信号。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.toolbar = self.addToolBar('Exit')</span><span>
+</span><span>self.toolbar.addAction(exitAction)</span><span>
+</span></code></pre><p>使用<code>addToolBar()</code>方法创建工具栏。我们使用<code>addAction()</code>将操作对象添加到工具栏中。<p><img alt=image-20200819101135395 src=Menus-and-toolbars-in-PyQt5/image-20200819101135395.png></p><center>图：工具栏</center><h2 id=pyqt5-zhu-chuang-kou>PyQt5 主窗口</h2><p>在本节的最后一个示例中，我们创建一个菜单栏、工具栏和状态栏，我们还创建一个中央部件。<p>main_window.py<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#b48ead;>import </span><span>sys</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtWidgets </span><span style=color:#b48ead;>import </span><span>QMainWindow, QTextEdit, QAction, QApplication</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtGui </span><span style=color:#b48ead;>import </span><span>QIcon</span><span>
+</span><span style=color:#b48ead;>from </span><span>PyQt5.QtCore </span><span style=color:#b48ead;>import </span><span>QFileInfo</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Example</span><span style=color:#eff1f5;>(</span><span style=color:#a3be8c;>QMainWindow</span><span style=color:#eff1f5;>):</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#96b5b4;>__init__</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>        </span><span style=color:#96b5b4;>super</span><span>().</span><span style=color:#96b5b4;>__init__</span><span>()</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>initUI</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>initUI</span><span>(</span><span style=color:#bf616a;>self</span><span>):</span><span>
+</span><span>
+</span><span>        textEdit = </span><span style=color:#bf616a;>QTextEdit</span><span>()</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setCentralWidget</span><span>(textEdit)</span><span>
+</span><span>
+</span><span>        root = </span><span style=color:#bf616a;>QFileInfo</span><span>(__file__).</span><span style=color:#bf616a;>absolutePath</span><span>()</span><span>
+</span><span>        exitAct = </span><span style=color:#bf616a;>QAction</span><span>(</span><span style=color:#bf616a;>QIcon</span><span>(root + '</span><span style=color:#a3be8c;>/exit.png</span><span>'), '</span><span style=color:#a3be8c;>Exit</span><span>', </span><span style=color:#bf616a;>self</span><span>)</span><span>
+</span><span>        exitAct.</span><span style=color:#bf616a;>setShortcut</span><span>('</span><span style=color:#a3be8c;>Ctrl+Q</span><span>')</span><span>
+</span><span>        exitAct.</span><span style=color:#bf616a;>setStatusTip</span><span>('</span><span style=color:#a3be8c;>Exit application</span><span>')</span><span>
+</span><span>        exitAct.triggered.</span><span style=color:#bf616a;>connect</span><span>(</span><span style=color:#bf616a;>self</span><span>.close)</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>statusBar</span><span>()</span><span>
+</span><span>
+</span><span>        menubar = </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>menuBar</span><span>()</span><span>
+</span><span>        fileMenu = menubar.</span><span style=color:#bf616a;>addMenu</span><span>('</span><span style=color:#a3be8c;>&File</span><span>')</span><span>
+</span><span>        fileMenu.</span><span style=color:#bf616a;>addAction</span><span>(exitAct)</span><span>
+</span><span>
+</span><span>        toolbar = </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>addToolBar</span><span>('</span><span style=color:#a3be8c;>Exit</span><span>')</span><span>
+</span><span>        toolbar.</span><span style=color:#bf616a;>addAction</span><span>(exitAct)</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setGeometry</span><span>(</span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>300</span><span>, </span><span style=color:#d08770;>350</span><span>, </span><span style=color:#d08770;>250</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>setWindowTitle</span><span>('</span><span style=color:#a3be8c;>Main window</span><span>')</span><span>
+</span><span>        </span><span style=color:#bf616a;>self</span><span>.</span><span style=color:#bf616a;>show</span><span>()</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>def </span><span style=color:#8fa1b3;>main</span><span>():</span><span>
+</span><span>    app = </span><span style=color:#bf616a;>QApplication</span><span>(sys.argv)</span><span>
+</span><span>    ex = </span><span style=color:#bf616a;>Example</span><span>()</span><span>
+</span><span>    sys.</span><span style=color:#bf616a;>exit</span><span>(app.</span><span style=color:#bf616a;>exec_</span><span>())</span><span>
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>if </span><span>__name__ == '</span><span style=color:#a3be8c;>__main__</span><span>':</span><span>
+</span><span>    </span><span style=color:#bf616a;>main</span><span>()</span><span>
+</span></code></pre><p>此代码示例使用菜单栏、工具栏和状态栏创建经典 GUI 应用程序的骨架。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>textEdit = QTextEdit()</span><span>
+</span><span>self.setCentralWidget(textEdit)</span><span>
+</span></code></pre><p>在这里，我们创建一个文本编辑部件，并将其设置为<code>QMainWindow</code>的中心部件。中央部件占用所有剩下的空间。<p><img alt=image-20200819101604469 src=Menus-and-toolbars-in-PyQt5/image-20200819101604469.png></p><center>图：主窗口</center><p>在 PyQt5 教程的这一部分中，我们使用菜单、工具栏、状态栏和主应用程序窗口。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

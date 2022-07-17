@@ -1,0 +1,318 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/cpp网络编程/httplibku-shi-yong/>httplib库的使用</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-10 </span></div><div class=post-content><p><a href=https://github.com/yhirose/cpp-httplib>httplib库的使用</a><h1 id=cpp-httplib>cpp-httplib</h1><p>cpp-httplib是一个跨平台的HTTP/HTTPS库，只有一个头文件，使用C++11新标准编程。<p>该库方便易用，仅需要在你的程序中引入头文件<code>httplib.h</code>！<h2 id=server-shi-li>Server 示例</h2><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>httplib.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>void</span><span>)
+</span><span>{
+</span><span>  </span><span style=color:#b48ead;>using namespace</span><span> httplib;
+</span><span>
+</span><span>  Server svr;
+</span><span>
+</span><span>  svr.</span><span style=color:#bf616a;>Get</span><span>("</span><span style=color:#a3be8c;>/hi</span><span>", [](</span><span style=color:#b48ead;>const</span><span> Request& req, Response& res) {
+</span><span>    res.</span><span style=color:#bf616a;>set_content</span><span>("</span><span style=color:#a3be8c;>Hello World!</span><span>", "</span><span style=color:#a3be8c;>text/plain</span><span>");
+</span><span>  });
+</span><span>
+</span><span>  svr.</span><span style=color:#bf616a;>Get</span><span>(</span><span style=color:#b48ead;>R</span><span>"(</span><span style=color:#a3be8c;>/numbers/(\d+)</span><span>)", [&](</span><span style=color:#b48ead;>const</span><span> Request& req, Response& res) {
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> numbers = req.</span><span style=color:#bf616a;>matches</span><span>[</span><span style=color:#d08770;>1</span><span>];
+</span><span>    res.</span><span style=color:#bf616a;>set_content</span><span>(numbers, "</span><span style=color:#a3be8c;>text/plain</span><span>");
+</span><span>  });
+</span><span>
+</span><span>  svr.</span><span style=color:#bf616a;>Get</span><span>("</span><span style=color:#a3be8c;>/body-header-param</span><span>", [](</span><span style=color:#b48ead;>const</span><span> Request& req, Response& res) {
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(req.</span><span style=color:#bf616a;>has_header</span><span>("</span><span style=color:#a3be8c;>Content-Length</span><span>")) {
+</span><span>      </span><span style=color:#b48ead;>auto</span><span> val = req.</span><span style=color:#bf616a;>get_header_value</span><span>("</span><span style=color:#a3be8c;>Content-Length</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(req.</span><span style=color:#bf616a;>has_param</span><span>("</span><span style=color:#a3be8c;>key</span><span>")) {
+</span><span>      </span><span style=color:#b48ead;>auto</span><span> val = req.</span><span style=color:#bf616a;>get_param_value</span><span>("</span><span style=color:#a3be8c;>key</span><span>");
+</span><span>    }
+</span><span>    res.</span><span style=color:#bf616a;>set_content</span><span>(req.</span><span style=color:#bf616a;>body</span><span>, "</span><span style=color:#a3be8c;>text/plain</span><span>");
+</span><span>  });
+</span><span>
+</span><span>  svr.</span><span style=color:#bf616a;>Get</span><span>("</span><span style=color:#a3be8c;>/stop</span><span>", [&](</span><span style=color:#b48ead;>const</span><span> Request& req, Response& res) {
+</span><span>    svr.</span><span style=color:#bf616a;>stop</span><span>();
+</span><span>  });
+</span><span>
+</span><span>  svr.</span><span style=color:#bf616a;>listen</span><span>("</span><span style=color:#a3be8c;>localhost</span><span>", </span><span style=color:#d08770;>1234</span><span>);
+</span><span>}
+</span></code></pre><p>除了<code>Get</code>方法，<code>Post</code>、<code>Put</code>、<code>Delete</code>、<code>Options</code>同样被支持。<h3 id=bang-ding-tao-jie-zi-dao-duo-ge-jie-kou-ipdi-zhi-he-ren-yi-ke-yong-duan-kou>绑定套接字到多个接口ip地址和任意可用端口</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>int</span><span> port = svr.</span><span style=color:#bf616a;>bind_to_any_port</span><span>("</span><span style=color:#a3be8c;>0.0.0.0</span><span>");
+</span><span>svr.</span><span style=color:#bf616a;>listen_after_bind</span><span>();
+</span></code></pre><h3 id=jing-tai-wen-jian-server>静态文件Server</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>// Mount / to ./www directory
+</span><span style=color:#b48ead;>auto</span><span> ret = svr.</span><span style=color:#bf616a;>set_mount_point</span><span>("</span><span style=color:#a3be8c;>/</span><span>", "</span><span style=color:#a3be8c;>./www</span><span>");
+</span><span style=color:#b48ead;>if </span><span>(!ret) {
+</span><span>  </span><span style=color:#65737e;>// The specified base directory doesn't exist...
+</span><span>}
+</span><span>
+</span><span style=color:#65737e;>// Mount /public to ./www directory
+</span><span>ret = svr.</span><span style=color:#bf616a;>set_mount_point</span><span>("</span><span style=color:#a3be8c;>/public</span><span>", "</span><span style=color:#a3be8c;>./www</span><span>");
+</span><span>
+</span><span style=color:#65737e;>// Mount /public to ./www1 and ./www2 directories
+</span><span>ret = svr.</span><span style=color:#bf616a;>set_mount_point</span><span>("</span><span style=color:#a3be8c;>/public</span><span>", "</span><span style=color:#a3be8c;>./www1</span><span>"); </span><span style=color:#65737e;>// 1st order to search
+</span><span>ret = svr.</span><span style=color:#bf616a;>set_mount_point</span><span>("</span><span style=color:#a3be8c;>/public</span><span>", "</span><span style=color:#a3be8c;>./www2</span><span>"); </span><span style=color:#65737e;>// 2nd order to search
+</span><span>
+</span><span style=color:#65737e;>// Remove mount /
+</span><span>ret = svr.</span><span style=color:#bf616a;>remove_mount_point</span><span>("</span><span style=color:#a3be8c;>/</span><span>");
+</span><span>
+</span><span style=color:#65737e;>// Remove mount /public
+</span><span>ret = svr.</span><span style=color:#bf616a;>remove_mount_point</span><span>("</span><span style=color:#a3be8c;>/public</span><span>");
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>// User defined file extension and MIME type mappings
+</span><span>svr.</span><span style=color:#bf616a;>set_file_extension_and_mimetype_mapping</span><span>("</span><span style=color:#a3be8c;>cc</span><span>", "</span><span style=color:#a3be8c;>text/x-c</span><span>");
+</span><span>svr.</span><span style=color:#bf616a;>set_file_extension_and_mimetype_mapping</span><span>("</span><span style=color:#a3be8c;>cpp</span><span>", "</span><span style=color:#a3be8c;>text/x-c</span><span>");
+</span><span>svr.</span><span style=color:#bf616a;>set_file_extension_and_mimetype_mapping</span><span>("</span><span style=color:#a3be8c;>hh</span><span>", "</span><span style=color:#a3be8c;>text/x-h</span><span>");
+</span></code></pre><p>已经内建映射的文件格式：<table><thead><tr><th>Extension<th>MIME Type<tbody><tr><td>txt<td>text/plain<tr><td>html, htm<td>text/html<tr><td>css<td>text/css<tr><td>jpeg, jpg<td>image/jpg<tr><td>png<td>image/png<tr><td>gif<td>image/gif<tr><td>svg<td>image/svg+xml<tr><td>ico<td>image/x-icon<tr><td>json<td>application/json<tr><td>pdf<td>application/pdf<tr><td>js<td>application/javascript<tr><td>wasm<td>application/wasm<tr><td>xml<td>application/xml<tr><td>xhtml<td>application/xhtml+xml</table><p>注意：静态文件服务提供的方法并非线程安全的<h3 id=ri-zhi-logging>日志 Logging</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>set_logger</span><span>([](</span><span style=color:#b48ead;>const auto</span><span>& req, </span><span style=color:#b48ead;>const auto</span><span>& res) {
+</span><span>  </span><span style=color:#bf616a;>your_logger</span><span>(req, res);
+</span><span>});
+</span></code></pre><h3 id=cuo-wu-chu-li>错误处理</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>set_error_handler</span><span>([](</span><span style=color:#b48ead;>const auto</span><span>& req, </span><span style=color:#b48ead;>auto</span><span>& res) {
+</span><span>  </span><span style=color:#b48ead;>auto</span><span> fmt = "</span><span style=color:#a3be8c;>&LTp>Error Status: &LTspan style='color:red;'></span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>&LT/span>&LT/p></span><span>";
+</span><span>  </span><span style=color:#b48ead;>char</span><span> buf[BUFSIZ];
+</span><span>  </span><span style=color:#96b5b4;>snprintf</span><span>(buf, sizeof(buf), fmt, res.</span><span style=color:#bf616a;>status</span><span>);
+</span><span>  res.</span><span style=color:#bf616a;>set_content</span><span>(buf, "</span><span style=color:#a3be8c;>text/html</span><span>");
+</span><span>});
+</span></code></pre><h3 id=shi-yong-multipart-form-data-shang-chuan-shu-ju>使用'multipart/form-data' 上传数据</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>Post</span><span>("</span><span style=color:#a3be8c;>/multipart</span><span>", [&](</span><span style=color:#b48ead;>const auto</span><span>& req, </span><span style=color:#b48ead;>auto</span><span>& res) {
+</span><span>  </span><span style=color:#b48ead;>auto</span><span> size = req.</span><span style=color:#bf616a;>files</span><span>.</span><span style=color:#bf616a;>size</span><span>();
+</span><span>  </span><span style=color:#b48ead;>auto</span><span> ret = req.</span><span style=color:#bf616a;>has_file</span><span>("</span><span style=color:#a3be8c;>name1</span><span>");
+</span><span>  </span><span style=color:#b48ead;>const auto</span><span>& file = req.</span><span style=color:#bf616a;>get_file_value</span><span>("</span><span style=color:#a3be8c;>name1</span><span>");
+</span><span>  </span><span style=color:#65737e;>// file.filename;
+</span><span>  </span><span style=color:#65737e;>// file.content_type;
+</span><span>  </span><span style=color:#65737e;>// file.content;
+</span><span>});
+</span></code></pre><h3 id=shi-yong-content-receiver-jie-shou-nei-rong>使用Content receiver 接收内容</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>Post</span><span>("</span><span style=color:#a3be8c;>/content_receiver</span><span>",
+</span><span>  [&](</span><span style=color:#b48ead;>const</span><span> Request &req, Response &res, </span><span style=color:#b48ead;>const</span><span> ContentReader &content_reader) {
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(req.</span><span style=color:#bf616a;>is_multipart_form_data</span><span>()) {
+</span><span>      MultipartFormDataItems files;
+</span><span>      </span><span style=color:#bf616a;>content_reader</span><span>(
+</span><span>        [&](</span><span style=color:#b48ead;>const</span><span> MultipartFormData &file) {
+</span><span>          files.</span><span style=color:#bf616a;>push_back</span><span>(file);
+</span><span>          </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>true</span><span>;
+</span><span>        },
+</span><span>        [&](</span><span style=color:#b48ead;>const char </span><span>*data, size_t data_length) {
+</span><span>          files.</span><span style=color:#bf616a;>back</span><span>().</span><span style=color:#bf616a;>content</span><span>.</span><span style=color:#bf616a;>append</span><span>(data, data_length);
+</span><span>          </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>true</span><span>;
+</span><span>        });
+</span><span>    } </span><span style=color:#b48ead;>else </span><span>{
+</span><span>      std::string body;
+</span><span>      </span><span style=color:#bf616a;>content_reader</span><span>([&](</span><span style=color:#b48ead;>const char </span><span>*data, size_t data_length) {
+</span><span>        body.</span><span style=color:#bf616a;>append</span><span>(data, data_length);
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>true</span><span>;
+</span><span>      });
+</span><span>      res.</span><span style=color:#bf616a;>set_content</span><span>(body, "</span><span style=color:#a3be8c;>text/plain</span><span>");
+</span><span>    }
+</span><span>  });
+</span></code></pre><h3 id=shi-yong-content-provider-ti-gong-nei-rong>使用Content provider 提供内容</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>const </span><span>size_t DATA_CHUNK_SIZE = </span><span style=color:#d08770;>4</span><span>;
+</span><span>
+</span><span>svr.</span><span style=color:#bf616a;>Get</span><span>("</span><span style=color:#a3be8c;>/stream</span><span>", [&](</span><span style=color:#b48ead;>const</span><span> Request &req, Response &res) {
+</span><span>  </span><span style=color:#b48ead;>auto</span><span> data = </span><span style=color:#b48ead;>new </span><span>std::</span><span style=color:#bf616a;>string</span><span>("</span><span style=color:#a3be8c;>abcdefg</span><span>");
+</span><span>
+</span><span>  res.</span><span style=color:#bf616a;>set_content_provider</span><span>(
+</span><span>    data-></span><span style=color:#bf616a;>size</span><span>(), </span><span style=color:#65737e;>// Content length
+</span><span>    [data](size_t offset, size_t length, DataSink &sink) {
+</span><span>      </span><span style=color:#b48ead;>const auto </span><span>&d = *data;
+</span><span>      sink.</span><span style=color:#bf616a;>write</span><span>(&d[offset], std::</span><span style=color:#bf616a;>min</span><span>(length, DATA_CHUNK_SIZE));
+</span><span>      </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>true</span><span>; </span><span style=color:#65737e;>// return 'false' if you want to cancel the process.
+</span><span>    },
+</span><span>    [data] { </span><span style=color:#b48ead;>delete</span><span> data; });
+</span><span>});
+</span></code></pre><h3 id=fen-kuai-chuan-shu-bian-ma>分块传输编码</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>Get</span><span>("</span><span style=color:#a3be8c;>/chunked</span><span>", [&](</span><span style=color:#b48ead;>const</span><span> Request& req, Response& res) {
+</span><span>  res.</span><span style=color:#bf616a;>set_chunked_content_provider</span><span>(
+</span><span>    [](size_t offset, DataSink &sink) {
+</span><span>      sink.</span><span style=color:#bf616a;>write</span><span>("</span><span style=color:#a3be8c;>123</span><span>", </span><span style=color:#d08770;>3</span><span>);
+</span><span>      sink.</span><span style=color:#bf616a;>write</span><span>("</span><span style=color:#a3be8c;>345</span><span>", </span><span style=color:#d08770;>3</span><span>);
+</span><span>      sink.</span><span style=color:#bf616a;>write</span><span>("</span><span style=color:#a3be8c;>789</span><span>", </span><span style=color:#d08770;>3</span><span>);
+</span><span>      sink.</span><span style=color:#bf616a;>done</span><span>();
+</span><span>      </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>true</span><span>; </span><span style=color:#65737e;>// return 'false' if you want to cancel the process.
+</span><span>    }
+</span><span>  );
+</span><span>});
+</span></code></pre><h3 id=expect-100-continue-chu-li>'Expect: 100-continue' 处理</h3><p>默认情况下，server 发送 <code>100 Continue</code> 响应给 <code>Expect: 100-continue</code> header。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>// Send a '417 Expectation Failed' response.
+</span><span>svr.</span><span style=color:#bf616a;>set_expect_100_continue_handler</span><span>([](</span><span style=color:#b48ead;>const</span><span> Request &req, Response &res) {
+</span><span>  </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>417</span><span>;
+</span><span>});
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>// Send a final status without reading the message body.
+</span><span>svr.</span><span style=color:#bf616a;>set_expect_100_continue_handler</span><span>([](</span><span style=color:#b48ead;>const</span><span> Request &req, Response &res) {
+</span><span>  </span><span style=color:#b48ead;>return</span><span> res.</span><span style=color:#bf616a;>status </span><span>= </span><span style=color:#d08770;>401</span><span>;
+</span><span>});
+</span></code></pre><h3 id=cun-huo-lian-jie>存活连接</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>set_keep_alive_max_count</span><span>(</span><span style=color:#d08770;>2</span><span>); </span><span style=color:#65737e;>// Default is 5
+</span></code></pre><h3 id=she-zhi-chao-shi-xian-zhi>设置超时限制</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>set_read_timeout</span><span>(</span><span style=color:#d08770;>5</span><span>, </span><span style=color:#d08770;>0</span><span>); </span><span style=color:#65737e;>// 5 seconds
+</span><span>svr.</span><span style=color:#bf616a;>set_write_timeout</span><span>(</span><span style=color:#d08770;>5</span><span>, </span><span style=color:#d08770;>0</span><span>); </span><span style=color:#65737e;>// 5 seconds
+</span><span>svr.</span><span style=color:#bf616a;>set_idle_interval</span><span>(</span><span style=color:#d08770;>0</span><span>, </span><span style=color:#d08770;>100000</span><span>); </span><span style=color:#65737e;>// 100 milliseconds
+</span></code></pre><h3 id=she-zhi-request-bodyzui-da-jie-shou-chuang-kou>设置request body最大接收窗口</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>svr.</span><span style=color:#bf616a;>set_payload_max_length</span><span>(</span><span style=color:#d08770;>1024 </span><span>* </span><span style=color:#d08770;>1024 </span><span>* </span><span style=color:#d08770;>512</span><span>); </span><span style=color:#65737e;>// 512MB
+</span></code></pre><h3 id=server-sent-events>Server-Sent Events</h3><p>Please see <a href=https://github.com/yhirose/cpp-httplib/blob/master/example/ssesvr.cc>Server example</a> and <a href=https://github.com/yhirose/cpp-httplib/blob/master/example/ssecli.cc>Client example</a>.<h3 id=default-thread-pool-support>Default thread pool support</h3><p><code>ThreadPool</code> is used as a default task queue, and the default thread count is set to value from <code>std::thread::hardware_concurrency()</code>.<p>You can change the thread count by setting <code>CPPHTTPLIB_THREAD_POOL_COUNT</code>.<h3 id=override-the-default-thread-pool-with-yours>Override the default thread pool with yours</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>class YourThreadPoolTaskQueue : public TaskQueue {
+</span><span>public:
+</span><span>  YourThreadPoolTaskQueue(size_t n) {
+</span><span>    pool_.start_with_thread_count(n);
+</span><span>  }
+</span><span>
+</span><span>  virtual void enqueue(std::function&LTvoid()> fn) override {
+</span><span>    pool_.enqueue(fn);
+</span><span>  }
+</span><span>
+</span><span>  virtual void shutdown() override {
+</span><span>    pool_.shutdown_gracefully();
+</span><span>  }
+</span><span>
+</span><span>private:
+</span><span>  YourThreadPool pool_;
+</span><span>};
+</span><span>
+</span><span>svr.new_task_queue = [] {
+</span><span>  return new YourThreadPoolTaskQueue(12);
+</span><span>};
+</span></code></pre><h2 id=client-shi-li>Client 示例</h2><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>httplib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>void</span><span>)
+</span><span>{
+</span><span>  httplib::Client </span><span style=color:#bf616a;>cli</span><span>("</span><span style=color:#a3be8c;>localhost</span><span>", </span><span style=color:#d08770;>1234</span><span>);
+</span><span>
+</span><span>  </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#b48ead;>auto</span><span> res = cli.</span><span style=color:#bf616a;>Get</span><span>("</span><span style=color:#a3be8c;>/hi</span><span>")) {
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(res-></span><span style=color:#bf616a;>status </span><span>== </span><span style=color:#d08770;>200</span><span>) {
+</span><span>      std::cout << res-></span><span style=color:#bf616a;>body </span><span><< std::endl;
+</span><span>    }
+</span><span>  } </span><span style=color:#b48ead;>else </span><span>{
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> err = res.</span><span style=color:#bf616a;>error</span><span>();
+</span><span>    </span><span style=color:#65737e;>/*...*/
+</span><span>  }
+</span><span>}
+</span></code></pre><p>NOTE: Constructor with scheme-host-port string is now supported!<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Client cli("localhost");
+</span><span>httplib::Client cli("localhost:8080");
+</span><span>httplib::Client cli("http://localhost");
+</span><span>httplib::Client cli("http://localhost:8080");
+</span><span>httplib::Client cli("https://localhost");
+</span></code></pre><h3 id=get-with-http-headers>GET with HTTP headers</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Headers headers = {
+</span><span>  { "Accept-Encoding", "gzip, deflate" }
+</span><span>};
+</span><span>auto res = cli.Get("/hi", headers);
+</span></code></pre><p>or<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cli.set_default_headers({
+</span><span>  { "Accept-Encoding", "gzip, deflate" }
+</span><span>});
+</span><span>auto res = cli.Get("/hi");
+</span></code></pre><h3 id=post>POST</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>res = cli.Post("/post", "text", "text/plain");
+</span><span>res = cli.Post("/person", "name=john1&ampnote=coder", "application/x-www-form-urlencoded");
+</span></code></pre><h3 id=post-with-parameters>POST with parameters</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Params params;
+</span><span>params.emplace("name", "john");
+</span><span>params.emplace("note", "coder");
+</span><span>
+</span><span>auto res = cli.Post("/post", params);
+</span></code></pre><p>or<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Params params{
+</span><span>  { "name", "john" },
+</span><span>  { "note", "coder" }
+</span><span>};
+</span><span>
+</span><span>auto res = cli.Post("/post", params);
+</span></code></pre><h3 id=post-with-multipart-form-data>POST with Multipart Form Data</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::MultipartFormDataItems items = {
+</span><span>  { "text1", "text default", "", "" },
+</span><span>  { "text2", "aωb", "", "" },
+</span><span>  { "file1", "h\ne\n\nl\nl\no\n", "hello.txt", "text/plain" },
+</span><span>  { "file2", "{\n  \"world\", true\n}\n", "world.json", "application/json" },
+</span><span>  { "file3", "", "", "application/octet-stream" },
+</span><span>};
+</span><span>
+</span><span>auto res = cli.Post("/multipart", items);
+</span></code></pre><h3 id=put>PUT</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>res = cli.Put("/resource/foo", "text", "text/plain");
+</span></code></pre><h3 id=delete>DELETE</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>res = cli.Delete("/resource/foo");
+</span></code></pre><h3 id=options>OPTIONS</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>res = cli.Options("*");
+</span><span>res = cli.Options("/resource/foo");
+</span></code></pre><h3 id=timeout>Timeout</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cli.set_connection_timeout(0, 300000); // 300 milliseconds
+</span><span>cli.set_read_timeout(5, 0); // 5 seconds
+</span><span>cli.set_write_timeout(5, 0); // 5 seconds
+</span></code></pre><h3 id=receive-content-with-content-receiver>Receive content with Content receiver</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>std::string body;
+</span><span>
+</span><span>auto res = cli.Get("/large-data",
+</span><span>  [&](const char *data, size_t data_length) {
+</span><span>    body.append(data, data_length);
+</span><span>    return true;
+</span><span>  });
+</span><span>std::string body;
+</span><span>
+</span><span>auto res = cli.Get(
+</span><span>  "/stream", Headers(),
+</span><span>  [&](const Response &response) {
+</span><span>    EXPECT_EQ(200, response.status);
+</span><span>    return true; // return 'false' if you want to cancel the request.
+</span><span>  },
+</span><span>  [&](const char *data, size_t data_length) {
+</span><span>    body.append(data, data_length);
+</span><span>    return true; // return 'false' if you want to cancel the request.
+</span><span>  });
+</span></code></pre><h3 id=send-content-with-content-provider>Send content with Content provider</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>std::string body = ...;
+</span><span>
+</span><span>auto res = cli_.Post(
+</span><span>  "/stream", body.size(),
+</span><span>  [](size_t offset, size_t length, DataSink &sink) {
+</span><span>    sink.write(body.data() + offset, length);
+</span><span>    return true; // return 'false' if you want to cancel the request.
+</span><span>  },
+</span><span>  "text/plain");
+</span></code></pre><h3 id=with-progress-callback>With Progress Callback</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Client client(url, port);
+</span><span>
+</span><span>// prints: 0 / 000 bytes => 50% complete
+</span><span>auto res = cli.Get("/", [](uint64_t len, uint64_t total) {
+</span><span>  printf("%lld / %lld bytes => %d%% complete\n",
+</span><span>    len, total,
+</span><span>    (int)(len*100/total));
+</span><span>  return true; // return 'false' if you want to cancel the request.
+</span><span>}
+</span><span>);
+</span></code></pre><p><a href=https://user-images.githubusercontent.com/236374/33138910-495c4ecc-cf86-11e7-8693-2fc6d09615c4.gif><img alt=progress src=https://user-images.githubusercontent.com/236374/33138910-495c4ecc-cf86-11e7-8693-2fc6d09615c4.gif></a><h3 id=authentication>Authentication</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>// Basic Authentication
+</span><span>cli.set_basic_auth("user", "pass");
+</span><span>
+</span><span>// Digest Authentication
+</span><span>cli.set_digest_auth("user", "pass");
+</span><span>
+</span><span>// Bearer Token Authentication
+</span><span>cli.set_bearer_token_auth("token");
+</span></code></pre><p>NOTE: OpenSSL is required for Digest Authentication.<h3 id=proxy-server-support>Proxy server support</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cli.set_proxy("host", port);
+</span><span>
+</span><span>// Basic Authentication
+</span><span>cli.set_proxy_basic_auth("user", "pass");
+</span><span>
+</span><span>// Digest Authentication
+</span><span>cli.set_proxy_digest_auth("user", "pass");
+</span><span>
+</span><span>// Bearer Token Authentication
+</span><span>cli.set_proxy_bearer_token_auth("pass");
+</span></code></pre><p>NOTE: OpenSSL is required for Digest Authentication.<h3 id=range>Range</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Client cli("httpbin.org");
+</span><span>
+</span><span>auto res = cli.Get("/range/32", {
+</span><span>  httplib::make_range_header({{1, 10}}) // 'Range: bytes=1-10'
+</span><span>});
+</span><span>// res->status should be 206.
+</span><span>// res->body should be "bcdefghijk".
+</span><span>httplib::make_range_header({{1, 10}, {20, -1}})      // 'Range: bytes=1-10, 20-'
+</span><span>httplib::make_range_header({{100, 199}, {500, 599}}) // 'Range: bytes=100-199, 500-599'
+</span><span>httplib::make_range_header({{0, 0}, {-1, 1}})        // 'Range: bytes=0-0, -1'
+</span></code></pre><h3 id=keep-alive-connection>Keep-Alive connection</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Client cli("localhost", 1234);
+</span><span>
+</span><span>cli.Get("/hello");         // with "Connection: close"
+</span><span>
+</span><span>cli.set_keep_alive(true);
+</span><span>cli.Get("/world");
+</span><span>
+</span><span>cli.set_keep_alive(false);
+</span><span>cli.Get("/last-request");  // with "Connection: close"
+</span></code></pre><h3 id=redirect>Redirect</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>httplib::Client cli("yahoo.com");
+</span><span>
+</span><span>auto res = cli.Get("/");
+</span><span>res->status; // 301
+</span><span>
+</span><span>cli.set_follow_location(true);
+</span><span>res = cli.Get("/");
+</span><span>res->status; // 200
+</span></code></pre><h3 id=use-a-specitic-network-interface>Use a specitic network interface</h3><p>NOTE: This feature is not available on Windows, yet.<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cli.set_interface("eth0"); // Interface name, IP address or host name
+</span></code></pre><h2 id=openssl-support>OpenSSL Support</h2><p>SSL support is available with <code>CPPHTTPLIB_OPENSSL_SUPPORT</code>. <code>libssl</code> and <code>libcrypto</code> should be linked.<p>NOTE: cpp-httplib currently supports only version 1.1.1.<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#define CPPHTTPLIB_OPENSSL_SUPPORT
+</span><span>
+</span><span>SSLServer svr("./cert.pem", "./key.pem");
+</span><span>
+</span><span>SSLClient cli("localhost", 8080);
+</span><span>cli.set_ca_cert_path("./ca-bundle.crt");
+</span><span>cli.enable_server_certificate_verification(true);
+</span></code></pre><h2 id=compression>Compression</h2><p>The server can applie compression to the following MIME type contents:<ul><li>all text types except text/event-stream<li>image/svg+xml<li>application/javascript<li>application/json<li>application/xml<li>application/xhtml+xml</ul><h3 id=zlib-support>Zlib Support</h3><p>'gzip' compression is available with <code>CPPHTTPLIB_ZLIB_SUPPORT</code>. <code>libz</code> should be linked.<h3 id=brotli-support>Brotli Support</h3><p>Brotli compression is available with <code>CPPHTTPLIB_BROTLI_SUPPORT</code>. Necessary libraries should be linked. Please see https://github.com/google/brotli for more detail.<h3 id=compress-request-body-on-client>Compress request body on client</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cli.set_compress(true);
+</span><span>res = cli.Post("/resource/foo", "...", "text/plain");
+</span></code></pre><h3 id=compress-response-body-on-client>Compress response body on client</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cli.set_decompress(false);
+</span><span>res = cli.Get("/resource/foo", {{"Accept-Encoding", "gzip, deflate, br"}});
+</span><span>res->body; // Compressed data
+</span></code></pre><h2 id=split-httplib-h-into-h-and-cc>Split httplib.h into .h and .cc</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>> python3 split.py
+</span><span>> ls out
+</span><span>httplib.h  httplib.cc
+</span></code></pre><h2 id=bian-yi-zhu-yi>编译注意</h2><h3 id=g>g++</h3><p>由于使用了C++11新标准，g++4.8 以及更旧的版本无法编译成功，因为<code>&LTregex></code>库不被支持<p><strong>编译参数要加上：<code>-pthread</code></strong><h3 id=windows>Windows</h3><ol><li><p>引用 <code>httplib.h</code> 之前先引用<code>Windows.h</code></p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>httplib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>Windows.h</span><span>>
+</span></code></pre><li><p>先声明<code>WIN32_LEAN_AND_MEAN</code> 再引用<code>Windows.h</code></p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#define </span><span>WIN32_LEAN_AND_MEAN
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>Windows.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>httplib.h</span><span>>
+</span></code></pre></ol><p>注意: Windows下的Cygwin不支持<h2 id=license>License</h2><p>MIT license (© 2020 Yuji Hirose)<h2 id=special-thanks-to>Special Thanks To</h2><p><a href=https://github.com/yhirose/cpp-httplib/graphs/contributors>These folks</a> made great contributions to polish this library to totally another level from a simple toy!</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

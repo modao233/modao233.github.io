@@ -1,0 +1,407 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/Linux/archlinuxan-zhuang-ji-lu/>ArchLinux安装</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-12 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a></span><div class=post-content><p>虚拟机安装ArchLinux的过程，使用ssh方便复制粘贴。<h2 id=qi-dong-sshd>启动sshd</h2><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 启动sshd服务
+</span><span style=color:#bf616a;>systemctl</span><span> start sshd.service
+</span><span style=color:#65737e;># 设置ssh登录的root密码
+</span><span style=color:#bf616a;>passwd
+</span><span style=color:#65737e;># 查看ip
+</span><span style=color:#bf616a;>ip</span><span> add
+</span></code></pre><h2 id=an-zhuang-guo-cheng>安装过程</h2><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># ls
+</span><span style=color:#bf616a;>install.txt
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># ls /sys/firmware/efi/efivars
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># timedatectl set-ntp true
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># fdisk -l
+</span><span style=color:#bf616a;>Disk</span><span> /dev/sda: 20 GiB, 21474836480 bytes, 41943040 sectors
+</span><span style=color:#bf616a;>Disk</span><span> model: VMware Virtual S
+</span><span style=color:#bf616a;>Units:</span><span> sectors of 1 * 512 = 512 bytes
+</span><span style=color:#bf616a;>Sector</span><span> size (logical/physical)</span><span style=color:#96b5b4;>:</span><span> 512 bytes / 512 bytes
+</span><span style=color:#bf616a;>I/O</span><span> size (minimum/optimal)</span><span style=color:#96b5b4;>:</span><span> 512 bytes / 512 bytes
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>Disk</span><span> /dev/loop0: 529.67 MiB, 555380736 bytes, 1084728 sectors
+</span><span style=color:#bf616a;>Units:</span><span> sectors of 1 * 512 = 512 bytes
+</span><span style=color:#bf616a;>Sector</span><span> size (logical/physical)</span><span style=color:#96b5b4;>:</span><span> 512 bytes / 512 bytes
+</span><span style=color:#bf616a;>I/O</span><span> size (minimum/optimal)</span><span style=color:#96b5b4;>:</span><span> 512 bytes / 512 bytes
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># fdisk /dev/sda
+</span><span>
+</span><span style=color:#bf616a;>Welcome</span><span> to fdisk (util-linux 2.35.2)</span><span style=color:#96b5b4;>.
+</span><span style=color:#bf616a;>Changes</span><span> will remain in memory only, until you decide to write them.
+</span><span style=color:#bf616a;>Be</span><span> careful before using the write command.
+</span><span>
+</span><span style=color:#bf616a;>Device</span><span> does not contain a recognized partition table.
+</span><span style=color:#bf616a;>Created</span><span> a new DOS disklabel with disk identifier 0xb921b361.
+</span><span>
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> m
+</span><span>
+</span><span style=color:#bf616a;>Help:
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>DOS</span><span> (MBR)
+</span><span>   </span><span style=color:#bf616a;>a</span><span>   toggle a bootable flag
+</span><span>   </span><span style=color:#bf616a;>b</span><span>   edit nested BSD disklabel
+</span><span>   </span><span style=color:#bf616a;>c</span><span>   toggle the dos compatibility flag
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Generic
+</span><span>   </span><span style=color:#bf616a;>d</span><span>   delete a partition
+</span><span>   </span><span style=color:#bf616a;>F</span><span>   list free unpartitioned space
+</span><span>   </span><span style=color:#bf616a;>l</span><span>   list known partition types
+</span><span>   </span><span style=color:#bf616a;>n</span><span>   add a new partition
+</span><span>   </span><span style=color:#bf616a;>p</span><span>   print the partition table
+</span><span>   </span><span style=color:#bf616a;>t</span><span>   change a partition type
+</span><span>   </span><span style=color:#bf616a;>v</span><span>   verify the partition table
+</span><span>   </span><span style=color:#bf616a;>i</span><span>   print information about a partition
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Misc
+</span><span>   </span><span style=color:#bf616a;>m</span><span>   print this menu
+</span><span>   </span><span style=color:#bf616a;>u</span><span>   change display/entry units
+</span><span>   </span><span style=color:#bf616a;>x</span><span>   extra functionality (experts only)
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Script
+</span><span>   </span><span style=color:#bf616a;>I</span><span>   load disk layout from sfdisk script file
+</span><span>   </span><span style=color:#bf616a;>O</span><span>   dump disk layout to sfdisk script file
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Save </span><span>& </span><span style=color:#bf616a;>Exit
+</span><span>   </span><span style=color:#bf616a;>w</span><span>   write table to disk and exit
+</span><span>   </span><span style=color:#bf616a;>q</span><span>   quit without saving changes
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Create</span><span> a new label
+</span><span>   </span><span style=color:#bf616a;>g</span><span>   create a new empty GPT partition table
+</span><span>   </span><span style=color:#bf616a;>G</span><span>   create a new empty SGI (IRIX) </span><span style=color:#bf616a;>partition</span><span> table
+</span><span>   </span><span style=color:#bf616a;>o</span><span>   create a new empty DOS partition table
+</span><span>   </span><span style=color:#bf616a;>s</span><span>   create a new empty Sun partition table
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> g
+</span><span style=color:#bf616a;>Created</span><span> a new GPT disklabel (GUID: B4CE73D7-CB8E-E84F-B3BD-5721A8CECAE0)</span><span style=color:#96b5b4;>.
+</span><span>
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> n
+</span><span style=color:#bf616a;>Partition</span><span> number (1-128, default 1)</span><span style=color:#96b5b4;>:
+</span><span style=color:#bf616a;>First</span><span> sector (2048-41943006, default 2048)</span><span style=color:#96b5b4;>:
+</span><span style=color:#bf616a;>Last</span><span> sector, +/-sectors or +/-size{K,M,G,T,P} (2048-41943006, default 41943006)</span><span style=color:#96b5b4;>:</span><span> +256M
+</span><span>
+</span><span style=color:#bf616a;>Created</span><span> a new partition 1 of type '</span><span style=color:#a3be8c;>Linux filesystem</span><span>' and of size 256 MiB.
+</span><span>
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> n
+</span><span style=color:#bf616a;>Partition</span><span> number (2-128, default 2)</span><span style=color:#96b5b4;>:
+</span><span style=color:#bf616a;>First</span><span> sector (526336-41943006, default 526336)</span><span style=color:#96b5b4;>:
+</span><span style=color:#bf616a;>Last</span><span> sector, +/-sectors or +/-size{K,M,G,T,P} (526336-41943006, default 41943006)</span><span style=color:#96b5b4;>:
+</span><span>
+</span><span style=color:#bf616a;>Created</span><span> a new partition 2 of type '</span><span style=color:#a3be8c;>Linux filesystem</span><span>' and of size 19.8 GiB.
+</span><span>
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> m
+</span><span>
+</span><span style=color:#bf616a;>Help:
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>GPT
+</span><span>   </span><span style=color:#bf616a;>M</span><span>   enter protective/hybrid MBR
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Generic
+</span><span>   </span><span style=color:#bf616a;>d</span><span>   delete a partition
+</span><span>   </span><span style=color:#bf616a;>F</span><span>   list free unpartitioned space
+</span><span>   </span><span style=color:#bf616a;>l</span><span>   list known partition types
+</span><span>   </span><span style=color:#bf616a;>n</span><span>   add a new partition
+</span><span>   </span><span style=color:#bf616a;>p</span><span>   print the partition table
+</span><span>   </span><span style=color:#bf616a;>t</span><span>   change a partition type
+</span><span>   </span><span style=color:#bf616a;>v</span><span>   verify the partition table
+</span><span>   </span><span style=color:#bf616a;>i</span><span>   print information about a partition
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Misc
+</span><span>   </span><span style=color:#bf616a;>m</span><span>   print this menu
+</span><span>   </span><span style=color:#bf616a;>x</span><span>   extra functionality (experts only)
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Script
+</span><span>   </span><span style=color:#bf616a;>I</span><span>   load disk layout from sfdisk script file
+</span><span>   </span><span style=color:#bf616a;>O</span><span>   dump disk layout to sfdisk script file
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Save </span><span>& </span><span style=color:#bf616a;>Exit
+</span><span>   </span><span style=color:#bf616a;>w</span><span>   write table to disk and exit
+</span><span>   </span><span style=color:#bf616a;>q</span><span>   quit without saving changes
+</span><span>
+</span><span>  </span><span style=color:#bf616a;>Create</span><span> a new label
+</span><span>   </span><span style=color:#bf616a;>g</span><span>   create a new empty GPT partition table
+</span><span>   </span><span style=color:#bf616a;>G</span><span>   create a new empty SGI (IRIX) </span><span style=color:#bf616a;>partition</span><span> table
+</span><span>   </span><span style=color:#bf616a;>o</span><span>   create a new empty DOS partition table
+</span><span>   </span><span style=color:#bf616a;>s</span><span>   create a new empty Sun partition table
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> t
+</span><span style=color:#bf616a;>Partition</span><span> number (1,2, default 2)</span><span style=color:#96b5b4;>:</span><span> 1
+</span><span style=color:#bf616a;>Partition</span><span> type (type L to list all types)</span><span style=color:#96b5b4;>:</span><span> 1
+</span><span style=color:#bf616a;>Changed</span><span> type of partition '</span><span style=color:#a3be8c;>Linux filesystem</span><span>' to '</span><span style=color:#a3be8c;>EFI System</span><span>'.
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> t
+</span><span style=color:#bf616a;>Partition</span><span> number (1,2, default 2)</span><span style=color:#96b5b4;>:
+</span><span style=color:#bf616a;>Partition</span><span> type (type L to list all types)</span><span style=color:#96b5b4;>:</span><span> 24
+</span><span style=color:#bf616a;>Changed</span><span> type of partition '</span><span style=color:#a3be8c;>Linux filesystem</span><span>' to '</span><span style=color:#a3be8c;>Linux root (x86-64)</span><span>'.
+</span><span style=color:#bf616a;>Command</span><span> (m for help)</span><span style=color:#96b5b4;>:</span><span> w
+</span><span style=color:#bf616a;>The</span><span> partition table has been altered.
+</span><span style=color:#bf616a;>Calling</span><span> ioctl() </span><span style=color:#bf616a;>to</span><span> re-read partition table.
+</span><span style=color:#bf616a;>Syncing</span><span> disks.
+</span><span>
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># mkfs.ext4 /dev/sda2
+</span><span style=color:#bf616a;>mke2fs</span><span> 1.45.6 (20-Mar-202:0)
+</span><span style=color:#bf616a;>Creating</span><span> filesystem with 5177083 4k blocks and 1294336 inodes
+</span><span style=color:#bf616a;>Filesystem</span><span> UUID: 0a6eccbf-2065-4d0e-aa66-d8851133f007
+</span><span style=color:#bf616a;>Superblock</span><span> backups stored on blocks:
+</span><span>        </span><span style=color:#bf616a;>32768,</span><span> 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+</span><span>        </span><span style=color:#bf616a;>4096000
+</span><span>
+</span><span style=color:#bf616a;>Allocating</span><span> group tables: done
+</span><span style=color:#bf616a;>Writing</span><span> inode tables: done
+</span><span style=color:#bf616a;>Creating</span><span> journal (32768 blocks)</span><span style=color:#96b5b4;>:</span><span> done
+</span><span style=color:#bf616a;>Writing</span><span> superblocks and filesystem accounting information: done
+</span><span>
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># mkfs.fat /dev/sda1
+</span><span style=color:#bf616a;>mkfs.fat</span><span> 4.1 (2017-01-24)
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># mount /dev/sda1 /mnt/boot
+</span><span style=color:#bf616a;>mount:</span><span> /mnt/boot: mount point does not exist.
+</span><span style=color:#bf616a;>32</span><span> root@archiso </span><span style=color:#bf616a;>~ </span><span style=color:#65737e;># mount /dev/sda2 /mnt
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># mkdir /mnt/boot
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># mount /dev/sda1 /mnt/boot
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># vim /etc/pacman.d/mirrorlist
+</span><span style=color:#bf616a;>Server</span><span> = http://mirrors.ustc.edu.cn/archlinux/$</span><span style=color:#bf616a;>repo</span><span>/os/$</span><span style=color:#bf616a;>arch
+</span><span>
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># pacstrap /mnt base linux linux-firmware dhcpcd vim
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># genfstab -U /mnt >> /mnt/etc/fstab
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># cat /mnt/etc/fstab
+</span><span style=color:#65737e;># Static information about the filesystems.
+</span><span style=color:#65737e;># See fstab(5) for details.
+</span><span>
+</span><span style=color:#65737e;># &LTfile system> &LTdir> &LTtype> &LToptions> &LTdump> &LTpass>
+</span><span style=color:#65737e;># /dev/sda2
+</span><span style=color:#bf616a;>UUID</span><span>=</span><span style=color:#a3be8c;>0a6eccbf-2065-4d0e-aa66-d8851133f007       </span><span style=color:#bf616a;>/</span><span>               ext4           rw,relatime      0 1
+</span><span>
+</span><span style=color:#65737e;># /dev/sda1
+</span><span style=color:#bf616a;>UUID</span><span>=</span><span style=color:#a3be8c;>0AD1-7225          </span><span style=color:#bf616a;>/boot</span><span>           vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro       0 2
+</span><span>
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># arch-chroot /mnt
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# ln</span><span style=color:#bf616a;> -sf</span><span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# hwclock</span><span style=color:#bf616a;> --systohc
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# vim /etc/locale.gen
+</span><span>    </span><span style=color:#bf616a;>en_US.UTF-8</span><span> UTF-8
+</span><span>    </span><span style=color:#bf616a;>zh_CN.UTF-8</span><span> UTF-8
+</span><span>    </span><span style=color:#bf616a;>zh_TW.UTF-8</span><span> UTF-8
+</span><span>    
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# locale-gen
+</span><span style=color:#bf616a;>Generating</span><span> locales...
+</span><span>  </span><span style=color:#bf616a;>en_US.UTF-8...</span><span> done
+</span><span>  </span><span style=color:#bf616a;>zh_CN.UTF-8...</span><span> done
+</span><span>  </span><span style=color:#bf616a;>zh_TW.UTF-8...</span><span> done
+</span><span style=color:#bf616a;>Generation</span><span> complete.
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# echo LANG=en_US.UTF-8 > /etc/locale.conf
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# echo modao > /etc/hostname
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# vim /etc/hosts
+</span><span style=color:#65737e;># /etc/hosts
+</span><span style=color:#bf616a;>127.0.0.1</span><span>	localhost
+</span><span style=color:#bf616a;>::1</span><span>		localhost
+</span><span style=color:#bf616a;>127.0.1.1</span><span>	modao.localdomain	modao
+</span><span>
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# passwd
+</span><span>
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# pacman</span><span style=color:#bf616a;> -S</span><span> grub
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# pacman</span><span style=color:#bf616a;> -S</span><span> efibootmgr
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# grub-install</span><span style=color:#bf616a;> --target</span><span>=x86_64-efi</span><span style=color:#bf616a;> --efi-directory</span><span>=/boot</span><span style=color:#bf616a;> --bootloader-id</span><span>=ARCHLINUX
+</span><span style=color:#bf616a;>Installing</span><span> for x86_64-efi platform.
+</span><span style=color:#bf616a;>Installation</span><span> finished. No error reported.
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# grub-mkconfig</span><span style=color:#bf616a;> -o</span><span> /boot/grub/grub.cfg
+</span><span style=color:#bf616a;>Generating</span><span> grub configuration file ...
+</span><span style=color:#bf616a;>Found</span><span> linux image: /boot/vmlinuz-linux
+</span><span style=color:#bf616a;>Found</span><span> initrd image: /boot/initramfs-linux.img
+</span><span style=color:#bf616a;>Found</span><span> fallback initrd image(s) </span><span style=color:#bf616a;>in</span><span> /boot: initramfs-linux-fallback.img
+</span><span style=color:#b48ead;>done
+</span><span style=color:#bf616a;>[root@archiso</span><span> /]# exit
+</span><span style=color:#96b5b4;>exit
+</span><span style=color:#bf616a;>arch-chroot</span><span> /mnt  8.17s user 2.01s system 1% cpu 11:43.60 total
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># umount -R /mnt
+</span><span style=color:#bf616a;>root@archiso ~ </span><span style=color:#65737e;># reboot
+</span></code></pre><h2 id=ming-ling-hui-zong>命令汇总</h2><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>ls</span><span> /sys/firmware/efi/efivars
+</span><span style=color:#bf616a;>timedatectl</span><span> set-ntp true
+</span><span style=color:#bf616a;>fdisk -l
+</span><span style=color:#bf616a;>fdisk</span><span> /dev/sda
+</span><span style=color:#bf616a;>mkfs.ext4</span><span> /dev/sda2
+</span><span style=color:#bf616a;>mkfs.fat</span><span> /dev/sda1
+</span><span style=color:#bf616a;>mount</span><span> /dev/sda2 /mnt
+</span><span style=color:#bf616a;>mkdir</span><span> /mnt/boot
+</span><span style=color:#bf616a;>mount</span><span> /dev/sda1 /mnt/boot
+</span><span style=color:#96b5b4;>echo </span><span style=color:#bf616a;>-e </span><span>"</span><span style=color:#a3be8c;>Server = http://mirrors.ustc.edu.cn/archlinux/</span><span style=color:#96b5b4;>\$</span><span style=color:#a3be8c;>repo/os/</span><span style=color:#96b5b4;>\$</span><span style=color:#a3be8c;>arch</span><span>" > /etc/pacman.d/mirrorlist
+</span><span style=color:#bf616a;>pacstrap</span><span> /mnt base linux linux-firmware dhcpcd vim
+</span><span style=color:#bf616a;>genfstab -U</span><span> /mnt >> /mnt/etc/fstab
+</span><span style=color:#bf616a;>cat</span><span> /mnt/etc/fstab
+</span><span style=color:#bf616a;>arch-chroot</span><span> /mnt
+</span><span style=color:#bf616a;>ln -sf</span><span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+</span><span style=color:#bf616a;>hwclock --systohc
+</span><span style=color:#96b5b4;>echo </span><span style=color:#bf616a;>-e </span><span>"</span><span style=color:#a3be8c;>en_US.UTF-8 UTF-8\nzh_CN.UTF-8 UTF-8\nzh_TW.UTF-8 UTF-8</span><span>" >  /etc/locale.gen
+</span><span style=color:#bf616a;>locale-gen
+</span><span style=color:#96b5b4;>echo</span><span> LANG=en_US.UTF-8 > /etc/locale.conf
+</span><span style=color:#96b5b4;>echo</span><span> modao > /etc/hostname
+</span><span style=color:#96b5b4;>echo </span><span style=color:#bf616a;>-e </span><span>"</span><span style=color:#a3be8c;>127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\tmodao.localdomain\tmodao</span><span>" > /etc/hosts
+</span><span style=color:#bf616a;>passwd
+</span><span style=color:#bf616a;>pacman -S</span><span> grub
+</span><span style=color:#bf616a;>pacman -S</span><span> efibootmgr
+</span><span style=color:#bf616a;>grub-install --target</span><span>=x86_64-efi</span><span style=color:#bf616a;> --efi-directory</span><span>=/boot</span><span style=color:#bf616a;> --bootloader-id</span><span>=ARCHLINUX
+</span><span style=color:#bf616a;>grub-mkconfig -o</span><span> /boot/grub/grub.cfg
+</span><span style=color:#96b5b4;>exit
+</span><span style=color:#bf616a;>umount -R</span><span> /mnt
+</span><span style=color:#bf616a;>reboot
+</span></code></pre><h2 id=pei-zhi-ruan-jian-yuan>配置软件源</h2><p><a href=http://mirrors.ustc.edu.cn/help/archlinux.html>中科大-Arch Linux 源使用帮助</a><p><a href=http://mirrors.ustc.edu.cn/help/archlinuxcn.html>中科大-Arch Linux CN 源使用帮助</a><p>更新软件数据库<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pacman -Syy
+</span></code></pre><p>安装 <code>archlinuxcn-keyring</code> 包以导入 GPG key<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pacman -S archlinuxcn-keyring
+</span></code></pre><p>更新系统<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pacman -Syu
+</span></code></pre><h2 id=pei-zhi-zhuo-mian>配置桌面</h2><h3 id=an-zhuang-xorg>安装xorg</h3><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>pacman -S</span><span> xorg
+</span><span style=color:#bf616a;>pacman -S</span><span> xorg-xinit
+</span><span style=color:#bf616a;>cp</span><span> /etc/X11/xinit/xinitrc </span><span style=color:#bf616a;>~</span><span>/.xinitrc
+</span><span style=color:#bf616a;>pacman -S</span><span> awesome
+</span><span style=color:#bf616a;>pacman -S</span><span> xterm
+</span></code></pre><h3 id=pei-zhi-awesome-wmzhu-ti>配置awesome-wm主题</h3><p>下载主题时：git clone --recursive 用于循环克隆git子项目<p><a href=https://github.com/4ban/awesome-ban>Awesome WM 4.x Ban theme</a><ul><li>启动不成功，将配置文件（rc.lua和theme.lua）里的<code>“/home”</code>改成了<code>“/”</code><li>修改默认终端为xterm（全小写）<li>修改主题配置文件里的字体大小<li>修改rc.lua的快捷键绑定</ul><h3 id=pei-zhi-zsh>配置zsh</h3><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>pacman -S</span><span> zsh
+</span><span style=color:#bf616a;>chsh -s</span><span> /bin/zsh
+</span><span style=color:#bf616a;>pacman -S</span><span> oh-my-zsh-git
+</span><span style=color:#bf616a;>cp</span><span> /usr/share/oh-my-zsh/zshrc </span><span style=color:#bf616a;>~</span><span>/.zshrc
+</span><span style=color:#65737e;>## 修改主题后，重新加载
+</span><span style=color:#96b5b4;>source </span><span style=color:#bf616a;>~</span><span>/.zshrc
+</span><span style=color:#65737e;>## 安装字体
+</span><span style=color:#bf616a;>pacman -S</span><span> ttf-monaco
+</span><span style=color:#bf616a;>pacman -S</span><span> wqy-microhei
+</span></code></pre><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>! .Xresources
+</span><span>! Xterm settings
+</span><span>! XTerm*vt100*reverseVideo: true
+</span><span>
+</span><span>XTerm*vt100.background: black
+</span><span>XTerm*vt100.foreground: white
+</span><span>
+</span><span>! copy & paste 
+</span><span>XTerm*VT100.translations: #override &LTBtn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) 
+</span><span>
+</span><span>! English font 
+</span><span>xterm*faceName: Monaco:antialias=True:pixelsize=15
+</span><span>! Chinese font 
+</span><span>xterm*faceNameDoublesize:WenQuanYi Micro Hei:antialias=True:pixelsize=15
+</span><span>
+</span><span>!input method 
+</span><span>XTerm*inputMethod:fcitx 
+</span><span>
+</span><span>! scrollbar 
+</span><span>XTerm*scrollBar: true 
+</span><span>XTerm*rightScrollBar: true 
+</span><span>XTerm*SaveLines: 4096
+</span><span>
+</span><span>! Xterm*faceSize: 20
+</span><span>Xterm*VT100*geometry: 100x30
+</span></code></pre><h3 id=diao-zheng-ping-mu-fen-bian-lu-ke-xuan>调整屏幕分辨率（可选）</h3><h4 id=hui-hua-zhong-sheng-xiao>会话中生效</h4><blockquote><p><em>xrandr</em> 作出的改变只在本次会话中有效<p>分辨率后面带有一个***<strong>号和一个</strong>+**号</blockquote><p>从已有分辨率中选择<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>xrandr --output HDMI-1 --mode 1920x1080
+</span><span>xrandr --output HDMI-1 --mode 1920x1080 --rate 60
+</span></code></pre><ul><li><code>--ouput</code>：可用的显示输出设备<li><code>--mode</code>：已有的分辨率<li><code>--rate</code>：刷新速率</ul><p>添加未被检测到的有效分辨率<pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 首先，运行gtf或者cvt，查询某分辨率的有效扫描频率。 
+</span><span>cvt 1280 1024
+</span><span>1280x1024 59.89 Hz (CVT 1.31M4) hsync: 63.67 kHz; pclk: 109.00 MHz 
+</span><span>Modeline "1280x1024_60.00"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync 
+</span><span>
+</span><span># 然后通过--newmode参数新建一种xrandr模式，输入上面所得到的查询结果，其中Modeline关键词自然需要被省略。
+</span><span>xrandr --newmode "1280x1024_60.00"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync
+</span><span>
+</span><span># 新建模式后，我们需要把这模式添加到当前的输出设备（假定为VGA1）上。由于一些参数已经事先设置，只需输入模式名称即可，即1280x1024_60.00。
+</span><span>xrandr --addmode VGA1 1280x1024_60.00
+</span><span>
+</span><span># 最后，再把VGA1的分辨率指定为刚刚添加的新模式。
+</span><span>xrandr --output VGA1 --mode 1280x1024_60.00   
+</span></code></pre><h4 id=yong-jiu-sheng-xiao>永久生效</h4><p>使xrandr定制永久生效的方案有：(详见Arch wiki)<ul><li><code>xorg.conf</code>（推荐）<li><code>.xprofile</code><li>kdm/gdm</ul><p>在<code>xorg.conf</code>设置分辨率：<p>可以通过 <code>/etc/X11/xorg.conf</code> 配置 Xorg，用下面命令可以生成 <code>xorg.conf</code> 模板:<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>Xorg :0 -configure
+</span></code></pre><p>执行后会在 <code>/root/</code> 生成 <code>xorg.conf.new</code> 文件，然后你可以将它复制到 <code>/etc/X11/xorg.conf</code>。<blockquote><p>如果已经运行了 X 服务器，请使用不同的 display，例如 <code>Xorg :2 -configure</code>。</blockquote><p>利用<code>gtf</code>计算参数：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>gtf 1920 1080 60
+</span></code></pre><p>得到结果：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 1920x1080 @ 60.00 Hz (GTF) hsync: 67.08 kHz; pclk: 172.80 MHz
+</span><span>Modeline "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
+</span></code></pre><p>修改<code>xorg.conf</code>文件：<ul><li><p>在Section "Monitor"中，加入：</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>Modeline "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
+</span></code></pre><li><p>在Section "Screen"中的 SubSection "Display"中，加入一行：</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>Modes   "1920x1080_60.00"
+</span></code></pre><li><p>最终xorg.conf文件看上去是这样的（无关的Section可以删掉）</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>......(省略)
+</span><span>
+</span><span>Section "Monitor"
+</span><span>	Identifier   "Monitor0"
+</span><span>	Modeline "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118      -HSync +Vsync
+</span><span>	Modeline "1888x1020_60.00"  160.17  1888 2008 2208 2528  1020 1021 1024 1056      -HSync +Vsync
+</span><span>    Modeline "1600x860_60.00"  112.78  1600 1688 1856 2112  860 861 864 890  -HSync +Vsync
+</span><span>	VendorName   "Monitor Vendor"
+</span><span>	ModelName    "Monitor Model"
+</span><span>EndSection
+</span><span>
+</span><span>......(省略)
+</span><span>
+</span><span>Section "Screen"
+</span><span>    Identifier "Screen0"
+</span><span>    Device     "Card0"
+</span><span>    Monitor    "Monitor0"
+</span><span>    SubSection "Display"
+</span><span>        Viewport   0 0
+</span><span>        Modes   "1920x1080_60.00"
+</span><span>        Depth     24
+</span><span>    EndSubSection
+</span><span>    SubSection "Display"
+</span><span>		Viewport   0 0
+</span><span>        Modes   "1888x1020_60.00"
+</span><span>        Depth     24
+</span><span>    EndSubSection
+</span><span>    SubSection "Display"
+</span><span>		Viewport   0 0
+</span><span>        Modes   "1600x860_60.00"
+</span><span>        Depth     24
+</span><span>    EndSubSection
+</span><span>EndSection
+</span><span>
+</span><span>......(省略)
+</span></code></pre></ul><p><strong>参考资料</strong>：<ul><li><a href=https://wiki.archlinux.org/index.php/Xrandr_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E4%BD%BFxrandr%E6%89%80%E6%9B%B4%E6%94%B9%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87%E8%AE%BE%E7%BD%AE%E6%B0%B8%E4%B9%85%E7%94%9F%E6%95%88>在xorg.conf设置分辨率（推荐）</a><li><a href=https://wiki.archlinux.org/index.php/Xorg_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E4%BD%BF%E7%94%A8_xorg.conf>使用 xorg.conf</a><li><a href=https://jlk.fjfi.cvut.cz/arch/manpages/man/xorg.conf.5>xorg.conf(5)</a><li><a href=https://feichashao.com/xorg_resolution/>xorg.conf：修改屏幕分辨率</a></ul><h3 id=tong-guo-fehshe-zhi-bi-zhi>通过feh设置壁纸</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pacman -S feh
+</span><span>feh --bg-fill master.jpg
+</span></code></pre><h3 id=tong-guo-picomshe-zhi-chuang-kou-tou-ming>通过picom设置窗口透明</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pacman -S picom
+</span><span>cp /etc/xdg/picom.conf ~/.config/
+</span><span>vim ~/.config/picom.conf
+</span><span>picom&
+</span></code></pre><pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 修改配置，添加规则
+</span><span># picom.conf
+</span><span>
+</span><span># 非活跃窗口透明度（非当前窗口）
+</span><span>inactive-opacity = 0.5;
+</span><span># 框体透明度，窗口的标题栏等
+</span><span>frame-opacity = 0.6;
+</span><span># 默认
+</span><span>inactive-opacity-override = false;
+</span><span># 活跃窗口透明度（当前窗口）
+</span><span>active-opacity = 0.7
+</span><span>
+</span><span>opacity-rule = [
+</span><span>	"100:class_g = 'Xterm'",
+</span><span>    "100:class_g = 'feh'"
+</span><span>];
+</span></code></pre><h3 id=jin-zhi-beepsheng-yin-ke-xuan>禁止beep声音（可选）</h3><p><code>/etc/modprobe.d</code>中加入<code>no-beep.conf</code> 文件，内容为：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>blacklist pcspkr
+</span></code></pre><p>禁掉该模块就不会发出 beep 的声音了。<h3 id=wang-luo-gong-ju-net-tools>网络工具net-tools</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pacman -S net-tools
+</span></code></pre><p>校园网Linux客户端依赖<code>ifconfig</code>（没装显示无效网卡），尽管在arch中已经有<code>ip addr</code>代替<h3 id=duo-xian-cheng-xia-zai-gong-ju-axel>多线程下载工具 axel</h3><p>more<h3 id=dai-li>代理</h3><p>proxychains privxy<h3 id=xi-tong-jian-kong-gong-ju-conky-ke-xuan>系统监控工具 conky（可选)</h3><p>more<h3 id=zhong-duan-wen-jian-guan-li-qi-ranger>终端文件管理器ranger</h3><h3 id=sou-suo-wen-jian-ming-shu-ju-ku-mlocate>搜索文件名数据库mlocate</h3><p>archlinux不自带locate，提供mlocate<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>//安装并初始化数据库，需要root
+</span><span>pacman -S mlocate
+</span><span>updatedb
+</span></code></pre><h3 id=vscode>vscode</h3><p>arch可以有多个版本的vscode供选择：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pacman -S code
+</span></code></pre><p>arch打包的oss版的vscode默认不使用官方市场<p>可以手动修改product.json让oss版使用官方市场，修改这个字段：<pre class=language-json data-lang=json style=background-color:#2b303b;color:#c0c5ce;><code class=language-json data-lang=json><span>"</span><span style=color:#a3be8c;>extensionsGallery</span><span>": {
+</span><span>      "</span><span style=color:#a3be8c;>serviceUrl</span><span>": "</span><span style=color:#a3be8c;>https://marketplace.visualstudio.com/_apis/public/gallery</span><span>",
+</span><span>      "</span><span style=color:#a3be8c;>cacheUrl</span><span>": "</span><span style=color:#a3be8c;>https://vscode.blob.core.windows.net/gallery/index</span><span>",
+</span><span>      "</span><span style=color:#a3be8c;>itemUrl</span><span>": "</span><span style=color:#a3be8c;>https://marketplace.visualstudio.com/items</span><span>"
+</span><span>}
+</span></code></pre><p><a href=https://stackoverflow.com/questions/37848793/install-extensions-after-building-vscode-from-source>可参考stackoverflow</a><h3 id=an-zhuang-fcitx5-pei-zhi-zhong-wen-shu-ru-fa>安装fcitx5，配置中文输入法</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>//安装输入法框架和配置工具
+</span><span>pacman -S fcitx5 fcitx5-configtool
+</span><span>//配置启动fcitx5必要的环境变量，并重新登陆
+</span><span>//~/.pam_environment
+</span><span>GTK_IM_MODULE DEFAULT=fcitx
+</span><span>QT_IM_MODULE  DEFAULT=fcitx
+</span><span>XMODIFIERS    DEFAULT=\@im=fcitx
+</span><span>SDL_IM_MODULE DEFAULT=fcitx
+</span><span>//安装中文输入法引擎
+</span><span>pacman -S fcitx5-rime
+</span><span>//安装词库：四叶草拼音输入方案
+</span><span>//https://github.com/fkxxyz/rime-cloverpinyin
+</span><span>//切换普通用户
+</span><span>yay -S rime-cloverpinyin
+</span><span>//fcitx5-rime的用户资料文件夹：~/.local/share/fcitx5/rime
+</span><span>//在用户资料夹下创建 default.custom.yaml ，内容为
+</span><span>patch:
+</span><span>  "menu/page_size": 8
+</span><span>  schema_list:
+</span><span>    - schema: clover
+</span><span>//其中 8 表示打字的时候输入面板的每一页的候选词数目，可以设置成 1~9 任意数字。
+</span><span>//写好该文件之后，点击右下角托盘图标右键菜单，点“重新部署”
+</span><span>
+</span><span>//配置startx启动时自动启动fcitx5
+</span><span>vim ~/.config/awesome/rc.lua
+</span><span>
+</span><span>添加一条autorun为fcitx5即可
+</span></code></pre><h3 id=archda-bao-de-ossban-de-vscodemo-ren-bu-shi-yong-guan-fang-shi-chang>arch打包的oss版的vscode默认不使用官方市场</h3><p>可以手动修改product.json让oss版使用官方市场，修改这个字段：<pre class=language-json data-lang=json style=background-color:#2b303b;color:#c0c5ce;><code class=language-json data-lang=json><span>"</span><span style=color:#a3be8c;>extensionsGallery</span><span>": {
+</span><span>      "</span><span style=color:#a3be8c;>serviceUrl</span><span>": "</span><span style=color:#a3be8c;>https://marketplace.visualstudio.com/_apis/public/gallery</span><span>",
+</span><span>      "</span><span style=color:#a3be8c;>cacheUrl</span><span>": "</span><span style=color:#a3be8c;>https://vscode.blob.core.windows.net/gallery/index</span><span>",
+</span><span>      "</span><span style=color:#a3be8c;>itemUrl</span><span>": "</span><span style=color:#a3be8c;>https://marketplace.visualstudio.com/items</span><span>"
+</span><span>}
+</span></code></pre><p><a href=https://stackoverflow.com/questions/37848793/install-extensions-after-building-vscode-from-source>可供参考</a><h2 id=za-sui-ji-lu>杂碎记录</h2><h3 id=gua-zai-xiang-guan>挂载相关</h3><p>Linux和手机传输文件： mtpfs手动挂载 jmtpfs df -iT查看能否识别<h3 id=fen-qu-xiang-guan>分区相关</h3><p>从性能角度考虑，/var/home 比较科学 把配置文件放在 /var 分区，速度更快 /home 单独分区，读写配置文件会比较慢 /var 如果没单独分区，那就在根分区，也不必如此操作<p>所以一般情况建议 /var /home 都还是留在根分区。 如果根分区在固态硬盘，则 /var 分到机械硬盘，/home 挪进 /var 分区。 我是根分区和 /boot 分区在固态，平时是只读挂载，提高安全性。/var 在机械硬盘，/home 挪入 /var。 第一，离根分区较远，磁头摆动大。 第二，单独的分区，不能和根分区集中进行布局优化。 第三，单独的主分区，必然会放一些七七八八的数据，磁盘碎片化严重。<p>软连接部分文件，配置文件和home都该放到根分区 较大的文件可以移走 然后软连接回来<h3 id=yi-lai-xiang-guan>依赖相关</h3><p>先安装该包还是先安装其依赖？ 直接apt install ./deb，可以自动装依赖<p>dpkg -i xxx.deb aptitude install dpkg 安装时缺少依赖就是返回非 0 值的 apt 只在 dpkg 失败时才补充<p>dpkg最差，pkg其次（arch属于pkg），rpm最舒服 dpkg主要问题是推荐和依赖分不清<h3 id=archlinuxbian-yi-nei-he><a href=https://www.cnblogs.com/mc-r/articles/12238345.html>Archlinux编译内核</a></h3><p>https://wiki.archlinux.org/index.php/Kernel_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/Traditional_compilation_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)<p>archlinux可以使用 zcat命令获取当前运行内核的config文件。其它发行版的config文件可能直接放在/boot目录中。<p>$ zcat /proc/config.gz > .config</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

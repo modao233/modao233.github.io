@@ -1,0 +1,134 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/cpp-shu-zu-chu-shi-hua/>cpp-数组初始化</a></h1><div class=post-meta-inline><span class=post-date> 2020-06-29 </span></div><div class=post-content><p>在C++中，普通数组是固定长度的，标准库类型vector可理解为可扩充数组（即长度不固定）。<p>编译参数：<code>g++ --std=c++2a</code><h2 id=vectorshu-zu-de-chu-shi-hua>vector数组的初始化</h2><table><thead><tr><th>初始化vector对象的方法<th>方法说明<tbody><tr><td>vector v1<td>v1是一个空vector，它潜在的元素是T类型的，执行默认初始化<tr><td>vector v2(v1)<td>v2中包含v1所有元素的副本<tr><td>vector v2 = v1<td>等价于v2(v1)，v2中包含v1所有元素的副本<tr><td>vector v3(n, val)<td>v3包含了n个重复的元素，每个元素的值都是val<tr><td>vector v4(n)<td>v4包含了n个重复地执行了值初始化的对象<tr><td>vector v5{a, b, c…}<td>v5包含了初始值个数的元素，每个元素被赋予相应的初始值<tr><td>vector v5 = {a, b, c…}<td>等价于v5{a, b, c…}</table><p>C++11新标准还提供了列表初始化。用<strong>花括号</strong>括起来的0个或多个初始元素值被赋给vector对象：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>vector&LTstring> articles = {"</span><span style=color:#a3be8c;>a</span><span>", "</span><span style=color:#a3be8c;>an</span><span>", "</span><span style=color:#a3be8c;>the</span><span>"};
+</span></code></pre><p>通常情况下，可以只提供vector对象容纳的元素数量而不用略去初始值。此时库会创建一个<strong>值初始化的</strong>元素初值，该值由元素类型决定：<ul><li>元素是内置类型，使用默认值<li>元素是类类型，元素由类默认初始化<li>如果元素的类型不支持默认初始化，则必须明确提供初始值<li>只提供元素数量而没有设定初始值，只能使用直接初始化</ul><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>vector<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#8fa1b3;>v1</span><span>(</span><span style=color:#d08770;>10</span><span>);        </span><span style=color:#65737e;>//v1有10个元素，每个元素的值都是0
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#bf616a;>v2</span><span>{</span><span style=color:#d08770;>10</span><span>};        </span><span style=color:#65737e;>//v2有1个元素：10
+</span><span>
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#8fa1b3;>v3</span><span>(</span><span style=color:#d08770;>10</span><span>, </span><span style=color:#d08770;>1</span><span>);    </span><span style=color:#65737e;>//v3有10个元素，每个元素的值都是1
+</span><span>vector<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#bf616a;>v4</span><span>{</span><span style=color:#d08770;>10</span><span>, </span><span style=color:#d08770;>1</span><span>};    </span><span style=color:#65737e;>//v4有2个元素：10和1
+</span></code></pre><p>圆括号提供的值用来构造vector对象；花括号的值作为元素的值，执行列表初始化。<p>如果初始化使用花括号但是提供的值又不能用来列表初始化，就会考虑用这样的值来构造对象。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>vector&LTstring> </span><span style=color:#bf616a;>v5</span><span>{"</span><span style=color:#a3be8c;>hi</span><span>"};    </span><span style=color:#65737e;>//列表初始化，v5有1个元素
+</span><span>vector&LTstring> </span><span style=color:#8fa1b3;>v6</span><span>("</span><span style=color:#a3be8c;>hi</span><span>");    </span><span style=color:#65737e;>//错误：不能用字符串字面值构建vector对象
+</span><span>vector&LTstring> </span><span style=color:#bf616a;>v7</span><span>{</span><span style=color:#d08770;>10</span><span>};        </span><span style=color:#65737e;>//v7有10个默认初始化的元素
+</span><span>vector&LTstring> </span><span style=color:#bf616a;>v8</span><span>{</span><span style=color:#d08770;>10</span><span>, "</span><span style=color:#a3be8c;>hi</span><span>"};</span><span style=color:#65737e;>//v8有10个值为“hi”的元素
+</span></code></pre><h2 id=pu-tong-shu-zu-de-chu-shi-hua>普通数组的初始化</h2><p>默认初始化，变量没有指定处值将被赋予默认值，由变量类型决定，且受定义变量位置影响：<ul><li>定义于任何函数体之外的变量被初始化为0<li>函数体内部的内置类型变量不被初始化，未被初始化的内置类型变量的值是未定义的</ul><h3 id=quan-ju-zuo-yong-yu>全局作用域</h3><p>位于全局作用域的数组没有赋初值时，都默认初始化成0。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::vector;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> a[</span><span style=color:#d08770;>10</span><span>];
+</span><span style=color:#b48ead;>int</span><span> b[</span><span style=color:#d08770;>10</span><span>][</span><span style=color:#d08770;>10</span><span>];
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){    
+</span><span>    cout << "</span><span style=color:#a3be8c;>测试一维数组</span><span>" << endl;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i<</span><span style=color:#d08770;>10</span><span>; i++)cout << a[i] << ' ';
+</span><span>    cout << endl;
+</span><span>    cout << "</span><span style=color:#a3be8c;>测试二维数组</span><span>" << endl;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i< </span><span style=color:#d08770;>10</span><span>; i++){
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> j=</span><span style=color:#d08770;>0</span><span>; j < </span><span style=color:#d08770;>10</span><span>; j++){
+</span><span>            cout << b[i][j] << ' ';
+</span><span>        }
+</span><span>        cout << endl;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>运行结果：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>测试一维数组
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>测试二维数组
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span></code></pre><h3 id=ju-bu-zuo-yong-yu>局部作用域</h3><p>函数体内部的内置类型变量不被初始化，未被初始化的内置类型变量的值是未定义的<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::vector;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#65737e;>// int a[10]= {0};
+</span><span>    </span><span style=color:#65737e;>// int b[10][10]= {0};
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a[</span><span style=color:#d08770;>10</span><span>];
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b[</span><span style=color:#d08770;>10</span><span>][</span><span style=color:#d08770;>10</span><span>];    
+</span><span>    cout << "</span><span style=color:#a3be8c;>测试一维数组</span><span>" << endl;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i<</span><span style=color:#d08770;>10</span><span>; i++)cout << a[i] << ' ';
+</span><span>    cout << endl;
+</span><span>    cout << "</span><span style=color:#a3be8c;>测试二维数组</span><span>" << endl;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i< </span><span style=color:#d08770;>10</span><span>; i++){
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> j=</span><span style=color:#d08770;>0</span><span>; j < </span><span style=color:#d08770;>10</span><span>; j++){
+</span><span>            cout << b[i][j] << ' ';
+</span><span>        }
+</span><span>        cout << endl;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>运行结果<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>测试一维数组
+</span><span>0 0 0 0 8 0 4199705 0 8 0 
+</span><span>测试二维数组
+</span><span>6421704 0 1875947768 0 1875947560 0 1875947840 0 1875946976 0 
+</span><span>1875893184 0 1875947560 0 6421704 0 1875947560 0 1875855620 0 
+</span><span>1875947768 0 1875865606 0 1875947552 0 1875746568 0 3 0 
+</span><span>1875937088 0 13959168 0 1875947560 0 1875942272 0 1875865824 0 
+</span><span>39 0 1875208332 0 13960008 0 268501009 0 13961056 0 
+</span><span>-747787642 32767 4206232 0 0 0 4200108 0 16 0 
+</span><span>0 0 0 0 8 0 4199705 0 4206232 0 
+</span><span>4206224 0 13983824 0 16 0 0 0 4200188 0 
+</span><span>4199744 0 8 0 0 0 268501009 0 13961064 0 
+</span><span>-747787642 32767 8 0 0 0 4200304 0 24 0
+</span></code></pre><p>列表初始化后：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::vector;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a[</span><span style=color:#d08770;>10</span><span>]= {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b[</span><span style=color:#d08770;>10</span><span>][</span><span style=color:#d08770;>10</span><span>]= {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#65737e;>// int a[10];
+</span><span>    </span><span style=color:#65737e;>// int b[10][10];    
+</span><span>    cout << "</span><span style=color:#a3be8c;>测试一维数组</span><span>" << endl;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i<</span><span style=color:#d08770;>10</span><span>; i++)cout << a[i] << ' ';
+</span><span>    cout << endl;
+</span><span>    cout << "</span><span style=color:#a3be8c;>测试二维数组</span><span>" << endl;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i< </span><span style=color:#d08770;>10</span><span>; i++){
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> j=</span><span style=color:#d08770;>0</span><span>; j < </span><span style=color:#d08770;>10</span><span>; j++){
+</span><span>            cout << b[i][j] << ' ';
+</span><span>        }
+</span><span>        cout << endl;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>运行结果<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>测试一维数组
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>测试二维数组
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0 
+</span><span>0 0 0 0 0 0 0 0 0 0
+</span></code></pre><p><strong>按道理二维数组这样初始化只能初始化第一行，但是结果却复现不出来，但还是记录下比较稳妥的方法</strong>：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>//最简单粗暴的方法就是逐个赋值，我就不写了
+</span><span style=color:#b48ead;>int</span><span>* b[</span><span style=color:#d08770;>10</span><span>];
+</span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i< </span><span style=color:#d08770;>10</span><span>; i++)b[i] = </span><span style=color:#b48ead;>new int</span><span>[</span><span style=color:#d08770;>10</span><span>]{</span><span style=color:#d08770;>0</span><span>};
+</span><span>...
+</span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>; i< </span><span style=color:#d08770;>10</span><span>; i++)</span><span style=color:#b48ead;>delete[]</span><span> b[i];
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

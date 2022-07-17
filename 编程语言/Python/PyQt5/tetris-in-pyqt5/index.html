@@ -1,0 +1,663 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/tetris-in-pyqt5/>俄罗斯方块（PyQt5）</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-20 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/tetris/>翻译自原文：Tetris in PyQt5</a><p>翻译时间 2020 年 8 月 20 日<p>在本章中，我们将创建一个俄罗斯方块的游戏模仿。<h2 id=e-luo-si-fang-kuai>俄罗斯方块</h2><p>俄罗斯方块 游戏是有史以来最受欢迎的电脑游戏之一。最初的游戏是由俄罗斯程序员阿列克谢·帕吉特诺夫在1985年设计和编程的。自那时起，俄罗斯方块 几乎在每个计算机平台上都有各种变化。<p>俄罗斯方块被称为下降块益智游戏。在这个游戏中，我们有七种不同的形状称为四角形：一个S形，一个Z形，一个T形，一个L形，一个线形，一个镜像L形状，和一个方形。这些形状中每个形状都用四个正方形组成。形状从木板上掉下来了。俄罗斯方块游戏的对象是移动和旋转形状，以便它们尽可能适合。如果我们设法形成一个行，行被摧毁，我们得分。我们玩俄罗斯方块游戏， 直到我们顶部溢出。<p><img alt=image-20200820214701778 src=Tetris-in-PyQt5/image-20200820214701778.png></p><center>图： 特特罗米诺</center><p>PyQt5 是一个旨在创建应用程序的工具包。还有其他库旨在创建计算机游戏。然而，PyQt5 和其他应用程序工具包可用于创建简单的游戏。<p>创建电脑游戏是提高编程技能的好办法。<h2 id=kai-fa>开发</h2><p>我们没有用于 俄罗斯方块游戏的图像，我们使用 PyQt5 编程工具包中提供的绘图 API 绘制四元图。每个电脑游戏的背后都有一个数学模型。所以在俄罗斯方块。<p>游戏背后的一些想法：<ul><li>我们使用 <code>QtCore.QBasicTimer</code>创建游戏周期。<li>画出四分位。<li>形状按方形移动（而不是按像素）。<li>从数学上讲，棋盘是一个简单的数字列表。</ul><p>代码由四个类组成：<code>Tetris</code>、<code>Board</code>、<code>Tetrominoe</code>、<code>Shape</code> 。<ul><li><code>Tetris</code>类设置游戏。<li><code>Board</code>类是编写游戏逻辑的地方。<li><code>Tetrominoe</code>类包含所有四分段的名称<li><code>Shape</code>类包含四分段的代码。</ul><p>tetris.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import random</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal</span><span>
+</span><span>from PyQt5.QtGui import QPainter, QColor</span><span>
+</span><span>from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication</span><span>
+</span><span>
+</span><span>
+</span><span>class Tetris(QMainWindow):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        """initiates application UI"""</span><span>
+</span><span>
+</span><span>        self.tboard = Board(self)</span><span>
+</span><span>        self.setCentralWidget(self.tboard)</span><span>
+</span><span>
+</span><span>        self.statusbar = self.statusBar()</span><span>
+</span><span>        self.tboard.msg2Statusbar[str].connect(self.statusbar.showMessage)</span><span>
+</span><span>
+</span><span>        self.tboard.start()</span><span>
+</span><span>
+</span><span>        self.resize(180, 380)</span><span>
+</span><span>        self.center()</span><span>
+</span><span>        self.setWindowTitle('Tetris')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def center(self):</span><span>
+</span><span>        """centers the window on the screen"""</span><span>
+</span><span>
+</span><span>        screen = QDesktopWidget().screenGeometry()</span><span>
+</span><span>        size = self.geometry()</span><span>
+</span><span>        self.move(int((screen.width() - size.width()) / 2),</span><span>
+</span><span>                  int((screen.height() - size.height()) / 2))</span><span>
+</span><span>
+</span><span>
+</span><span>class Board(QFrame):</span><span>
+</span><span>    msg2Statusbar = pyqtSignal(str)</span><span>
+</span><span>
+</span><span>    BoardWidth = 10</span><span>
+</span><span>    BoardHeight = 22</span><span>
+</span><span>    Speed = 300</span><span>
+</span><span>
+</span><span>    def __init__(self, parent):</span><span>
+</span><span>        super().__init__(parent)</span><span>
+</span><span>
+</span><span>        self.initBoard()</span><span>
+</span><span>
+</span><span>    def initBoard(self):</span><span>
+</span><span>        """initiates board"""</span><span>
+</span><span>
+</span><span>        self.timer = QBasicTimer()</span><span>
+</span><span>        self.isWaitingAfterLine = False</span><span>
+</span><span>
+</span><span>        self.curX = 0</span><span>
+</span><span>        self.curY = 0</span><span>
+</span><span>        self.numLinesRemoved = 0</span><span>
+</span><span>        self.board = []</span><span>
+</span><span>
+</span><span>        self.setFocusPolicy(Qt.StrongFocus)</span><span>
+</span><span>        self.isStarted = False</span><span>
+</span><span>        self.isPaused = False</span><span>
+</span><span>        self.clearBoard()</span><span>
+</span><span>
+</span><span>    def shapeAt(self, x, y):</span><span>
+</span><span>        """determines shape at the board position"""</span><span>
+</span><span>
+</span><span>        return self.board[(y * Board.BoardWidth) + x]</span><span>
+</span><span>
+</span><span>    def setShapeAt(self, x, y, shape):</span><span>
+</span><span>        """sets a shape at the board"""</span><span>
+</span><span>
+</span><span>        self.board[(y * Board.BoardWidth) + x] = shape</span><span>
+</span><span>
+</span><span>    def squareWidth(self):</span><span>
+</span><span>        """returns the width of one square"""</span><span>
+</span><span>
+</span><span>        return self.contentsRect().width() // Board.BoardWidth</span><span>
+</span><span>
+</span><span>    def squareHeight(self):</span><span>
+</span><span>        """returns the height of one square"""</span><span>
+</span><span>
+</span><span>        return self.contentsRect().height() // Board.BoardHeight</span><span>
+</span><span>
+</span><span>    def start(self):</span><span>
+</span><span>        """starts game"""</span><span>
+</span><span>
+</span><span>        if self.isPaused:</span><span>
+</span><span>            return</span><span>
+</span><span>
+</span><span>        self.isStarted = True</span><span>
+</span><span>        self.isWaitingAfterLine = False</span><span>
+</span><span>        self.numLinesRemoved = 0</span><span>
+</span><span>        self.clearBoard()</span><span>
+</span><span>
+</span><span>        self.msg2Statusbar.emit(str(self.numLinesRemoved))</span><span>
+</span><span>
+</span><span>        self.newPiece()</span><span>
+</span><span>        self.timer.start(Board.Speed, self)</span><span>
+</span><span>
+</span><span>    def pause(self):</span><span>
+</span><span>        """pauses game"""</span><span>
+</span><span>
+</span><span>        if not self.isStarted:</span><span>
+</span><span>            return</span><span>
+</span><span>
+</span><span>        self.isPaused = not self.isPaused</span><span>
+</span><span>
+</span><span>        if self.isPaused:</span><span>
+</span><span>            self.timer.stop()</span><span>
+</span><span>            self.msg2Statusbar.emit("paused")</span><span>
+</span><span>
+</span><span>        else:</span><span>
+</span><span>            self.timer.start(Board.Speed, self)</span><span>
+</span><span>            self.msg2Statusbar.emit(str(self.numLinesRemoved))</span><span>
+</span><span>
+</span><span>        self.update()</span><span>
+</span><span>
+</span><span>    def paintEvent(self, event):</span><span>
+</span><span>        """paints all shapes of the game"""</span><span>
+</span><span>
+</span><span>        painter = QPainter(self)</span><span>
+</span><span>        rect = self.contentsRect()</span><span>
+</span><span>
+</span><span>        boardTop = rect.bottom() - Board.BoardHeight * self.squareHeight()</span><span>
+</span><span>
+</span><span>        for i in range(Board.BoardHeight):</span><span>
+</span><span>            for j in range(Board.BoardWidth):</span><span>
+</span><span>                shape = self.shapeAt(j, Board.BoardHeight - i - 1)</span><span>
+</span><span>
+</span><span>                if shape != Tetrominoe.NoShape:</span><span>
+</span><span>                    self.drawSquare(painter,</span><span>
+</span><span>                                    rect.left() + j * self.squareWidth(),</span><span>
+</span><span>                                    boardTop + i * self.squareHeight(), shape)</span><span>
+</span><span>
+</span><span>        if self.curPiece.shape() != Tetrominoe.NoShape:</span><span>
+</span><span>
+</span><span>            for i in range(4):</span><span>
+</span><span>                x = self.curX + self.curPiece.x(i)</span><span>
+</span><span>                y = self.curY - self.curPiece.y(i)</span><span>
+</span><span>                self.drawSquare(painter, rect.left() + x * self.squareWidth(),</span><span>
+</span><span>                                boardTop + (Board.BoardHeight - y - 1) * self.squareHeight(),</span><span>
+</span><span>                                self.curPiece.shape())</span><span>
+</span><span>
+</span><span>    def keyPressEvent(self, event):</span><span>
+</span><span>        """processes key press events"""</span><span>
+</span><span>
+</span><span>        if not self.isStarted or self.curPiece.shape() == Tetrominoe.NoShape:</span><span>
+</span><span>            super(Board, self).keyPressEvent(event)</span><span>
+</span><span>            return</span><span>
+</span><span>
+</span><span>        key = event.key()</span><span>
+</span><span>
+</span><span>        if key == Qt.Key_P:</span><span>
+</span><span>            self.pause()</span><span>
+</span><span>            return</span><span>
+</span><span>
+</span><span>        if self.isPaused:</span><span>
+</span><span>            return</span><span>
+</span><span>
+</span><span>        elif key == Qt.Key_Left:</span><span>
+</span><span>            self.tryMove(self.curPiece, self.curX - 1, self.curY)</span><span>
+</span><span>
+</span><span>        elif key == Qt.Key_Right:</span><span>
+</span><span>            self.tryMove(self.curPiece, self.curX + 1, self.curY)</span><span>
+</span><span>
+</span><span>        elif key == Qt.Key_Down:</span><span>
+</span><span>            self.tryMove(self.curPiece.rotateRight(), self.curX, self.curY)</span><span>
+</span><span>
+</span><span>        elif key == Qt.Key_Up:</span><span>
+</span><span>            self.tryMove(self.curPiece.rotateLeft(), self.curX, self.curY)</span><span>
+</span><span>
+</span><span>        elif key == Qt.Key_Space:</span><span>
+</span><span>            self.dropDown()</span><span>
+</span><span>
+</span><span>        elif key == Qt.Key_D:</span><span>
+</span><span>            self.oneLineDown()</span><span>
+</span><span>
+</span><span>        else:</span><span>
+</span><span>            super(Board, self).keyPressEvent(event)</span><span>
+</span><span>
+</span><span>    def timerEvent(self, event):</span><span>
+</span><span>        """handles timer event"""</span><span>
+</span><span>
+</span><span>        if event.timerId() == self.timer.timerId():</span><span>
+</span><span>
+</span><span>            if self.isWaitingAfterLine:</span><span>
+</span><span>                self.isWaitingAfterLine = False</span><span>
+</span><span>                self.newPiece()</span><span>
+</span><span>            else:</span><span>
+</span><span>                self.oneLineDown()</span><span>
+</span><span>
+</span><span>        else:</span><span>
+</span><span>            super(Board, self).timerEvent(event)</span><span>
+</span><span>
+</span><span>    def clearBoard(self):</span><span>
+</span><span>        """clears shapes from the board"""</span><span>
+</span><span>
+</span><span>        for i in range(Board.BoardHeight * Board.BoardWidth):</span><span>
+</span><span>            self.board.append(Tetrominoe.NoShape)</span><span>
+</span><span>
+</span><span>    def dropDown(self):</span><span>
+</span><span>        """drops down a shape"""</span><span>
+</span><span>
+</span><span>        newY = self.curY</span><span>
+</span><span>
+</span><span>        while newY > 0:</span><span>
+</span><span>
+</span><span>            if not self.tryMove(self.curPiece, self.curX, newY - 1):</span><span>
+</span><span>                break</span><span>
+</span><span>
+</span><span>            newY -= 1</span><span>
+</span><span>
+</span><span>        self.pieceDropped()</span><span>
+</span><span>
+</span><span>    def oneLineDown(self):</span><span>
+</span><span>        """goes one line down with a shape"""</span><span>
+</span><span>
+</span><span>        if not self.tryMove(self.curPiece, self.curX, self.curY - 1):</span><span>
+</span><span>            self.pieceDropped()</span><span>
+</span><span>
+</span><span>    def pieceDropped(self):</span><span>
+</span><span>        """after dropping shape, remove full lines and create new shape"""</span><span>
+</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            x = self.curX + self.curPiece.x(i)</span><span>
+</span><span>            y = self.curY - self.curPiece.y(i)</span><span>
+</span><span>            self.setShapeAt(x, y, self.curPiece.shape())</span><span>
+</span><span>
+</span><span>        self.removeFullLines()</span><span>
+</span><span>
+</span><span>        if not self.isWaitingAfterLine:</span><span>
+</span><span>            self.newPiece()</span><span>
+</span><span>
+</span><span>    def removeFullLines(self):</span><span>
+</span><span>        """removes all full lines from the board"""</span><span>
+</span><span>
+</span><span>        numFullLines = 0</span><span>
+</span><span>        rowsToRemove = []</span><span>
+</span><span>
+</span><span>        for i in range(Board.BoardHeight):</span><span>
+</span><span>
+</span><span>            n = 0</span><span>
+</span><span>            for j in range(Board.BoardWidth):</span><span>
+</span><span>                if not self.shapeAt(j, i) == Tetrominoe.NoShape:</span><span>
+</span><span>                    n = n + 1</span><span>
+</span><span>
+</span><span>            if n == 10:</span><span>
+</span><span>                rowsToRemove.append(i)</span><span>
+</span><span>
+</span><span>        rowsToRemove.reverse()</span><span>
+</span><span>
+</span><span>        for m in rowsToRemove:</span><span>
+</span><span>
+</span><span>            for k in range(m, Board.BoardHeight):</span><span>
+</span><span>                for l in range(Board.BoardWidth):</span><span>
+</span><span>                    self.setShapeAt(l, k, self.shapeAt(l, k + 1))</span><span>
+</span><span>
+</span><span>        numFullLines = numFullLines + len(rowsToRemove)</span><span>
+</span><span>
+</span><span>        if numFullLines > 0:</span><span>
+</span><span>            self.numLinesRemoved = self.numLinesRemoved + numFullLines</span><span>
+</span><span>            self.msg2Statusbar.emit(str(self.numLinesRemoved))</span><span>
+</span><span>
+</span><span>            self.isWaitingAfterLine = True</span><span>
+</span><span>            self.curPiece.setShape(Tetrominoe.NoShape)</span><span>
+</span><span>            self.update()</span><span>
+</span><span>
+</span><span>    def newPiece(self):</span><span>
+</span><span>        """creates a new shape"""</span><span>
+</span><span>
+</span><span>        self.curPiece = Shape()</span><span>
+</span><span>        self.curPiece.setRandomShape()</span><span>
+</span><span>        self.curX = Board.BoardWidth // 2 + 1</span><span>
+</span><span>        self.curY = Board.BoardHeight - 1 + self.curPiece.minY()</span><span>
+</span><span>
+</span><span>        if not self.tryMove(self.curPiece, self.curX, self.curY):</span><span>
+</span><span>            self.curPiece.setShape(Tetrominoe.NoShape)</span><span>
+</span><span>            self.timer.stop()</span><span>
+</span><span>            self.isStarted = False</span><span>
+</span><span>            self.msg2Statusbar.emit("Game over")</span><span>
+</span><span>
+</span><span>    def tryMove(self, newPiece, newX, newY):</span><span>
+</span><span>        """tries to move a shape"""</span><span>
+</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>
+</span><span>            x = newX + newPiece.x(i)</span><span>
+</span><span>            y = newY - newPiece.y(i)</span><span>
+</span><span>
+</span><span>            if x < 0 or x >= Board.BoardWidth or y < 0 or y >= Board.BoardHeight:</span><span>
+</span><span>                return False</span><span>
+</span><span>
+</span><span>            if self.shapeAt(x, y) != Tetrominoe.NoShape:</span><span>
+</span><span>                return False</span><span>
+</span><span>
+</span><span>        self.curPiece = newPiece</span><span>
+</span><span>        self.curX = newX</span><span>
+</span><span>        self.curY = newY</span><span>
+</span><span>        self.update()</span><span>
+</span><span>
+</span><span>        return True</span><span>
+</span><span>
+</span><span>    def drawSquare(self, painter, x, y, shape):</span><span>
+</span><span>        """draws a square of a shape"""</span><span>
+</span><span>
+</span><span>        colorTable = [0x000000, 0xCC6666, 0x66CC66, 0x6666CC,</span><span>
+</span><span>                      0xCCCC66, 0xCC66CC, 0x66CCCC, 0xDAAA00]</span><span>
+</span><span>
+</span><span>        color = QColor(colorTable[shape])</span><span>
+</span><span>        painter.fillRect(x + 1, y + 1, self.squareWidth() - 2,</span><span>
+</span><span>                         self.squareHeight() - 2, color)</span><span>
+</span><span>
+</span><span>        painter.setPen(color.lighter())</span><span>
+</span><span>        painter.drawLine(x, y + self.squareHeight() - 1, x, y)</span><span>
+</span><span>        painter.drawLine(x, y, x + self.squareWidth() - 1, y)</span><span>
+</span><span>
+</span><span>        painter.setPen(color.darker())</span><span>
+</span><span>        painter.drawLine(x + 1, y + self.squareHeight() - 1,</span><span>
+</span><span>                         x + self.squareWidth() - 1, y + self.squareHeight() - 1)</span><span>
+</span><span>        painter.drawLine(x + self.squareWidth() - 1,</span><span>
+</span><span>                         y + self.squareHeight() - 1, x + self.squareWidth() - 1, y + 1)</span><span>
+</span><span>
+</span><span>
+</span><span>class Tetrominoe(object):</span><span>
+</span><span>    NoShape = 0</span><span>
+</span><span>    ZShape = 1</span><span>
+</span><span>    SShape = 2</span><span>
+</span><span>    LineShape = 3</span><span>
+</span><span>    TShape = 4</span><span>
+</span><span>    SquareShape = 5</span><span>
+</span><span>    LShape = 6</span><span>
+</span><span>    MirroredLShape = 7</span><span>
+</span><span>
+</span><span>
+</span><span>class Shape(object):</span><span>
+</span><span>    coordsTable = (</span><span>
+</span><span>        ((0, 0), (0, 0), (0, 0), (0, 0)),</span><span>
+</span><span>        ((0, -1), (0, 0), (-1, 0), (-1, 1)),</span><span>
+</span><span>        ((0, -1), (0, 0), (1, 0), (1, 1)),</span><span>
+</span><span>        ((0, -1), (0, 0), (0, 1), (0, 2)),</span><span>
+</span><span>        ((-1, 0), (0, 0), (1, 0), (0, 1)),</span><span>
+</span><span>        ((0, 0), (1, 0), (0, 1), (1, 1)),</span><span>
+</span><span>        ((-1, -1), (0, -1), (0, 0), (0, 1)),</span><span>
+</span><span>        ((1, -1), (0, -1), (0, 0), (0, 1))</span><span>
+</span><span>    )</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>
+</span><span>        self.coords = [[0, 0] for i in range(4)]</span><span>
+</span><span>        self.pieceShape = Tetrominoe.NoShape</span><span>
+</span><span>
+</span><span>        self.setShape(Tetrominoe.NoShape)</span><span>
+</span><span>
+</span><span>    def shape(self):</span><span>
+</span><span>        """returns shape"""</span><span>
+</span><span>
+</span><span>        return self.pieceShape</span><span>
+</span><span>
+</span><span>    def setShape(self, shape):</span><span>
+</span><span>        """sets a shape"""</span><span>
+</span><span>
+</span><span>        table = Shape.coordsTable[shape]</span><span>
+</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            for j in range(2):</span><span>
+</span><span>                self.coords[i][j] = table[i][j]</span><span>
+</span><span>
+</span><span>        self.pieceShape = shape</span><span>
+</span><span>
+</span><span>    def setRandomShape(self):</span><span>
+</span><span>        """chooses a random shape"""</span><span>
+</span><span>
+</span><span>        self.setShape(random.randint(1, 7))</span><span>
+</span><span>
+</span><span>    def x(self, index):</span><span>
+</span><span>        """returns x coordinate"""</span><span>
+</span><span>
+</span><span>        return self.coords[index][0]</span><span>
+</span><span>
+</span><span>    def y(self, index):</span><span>
+</span><span>        """returns y coordinate"""</span><span>
+</span><span>
+</span><span>        return self.coords[index][1]</span><span>
+</span><span>
+</span><span>    def setX(self, index, x):</span><span>
+</span><span>        """sets x coordinate"""</span><span>
+</span><span>
+</span><span>        self.coords[index][0] = x</span><span>
+</span><span>
+</span><span>    def setY(self, index, y):</span><span>
+</span><span>        """sets y coordinate"""</span><span>
+</span><span>
+</span><span>        self.coords[index][1] = y</span><span>
+</span><span>
+</span><span>    def minX(self):</span><span>
+</span><span>        """returns min x value"""</span><span>
+</span><span>
+</span><span>        m = self.coords[0][0]</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            m = min(m, self.coords[i][0])</span><span>
+</span><span>
+</span><span>        return m</span><span>
+</span><span>
+</span><span>    def maxX(self):</span><span>
+</span><span>        """returns max x value"""</span><span>
+</span><span>
+</span><span>        m = self.coords[0][0]</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            m = max(m, self.coords[i][0])</span><span>
+</span><span>
+</span><span>        return m</span><span>
+</span><span>
+</span><span>    def minY(self):</span><span>
+</span><span>        """returns min y value"""</span><span>
+</span><span>
+</span><span>        m = self.coords[0][1]</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            m = min(m, self.coords[i][1])</span><span>
+</span><span>
+</span><span>        return m</span><span>
+</span><span>
+</span><span>    def maxY(self):</span><span>
+</span><span>        """returns max y value"""</span><span>
+</span><span>
+</span><span>        m = self.coords[0][1]</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            m = max(m, self.coords[i][1])</span><span>
+</span><span>
+</span><span>        return m</span><span>
+</span><span>
+</span><span>    def rotateLeft(self):</span><span>
+</span><span>        """rotates shape to the left"""</span><span>
+</span><span>
+</span><span>        if self.pieceShape == Tetrominoe.SquareShape:</span><span>
+</span><span>            return self</span><span>
+</span><span>
+</span><span>        result = Shape()</span><span>
+</span><span>        result.pieceShape = self.pieceShape</span><span>
+</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            result.setX(i, self.y(i))</span><span>
+</span><span>            result.setY(i, -self.x(i))</span><span>
+</span><span>
+</span><span>        return result</span><span>
+</span><span>
+</span><span>    def rotateRight(self):</span><span>
+</span><span>        """rotates shape to the right"""</span><span>
+</span><span>
+</span><span>        if self.pieceShape == Tetrominoe.SquareShape:</span><span>
+</span><span>            return self</span><span>
+</span><span>
+</span><span>        result = Shape()</span><span>
+</span><span>        result.pieceShape = self.pieceShape</span><span>
+</span><span>
+</span><span>        for i in range(4):</span><span>
+</span><span>            result.setX(i, -self.y(i))</span><span>
+</span><span>            result.setY(i, self.x(i))</span><span>
+</span><span>
+</span><span>        return result</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>
+</span><span>    app = QApplication([])</span><span>
+</span><span>    tetris = Tetris()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>游戏是简化一点，以便更容易理解。游戏启动后立即启动。我们可以按p键暂停游戏。按Space 键会立即将四分位放置到底部。游戏以恒定的速度进行，没有实现加速。分数是我们已删除的行数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.tboard = Board(self)</span><span>
+</span><span>self.setCentralWidget(self.tboard)</span><span>
+</span></code></pre><p>将创建类的实例并设置为应用程序的中心<code>Board</code>部件。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.statusbar = self.statusBar()</span><span>
+</span><span>self.tboard.msg2Statusbar[str].connect(self.statusbar.showMessage)</span><span>
+</span></code></pre><p>我们创建一个状态栏，在其中显示消息。我们将显示三个可能的消息：已删除的行数、暂停的消息或游戏通过消息。是在板类中实现的自定义信号<code>msg2Statusbar</code>。<code>showMessage</code>是一种内置方法，在状态栏上显示消息。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.tboard.start()</span><span>
+</span></code></pre><p>此行启动游戏。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>class Board(QFrame):</span><span>
+</span><span>
+</span><span>    msg2Statusbar = pyqtSignal(str)</span><span>
+</span><span>...</span><span>
+</span></code></pre><p>使用 <code>pyqtSignal</code>创建自定义信号。<code>msg2Statusbar</code>是当我们要将消息或分数写入状态栏时发出的信号。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>BoardWidth = 10</span><span>
+</span><span>BoardHeight = 22</span><span>
+</span><span>Speed = 300</span><span>
+</span></code></pre><p>这些是<code>Board</code>的类变量。<code>BoardWidth</code>和<code>BoardHeight</code>定义块中板的大小。<code>Speed</code>定义游戏的速度。每个300ms一个新的游戏周期将开始。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>...</span><span>
+</span><span>self.curX = 0</span><span>
+</span><span>self.curY = 0</span><span>
+</span><span>self.numLinesRemoved = 0</span><span>
+</span><span>self.board = []</span><span>
+</span><span>...</span><span>
+</span></code></pre><p>在<code>initBoard</code>方法中，我们初始化了一些重要的变量。 <code>self.board</code>变量是 0 到 7 的数字列表。它代表各种形状的位置和棋盘上形状保留的位置。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def shapeAt(self, x, y):</span><span>
+</span><span>    """determines shape at the board position"""</span><span>
+</span><span>
+</span><span>    return self.board[(y * Board.BoardWidth) + x]</span><span>
+</span></code></pre><p><code>shapeAt</code>方法确定给定块中的形状类型。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def squareWidth(self):</span><span>
+</span><span>    """returns the width of one square"""</span><span>
+</span><span>
+</span><span>    return self.contentsRect().width() // Board.BoardWidth</span><span>
+</span></code></pre><p>电路板可以动态调整大小。因此，块的大小可能会更改。<code>squareWidth</code>计算单个正方形的宽度（以像素为单位）并返回它。<code>Board.BoardWidth</code>是块中的板的大小。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def pause(self):</span><span>
+</span><span>    """pauses game"""</span><span>
+</span><span>
+</span><span>    if not self.isStarted:</span><span>
+</span><span>        return</span><span>
+</span><span>
+</span><span>    self.isPaused = not self.isPaused</span><span>
+</span><span>
+</span><span>    if self.isPaused:</span><span>
+</span><span>        self.timer.stop()</span><span>
+</span><span>        self.msg2Statusbar.emit("paused")</span><span>
+</span><span>
+</span><span>    else:</span><span>
+</span><span>        self.timer.start(Board.Speed, self)</span><span>
+</span><span>        self.msg2Statusbar.emit(str(self.numLinesRemoved))</span><span>
+</span><span>
+</span><span>    self.update()</span><span>
+</span></code></pre><p><code>pause</code>方法暂停游戏。它停止计时器并在状态栏上显示一条消息。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def paintEvent(self, event):</span><span>
+</span><span>    """paints all shapes of the game"""</span><span>
+</span><span>
+</span><span>    painter = QPainter(self)</span><span>
+</span><span>    rect = self.contentsRect()</span><span>
+</span><span>...</span><span>
+</span></code></pre><p>绘画发生在方法<code>paintEvent</code>中。<code>QPainter</code>负责 PyQt5 中所有低级绘画。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>for i in range(Board.BoardHeight):</span><span>
+</span><span>    for j in range(Board.BoardWidth):</span><span>
+</span><span>        shape = self.shapeAt(j, Board.BoardHeight - i - 1)</span><span>
+</span><span>
+</span><span>        if shape != Tetrominoe.NoShape:</span><span>
+</span><span>            self.drawSquare(painter,</span><span>
+</span><span>                rect.left() + j * self.squareWidth(),</span><span>
+</span><span>                boardTop + i * self.squareHeight(), shape)</span><span>
+</span></code></pre><p>游戏的绘画分为两个步骤。在第一步中，我们绘制所有形状，或已掉到板底部的形状的保留。列表变量中记住所有方块。使用<code>shapeAt</code> 方法访问<code>self.board</code>变量。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if self.curPiece.shape() != Tetrominoe.NoShape:</span><span>
+</span><span>
+</span><span>    for i in range(4):</span><span>
+</span><span>
+</span><span>        x = self.curX + self.curPiece.x(i)</span><span>
+</span><span>        y = self.curY - self.curPiece.y(i)</span><span>
+</span><span>        self.drawSquare(painter, rect.left() + x * self.squareWidth(),</span><span>
+</span><span>            boardTop + (Board.BoardHeight - y - 1) * self.squareHeight(),</span><span>
+</span><span>            self.curPiece.shape())</span><span>
+</span></code></pre><p>下一步是绘制正在坠落的实际作品。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>elif key == Qt.Key_Right:</span><span>
+</span><span>    self.tryMove(self.curPiece, self.curX + 1, self.curY)</span><span>
+</span></code></pre><p>在<code>keyPressEvent</code>方法中，我们检查按下的键。如果我们按右箭头键，我们尝试将该件向右移动。我们说尝试，因为片可能不能移动。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>elif key == Qt.Key_Up:</span><span>
+</span><span>    self.tryMove(self.curPiece.rotateLeft(), self.curX, self.curY)</span><span>
+</span></code></pre><p>箭头键Up将向左旋转掉落的零件。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>elif key == Qt.Key_Space:</span><span>
+</span><span>    self.dropDown()</span><span>
+</span></code></pre><p>Space键会立即将掉落的一块掉落到底部。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>elif key == Qt.Key_D:</span><span>
+</span><span>    self.oneLineDown()</span><span>
+</span></code></pre><p>按d键，件子会向下一块。它可以用来使一块的掉落有点。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def timerEvent(self, event):</span><span>
+</span><span>    """handles timer event"""</span><span>
+</span><span>
+</span><span>    if event.timerId() == self.timer.timerId():</span><span>
+</span><span>
+</span><span>        if self.isWaitingAfterLine:</span><span>
+</span><span>            self.isWaitingAfterLine = False</span><span>
+</span><span>            self.newPiece()</span><span>
+</span><span>        else:</span><span>
+</span><span>            self.oneLineDown()</span><span>
+</span><span>
+</span><span>    else:</span><span>
+</span><span>        super(Board, self).timerEvent(event)</span><span>
+</span></code></pre><p>在计时器事件中，我们要么在上一个片掉到底部后创建一个新片，要么向下移动一个下降的一块。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def clearBoard(self):</span><span>
+</span><span>    """clears shapes from the board"""</span><span>
+</span><span>
+</span><span>    for i in range(Board.BoardHeight * Board.BoardWidth):</span><span>
+</span><span>        self.board.append(Tetrominoe.NoShape)</span><span>
+</span></code></pre><p><code>clearBoard</code>方法通过设置板的每个块<code>Tetrominoe.NoShape</code>来清除板。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def removeFullLines(self):</span><span>
+</span><span>    """removes all full lines from the board"""</span><span>
+</span><span>
+</span><span>    numFullLines = 0</span><span>
+</span><span>    rowsToRemove = []</span><span>
+</span><span>
+</span><span>    for i in range(Board.BoardHeight):</span><span>
+</span><span>
+</span><span>        n = 0</span><span>
+</span><span>        for j in range(Board.BoardWidth):</span><span>
+</span><span>            if not self.shapeAt(j, i) == Tetrominoe.NoShape:</span><span>
+</span><span>                n = n + 1</span><span>
+</span><span>
+</span><span>        if n == 10:</span><span>
+</span><span>            rowsToRemove.append(i)</span><span>
+</span><span>
+</span><span>    rowsToRemove.reverse()</span><span>
+</span><span>
+</span><span>
+</span><span>    for m in rowsToRemove:</span><span>
+</span><span>
+</span><span>        for k in range(m, Board.BoardHeight):</span><span>
+</span><span>            for l in range(Board.BoardWidth):</span><span>
+</span><span>                    self.setShapeAt(l, k, self.shapeAt(l, k + 1))</span><span>
+</span><span>
+</span><span>    numFullLines = numFullLines + len(rowsToRemove)</span><span>
+</span><span> ...</span><span>
+</span></code></pre><p>如果该件触底，我们调用 <code>removeFullLines</code>方法。我们找出所有完整的行，并删除他们。我们通过将当前整行上方的所有线向下移动来移动以将其删除。请注意，我们反转要删除的行的顺序。否则，它无法正常工作。在我们的案例中，我们使用<em>天真的重力</em>。这意味着碎片可能漂浮在空隙上方。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def newPiece(self):</span><span>
+</span><span>    """creates a new shape"""</span><span>
+</span><span>
+</span><span>    self.curPiece = Shape()</span><span>
+</span><span>    self.curPiece.setRandomShape()</span><span>
+</span><span>    self.curX = Board.BoardWidth // 2 + 1</span><span>
+</span><span>    self.curY = Board.BoardHeight - 1 + self.curPiece.minY()</span><span>
+</span><span>
+</span><span>    if not self.tryMove(self.curPiece, self.curX, self.curY):</span><span>
+</span><span>
+</span><span>        self.curPiece.setShape(Tetrominoe.NoShape)</span><span>
+</span><span>        self.timer.stop()</span><span>
+</span><span>        self.isStarted = False</span><span>
+</span><span>        self.msg2Statusbar.emit("Game over")</span><span>
+</span></code></pre><p><code>newPiece</code>方法随机创建一个新的四分法。如果该作品不能进入其初始位置，游戏将结束。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def tryMove(self, newPiece, newX, newY):</span><span>
+</span><span>    """tries to move a shape"""</span><span>
+</span><span>
+</span><span>    for i in range(4):</span><span>
+</span><span>
+</span><span>        x = newX + newPiece.x(i)</span><span>
+</span><span>        y = newY - newPiece.y(i)</span><span>
+</span><span>
+</span><span>        if x < 0 or x >= Board.BoardWidth or y < 0 or y >= Board.BoardHeight:</span><span>
+</span><span>            return False</span><span>
+</span><span>
+</span><span>        if self.shapeAt(x, y) != Tetrominoe.NoShape:</span><span>
+</span><span>            return False</span><span>
+</span><span>
+</span><span>    self.curPiece = newPiece</span><span>
+</span><span>    self.curX = newX</span><span>
+</span><span>    self.curY = newY</span><span>
+</span><span>    self.update()</span><span>
+</span><span>
+</span><span>    return True</span><span>
+</span></code></pre><p>在<code>tryMove</code>方法中，我们尝试移动我们的形状。如果形状位于板的边缘或与其他部分相邻，我们返回 <code>False</code>。否则，我们将当前下降件放在一个新的位置。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>class Tetrominoe(object):</span><span>
+</span><span>
+</span><span>    NoShape = 0</span><span>
+</span><span>    ZShape = 1</span><span>
+</span><span>    SShape = 2</span><span>
+</span><span>    LineShape = 3</span><span>
+</span><span>    TShape = 4</span><span>
+</span><span>    SquareShape = 5</span><span>
+</span><span>    LShape = 6</span><span>
+</span><span>    MirroredLShape = 7</span><span>
+</span></code></pre><p><code>Tetrominoe</code>类保存所有可能形状的名称。我们也有一个空白空间<code>NoShape</code>。<p><code>Shape</code>类保存有关四分位的信息。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>class Shape(object):</span><span>
+</span><span>
+</span><span>    coordsTable = (</span><span>
+</span><span>        ((0, 0),     (0, 0),     (0, 0),     (0, 0)),</span><span>
+</span><span>        ((0, -1),    (0, 0),     (-1, 0),    (-1, 1)),</span><span>
+</span><span>        ...</span><span>
+</span><span>    )</span><span>
+</span><span>...</span><span>
+</span></code></pre><p>元组<code>coordsTable</code>保存我们四分位的所有可能的坐标值。这是一个模板，所有片段都从该模板中显示其坐标值。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.coords = [[0,0] for i in range(4)]</span><span>
+</span></code></pre><p>创建时，我们创建一个空坐标列表。列表将保存四分块的坐标。<p><img alt=Coordinates src=http://zetcode.com/img/gui/pyqt5/coordinates.png>图：坐标<p>上图将有助于更好地理解坐标值。例如，元对 （0， -1）， （0， 0）， （-1， 0）， （-1， -1） 表示 Z 形状。该图说明了形状。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def rotateLeft(self):</span><span>
+</span><span>    """rotates shape to the left"""</span><span>
+</span><span>
+</span><span>    if self.pieceShape == Tetrominoe.SquareShape:</span><span>
+</span><span>        return self</span><span>
+</span><span>
+</span><span>    result = Shape()</span><span>
+</span><span>    result.pieceShape = self.pieceShape</span><span>
+</span><span>
+</span><span>    for i in range(4):</span><span>
+</span><span>
+</span><span>        result.setX(i, self.y(i))</span><span>
+</span><span>        result.setY(i, -self.x(i))</span><span>
+</span><span>
+</span><span>    return result</span><span>
+</span></code></pre><p><code>rotateLeft</code>方法将一块向左旋转。广场不必旋转。这就是为什么我们只返回对当前对象的引用。将创建一个新作品，其坐标设置为旋转件的坐标。<p><img alt=image-20200820220337438 src=Tetris-in-PyQt5/image-20200820220337438.png></p><center>图： 特瑞斯</center><p>这是 Pyqt5 中的特瑞斯游戏。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

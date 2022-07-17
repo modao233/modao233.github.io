@@ -1,0 +1,67 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/typedefyu-structjie-gou-ti-ding-yi/>typedef与struct结构体定义</a></h1><div class=post-meta-inline><span class=post-date> 2020-12-11 </span></div><div class=post-content><p>typedef与struct结构体定义<h2 id=ding-yi-jie-gou-ti-bie-ming>定义结构体别名</h2><p>C语言中结构体名不可单独作类型使用，而别名可当类型直接使用<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>typedef struct</span><span> Student
+</span><span>{
+</span><span>   </span><span style=color:#b48ead;>int</span><span> 	cnt;
+</span><span>   </span><span style=color:#b48ead;>char</span><span> name[</span><span style=color:#d08770;>12</span><span>];
+</span><span>}Student;
+</span><span>
+</span><span>Student stu;</span><span style=color:#65737e;>//stu是变量，其类型是Student
+</span><span style=color:#b48ead;>struct</span><span> Student stu;</span><span style=color:#65737e;>//stu是变量，其类型是struct Student
+</span></code></pre><blockquote><p>为避免命名混乱，建议别名和结构体本名一致</blockquote><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//匿名结构体，定义时绑定别名，不推荐
+</span><span style=color:#b48ead;>typedef struct
+</span><span>{
+</span><span>   </span><span style=color:#b48ead;>int</span><span> 	cnt;
+</span><span>   </span><span style=color:#b48ead;>char</span><span> name[</span><span style=color:#d08770;>12</span><span>];
+</span><span>}Student;
+</span><span>
+</span><span>Student stu;</span><span style=color:#65737e;>//stu是变量，其类型是Student
+</span></code></pre><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>struct </span><span>Student
+</span><span>{
+</span><span>   </span><span style=color:#b48ead;>int</span><span> 	cnt;
+</span><span>   </span><span style=color:#b48ead;>char</span><span> name[</span><span style=color:#d08770;>12</span><span>];
+</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>struct</span><span> Student stu;</span><span style=color:#65737e;>//stu是变量，其类型是struct Student
+</span><span>
+</span><span style=color:#b48ead;>typedef struct</span><span> Student Student;
+</span><span>Student stu;</span><span style=color:#65737e;>//stu是变量，其类型是Student
+</span></code></pre><h2 id=sheng-ming-jie-gou-ti-bian-liang>声明结构体变量</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>struct </span><span>Student
+</span><span>{
+</span><span>   </span><span style=color:#b48ead;>int</span><span> 	cnt;
+</span><span>   </span><span style=color:#b48ead;>char</span><span> name[</span><span style=color:#d08770;>12</span><span>];
+</span><span>}Stu;
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> a = Stu.</span><span style=color:#bf616a;>cnt</span><span>;</span><span style=color:#65737e;>//Stu是结构体类型的变量
+</span></code></pre><h2 id=ni-ming-jie-gou-ti>匿名结构体</h2><p>在 C++11 中，没有名字的类是没法显式写构造的，由于有C++11的non-static member in-class initialization，通常情况下可以直接写：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>struct </span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span>  count = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>bool</span><span> done  = </span><span style=color:#d08770;>false</span><span>;
+</span><span>} abc;
+</span></code></pre><p>如果坚持要在构造里做点事情：根据C++ RAII的精神，构造和析构是对成员递归的，可以构造一个成员来帮忙执行一段函数：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>struct </span><span>AutoExec
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>template</span><span><</span><span style=color:#b48ead;>typename</span><span> Callable>
+</span><span>    </span><span style=color:#8fa1b3;>AutoExec</span><span>(Callable&& </span><span style=color:#bf616a;>callable</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>callable</span><span>();
+</span><span>    }
+</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>struct
+</span><span>{
+</span><span>    AutoExec </span><span style=color:#bf616a;>wtf</span><span>{[]{
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>anonymous constructor called.</span><span style=color:#96b5b4;>\n</span><span>";
+</span><span>    }};
+</span><span>} abc;
+</span></code></pre><p>其中AutoExec类的唯一用途就是把任意函数（或functor，lambda）通过模板构造函数执行掉，于是就可以再结合成员初始化来代替匿名类的构造了。<p>通过lambda函数捕获，执行构造行为：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>struct </span><span>{
+</span><span>        </span><span style=color:#b48ead;>void </span><span>*p_this;
+</span><span>        </span><span style=color:#b48ead;>int</span><span> i = [</span><span style=color:#bf616a;>this</span><span>](){
+</span><span>            p_this = </span><span style=color:#bf616a;>this</span><span>;
+</span><span>            </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>        }();
+</span><span>    } foo;
+</span><span>    std::cout << &foo << '</span><span style=color:#96b5b4;>\n</span><span>'
+</span><span>    << foo.</span><span style=color:#bf616a;>p_this </span><span><< std::endl;
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

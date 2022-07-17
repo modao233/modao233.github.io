@@ -1,0 +1,40 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/qin-ru-shi-rong-qi-he-fei-qin-ru-shi-rong-qi-zhi-jian-de-chai-yi/>侵入式容器和非侵入式容器</a></h1><div class=post-meta-inline><span class=post-date> 2020-12-23 </span></div><div class=post-content><p>侵入式容器和非侵入式容器<p>原文：https://www.boost.org/doc/libs/1_75_0/doc/html/intrusive/intrusive_vs_nontrusive.html<h2 id=qin-ru-shi-rong-qi-he-fei-qin-ru-shi-rong-qi-zhi-jian-de-chai-yi>侵入式容器和非侵入式容器之间的差异</h2><p>侵入性容器和非侵入式容器之间的主要区别在于，在C++中，非侵入式容器存储用户传递的值的副本。 非侵入式容器使用<code>Allocator</code>模板参数分配存储的值：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>list</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>assert.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>   std::list&LTMyClass> myclass_list;
+</span><span>
+</span><span>   MyClass </span><span style=color:#bf616a;>myclass</span><span>(...);
+</span><span>   myclass_list.</span><span style=color:#bf616a;>push_back</span><span>(myclass);
+</span><span>
+</span><span>   </span><span style=color:#65737e;>//The stored object is different from the original object
+</span><span>   </span><span style=color:#96b5b4;>assert</span><span>(&myclass != &myclass_list.</span><span style=color:#bf616a;>front</span><span>());
+</span><span>   </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>要存储新分配的<code>myclass</code>的副本，容器需要额外的数据：<code>std::list</code>通常分配包含指向下一个节点和上一个节点以及值本身的指针的节点。类似于：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//A possible implementation of a std::list&LTMyClass> node
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>list_node
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>   list_node </span><span>*</span><span style=color:#eff1f5;>next;
+</span><span style=color:#eff1f5;>   list_node </span><span>*</span><span style=color:#eff1f5;>previous;
+</span><span style=color:#eff1f5;>   MyClass    value;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><p>另一方面，侵入性容器不存储传递对象的副本，但它存储对象本身。在容器中插入对象所需的其他数据必须由对象本身提供。例如，要插入<code>MyClass</code>到一个实现为链表的侵入性容器中，<code>MyClass</code>必须包含所需的<code>next</code>和<code>previous</code>指针：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>MyClass
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>   MyClass </span><span>*</span><span style=color:#eff1f5;>next;
+</span><span style=color:#eff1f5;>   MyClass </span><span>*</span><span style=color:#eff1f5;>previous;
+</span><span style=color:#eff1f5;>   </span><span style=color:#65737e;>//Other members...
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>   acme_intrusive_list&LTMyClass> list;
+</span><span>
+</span><span>   MyClass myclass;
+</span><span>   list.</span><span style=color:#bf616a;>push_back</span><span>(myclass);
+</span><span>
+</span><span>   </span><span style=color:#65737e;>//"myclass" object is stored in the list
+</span><span>   </span><span style=color:#96b5b4;>assert</span><span>(&myclass == &list.</span><span style=color:#bf616a;>front</span><span>());
+</span><span>   </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>正如我们所看到的，知道类应该包含哪些附加数据并非易事。 <strong>Boost.Intrusive</strong>提供了多个侵入性容器，以及使用户类与这些容器兼容的一种简单方法。<h2 id=boost-intrusivede-shu-xing>Boost.Intrusive的属性</h2><p>在语义上**，Boost.intrusive**容器类似于包含指向对象的 STL 容器。也就是说，如果您有一个包含<code>T</code>类型的对象的侵入性列表，则<code>std::list&LTT*></code>允许您执行与STL容器完全相同的操作（维护和导航一组类型为 T 的对象和从它派生的类型）。<p>非侵入式容器有一些限制：<ul><li>对象只能属于一个容器：如果要在两个容器之间共享对象，则必须存储这些对象的多个副本，或者需要使用指针的容器：<code>std::list&LTObject*></code> 。<li>在某些应用程序中，使用动态分配创建传递值的副本可能是性能和大小的瓶颈。通常，动态分配会为每个分配施加大小开销，以存储簿记信息，并同步用于从不同线程进行受保护的并发分配。<li>在C++11 之前，只能将对象的副本存储在非侵入式容器中。仍需要复制或移动构造函数以及复制或移动赋值运算符，并且不可复制和不可移动的对象不能存储在某些容器中。在任何情况下，必须使用构造函数在容器内创建新对象，并且不能在两个容器之间共享同一对象。<li>无法将派生对象存储在 STL 容器中，同时保留其原始类型。</ul><p>侵入式容器具有一些重要优势：<ul><li>使用侵入性容器操作不会调用任何内存管理。可以最大限度地减少与动态内存关联的时间和大小开销。<li>同一对象可以同时插入多个容器中，对象大小中具有很小的开销。<li>迭代入侵式容器所需的内存访问量比指针的语义等效容器要少：迭代更快。<li>与非侵入式容器，侵入式容器提供更好的异常保证。在某些情况下，侵入式容器提供非侵入式容器无法实现的不抛异常的保证。<li>从指针到元素的引用到元素的计算是一个恒定的时间操作（计算<code>std::list&LTT*></code>中<code>T*</code>的位置具有线性复杂性）。<li>侵入性容器在插入和擦除对象时提供可预测性，因为对侵入性容器没有进行内存管理。内存管理通常不是一个可预测的操作，因此来自非侵入式容器的复杂性保证比侵入式容器提供的保证更宽松。</ul><p>侵入式容器也有缺点：<ul><li>存储在侵入性容器中的每种类型的存储需要额外的内存来保存容器所需的维护信息。因此，每当某个类型存储在侵入性容器中时，您必须适当地更改该类型的定义。虽然这个任务对<strong>Boost.Intrusive</strong>来说很easy，但接触类型的定义有时也是一个关键问题（可能无法修改的意思）。<li>在侵入性容器中，不存储对象的副本，而是将原始对象与容器中的其他对象链接。对象不需要复制构造函数或赋值运算符存储在侵入性容器中。但是，每当您更改对象的内容时，您都必须注意可能的副作用（这对于关联容器尤其重要）。<li>用户必须独立管理容器中的插入对象的生存期。<li>同样，您必须小心：与 STL 容器相比，无需直接接触侵入性容器即可轻松地使遍该程序无效，因为对象可以在从容器中擦除之前释放。<li><strong>Boost.Intrusive</strong>不可复制，不可分配。由于侵入性容器没有分配功能，因此这些操作没有意义。但是，交换可用于实现移动功能。为了便于实现存储<strong>Boost.Intrusive</strong>容器的类的复制构造函数和赋值运算符**，Boost.intrusive**提供了特殊的克隆函数。有关详细信息<a href=https://www.boost.org/doc/libs/1_75_0/doc/html/intrusive/clone_from.html>Cloning Boost.Intrusive containers</a>容器部分。<li>对使用侵入型容器的程序进行线程安全分析更加困难，因为容器可能会间接修改，而无需显式调用容器成员。</ul><p><strong>表 19.1.侵入性容器的优点和缺点摘要</strong><table><thead><tr><th>问题<th>侵入<th>非侵入式<tbody><tr><td>内存管理<td>外部<td>内部通过分配器<tr><td>插入/擦除时间<td>更快<td>慢<tr><td>内存区域<td>更好<td>糟糕<tr><td>可以在多个容器中插入同一对象<td>是的<td>不<tr><td>异常保证<td>更好<td>糟糕<tr><td>根据值计算迭代器<td>常数<td>非常数<tr><td>插入/擦除可预测性<td>高<td>低<tr><td>内存使用<td>最小<td>超过最小<tr><td>按值保留多态行为插入对象<td>是的<td>否（切片）<tr><td>用户必须修改要插入的值的定义<td>是的<td>不<tr><td>容器是可复制的<td>不<td>是的<tr><td>管理插入对象的生命周期<td>用户（更复杂）<td>容器（不太复杂）<tr><td>容器不变量可以不使用容器就损坏<td>容易<td>困难（仅使用指针容器）<tr><td>线程安全分析<td>困难<td>容易</table><p>有关入侵和非侵入容器之间的性能比较，请参阅<a href=https://www.boost.org/doc/libs/1_75_0/doc/html/intrusive/performance.html>性能</a>部分。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

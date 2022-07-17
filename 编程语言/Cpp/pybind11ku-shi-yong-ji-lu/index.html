@@ -1,0 +1,67 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/pybind11ku-shi-yong-ji-lu/>pybind11库使用</a></h1><div class=post-meta-inline><span class=post-date> 2022-05-23 </span></div><div class=post-content><p>首先，安装：<ul><li>通过git的方式下载安装<li>通过包管理的方式下载安装：pip、conda-forge、vcpkg、brew</ul><p>pybind11 是一个 <code>header-only</code> 的库，换句话说，只需要 C++ 项目里直接 include pybind11 的头文件就能使用。<h2 id=huo-qu-pybind11>获取pybind11</h2><p>可以 <code>git submodule</code> 添加子模块，最好固定为某个版本：<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>git</span><span> submodule add https://github.com/pybind/pybind11.git third_party/pybind11-2.5.0
+</span><span style=color:#96b5b4;>cd</span><span> third_party/pybind11-2.5.0/
+</span><span style=color:#bf616a;>git</span><span> checkout tags/v2.5.0
+</span></code></pre><p>或者，直接获取源码，放进相应子目录即可。<h2 id=tian-jia-jin-cmake>添加进cmake</h2><p><code>CMakeLists.txt</code> 里 <code>add_subdirectory</code> pybind11 的路径，再用其提供的 <code>pybind11_add_module</code> 就能创建 pybind11 的模块了。<pre class=language-cmake data-lang=cmake style=background-color:#2b303b;color:#c0c5ce;><code class=language-cmake data-lang=cmake><span>
+</span><span style=color:#96b5b4;>cmake_minimum_required</span><span>(</span><span style=color:#bf616a;>VERSION </span><span>3.1)
+</span><span style=color:#96b5b4;>project</span><span>(start-pybind11 </span><span style=color:#bf616a;>VERSION </span><span>0.1.0 </span><span style=color:#bf616a;>LANGUAGES </span><span>C CXX)
+</span><span>
+</span><span style=color:#96b5b4;>set</span><span>(</span><span style=color:#bf616a;>MY_PYBIND </span><span>${</span><span style=color:#bf616a;>CMAKE_CURRENT_SOURCE_DIR</span><span>}/third_party/pybind11-2.5.0)
+</span><span>
+</span><span style=color:#96b5b4;>add_subdirectory</span><span>(${</span><span style=color:#bf616a;>MY_PYBIND</span><span>})
+</span><span style=color:#bf616a;>pybind11_add_module</span><span>(example_pb example_pb.cpp)
+</span><span>
+</span></code></pre><p>如果想在已有 C++ 动态库上扩展 pybind11 绑定，那么 <code>target_link_libraries</code> 链接该动态库就可以了。<pre class=language-text data-lang=text style=background-color:#2b303b;color:#c0c5ce;><code class=language-text data-lang=text><span>target_link_libraries(example_pb PUBLIC example)
+</span></code></pre><h2 id=dai-ma-shi-li>代码示例</h2><p>在项目根目录创建一个example_pb.cc的文件<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>pybind11/pybind11.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>namespace </span><span>py = pybind11;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>add</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>i</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>j</span><span>) {
+</span><span>  </span><span style=color:#b48ead;>return</span><span> i + j;
+</span><span>}
+</span><span>
+</span><span style=color:#bf616a;>PYBIND11_MODULE</span><span>(example_pb, m) {
+</span><span>  m.</span><span style=color:#bf616a;>doc</span><span>() = "</span><span style=color:#a3be8c;>example_pb bindings</span><span>";
+</span><span>
+</span><span>  m.</span><span style=color:#bf616a;>def</span><span>("</span><span style=color:#a3be8c;>add</span><span>", &add, "</span><span style=color:#a3be8c;>A function which adds two numbers</span><span>");
+</span><span>
+</span><span>}
+</span><span>
+</span></code></pre><p>example_pb：模型名，切记不需要引号<p>m：可以理解成模块对象<p>m.doc()：help说明<p>m.def：用来注册函数和python打通界限<p>然后，进入cmake构建目录：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cd build
+</span><span>cmake ..
+</span><span>cmake --build .
+</span></code></pre><p>编译完后，在 build 目录会生成一个 <code>example_pb.cpython-310-x86_64-linux-gnu.so</code>的文件，文件名与编译环境有关，接着，就可以在该文件所在目录里通过python代码import调用。<pre class=language-py data-lang=py style=background-color:#2b303b;color:#c0c5ce;><code class=language-py data-lang=py><span>$ python
+</span><span>Python </span><span style=color:#d08770;>2.7.10 </span><span>(default, Aug </span><span style=color:#d08770;>22 2015</span><span>, </span><span style=color:#d08770;>20</span><span>:</span><span style=color:#d08770;>33</span><span>:</span><span style=color:#d08770;>39</span><span>)
+</span><span>[</span><span style=color:#bf616a;>GCC </span><span style=color:#d08770;>4.2.1 </span><span>Compatible Apple </span><span style=color:#bf616a;>LLVM </span><span style=color:#d08770;>7.0.0 </span><span>(clang-</span><span style=color:#d08770;>700.0.59.1</span><span>)] on darwin
+</span><span>Type "</span><span style=color:#a3be8c;>help</span><span>", "</span><span style=color:#a3be8c;>copyright</span><span>", "</span><span style=color:#a3be8c;>credits</span><span>" or "</span><span style=color:#a3be8c;>license</span><span>" </span><span style=color:#b48ead;>for </span><span>more information.
+</span><span>>>> </span><span style=color:#b48ead;>import </span><span>example
+</span><span>>>> example.</span><span style=color:#bf616a;>add</span><span>(</span><span style=color:#d08770;>1</span><span>, </span><span style=color:#d08770;>2</span><span>)
+</span><span style=color:#d08770;>3</span><span style=color:#b48ead;>L
+</span><span>>>>
+</span></code></pre><h2 id=tong-guo-guan-jian-zi-chuan-di-can-shu>通过关键字传递参数</h2><p>cpp文件中：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>m.</span><span style=color:#bf616a;>def</span><span>("</span><span style=color:#a3be8c;>add</span><span>", &add, "</span><span style=color:#a3be8c;>A function which adds two numbers</span><span>",
+</span><span>      py::</span><span style=color:#bf616a;>arg</span><span>("</span><span style=color:#a3be8c;>i</span><span>"), py::</span><span style=color:#bf616a;>arg</span><span>("</span><span style=color:#a3be8c;>j</span><span>"));
+</span></code></pre><p>python使用：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>>>> </span><span style=color:#b48ead;>import </span><span>example
+</span><span>>>> example.</span><span style=color:#bf616a;>add</span><span>(</span><span style=color:#bf616a;>i</span><span>=</span><span style=color:#d08770;>1</span><span>, </span><span style=color:#bf616a;>j</span><span>=</span><span style=color:#d08770;>2</span><span>)
+</span><span style=color:#d08770;>3</span><span style=color:#b48ead;>L
+</span></code></pre><p>等价写法：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>// regular notation
+</span><span>m.</span><span style=color:#bf616a;>def</span><span>("</span><span style=color:#a3be8c;>add1</span><span>", &add, py::</span><span style=color:#bf616a;>arg</span><span>("</span><span style=color:#a3be8c;>i</span><span>"), py::</span><span style=color:#bf616a;>arg</span><span>("</span><span style=color:#a3be8c;>j</span><span>"));
+</span><span style=color:#65737e;>// shorthand，C++11
+</span><span style=color:#b48ead;>using namespace</span><span> pybind11::literals;
+</span><span>m.</span><span style=color:#bf616a;>def</span><span>("</span><span style=color:#a3be8c;>add2</span><span>", &add, "</span><span style=color:#a3be8c;>i</span><span>"_a, "</span><span style=color:#a3be8c;>j</span><span>"_a);
+</span></code></pre><h2 id=mo-ren-can-shu-zhi>默认参数值</h2><pre class=language-CPP data-lang=CPP style=background-color:#2b303b;color:#c0c5ce;><code class=language-CPP data-lang=CPP><span>m.def("add", &add, "A function which adds two numbers",
+</span><span>      py::arg("i") = 1, py::arg("j") = 2);
+</span></code></pre><p>等价写法：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>// regular notation
+</span><span>m.</span><span style=color:#bf616a;>def</span><span>("</span><span style=color:#a3be8c;>add1</span><span>", &add, py::</span><span style=color:#bf616a;>arg</span><span>("</span><span style=color:#a3be8c;>i</span><span>") = </span><span style=color:#d08770;>1</span><span>, py::</span><span style=color:#bf616a;>arg</span><span>("</span><span style=color:#a3be8c;>j</span><span>") = </span><span style=color:#d08770;>2</span><span>);
+</span><span style=color:#65737e;>// shorthand
+</span><span>m.</span><span style=color:#bf616a;>def</span><span>("</span><span style=color:#a3be8c;>add2</span><span>", &add, "</span><span style=color:#a3be8c;>i</span><span>"_a=</span><span style=color:#d08770;>1</span><span>, "</span><span style=color:#a3be8c;>j</span><span>"_a=</span><span style=color:#d08770;>2</span><span>);
+</span></code></pre><h2 id=exportbian-liang>export变量</h2><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#bf616a;>PYBIND11_MODULE</span><span>(example, m) {
+</span><span>    m.</span><span style=color:#bf616a;>attr</span><span>("</span><span style=color:#a3be8c;>the_answer</span><span>") = </span><span style=color:#d08770;>42</span><span>;
+</span><span>    py::object world = py::</span><span style=color:#bf616a;>cast</span><span>("</span><span style=color:#a3be8c;>World</span><span>");
+</span><span>    m.</span><span style=color:#bf616a;>attr</span><span>("</span><span style=color:#a3be8c;>what</span><span>") = world;
+</span><span>}
+</span></code></pre><p>cpp内置类型和通用对象可以自动转换，其它类型需要通过py::cast显示转化 通过export变量，可以通过模块访问cpp里定义的变量：<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>>>> </span><span style=color:#b48ead;>import </span><span>example
+</span><span>>>> example.the_answer
+</span><span style=color:#d08770;>42
+</span><span>>>> example.what
+</span><span>'</span><span style=color:#a3be8c;>World</span><span>'
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

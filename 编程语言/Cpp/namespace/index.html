@@ -1,0 +1,259 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/namespace/>命名空间</a></h1><div class=post-meta-inline><span class=post-date> 2020-12-28 </span></div><div class=post-content><p>命名空间提供了在大项目中<strong>避免名字冲突</strong>的一种方法。<p>声明于命名空间块内的符号被放入一个<strong>具名</strong>的作用域中，避免这些符号被误认为其他作用域中的同名符号。<p>允许具有相同名字的多个命名空间块。这些块中的所有声明声明于该具名作用域。<h2 id=ming-ming-kong-jian>命名空间</h2><p>命名空间的定义：只允许在<strong>命名空间作用域</strong>，包括全局作用域中出现<p>重打开一个已经定义的命名空间（<strong>某个外围命名空间</strong>或<strong>外围命名空间中的内联命名空间</strong>的成员），需要使用命名空间名（而非别名）。<p>命名空间体内声明的所有名字，都成为该命名空间的成员，无论此命名空间定义是原初命名空间定义（引入 <em>标识符</em> 者），还是扩展命名空间定义（“重打开”已定义命名空间者）<p>声明于命名空间体内的命名空间成员，可以在其外部用显式限定进行定义或再声明：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>Q {
+</span><span>  </span><span style=color:#b48ead;>namespace </span><span>V { </span><span style=color:#65737e;>// V 是 Q 的成员，且完全在 Q 内定义
+</span><span style=color:#65737e;>// namespace Q::V { // C++17 中对上述二行的替代写法
+</span><span>    </span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>C </span><span style=color:#eff1f5;>{ </span><span style=color:#b48ead;>void </span><span style=color:#bf616a;>m</span><span style=color:#eff1f5;>(); }</span><span>; </span><span style=color:#65737e;>// C 是 V 的成员且完全定义于 V 内
+</span><span>                           </span><span style=color:#65737e;>// C::m 仅声明
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(); </span><span style=color:#65737e;>// f 是 V 的成员，但只在此声明
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead;>void </span><span>V::</span><span style=color:#8fa1b3;>f</span><span>() </span><span style=color:#65737e;>// V 的成员 f 的 V 外定义
+</span><span>              </span><span style=color:#65737e;>// f 的外围命名空间仍是全局命名空间、Q 与 Q::V
+</span><span>  {
+</span><span>      </span><span style=color:#b48ead;>extern void </span><span style=color:#bf616a;>h</span><span>(); </span><span style=color:#65737e;>// 这声明 ::Q::V::h
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead;>void </span><span>V::C::</span><span style=color:#8fa1b3;>m</span><span>() </span><span style=color:#65737e;>// V::C::m 的命名空间（及类）外定义
+</span><span>                 </span><span style=color:#65737e;>// 外围命名空间是全局命名空间、Q 与 Q::V
+</span><span>  {
+</span><span>  }
+</span><span>}
+</span></code></pre><p>命名空间外的定义和再声明：<ul><li>只能出现在声明点（第一次声明）后<li>必须在命名空间作用域里，且只能在包围原命名空间的命名空间（包括全局命名空间）中允许出现<li>必须使用限定标识语法 (C++14 起)</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>Q {
+</span><span>  </span><span style=color:#b48ead;>namespace </span><span>V { </span><span style=color:#65737e;>// V 的原初命名空间定义
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(); </span><span style=color:#65737e;>// Q::V::f 的声明
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead;>void </span><span>V::</span><span style=color:#8fa1b3;>f</span><span>() {} </span><span style=color:#65737e;>// OK
+</span><span>  </span><span style=color:#b48ead;>void </span><span>V::</span><span style=color:#8fa1b3;>g</span><span>() {} </span><span style=color:#65737e;>// 错误：g() 仍不是 V 的成员
+</span><span>  </span><span style=color:#b48ead;>namespace </span><span>V { </span><span style=color:#65737e;>// V 的扩展命名空间定义
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>(); </span><span style=color:#65737e;>// Q::V::g 的声明
+</span><span>  }
+</span><span>}
+</span><span style=color:#b48ead;>namespace </span><span>R { </span><span style=color:#65737e;>// 不是 Q 的外围命名空间
+</span><span>   </span><span style=color:#b48ead;>void </span><span>Q::V::</span><span style=color:#8fa1b3;>g</span><span>() {} </span><span style=color:#65737e;>// 错误：不能在 R 内定义 Q::V::g
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span>Q::V::</span><span style=color:#8fa1b3;>g</span><span>() {} </span><span style=color:#65737e;>// OK：全局命名空间包围 Q
+</span></code></pre><p>在非局部类 X 中由<a href=https://zh.cppreference.com/w/cpp/language/friend>友元</a>声明所引入的名字，会成为 X 的<strong><em>最内层</em>外围命名空间</strong>的成员，但它们对于通常的<a href=https://zh.cppreference.com/w/cpp/language/lookup>名字查找</a>（<a href=https://zh.cppreference.com/w/cpp/language/unqualified_lookup>无限定</a>或<a href=https://zh.cppreference.com/w/cpp/language/qualified_lookup>有限定</a>）不可见，除非在命名空间作用域提供与之匹配的声明，不论在类之前还是之后均可。这种名字可通过 <a href=https://zh.cppreference.com/w/cpp/language/adl>ADL</a> 找到，其中同时考虑命名空间和类。<p>这种友元声明，在确定名字是否与先前声明的名字冲突时，只考虑最内层外围命名空间。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>h</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span style=color:#b48ead;>namespace </span><span>A {
+</span><span>  </span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>X </span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend void</span><span style=color:#eff1f5;> f(X); </span><span style=color:#65737e;>// A::f 是友元
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Y </span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>friend void</span><span style=color:#eff1f5;> g(); </span><span style=color:#65737e;>// A::g 是友元
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>friend void</span><span style=color:#eff1f5;> h(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>); </span><span style=color:#65737e;>// A::h 是友元，与 ::h 不冲突
+</span><span style=color:#eff1f5;>    };
+</span><span style=color:#eff1f5;>  }</span><span>;
+</span><span>  </span><span style=color:#65737e;>// A::f、A::g 与 A::h 在命名空间作用域不可见
+</span><span>  </span><span style=color:#65737e;>// 虽然它们是命名空间 A 的成员
+</span><span>  X x;
+</span><span>  </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>() {  </span><span style=color:#65737e;>// A::g 的定义
+</span><span>     </span><span style=color:#bf616a;>f</span><span>(x); </span><span style=color:#65737e;>// A::X::f 通过 ADL 找到
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>X</span><span>) {}       </span><span style=color:#65737e;>// A::f 的定义
+</span><span>  </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>h</span><span>(</span><span style=color:#bf616a;>int</span><span>) {}     </span><span style=color:#65737e;>// A::h 的定义
+</span><span>  </span><span style=color:#65737e;>// A::f 、 A::g 与 A::h 现在在命名空间作用域可见
+</span><span>  </span><span style=color:#65737e;>// 而且它们亦是 A::X 与 A::X::Y 的友元
+</span><span>}
+</span></code></pre><h3 id=ju-ming-ming-ming-kong-jian>具名命名空间</h3><p><code>namespace</code> <em>命名空间名</em> { <em>声明序列</em> }<h3 id=nei-lian-ming-ming-kong-jian-c-11>内联命名空间（C++11）</h3><p><code>inline</code> <code>namespace</code> <em>命名空间名</em> { <em>声明序列</em> }<p>内联命名空间是在其<em>原初命名空间定义</em>中使用了可选的关键词 <code>inline</code> 的命名空间。<p>许多情况下（列于下方），内联命名空间的成员都被当做如同它们是其外围命名空间的成员一样。这项性质是传递性的：若命名空间 N 包含内联命名空间 M，它又继而包含内联命名空间 O，则 O 的成员能按如同它们是 M 或 N 的成员一样使用。<ul><li>在外围命名空间中，隐含地插入了一条指名内联命名空间的 <em>using 指令</em>（类似于无名命名空间的隐式 using 指令）<li><a href=https://zh.cppreference.com/w/cpp/language/adl>实参依赖查找</a>中，当将命名空间添加到关联命名空间集合时，亦添加其内联命名空间，而当添加内联命名空间到关联命名空间列表时，亦添加其外围命名空间。<li>内联命名空间的每个成员，都能按照如同它是外围命名空间的成员一样，进行部分特化、显式实例化或显式特化。<li>检验外围命名空间的有限定<a href=https://zh.cppreference.com/w/cpp/language/lookup>名字查找</a>，将包含来自其各个内联命名空间的名称，即使同一名称已存在于外围命名空间也是如此。</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//C++11起
+</span><span>{ </span><span style=color:#65737e;>// C++14 中，std::literals 及其成员命名空间是内联的
+</span><span>   </span><span style=color:#b48ead;>using namespace</span><span> std::string_literals; </span><span style=color:#65737e;>// 令来自 std::literals::string_literals
+</span><span>                                         </span><span style=color:#65737e;>// 的 operator""s 可见
+</span><span>   </span><span style=color:#b48ead;>auto</span><span> str = "</span><span style=color:#a3be8c;>abc</span><span>"s;
+</span><span>}
+</span><span>{
+</span><span>   </span><span style=color:#b48ead;>using namespace</span><span> std::literals; </span><span style=color:#65737e;>// 令
+</span><span>                                  </span><span style=color:#65737e;>// std::literals::string_literals::operator""s 与
+</span><span>                                  </span><span style=color:#65737e;>// std::literals::chrono_literals::operator""s 均可见
+</span><span>   </span><span style=color:#b48ead;>auto</span><span> str = "</span><span style=color:#a3be8c;>abc</span><span>"s;
+</span><span>   </span><span style=color:#b48ead;>auto</span><span> min = </span><span style=color:#d08770;>60</span><span style=color:#b48ead;>s</span><span>;
+</span><span>}
+</span><span>{
+</span><span>   </span><span style=color:#b48ead;>using</span><span> std::</span><span style=color:#b48ead;>operator</span><span>""s; </span><span style=color:#65737e;>// 令 std::literals::string_literals::operator""s 与
+</span><span>                           </span><span style=color:#65737e;>// std::literals::chrono_literals::operator""s 均可见
+</span><span>   </span><span style=color:#b48ead;>auto</span><span> str = "</span><span style=color:#a3be8c;>abc</span><span>"s;
+</span><span>   </span><span style=color:#b48ead;>auto</span><span> min = </span><span style=color:#d08770;>60</span><span style=color:#b48ead;>s</span><span>;
+</span><span>}
+</span></code></pre><p>注意：上述关于特化的规则允许建立库版本：库模板的不同实现可定义于不同内联命名空间，同时仍然允许用户通过主模板的显式特化来扩充父命名空间。<h3 id=wu-ming-ming-ming-kong-jian>无名命名空间</h3><p><code>namespace</code> { <em>声明序列</em> }<p>此定义被当做一个拥有<strong>独有名字</strong>的命名空间定义 + 当前作用域中指名此无名命名空间的一条 <em>using 指令</em>。（定义完并using。）<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i;  </span><span style=color:#65737e;>// 定义 ::(独有)::i
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>() {
+</span><span>    i++;  </span><span style=color:#65737e;>// 自增 ::(独有)::i
+</span><span>}
+</span><span> 
+</span><span style=color:#b48ead;>namespace </span><span>A {
+</span><span>    </span><span style=color:#b48ead;>namespace </span><span>{
+</span><span>        </span><span style=color:#b48ead;>int</span><span> i; </span><span style=color:#65737e;>// A::(独有)::i
+</span><span>        </span><span style=color:#b48ead;>int</span><span> j; </span><span style=color:#65737e;>// A::(独有)::j
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>() { i++; } </span><span style=color:#65737e;>// A::(独有)::i++
+</span><span>}
+</span><span> 
+</span><span style=color:#b48ead;>using namespace</span><span> A; </span><span style=color:#65737e;>// 从 A 引入所有名称到全局命名空间
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>h</span><span>() {
+</span><span>    i++;    </span><span style=color:#65737e;>// 错误：::(独有)::i 与 ::A::(独有)::i 均在作用域中
+</span><span>    A::i++; </span><span style=color:#65737e;>// OK：自增 A::(独有)::i
+</span><span>    j++;    </span><span style=color:#65737e;>// OK：自增 A::(独有)::j
+</span><span>}
+</span></code></pre><p>C++11 前：虽然无名命名空间中的名字可以声明为具有外部连接，但绝对无法从其他翻译单元访问它们，因为其命名空间名是独有的。<p>C++11 起：无名命名空间以及所有直接或间接在无名命名空间内声明的命名空间，都具有<a href=https://zh.cppreference.com/w/cpp/language/storage_duration#.E8.BF.9E.E6.8E.A5>内部连接</a>，这表示声明于无名命名空间内的任何名字都具有内部连接。<h3 id=qian-tao-ming-ming-kong-jian-c-17>嵌套命名空间（C++17）</h3><p><code>namespace</code> <em>命名空间名</em> <code>::inline</code>(C++20 起)(可选) <em>名字</em> { <em>声明序列</em> }<p><strong>inline 可出现于除首个以外的每个命名空间名之前</strong><p>嵌套命名空间定义：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>A::B::C { ... }
+</span><span style=color:#b48ead;>namespace </span><span>A { </span><span style=color:#b48ead;>namespace </span><span>B { </span><span style=color:#b48ead;>namespace </span><span>C { ... } } }
+</span><span>
+</span><span style=color:#b48ead;>namespace </span><span>A::B::inline </span><span style=color:#bf616a;>C </span><span>{ ... }
+</span><span>namespace A::</span><span style=color:#bf616a;>B </span><span>{ </span><span style=color:#b48ead;>inline</span><span> namespace </span><span style=color:#bf616a;>C </span><span>{ ... } }
+</span><span>
+</span><span>namespace A::</span><span style=color:#b48ead;>inline </span><span>B::</span><span style=color:#bf616a;>C </span><span>{}
+</span><span>namespace </span><span style=color:#bf616a;>A </span><span>{ </span><span style=color:#b48ead;>inline</span><span> namespace </span><span style=color:#bf616a;>B </span><span>{ namespace </span><span style=color:#bf616a;>C </span><span>{} } }
+</span></code></pre><h2 id=using>using</h2><p><a href=https://zh.cppreference.com/w/cpp/language/namespace#using_.E6.8C.87.E4.BB.A4>using 指令</a>：从 using 指令之后到指令出现的作用域结尾为止，以对任何名字的无限定<a href=https://zh.cppreference.com/w/cpp/language/lookup>名字查找</a>的视点来说，来自 <em>命名空间名</em> 的任何名字均可见，如同它声明于同时含有该 using 指令和 <em>命名空间名</em> 两者的最接近外围命名空间作用域一样。<p><a href=https://zh.cppreference.com/w/cpp/language/namespace#using_.E5.A3.B0.E6.98.8E>using 声明</a>：令来自命名空间 <em>命名空间名</em> 的符号 <em>名字</em> 对<a href=https://zh.cppreference.com/w/cpp/language/lookup>无限定名字查找</a>可见，如同将它声明于包含该 using 声明的相同的类作用域、块作用域或命名空间之中一样。<h3 id=using-sheng-ming>using 声明</h3><p>引入定义于别处的名称到 using 声明所在的声明性区域。<ul><li><p><code>using</code> <code>typename</code>(可选) <em>嵌套名说明符</em> <em>无限定标识</em> <code>;</code>(C++17 前)</p><li><p><code>using</code> <em>声明符列表</em> <code>;</code>(C++17 起)</p> <ul><li><em>声明符列表</em>：一或多个形式为 <strong><code>typename</code>(可选) <em>嵌套名说明符</em> <em>无限定标识</em></strong> 的声明符的逗号分隔列表。声明符可以后随省略号以指示<a href=https://zh.cppreference.com/w/cpp/language/parameter_pack>包展开</a>，但这种形式只在<a href=https://zh.cppreference.com/w/cpp/language/using_declaration>派生类定义</a>中有意义</ul></ul><p>using 声明可用于<ul><li>将命名空间的成员引入到其他命名空间和块作用域中<li>将基类的成员引入到派生类定义中<li>将<a href=https://zh.cppreference.com/w/cpp/language/enum>枚举项</a>引入命名空间、块或类作用域中 (C++20 起)。</ul><p>(C++17 起)拥有多于一个 using 声明符的 using 声明，等价于对应的单个 using 声明符的 using 声明的序列。<p>对于在派生类定义中的用法，见 <a href=https://zh.cppreference.com/w/cpp/language/using_declaration>using 声明</a>。<p>由 using 声明引入到命名空间作用域的名字，可以同任何其他名字一样使用，包含从其他作用域进行的有限定查找：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>();
+</span><span style=color:#b48ead;>namespace </span><span>A {
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>();
+</span><span>}
+</span><span style=color:#b48ead;>namespace </span><span>X {
+</span><span>    </span><span style=color:#b48ead;>using </span><span>::f; </span><span style=color:#65737e;>// 全局 f 现在作为 ::X::f 可见
+</span><span>    </span><span style=color:#b48ead;>using</span><span> A::g; </span><span style=color:#65737e;>// A::g 现在作为 ::X::g 可见
+</span><span>    </span><span style=color:#b48ead;>using</span><span> A::g, A::g; </span><span style=color:#65737e;>// (C++17) OK：命名空间作用域允许双重声明
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>h</span><span>()
+</span><span>{
+</span><span>    X::</span><span style=color:#bf616a;>f</span><span>(); </span><span style=color:#65737e;>// 调用 ::f
+</span><span>    X::</span><span style=color:#bf616a;>g</span><span>(); </span><span style=color:#65737e;>// 调用 A::g
+</span><span>}
+</span></code></pre><p>在用 using 声明从命名空间采取成员后，若该命名空间被扩充并引入了同名的额外声明，则这些额外声明不会通过该 using 声明变为可见（与 using 指令相反）。一个例外是 using 声明指名类模板时：后面引入的部分特化实际上是可见的，因为其<a href=https://zh.cppreference.com/w/cpp/language/lookup>查找</a>是通过主模板达成的。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>A {
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span>}
+</span><span style=color:#b48ead;>using</span><span> A::f; </span><span style=color:#65737e;>// ::f 现在是 A::f(int) 的同义词
+</span><span> 
+</span><span style=color:#b48ead;>namespace </span><span>A { </span><span style=color:#65737e;>// 命名空间扩展
+</span><span>   </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>char</span><span>); </span><span style=color:#65737e;>// 不更改 ::f 的含义
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>foo</span><span>() {
+</span><span>    </span><span style=color:#bf616a;>f</span><span>('</span><span style=color:#a3be8c;>a</span><span>'); </span><span style=color:#65737e;>// 调用 f(int)，即使 f(char) 存在。
+</span><span>} 
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>bar</span><span>() {
+</span><span>   </span><span style=color:#b48ead;>using</span><span> A::f; </span><span style=color:#65737e;>// 此 f 是 A::f(int) 与 A::f(char) 的同义词
+</span><span>   </span><span style=color:#bf616a;>f</span><span>('</span><span style=color:#a3be8c;>a</span><span>'); </span><span style=color:#65737e;>// 调用 f(char)
+</span><span>}
+</span></code></pre><p>using 声明不能指名<a href=https://zh.cppreference.com/w/cpp/language/templates#.E6.A8.A1.E6.9D.BF.E6.A0.87.E8.AF.86>模板标识</a>或命名空间，或有作用域枚举项 (C++20 前)。using 声明中的每个声明符引入一个且只有一个名字，例如<a href=https://zh.cppreference.com/w/cpp/language/enum>枚举</a> 的 using 声明不引入其任何枚举项。<p>针对相同名字的常规声明的所有制约，隐藏和重载规则，均适用于 using 声明：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>A {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> x;
+</span><span>}
+</span><span style=color:#b48ead;>namespace </span><span>B {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i;
+</span><span>    </span><span style=color:#b48ead;>struct </span><span>g { };
+</span><span>    </span><span style=color:#b48ead;>struct </span><span>x { };
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>double</span><span>);
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>(</span><span style=color:#bf616a;>char</span><span>); </span><span style=color:#65737e;>// OK：函数名 g 隐藏类 g
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>func</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i;
+</span><span>    </span><span style=color:#b48ead;>using</span><span> B::i; </span><span style=color:#65737e;>// 错误：两次声明 i
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#b48ead;>char</span><span>);
+</span><span>    </span><span style=color:#b48ead;>using</span><span> B::f; </span><span style=color:#65737e;>// OK：f(char)、f(int)、f(double) 是重载
+</span><span>    </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#d08770;>3.5</span><span>); </span><span style=color:#65737e;>// 调用 B::f(double)
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>using</span><span> B::g;
+</span><span>    </span><span style=color:#bf616a;>g</span><span>('</span><span style=color:#a3be8c;>a</span><span>');      </span><span style=color:#65737e;>// 调用 B::g(char)
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> g g1; </span><span style=color:#65737e;>// 声明 g1 拥有类型 struct B::g
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>using</span><span> B::x;
+</span><span>    </span><span style=color:#b48ead;>using</span><span> A::x;  </span><span style=color:#65737e;>// OK ：隐藏 B::x
+</span><span>    x = </span><span style=color:#d08770;>99</span><span>;      </span><span style=color:#65737e;>// 赋值给 A::x
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> x x1; </span><span style=color:#65737e;>// 声明 x1 拥有类型 struct B::x
+</span><span>}
+</span></code></pre><p>若用 using 声明引入函数，则声明拥有相同名字和形参列表的函数是非良构的（除非是同一函数的声明）。若用 using 声明引入函数模板，则声明拥有相同名字、形参类型列表、返回类型及模板形参列表的函数模板是非良构的。两个 using 声明<strong>可以引入</strong>拥有相同名字和形参列表的函数，但<strong>若试图调用</strong>该函数，则程序非良构。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>B {
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>double</span><span>);
+</span><span>}
+</span><span style=color:#b48ead;>namespace </span><span>C {
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>double</span><span>);
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>char</span><span>);
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>h</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>using</span><span> B::f; </span><span style=color:#65737e;>// 引入 B::f(int) 、 B::f(double)
+</span><span>    </span><span style=color:#b48ead;>using</span><span> C::f; </span><span style=color:#65737e;>// 引入 C::f(int) 、 C::f(double) 及 C::f(char)
+</span><span>    </span><span style=color:#bf616a;>f</span><span>('</span><span style=color:#a3be8c;>h</span><span>');      </span><span style=color:#65737e;>// 调用 C::f(char)
+</span><span>    </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#d08770;>1</span><span>);        </span><span style=color:#65737e;>// 错误：B::f(int) 或 C::f(int) ？
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#b48ead;>int</span><span>); </span><span style=color:#65737e;>// 错误：f(int) 与 C::f(int) 及 B::f(int) 冲突
+</span><span>}
+</span></code></pre><blockquote><p>//C++14起<p>若某个实体被声明，但未在某内层命名空间中定义，然后在外层命名空间中通过 using 声明予以声明，然后在外层命名空间中再出现拥有相同非限定名的定义，则该定义是外层命名空间的成员，且与 using 声明冲突：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>X {
+</span><span>  </span><span style=color:#b48ead;>namespace </span><span>M {
+</span><span>     </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>(); </span><span style=color:#65737e;>// 声明，但不定义 X::M::g()
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead;>using</span><span> M::g;
+</span><span>  </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>();   </span><span style=color:#65737e;>// 错误：试图声明与 X::M::g() 冲突的 X::g
+</span><span>}
+</span></code></pre><p>更一般地，出现于任何命名空间作用域中并用无限定标识符引入名字的声明，始终向它所在的命名空间中引入一个成员，而并非向任何其他命名空间引入。例外情况是对定义于内联命名空间的主模板进行的显式实例化和显式特化：因为它们不引入新名字，它们在外围命名空间中可以使用无限定标识。</blockquote><h3 id=using-zhi-ling>using 指令</h3><p><em>attr</em>(C++11可选) <code>using</code> <code>namespace</code> <em>嵌套名说明符</em>(可选) <em>命名空间名</em> <code>;</code><p>using 指令仅在命名空间<a href=https://zh.cppreference.com/w/cpp/language/scope>作用域</a>和块作用域中允许出现。<p>从某个 using 指令之后到该指令出现的作用域结尾为止，以任何名字的无限定<a href=https://zh.cppreference.com/w/cpp/language/lookup>名字查找</a>的视点，来自 <em>命名空间名</em> 的每个名字均<strong>可见</strong>，如同它声明于同时包含该 using 指令和 <em>命名空间名</em> 两者的最接近外围命名空间一样。<p>using 指令<strong>不向其所出现的声明性区域添加任何名字</strong>（不同于 using 声明），因而并不妨碍再声明相同的名字。(<strong>只是让名字可见而且</strong>)<p>using 指令对于<a href=https://zh.cppreference.com/w/cpp/language/lookup>无限定查找</a>是传递性的：若作用域包含指名 <em>命名空间名</em> 的 using 指令，而它自身包含对某 <em>命名空间名-2</em> 的 using 指令，则效果如同第二个命名空间中的 using 指令出现在第一个之中一样。这些传递性命名空间的出现顺序并不影响名字查找。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>A {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i;
+</span><span>}
+</span><span style=color:#b48ead;>namespace </span><span>B {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> j;
+</span><span>    </span><span style=color:#b48ead;>namespace </span><span>C {
+</span><span>        </span><span style=color:#b48ead;>namespace </span><span>D {
+</span><span>            </span><span style=color:#b48ead;>using namespace</span><span> A; </span><span style=color:#65737e;>// 注入所有来自 A 的名称到全局命名空间
+</span><span>            </span><span style=color:#b48ead;>int</span><span> j;
+</span><span>            </span><span style=color:#b48ead;>int</span><span> k;
+</span><span>            </span><span style=color:#b48ead;>int</span><span> a = i; </span><span style=color:#65737e;>// i 是 B::i，因为 B::i 隐藏 A::i
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>using namespace</span><span> D; </span><span style=color:#65737e;>// 注入来自 D 的名称到 C
+</span><span>                           </span><span style=color:#65737e;>// 注入来自 A 的名称到全局命名空间
+</span><span>        </span><span style=color:#b48ead;>int</span><span> k = </span><span style=color:#d08770;>89</span><span>; </span><span style=color:#65737e;>// 声明与用 using 引入者等同的名称 OK
+</span><span>        </span><span style=color:#b48ead;>int</span><span> l = k;  </span><span style=color:#65737e;>// 歧义：C::k 或 D::k
+</span><span>        </span><span style=color:#b48ead;>int</span><span> m = i;  </span><span style=color:#65737e;>// OK：B::i 隐藏 A::i
+</span><span>        </span><span style=color:#b48ead;>int</span><span> n = j;  </span><span style=color:#65737e;>// OK：D::j 隐藏 B::j
+</span><span>    }
+</span><span>}
+</span></code></pre><p>在使用 using 指令指名某命名空间后，若该命名空间被扩充并向其添加了额外的成员和/或 using 指令，则这些额外成员和额外的命名空间通过该 using 指令可见（与 using 声明相反）<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>D {
+</span><span>   </span><span style=color:#b48ead;>int</span><span> d1;
+</span><span>   </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>char</span><span>);
+</span><span>}
+</span><span style=color:#b48ead;>using namespace</span><span> D; </span><span style=color:#65737e;>// 引入 D::d1、D::f、D::d2、D::f，
+</span><span>                   </span><span style=color:#65737e;>// E::e 及 E::f 到全局命名空间！
+</span><span> 
+</span><span style=color:#b48ead;>int</span><span> d1; </span><span style=color:#65737e;>// OK：声明时与 D::d1 不冲突
+</span><span style=color:#b48ead;>namespace </span><span>E {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> e;
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span>}
+</span><span style=color:#b48ead;>namespace </span><span>D { </span><span style=color:#65737e;>// 命名空间扩展
+</span><span>    </span><span style=color:#b48ead;>int</span><span> d2;
+</span><span>    </span><span style=color:#b48ead;>using namespace</span><span> E; </span><span style=color:#65737e;>// 传递性 using 指令
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>(</span><span style=color:#bf616a;>int</span><span>);
+</span><span>}
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>() {
+</span><span>    d1++; </span><span style=color:#65737e;>// 错误：歧义：::d1 或 D::d1？
+</span><span>    ::d1++; </span><span style=color:#65737e;>// OK
+</span><span>    D::d1++; </span><span style=color:#65737e;>// OK
+</span><span>    d2++; </span><span style=color:#65737e;>// OK，d2 是 D::d2
+</span><span>    e++; </span><span style=color:#65737e;>// OK：e 是 E::e，因为传递性 using
+</span><span>    </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#d08770;>1</span><span>); </span><span style=color:#65737e;>// 错误：歧义：D::f(int) 或 E::f(int)？
+</span><span>    </span><span style=color:#bf616a;>f</span><span>('</span><span style=color:#a3be8c;>a</span><span>'); </span><span style=color:#65737e;>// OK：仅有的 f(char) 是 D::f(char)
+</span><span>}
+</span></code></pre><p><strong>注解</strong><p>在任何命名空间作用域中的 using 指令 <code>using namespace std;</code>，将命名空间 <code>std</code> 中的所有名字都引入到全局命名空间中（因为全局命名空间是同时包含 <code>std</code> 和任何用户声明命名空间的最近命名空间），这可能导致不合预期的名字冲突。通常认为，在头文件的文件作用域中采用它或其他的 using 指令是不良的实践。<p><strong>示例</strong><p>此例展示如何用命名空间创建已命名于 <code>std</code> 命名空间的类。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>>
+</span><span> 
+</span><span style=color:#b48ead;>namespace </span><span>vec {
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>template</span><span>< </span><span style=color:#b48ead;>typename</span><span> T >
+</span><span>    </span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>vector </span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>        </span><span style=color:#65737e;>// ...
+</span><span style=color:#eff1f5;>    }</span><span>;
+</span><span> 
+</span><span>} </span><span style=color:#65737e;>// of vec
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::vector<</span><span style=color:#b48ead;>int</span><span>> v1; </span><span style=color:#65737e;>// 标准 vector。
+</span><span>    vec::vector<</span><span style=color:#b48ead;>int</span><span>> v2; </span><span style=color:#65737e;>// 用户定义 vector。
+</span><span> 
+</span><span>    v1 = v2; </span><span style=color:#65737e;>// 错误：v1 与 v2 是不同类型的对象。
+</span><span> 
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span>        vector<</span><span style=color:#b48ead;>int</span><span>> v3; </span><span style=color:#65737e;>// 同 std::vector
+</span><span>        v1 = v3; </span><span style=color:#65737e;>// OK
+</span><span>    }
+</span><span> 
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>using</span><span> vec::vector;
+</span><span>        vector<</span><span style=color:#b48ead;>int</span><span>> v4; </span><span style=color:#65737e;>// 同 vec::vector
+</span><span>        v2 = v4; </span><span style=color:#65737e;>// OK
+</span><span>    }
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=can-kao>参考</h2><p>https://zh.cppreference.com/w/cpp/language/namespace</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

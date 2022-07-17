@@ -1,0 +1,49 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/cpp-coutshu-chu-zhi-ding-wei-shu-de-fu-dian-shu/>cout输出指定位数的浮点数</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-02 </span></div><div class=post-content><p>cout输出指定位数的浮点数。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>//方便快速复制
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span>
+</span><span>cout << std::fixed << std::</span><span style=color:#bf616a;>setprecision</span><span>(</span><span style=color:#d08770;>2</span><span>);
+</span><span>
+</span><span>cout << std::defaultfloat;
+</span></code></pre><h2 id=fu-dian-jing-du-geng-gai>浮点精度更改</h2><p>指定输出小数点后几位，包含在<code>&LTiomanip></code>头文件中<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#b48ead;>double</span><span> a = </span><span style=color:#d08770;>1.6006</span><span>;
+</span><span>    cout << std::</span><span style=color:#bf616a;>setprecision</span><span>(</span><span style=color:#d08770;>2</span><span>) << a << endl;
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>输出：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>1.6
+</span></code></pre><blockquote><p>单独使用并不会进行补0操作</blockquote><h2 id=fu-dian-shu-ge-shi-hua>浮点数格式化</h2><p>对于浮点数输入/输出的默认格式化，有四个操纵符可对其修改：<ul><li><code>std::fixed</code>：使用定点操纵浮点数<li><code>std::scientific</code>：使用科学计数法操纵浮点数<li><code>std::hexfloat</code>：使用十六进制操纵浮点数<li><code>std::defaultfloat</code>：使用默认的浮点数操纵方式</ul><blockquote><p>十六进制浮点格式化忽略流精度规定</blockquote><p>包含在头文件<code>&LTios></code>中，而头文件<code>&LTios></code>包含在<code>&LTiostream></code>中。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sstream</span><span>>
+</span><span> 
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>print</span><span>(</span><span style=color:#b48ead;>const char</span><span>* </span><span style=color:#bf616a;>textNum</span><span>, </span><span style=color:#b48ead;>double </span><span style=color:#bf616a;>num</span><span>)
+</span><span>{
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>The number </span><span>" << textNum << "</span><span style=color:#a3be8c;> in fixed:      </span><span>" << std::fixed << num << '</span><span style=color:#96b5b4;>\n</span><span>'
+</span><span>              << "</span><span style=color:#a3be8c;>The number </span><span>" << textNum << "</span><span style=color:#a3be8c;> in scientific: </span><span>" << std::scientific << num << '</span><span style=color:#96b5b4;>\n</span><span>'
+</span><span>              << "</span><span style=color:#a3be8c;>The number </span><span>" << textNum << "</span><span style=color:#a3be8c;> in hexfloat:   </span><span>" << std::hexfloat << num << '</span><span style=color:#96b5b4;>\n</span><span>'
+</span><span>              << "</span><span style=color:#a3be8c;>The number </span><span>" << textNum << "</span><span style=color:#a3be8c;> in default:    </span><span>" << std::defaultfloat << num << '</span><span style=color:#96b5b4;>\n</span><span>';
+</span><span>}
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#bf616a;>print</span><span>("</span><span style=color:#a3be8c;>0.01   </span><span>", </span><span style=color:#d08770;>0.01</span><span>);
+</span><span>    </span><span style=color:#bf616a;>print</span><span>("</span><span style=color:#a3be8c;>0.00001</span><span>", </span><span style=color:#d08770;>0.00001</span><span>);
+</span><span>    </span><span style=color:#b48ead;>double</span><span> f;
+</span><span>    std::</span><span style=color:#bf616a;>istringstream</span><span>("</span><span style=color:#a3be8c;>0x1P-1022</span><span>") >> std::hexfloat >> f;
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>Parsing 0x1P-1022 as hex gives </span><span>" << f << '</span><span style=color:#96b5b4;>\n</span><span>';
+</span><span>}
+</span></code></pre><p>输出：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>//十六进制输出结果因人而异，无精度可言
+</span><span>The number 0.01    in fixed:      0.010000
+</span><span>The number 0.01    in scientific: 1.000000e-02
+</span><span>The number 0.01    in hexfloat:   0x1.47ae147ae147bp-7
+</span><span>The number 0.01    in default:    0.01
+</span><span>The number 0.00001 in fixed:      0.000010
+</span><span>The number 0.00001 in scientific: 1.000000e-05
+</span><span>The number 0.00001 in hexfloat:   0x1.4f8b588e368f1p-17
+</span><span>The number 0.00001 in default:    1e-05
+</span><span>Parsing 0x1P-1022 as hex gives 2.22507e-308
+</span></code></pre><h2 id=can-kao-wen-zhang>参考文章</h2><p><a href=https://en.cppreference.com/w/cpp/io/manip/fixed>std::fixed, std::scientific, std::hexfloat, std::defaultfloat</a><p><a href=http://www.cplusplus.com/reference/ios/fixed/>std::fixed</a></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

@@ -1,0 +1,115 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/Linux/lvmji-lu/>LVM记录</a></h1><div class=post-meta-inline><span class=post-date> 2021-06-01 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a></span><div class=post-content><p>重装了下系统，用上了LVM<p>LVM：<ul><li>物理卷PV<li>卷组VG：将物理卷划分为可分配的逻辑块<li>逻辑卷LV：多个逻辑块组成固定大小</ul><p>流程：多个磁盘/分区/raid-->多个物理卷PV-->合成卷组VG-->从VG划分出逻辑卷LV-->格式化LV，挂载使用。<p>参考：<ul><li><p><a href=https://www.cnblogs.com/diantong/p/10554831.html>LVM管理</a></p><li><p><a href=https://www.bilibili.com/video/BV1p541187V6>LVM逻辑卷</a></p></ul><h1 id=vfs-cannot-open-root-device-jie-jue-si-lu>VFS: Cannot open root device 解决思路</h1><h4 id=li-lun>理论</h4><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>VFS: Cannot open root device \"%s\"(A) or %s(B): error %d(C)\n"
+</span><span>Please append a correct \"root=\" boot option; here are the available partitions:\n
+</span><span>VFS: Unable to mount root fs on %s(D)
+</span></code></pre><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>以上是 init/do_mounts.c 文件中的 函数mount_block_root 做的打印
+</span><span>
+</span><span>表示  利用所有的文件系统 调用 do_mount_root  对 一个分区(通过是您指定的) 进行了挂载,但是还是挂载失败
+</span><span>上面的信息就是打印出来的帮助您定位错误的信息
+</span><span>
+</span><span>内核会针对不同的情况对 A B C D 进行填充
+</span><span>A : 如果您指定的是 root=/dev/hda2 ,那么 A 为 "/dev/" 后面的 hda2
+</span><span>	如果您指定的是 root=/xxx/hda2(前五个字节不为"/dev/") ,那么 A 为 /xxx/hda2
+</span><span>B : 根据您指定的 root=/dev/hda2 , 根据ROOT_DEV = name_to_dev_t(root_device_name); 算出来的设备号,从而算出来的主次设备号,格式 为 unknown-block(主设备号,次设备号)
+</span><span>C : do_mount_root 的返回值,返回值的定义在 内核代码中的 include/uapi/asm-generic/errno-base.h
+</span><span>D : 和B一样
+</span></code></pre><h4 id=shi-li>实例</h4><ul><li>1</ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>VFS: Cannot open root device "</span><span style=color:#a3be8c;>mmcblk0p1</span><span>" or unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>179</span><span>,</span><span style=color:#d08770;>1</span><span>): error -</span><span style=color:#d08770;>19
+</span><span>
+</span><span>Please append a correct "</span><span style=color:#a3be8c;>root=</span><span>" boot option; here are the available partitions:
+</span><span>
+</span><span>-------------------------------------------------------------+++
+</span><span>
+</span><span>A为 </span><span style=color:#8fa1b3;>mmcblk0p1
+</span><span>B为 unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>179</span><span>,</span><span style=color:#d08770;>1</span><span>)
+</span><span>C为 19
+</span><span>
+</span><span>A的格式是对的,mmc设备的分区名请参考 Documentation/block/cmdline-partition.</span><span style=color:#bf616a;>txt
+</span><span>B表示 已经找到了mmc设备的驱动, 因为主次设备已经出来了,且是对的. 请参考 Documentation/devices.</span><span style=color:#bf616a;>txt
+</span><span>C为19 表示 #define ENODEV      </span><span style=color:#d08770;>19  </span><span style=color:#65737e;>/* No such device */ 
+</span><span>
+</span><span>
+</span><span>这个问题的结论是
+</span><span>	</span><span style=color:#d08770;>1.</span><span>有驱动
+</span><span>	2.</span><span style=color:#bf616a;>可查磁盘名级分区名是否正确
+</span><span>	3.</span><span style=color:#bf616a;>可查对应的文件系统
+</span><span>
+</span></code></pre><ul><li>2</ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>VFS: Cannot open root device "</span><span style=color:#a3be8c;>mtdblock5</span><span>" or unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>0</span><span>,</span><span style=color:#d08770;>0</span><span>): error -</span><span style=color:#d08770;>6
+</span><span>
+</span><span>-------------------------------------------------------------+++
+</span><span>
+</span><span>A为 </span><span style=color:#8fa1b3;>mtdblock5
+</span><span>B为 unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>0</span><span>,</span><span style=color:#d08770;>0</span><span>)
+</span><span>C为 -</span><span style=color:#d08770;>6
+</span><span>
+</span><span>A的格式是对的
+</span><span>B </span><span style=color:#d08770;>0 </span><span>= reserved as null device number ,表示没找到该设分区的设备号,驱动可能有问题
+</span><span>C -</span><span style=color:#d08770;>6</span><span> #define ENXIO        </span><span style=color:#d08770;>6  </span><span style=color:#65737e;>/* No such device or address */
+</span><span>
+</span><span>
+</span><span>这个问题的结论是
+</span><span>	</span><span style=color:#d08770;>1.</span><span>查驱动是否存在
+</span><span>	2.</span><span style=color:#bf616a;>可查磁盘名级分区名是否正确
+</span><span>	3.</span><span style=color:#bf616a;>可查对应的文件系统
+</span><span>
+</span></code></pre><ul><li>3</ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>VFS: Cannot open root device "</span><span style=color:#a3be8c;>nfs</span><span>" or unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>0</span><span>,</span><span style=color:#d08770;>255</span><span>)
+</span><span>-------------------------------------------------------------+++
+</span><span>内核中nfs设置不对
+</span><span>
+</span></code></pre><ul><li>4</ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>No filesystem could mount root, tried:  ext3 ext2 cramfs vfat msdos iso9660 romfs  
+</span><span>kernel panic - not syncing: VFS: Unable to mount root fs on unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>31</span><span>,</span><span style=color:#d08770;>3</span><span>)
+</span><span>------------------------+++
+</span><span>磁盘分区被格式化为xxx文件系统,内核镜像无该xxx文件系统的支持
+</span></code></pre><ul><li>5</ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>一般挂载不上的话,会有打印 here are the available partitions:
+</span><span>然后在下面打印如下
+</span><span>
+</span><span>Please append a correct "</span><span style=color:#a3be8c;>root=</span><span>" boot option; here are the available partitions:
+</span><span style=color:#d08770;>0300	16777216</span><span>	hda 	driver:	ide-disk
+</span><span>	0301 	</span><span style=color:#d08770;>499873</span><span>		hda1
+</span><span>	0302	</span><span style=color:#d08770;>16277152</span><span> 	hda2
+</span><span style=color:#d08770;>1600	4194302</span><span> hdc 	driver: ide-cdrom
+</span><span style=color:#d08770;>0</span><span style=background-color:#bf616a;color:#2b303b;>8</span><span style=color:#d08770;>00 	2097152</span><span> sda 	driver: sd
+</span><span>	0801	</span><span style=color:#d08770;>2096451</span><span>	sda1
+</span><span>Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>2</span><span>,</span><span style=color:#d08770;>0</span><span>)
+</span><span>
+</span><span>--------------+++
+</span><span>以下为注释
+</span><span style=color:#d08770;>0300</span><span>(十六进制数)	</span><span style=color:#d08770;>16777216</span><span>(有多少个磁盘扇区)	</span><span style=color:#bf616a;>hda</span><span>(磁盘名) 	</span><span style=color:#bf616a;>driver</span><span>(所用的驱动):	ide-disk
+</span><span>	0301(十六进制数) 	</span><span style=color:#d08770;>499873</span><span>(有多少个扇区)		</span><span style=color:#bf616a;>hda1</span><span>(分区名)
+</span><span>	0302	</span><span style=color:#d08770;>16277152</span><span> 	hda2
+</span><span style=color:#d08770;>1600	4194302</span><span> hdc 	driver: ide-cdrom
+</span><span style=color:#d08770;>0</span><span style=background-color:#bf616a;color:#2b303b;>8</span><span style=color:#d08770;>00 	2097152</span><span> sda 	driver: sd
+</span><span>	0801	</span><span style=color:#d08770;>2096451</span><span>	sda1
+</span><span>Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-</span><span style=color:#bf616a;>block</span><span>(</span><span style=color:#d08770;>2</span><span>,</span><span style=color:#d08770;>0</span><span>)
+</span><span>
+</span></code></pre><h4 id=init-xxx-zhong-xxx-de-ge-shi>init=xxx 中 xxx 的格式</h4><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>name_to_dev_t </span><span style=color:#8fa1b3;>函数的注释
+</span><span>
+</span><span style=color:#d08770;>1.</span><span> 十六进制数
+</span><span>	0x302 </span><span style=color:#d08770;>302 0X302
+</span><span>		</span><span style=color:#65737e;>//3为主设备号,2为此设备号
+</span><span>		</span><span style=color:#65737e;>//0xaaabb
+</span><span>		</span><span style=color:#65737e;>//aaa代表主设备号
+</span><span>		</span><span style=color:#65737e;>//bb代表设备号码
+</span><span style=color:#d08770;>2.</span><span>带冒号的数对
+</span><span>	3:</span><span style=color:#d08770;>2 
+</span><span>		</span><span style=color:#65737e;>// 只能是%u：无符号十进制整数
+</span><span>		</span><span style=color:#65737e;>// 3 为主设备号
+</span><span>		</span><span style=color:#65737e;>// 2 为此设备号
+</span><span style=color:#d08770;>3. </span><span>/dev/nfs
+</span><span>	</span><span style=color:#65737e;>// setenv bootargs 'noinitrd mem=64M console=ttySAC0 root=/dev/nfs nfsroot=192.168.0.3:/nfs ip=192.168.0.5'
+</span><span>
+</span><span style=color:#d08770;>4.</span><span> 不以数字结尾的字符串且代表磁盘
+</span><span>	/dev/sda : 代表第1个硬盘
+</span><span>	
+</span><span style=color:#d08770;>5.</span><span> 	以数字结尾的字符串且代表分区
+</span><span>	/dev/sda1 : 代表第1个硬盘的第1个分区
+</span><span>
+</span><span style=color:#d08770;>6.</span><span>  已数字结尾的字符串且代表磁盘
+</span><span>	/dev/mmcblk0:代表第1个mmc设备
+</span><span style=color:#d08770;>7.</span><span>  如果磁盘名以数字结尾,则分区名需要加p : /dev/&LTdisk_name>p&LTdecimal>
+</span><span>	/dev/mmcblk0p1
+</span><span style=color:#d08770;>6.</span><span>	PARTUUID=</span><span style=color:#d08770;>00112233</span><span>-</span><span style=color:#d08770;>4455</span><span>-</span><span style=color:#d08770;>6677</span><span>-</span><span style=color:#d08770;>8899</span><span>-AABBCCDDEEFF
+</span><span>
+</span><span>如果不为这几种,则返回 </span><span style=color:#b48ead;>return </span><span>(</span><span style=color:#d08770;>0</span><span>,</span><span style=color:#d08770;>0</span><span>). 
+</span><span>
+</span><span>
+</span><span>
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

@@ -1,0 +1,45 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/pythonpa-chong-guo-lu-urlwen-ben/>python爬虫——判断url是否http开头</a></h1><div class=post-meta-inline><span class=post-date> 2019-11-10 </span></div><div class=post-content><p>编写爬虫程序时，常见的操作是从页面上解析出url，然后深度（或广度）探寻，然而有时候解析出来的文本含有一些杂质，需要一些过滤后才是我们想要的url。<p><strong><a href=http://blog.itpub.net/69923331/viewspace-2654450/>Python：如何判断一个url是以http开头的？</a></strong><p>比如一个文本test.txt,里面的内容为：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>http://www.sogou.com
+</span><span>this is a url
+</span><span>this is http://www.sogou.com address
+</span></code></pre><h2 id=1-jian-dan-de-pan-duan-bao-han>1. 简单的判断包含</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#encoding: utf-8
+</span><span> 
+</span><span>with open("test.txt", "r") as f:
+</span><span>content = f.readlines()
+</span><span>for line in content:
+</span><span> if "http" in line:
+</span><span> print(line)
+</span></code></pre><p>输出为：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>http://www.sogou.com
+</span><span>this is http://www.sogou.com address
+</span></code></pre><h2 id=2-zheng-ze-pi-pei>2. 正则匹配</h2><p>获取以http开头：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#encoding: utf-8
+</span><span>import re
+</span><span>with open("test.txt", "r") as f:
+</span><span>content = f.readlines()
+</span><span>for line in content:
+</span><span> r = re.match("http", line)
+</span><span> if r != None:
+</span><span> print(line)
+</span></code></pre><p>输出为：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>http://www.sogou.com
+</span></code></pre><p><strong>re.match, 从开头匹配字符串，如果匹配到返回匹配到的对象。没有匹配到返回None。</strong><h2 id=3-diao-yong-pythonzi-dai-han-shu>3. 调用python自带函数</h2><p>判断开头：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#encoding: utf-8
+</span><span>with open("test.txt", "r") as f:
+</span><span> content = f.readlines()
+</span><span> for line in content:
+</span><span> if line.startswith("http"):
+</span><span> print(line)
+</span></code></pre><p>输出为：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>http://www.sogou.com
+</span></code></pre><p>判断结尾：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#encoding: utf-8
+</span><span>with open("test.txt", "r") as f:
+</span><span> content = f.readlines()
+</span><span> for line in content:
+</span><span> if line.replace("\n","").endswith("com"):
+</span><span> print(line)
+</span></code></pre><p>这里要注意的是，每行结束会有一个换行符，因此要替换掉。<p>虽然从代码行数上，区别不是太大，但是从方法名称的理解上，startswith和endswith，更容易一些。<h2 id=4-pi-pei-duo-ge-zi-fu>4. 匹配多个字符</h2><p>比如文本内容为：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>http://www.sogou.com
+</span><span>this is a url
+</span><span>this is http://www.sogou.com address
+</span><span>ftp://www.sogou.com
+</span></code></pre><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#encoding: utf-8
+</span><span>with open("test.txt", "r") as f:
+</span><span> content = f.readlines()
+</span><span> for line in content:
+</span><span> if line.startswith(("http", "ftp")):
+</span><span> print(line)
+</span></code></pre><p>只需要传参数为元组，包含要匹配的字串即可。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

@@ -1,0 +1,215 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/编程语言/Linux shell/sed/">sed入门</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-03 </span></div><div class=post-content><p>sed 是一个比较古老的，功能十分强大的用于文本处理的流编辑器，加上正则表达式的支持，可以进行大量的复杂的文本编辑操作。<h2 id=jian-jie>简介</h2><p>sed 全名为 stream editor，是一个流编辑器，用于处理来自文件或管道的输入流，进行基本文本的匹配及处理。<p>sed会一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，成为"模式空间"，接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。文件内容并没有改变，除非你使用重定向存储输出。<p>sed能够对来自于管道的文本进行过滤，与其他类型编辑器相比，这是它的独特之处。<h2 id=shi-yong>使用</h2><p>使用形式：<code>sed OPTIONS . . . [SCRIPT] [INPUTFILE . . .] </code>:<ul><li>OPTIONS：命令行选项<li>[SCRIPT]：操作脚本<li>[INPUTFILE . . .] ：输入流来源</ul><p>Linux命令行执行一条命令后一般会返回一个状态码（<code>echo $?</code>），sed返回的状态码有：<ul><li>0：成功完成<li>1：命令无效、语法无效、正则表达式无效或者在”--posix“下执行了GNU sed扩展的命令。<li>2：命令行上指定的一个或者多个输入文件不能打开（例如，文件找不到，或者无权限读取，被拒绝），程序会继续处理其他文件。<li>4：出现一个I/O错误，或运行时发生严重的操作错误，GNU sed立即中止程序。</ul><h3 id=cao-zuo-jiao-ben-zhong-de-xing-cao-zuo-ming-ling>操作脚本中的行操作命令</h3><ol><li><p>a 命令——添加新行</p> <p>在匹配的行下面添加新行</p><li><p>i 命令——插入新行</p> <p>在匹配的行上面插入新行</p><li><p>c 命令——行替换</p> <p>替换指定范围的行的内容</p><li><p>d 命令——删除</p> <p>删除指定范围</p><li><p>p 命令——打印</p> <p>打印指定范围的内容</p><li><p>= 命令——打印行号</p> <p>打印指定范围的行号</p><li><p>s 命令——正则替换</p> <p>指定范围内容进行正则替换，格式为： <code>s/正则表达式/要替换的内容/</code></p> <p>s 命令最后跟个 g 表示替换该行所有匹配</p> <p>不加 g 的 s 只能替换<strong>每一行匹配到的第一个</strong></p> <pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>sed '4,8s/\(line\)\([[:digit:]]\+\)/\2 - \1/' a.txt
+</span><span># 4,8 表示从第 4 行到第 8 行
+</span><span># \(line\)\([[:digit:]]\+\) 是正则表达式
+</span><span># \1 表示正则表达式中第一个括号匹配的结果
+</span><span># \2 表示正则表达式中第二个括号匹配的结果
+</span><span>
+</span><span># 可以加 -r 参数开启扩展正则表达式，写成等价形式
+</span><span>sed -r '4,8s/(line)([[:digit:]]+)/\2 - \1/' a.txt
+</span></code></pre><li><p>y 命令——字符映射替换</p><li><p>r 命令——行替换，替换内容为文件内容</p></ol><h3 id=cao-zuo-jiao-ben-zhong-de-qi-ta-ming-ling>操作脚本中的其它命令</h3><ol><li><p>{} ——脚本块</p> <p>在大括号内用分号隔开命令，可以实现执行多个命令，多个命令范围相同，则可以省略相同匹配后面的范围指定</p> <p>脚本块可以嵌套，嵌套时范围指定不同，则会取交集</p><li><p>b ——标签跳转</p> <p>跳转到用冒号开头表示的标签，当标签在最后时，可以省略，而且当 b 命令指定的标签不存在时，会自动跳转到最后</p> <p>如果标签在前可能造成死循环，需要注意指定行</p><li><p>t ——条件正则跳转</p> <p>如果前一条命令执行成功，则跳转到用冒号开头表示的标签</p><li><p>空间交换命令</p> <p>**模式空间：**sed 命令默认是一行一行处理的，每读取到一行，会放到模式空间里，然后执行脚本来处理模式空间的内容，处理完后会清空模式空间，并且读取下一行继续处理，如此循环直到行尾。模式空间相当于专门用于 sed 处理的字符串缓冲区。</p> <p>**保持空间：**默认的 sed 是不会操作保持空间的，保持空间是专门为用户提供的空间，这几个命令可以操作保持空间，来实现更复杂的功能。</p> <blockquote><p>**h：**把模式空间内容覆盖到保持空间中 **H：**把模式空间内容追加到保持空间中 **g：**把保持空间内容覆盖到模式空间中 **G：**把保持空间内容追加到模式空间中 **x：**交换模式空间与保持空间的内容</blockquote><li><p>模式空间命令</p> <p>有了模式空间的概念后，可以重新理解一下前面 p、d、n 等命令的本质。</p> <blockquote><p>**p：**打印当前模式空间所有内容，追加到默认输出之后。<p>**P：**打印当前模式空间开端至\n的内容，并追加到默认输出之前。Sed并不对每行末尾\n进行处理，但是对N命令追加的行间\n进行处理，因为此时sed将两行看做一行。<p>**n：**命令简单来说就是提前读取下一行，覆盖模型空间前一行，然后执行后续命令。然后再读取新行，对新读取的内容重头执行sed。<p>**N：**命令简单来说就是追加下一行到模式空间，同时将两行看做一行，但是两行之间依然含有\n换行符，然后执行后续命令。然后再读取新行，对新读取的内容重头执行sed。此时，新读取的行会覆盖之前的行（之前的两行已经合并为一行）。<p>**d：**命令是删除当前模式空间内容（不再传至标准输出）， 并放弃之后的命令，并对新读取的内容，重头执行sed。<p>**D：**命令是删除当前模式空间开端至\n的内容（不在传至标准输出）， 放弃之后的命令，但是对剩余模式空间重新执行sed。</blockquote></ol><h3 id=cao-zuo-jiao-ben-zhong-de-fan-wei-zhi-ding>操作脚本中的范围指定</h3><p>sed命令可以不带地址范围指定，在这种情况下，将对所有输入行执行该命令。<ol><li><code>,</code>——范围分隔符<li><code>+</code>——到接下来几行<li><code>,~</code>——行数倍数匹配，到第一次倍数匹配的位置<li><code>~</code>——步进<li><code>$</code>——最后一行<li><code>!</code>——范围取反<li><code>/[正则匹配式]/</code>——正则表达式范围</ol><h2 id=yun-xing>运行</h2><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>$ for a in $(seq 1 1 6);do echo modao$a;done > a.txt
+</span><span>$ cat a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ ls
+</span><span>a.txt
+</span><span>$ cat a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed '1,3a newmodao' a.txt
+</span><span>modao1
+</span><span>newmodao
+</span><span>modao2
+</span><span>newmodao
+</span><span>modao3
+</span><span>newmodao
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed '1,3i newmodao' a.txt
+</span><span>newmodao
+</span><span>modao1
+</span><span>newmodao
+</span><span>modao2
+</span><span>newmodao
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed '1,3c newmodao' a.txt
+</span><span>newmodao
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed '1,3d' a.txt
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed '1,3p' a.txt
+</span><span>modao1
+</span><span>modao1
+</span><span>modao2
+</span><span>modao2
+</span><span>modao3
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed -n '1,3p' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>$ sed -n '1,3=' a.txt
+</span><span>1
+</span><span>2
+</span><span>3
+</span><span>$ sed '1,3=' a.txt
+</span><span>1
+</span><span>modao1
+</span><span>2
+</span><span>modao2
+</span><span>3
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed '1,3s/modao/regex/' a.txt
+</span><span>regex1
+</span><span>regex2
+</span><span>regex3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed -n '1,3s/modao/regex/' a.txt
+</span><span>$ sed  '1,3y/modao/regex/' a.txt
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed -n '1,3{y/modao/regex/;p}' a.txt
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>$ sed -n '1,3{y/modao/regex/;p}' a.txt > b.txt
+</span><span>$ cat b.txt
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>$ sed -n '3,$rb.txt' a.txt
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>$ sed '3rb.txt' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed -n '3rb.txt' a.txt
+</span><span>regee1
+</span><span>regee2
+</span><span>regee3
+</span><span>$ sed '/modao4/bend;p;:end' a.txt
+</span><span>modao1
+</span><span>modao1
+</span><span>modao2
+</span><span>modao2
+</span><span>modao3
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao5
+</span><span>modao6
+</span><span>modao6
+</span><span>$ sed -n '/modao4/bend;p;:end' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed -n '/modao4/p;tend;s/modao/modao233/;:end' a.txt
+</span><span>modao4
+</span><span>$ sed  '/modao4/d;tend;s/modao/modao233/;:end' a.txt
+</span><span>modao2331
+</span><span>modao2332
+</span><span>modao2333
+</span><span>modao2335
+</span><span>modao2336
+</span><span>$ sed '1h;2H;3x;4H;5H;6G' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao1
+</span><span>modao2
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>$ sed 'n;p' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao2
+</span><span>modao3
+</span><span>modao4
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>modao6
+</span><span>$ sed -n 'n;p' a.txt
+</span><span>modao2
+</span><span>modao4
+</span><span>modao6
+</span><span>$ sed -n 'N;P' a.txt
+</span><span>modao1
+</span><span>modao3
+</span><span>modao5
+</span><span>$ sed -n '1,3p' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>$ sed -n '1,+3p' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>modao4
+</span><span>$ sed -n '1,~3p' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>$ sed -n '1~3p' a.txt
+</span><span>modao1
+</span><span>modao4
+</span><span>$ sed -n '1,$p' a.txt
+</span><span>modao1
+</span><span>modao2
+</span><span>modao3
+</span><span>modao4
+</span><span>modao5
+</span><span>modao6
+</span><span>$ sed -n '3,$!p' a.txt
+</span><span>modao1
+</span><span>modao2
+</span></code></pre><h2 id=can-kao>参考</h2><ol><li><a href=https://blog.csdn.net/qq_39785418/category_8913107.html>GNU sed 4.5 版参考文档全文翻译 各命令和随带20个示例详细解析</a><li><a href=https://www.fkxxyz.com/c/sed/>sed 命令从入门到精通 </a><li><a href=https://linux.die.net/man/1/sed>sed(1) - Linux man page</a><li><a href=https://www.runoob.com/linux/linux-comm-sed.html>菜鸟教程 —— Linux sed 命令</a><li><a href=https://www.cnblogs.com/liwei0526vip/p/5644163.html>肖邦linux —— sed入门详解教程</a><li><a href=https://www.cnblogs.com/irockcode/p/8018575.html>DataCareer —— Sed命令n，N，d，D，p，P，h，H，g，G，x解析</a></ol></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

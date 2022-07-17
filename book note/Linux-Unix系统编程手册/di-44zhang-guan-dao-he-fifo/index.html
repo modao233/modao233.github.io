@@ -1,0 +1,344 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/book note/Linux-Unix系统编程手册/di-44zhang-guan-dao-he-fifo/">第44章 管道和FIFO</a></h1><div class=post-meta-inline><span class=post-date> 2021-02-01 </span></div><div class=post-content><p>管道是Unix系统上最古老的IPC方法。<p>FIFO是管道概念的变体，它们之间的差别在于FIFO可以用于任意进程间的通信。<h2 id=gai-shu>概述</h2><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>$</span><span> ls | </span><span style=color:#bf616a;>wc -l
+</span></code></pre><p><img alt=image-20210130114347946 src=image-20210130114347946.png><p>两个进程并不知道管道的存在，它们只是从标准文件描述符中读取数据和写入数据。<p>管道的重要特征：<ul><li><p>一个管道是一个字节流</p> <ul><li>使用管道时不存在消息或消息边界的概念<li>可以从管道中读取任意大小的数据块，不管写入管道的数据块大小是什么<li>通过管道传递的数据是顺序的，无法随机访问</ul><li><p>读空管道会阻塞至数据到来。管道写端关闭后，管道读取进程在读完剩余所有数据后将看到文件结束（即read()返回0）</p><li><p>在管道中数据的传递方向是单向的</p><li><p>可以确保写入不超过PIPE_BUF字节的操作是原子的</p><li><p>管道的容量是有限的</p></ul><h2 id=chuang-jian-he-shi-yong-guan-dao>创建和使用管道</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span style=color:#65737e;>//成功返回0，失败返回-1
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>pipe</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>filedes</span><span>[</span><span style=color:#d08770;>2</span><span>]);
+</span></code></pre><p>成功的pipe()调用会在filedes中返回两个打开的文件描述符：<ul><li>filedes[0]：表示管道的读取端<li>filedes[1]：表示管道的写入端</ul><p>一旦向管道的写入端写入数据之后立即就能从管道的读取端读取数据。<p>管道上的read()调用会读取的数据量为所请求的字节数与管道中当前存在的字节数两者之间较小的那个。<p>ioctl(fd, FIONREAD, &cnt)调用返回文件描述符fd所引用的管道或FIFO中未读取的字节数。<p><img alt=image-20210130154430225 src=image-20210130154430225.png><p><img alt=image-20210130154440374 src=image-20210130154440374.png><p>让父进程和子进程都能够从一个管道中读取和写入数据这种做法并不常见的一个原因是：如果两个进程同时试图从管道中读取数据，那么就无法确定哪个进程会首先读取成功——两个进程竞争数据了。<p>管道允许进程间的通信：<ul><li>管道可用于任意两个（或多个）相关进程之间的通信。相关进程的含义：拥有相同的祖先进程，由该祖先进程负责创建管道。shell在构建管道线时所做的工作。<li>通过UNIX domain socket传递一个文件描述符使得管道的一个文件描述符传递给另一个非相关进程</ul><p><strong>为何要关闭未使用管道文件描述符</strong><ol><li>确保进程不会耗尽文件描述符的限制<li>只有当所有进程中所有引用一个管道的文件描述符被关闭之后才会销毁该管道以及释放该管道占用的资源以供其它进程复用<li>读取进程要关闭其持有的未使用的管道的写入描述符：当其它进程关闭了写入描述符之后，如果读取进程没有关闭写入描述符，则内核知道至少存在一个管道的写入描述符打开着，则读取进程即使读取了管道中的所有数据后仍不会看到文件结束，并阻塞在read()调用，<strong>理论上</strong>该读取进程仍然可以向管道写入数据，即使它已经被读取操作阻塞。<li>写入进程要关闭其持有的未使用的管道的读取描述符：当一个进程向一个管道写入数据但没有任何进程拥有该管道的打开着的读取描述符时，内核会向写入进程发送一个SIGPIPE信号，默认情况该信号会杀死一个进程。进程也可以捕获或忽略该信号，这样会导致管道上的write()操作因EPIPI错误（已损坏的管道）而失败。收到SIGPIPE信号或得到EPIPE错误对于标示出管道的状态是有用的。如果写入进程没有关闭管道的读取端而其它进程已经关闭了该管道的读取端，则写入进程会将数据充满整个管道，后续的写入请求会被永远阻塞。</ol><p>程序示例：在父进程和子进程间使用管道通信<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/wait.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>bits/types.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span>
+</span><span style=color:#65737e;>//typedef __ssize_t ssize_t
+</span><span style=color:#b48ead;>#define </span><span>BUF_SIZE </span><span style=color:#d08770;>10
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> pfd[</span><span style=color:#d08770;>2</span><span>];
+</span><span>    </span><span style=color:#b48ead;>char</span><span> buf[BUF_SIZE];
+</span><span>    ssize_t numRead;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(argc != </span><span style=color:#d08770;>2 </span><span>|| </span><span style=color:#96b5b4;>strcmp</span><span>(argv[</span><span style=color:#d08770;>1</span><span>], "</span><span style=color:#a3be8c;>--help</span><span>") == </span><span style=color:#d08770;>0</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>usage: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> string</span><span style=color:#96b5b4;>\n</span><span>", argv[</span><span style=color:#d08770;>0</span><span>]);
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>pipe</span><span>(pfd) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error create pipe</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>switch</span><span>(</span><span style=color:#bf616a;>fork</span><span>()){
+</span><span>    </span><span style=color:#b48ead;>case </span><span>-</span><span style=color:#d08770;>1</span><span>:
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error fork</span><span>");</span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    </span><span style=color:#b48ead;>case </span><span style=color:#d08770;>0</span><span>:
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close child's write of pipe</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>1</span><span>){
+</span><span>            numRead = </span><span style=color:#bf616a;>read</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>], buf, BUF_SIZE);
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(numRead == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error read</span><span>");</span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(numRead == </span><span style=color:#d08770;>0</span><span>)
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>write</span><span>(STDOUT_FILENO, buf, numRead) != numRead)
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>child -partial/failed write</span><span>");
+</span><span>        }
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>write</span><span>(STDOUT_FILENO, "</span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#d08770;>1</span><span>);
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close child's read of pipe</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        }
+</span><span>        </span><span style=color:#bf616a;>_exit</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span>    </span><span style=color:#b48ead;>default</span><span>:
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close parent's read of pipe</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>write</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>], argv[</span><span style=color:#d08770;>1</span><span>], </span><span style=color:#96b5b4;>strlen</span><span>(argv[</span><span style=color:#d08770;>1</span><span>])) != </span><span style=color:#96b5b4;>strlen</span><span>(argv[</span><span style=color:#d08770;>1</span><span>]))
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>parent - partial/failed write</span><span>");
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close parent's write of pipe</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        }
+</span><span>        </span><span style=color:#bf616a;>wait</span><span>(</span><span style=color:#d08770;>NULL</span><span>);
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span>    }
+</span><span>}
+</span></code></pre><h2 id=jiang-guan-dao-zuo-wei-yi-chong-jin-cheng-tong-bu-de-fang-fa>将管道作为一种进程同步的方法</h2><p>使用管道同步具备一个优势：它可以同时用来协调一个进程的动作使之与多个其它（相关）进程匹配。<p>多个（标准）信号无法排队的事实使得信号不适用于这种情形，相反，信号的优势是它可以被一个进程广播到进程组中的所有成员处。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>time.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>BUF_SIZE </span><span style=color:#d08770;>10
+</span><span>
+</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#8fa1b3;>currTime</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>format</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>static char</span><span> buf[BUF_SIZE];  </span><span style=color:#65737e;>/* Nonreentrant */
+</span><span>    time_t t;
+</span><span>    size_t s;
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> tm *tm;
+</span><span>
+</span><span>    t = </span><span style=color:#96b5b4;>time</span><span>(</span><span style=color:#d08770;>NULL</span><span>);
+</span><span>    tm = </span><span style=color:#96b5b4;>localtime</span><span>(&t);
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(tm == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>
+</span><span>    s = </span><span style=color:#96b5b4;>strftime</span><span>(buf, BUF_SIZE, (format != </span><span style=color:#d08770;>NULL</span><span>) ? format : "</span><span style=color:#d08770;>%c</span><span>", tm);
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span>(s == </span><span style=color:#d08770;>0</span><span>) ? </span><span style=color:#d08770;>NULL </span><span>: buf;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> pfd[</span><span style=color:#d08770;>2</span><span>];
+</span><span>    </span><span style=color:#b48ead;>int</span><span> j, dummy;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(argc < </span><span style=color:#d08770;>2 </span><span>|| </span><span style=color:#96b5b4;>strcmp</span><span>(argv[</span><span style=color:#d08770;>1</span><span>], "</span><span style=color:#a3be8c;>--help</span><span>") == </span><span style=color:#d08770;>0</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>usage: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> sleep-time...</span><span style=color:#96b5b4;>\n</span><span>", argv[</span><span style=color:#d08770;>0</span><span>]);
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>setbuf</span><span>(stdout, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> Parent started</span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>currTime</span><span>("</span><span style=color:#a3be8c;>%T</span><span>"));
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>pipe</span><span>(pfd) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error pipe</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(j = </span><span style=color:#d08770;>1</span><span>; j < argc; ++j){
+</span><span>        </span><span style=color:#b48ead;>switch</span><span>(</span><span style=color:#bf616a;>fork</span><span>()){
+</span><span>            </span><span style=color:#b48ead;>case </span><span>-</span><span style=color:#d08770;>1</span><span>:
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error fork </span><span style=color:#d08770;>%d</span><span>", j);
+</span><span>                </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>            </span><span style=color:#b48ead;>case </span><span style=color:#d08770;>0</span><span>:
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>                    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>                }
+</span><span>                </span><span style=color:#bf616a;>sleep</span><span>(</span><span style=color:#96b5b4;>strtol</span><span>(argv[j], </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>10</span><span>));
+</span><span>
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> Child </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> (PID=</span><span style=color:#d08770;>%ld</span><span style=color:#a3be8c;>) closing pepe</span><span style=color:#96b5b4;>\n</span><span>",
+</span><span>                        </span><span style=color:#bf616a;>currTime</span><span>("</span><span style=color:#a3be8c;>%T</span><span>"), j, (</span><span style=color:#b48ead;>long</span><span>)</span><span style=color:#bf616a;>getpid</span><span>());
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>                    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>                }
+</span><span>                </span><span style=color:#bf616a;>_exit</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span>            </span><span style=color:#b48ead;>default</span><span>:
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>read</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>], &dummy, </span><span style=color:#d08770;>1</span><span>) != </span><span style=color:#d08770;>0</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>parent didn't get EOF</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> Parent ready to go</span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>currTime</span><span>("</span><span style=color:#a3be8c;>%T</span><span>"));
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span>}
+</span></code></pre><h2 id=shi-yong-guan-dao-lian-jie-guo-lu-qi>使用管道连接过滤器</h2><p>当管道被创建之后，为管道的两端分配的文件描述符是可用描述符中数值最小的两个。<p>使用管道连接两个过滤器（即从stdin读取和写入到stdout的程序）使得一个程序的标准输出被定向到管道中，而另一个程序的标准输入则从管道中读取。<p>通常情况下，进程已经使用了描述符0、1、2，为管道分配的文件描述符数值更大。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/wait.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> pfd[</span><span style=color:#d08770;>2</span><span>];
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>pipe</span><span>(pfd) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error pipe</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>switch</span><span>(</span><span style=color:#bf616a;>fork</span><span>()){
+</span><span>        </span><span style=color:#b48ead;>case </span><span>-</span><span style=color:#d08770;>1</span><span>:
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error fork</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        </span><span style=color:#b48ead;>case </span><span style=color:#d08770;>0</span><span>:
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>                </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>] != STDOUT_FILENO){
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>dup2</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>], STDOUT_FILENO) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error dup2</span><span>");
+</span><span>                    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>                }
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>                    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style=color:#bf616a;>execlp</span><span>("</span><span style=color:#a3be8c;>ls</span><span>", "</span><span style=color:#a3be8c;>ls</span><span>", (</span><span style=color:#b48ead;>char</span><span>*)</span><span style=color:#d08770;>NULL</span><span>);
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error execlp ls</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        </span><span style=color:#b48ead;>default</span><span>:
+</span><span>            </span><span style=color:#b48ead;>break</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>switch</span><span>(</span><span style=color:#bf616a;>fork</span><span>()){
+</span><span>        </span><span style=color:#b48ead;>case </span><span>-</span><span style=color:#d08770;>1</span><span>:
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error fork</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        </span><span style=color:#b48ead;>case </span><span style=color:#d08770;>0</span><span>:
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>                </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>] != STDIN_FILENO){
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>dup2</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>], STDIN_FILENO) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error dup2</span><span>");
+</span><span>                    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>                }
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>                    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>                    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style=color:#bf616a;>execlp</span><span>("</span><span style=color:#a3be8c;>wc</span><span>", "</span><span style=color:#a3be8c;>wc</span><span>", "</span><span style=color:#a3be8c;>-l</span><span>", (</span><span style=color:#b48ead;>char</span><span>*)</span><span style=color:#d08770;>NULL</span><span>);
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error execlp wc</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>        </span><span style=color:#b48ead;>default</span><span>:
+</span><span>            </span><span style=color:#b48ead;>break</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>0</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>close</span><span>(pfd[</span><span style=color:#d08770;>1</span><span>]) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error close</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>wait</span><span>(</span><span style=color:#d08770;>NULL</span><span>) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error wait</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>wait</span><span>(</span><span style=color:#d08770;>NULL</span><span>) == -</span><span style=color:#d08770;>1</span><span>){
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>error wait</span><span>");
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>1</span><span>);
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span>}
+</span></code></pre><h2 id=tong-guo-guan-dao-yu-shellming-ling-jin-xing-tong-xin-popen>通过管道与shell命令进行通信：popen()</h2><p>管道的一个常见用途是执行shell命令并读取其输出或向其发送一些输入。popen()和pclose()函数简化了这个任务。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>bits/types/FILE.h</span><span>>
+</span><span>
+</span><span>FILE *</span><span style=color:#8fa1b3;>popen</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>command</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>mode</span><span>);
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>pclose</span><span>(FILE *</span><span style=color:#bf616a;>stream</span><span>);
+</span></code></pre><p>popen()成功时返回可供stdio库函数使用的<strong>文件流指针</strong>，当发生错误时（如mode不是r或w，创建管道失败，或通过fork()创建子进程失败），popen()会返回NULL并设置errno以标示出发生错误的原因。<p>popen()函数<strong>创建了一个管道</strong>，然后创建了一个子进程来执行shell，而shell又创建了一个子进程来执行command字符串。mode参数是一个字符串，它确定调用进程是从管道中读取数据（mode是r）还是将数据写入到管道中（mode是w）。<p>mode的取值确定了所执行的命令的标准输出是连接到管道的写入端还是将其标准输入连接到管道的读取端。<p><img alt=image-20210131174301562 src=image-20210131174301562.png><p>与使用pipe()创建的管道一样，当从管道中读取数据时，调用进程在command关闭管道的写入端之后会看到文件结束；当向管道写入数据时，如果command已经关闭了管道的读取端，那么调用进程会收到SIGPIPE信号并得到EPIPE错误。<p>一旦I/O结束之后，可以使用pclose()函数关闭管道并<strong>等待</strong>子进程中的shell终止。（fclose()函数不等待子进程）。pclose()在成功时会返回子进程中shell的终止状态。如果无法执行shell，那么pclose()会返回一个值就像子进程中的shell通过调用_exit(127)来终止一样。如果发生了其它错误（如无法取得终止状态），pclose()返回-1。<blockquote><p><strong>未读：system()和popen()以及pclose()的异同</strong>**</blockquote><p>程序示例：使用popen()通配文件描述符<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>ctype.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>limits.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>bits/types/FILE.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdbool.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>limits.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>POPEN_FMT "</span><span style=color:#a3be8c;>/bin/ls -d </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> 2> /dev/null</span><span>"
+</span><span style=color:#b48ead;>#define </span><span>PAT_SIZE </span><span style=color:#d08770;>50
+</span><span style=color:#b48ead;>#define </span><span>PCMD_BUF_SIZE (sizeof(POPEN_FMT) + PAT_SIZE)
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> pat[PAT_SIZE];
+</span><span>    </span><span style=color:#b48ead;>char</span><span> popenCmd[PCMD_BUF_SIZE];
+</span><span>    FILE *fp;
+</span><span>    </span><span style=color:#b48ead;>bool</span><span> badPattern;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> len, status, fileCnt, j;
+</span><span>    </span><span style=color:#b48ead;>char</span><span> pathname[PATH_MAX];
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(;;)
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>pattren: </span><span>");
+</span><span>        </span><span style=color:#96b5b4;>fflush</span><span>(stdout);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#96b5b4;>fgets</span><span>(pat, PAT_SIZE, stdin) == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>            </span><span style=color:#b48ead;>break</span><span>;
+</span><span>        len = </span><span style=color:#96b5b4;>strlen</span><span>(pat);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(len <= </span><span style=color:#d08770;>1</span><span>)
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(pat[len - </span><span style=color:#d08770;>1</span><span>] == '</span><span style=color:#96b5b4;>\n</span><span>')
+</span><span>            pat[len - </span><span style=color:#d08770;>1</span><span>] = '</span><span style=color:#96b5b4;>\0</span><span>';
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>for </span><span>(j = </span><span style=color:#d08770;>0</span><span>, badPattern = </span><span style=color:#d08770;>false</span><span>; j < len && !badPattern; ++j)
+</span><span>        {
+</span><span>            </span><span style=color:#b48ead;>if </span><span>(!</span><span style=color:#96b5b4;>isalnum</span><span>((</span><span style=color:#b48ead;>unsigned char</span><span>)pat[j]) &&
+</span><span>                </span><span style=color:#96b5b4;>strchr</span><span>("</span><span style=color:#a3be8c;>_*?[^-]).</span><span>", pat[j]) == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>                badPattern = </span><span style=color:#d08770;>true</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(badPattern)
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>Bad pattern character: </span><span style=color:#d08770;>%c</span><span style=color:#96b5b4;>\n</span><span>", pat[j - </span><span style=color:#d08770;>1</span><span>]);
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(popenCmd, PCMD_BUF_SIZE, POPEN_FMT, pat);
+</span><span>        popenCmd[PCMD_BUF_SIZE - </span><span style=color:#d08770;>1</span><span>] = '</span><span style=color:#96b5b4;>\0</span><span>';
+</span><span>
+</span><span>        fp = </span><span style=color:#bf616a;>popen</span><span>(popenCmd, "</span><span style=color:#a3be8c;>r</span><span>");
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(fp == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>popen() failed</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>
+</span><span>        fileCnt = </span><span style=color:#d08770;>0</span><span>;
+</span><span>        </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#96b5b4;>fgets</span><span>(pathname, PATH_MAX, fp) != </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span>", pathname);
+</span><span>            fileCnt++;
+</span><span>        }
+</span><span>
+</span><span>        status = </span><span style=color:#bf616a;>pclose</span><span>(fp);
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("    </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> matching file</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", fileCnt, (fileCnt != </span><span style=color:#d08770;>1</span><span>) ? "</span><span style=color:#a3be8c;>s</span><span>" : "");
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>    pclose() status = </span><span style=color:#d08770;>%#x</span><span style=color:#96b5b4;>\n</span><span>", (</span><span style=color:#b48ead;>unsigned int</span><span>)status);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(status != -</span><span style=color:#d08770;>1</span><span>)
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#96b5b4;>\t</span><span>");
+</span><span>            </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>WIFEXITED</span><span>(status))
+</span><span>            {
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>child exited, status=</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>WEXITSTATUS</span><span>(status));
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>else if </span><span>(</span><span style=color:#bf616a;>WIFSIGNALED</span><span>(status))
+</span><span>            {
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>child killed by signal </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> (</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>)</span><span>",
+</span><span>                       </span><span style=color:#bf616a;>WTERMSIG</span><span>(status), </span><span style=color:#bf616a;>strsignal</span><span>(</span><span style=color:#bf616a;>WTERMSIG</span><span>(status)));
+</span><span style=color:#b48ead;>#ifdef</span><span> WCOREDUMP </span><span style=color:#65737e;>/* Not in SUSv3, may be absent on some systems */
+</span><span>                </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>WCOREDUMP</span><span>(status))
+</span><span>                    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;> (core dumped)</span><span>");
+</span><span style=color:#b48ead;>#endif
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>else if </span><span>(</span><span style=color:#bf616a;>WIFSTOPPED</span><span>(status))
+</span><span>            {
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>child stopped by signal </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> (</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>)</span><span style=color:#96b5b4;>\n</span><span>",
+</span><span>                       </span><span style=color:#bf616a;>WSTOPSIG</span><span>(status), </span><span style=color:#bf616a;>strsignal</span><span>(</span><span style=color:#bf616a;>WSTOPSIG</span><span>(status)));
+</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span> WIFCONTINUED </span><span style=color:#65737e;>/* SUSv3 has this, but older Linux versions and \
+</span><span style=color:#65737e;>                    some other UNIX implementations don't */
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>else if </span><span>(</span><span style=color:#bf616a;>WIFCONTINUED</span><span>(status))
+</span><span>            {
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>child continued</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span style=color:#b48ead;>#endif
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>else
+</span><span>            { </span><span style=color:#65737e;>/* Should never happen */
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>what happened to this child? (status=</span><span style=color:#d08770;>%x</span><span style=color:#a3be8c;>)</span><span style=color:#96b5b4;>\n</span><span>",
+</span><span>                       (</span><span style=color:#b48ead;>unsigned int</span><span>)status);
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span>}
+</span></code></pre><h2 id=guan-dao-he-stdiohuan-chong>管道和stdio缓冲</h2><p>由于popen()调用返回的文件流指针没有引用一个终端，因此stdio库会对这种文件流应用<strong>块缓冲</strong>。<p>当将mode的值设置为w来调用popen()时：默认情况下只有当stdio缓冲器被充满或使用pclose()关闭管道之后输出才会被发送到管道另一端的子进程。如果需要确保子进程能够立即从管道中接收数据，那么就需要定期调用fflush()或使用setbuf(fp, NULL)调用禁用stdio缓冲。<blockquote><p>当使用pipe()创建管道，然后使用fdopen()获取一个与管道的写入端对应的stdio流时也可以使用这项技术</blockquote><p>当将mode的值设置为r来调用popen()时：如果子进程（写入数据的进程）正在使用stdio库，那么除非调用进程显示调用了fflush()或使用setbuf(fp, NULL)调用禁用stdio缓冲，子进程的输出只有在子进程填满stdio缓冲器或调用了fclose()之后才会对调用进程可用。（使用pipe()创建的管道也适用该规则）<p>如果无法修改源代码，则可以适用伪终端来替换管道。一个伪终端是一个IPC通道，对进程来讲它就像是一个终端。其结果是stdio库会逐行输出缓冲器中的数据。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

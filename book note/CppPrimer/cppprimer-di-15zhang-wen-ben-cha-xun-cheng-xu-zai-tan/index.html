@@ -1,0 +1,267 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/book note/CppPrimer/cppprimer-di-15zhang-wen-ben-cha-xun-cheng-xu-zai-tan/">CppPrimer-第15章-文本查询程序再探</a></h1><div class=post-meta-inline><span class=post-date> 2018-06-20 </span></div><div class=post-content><h2 id=ding-yi-queryresult>定义QueryResult</h2><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>// Created by modao on 2021-01-6//</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>#ifndef</span><span> TEXT_QUERY_QUERYRESULT_H</span><span>
+</span><span style=color:#b48ead;>#define </span><span>TEXT_QUERY_QUERYRESULT_H</span><span>
+</span><span>
+</span><span>std::string </span><span style=color:#8fa1b3;>make_plural</span><span>(size_t </span><span style=color:#bf616a;>ctr</span><span>, </span><span style=color:#b48ead;>const</span><span> std::string &</span><span style=color:#bf616a;>word</span><span>, </span><span style=color:#b48ead;>const</span><span> std::string </span><span style=color:#bf616a;>ending</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span>(ctr == </span><span style=color:#d08770;>1</span><span>)? word: word + ending;</span><span>
+</span><span>}</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>QueryResult </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> std::ostream </span><span>&</span><span style=color:#eff1f5;>print(std::ostream</span><span>&</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> QueryResult</span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>using </span><span style=color:#eff1f5;>line_no </span><span>=</span><span style=color:#eff1f5;> std::vector&LTstd::string>::size_type;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>QueryResult</span><span style=color:#eff1f5;>(std::string </span><span style=color:#bf616a;>s</span><span style=color:#eff1f5;>,</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>                std::shared_ptr&LTstd::set&LTline_no>> </span><span style=color:#bf616a;>p</span><span style=color:#eff1f5;>,</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>                std::shared_ptr&LTstd::vector&LTstd::string>> </span><span style=color:#bf616a;>f</span><span style=color:#eff1f5;>):</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>                </span><span style=color:#bf616a;>sought</span><span style=color:#eff1f5;>(s), </span><span style=color:#bf616a;>lines</span><span style=color:#eff1f5;>(p), </span><span style=color:#bf616a;>file</span><span style=color:#eff1f5;>(f) { }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::shared_ptr&LTstd::vector&LTstd::string>> </span><span style=color:#8fa1b3;>get_file</span><span style=color:#eff1f5;>(){</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> file;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::set&LTline_no>::iterator </span><span style=color:#8fa1b3;>begin</span><span style=color:#eff1f5;>(){</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> lines-></span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::set&LTline_no>::iterator </span><span style=color:#8fa1b3;>end</span><span style=color:#eff1f5;>(){</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> lines-></span><span style=color:#bf616a;>end</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::string sought;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::shared_ptr&LTstd::set&LTline_no>> lines;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::shared_ptr&LTstd::vector&LTstd::string>> file;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span>std::ostream &</span><span style=color:#8fa1b3;>print</span><span>(std::ostream &</span><span style=color:#bf616a;>os</span><span>, </span><span style=color:#b48ead;>const</span><span> QueryResult &</span><span style=color:#bf616a;>qr</span><span>){</span><span>
+</span><span>    os << qr.</span><span style=color:#bf616a;>sought </span><span><< "</span><span style=color:#a3be8c;> occurs </span><span>" << qr.</span><span style=color:#bf616a;>lines</span><span>-></span><span style=color:#bf616a;>size</span><span>() << ' '</span><span>
+</span><span>       << </span><span style=color:#bf616a;>make_plural</span><span>(qr.</span><span style=color:#bf616a;>lines</span><span>-></span><span style=color:#bf616a;>size</span><span>(), "</span><span style=color:#a3be8c;>time</span><span>", "</span><span style=color:#a3be8c;>s</span><span>") << std::endl;</span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>auto</span><span> num : *qr.</span><span style=color:#bf616a;>lines</span><span>)</span><span>
+</span><span>        os << "</span><span style=color:#96b5b4;>\t</span><span style=color:#a3be8c;>(line </span><span>" << num + </span><span style=color:#d08770;>1 </span><span><< "</span><span style=color:#a3be8c;>) </span><span>"</span><span>
+</span><span>           << *(qr.</span><span style=color:#bf616a;>file</span><span>-></span><span style=color:#bf616a;>begin</span><span>() + num) << std::endl;</span><span>
+</span><span>    </span><span style=color:#b48ead;>return</span><span> os;</span><span>
+</span><span>}</span><span>
+</span><span style=color:#b48ead;>#endif </span><span style=color:#65737e;>//TEXT_QUERY_QUERYRESULT_H</span><span style=color:#65737e;>
+</span></code></pre><h2 id=ding-yi-textquery>定义TextQuery</h2><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>// Created by modao on 2021-01-6//</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>#ifndef</span><span> TEXT_QUERY_TEXTQUERY_H</span><span>
+</span><span style=color:#b48ead;>#define </span><span>TEXT_QUERY_TEXTQUERY_H</span><span>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>QueryResult.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>TextQuery </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>using </span><span style=color:#eff1f5;>line_no </span><span>=</span><span style=color:#eff1f5;> std::vector&LTstd::string>::size_type;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>TextQuery</span><span style=color:#eff1f5;>(std::ifstream</span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    QueryResult </span><span style=color:#8fa1b3;>query</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::string</span><span>&</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::shared_ptr&LTstd::vector&LTstd::string>> file;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::map&LTstd::string, std::shared_ptr&LTstd::set&LTline_no>>> wm;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>TextQuery::</span><span style=color:#8fa1b3;>TextQuery</span><span>(std::ifstream &</span><span style=color:#bf616a;>is</span><span>): </span><span style=color:#bf616a;>file</span><span>(</span><span style=color:#b48ead;>new</span><span> std::vector&LTstd::string>) {</span><span>
+</span><span>    std::string text;</span><span>
+</span><span>    </span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#bf616a;>getline</span><span>(is, text)){</span><span>
+</span><span>        file-></span><span style=color:#bf616a;>push_back</span><span>(text);</span><span>
+</span><span>        </span><span style=color:#b48ead;>int</span><span> n = file-></span><span style=color:#bf616a;>size</span><span>() - </span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>        std::istringstream </span><span style=color:#bf616a;>line</span><span>(text);</span><span>
+</span><span>        std::string word;</span><span>
+</span><span>        </span><span style=color:#b48ead;>while</span><span>(line >> word){</span><span>
+</span><span>            </span><span style=color:#b48ead;>auto </span><span>&lines = wm[word];</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(!lines)</span><span>
+</span><span>                lines.</span><span style=color:#bf616a;>reset</span><span>(</span><span style=color:#b48ead;>new</span><span> std::set&LTline_no>);</span><span>
+</span><span>            lines-></span><span style=color:#bf616a;>insert</span><span>(n);</span><span>
+</span><span>        }</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span><span>QueryResult TextQuery::</span><span style=color:#8fa1b3;>query</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &</span><span style=color:#bf616a;>sought</span><span>) </span><span style=color:#b48ead;>const </span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>static</span><span> std::shared_ptr&LTstd::set&LTline_no>> </span><span style=color:#bf616a;>nodata</span><span>(</span><span style=color:#b48ead;>new</span><span> std::set&LTline_no>);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> loc = wm.</span><span style=color:#bf616a;>find</span><span>(sought);</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(loc == wm.</span><span style=color:#bf616a;>end</span><span>())</span><span>
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>QueryResult</span><span>(sought, nodata, file);</span><span>
+</span><span>    </span><span style=color:#b48ead;>else</span><span>
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>QueryResult</span><span>(sought, loc-></span><span style=color:#bf616a;>second</span><span>, file);</span><span>
+</span><span>}</span><span>
+</span><span style=color:#b48ead;>#endif </span><span style=color:#65737e;>//TEXT_QUERY_TEXTQUERY_H</span><span style=color:#65737e;>
+</span></code></pre><h2 id=ding-yi-queryjie-kou>定义Query接口</h2><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>// Created by modao on 2021-01-7//</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>#ifndef</span><span> TEXT_QUERY_QUERY_H</span><span>
+</span><span style=color:#b48ead;>#define </span><span>TEXT_QUERY_QUERY_H</span><span>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>TextQuery.h</span><span>"</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Query_base </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend class</span><span style=color:#eff1f5;> Query;</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>protected</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>using </span><span style=color:#eff1f5;>line_no </span><span>=</span><span style=color:#eff1f5;> TextQuery::line_no;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>virtual </span><span style=color:#8fa1b3;>~Query_base</span><span style=color:#eff1f5;>() </span><span>= </span><span style=color:#b48ead;>default</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>virtual</span><span style=color:#eff1f5;> QueryResult </span><span style=color:#8fa1b3;>eval</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> TextQuery</span><span>&</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>virtual</span><span style=color:#eff1f5;> std::string </span><span style=color:#8fa1b3;>rep</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Query </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> Query </span><span style=color:#b48ead;>operator</span><span>~</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> Query </span><span style=color:#b48ead;>operator</span><span>|</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> Query </span><span style=color:#b48ead;>operator</span><span>&</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Query</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::string</span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    QueryResult </span><span style=color:#8fa1b3;>eval</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> TextQuery </span><span>&</span><span style=color:#bf616a;>t</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> q-></span><span style=color:#bf616a;>eval</span><span style=color:#eff1f5;>(t);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::string </span><span style=color:#8fa1b3;>rep</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> q-></span><span style=color:#bf616a;>rep</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> std::ostream </span><span>&</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>operator<<</span><span style=color:#eff1f5;>(std::ostream </span><span>&</span><span style=color:#bf616a;>os</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>query</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> os </span><span><<</span><span style=color:#eff1f5;> query.</span><span style=color:#bf616a;>rep</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Query</span><span style=color:#eff1f5;>(std::shared_ptr&LTQuery_base> </span><span style=color:#bf616a;>query</span><span style=color:#eff1f5;>) : </span><span style=color:#bf616a;>q</span><span style=color:#eff1f5;>(query){ }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::shared_ptr&LTQuery_base> q;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>WordQuery</span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>Query_base </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend class</span><span style=color:#eff1f5;> Query;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>WordQuery</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> std::string </span><span>&</span><span style=color:#bf616a;>s</span><span style=color:#eff1f5;>) : </span><span style=color:#bf616a;>query_word</span><span style=color:#eff1f5;>(s){}</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    QueryResult </span><span style=color:#8fa1b3;>eval</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> TextQuery </span><span>&</span><span style=color:#bf616a;>t</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> t.</span><span style=color:#bf616a;>query</span><span style=color:#eff1f5;>(query_word);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::string </span><span style=color:#8fa1b3;>rep</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> query_word;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::string query_word;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span style=color:#b48ead;>inline </span><span>Query::</span><span style=color:#8fa1b3;>Query</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &</span><span style=color:#bf616a;>s</span><span>):</span><span style=color:#bf616a;>q</span><span>(</span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>WordQuery</span><span>(s)) {}</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>NotQuery</span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>Query_base</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> Query </span><span style=color:#b48ead;>operator</span><span>~</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>NotQuery</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>q</span><span style=color:#eff1f5;>):</span><span style=color:#bf616a;>query</span><span style=color:#eff1f5;>(q){}</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::string </span><span style=color:#8fa1b3;>rep</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return </span><span>"</span><span style=color:#a3be8c;>~(</span><span>" +</span><span style=color:#eff1f5;> query.</span><span style=color:#bf616a;>rep</span><span style=color:#eff1f5;>() </span><span>+ "</span><span style=color:#a3be8c;>)</span><span>"</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    QueryResult </span><span style=color:#8fa1b3;>eval</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> TextQuery </span><span>&</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    Query query;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span style=color:#b48ead;>inline</span><span> Query </span><span style=color:#8fa1b3;>operator~</span><span>(</span><span style=color:#b48ead;>const</span><span> Query &</span><span style=color:#bf616a;>operand</span><span>){</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span>std::</span><span style=color:#bf616a;>shared_ptr</span><span>&LTQuery_base>(</span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>NotQuery</span><span>(operand));</span><span>
+</span><span>}</span><span>
+</span><span>QueryResult</span><span>
+</span><span>NotQuery::</span><span style=color:#8fa1b3;>eval</span><span>(</span><span style=color:#b48ead;>const</span><span> TextQuery &</span><span style=color:#bf616a;>text</span><span>) </span><span style=color:#b48ead;>const </span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> result = query.</span><span style=color:#bf616a;>eval</span><span>(text);</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> ret_lines = std::</span><span style=color:#bf616a;>make_shared</span><span>&LTstd::set&LTline_no>>();</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> beg = result.</span><span style=color:#bf616a;>begin</span><span>(), end = result.</span><span style=color:#bf616a;>end</span><span>();</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> sz = result.</span><span style=color:#bf616a;>get_file</span><span>()-></span><span style=color:#bf616a;>size</span><span>();</span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(size_t n = </span><span style=color:#d08770;>0</span><span>; n != sz; ++n){</span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(beg == end || *beg != n)</span><span>
+</span><span>            ret_lines-></span><span style=color:#bf616a;>insert</span><span>(n);</span><span>
+</span><span>        </span><span style=color:#b48ead;>else if</span><span>(beg != end)</span><span>
+</span><span>            ++beg;</span><span>
+</span><span>    }</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>QueryResult</span><span>(</span><span style=color:#bf616a;>rep</span><span>(), ret_lines, result.</span><span style=color:#bf616a;>get_file</span><span>());</span><span>
+</span><span>}</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>BinaryQuery</span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>Query_base </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>protected</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>BinaryQuery</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>l</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>r</span><span style=color:#eff1f5;>, std::string </span><span style=color:#bf616a;>s</span><span style=color:#eff1f5;>):</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>lhs</span><span style=color:#eff1f5;>(l), </span><span style=color:#bf616a;>rhs</span><span style=color:#eff1f5;>(r), </span><span style=color:#bf616a;>opSym</span><span style=color:#eff1f5;>(s){}</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::string </span><span style=color:#8fa1b3;>rep</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return </span><span>"</span><span style=color:#a3be8c;>(</span><span>" +</span><span style=color:#eff1f5;> lhs.</span><span style=color:#bf616a;>rep</span><span style=color:#eff1f5;>() </span><span>+ " "</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>                    </span><span>+</span><span style=color:#eff1f5;>opSym </span><span>+ " "</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>                    </span><span>+</span><span style=color:#eff1f5;>rhs.</span><span style=color:#bf616a;>rep</span><span style=color:#eff1f5;>() </span><span>+ "</span><span style=color:#a3be8c;>)</span><span>"</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    Query lhs, rhs;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    std::string opSym;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>AndQuery</span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>BinaryQuery</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> Query </span><span style=color:#b48ead;>operator</span><span>&</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>AndQuery</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>left</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>right</span><span style=color:#eff1f5;>):</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>BinaryQuery</span><span style=color:#eff1f5;>(left, right, </span><span>"</span><span style=color:#a3be8c;>&</span><span>"</span><span style=color:#eff1f5;>){}</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    QueryResult </span><span style=color:#8fa1b3;>eval</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> TextQuery</span><span>&</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span style=color:#b48ead;>inline</span><span> Query </span><span style=color:#8fa1b3;>operator&</span><span>(</span><span style=color:#b48ead;>const</span><span> Query &</span><span style=color:#bf616a;>lhs</span><span>, </span><span style=color:#b48ead;>const</span><span> Query &</span><span style=color:#bf616a;>rhs</span><span>){</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span>std::</span><span style=color:#bf616a;>shared_ptr</span><span>&LTQuery_base>(</span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>AndQuery</span><span>(lhs, rhs));</span><span>
+</span><span>}</span><span>
+</span><span>QueryResult</span><span>
+</span><span>AndQuery::</span><span style=color:#8fa1b3;>eval</span><span>(</span><span style=color:#b48ead;>const</span><span> TextQuery &</span><span style=color:#bf616a;>text</span><span>) </span><span style=color:#b48ead;>const </span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> left = lhs.</span><span style=color:#bf616a;>eval</span><span>(text), right = rhs.</span><span style=color:#bf616a;>eval</span><span>(text);</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> ret_lines = std::</span><span style=color:#bf616a;>make_shared</span><span>&LTstd::set&LTline_no>>();</span><span>
+</span><span>    std::</span><span style=color:#bf616a;>set_intersection</span><span>(left.</span><span style=color:#bf616a;>begin</span><span>(), left.</span><span style=color:#bf616a;>end</span><span>(),</span><span>
+</span><span>                    right.</span><span style=color:#bf616a;>begin</span><span>(), right.</span><span style=color:#bf616a;>end</span><span>(),</span><span>
+</span><span>                    </span><span style=color:#bf616a;>inserter</span><span>(*ret_lines, ret_lines-></span><span style=color:#bf616a;>begin</span><span>()));</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>QueryResult</span><span>(</span><span style=color:#bf616a;>rep</span><span>(), ret_lines, left.</span><span style=color:#bf616a;>get_file</span><span>());</span><span>
+</span><span>}</span><span>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>OrQuery</span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>BinaryQuery</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend</span><span style=color:#eff1f5;> Query </span><span style=color:#b48ead;>operator</span><span>|</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query</span><span>&</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>OrQuery</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>left</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Query </span><span>&</span><span style=color:#bf616a;>right</span><span style=color:#eff1f5;>):</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>BinaryQuery</span><span style=color:#eff1f5;>(left, right, </span><span>"</span><span style=color:#a3be8c;>|</span><span>"</span><span style=color:#eff1f5;>){}</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    QueryResult </span><span style=color:#8fa1b3;>eval</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> TextQuery</span><span>&</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span style=color:#b48ead;>inline</span><span> Query </span><span style=color:#8fa1b3;>operator|</span><span>(</span><span style=color:#b48ead;>const</span><span> Query &</span><span style=color:#bf616a;>lhs</span><span>, </span><span style=color:#b48ead;>const</span><span> Query &</span><span style=color:#bf616a;>rhs</span><span>){</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span>std::</span><span style=color:#bf616a;>shared_ptr</span><span>&LTQuery_base>(</span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>OrQuery</span><span>(lhs, rhs));</span><span>
+</span><span>}</span><span>
+</span><span>QueryResult</span><span>
+</span><span>OrQuery::</span><span style=color:#8fa1b3;>eval</span><span>(</span><span style=color:#b48ead;>const</span><span> TextQuery& </span><span style=color:#bf616a;>text</span><span>) </span><span style=color:#b48ead;>const</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> right = rhs.</span><span style=color:#bf616a;>eval</span><span>(text), left = lhs.</span><span style=color:#bf616a;>eval</span><span>(text);</span><span>
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> ret_lines =</span><span>
+</span><span>            std::</span><span style=color:#bf616a;>make_shared</span><span>&LTstd::set&LTline_no>>(left.</span><span style=color:#bf616a;>begin</span><span>(), left.</span><span style=color:#bf616a;>end</span><span>());</span><span>
+</span><span>    ret_lines-></span><span style=color:#bf616a;>insert</span><span>(right.</span><span style=color:#bf616a;>begin</span><span>(), right.</span><span style=color:#bf616a;>end</span><span>());</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>QueryResult</span><span>(</span><span style=color:#bf616a;>rep</span><span>(), ret_lines, left.</span><span style=color:#bf616a;>get_file</span><span>());</span><span>
+</span><span>}</span><span>
+</span><span style=color:#b48ead;>#endif </span><span style=color:#65737e;>//TEXT_QUERY_QUERY_H</span><span style=color:#65737e;>
+</span></code></pre><h2 id=bian-xie-mainhan-shu>编写main函数</h2><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fstream</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>memory</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>map</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>set</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>algorithm</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sstream</span><span>></span><span>
+</span><span>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>Query.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>runQueries</span><span>(std::ifstream &</span><span style=color:#bf616a;>infile</span><span>){</span><span>
+</span><span>    TextQuery </span><span style=color:#bf616a;>tq</span><span>(infile);</span><span>
+</span><span>    </span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>true</span><span>){</span><span>
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>enter word to look for</span><span>"<< std::endl;</span><span>
+</span><span>        std::string s1,s2,s3;</span><span>
+</span><span>        std::cin >> s1 >> s2 >> s3;</span><span>
+</span><span>
+</span><span>        Query </span><span style=color:#bf616a;>q0</span><span>(s1);</span><span>
+</span><span>        Query q1=~</span><span style=color:#bf616a;>Query</span><span>(s1);</span><span>
+</span><span>        Query q2=</span><span style=color:#bf616a;>Query</span><span>(s1)|</span><span style=color:#bf616a;>Query</span><span>(s2);</span><span>
+</span><span>        Query q3=</span><span style=color:#bf616a;>Query</span><span>(s1)&</span><span style=color:#bf616a;>Query</span><span>(s2);</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>print</span><span>(std::cout, q0.</span><span style=color:#bf616a;>eval</span><span>(tq)) << std::endl;</span><span>
+</span><span>        </span><span style=color:#bf616a;>print</span><span>(std::cout, q1.</span><span style=color:#bf616a;>eval</span><span>(tq)) << std::endl;</span><span>
+</span><span>        </span><span style=color:#bf616a;>print</span><span>(std::cout, q2.</span><span style=color:#bf616a;>eval</span><span>(tq)) << std::endl;</span><span>
+</span><span>        </span><span style=color:#bf616a;>print</span><span>(std::cout, q3.</span><span style=color:#bf616a;>eval</span><span>(tq)) << std::endl;</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>() {</span><span>
+</span><span>    </span><span style=color:#65737e;>//必须使用绝对路径</span><span style=color:#65737e;>
+</span><span>    std::ifstream </span><span style=color:#bf616a;>file</span><span>("</span><span style=color:#a3be8c;>E:</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>clion_workspace</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>Text_query</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>file.txt</span><span>");</span><span>
+</span><span>    </span><span style=color:#bf616a;>runQueries</span><span>(file);</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=cmakewen-jian>cmake文件</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cmake_minimum_required(VERSION 3.12)</span><span>
+</span><span>project(Text_query)</span><span>
+</span><span>
+</span><span>set(CMAKE_CXX_STANDARD 20)</span><span>
+</span><span>
+</span><span>add_executable(Text_query main.cpp TextQuery.h QueryResult.h Query.h)</span><span>
+</span></code></pre><h2 id=file-txtwen-jian>file.txt文件</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>Alice Emma has long flowing red hair.</span><span>
+</span><span>Her Daddy says when the wind blows</span><span>
+</span><span>through her hair, it looks almost alive,</span><span>
+</span><span>like a fiery bird in flight.</span><span>
+</span><span>A beautiful fiery bird, he tells her,</span><span>
+</span><span>magical but untamed.</span><span>
+</span><span>“Daddy, shush, there is no such thing,”</span><span>
+</span><span>she tells him, at the same time wanting</span><span>
+</span><span>him to tell her more.</span><span>
+</span><span>Shyly, she asks, “I mean, Daddy, is there?”</span><span>
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

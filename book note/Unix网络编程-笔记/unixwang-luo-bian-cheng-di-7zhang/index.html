@@ -1,0 +1,198 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/book note/Unix网络编程-笔记/unixwang-luo-bian-cheng-di-7zhang/">Unix网络编程-第7章 套接字选项</a></h1><div class=post-meta-inline><span class=post-date> 2019-12-26 </span></div><div class=post-content><p>第7章 套接字选项<h2 id=7-1-gai-shu>7.1 概述</h2><p>获取和设置套接字选项的方法：<ul><li>getsockopt和setsockopt函数<li>fcntl函数<li>ioctl函数</ul><h2 id=7-2-getsockopthe-setsockopthan-shu>7.2 getsockopt和setsockopt函数</h2><p>这两个函数仅用于套接字：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>>
+</span><span style=color:#65737e;>//若成功都返回0，出错都返回-1
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>getsockopt</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>level</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>optname</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>optval</span><span>, socklen_t *</span><span style=color:#bf616a;>optlen</span><span>);
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>setsockopt</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>level</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>optname</span><span>, </span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>optval</span><span>, socklen_t </span><span style=color:#bf616a;>optlen</span><span>);
+</span></code></pre><ul><li>sockfd：指向一个打开的套接字<li>level：指定系统中解释选项的代码，为通用套接字代码或某个特定于协议的代码（IPv4、IPv6、TCP、SCTP）<li>optval：指向某个变量（*optval）的指针，大小由最后一个参数指定 <ul><li>setsockopt从中取得选项待设置的新值，是一个值参数<li>getsockopt把已获取的选项当前值存放到*optval中，是一个值-结果参数</ul></ul><p>套接字选项粗分为两大基本类型：<ul><li>启用或禁止某个特性的二元选项（称为标志选项） <ul><li>getsockopt：*optval是一个整数，返回的值为0表示相应选项被禁止，不为0表示相应选项被启用<li>setsockopt：*optval是一个整数，不为0的值表示启用选项，为0的值表示禁止选项</ul><li>取得并返回我们可以设置或检查的特定值的选项（称为值选项）</ul><h2 id=7-3-jian-cha-xuan-xiang-shi-fou-shou-zhi-chi-bing-huo-qu-mo-ren-zhi>7.3 检查选项是否受支持并获取默认值</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>/* include checkopts1 */
+</span><span style=color:#65737e;>/* *INDENT-OFF* */
+</span><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"
+</span><span style=color:#b48ead;>#include    </span><span><</span><span style=color:#a3be8c;>netinet/tcp.h</span><span>>        </span><span style=color:#65737e;>/* for TCP_xxx defines */
+</span><span>
+</span><span style=color:#65737e;>//getsockopt的每个可能的返回值，union类型中都有一个成员
+</span><span style=color:#b48ead;>union </span><span>val {
+</span><span>  </span><span style=color:#b48ead;>int</span><span>                i_val;
+</span><span>  </span><span style=color:#b48ead;>long</span><span>                l_val;
+</span><span>  </span><span style=color:#b48ead;>struct</span><span> linger        linger_val;
+</span><span>  </span><span style=color:#b48ead;>struct</span><span> timeval    timeval_val;
+</span><span>} val;
+</span><span>
+</span><span style=color:#65737e;>//用于输出给定套接字选项的值的4个函数的原型
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_flag</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_int</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_linger</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_timeval</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);
+</span><span>
+</span><span style=color:#65737e;>//定义结构体，声明并定义结构体数组
+</span><span style=color:#b48ead;>struct </span><span>sock_opts {
+</span><span>  </span><span style=color:#b48ead;>const char       </span><span>*opt_str;
+</span><span>  </span><span style=color:#b48ead;>int</span><span>        opt_level;
+</span><span>  </span><span style=color:#b48ead;>int</span><span>        opt_name;
+</span><span>  </span><span style=color:#b48ead;>char   </span><span>*(*opt_val_str)(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#b48ead;>int</span><span>);    </span><span style=color:#65737e;>//函数指针，指向输出函数
+</span><span>} sock_opts[] = {
+</span><span>    { "</span><span style=color:#a3be8c;>SO_BROADCAST</span><span>",        SOL_SOCKET,    SO_BROADCAST,    sock_str_flag },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_DEBUG</span><span>",            SOL_SOCKET,    SO_DEBUG,        sock_str_flag },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_DONTROUTE</span><span>",        SOL_SOCKET,    SO_DONTROUTE,    sock_str_flag },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_ERROR</span><span>",            SOL_SOCKET,    SO_ERROR,        sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_KEEPALIVE</span><span>",        SOL_SOCKET,    SO_KEEPALIVE,    sock_str_flag },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_LINGER</span><span>",            SOL_SOCKET,    SO_LINGER,        sock_str_linger },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_OOBINLINE</span><span>",        SOL_SOCKET,    SO_OOBINLINE,    sock_str_flag },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_RCVBUF</span><span>",            SOL_SOCKET,    SO_RCVBUF,        sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_SNDBUF</span><span>",            SOL_SOCKET,    SO_SNDBUF,        sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_RCVLOWAT</span><span>",        SOL_SOCKET,    SO_RCVLOWAT,    sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_SNDLOWAT</span><span>",        SOL_SOCKET,    SO_SNDLOWAT,    sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_RCVTIMEO</span><span>",        SOL_SOCKET,    SO_RCVTIMEO,    sock_str_timeval },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_SNDTIMEO</span><span>",        SOL_SOCKET,    SO_SNDTIMEO,    sock_str_timeval },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_REUSEADDR</span><span>",        SOL_SOCKET,    SO_REUSEADDR,    sock_str_flag },
+</span><span style=color:#b48ead;>#ifdef</span><span>    SO_REUSEPORT
+</span><span>    { "</span><span style=color:#a3be8c;>SO_REUSEPORT</span><span>",        SOL_SOCKET,    SO_REUSEPORT,    sock_str_flag },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>SO_REUSEPORT</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span>    { "</span><span style=color:#a3be8c;>SO_TYPE</span><span>",            SOL_SOCKET,    SO_TYPE,        sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>SO_USELOOPBACK</span><span>",        SOL_SOCKET,    SO_USELOOPBACK,    sock_str_flag },
+</span><span>    { "</span><span style=color:#a3be8c;>IP_TOS</span><span>",                IPPROTO_IP,    IP_TOS,            sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>IP_TTL</span><span>",                IPPROTO_IP,    IP_TTL,            sock_str_int },
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6_DONTFRAG
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_DONTFRAG</span><span>",        IPPROTO_IPV6,IPV6_DONTFRAG,    sock_str_flag },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_DONTFRAG</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6_UNICAST_HOPS
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_UNICAST_HOPS</span><span>",    IPPROTO_IPV6,IPV6_UNICAST_HOPS,sock_str_int },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_UNICAST_HOPS</span><span>",    </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6_V6ONLY
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_V6ONLY</span><span>",        IPPROTO_IPV6,IPV6_V6ONLY,    sock_str_flag },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_V6ONLY</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span>    { "</span><span style=color:#a3be8c;>TCP_MAXSEG</span><span>",            IPPROTO_TCP,TCP_MAXSEG,        sock_str_int },
+</span><span>    { "</span><span style=color:#a3be8c;>TCP_NODELAY</span><span>",        IPPROTO_TCP,TCP_NODELAY,    sock_str_flag },
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_AUTOCLOSE
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_AUTOCLOSE</span><span>",        IPPROTO_SCTP,SCTP_AUTOCLOSE,sock_str_int },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_AUTOCLOSE</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_MAXBURST
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXBURST</span><span>",        IPPROTO_SCTP,SCTP_MAXBURST,    sock_str_int },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXBURST</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_MAXSEG
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXSEG</span><span>",        IPPROTO_SCTP,SCTP_MAXSEG,    sock_str_int },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXSEG</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_NODELAY
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_NODELAY</span><span>",        IPPROTO_SCTP,SCTP_NODELAY,    sock_str_flag },
+</span><span style=color:#b48ead;>#else
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_NODELAY</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},
+</span><span style=color:#b48ead;>#endif
+</span><span>    { </span><span style=color:#d08770;>NULL</span><span>,                    </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>}
+</span><span>};
+</span><span style=color:#65737e;>/* *INDENT-ON* */
+</span><span style=color:#65737e;>/* end checkopts1 */
+</span><span>
+</span><span style=color:#65737e;>/* include checkopts2 */
+</span><span style=color:#b48ead;>int
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span>                    fd;
+</span><span>    socklen_t            len;
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sock_opts    *ptr;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(ptr = sock_opts; ptr->opt_str != </span><span style=color:#d08770;>NULL</span><span>; ptr++) {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>: </span><span>", ptr->opt_str);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(ptr->opt_val_str == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>(undefined)</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>        </span><span style=color:#b48ead;>else </span><span>{
+</span><span>            </span><span style=color:#b48ead;>switch</span><span>(ptr->opt_level) {
+</span><span>            </span><span style=color:#b48ead;>case</span><span> SOL_SOCKET:
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_IP:
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_TCP:
+</span><span>                fd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_IPV6:
+</span><span>                fd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET6, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;
+</span><span style=color:#b48ead;>#endif
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPPROTO_SCTP
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_SCTP:
+</span><span>                fd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_SEQPACKET, IPPROTO_SCTP);
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;
+</span><span style=color:#b48ead;>#endif
+</span><span>            </span><span style=color:#b48ead;>default</span><span>:
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>Can't create fd for level </span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", ptr->opt_level);
+</span><span>            }
+</span><span>
+</span><span>            len = sizeof(val);
+</span><span>            </span><span style=color:#65737e;>//不支持的选项应该会引发一个ENOPROTOOPT错误
+</span><span>            </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>getsockopt</span><span>(fd, ptr->opt_level, ptr->opt_name,
+</span><span>                           &val, &len) == -</span><span style=color:#d08770;>1</span><span>) {
+</span><span>                </span><span style=color:#bf616a;>err_ret</span><span>("</span><span style=color:#a3be8c;>getsockopt error</span><span>");
+</span><span>            } </span><span style=color:#b48ead;>else </span><span>{
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>default = </span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", (*ptr->opt_val_str)(&val, len));
+</span><span>            }
+</span><span>            </span><span style=color:#bf616a;>close</span><span>(fd);
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span>}
+</span><span style=color:#65737e;>/* end checkopts2 */
+</span><span>
+</span><span style=color:#65737e;>/* include checkopts3 */
+</span><span style=color:#b48ead;>static char</span><span>    strres[</span><span style=color:#d08770;>128</span><span>];
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*
+</span><span style=color:#8fa1b3;>sock_str_flag</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)
+</span><span>{
+</span><span style=color:#65737e;>/* *INDENT-OFF* */
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>int</span><span>))
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(int)</span><span>", len);
+</span><span>    </span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres),
+</span><span>                 "</span><span style=color:#d08770;>%s</span><span>", (ptr->i_val == </span><span style=color:#d08770;>0</span><span>) ? "</span><span style=color:#a3be8c;>off</span><span>" : "</span><span style=color:#a3be8c;>on</span><span>");
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);
+</span><span style=color:#65737e;>/* *INDENT-ON* */
+</span><span>}
+</span><span style=color:#65737e;>/* end checkopts3 */
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*
+</span><span style=color:#8fa1b3;>sock_str_int</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>int</span><span>))
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(int)</span><span>", len);
+</span><span>    </span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#d08770;>%d</span><span>", ptr->i_val);
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*
+</span><span style=color:#8fa1b3;>sock_str_linger</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> linger    *lptr = &ptr->linger_val;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>struct</span><span> linger))
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres),
+</span><span>                 "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(struct linger)</span><span>", len);
+</span><span>    </span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#a3be8c;>l_onoff = </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>, l_linger = </span><span style=color:#d08770;>%d</span><span>",
+</span><span>                 lptr->l_onoff, lptr->l_linger);
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*
+</span><span style=color:#8fa1b3;>sock_str_timeval</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timeval    *tvptr = &ptr->timeval_val;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>struct</span><span> timeval))
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres),
+</span><span>                 "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(struct timeval)</span><span>", len);
+</span><span>    </span><span style=color:#b48ead;>else
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> sec, </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> usec</span><span>",
+</span><span>                 tvptr->tv_sec, tvptr->tv_usec);
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);
+</span><span>}
+</span></code></pre><h2 id=7-4-tao-jie-zi-zhuang-tai>7.4 套接字状态</h2><p>对于某些套接字选项，针对套接字的状态，什么时候设置或获取选项有时序上的考虑。<p>TCP已连接套接字选项从监听套接字继承的选项：SO_DEBUG、SO_DONTROUTE、SO_KEEPALIVE、SO_LINGER、SO_OOBINLINE、SO_RCVBUF、SO_RCVLOWAT、SO_SNDBUF、SO_SNDLOWAT、TCP_MAXSEG和TCP_NODELAY。<p>因为accept一直要到三次握手完成时，才会给服务器返回已连接套接字，如果想在三次握手完成时确保这些套接字选项中的某一个是给已连接套接字设置的，那么必须先给监听套接字设置该选项。<h2 id=7-5-tong-yong-tao-jie-zi-xuan-xiang>7.5 通用套接字选项</h2><p>通用套接字选项是协议无关的，由内核中协议无关代码处理。某些通用套接字选项只能应用到某些特定类型的套接字中。<h3 id=so-broadcasttao-jie-zi-xuan-xiang>SO_BROADCAST套接字选项</h3><p>开启或禁止进程发送广播消息的能力，只有数据报套接字支持广播，并且还必须在支持广播消息的网络上。<h3 id=so-debugtao-jie-zi-xuan-xiang>SO_DEBUG套接字选项</h3><p>仅由TCP支持，开启本选项时，内核将为TCP在该套接字发送和接收的所有分组保留详细跟踪信息。<h3 id=so-dontroutetao-jie-zi-xuan-xiang>SO_DONTROUTE套接字选项</h3><p>本选项规定外出的分组将绕过底层协议的正常路由机制。<h3 id=so-errortao-jie-zi-xuan-xiang>SO_ERROR套接字选项</h3><h2 id=7-6-ipv4tao-jie-zi-xuan-xiang>7.6 ipv4套接字选项</h2><h2 id=7-7-icmpv6tao-jie-zi-xuan-xiang>7.7 icmpv6套接字选项</h2><h2 id=7-8-ipv6tao-jie-zi-xuan-xiang>7.8 ipv6套接字选项</h2><h2 id=7-9-tcptao-jie-zi-xuan-xiang>7.9 tcp套接字选项</h2><h2 id=7-10-sctptao-jie-zi-xuan-xiang>7.10 sctp套接字选项</h2><h2 id=7-11-fcntlhan-shu>7.11 fcntl函数</h2></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

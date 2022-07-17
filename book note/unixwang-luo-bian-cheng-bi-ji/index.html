@@ -1,0 +1,1017 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/book note/unixwang-luo-bian-cheng-bi-ji/">all-unp</a></h1><div class=post-meta-inline><span class=post-date> 2019-12-07 </span></div><div class=post-content><h1 id=di-3zhang-tao-jie-zi-bian-cheng-jian-jie>第3章 套接字编程简介</h1><h2 id=3-2-tao-jie-zi-de-di-zhi-jie-gou>3.2 套接字的地址结构</h2><p>大多数套接字函数都需要一个指向套接字地址结构的指针作为参数。每个协议族都定义自己的套接字地址结构，这些结构的名字均已<code>sockaddr_</code>开头，并以对应每个协议族的唯一后缀结尾。<h3 id=ipv4tao-jie-zi-di-zhi-jie-gou>IPv4套接字地址结构：</h3><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>struct </span><span>in_addr{</span><span>
+</span><span>    in_addr_t          s_addr;</span><span>
+</span><span>};</span><span>
+</span><span style=color:#b48ead;>struct </span><span>sockaddr_in{</span><span>
+</span><span>    uint8_t            sin_len;</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#65737e;>//POSIX规范只需要这个结构中的三个字段</span><span style=color:#65737e;>
+</span><span>    sa_family_t        sin_family;</span><span>
+</span><span>    in_port_t          sin_port;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> in_addr     sin_addr;</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>               sin_zero[</span><span style=color:#d08770;>8</span><span>];</span><span>
+</span><span>};</span><span>
+</span></code></pre><table><thead><tr><th>字段<th>数据类型<th>说明<tbody><tr><td>s_addr<td>in_addr_t<td>至少32位的无符号整数类型<tr><td>sin_port<td>in_port_t<td>至少16位的无符号整数类型<tr><td>sin_family<td>sa_family_t<td>任何无符号整数类型。在支持长度字段的实现中，通常是一个8位无符号整数，在不支持长度字段中，是一个16位的无符号整数</table><p>套接字地址结构仅在给定主机上使用：虽然结构中某些字段用在不同主机之间的通信，但是结构本身并不在主机之间传递。<p>为了让套接字函数能够处理来自任何协议族的套接字地址结构，套接字函数定义的参数中使用指向通用套接字地址结构的指针，使用时再进行类型强制转换<h3 id=tong-yong-tao-jie-zi-di-zhi-jie-gou>通用套接字地址结构：</h3><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>struct </span><span>sockaddr{</span><span>
+</span><span>    uint8_t            sa_len;		</span><span style=color:#65737e;>//该字段只在一些Unix实现中有</span><span style=color:#65737e;>
+</span><span>	    						  	</span><span style=color:#65737e;>//SuSv3标准不做要求，Linux实现也不存在该字段</span><span style=color:#65737e;>
+</span><span>    sa_family_t        sa_family;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>               sa_date[</span><span style=color:#d08770;>14</span><span>];</span><span>
+</span><span>};</span><span>
+</span></code></pre><h3 id=ipv6tao-jie-zi-di-zhi-jie-gou>IPv6套接字地址结构：</h3><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>struct </span><span>in6_addr{</span><span>
+</span><span>    uint8_t            s6_addr[</span><span style=color:#d08770;>16</span><span>];</span><span>
+</span><span>};</span><span>
+</span><span>
+</span><span style=color:#65737e;>//如果系统支持套接字地址结构中的长度字段，则SIN6_LEN常值必须定义</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>#define </span><span>SIN6_LEN</span><span>
+</span><span>
+</span><span style=color:#b48ead;>struct </span><span>sockaddr_in6{</span><span>
+</span><span>    uint8_t            sin6_len;</span><span>
+</span><span>    sa_family_t        sin6_family;</span><span>
+</span><span>    in_port_t          sin6_port;</span><span>
+</span><span>    </span><span>
+</span><span>    uint32_t           sin6_flowinfo;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> in6_addr    sin6_addr;</span><span>
+</span><span>    </span><span>
+</span><span>    uint32_t           sin6_scope_id;</span><span>
+</span><span>}</span><span>
+</span></code></pre><h3 id=xin-de-tong-yong-tao-jie-zi-di-zhi-jie-gou>新的通用套接字地址结构</h3><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>struct </span><span>sockaddr_storage{</span><span>
+</span><span>    uint8_t        ss_len;</span><span>
+</span><span>    sa_family_t    ss_family;</span><span>
+</span><span>}</span><span>
+</span></code></pre><p><strong>套接字地址结构比较：</strong><p><img alt=1579573720073 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E7%BB%93%E6%9E%84.png><h2 id=3-3-zhi-jie-guo-can-shu>3.3 值-结果参数</h2><p>套接字的地址结构总是以引用形式传递给套接字函数的。<p>套接字的长度作为一个参数传递给套接字函数时，其传递方式取决于该结构的传递方向。<p>套接字地址结构可以在两个方向上传递：<ul><li><p>从进程到内核。函数：bind、connect、sendto。</p> <p>这些函数的一个参数是指向套接字地址结构的指针，另一个参数是该结构的整数大小。</p><li><p>从内核到进程。函数：accept、recvfrom、getsockname、getpeername。</p> <p>这些函数的一个参数是指向套接字地址结构的指针，另一个参数是指向表示该结构大小的整数变量的指针（这种类型的参数称为“值-结果”参数）。</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>值-结果传参：</span><span>
+</span><span>当函数被调用时，结构大小是一个值，它告诉内核该结构的大小，这样内核在写该结构时不至于越界。</span><span>
+</span><span>当函数返回时，结构大小又是一个结果，它告诉进程内核在该结构中究竟存储了多少信息。</span><span>
+</span></code></pre></ul><p>当套接字地址结构的长度使用值-结果参数时，如果套接字地址结构是固定长度则从内核返回的值总是那个长度，如果是可变长度，则返回值可能小于该结构的最大长度。<h2 id=3-4-zi-jie-pai-xu-han-shu>3.4 字节排序函数</h2><p>主机字节序：<ul><li>小端字节序：将低序字节存储在起始地址<li>大端字节序：将高序字节存储在起始地址</ul><p><img alt=1579582483045 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E4%B8%BB%E6%9C%BA%E5%AD%97%E8%8A%82%E5%BA%8F.png><p>最高有效位：MSB：most significant bit<p>最低有效位：LSB：least significant bit<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>术语“小端”和“大端”表示：多个字节值的哪一端（小端或大端）存储在该值的起始地址（低地址）。</span><span>
+</span></code></pre><p><strong>网络字节序：大端字节序</strong><p>网络协议必须指定一个<strong>网络字节序</strong>。由于历史原因和POSIX规范的规定，套接字地址结构中的某些字段必须按照网络字节序进行维护。<p>主机字节序和网络字节序之间相互转换使用以下4个函数：<ul><li>s视为一个16位的值，例如TCP或UDP的端口号<li>l视为一个32位的值，例如IPv4地址<li>主机字节序和网络字节序相同的系统中这四个函数定义为空宏</ul><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#65737e;>//主机：host(h)</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>//网络：network(n)</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>//短整型：short(s)</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>//长整型：long(l)</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>netinet/in.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//返回网络字节序的值</span><span style=color:#65737e;>
+</span><span>uint16_t </span><span style=color:#8fa1b3;>htons</span><span>(uint16_t </span><span style=color:#bf616a;>host16bitvalue</span><span>);</span><span>
+</span><span>uint32_t </span><span style=color:#8fa1b3;>htonl</span><span>(uint32_t </span><span style=color:#bf616a;>host32bitvalue</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//返回主机字节序的值</span><span style=color:#65737e;>
+</span><span>uint16_t </span><span style=color:#8fa1b3;>ntohs</span><span>(uint16_t </span><span style=color:#bf616a;>net16bitvalue</span><span>);</span><span>
+</span><span>uint32_t </span><span style=color:#8fa1b3;>ntohl</span><span>(uint32_t </span><span style=color:#bf616a;>net32bitvalue</span><span>);</span><span>
+</span></code></pre><p>因特网另一个重要的约定是<strong>位序</strong>，IPv4首部前32位的位序如下：<p><img alt=1579584598760 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/%E4%BD%8D%E5%BA%8F.png><h2 id=3-5-zi-jie-cao-zuo-han-shu>3.5 字节操作函数</h2><p>操作多字节段的函数有<strong>两组</strong>，它们既不对数据作解释，也不假设数据是以空字节符结束的C字符串。<ul><li><p>第一组函数源于4.2BSD，名字以b（表示字节）开头</p> <pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>strings.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>bzero</span><span>(</span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>dest</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>);</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>bcopy</span><span>(</span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>src</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>dest</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>);</span><span>
+</span><span style=color:#65737e;>//若相等则返回0，否则为非0</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>bcmp</span><span>(</span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>ptr1</span><span>, </span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>ptr2</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>);</span><span>
+</span></code></pre><li><p>第二组函数源于ANSI C标准，名字以men（表示内存）开头</p> <pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//每个函数的最后一个参数都是长度参数</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#8fa1b3;>memset</span><span>(</span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>dest</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>c</span><span>, size_t </span><span style=color:#bf616a;>len</span><span>);</span><span>
+</span><span style=color:#65737e;>//memcpy函数的参数顺序与C的赋值语句顺序相同：dest = src</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#8fa1b3;>memcpy</span><span>(</span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>dest</span><span>, </span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>src</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>);</span><span>
+</span><span style=color:#65737e;>//若相等则返回0，否则</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>//    看第一个不等字节：ptr1 > ptr2，则返回值大于0，否则返回值小于0</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>memcmp</span><span>(</span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>ptr1</span><span>, </span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>ptr2</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>);</span><span>
+</span></code></pre></ul><p>当源字节串与目标字节串重叠时，bcopy能够正确处理，memcpy的操作结果却不可知，这种情况必须改用ANSI C的memmove函数。<p><strong>比较操作是假设两个不等字节均为无符号字符（unsigned char）的情况下完成的。</strong><h2 id=3-6-inet-aton-inet-addrhe-inet-ntoahan-shu>3.6 inet_aton、inet_addr和inet_ntoa函数</h2><p><strong>功能介绍</strong>：在点分十进制数串和它长度为32位的网络字节序二进制值间转换<strong>IPv4地址</strong>。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>arpa/inet.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//若字符串有效，则返回1，否则返回0</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>//如果addrptr指针为空，那么该函数仍然对输入的字符串执行有效性检查，但是不存储任何结果。</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>inet_aton</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>strptr</span><span>, </span><span style=color:#b48ead;>struct</span><span> in_addr *</span><span style=color:#bf616a;>addrptr</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//若字符串有效，则返回32位二进制网络字节序的IPv4地址，否则返回INADDR_NONE</span><span style=color:#65737e;>
+</span><span style=color:#65737e;>//NADDR_NONE常值通常是一个32位均为1的值，这意味着点分十进制数串255.255.255.255不能由该函数处理，因为其二进制值被用来指示函数失败。</span><span style=color:#65737e;>
+</span><span>in_addr_t </span><span style=color:#8fa1b3;>inet_addr</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>strptr</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//返回一个点分十进制数串的指针</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#8fa1b3;>inet_ntoa</span><span>(</span><span style=color:#b48ead;>struct</span><span> in_addr </span><span style=color:#bf616a;>inaddr</span><span>);</span><span>
+</span><span>
+</span></code></pre><h2 id=3-7-inet-ptonhe-inet-ntophan-shu>3.7 inet_pton和inet_ntop函数</h2><p>这两个函数对于IPv4地址和IPv6地址都适用。函数名中p和n分别代表<strong>表达（presentation）<strong>和</strong>数值（numeric）</strong>。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>arpa/inet.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//函数执行成功返回1，表达的格式无效返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>inet_pton</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>family</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>strptr</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>addptr</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//函数执行成功返回指向结果的指针，出错返回NULL</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#8fa1b3;>inet_ntop</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>family</span><span>, </span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>addptr</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>strptr</span><span>, size_t </span><span style=color:#bf616a;>len</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//family参数可以是AF_INET，也可以是AF_INET6，如果以不被支持的地址族作为family参数，两个函数就都返回一个错误，并将errno置为EAFNOSUPPORT</span><span style=color:#65737e;>
+</span></code></pre><h3 id=zong-jie-5ge-han-shu>总结5个函数</h3><p><img alt=1579590914742 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0/3.7%E6%80%BB%E7%BB%93.png><h2 id=3-8-sock-ntophe-xiang-guan-han-shu>3.8 sock_ntop和相关函数</h2><p>本书编写的协议无关性函数。函数名以sock_开头。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#65737e;>//成功返回非空指针，出错返回NULL</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#8fa1b3;>sock_ntop</span><span>(</span><span style=color:#b48ead;>const struct</span><span> sockaddr * </span><span style=color:#bf616a;>sockaddr</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//成功返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>sock_bind_wild</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>family</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//若地址为同一协议族且相同，则返回0，反则返回非0</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>sock_cmp_addr</span><span>(</span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr1</span><span>,</span><span>
+</span><span>                  </span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr2</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//若地址为同一协议族且端口相同，则返回0，反则返回非0</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>sock_cmp_addr</span><span>(</span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr1</span><span>,</span><span>
+</span><span>                  </span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr2</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//返回：若为IPv4或IPv6地址则为非负端口号，否则为-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>sock_get_port</span><span>(</span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//成功返回非空指针，出错返回NULL</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#8fa1b3;>sock_ntop_host</span><span>(</span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>sock_set_addr</span><span>(</span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr</span><span>, </span><span>
+</span><span>                   socklen_t </span><span style=color:#bf616a;>addrlen</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>ptr</span><span>);</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>sock_set_port</span><span>(</span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>sockaddr</span><span>,</span><span>
+</span><span>                   socklen_t </span><span style=color:#bf616a;>addrlen</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>port</span><span>);</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>sock_set_wild</span><span>(sturct sockaddr *</span><span style=color:#bf616a;>sockaddr</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span></code></pre><h2 id=3-9-readn-writenhe-readlinehan-shu>3.9 readn、writen和readline函数</h2><p>字节流套接字上的read和write函数所表现的行为不同于通常文件的I/O。字节流套接字上调用read或write输入或输出的字节数可能比请求的数量少，然而这不是出错状态。原因在于：内核中用于套接字的缓冲区可能已经达到极限。此时需要的是调用者再次调用read或write函数，输入或输出剩余的字节。<p>为了预防万一，不让返回的字节计数值不足，编写了三个函数。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span>ssize_t </span><span style=color:#8fa1b3;>readn</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>filedes</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>buff</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>);</span><span>
+</span><span>ssize_t </span><span style=color:#8fa1b3;>written</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>filedes</span><span>, </span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>buff</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>);</span><span>
+</span><span>ssize_t </span><span style=color:#8fa1b3;>readline</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>filedes</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>buff</span><span>, size_t </span><span style=color:#bf616a;>maxlen</span><span>);</span><span>
+</span></code></pre><h1 id=di-4zhang-ji-ben-tcptao-jie-zi-bian-cheng>第4章 基本TCP套接字编程</h1><h2 id=4-1-gai-shu>4.1 概述</h2><p><strong>TCP客户与服务器进程之间发生的一些典型事件的时间表</strong>:<p><img alt=1579936030580 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.1.png><h2 id=4-2-sockethan-shu>4.2 socket函数</h2><p>为了执行网络I/O，一个进程必须做的第一件事就是：<strong>调用socket函数，指定期望的通信协议类型</strong>。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//成功返回一个小的非负整数值，即套接字描述符（sockfd），若出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>socket</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>family</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>type</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>protocol</span><span>);</span><span>
+</span></code></pre><ul><li>family参数指明协议族（该参数又被称为协议域），是一个常值。</ul><p><img alt=1579936305279 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_2.png><ul><li>type参数指明套接字类型，是一个常值。</ul><p><img alt=1579936393623 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_3.png><ul><li>protocol参数设置为对应协议类型的常值。</ul><p><img alt=1579936706600 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.2_4.png><p><strong>并非所有套接字family和type的组合都是有效的:</strong><p><img alt=1579937354376 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.3_5.png><p>AF_前缀表示地址族，PF_前缀表示协议族。<p><em>历史想法：单个协议族可以支持多个地址族，PF_值用来创建套接字，而AF_值用于套接字地址结构。实际上，支持多个地址族的协议族从来就未实现过，头文件&LTsys/socket.h>中为一给定协议定义的PF_值总是与此协议的AF_值相等。</em><h2 id=4-3-connecthan-shu>4.3 connect函数</h2><p>TCP客户用connect函数来建立与TCP服务器的连接。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//成功返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>connect</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>servaddr</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span></code></pre><ul><li>参数1：由socket函数返回的_套接字描述符_。<li>参数2：一个指向套接字地址结构的指针<li>参数3：套接字地址结构的大小</ul><p><strong>客户在调用connect函数前不必非得调用bind函数，如果需要的话内核会确定源IP地址并选择一个临时端口作为源端口。</strong><h3 id=tcptao-jie-zi>TCP套接字</h3><p>如果是TCP套接字，调用connect函数将激发TCP三次握手过程，连接成功或失败才返回。<p>出错情况：<ol><li><p>ETIMEDOUT错误，未收到SYN分节的响应（超时重传后）。</p><li><p>ECONNREFUSED错误，客户的SYN响应是RST（复位），表明服务器主机在指定的端口上没有进程在等待与之连接。这是一种<strong>硬错误</strong>。客户收到RST后立马返回错误。</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>产生RST的三个条件：</span><span>
+</span><span>1. 目的地为某端口的SYN到达，然而该端口上没有正在监听的服务器</span><span>
+</span><span>2. TCP想取消一个已有的连接</span><span>
+</span><span>3. TCP接收到一个根本不存在的连接上的分节</span><span>
+</span></code></pre><li><p>EHOSTUNREACH~~或ENETUNREACH~~错误，客户发出的SYN在发生的过程中遇到“destination unreachable”（目的地不可到达）ICMP错误。这是一种<strong>软错误</strong>。重传后仍未被响应则返回错误给进程。</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>产生EHOSTUNREACH错误的其他可能情况：</span><span>
+</span><span>1. 按照本地系统的转发表，根本没有到达远程系统的路径</span><span>
+</span><span>2. connect调用根本不等待就返回</span><span>
+</span></code></pre></ol><p>按照TCP状态转换图，connect函数导致当前套接字从CLOSED状态（该套接字自从由socket函数创建以来一直所在的状态）转移到SYN_SENT状态，若成功再转移到ESTABLISHED状态。<p>若connect函数返回失败后，当前套接字必须close不可以再使用，当重新connect之前必须重新调用socket函数。<h2 id=4-4-bindhan-shu>4.4 bind函数</h2><p>把一个本地协议地址赋予一个套接字。对于网际网协议，协议地址是32位的IPv4地址或128位的IPv6地址与16位的TCP或UDP端口号的组合。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//成功返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>bind</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>myaddr</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span></code></pre><ul><li>参数1：由socket函数返回的_套接字描述符_。<li>参数2：一个指向特定协议的地址结构的指针<li>参数3：该地址结构的长度</ul><p><em>函数返回的一个常见错误</em>：EADDRINUSE（“Address already in use”，地址已使用）<h3 id=dui-yu-tcp>对于TCP</h3><p>调用bind函数可以指定一个端口号，或指定一个IP地址，也可以两者都指定，还可以两者都不指定。<ul><li>服务器一般捆绑熟知端口号，远程过程调用（RPC）服务器例外<li>客户一般由内核为套接字选择一个临时端口，除非应用需要一个预留端口<li>客户将一个特定的IP绑定到套接字，则为在该套接字上发送的IP数据报指定了源IP地址<li>服务器将一个特定的IP绑定到套接字，则限定该套接字只接收那些目的地址为该IP地址的客户连接<li>TCP客户通常不把IP地址捆绑到它的套接字上，当连接套接字时，<strong>内核根据外出网络接口来选择源IP地址</strong><li>TCP服务器没有捆绑IP地址，<strong>内核就把客户的SYN的目的地址作为服务器的源IP地址</strong></ul><p><img alt=1579959335440 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.4_2.png><p>IPv4：设置sin_addr和sin_port<p>通配地址由常值INADDR_ANY来指定，其值一般为0，无论主机字节序还是网络字节序值为0都一样，因此使用htonl并非必需。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>struct</span><span> sockaddr_in servaddr;</span><span>
+</span><span>servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);</span><span>
+</span></code></pre><p>IPv6：设置sin6_addr和sin6_port<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>struct</span><span> sockaddr_in6 serv;</span><span>
+</span><span>serv.</span><span style=color:#bf616a;>sin6_addr </span><span>= in6addr_any;</span><span>
+</span><span style=color:#65737e;>//系统预先分配in6addr_any变量并将其初始化为常值IN6ADDR_ANY_INIT</span><span style=color:#65737e;>
+</span></code></pre><p><em>内核为套接字选择临时端口号</em>：调用函数getsockname返回协议地址。<p>进程捆绑非通配IP地址：一个主机提供多个服务，根据IP地址访问相对应的服务页面<h2 id=4-5-listenhan-shu>4.5 listen函数</h2><p>listen函数仅由TCP服务器调用，它做两件事：<ol><li>当socket创建一个套接字时，默认为<strong>主动套接字</strong>，是一个客户套接字，可以调用connect发起连接。listen函数将其转换为<strong>被动套接字</strong>，指示内核应该接受指向该套接字的连接请求。<li>函数的第二个参数规定内核应该为相应套接字排队的<strong>最大连接个数</strong>。<li>根据TCP转换图，调用listen导致套接字从CLOSED状态转换到LISTEN状态。</ol><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//成功返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>listen</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>backlog</span><span>);</span><span>
+</span></code></pre><p>内核为每个监听套接字维护两个队列：<ol><li>未完成连接队列。客户SYN到达服务器但未完成三次握手。<li>已完成连接队列。完成三次握手。</ol><p><img alt=1579965675751 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.5_2.png><p>每当在未完成连接队列中创建一项时，来自监听套接字的参数就复制到即将建立的连接中，连接的创建机制是完成自动的，无需服务器进程插手。<p><img alt=image-20200605103311037 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/image-20200605103311037.png><p>当进程调用accept时，已完成连接队列的队头项返回给进程，如果此队列为空则该进程投入睡眠，直到已完成连接队列放入一项才唤醒。<p><strong>关于两个队列的处理，有几点考虑：</strong><ul><li><p>listen函数的backlog参数<strong>曾经</strong>被规定为两个队列总和的最大值，<em>4.2BSD手册页面定义为：由未处理连接构成的队列可能增长到的最大长度</em></p><li><p>源自Berkeley的实现给backlog增设了一个模糊因子：把它乘以1.5得到未处理队列的最大长度</p><li><p>不要把backlog定义为0</p><li><p>未完成连接队列中任何一项的存留时间是一个RTT（三次握手正常完成的情况下）</p><li><p>历来沿用的样例代码总是给出值为5的backlog</p><li><p>backlog的值为5往往不够，可以通过命令行选项或环境变量覆盖该默认值，若指定值超过内核支持的最大值，则内核将指定的偏大值截成自身支持的最大值，<strong>不返回错误</strong></p><li><p>~~手册和书本历来称：将固定数目的未处理连接排成队列是为了处理服务器进程在相继的accept调用之间处于忙状态的情况。这隐含的意思是：已完成队列通常比未完成队列有更多的项。~~繁忙的服务器表明这是不对的，指定较大的backlog值的理由在于：随着客户SYN分节的到达，未完成连接队列中的项数可能增长，它们等着三次握手的完成。</p><li><p>当客户SYN到达时，若这些队列是满的，TCP就忽略这分节而不发送RST，让客户进行重传</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>客户无法区别响应SYN的RST究竟意味什么，可能情况是：</span><span>
+</span><span>1. 该端口没有服务器在监听</span><span>
+</span><span>2. 该端口有服务器在监听，不过队列满了</span><span>
+</span></code></pre><li><p>三次握手完成后，调用accept之前，到达的数据由服务器TCP排队，最大数据量为相应已连接套接字的接收缓冲区大小</p></ul><p><strong>回味listen的backlog参数的确切含义：它应该指定某个给定套接字上内核为之排队的最大已完成连接数</strong>。对已完成连接数作出限制的目的在于：在监听某个给定套接字的应用进程（不论什么原因）停止<strong>接受</strong>连接的时候，防止内核在该套接字上继续接受新的连接请求（客户的connect）。<h2 id=4-6-accepthan-shu>4.6 accept函数</h2><p>accept函数由TCP服务器调用，用于从已完成连接队列队头返回下一个已完成连接。如果队列为空，那么进程被投入睡眠（假定套接字为默认的阻塞方式）。<pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//成功返回非负描述符，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>accept</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>struct</span><span> sockaddr *</span><span style=color:#bf616a;>cliaddr</span><span>, socklen_t *</span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span></code></pre><p>参数cliaddr和addrlen用来<strong>返回</strong>已连接的对端进程（客户）的协议地址。addrlen是值-结果参数。<p>accept成功返回一个由内核自动生成的_已连接套接字描述符_，代表与所返回客户的TCP连接。当服务器完成对某个给定的客户的服务时，相应的已连接套接字就被关闭。<p>accept函数的第一个参数为_监听套接字描述符_。一个服务器通常仅仅创建一个监听套接字，它在服务器的生命周期内一直存在。<h2 id=4-7-forkhe-exechan-shu>4.7 fork和exec函数</h2><p>fork函数是Unix中派生新进程的唯一方法，<strong>调用一次fork，返回两次结果</strong>：<ol><li>在调用进程（称为父进程）中返回一次，告知新派生进程（称为子进程）的进程ID号<li>在子进程中返回一次，返回值为0，告知当前进程是子进程还是父进程</ol><p><strong>这样设计的原因是：任何子进程只有一个父进程，子进程可以通过getppid获取父进程ID。而父进程可以有多个子进程，而无法获取各个子进程的进程ID。</strong><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>></span><span>
+</span><span style=color:#65737e;>//在子进程中返回0，在父进程中返回子进程ID，出错返回-1</span><span style=color:#65737e;>
+</span><span>pid_t </span><span style=color:#8fa1b3;>fork</span><span>(</span><span style=color:#b48ead;>void</span><span>);</span><span>
+</span></code></pre><p>父进程中调用的fork之前打开的所有描述符在fork返回之后由子进程分享。网络服务器利用此特性：父进程accept之后调用fork，所接受的已连接套接字在父进程和子进程之间共享，通常情况下，子进程接着读写这个已连接套接字，父进程则关闭这个已连接套接字。<p>fork有两个典型用法：<ol><li>一个进程创建一个自身的副本，每个副本执行各自的任务<li>一个进程执行另一个程序，调用fork创建一个自身的副本后，副本调用exec把自身替换成新程序</ol><p>存放在硬盘上的可执行文件被Unix执行的唯一方法是：由一个现有进程调用exec函数，exec函数把当前进程映像替换成新的程序文件，而且该新程序通常从main函数开始执行，进程ID不变。<p><strong>我们称调用exec的进程为_调用进程_</strong>，<strong>称新执行的程序为_新程序_</strong>。<p>exec函数有6个，其区别是：<ul><li>待执行的程序文件是由_<strong>文件名</strong><em>还是由</em><strong>路径名</strong>_指定<li>新程序的参数是一一列出还是由一个指针数组来引用<li>把调用进程的环境传递给新程序还是给新程序指定新的环境</ul><pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//成功均不返回，出错返回-1</span><span style=color:#65737e;>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>execl</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>pathname</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>arg0</span><span>, ...</span><span style=color:#65737e;>/* (char *) 0 */</span><span>);</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>execv</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>pathname</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#b48ead;>const </span><span>*</span><span style=color:#bf616a;>argv</span><span>[]);</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>execle</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>pathname</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>arg0</span><span>, ... </span><span style=color:#65737e;>/* (char *) 0, char *const envp[] */</span><span>);</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>execve</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>pathname</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#b48ead;>const </span><span style=color:#bf616a;>argv</span><span>[], </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#b48ead;>const </span><span style=color:#bf616a;>envp</span><span>[]);</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>execlp</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>filename</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>arg0</span><span>, ... </span><span style=color:#65737e;>/* (char *) 0 */</span><span>);</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>execvp</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>filename</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#b48ead;>const </span><span style=color:#bf616a;>argv</span><span>[]);</span><span>
+</span></code></pre><p>这些函数只在出错时才返回到调用者，否在，控制将被传递给新程序的起始点，通常是main函数。<p>execve是内核中的系统调用，其他5个都是调用execve的库函数。<p><img alt=1580115067308 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0/4.7_3.png><ul><li>上面的三个函数以空指针结束可变数量的参数，下面三个的参数数组argv必须含有一个用于指定其末尾的空指针<li>左列2个函数指定一个filename参数，如果filename参数里不包含斜杆（/），exec将使用当前PATH环境变量把该文件名参数转换为一个路径名<li>左边2列4个函数不显示指定一个环境指针，使用外部变量environ的当前值来构造一个传递给新程序的环境列表。右列2个函数显示指定一个环境列表，其envp指针数组必须以一个空指针结束</ul><h2 id=4-8-bing-fa-fu-wu-qi>4.8 并发服务器</h2><p>目的：子进程处理与客户的连接，父进程则可以在监听套接字上再次调用accept来处理下一个客户连接。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//典型的并发服务器程序轮廓</span><span style=color:#65737e;>
+</span><span>
+</span><span>pid_t pid;</span><span>
+</span><span style=color:#b48ead;>int</span><span>   listenfd, connfd;</span><span>
+</span><span>listenfd = </span><span style=color:#bf616a;>Socket</span><span>( ... );</span><span>
+</span><span>
+</span><span style=color:#bf616a;>Bind</span><span>(listenfd, ...);</span><span>
+</span><span style=color:#bf616a;>Listen</span><span>(listenfd, LISTENQ);</span><span>
+</span><span style=color:#b48ead;>for</span><span>( ; ; ) {</span><span>
+</span><span>    connfd = </span><span style=color:#bf616a;>Accept</span><span>(listenfd, ... );</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>( (pid = </span><span style=color:#bf616a;>Fork</span><span>()) == </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>        </span><span style=color:#bf616a;>Close</span><span>(listenfd);    </span><span style=color:#65737e;>//子进程里关闭监听套接字</span><span style=color:#65737e;>
+</span><span>        </span><span style=color:#bf616a;>doit</span><span>(connfd);</span><span>
+</span><span>        </span><span style=color:#bf616a;>Close</span><span>(connfd);</span><span>
+</span><span>        </span><span style=color:#65737e;>//调用exit，执行进程终止处理，会关闭所有由内核打开的描述符</span><span style=color:#65737e;>
+</span><span>        </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>    }</span><span>
+</span><span>    </span><span style=color:#bf616a;>Close</span><span>(connfd);          </span><span style=color:#65737e;>//子进程为客户提供服务，父进程里则关闭已连接套接字</span><span style=color:#65737e;>
+</span><span>}</span><span>
+</span></code></pre><p>对一个TCP套接字调用close会导致发送一个FIN分节，随后进行正常的TCP连接终止序列。而程序中父进程对connfd调用close并没有终止它与客户的连接，原因是：每个文件或套接字都有一个引用计数，引用计算在文件表项中维护，它是当前打开着的引用该文件或套接字的描述符的个数。程序中fork后子进程共享了父进程的套接字描述符，使得套接字的引用计数加一均变为2，这样父进程close时，只是将引用计数从2减为1。该套接字真正的清理和资源释放要等到引用计数值变为0时才发生。<h2 id=4-9-closehan-shu>4.9 close函数</h2><p>通常的Unix close函数也用来关闭套接字，并终止TCP连接。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>></span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>close</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>);</span><span>
+</span></code></pre><p>close一个TCP套接字的默认行为是把该套接字标记为已关闭，然后立即返回调用进程，被关闭的套接字不能再由调用进程使用，也就是它不能再作为read或write的第一个参数。然后TCP将尝试发送已排队等待发送到对端的任何数据，发送完毕后发生正常的TCP连接终止序列。<h3 id=miao-shu-fu-yin-yong-ji-shu>描述符引用计数</h3><p>close将导致相应描述符引用计数值减1，只要引用计数值仍大于0则不会引发TCP连接终止序列。<p>如果确实想在某个TCP连接上发送一个FIN，那么可以改用shutdown函数代替close。<p><strong>任何进程在任何时刻可拥有的打开着的描述符数通常是有限制的</strong>。如果父进程对每个accept返回的已连接套接字都不调用close，首先父进程最终将耗尽可用描述符，接着没有一个客户连接会被终止，TCP连接终止序列也不会发生。<h2 id=4-10-getsocknamehe-getpeernamehan-shu>4.10 getsockname和getpeername函数</h2><p>getsockname函数：返回与某个套接字关联的本地协议地址<p>getpeername函数：返回与某个套接字关联的外地协议地址<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//成功返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>getsockname</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>struct</span><span> sockaddr *</span><span style=color:#bf616a;>localaddr</span><span>, socklen_t *</span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>getpeername</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>struct</span><span> sockaddr *</span><span style=color:#bf616a;>peeraddr </span><span>, socklen_t *</span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span></code></pre><p>两个函数的最后一个参数都是<strong>值-结果参数</strong>，说明两个函数都要装填由localaddr或peeraddr指针所指的套接字地址结构。<p>使用情况：<ul><li>TCP客户没有调用bind，connect成功返回后，使用getsockname返回由内核赋予该连接的本地IP地址和本地端口号<li>在以端口号0调用bind后，使用getsockname返回由内核赋予的本地端口号<li>可用于获取某个套接字的地址族<li>在以通配IP地址调用bind的TCP服务器上，accept成功返回后，使用getsockname返回由内核赋予该连接的本地IP地址，这里的套接字描述符参数必须是已连接套接字描述符，不是监听套接字描述符<li>服务器某个进程accept后调用exec执行新的程序，子进程的内存映像被替换（包含端地址的那个套接字地址结构丢失），但已连接套接字的描述符跨exec继续保持开放，子进程使用函数getpeername用于获取客户的IP地址和端口号。</ul><p>inetd派生服务器例子，服务器获取connfd描述符值的两种方法：<ol><li>调用exec的进程可以把这个描述符号格式化成一个字符串，再把它作为一个命令行参数传递给新程序<li>约定在调用exec之前，总是把某个特定描述符置为所接受的已连接套接字的描述符<li>inetd采用第二种方法，它总是把描述符0、1、2置为所接受的已连接套接字的描述符</ol><p><strong>POSIX规范允许对未绑定的套接字调用getsockname，该函数应该适合任何已打开的套接字描述符</strong>。<p><strong>大多数TCP服务器是并发的，大多数UDP服务器是迭代的</strong>。<h1 id=di-5zhang-tcpke-hu-fu-wu-qi-cheng-xu-shi-li>第5章 TCP客户/服务器程序示例</h1><h2 id=5-1-gai-shu>5.1 概述</h2><p><img alt=image-20200212163819379 src=./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.1.png><h2 id=5-6-zheng-chang-qi-dong>5.6 正常启动</h2><p>使用<code>netstat -a</code>检查服务器套接字的状态<p>在目前众多较新的 Linux 发行版中，已经移除了 net-tools 套件，ifconfig、route、netstat、arp 等一系列工具均无法使用。<p>新的工具<em>ss</em> 代替了 netstat。<p><strong>显示系统内的TCP连接，命令：ss -at</strong><p>netstat用**“*”**号来表示一个为0的IP地址（INADDR_ANY，通配地址）或为0的端口号。<p>子进程的PPID是父进程的PID，当进程的STAT是“S”表明进程在为等待某些资源而睡眠，进程处于睡眠状态时WCHAN列指出相应的条件。<ul><li>Linux进程阻塞于accept或connect时，输出wait_for_connect<li>进程阻塞于套接字输入或输出时，输出tcp_data_wait<li>在进程阻塞于终端I/O时，输出read_chan</ul><h2 id=5-7-zheng-chang-zhong-zhi>5.7 正常终止</h2><p>正常终止客户和服务器的步骤：<ol><li>客户程序输入EOF，fgets返回一个空指针，str_cli函数返回<li>str_cli函数返回到客户的main函数，main通过调用exit终止<li>进程终止处理的部分工作是关闭所有打开的描述符，因此客户打开的套接字有内核关闭，这导致客户TCP发送一个FIN给服务器，服务器TCP响应ACK，这是TCP连接终止的前半部分。此时服务器套接字处于CLOSE_WAIT状态，客户套接字处于FIN_WAIT_2状态<li>当服务器接收FIN时，服务器子进程阻塞于readline调用，readline返回0，这导致str_echo函数返回服务器子进程的main函数<li>服务器子进程通过调用exit来终止<li>服务器子进程所有描述符随之关闭，子进程关闭已连接套接字会引发TCP连接终止的最后两个分节：一个服务器到客户的FIN和一个客户到服务器的ACK。至此，连接完全终止，客户套接字进入TIME_WAIT状态<li>进程终止处理的另一个部分内容是：在服务器子程序终止时，给父进程发送一个SIGCHLD信号。</ol><h2 id=5-8-posixxin-hao-chu-li>5.8 POSIX信号处理</h2><p><strong>信号</strong>就是告知某个进程发生了某个事件的通知，有时也称<strong>软件中断</strong>。<p>信号通常是<strong>异步发生</strong>的，也就是说进程预先不知道信号的准确发生时刻。<p>信号可以：<ul><li>由一个进程发送给另一个进程（或自身）<li>由内核发给某个进程</ul><p>每个信号都有一个与之关联的<strong>处置（disposition）</strong>，也称为<strong>行为（action）</strong>，我们通常通过调用sigaction函数来设定一个信号的处置，并有三种选择：<ol><li><p>提供一个函数，只要有特定信号发生就被调用，这样的函数称为<strong>信号处理函数（signal handler）</strong>，这种行为称为**捕获（catching）**信号。有两个信号不能被捕获：SIGKILL 和 SIGSTOP。信号处理函数由信号值这个单一的整数参数来调用，没有返回值。</p> <pre class=language-C data-lang=C style=background-color:#2b303b;color:#c0c5ce;><code class=language-C data-lang=C><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>handler</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>signo</span><span>);</span><span>
+</span></code></pre><li><p>把某个信号的处置设置为SIG_IGN来忽略它，SIGKILL 和 SIGSTOP不能被忽略。</p><li><p>把某个信号的处置设定为SIG_DEF来启用它的默认处置。默认处置通常是在收到信号后终止进程，其中某些信号还在当前工作目录产生一个进程的核心映像(core image，也称内存映像)。个别信号的默认处置是忽略，例如SIGCHLD 和 SIGURG。</p></ol><h3 id=signalhan-shu>signal函数</h3><p>建立信号处置的POSIX方法就是调用sigaction函数，但是有点复杂，因为该函数的参数之一是我们必须分配并填写的结构。简答些的方法是调用signal函数，其第一个参数是信号名，第二个参数或为指向函数的指针，或为常值SIG_IGN或SIG_DFL。<p>signal函数是早于POSIX出现的历史悠久的函数，不同的实现提供不同的信号语义以达成后向兼容。<p>POSIX则明确规定了调用sigaction时的信号语义。我们定义了自己的signal函数，它只是调用POSIX的sigaction函数，这就以所期望的POSIX语义提供一个简答的接口。<p><img alt=image-20200212205315625 src=./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8.png><p><img alt=image-20200212210809188 src=./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.8_2.png><h3 id=posixxin-hao-yu-yi>POSIX信号语义</h3><ul><li>一旦安装了信号处理函数，便一直安装着（早期系统执行一次便拆除）<li>在一个信号处理函数运行期间，正被递交的信号是阻塞的，而且sa_mask信号集中指定的任何额外信号也被阻塞<li>如果一个信号在被阻塞期间产生了一次或多次，那么该信号被解阻塞之后通常只递交一次，也就是说Unix信号默认是不排队的<li>利用sigprocmask函数选择性地阻塞或解阻塞一组信号是可能的。可以做到在临界区代码执行期间，防止捕获某些信号，以此保护这段代码</ul><h2 id=5-9-chu-li-sigchldxin-hao>5.9 处理SIGCHLD信号</h2><p>设置僵死（zombie）状态的目的是维护子进程的信息（子进程的进程ID、终止状态以及资源利用信息（CPU时间、内存使用量等等）），以便父进程在以后某个时候获取。<p>如果一个进程终止，而该进程有子进程处于僵死状态，那么它的所有僵死子进程的父进程ID将重置为1（init进程）。继承这些子进程的init进程将清理它们。<h3 id=chu-li-jiang-si-jin-cheng>处理僵死进程</h3><p>僵死进程占用内核中的空间，可能导致耗尽进程资源。<p>无论何时我们fork子进程都得wait它们，防止它们变成僵死进程，为此我们建立一个捕获SIGCHLD信号的信号处理函数，在函数体中调用wait。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#bf616a;>Signal</span><span>(SIGCHLD, sig_chld);</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>sig_child</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>signo</span><span>){</span><span>
+</span><span>    pid_t    pid;</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>      stat;</span><span>
+</span><span>    </span><span>
+</span><span>    pid = </span><span style=color:#bf616a;>wait</span><span>(&stat);</span><span>
+</span><span>    </span><span style=color:#65737e;>//在信号处理函数中调用诸如printf这样的标准I/O函数是不合适的</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>child </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> terminated</span><span style=color:#96b5b4;>\n</span><span>", pid);</span><span>
+</span><span>    </span><span style=color:#b48ead;>return</span><span>;</span><span>
+</span><span>}</span><span>
+</span></code></pre><h3 id=chu-li-bei-zhong-duan-de-xi-tong-diao-yong>处理被中断的系统调用</h3><p>慢系统调用适用于那些可能永远阻塞的系统调用，永远阻塞的系统调用是指调用有可能永远无法返回，多数网络支持函数都属于这一类。<p>适用于慢系统调用的基本规则：当阻塞于某个慢系统调用的一个进程捕获某个信号且相应信号处理函数返回时，该系统调用<strong>可能</strong>返回一个EINTR错误（被中断的系统调用）。<strong>有些</strong>内核自动重启某些被中断的系统调用。<p>由于“可能”、“有些”以及对POSIX的SA_RESTART标志的支持是可选的，我们必须考虑可移植性问题。为了便于移植，我们编写捕获信号的程序时（多数并发服务器捕获SIGCHLD），我们必须对慢系统调用返回EINTR有所准备。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>for</span><span>( ; ; ){</span><span>
+</span><span>    client = sizeof(cliaddr);</span><span>
+</span><span>    </span><span style=color:#b48ead;>if</span><span>((connfd = </span><span style=color:#bf616a;>accept</span><span>(listenfd, (SA *) &cliaddr, &clinet)) < </span><span style=color:#d08770;>0 </span><span>){</span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(errno == EINTR)</span><span>
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;</span><span>
+</span><span>        </span><span style=color:#b48ead;>else</span><span>
+</span><span>            </span><span style=color:#bf616a;>err_sys</span><span>("</span><span style=color:#a3be8c;>accept error</span><span>");</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><p>我们可以编写函数，自己重启被中断的系统调用，如accept、read、write、select和open之类的函数，<p>但是<strong>connect函数我们不能重启</strong>：如果该函数返回EINTR，我们就不能再次调用它，否则将立即返回一个错误，当connect被一个捕获的信号中断而且不自动重启时，我们必须调用select来等待连接完成。<h2 id=5-10-waithe-waitpid>5.10 wait和waitpid</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/wait.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//成功返回进程ID，出错返回0或-1</span><span style=color:#65737e;>
+</span><span>pid_t </span><span style=color:#8fa1b3;>wait</span><span>(</span><span style=color:#b48ead;>int </span><span>*</span><span style=color:#bf616a;>statloc</span><span>);</span><span>
+</span><span>pid_t </span><span style=color:#8fa1b3;>waitpid</span><span>(pid_t </span><span style=color:#bf616a;>pid</span><span>, </span><span style=color:#b48ead;>int </span><span>*</span><span style=color:#bf616a;>statloc</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>options</span><span>);</span><span>
+</span></code></pre><p>函数wait和waitpid均<strong>返回两个值</strong>：<ol><li>已终止子进程的进程ID号<li>通过statloc指针返回子进程终止状态（一个整数）</ol><p>调用wait的进程没有已终止的子进程，不过有一个或多个子进程仍在执行，那么wait将阻塞到现有子进程第一个终止为止。<p>waitpid函数就等待哪个进程终止以及是否阻塞给了我们更多的控制：<ol><li>pid参数允许我们指定想等待的进程ID，值-1表示等待第一个终止的子进程<li>options参数允许我们指定附加选项，常用选项是WNOHANG，告知内核在没有已终止子进程时不要阻塞。</ol><h3 id=han-shu-waithe-waitpidde-qu-bie>函数wait和waitpid的区别</h3><p>若有多个子进程同时终止，则同一时刻有5个SIGCHLD信号递交给父进程，因为<strong>Unix信号一般是不排序的</strong>，导致调用wait的信号处理函数只执行了一次。而使用waitpid函数，则可以在一个循环内调用（无法防止wait在正在运行的子进程尚有未终止时阻塞，不能在循环内调用wait），以获取所有已终止子进程的状态，这时必须指定WNOHANG选项，告知waitpid在尚有未终止的子进程在运行时不阻塞。<p><strong>本节的目的是示范我们在网络编程时可能会遇到的三种情况：</strong><ol><li>当fork子进程时，必须捕获SIGCHLD信号<li>当捕获信号时，必须处理被中断的系统调用<li>SIGCHLD的信号处理函数必须正确编写，应使用waitpid函数以免留下僵死进程</ol><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//处理accept返回EINIT的TCP服务器程序最终（正确）版</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>#include	</span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>	</span><span style=color:#b48ead;>int</span><span>					listenfd, connfd;</span><span>
+</span><span>	pid_t				childpid;</span><span>
+</span><span>	socklen_t			clilen;</span><span>
+</span><span>	</span><span style=color:#b48ead;>struct</span><span> sockaddr_in	cliaddr, servaddr;</span><span>
+</span><span>	</span><span style=color:#b48ead;>void				</span><span style=color:#bf616a;>sig_chld</span><span>(</span><span style=color:#b48ead;>int</span><span>);</span><span>
+</span><span>
+</span><span>	listenfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>
+</span><span>	</span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>	servaddr.</span><span style=color:#bf616a;>sin_family      </span><span>= AF_INET;</span><span>
+</span><span>	servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);</span><span>
+</span><span>	servaddr.</span><span style=color:#bf616a;>sin_port        </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>
+</span><span>	</span><span style=color:#bf616a;>Bind</span><span>(listenfd, (SA *) &servaddr, sizeof(servaddr));</span><span>
+</span><span>
+</span><span>	</span><span style=color:#bf616a;>Listen</span><span>(listenfd, LISTENQ);</span><span>
+</span><span>
+</span><span>	</span><span style=color:#bf616a;>Signal</span><span>(SIGCHLD, sig_chld);	</span><span style=color:#65737e;>/* must call waitpid() */</span><span>
+</span><span>
+</span><span>	</span><span style=color:#b48ead;>for </span><span>( ; ; ) {</span><span>
+</span><span>		clilen = sizeof(cliaddr);</span><span>
+</span><span>		</span><span style=color:#b48ead;>if </span><span>( (connfd = </span><span style=color:#bf616a;>accept</span><span>(listenfd, (SA *) &cliaddr, &clilen)) < </span><span style=color:#d08770;>0</span><span>) {</span><span>
+</span><span>			</span><span style=color:#b48ead;>if </span><span>(errno == EINTR)</span><span>
+</span><span>				</span><span style=color:#b48ead;>continue</span><span>;		</span><span style=color:#65737e;>/* back to for() */</span><span>
+</span><span>			</span><span style=color:#b48ead;>else</span><span>
+</span><span>				</span><span style=color:#bf616a;>err_sys</span><span>("</span><span style=color:#a3be8c;>accept error</span><span>");</span><span>
+</span><span>		}</span><span>
+</span><span>
+</span><span>		</span><span style=color:#b48ead;>if </span><span>( (childpid = </span><span style=color:#bf616a;>Fork</span><span>()) == </span><span style=color:#d08770;>0</span><span>) {	</span><span style=color:#65737e;>/* child process */</span><span>
+</span><span>			</span><span style=color:#bf616a;>Close</span><span>(listenfd);	</span><span style=color:#65737e;>/* close listening socket */</span><span>
+</span><span>			</span><span style=color:#bf616a;>str_echo</span><span>(connfd);	</span><span style=color:#65737e;>/* process the request */</span><span>
+</span><span>			</span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>		}</span><span>
+</span><span>		</span><span style=color:#bf616a;>Close</span><span>(connfd);			</span><span style=color:#65737e;>/* parent closes connected socket */</span><span>
+</span><span>	}</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=5-11-acceptfan-hui-qian-lian-jie-zhong-zhi>5.11 accept返回前连接中止</h2><p>三次握手完成建立连接后，客户TCP却发送RST，服务器端该连接已由TCP排队，在等待accept时RST到达，稍后服务器进程调用accept。<p><img alt=image-20200213115625378 src=./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.11.png><p>处理连接中止依赖于不同的实现，大多数返回一个错误给服务器，作为accept的返回结果，POSIX指出返回的<strong>errno值必须是ECONNABORTED</strong>（“software caused connection abort”，软件引起的连接中止）。遇到此错误，服务器可以选择忽略它，再次调用accept函数。<h2 id=5-12-fu-wu-qi-jin-cheng-zhong-zhi>5.12 服务器进程终止</h2><p>启动客户/服务器，然后杀死服务器子进程，模拟服务器进程崩溃时的情况：<ol><li><p>于同一台主机启动客户和服务器，验证一切正常</p><li><p>找到服务器子进程ID，kill掉它。进程终止的处理工作会关闭子进程中所有打开着的描述符，导致向客户发送一个FIN，而客户响应一个ACK（TCP连接终止工作的前半部分）</p><li><p>SIGHELD信号发送给服务器父进程，并得到正确处理</p><li><p>客户接受到FIN并响应ACK的时候，正阻塞在fgets调用上，等待终端接收一个文本</p><li><p>当客户在终端上输入文本时，将调用writen，客户TCP将把数据发送给服务器，当服务器接收到数据后，由于先前打开的描述符已经终止，于是响应一个RST</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>客户TCP接收到FIN只是表示服务器进程已关闭了连接的服务器端，从而（服务器）不再往其发送任何数据。FIN的接收并没有告知客户TCP服务器进程已经终止。</span><span>
+</span></code></pre><li><p>而客户进程看不到这个RST，因为调用writen后立即调用readline，并由于步骤2接收的FIN，readline立即返回0（EOF）。客户此时未预期收到EOF，于是返回出错信息“server terminated prematurely”（服务器过早终止）退出</p><li><p>客户终止，所有打开着的描述符都被关闭</p></ol><h2 id=5-13-sigpipexin-hao>5.13 SIGPIPE信号</h2><p>当一个进程向某个已收到RST的套接字执行写操作时，内核向该进程发送一个SIGPIPE信号。该信号默认行为是终止进程，因此进程必须捕获它以免不情愿地被终止。<p>无论进程是捕获了该信号并从其信号处理函数返回，还是简答地忽略该信号，写操作都将<strong>返回EPIPE错误</strong>。<p>如果不理会readline函数返回的错误，反而写更多的数据到服务器上，客户在读回任何数据之前执行两次对服务器的写操作，第一次写操作引发RST，第二次写操作引发SIGPIPE信号。<p>写一个已接受了FIN的套接字不成问题，但是写一个接收了RST的套接字则是一个错误。<p>处理SIGPIPE的建议方法取决于它发生时应用进程想做什么，如果没有特殊的事情要做，那么将信号处理方法直接设置为SIG_IGN，并假设后续的输出操作将捕捉EPIPE错误并终止。<p>如果使用多个套接字，该信号的提交无法告诉我们是哪个套接字出的错，如果确实需要知道是哪个write出了错，那么要么不理会该信号，要么从信号处理函数返回后再处理来自write的PIPE。<h2 id=5-14-fu-wu-qi-zhu-ji-beng-kui>5.14 服务器主机崩溃</h2><ol><li>当服务器主机崩溃时，已有的网络连接上不发出任何东西<li>当客户键入文本，由writen写入内核，再由客户TCP作为一个数据分节送出，阻塞于readline，等待回射应答<li>客户TCP将持续重传数据分节，试图从服务器上接收一个ACK。若服务器已崩溃，从而对客户的数据分节根本没有响应，那么返回的错误是ETIMEOUT，然而如果某个中间的路由器判定服务器已不可到达，从而响应一个“destination unreachable”（目的地不可到达）ICMP信息，那么返回的错误是EHOSTUNREACH或ENETHNREACH</ol><p>通过设置超时可以及时检测出不可到达的情况。如果不主动向它发送数据也想检测出服务器主机的崩溃，那么就需要SO_KEEPALIVE套接字选项。<h2 id=5-15-fu-wu-qi-zhu-ji-beng-kui-hou-zhong-qi>5.15 服务器主机崩溃后重启</h2><ol><li>当服务器主机崩溃重启后，它的TCP丢失了崩溃前的所有连接信息，因此服务器TCP对于收到的来自客户的数据分节响应以一个RST。<li>客户TCP收到RST时，客户正阻塞于readline调用，导致该调用返回ECONNRESET错误。</ol><h2 id=5-16-fu-wu-qi-zhu-ji-guan-ji>5.16 服务器主机关机</h2><p>Unix系统关机时，init进程通常先给所有进程发送SIGTERM信号（该信号可被捕获），等待一段固定的时间（往往在5到20秒之间），然后给所有仍在运行的进程发送SIGKILL信号（该信号不可被捕获）。这么做留个所有运行的进程一小段时间来清除和终止。<ul><li>如果我们忽略SIGTERM信号，我们的服务器将由SIGKILL信号终止<li>如果我们不捕获也不忽略SIGTERM信号，那么起作用的是SIGTERM的默认处置（终止进程），那么服务器将被SIGTERM信号终止，SIGKILL信号不可能再发送给服务器</ul><h2 id=5-17-tcpcheng-xu-li-zi-xiao-jie>5.17 TCP程序例子小结</h2><h3 id=cong-ke-hu-jiao-du-zong-jie-tcpke-hu-fu-wu-qi>从客户角度总结TCP客户/服务器</h3><p><img alt=image-20200218171852426 src=./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.17.1.png><h3 id=cong-fu-wu-qi-jiao-du-zong-jie-tcpke-hu-fu-wu-qi>从服务器角度总结TCP客户/服务器</h3><p><img alt=image-20200218172026706 src=./Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC5%E7%AB%A0/5.17.2.png><h2 id=5-18-shu-ju-ge-shi>5.18 数据格式</h2><p>传递二进制数据可能存在的问题：<ol><li>不同的实现以不同的格式存储二进制数，大端字节序和小端字节序<li>不同的实现在存储相同的C数据类型上可能存在差异，32位系统使用32位表示long，64位系统使用64位<li>不同的实现给结构打包的方式存在差异，取决于各种数据类型所使用的位数以及机器的对齐限制</ol><p>处理数据格式问题常用方法：<ol><li>把所有的数值数据作为文本串来传递（客户和服务器主机具有相同的字符集）<li>显示定义所支持数据类型的二进制格式（数位、大端或小端字节序），并以这样的格式在客户与服务器之间传递所有数据，远程过程调用（RPC）软件包通常使用这种技术</ol><h1 id=di-6zhang-i-ofu-yong-selecthe-pollhan-shu>第6章 I/O复用：select和poll函数</h1><h2 id=6-1-gai-shu>6.1 概述</h2><p>内核一旦发现进程指定的一个或多个I/O条件就绪（也就是说输入已准备好被读取，或者描述符已能承接更多的输出），它就通知进程，这个能力称为I/O复用。<p>I/O复用由select和poll两个函数支持，前者较新的称为pselect的POSIX变种。<p>I/O复用并非只限于网络编程，I/O复用典型使用在下列网络应用场合：<ul><li>当客户处理多个描述符（通常是交互式输入和网络套接字）时，必须使用I/O复用<li>一个客户同时处理多个套接字是可能的，不过比较少见<li>如果一个TCP服务器既要处理监听套接字，又要处理已连接套接字，一般就要使用I/O复用<li>如果一个服务器既要处理TCP，又要处理UDP，一般就要使用I/O复用<li>如果一个服务器要处理多个服务或者多个协议，一般就要使用I/O复用</ul><h2 id=6-2-i-omo-xing>6.2 I/O模型</h2><p>Unix下可用的I/O模型有五种：<ul><li>阻塞式I/O<li>非阻塞式I/O<li>I/O复用（select和poll）<li>信号驱动式I/O（SIGIO）<li>异步I/O（POSIX的aio_系列函数）</ul><p>一个输入操作通常包括两个不同的阶段：<ol><li>等待数据准备好<li>从内核向进程复制数据</ol><p>对于一个套接字上的输入操作：<ol><li>第一步通常涉及等待数据从网络中到达，当所等待的分组到达时，它被复制到内核中的某个缓冲区<li>把数据从内核缓冲区复制到应用进程缓冲区</ol><h3 id=6-2-1-zu-sai-shi-i-ozu-sai>6.2.1 阻塞式I/O阻塞</h3><p>最流行的I/O模型是阻塞式I/O模型。默认情况下，所有套接字都是阻塞的。<p><img alt=image-20200220142525476 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.1.1.png><h3 id=6-2-2-fei-zu-sai-shi-i-omo-xing>6.2.2 非阻塞式I/O模型</h3><p>进程把一个套接字设置为非阻塞是在通知内核：当所请求的I/O操作非把本进程投入睡眠才能完成时，不要把本进程投入睡眠，而是返回一个错误。<p><img alt=image-20200220143123892 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.2.png><p><strong>轮询（polling)</strong>：应用进程持续轮询内核，以查看某个操作是否就绪，这样做往往耗费大量CPU时间。<h3 id=6-2-3-i-ofu-yong-mo-xing>6.2.3 I/O复用模型</h3><p>通过调用select或poll，阻塞在这两个系统调用中的某一个之上，而不是阻塞在真正的I/O调用上<p><img alt=image-20200220211237813 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.3.png><p>I/O复用需要两个系统调用<p>优势：可以等待多个描述符就绪<h3 id=6-2-4-xin-hao-qu-dong-shi-i-omo-xing>6.2.4 信号驱动式I/O模型</h3><p>使用信号，让内核在描述符就绪时发送SIGIO信号通知我们，这种模式为信号驱动式I/O。<p><img alt=image-20200220211730610 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.4.png><p>优势：等待数据报到达期间进程不被阻塞，主循环可以继续执行，只要等待来自信号处理函数的通知：既可以是数据已经准备好被处理，也可以是数据报已准备好被读取<h3 id=6-2-5-yi-bu-i-omo-xing>6.2.5 异步I/O模型</h3><p>异步I/O由POSIX规范定义。<p>异步函数的工作机制是：告知内核启动某个操作，并让内核在整个操作（包括将数据从内核复制到我们自己的缓冲区）完成后通知我们。<p>与信号驱动模型的主要区别在于：信号驱动式I/O是由内核通知我们何时可以启动一个I/O操作，而异步I/O模型是由内核通知我们I/O操作何时完成。<p><img alt=image-20200220222137004 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.5.png><p>POSIX异步函数以aio_或lio_开头。<p>这里调用aio_read函数，给内核传递描述符、缓冲区指针、缓冲区大小（与read相同的三个参数）和文件偏移（与lseek类似），并告诉内核当整个操作完成时如何通知我们。该系统调用立即返回，而且在等待I/O完成期间，进程不被阻塞。<h3 id=6-2-6-ge-chong-i-omo-xing-de-bi-jiao>6.2.6 各种I/O模型的比较</h3><p>POSIX定义：<ul><li><p>同步I/O操作：导致请求进程阻塞，知道I/O操作完成</p><li><p>异步I/O操作：不导致请求进程阻塞</p></ul><p><img alt=image-20200220222618152 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/6.2.6.png><p>前4种模型都是同步I/O模型，因为其中真正的I/O操作（recvfrom）将进程阻塞。只有异步I/O模型与POSIX定义的异步I/O相匹配。<h2 id=6-3-selecthan-shu>6.3 select函数</h2><p>该函数允许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒它。<p>select函数告知内核对哪些描述符（就读、写或异常条件）感兴趣以及等待多长时间。描述符不局限于套接字，任何描述符都可以使用select来测试。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/select.h</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/time.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#65737e;>//若有就绪描述符则返回其数目，若超时则返回0，若出错则返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>select</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>maxfdp1</span><span>, fd_set *</span><span style=color:#bf616a;>readset</span><span>, fd_set *</span><span style=color:#bf616a;>writeset</span><span>, </span><span>
+</span><span>           fd_set *</span><span style=color:#bf616a;>exceptset</span><span>, </span><span style=color:#b48ead;>const struct</span><span> timeval *</span><span style=color:#bf616a;>timeout</span><span>);</span><span>
+</span></code></pre><p>参数解析：<ol><li><p>timeout：告知内核等待所指定描述符中的任何一个就绪可花多长时间</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>struct </span><span>timeval{</span><span>
+</span><span>    </span><span style=color:#b48ead;>long</span><span>     tv_sec;    </span><span style=color:#65737e;>//秒数</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#b48ead;>long</span><span>     tv_usec;   </span><span style=color:#65737e;>//微秒数</span><span style=color:#65737e;>
+</span><span>}</span><span>
+</span></code></pre> <p>该参数有三种情况：</p> <ul><li>永远等待下去：仅在有一个描述符准备好I/O时才返回，此时将该参数设置为空指针<li>等待一段固定时间：在有一个描述符准备好I/O时返回，但是不超过由该参数所指向的timeval结构中指定的秒数和微秒数<li>根本不等待：检测描述符后立即返回，这称为轮询。该参数指向timeval结构，其中定时器的值必须为0</ul> <p>前两种情况的等待通常会被进程在等待期间捕获的信号中断，并从信号处理函数返回。</p> <p>timeval结构允许我们指定一个微秒级的分辨率，然而内核支持的真实分辨率往往粗糙得多，许多Unix内核把超时值向上舍入成10ms的倍数，另外内核还需要额外的调度延迟。</p> <p>timeout参数的const限定词表示它在函数返回时不会被select修改，无法通过该参数计算出实际等待时间。</p><li><p>中间三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述符</p> <ul><li><p>目前支持的异常条件只有两个：</p> <ol><li>某个套接字的带外数据的到达<li>某个已置为分组模式的伪终端存在可从其主端读取的控制状态信息</ol><li><p>select使用<strong>描述符集</strong>来给3个参数中的每一个参数指定一个或多个描述符值，通常是一个整数数组，其中<strong>每个整数中的每一位</strong>对应一个描述符。具体实现与应用程序无关，隐藏在数据类型fd_set和以下四个宏中：</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_ZERO</span><span>(fd_set *</span><span style=color:#bf616a;>fdset</span><span>);		</span><span style=color:#65737e;>//clear all bits of fdset</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_SET</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>fd</span><span>, fd_set *</span><span style=color:#bf616a;>fdset</span><span>);	</span><span style=color:#65737e;>//turn on the bit for fd in fdset</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_CLR</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>fd</span><span>, fd_set *</span><span style=color:#bf616a;>fdset</span><span>);	</span><span style=color:#65737e;>//turn off the bit for fd in fdset</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_ISSET</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>fd</span><span>, fd_set *</span><span style=color:#bf616a;>fdset</span><span>);</span><span style=color:#65737e;>//is the bit for fd on fdset ?</span><span style=color:#65737e;>
+</span></code></pre> <p>我们分配一个fd_set类型的描述符集，并用这些宏设置和测试集合中的每一位，也可以使用赋值语句将它赋值成另一个描述符集：</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>fd_set rset;</span><span>
+</span><span>
+</span><span style=color:#bf616a;>FD_ZERO</span><span>(&rset);	</span><span style=color:#65737e;>//初始化</span><span style=color:#65737e;>
+</span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#d08770;>1</span><span>, &rset);</span><span>
+</span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#d08770;>4</span><span>, &rset);</span><span>
+</span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#d08770;>5</span><span>, &rset);</span><span>
+</span></code></pre></ul> <ol start=3><li>maxfdpl参数指定待测试的描述符的个数，它的值是待测试的最大描述符加1，描述符0，1，2……一直到maxfdpl-1均将被测试<li>头文件&LTsys/select.h>中定义的FD_SETSIZE常值是数据类型fd_set中描述符总数，通常是1024，通常使用不了那么多<li>select函数修改由指针readset、writeset和exceptset所指向的描述符集，因此这三个参数都是值-结果传参。函数返回时，指示哪些描述符已就绪，描述符集内任何与未就绪描述符对应的位返回时均清零，因此每次重新调用select函数时，都需要重新为关心的位均置1。</ol></ol><h3 id=6-3-1-miao-shu-fu-jiu-xu-tiao-jian>6.3.1 描述符就绪条件</h3><p>满足下列条件之一，则套接字准备好读：<ol><li>该套接字的接收缓冲区中的数据字节数大于等于套接字接收缓冲区低水位标记SO_RCVLOWAT的当前大小，对该套接字读操作不阻塞并返回一个大于0的值<li>该连接的读半部关闭（也就是接收了FIN的TCP连接），读操作不阻塞并返回0<li>该套接字是一个监听套接字，且已完成的连接数不为0，不阻塞<li>其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件。此时可以使用getsockopt来读取和清除该错误</ol><p>满足下列条件之一，则套接字准备好写：<ol><li>该套接字的发送缓冲区中的可用空间字节数大于等于套接字发送缓冲区低水位标记的当前大小，并且该套接字已经连接或者不需要连接（如UDP套接字），对该套接字写操作不阻塞并返回一个大于0的值<li>该连接的写半部关闭，对这样的套接字的写操作将产生SIGPIPE信号<li>使用非阻塞式connect的套接字已建立连接，或者connect已经以失败告终<li>其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件</ol><p>如果一个套接字存在带外数据或者仍处于带外标记，那么它有异常条件待处理。当某个套接字上发生错误时，它将由select标记为既可读又可写。<blockquote><p>接收低水位标记和发送低水位标记的目的在于：允许应用进程控制在select返回可读或可写条件之前有多少数据可读或有多大空间可用于写。<p>举例：当数据少于64字节时，应用程序没有任何有效工作可做，则把接收低水位标记设置为64，以防少于64字节的数据准备好时select唤醒程序。<p>任何UDP套接字只要其发送低水位标记小于等于发送缓冲区大小（默认关系）就总是可写的，这是因为UDP套接字不需要连接。</blockquote><p><img alt=image-20200805213132250 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200805213132250.png><h3 id=6-3-2-selectde-zui-da-miao-shu-fu-shu>6.3.2 select的最大描述符数</h3><p>最初设计select时，操作系统通常对每个进程可用的最大描述符数设置了上限，select就使用了相同的限制。<p>当今的Unix版本允许每个进程使用事实上无数目限制的描述符（往往仅受限于内存总量和管理性限制）。<p>表面上可以通过将FD_SETSIZE定义为某个更大的值，实际上却行不通，首先它是内核集成的，修改后需要重新编译内核，其次可能存在扩展性问题。<p>有些应用程序开始改用poll代替select，典型例子是需要复选大量描述符的事件驱动型服务器程序，所需描述符量超过1024个<h2 id=6-4-str-clihan-shu-xiu-ding-ban>6.4 str_cli函数（修订版）</h2><p>原先版本可能阻塞于fgets调用，新版改为阻塞于select调用，或是等待标准输入可读，或是等待套接字可读。<p><img alt=image-20200805220011258 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200805220011258.png><p>客户的套接字上的三个条件处理如下：<ul><li>如果对端TCP发送数据，那么该套接字变为可读，并且read返回一个大于0的值（读入数据的字节数）<li>如果对端TCP发送一个FIN（对端进程终止），那么该套接字变为可读，并且read返回0（EOF）<li>如果对端TCP发送一个RST（对端主机崩溃并重新启动），那么该套接字变为可读，并且read返回-1，而errno中含有确切的错误码</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>str_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>){</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span> 	maxfdpl;</span><span>
+</span><span>    fd_set	rset;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	sendline[MAXLINE], recvline[MAXLINE];</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#bf616a;>FD_ZERO</span><span>(&rset);</span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){</span><span>
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset);</span><span>
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(sockfd, &rset);</span><span>
+</span><span>        </span><span style=color:#65737e;>//fileno函数把标准I/O文件指针转换为对应的描述符</span><span style=color:#65737e;>
+</span><span>        maxfdpl = </span><span style=color:#bf616a;>max</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), sockfd) + </span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>        </span><span style=color:#bf616a;>Select</span><span>(maxfdpl, &rset, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>);</span><span>
+</span><span>        </span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(sockfd, &rset)){		</span><span style=color:#65737e;>//socket is readable</span><span style=color:#65737e;>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>Readline</span><span>(sockfd, recvline, MAXLINE) == </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>str_cli: server terminated prematurely</span><span>");</span><span>
+</span><span>            </span><span style=color:#bf616a;>Fputs</span><span>(recvline, stdout);</span><span>
+</span><span>        }</span><span>
+</span><span>        </span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset)){	</span><span style=color:#65737e;>//input is readable</span><span style=color:#65737e;>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>Fgets</span><span>(sendline, MAXLINE, fp) == </span><span style=color:#d08770;>NULL</span><span>)</span><span>
+</span><span>                </span><span style=color:#b48ead;>return</span><span>;</span><span>
+</span><span>            </span><span style=color:#bf616a;>Writen</span><span>(sockfd, sendline, </span><span style=color:#96b5b4;>strlen</span><span>(sendline));</span><span>
+</span><span>        }</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=6-5-pi-liang-shu-ru>6.5 批量输入</h2><p>当客户端使用停-等方式工作时，虽然对交互式使用是合适的，但是却不能实现对通信管道的高效利用。<p>如果把客户与服务器之间的网络作为全双工管道考虑，请求从客户想服务器发送，应答从服务器向客户发送，则停-等方式如下图：<p><img alt=image-20200806100510176 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806100510176.png><p>在Unix的shell环境下，很容易实现重定向标准输入和标准输出，从而可以批量运行客户。当我们把标准输入和标准输出重定向到文件来运行新的客户程序时，却发现输出文件总是小于输入文件（对于回射服务器而言理应相等）。<p><img alt=image-20200806101504809 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806101504809.png><p>当运行一个客户程序时，标准输入的EOF同时意味着完成从套接字的读入。批量运行客户程序时，客户程序写完请求时，并不能立即关闭连接，因为管道中还有其它的请求和应答，但是修订版的str_cli函数对标准输入EOF的处理却是返回到main函数，而main函数随后终止。<p>我们需要的是一种关闭TCP连接其中一半的方法，即给服务器发送一个FIN告诉它我们已经完成了数据发送，但仍然保持套接字描述符打开以便读取。由shutdown函数完成。<p>为了提升性能而引入的缓冲机制增加了网络应用程序的复杂性：<ul><li><p>fgets读取输入，将数据存放在stdio缓冲区，但是fgets只返回其中一行，其余仍在缓冲区。select处理完一行后再次被调用等待新的工作，并不知道stdio使用了缓冲区——它只是从read系统的角度指出是否有数据可读，而不是从fgets之类的调用角度</p><li><p>readline调用时，select不可见的数据隐藏在readline自己的缓冲区中</p></ul><h2 id=6-6-shutdownhan-shu>6.6 shutdown函数</h2><p>终止网络连接的通常方法是调用close函数，不过close函数有两个限制，却可以使用shutdown来避免：<ul><li>close把描述符引用计数减1，仅在计数变为0时才关闭套接字。shutdown可以不管引用计数就激发TCP的正常连接终止序列<li>close终止读和写两个方向的数据传送。既然TCP连接是全双工的，有时候我们需要告知对端已经完成数据发送，即使对端仍有数据要发送给我们。</ul><p><img alt=image-20200806105214830 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806105214830.png><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//成功返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>shutdown</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>howto</span><span>);</span><span>
+</span></code></pre><p>函数行为依赖于<code>howto</code>参数的值：<ul><li>SHUT_RD：关闭连接的读一半——套接字中不再有数据可接收，套接字接收缓冲区中的现有数据都被丢弃。进程不能再对套接字调用任何读函数。TCP套接字调用shutdown函数后，由该套接字接收的来自对端的任何数据都将被确认，然后悄然丢弃<li>SHUT_WR：关闭连接的写一半——对于TCP套接字，这称为半关闭。当前留在套接字发送缓冲区的数据将被发送掉，后跟TCP正常连接终止序列。不能再对套接字调用任何写函数<li>SHUT_RDWR：连接的读半部和写半部都关闭——等效于调用两次shutdown，第一次指定SHUT_RD，第二次指定SHUT_WR</ul><blockquote><p>这三个SHUT_XXX名字由POSIX规范定义，howto参数的典型值将会是0（关闭读半部）、1（关闭写半部）和2（读半部和写半部都关闭）。</blockquote><h2 id=6-7-str-clihan-shu-zai-xiu-ding-ban>6.7 str_cli函数（再修订版）</h2><p>改进（且正确）版本：<ul><li>服务器一关闭它那一端的连接立马得到通知<li>可以正确处理批量输入<li>废弃以文本行为中心，改而针对缓冲区操作</ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>str_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>){</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span> 	maxfdpl, stdineof;</span><span>
+</span><span>    fd_set	rset;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	buf[MAXLINE];</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span> n;</span><span>
+</span><span>    </span><span>
+</span><span>    stdineof = </span><span style=color:#d08770;>0</span><span>;</span><span>
+</span><span>    </span><span style=color:#bf616a;>FD_ZERO</span><span>(&rset);</span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){</span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(stdineof == </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>            </span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset);</span><span>
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(sockfd, &rset);</span><span>
+</span><span>        </span><span style=color:#65737e;>//fileno函数把标准I/O文件指针转换为对应的描述符</span><span style=color:#65737e;>
+</span><span>        maxfdpl = </span><span style=color:#bf616a;>max</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), sockfd) + </span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>        </span><span style=color:#bf616a;>Select</span><span>(maxfdpl, &rset, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>);</span><span>
+</span><span>        </span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(sockfd, &rset)){		</span><span style=color:#65737e;>//socket is readable</span><span style=color:#65737e;>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>( (n = </span><span style=color:#bf616a;>Read</span><span>(sockfd, buf, MAXLINE)) == </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(stdineof == </span><span style=color:#d08770;>1</span><span>)</span><span>
+</span><span>                    </span><span style=color:#b48ead;>return</span><span>;</span><span>
+</span><span>                </span><span style=color:#b48ead;>else</span><span>
+</span><span>                    </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>str_cli: server terminated prematurely</span><span>");</span><span>
+</span><span>            }</span><span>
+</span><span>            </span><span style=color:#bf616a;>Write</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(stdout), buf, n)</span><span>
+</span><span>        }</span><span>
+</span><span>        </span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset)){	</span><span style=color:#65737e;>//input is readable</span><span style=color:#65737e;>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>( (n = </span><span style=color:#bf616a;>Read</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), buf, MAXLINE)) == </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>                stdineof = </span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>                </span><span style=color:#bf616a;>Shutdown</span><span>(sockfd, SHUT_WR);</span><span>
+</span><span>                </span><span style=color:#bf616a;>FD_CLR</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset);</span><span>
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;</span><span>
+</span><span>            }</span><span>
+</span><span>            </span><span style=color:#bf616a;>Writen</span><span>(sockfd, buf, n);</span><span>
+</span><span>        }</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=6-8-tcphui-she-fu-wu-qi-cheng-xu-xiu-ding-ban>6.8 TCP回射服务器程序（修订版）</h2><p>使用select来处理任意个客户的单进程程序，而不是为每个客户派生一个子进程。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>){</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		i, maxi, maxfd, listenfd, connfd, sockfd;</span><span>
+</span><span>    </span><span style=color:#65737e;>//服务器所能处理的最大客户数目的限制是：</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#65737e;>//	min[FD_SETSIZE, 内核允许本进程打开的最大描述符数]</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#65737e;>//进程能打开的描述符数数目上已经无限制，只受资源和内存限制</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		nready, client[FD_SETSIZE];</span><span>
+</span><span>    ssize_t	n;</span><span>
+</span><span>    fd_set	rset, allset;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	buf[MAXLINE];</span><span>
+</span><span>    socklen_t	clilen;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in cliaddr, servaddr;</span><span>
+</span><span>    </span><span>
+</span><span>    listenfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family </span><span>= AF_INET;</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#bf616a;>Bind</span><span>(listenfd, (SA*)&servaddr, sizeof(servaddr));</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#bf616a;>Listen</span><span>(listenfd, LISTENQ);</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#65737e;>//描述符集前三位分别被设置为：标准输入、标准输出和标准错误输出</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#65737e;>//select第一个参数为：maxfd+1</span><span style=color:#65737e;>
+</span><span>    maxfd = listenfd;</span><span>
+</span><span>    maxi = -</span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>0</span><span>; i < FD_SETSIZE; i++)</span><span>
+</span><span>        client[i] = -</span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>    </span><span style=color:#bf616a;>FD_ZERO</span><span>(&allset);</span><span>
+</span><span>    </span><span style=color:#bf616a;>FD_SET</span><span>(listenfd, &allset);</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){</span><span>
+</span><span>        rset = allset;</span><span>
+</span><span>        nready = </span><span style=color:#bf616a;>Select</span><span>(maxfd+</span><span style=color:#d08770;>1</span><span>, &rset, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>);</span><span>
+</span><span>        </span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(listenfd, &rset)){</span><span>
+</span><span>            clilen = sizeof(cliaddr);</span><span>
+</span><span>            connfd = </span><span style=color:#bf616a;>Accept</span><span>(listenfd, (SA*) &cliaddr, &clilen);</span><span>
+</span><span>            </span><span>
+</span><span>            </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>0</span><span>; i < FD_SETSIZE; i++){</span><span>
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(client[i] < </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>                    client[i] = connfd;</span><span>
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;</span><span>
+</span><span>                }</span><span>
+</span><span>            }</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i == FD_SETSIZE)</span><span>
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>too many clients</span><span>");</span><span>
+</span><span>            </span><span style=color:#bf616a;>FD_SET</span><span>(connfd, &allset);</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(connfd > maxfd)</span><span>
+</span><span>                maxfd = connfd;</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i > maxi)</span><span>
+</span><span>                maxi = i;</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;</span><span>
+</span><span>        }</span><span>
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>0</span><span>; i <= maxi; i++){</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>((sockfd = client[i]) < </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(sockfd, &rset)){</span><span>
+</span><span>                </span><span style=color:#b48ead;>if</span><span>((n = </span><span style=color:#bf616a;>Read</span><span>(sockfd, buf, MAXLINE)) == </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>                    </span><span style=color:#bf616a;>Close</span><span>(sockfd);</span><span>
+</span><span>                    </span><span style=color:#bf616a;>FD_CLR</span><span>(sockfd, &allset);</span><span>
+</span><span>                    client[i] = -</span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>                }</span><span style=color:#b48ead;>else</span><span>
+</span><span>                    </span><span style=color:#bf616a;>Writen</span><span>(sockfd, buf, n);</span><span>
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;</span><span>
+</span><span>            }</span><span>
+</span><span>        }</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><p>面向文本行服务器程序存在一个问题：如果一个恶意的客户连接到服务器，发送一个字节的数据（不是换行符）后进入睡眠，服务器将会调用readline从客户读入这个单字节的数据，然后阻塞于下一个read（readline内部的read）调用，等待客户其它数据。服务器因此阻塞而不能再为其它客户提供服务，直到那个恶意的客户发出一个换行符或终止为止。<p>当前版本的服务器程序已经弃用面向文本行的方法，等待换行输入或EOF而引起的拒绝服务攻击已经不复存在。<blockquote><p>拒绝服务型攻击：当一个服务器在处理多个客户时，它绝对不能阻塞于只与单个客户相关的某个函数调用。否则可能导致服务器被挂起，拒绝为所有其它客户提供服务。<p>可能的解决办法：<ul><li>使用非阻塞式I/O<li>让每个客户由单独的控制线程提供服务<li>对I/O操作设置一个超时</ul></blockquote><h2 id=6-9-pselecthan-shu>6.9 pselect函数</h2><p>pselect函数是由POSIX发明的，如今许多Unix变种支持它<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/select.h</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>signal.h</span><span>></span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>time.h</span><span>></span><span>
+</span><span style=color:#65737e;>//若有就绪描述符则返回其数目，超时返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>pselect</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>maxfdpl</span><span>, fd_set *</span><span style=color:#bf616a;>readset</span><span>, </span><span>
+</span><span>            fd_set *</span><span style=color:#bf616a;>writeset</span><span>, fd_set *</span><span style=color:#bf616a;>exceptset</span><span>,</span><span>
+</span><span>            </span><span style=color:#b48ead;>const struct</span><span> timespec *</span><span style=color:#bf616a;>timeout</span><span>, </span><span style=color:#b48ead;>const</span><span> sigset_t *</span><span style=color:#bf616a;>sigmark</span><span>);</span><span>
+</span></code></pre><p>pselect相对于通常的select有两个变化：<ul><li><p>pselect使用timespec结构（POSIX的一个发明），不使用timeval结构</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>struct </span><span>timespec{</span><span>
+</span><span>    time_t	tv_sec;</span><span>
+</span><span>    </span><span style=color:#65737e;>//新结构第二个成员指定纳秒数，旧结构指定微秒数</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#b48ead;>long</span><span>	tv_nsec;</span><span>
+</span><span>};</span><span>
+</span></code></pre><li><p>pselect函数增加了第六个参数：一个指向信号掩码的指针。该参数允许程序先禁止递交某些信号，再测试由这些当前被禁止信号的信号处理函数设置的全局变量，然后调用pselect，然后告诉它重新设置信号掩码</p></ul><h2 id=6-10-pollhan-shu>6.10 poll函数</h2><p>poll函数起源于SVR3，最初局限于流设备，SVR4取消了这种限制，允许poll工作在任何描述符上。<p>poll提供的功能与select类似，不过在处理流设备时，它能够提供额外的信息。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>poll.h</span><span>></span><span>
+</span><span>
+</span><span style=color:#b48ead;>struct </span><span>pollfd{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		fd;</span><span>
+</span><span>    </span><span style=color:#b48ead;>short</span><span>	events;	</span><span style=color:#65737e;>//指定要测试的条件</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#b48ead;>short</span><span>	revents;</span><span style=color:#65737e;>//返回描述符的状态</span><span style=color:#65737e;>
+</span><span>}</span><span>
+</span><span style=color:#65737e;>//若有就绪描述符返回其数目，超时返回0，出错返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>poll</span><span>(</span><span style=color:#b48ead;>struct</span><span> pollfd *</span><span style=color:#bf616a;>fdarray</span><span>, </span><span style=color:#b48ead;>unsigned long </span><span style=color:#bf616a;>nfds</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>timeout</span><span>);</span><span>
+</span></code></pre><p><img alt=image-20210122225638690 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20210122225638690.png><p>图分为三个部分：<ul><li>第一部分：处理输入的四个常值<li>第二部分：处理输出的三个常值<li>第三部分：处理错误的三个常值，不能在events中设置，但是当相应条件存在时就在revents中返回</ul><p>poll识别三类数据：普通（normal）、优先级带（priority band）、高优先级（high priority）<p>就TCP和UDP套接字而言，以下条件引起poll返回特定的revent。不幸的是，POSIX在其poll的实现中留了许多空洞（即有多种方法可返回相同的条件）：<ul><li>所有正规的TCP数据和所有UDP数据都被认为是普通数据<li>TCP的带外数据被认为是优先级带数据<li>当TCP连接的读半部关闭时，也被认为是普通数据，随后读操作返回0<li>TCP连接存在错误既可以认为是普通数据，也可以是错误（POLLERR）。读操作后都将返回-1，并设置errno，可用于收到RST或发生超时等条件<li>在监听套接字上有新的连接可用既可以认为是普通数据，也可以认为是优先级数据。大多数实现视为普通数据<li>非阻塞connect的完成被认为是使相应套接字可写</ul><p>参数nfds指定结构数组中元素的个数；timeout参数指定poll函数返回前等待多长时间，它是一个指定应等待毫秒数的正值。<p><img alt=image-20200806153002725 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC6%E7%AB%A0/image-20200806153002725.png><blockquote><p>INFTIM常值被定义为一个负值，如果系统不能提供毫秒级精度的定时器，该值就向上舍入到最接近的支持值。</blockquote><p>两种方法用来（也许只是暂时的）关闭对单个文件描述符的检查，而不需要重新建立整个fds列表：<ul><li>将events设为0<li>如果不再关心某个特定描述符，那么可以把与它对应的pollfd结构的fd成员设置成一个负值，poll函数将忽略这样的pollfd结构的events成员，返回时将它的revents成员的值设置为0。</ul><h2 id=6-11-tcphui-she-fu-wu-qi-cheng-xu-zai-xiu-ding-ban>6.11 TCP回射服务器程序（再修订版）</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>limits.h</span><span>>	</span><span style=color:#65737e;>//for OPEN_MAX</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>){</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		i, maxi, listenfd, connfd, sockfd;</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		nready;</span><span>
+</span><span>    ssize_t	n;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	buf[MAXLINE];</span><span>
+</span><span>    socklen_t	clilen;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> pollfd client[OPEN_MAX];</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in cliaddr, servaddr;</span><span>
+</span><span>    </span><span>
+</span><span>    listenfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family </span><span>= AF_INET;</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#bf616a;>Bind</span><span>(listenfd, (SA*)&servaddr, sizeof(servaddr));</span><span>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#bf616a;>Listen</span><span>(listenfd, LISTENQ);</span><span>
+</span><span>    </span><span>
+</span><span>    client[</span><span style=color:#d08770;>0</span><span>].</span><span style=color:#bf616a;>fd </span><span>= listenfd;</span><span>
+</span><span>    client[</span><span style=color:#d08770;>1</span><span>].</span><span style=color:#bf616a;>events </span><span>= POLLRDNORM;</span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>1</span><span>; i < OPEN_MAX; i++)</span><span>
+</span><span>        client[i].</span><span style=color:#bf616a;>fd </span><span>= -</span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>    maxi = </span><span style=color:#d08770;>0</span><span>;	</span><span style=color:#65737e;>//含义client数组当前正在使用的最大下标值</span><span style=color:#65737e;>
+</span><span>    </span><span>
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){</span><span>
+</span><span>        nready = </span><span style=color:#bf616a;>Poll</span><span>(client, maxi + </span><span style=color:#d08770;>1</span><span>, INFTIM);</span><span>
+</span><span>        </span><span>
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(client[</span><span style=color:#d08770;>0</span><span>].</span><span style=color:#bf616a;>revents </span><span>& POLLRDNORM){</span><span>
+</span><span>            clilen = sizeof(cliaddr);</span><span>
+</span><span>            connfd = </span><span style=color:#bf616a;>Accept</span><span>(listenfd, (SA*) &cliaddr, &clilen);</span><span>
+</span><span>            </span><span>
+</span><span>            </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>1</span><span>; i < OPEN_MAX; i++){</span><span>
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(client[i].</span><span style=color:#bf616a;>fd </span><span>< </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>                    client[i].</span><span style=color:#bf616a;>fd </span><span>= connfd;</span><span>
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;</span><span>
+</span><span>                }</span><span>
+</span><span>            }</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i == OPEN_MAX)</span><span>
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>too many clients</span><span>");</span><span>
+</span><span>            client[i].</span><span style=color:#bf616a;>events </span><span>= POLLRDNORM;</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i > maxfi)</span><span>
+</span><span>                maxfi = i;</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i > maxi)</span><span>
+</span><span>                maxi = i;</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;</span><span>
+</span><span>        }</span><span>
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>1</span><span>; i <= maxi; i++){</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>((sockfd = client[i].</span><span style=color:#bf616a;>fd</span><span>) < </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;</span><span>
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(client[i].</span><span style=color:#bf616a;>revents </span><span>& (POLLRDNORM | POLLERR)){</span><span>
+</span><span>                </span><span style=color:#b48ead;>if</span><span>((n = </span><span style=color:#bf616a;>Read</span><span>(sockfd, buf, MAXLINE)) < </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>                    </span><span style=color:#b48ead;>if</span><span>(errno == ECONNRESET){</span><span>
+</span><span>                        </span><span style=color:#bf616a;>Close</span><span>(sockfd);</span><span>
+</span><span>                        client[i].</span><span style=color:#bf616a;>fd </span><span>= -</span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>                    }</span><span style=color:#b48ead;>else</span><span>
+</span><span>                        </span><span style=color:#bf616a;>err_SYS</span><span>("</span><span style=color:#a3be8c;>read error</span><span>");</span><span>
+</span><span>                }</span><span style=color:#b48ead;>else if</span><span>(n == </span><span style=color:#d08770;>0</span><span>){</span><span>
+</span><span>                    </span><span style=color:#bf616a;>Close</span><span>(sockfd);</span><span>
+</span><span>                    client[i].</span><span style=color:#bf616a;>fd </span><span>= -</span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>                }</span><span style=color:#b48ead;>else</span><span>
+</span><span>                    </span><span style=color:#bf616a;>Writen</span><span>(sockfd, buf, n);</span><span>
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)</span><span>
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;</span><span>
+</span><span>            }</span><span>
+</span><span>        }</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><h1 id=di-7zhang-tao-jie-zi-xuan-xiang>第7章 套接字选项</h1><h2 id=7-1-gai-shu>7.1 概述</h2><p>获取和设置套接字选项的方法：<ul><li>getsockopt和setsockopt函数<li>fcntl函数<li>ioctl函数</ul><h2 id=7-2-getsockopthe-setsockopthan-shu>7.2 getsockopt和setsockopt函数</h2><p>这两个函数仅用于套接字：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//若成功都返回0，出错都返回-1</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>getsockopt</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>level</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>optname</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>optval</span><span>, socklen_t *</span><span style=color:#bf616a;>optlen</span><span>);</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>setsockopt</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>level</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>optname</span><span>, </span><span style=color:#b48ead;>const void </span><span>*</span><span style=color:#bf616a;>optval</span><span>, socklen_t </span><span style=color:#bf616a;>optlen</span><span>);</span><span>
+</span></code></pre><ul><li>sockfd：指向一个打开的套接字<li>level：指定系统中解释选项的代码，为通用套接字代码或某个特定于协议的代码（IPv4、IPv6、TCP、SCTP）<li>optval：指向某个变量（*optval）的指针，大小由最后一个参数指定 <ul><li>setsockopt从中取得选项待设置的新值，是一个值参数<li>getsockopt把已获取的选项当前值存放到*optval中，是一个值-结果参数</ul></ul><p>套接字选项粗分为两大基本类型：<ul><li>启用或禁止某个特性的二元选项（称为标志选项） <ul><li>getsockopt：*optval是一个整数，返回的值为0表示相应选项被禁止，不为0表示相应选项被启用<li>setsockopt：*optval是一个整数，不为0的值表示启用选项，为0的值表示禁止选项</ul><li>取得并返回我们可以设置或检查的特定值的选项（称为值选项）</ul><h2 id=7-3-jian-cha-xuan-xiang-shi-fou-shou-zhi-chi-bing-huo-qu-mo-ren-zhi>7.3 检查选项是否受支持并获取默认值</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>/* include checkopts1 */</span><span>
+</span><span style=color:#65737e;>/* *INDENT-OFF* */</span><span>
+</span><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span style=color:#b48ead;>#include    </span><span><</span><span style=color:#a3be8c;>netinet/tcp.h</span><span>>        </span><span style=color:#65737e;>/* for TCP_xxx defines */</span><span>
+</span><span>
+</span><span style=color:#65737e;>//getsockopt的每个可能的返回值，union类型中都有一个成员</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>union </span><span>val {</span><span>
+</span><span>  </span><span style=color:#b48ead;>int</span><span>                i_val;</span><span>
+</span><span>  </span><span style=color:#b48ead;>long</span><span>                l_val;</span><span>
+</span><span>  </span><span style=color:#b48ead;>struct</span><span> linger        linger_val;</span><span>
+</span><span>  </span><span style=color:#b48ead;>struct</span><span> timeval    timeval_val;</span><span>
+</span><span>} val;</span><span>
+</span><span>
+</span><span style=color:#65737e;>//用于输出给定套接字选项的值的4个函数的原型</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_flag</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_int</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_linger</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span style=color:#8fa1b3;>sock_str_timeval</span><span>(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#bf616a;>int</span><span>);</span><span>
+</span><span>
+</span><span style=color:#65737e;>//定义结构体，声明并定义结构体数组</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>struct </span><span>sock_opts {</span><span>
+</span><span>  </span><span style=color:#b48ead;>const char       </span><span>*opt_str;</span><span>
+</span><span>  </span><span style=color:#b48ead;>int</span><span>        opt_level;</span><span>
+</span><span>  </span><span style=color:#b48ead;>int</span><span>        opt_name;</span><span>
+</span><span>  </span><span style=color:#b48ead;>char   </span><span>*(*opt_val_str)(</span><span style=color:#b48ead;>union</span><span> val *, </span><span style=color:#b48ead;>int</span><span>);    </span><span style=color:#65737e;>//函数指针，指向输出函数</span><span style=color:#65737e;>
+</span><span>} sock_opts[] = {</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_BROADCAST</span><span>",        SOL_SOCKET,    SO_BROADCAST,    sock_str_flag },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_DEBUG</span><span>",            SOL_SOCKET,    SO_DEBUG,        sock_str_flag },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_DONTROUTE</span><span>",        SOL_SOCKET,    SO_DONTROUTE,    sock_str_flag },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_ERROR</span><span>",            SOL_SOCKET,    SO_ERROR,        sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_KEEPALIVE</span><span>",        SOL_SOCKET,    SO_KEEPALIVE,    sock_str_flag },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_LINGER</span><span>",            SOL_SOCKET,    SO_LINGER,        sock_str_linger },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_OOBINLINE</span><span>",        SOL_SOCKET,    SO_OOBINLINE,    sock_str_flag },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_RCVBUF</span><span>",            SOL_SOCKET,    SO_RCVBUF,        sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_SNDBUF</span><span>",            SOL_SOCKET,    SO_SNDBUF,        sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_RCVLOWAT</span><span>",        SOL_SOCKET,    SO_RCVLOWAT,    sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_SNDLOWAT</span><span>",        SOL_SOCKET,    SO_SNDLOWAT,    sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_RCVTIMEO</span><span>",        SOL_SOCKET,    SO_RCVTIMEO,    sock_str_timeval },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_SNDTIMEO</span><span>",        SOL_SOCKET,    SO_SNDTIMEO,    sock_str_timeval },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_REUSEADDR</span><span>",        SOL_SOCKET,    SO_REUSEADDR,    sock_str_flag },</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    SO_REUSEPORT</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_REUSEPORT</span><span>",        SOL_SOCKET,    SO_REUSEPORT,    sock_str_flag },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_REUSEPORT</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_TYPE</span><span>",            SOL_SOCKET,    SO_TYPE,        sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SO_USELOOPBACK</span><span>",        SOL_SOCKET,    SO_USELOOPBACK,    sock_str_flag },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IP_TOS</span><span>",                IPPROTO_IP,    IP_TOS,            sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IP_TTL</span><span>",                IPPROTO_IP,    IP_TTL,            sock_str_int },</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6_DONTFRAG</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_DONTFRAG</span><span>",        IPPROTO_IPV6,IPV6_DONTFRAG,    sock_str_flag },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_DONTFRAG</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6_UNICAST_HOPS</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_UNICAST_HOPS</span><span>",    IPPROTO_IPV6,IPV6_UNICAST_HOPS,sock_str_int },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_UNICAST_HOPS</span><span>",    </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6_V6ONLY</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_V6ONLY</span><span>",        IPPROTO_IPV6,IPV6_V6ONLY,    sock_str_flag },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>IPV6_V6ONLY</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>TCP_MAXSEG</span><span>",            IPPROTO_TCP,TCP_MAXSEG,        sock_str_int },</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>TCP_NODELAY</span><span>",        IPPROTO_TCP,TCP_NODELAY,    sock_str_flag },</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_AUTOCLOSE</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_AUTOCLOSE</span><span>",        IPPROTO_SCTP,SCTP_AUTOCLOSE,sock_str_int },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_AUTOCLOSE</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_MAXBURST</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXBURST</span><span>",        IPPROTO_SCTP,SCTP_MAXBURST,    sock_str_int },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXBURST</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_MAXSEG</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXSEG</span><span>",        IPPROTO_SCTP,SCTP_MAXSEG,    sock_str_int },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_MAXSEG</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    SCTP_NODELAY</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_NODELAY</span><span>",        IPPROTO_SCTP,SCTP_NODELAY,    sock_str_flag },</span><span>
+</span><span style=color:#b48ead;>#else</span><span>
+</span><span>    { "</span><span style=color:#a3be8c;>SCTP_NODELAY</span><span>",        </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>},</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span>    { </span><span style=color:#d08770;>NULL</span><span>,                    </span><span style=color:#d08770;>0</span><span>,            </span><span style=color:#d08770;>0</span><span>,                </span><span style=color:#d08770;>NULL </span><span>}</span><span>
+</span><span>};</span><span>
+</span><span style=color:#65737e;>/* *INDENT-ON* */</span><span>
+</span><span style=color:#65737e;>/* end checkopts1 */</span><span>
+</span><span>
+</span><span style=color:#65737e;>/* include checkopts2 */</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>                    fd;</span><span>
+</span><span>    socklen_t            len;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sock_opts    *ptr;</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(ptr = sock_opts; ptr->opt_str != </span><span style=color:#d08770;>NULL</span><span>; ptr++) {</span><span>
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>: </span><span>", ptr->opt_str);</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(ptr->opt_val_str == </span><span style=color:#d08770;>NULL</span><span>)</span><span>
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>(undefined)</span><span style=color:#96b5b4;>\n</span><span>");</span><span>
+</span><span>        </span><span style=color:#b48ead;>else </span><span>{</span><span>
+</span><span>            </span><span style=color:#b48ead;>switch</span><span>(ptr->opt_level) {</span><span>
+</span><span>            </span><span style=color:#b48ead;>case</span><span> SOL_SOCKET:</span><span>
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_IP:</span><span>
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_TCP:</span><span>
+</span><span>                fd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPV6</span><span>
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_IPV6:</span><span>
+</span><span>                fd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET6, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span style=color:#b48ead;>#ifdef</span><span>    IPPROTO_SCTP</span><span>
+</span><span>            </span><span style=color:#b48ead;>case</span><span> IPPROTO_SCTP:</span><span>
+</span><span>                fd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_SEQPACKET, IPPROTO_SCTP);</span><span>
+</span><span>                </span><span style=color:#b48ead;>break</span><span>;</span><span>
+</span><span style=color:#b48ead;>#endif</span><span>
+</span><span>            </span><span style=color:#b48ead;>default</span><span>:</span><span>
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>Can't create fd for level </span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", ptr->opt_level);</span><span>
+</span><span>            }</span><span>
+</span><span>
+</span><span>            len = sizeof(val);</span><span>
+</span><span>            </span><span style=color:#65737e;>//不支持的选项应该会引发一个ENOPROTOOPT错误</span><span style=color:#65737e;>
+</span><span>            </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>getsockopt</span><span>(fd, ptr->opt_level, ptr->opt_name,</span><span>
+</span><span>                           &val, &len) == -</span><span style=color:#d08770;>1</span><span>) {</span><span>
+</span><span>                </span><span style=color:#bf616a;>err_ret</span><span>("</span><span style=color:#a3be8c;>getsockopt error</span><span>");</span><span>
+</span><span>            } </span><span style=color:#b48ead;>else </span><span>{</span><span>
+</span><span>                </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>default = </span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", (*ptr->opt_val_str)(&val, len));</span><span>
+</span><span>            }</span><span>
+</span><span>            </span><span style=color:#bf616a;>close</span><span>(fd);</span><span>
+</span><span>        }</span><span>
+</span><span>    }</span><span>
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>}</span><span>
+</span><span style=color:#65737e;>/* end checkopts2 */</span><span>
+</span><span>
+</span><span style=color:#65737e;>/* include checkopts3 */</span><span>
+</span><span style=color:#b48ead;>static char</span><span>    strres[</span><span style=color:#d08770;>128</span><span>];</span><span>
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span>
+</span><span style=color:#8fa1b3;>sock_str_flag</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span style=color:#65737e;>/* *INDENT-OFF* */</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>int</span><span>))</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(int)</span><span>", len);</span><span>
+</span><span>    </span><span style=color:#b48ead;>else</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres),</span><span>
+</span><span>                 "</span><span style=color:#d08770;>%s</span><span>", (ptr->i_val == </span><span style=color:#d08770;>0</span><span>) ? "</span><span style=color:#a3be8c;>off</span><span>" : "</span><span style=color:#a3be8c;>on</span><span>");</span><span>
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);</span><span>
+</span><span style=color:#65737e;>/* *INDENT-ON* */</span><span>
+</span><span>}</span><span>
+</span><span style=color:#65737e;>/* end checkopts3 */</span><span>
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span>
+</span><span style=color:#8fa1b3;>sock_str_int</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>int</span><span>))</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(int)</span><span>", len);</span><span>
+</span><span>    </span><span style=color:#b48ead;>else</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#d08770;>%d</span><span>", ptr->i_val);</span><span>
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);</span><span>
+</span><span>}</span><span>
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span>
+</span><span style=color:#8fa1b3;>sock_str_linger</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> linger    *lptr = &ptr->linger_val;</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>struct</span><span> linger))</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres),</span><span>
+</span><span>                 "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(struct linger)</span><span>", len);</span><span>
+</span><span>    </span><span style=color:#b48ead;>else</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#a3be8c;>l_onoff = </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>, l_linger = </span><span style=color:#d08770;>%d</span><span>",</span><span>
+</span><span>                 lptr->l_onoff, lptr->l_linger);</span><span>
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);</span><span>
+</span><span>}</span><span>
+</span><span>
+</span><span style=color:#b48ead;>static char    </span><span>*</span><span>
+</span><span style=color:#8fa1b3;>sock_str_timeval</span><span>(</span><span style=color:#b48ead;>union</span><span> val *</span><span style=color:#bf616a;>ptr</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timeval    *tvptr = &ptr->timeval_val;</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(len != sizeof(</span><span style=color:#b48ead;>struct</span><span> timeval))</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres),</span><span>
+</span><span>                 "</span><span style=color:#a3be8c;>size (</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>) not sizeof(struct timeval)</span><span>", len);</span><span>
+</span><span>    </span><span style=color:#b48ead;>else</span><span>
+</span><span>        </span><span style=color:#96b5b4;>snprintf</span><span>(strres, sizeof(strres), "</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> sec, </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> usec</span><span>",</span><span>
+</span><span>                 tvptr->tv_sec, tvptr->tv_usec);</span><span>
+</span><span>    </span><span style=color:#b48ead;>return</span><span>(strres);</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=7-4-tao-jie-zi-zhuang-tai>7.4 套接字状态</h2><p>对于某些套接字选项，针对套接字的状态，什么时候设置或获取选项有时序上的考虑。<p>TCP已连接套接字选项从监听套接字继承的选项：SO_DEBUG、SO_DONTROUTE、SO_KEEPALIVE、SO_LINGER、SO_OOBINLINE、SO_RCVBUF、SO_RCVLOWAT、SO_SNDBUF、SO_SNDLOWAT、TCP_MAXSEG和TCP_NODELAY。<p>因为accept一直要到三次握手完成时，才会给服务器返回已连接套接字，如果想在三次握手完成时确保这些套接字选项中的某一个是给已连接套接字设置的，那么必须先给监听套接字设置该选项。<h2 id=7-5-tong-yong-tao-jie-zi-xuan-xiang>7.5 通用套接字选项</h2><p>通用套接字选项是协议无关的，由内核中协议无关代码处理。某些通用套接字选项只能应用到某些特定类型的套接字中。<h3 id=so-broadcasttao-jie-zi-xuan-xiang>SO_BROADCAST套接字选项</h3><p>开启或禁止进程发送广播消息的能力，只有数据报套接字支持广播，并且还必须在支持广播消息的网络上。<h3 id=so-debugtao-jie-zi-xuan-xiang>SO_DEBUG套接字选项</h3><p>仅由TCP支持，开启本选项时，内核将为TCP在该套接字发送和接收的所有分组保留详细跟踪信息。<h3 id=so-dontroutetao-jie-zi-xuan-xiang>SO_DONTROUTE套接字选项</h3><p>本选项规定外出的分组将绕过底层协议的正常路由机制。<h3 id=so-errortao-jie-zi-xuan-xiang>SO_ERROR套接字选项</h3><h2 id=7-6-ipv4tao-jie-zi-xuan-xiang>7.6 ipv4套接字选项</h2><h2 id=7-7-icmpv6tao-jie-zi-xuan-xiang>7.7 icmpv6套接字选项</h2><h2 id=7-8-ipv6tao-jie-zi-xuan-xiang>7.8 ipv6套接字选项</h2><h2 id=7-9-tcptao-jie-zi-xuan-xiang>7.9 tcp套接字选项</h2><h2 id=7-10-sctptao-jie-zi-xuan-xiang>7.10 sctp套接字选项</h2><h2 id=7-11-fcntlhan-shu>7.11 fcntl函数</h2><h1 id=di-8zhang-ji-ben-udptao-jie-zi-bian-cheng>第8章 基本UDP套接字编程</h1><h2 id=8-1-gai-shu>8.1 概述</h2><p>UDP是无连接不可靠的数据报协议，非常不同于TCP提供的面向连接的可靠字节流。<p>有些场合确实适合使用UDP，常见的应用程序有：<ul><li>DNS：域名系统<li>NFS：网络文件系统<li>SNMP：简单网络管理协议</ul><p><img alt=image-20200815203716894 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815203716894.png><h2 id=8-2-recvfromhe-sendtohan-shu>8.2 recvfrom和sendto函数</h2><p>类似于标准的read和write函数，不过需要三个额外的参数：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>></span><span>
+</span><span style=color:#65737e;>//成功则均返回读或写的字节数，出错返回-1</span><span style=color:#65737e;>
+</span><span>ssize_t </span><span style=color:#8fa1b3;>recvfrom</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>buff</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>flags</span><span>,</span><span>
+</span><span>                </span><span style=color:#b48ead;>struct</span><span> sockadd *</span><span style=color:#bf616a;>from</span><span>, socklen_t *</span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span><span>ssize_t </span><span style=color:#8fa1b3;>sendto</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>void </span><span>*</span><span style=color:#bf616a;>buff</span><span>, size_t </span><span style=color:#bf616a;>nbytes</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>flags</span><span>,</span><span>
+</span><span>              </span><span style=color:#b48ead;>const struct</span><span> sockaddr *</span><span style=color:#bf616a;>to</span><span>, socklen_t </span><span style=color:#bf616a;>addrlen</span><span>);</span><span>
+</span></code></pre><ul><li><p>前三个参数sockfd、buff和nbytes等同于read和write函数的三个参数：描述符、指向读入或写出缓冲区的指针和读写字节数。</p><li><p>flags总是置0</p><li><p>sendto的to参数指向一个含有数据报接收者的协议地址（例如IP地址及端口号）的套接字地址结构，大小由addrlen参数指定（<strong>是一个整数值</strong>）</p><li><p>recvfrom的from参数指向一个将由该函数在返回时填写数据报发送者的协议地址（例如IP地址及端口号）的套接字地址结构，该套接字地址中填写的字节数存放在addrlen参数所指的整数中返回给调用者（<strong>是一个指向整数值的指针（值-结果传参）</strong>）</p></ul><blockquote><p>recvfrom最后两个参数类似accept最后两个参数：返回时其中套接字地址结构内容告诉我们是谁发送了数据报（UPD情况下）或是谁发起了连接（TCP情况下）。<p>sendto的最后两个参数类似于connect最后两个参数：调用时其中套接字地址结构被我们填入数据报发往（UDP情况下）或与之建立连接（TCP情况下）的协议地址</blockquote><p>**写一个长度为0的数据报是可行的。**在UDP情况下，会形成一个只包含IP首部和UDP首部而没有数据的IP数据报，即recvfrom返回0值是可接受的。<p>UDP是无连接的，不存在关闭连接之类的事情。<h2 id=8-3-udphui-she-fu-wu-qi-cheng-xu-mainhan-shu>8.3 UDP回射服务器程序：main函数</h2><p><img alt=image-20200815211416476 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815211416476.png><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>                    sockfd;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in     servaddr, cliaddr;</span><span>
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//通过指定SOCK_DGRAM，创建一个UDP套接字</span><span style=color:#65737e;>
+</span><span>    sockfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_DGRAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family      </span><span>= AF_INET;</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port        </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>Bind</span><span>(sockfd, (SA *) &servaddr, sizeof(servaddr));</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>dg_echo</span><span>(sockfd, (SA *) &cliaddr, sizeof(cliaddr));</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=8-4-udphui-shou-fu-wu-qi-cheng-xu-dg-echohan-shu>8.4 UDP回收服务器程序：dg_echo函数</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>dg_echo</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, SA *</span><span style=color:#bf616a;>pcliaddr</span><span>, socklen_t </span><span style=color:#bf616a;>clilen</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>            n;</span><span>
+</span><span>    socklen_t      len;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>           mesg[MAXLINE];</span><span>
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//迭代服务器，永不终止，无连接</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>( ; ; ) {</span><span>
+</span><span>        len = clilen;</span><span>
+</span><span>        n = </span><span style=color:#bf616a;>Recvfrom</span><span>(sockfd, mesg, MAXLINE, </span><span style=color:#d08770;>0</span><span>, pcliaddr, &len);</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>Sendto</span><span>(sockfd, mesg, n, </span><span style=color:#d08770;>0</span><span>, pcliaddr, len);</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><p>大多数TCP服务器是并发的，大多数UDP服务器是迭代的。每个UDP套接字都有一个接收缓冲区，到达该套接字的每个数据报都进入这个套接字接收缓冲区，当进程调用recvfrom函数时，缓冲区中的下一个数据报以FIFO顺序返回给进程。<blockquote><p>dg_echo函数是协议无关的：调用者分配一个正确大小的套接字地址结构，将其地址指针和大小传参给dg_echo，dg_echo绝不查看该结构的内容，而是把一个指向该结构的指针传递给recvfrom和sendto。</blockquote><p><img alt=image-20200815212534596 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815212534596.png><p><img alt=image-20200815212550160 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200815212550160.png><h2 id=8-5-udphui-she-ke-hu-cheng-xu-mainhan-shu>8.5 UDP回射客户程序：main函数</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>                    sockfd;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in     servaddr;</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(argc != </span><span style=color:#d08770;>2</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>usage: udpcli &LTIPaddress></span><span>");</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family </span><span>= AF_INET;</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>    </span><span style=color:#bf616a;>Inet_pton</span><span>(AF_INET, argv[</span><span style=color:#d08770;>1</span><span>], &servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>);</span><span>
+</span><span>
+</span><span>    sockfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_DGRAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>dg_cli</span><span>(stdin, sockfd, (SA *) &servaddr, sizeof(servaddr));</span><span>
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=8-6-udphui-she-ke-hu-cheng-xu-dg-clihan-shu>8.6 UDP回射客户程序：dg_cli函数</h2><p>dg_cli函数也是协议无关的，不过main函数都是协议相关的。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>dg_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>const</span><span> SA *</span><span style=color:#bf616a;>pservaddr</span><span>, socklen_t </span><span style=color:#bf616a;>servlen</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>     n;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>    sendline[MAXLINE], recvline[MAXLINE + </span><span style=color:#d08770;>1</span><span>];</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#bf616a;>Fgets</span><span>(sendline, MAXLINE, fp) != </span><span style=color:#d08770;>NULL</span><span>) {</span><span>
+</span><span>
+</span><span>        </span><span style=color:#65737e;>//首次调用sendto时没有绑定一个本地接口，内核在此时为它选择一个临时端口</span><span style=color:#65737e;>
+</span><span>        </span><span style=color:#bf616a;>Sendto</span><span>(sockfd, sendline, </span><span style=color:#96b5b4;>strlen</span><span>(sendline), </span><span style=color:#d08770;>0</span><span>, pservaddr, servlen);</span><span>
+</span><span>
+</span><span>        </span><span style=color:#65737e;>//最后两个参数是空指针，表示并不关心应答数据报由谁发送</span><span style=color:#65737e;>
+</span><span>        </span><span style=color:#65737e;>//任何接收的数据报均被认为是服务器的内容</span><span style=color:#65737e;>
+</span><span>        n = </span><span style=color:#bf616a;>Recvfrom</span><span>(sockfd, recvline, MAXLINE, </span><span style=color:#d08770;>0</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>);</span><span>
+</span><span>
+</span><span>        recvline[n] = </span><span style=color:#d08770;>0</span><span>;    </span><span style=color:#65737e;>/* null terminate */</span><span>
+</span><span>        </span><span style=color:#bf616a;>Fputs</span><span>(recvline, stdout);</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=8-7-shu-ju-bao-de-diu-shi>8.7 数据报的丢失</h2><p>UDP客户/服务器例子是不可靠的：如果客户数据报到达服务器，但是服务器的应答丢失了，则客户将永远阻塞于dg_cli函数的recvfrom调用，等待一个永远不会到达的服务器应答。<p>防止永久阻塞的一般方法是给客户的recvfrom调用设置一个超时，但是这并不是完整的解决办法。<h2 id=8-8-yan-zheng-jie-shou-dao-de-xiang-ying>8.8 验证接收到的响应</h2><p>知道客户临时端口的任何进程都可以往客户发送数据报，而这些数据报会与正常的服务器应答混杂。<p>通过在dg_cli函数的recvfrom调用中，通知内核返回数据报发送者的地址，通过比较recvfrom在值-结果传参中返回的长度，然后用memcmp比较套接字地址结构本身，验证接收到的响应。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>dg_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>const</span><span> SA *</span><span style=color:#bf616a;>pservaddr</span><span>, socklen_t </span><span style=color:#bf616a;>servlen</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>                    n;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>                sendline[MAXLINE], recvline[MAXLINE + </span><span style=color:#d08770;>1</span><span>];</span><span>
+</span><span>    socklen_t              len;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr        *preply_addr;</span><span>
+</span><span>
+</span><span>    preply_addr = </span><span style=color:#bf616a;>Malloc</span><span>(servlen);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#bf616a;>Fgets</span><span>(sendline, MAXLINE, fp) != </span><span style=color:#d08770;>NULL</span><span>) {</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>Sendto</span><span>(sockfd, sendline, </span><span style=color:#96b5b4;>strlen</span><span>(sendline), </span><span style=color:#d08770;>0</span><span>, pservaddr, servlen);</span><span>
+</span><span>
+</span><span>        len = servlen;</span><span>
+</span><span>        n = </span><span style=color:#bf616a;>Recvfrom</span><span>(sockfd, recvline, MAXLINE, </span><span style=color:#d08770;>0</span><span>, preply_addr, &len);</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(len != servlen || </span><span style=color:#96b5b4;>memcmp</span><span>(pservaddr, preply_addr, len) != </span><span style=color:#d08770;>0</span><span>) {</span><span>
+</span><span>            </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>reply from </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> (ignored)</span><span style=color:#96b5b4;>\n</span><span>",</span><span>
+</span><span>                    </span><span style=color:#bf616a;>Sock_ntop</span><span>(preply_addr, len));</span><span>
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;</span><span>
+</span><span>        }</span><span>
+</span><span>
+</span><span>        recvline[n] = </span><span style=color:#d08770;>0</span><span>;    </span><span style=color:#65737e;>/* null terminate */</span><span>
+</span><span>        </span><span style=color:#bf616a;>Fputs</span><span>(recvline, stdout);</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><p>如果服务器运行在只有单个IP的主机上，那么新版的客户将正常工作，如果服务器主机是多宿的，该客户可能失败：发送到服务器数据的地址和接收服务器数据的地址可能不同。<p>解决办法：<ul><li>将返回的IP地址通过DNS中查找服务器主机的名字来验证主机的域名<li>为服务器每个IP绑定一个套接字，在所有套接字上使用select，使应答的套接字上绑定的IP地址就是客户请求的目的IP地址</ul><h2 id=8-9-fu-wu-qi-jin-cheng-wei-yun-xing>8.9 服务器进程未运行</h2><p>服务器进程不启动的情况下，客户永远阻塞在它的recvfrom调用，等待一个永不出现的服务器应答：<ul><li>客户主机进行ARP请求后获取服务器地址<li>客户发送数据后，返回“端口不可达”的ICMP消息，但该消息不会返回给客户进程</ul><p>这个ICMP错误称为<strong>异步错误</strong>，该错误由sendto引起，但是sendto本身却成功返回。UDP输出操作成功后仅仅返回表示在接口输出队列中具有存放所形成IP数据报的空间，该ICMP错误直到后来才返回，故称其为异步。<p>一个基本的规则：对于一个UDP套接字，由它引起的异步错误却并不返回给它，除非它已连接。ICMP出错信息包含引起错误的数据报的IP首部和UDP首部，而recvfrom可以返回的信息只有errno值，没法返回出错数据报的目的IP地址和目的UDP端口号，因此做出决定：仅在进程已将其UDP套接字连接到恰恰一个对端后，这些异步错误才返回给进程。<blockquote><p>只要SO_BSDCOMPAT套记者选项没有开启，Linux甚至对未连接的套接字也返回大多数ICMP “destination unreachable”错误。</blockquote><h2 id=8-10-udpcheng-xu-li-zi-xiao-jie>8.10 UDP程序例子小结</h2><p><img alt=image-20200816101704301 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816101704301.png><ul><li>客户临时端口是在第一次调用sendto时一次性选定，不能改变<li>客户的IP地址可以随客户发送的每个UDP数据报而变动</ul><p><img alt=image-20200816101727333 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816101727333.png><ul><li>对于UDP套接字来是，目的IP地址只能通过为IPv4设置IP_RECVDSTADDR套接字选项（或为IPv6设置IPV6_PKTINFO套接字选项）然后调用recvmsg取得。</ul><h2 id=8-11-udpde-connecthan-shu>8.11 UDP的connect函数</h2><p>UDP套接字的connect没有三路握手过程，内核只是检查是否存在立即可知的错误，记录对端的IP地址和端口号，然后立即返回到调用进程：<ul><li>未连接UDP套接字，新创建的UDP套接字默认如此<li>已连接UDP套接字，对UDP套接字调用connect的结果</ul><p>已连接UDP套接字对比默认的未连接套接字的三个变化：<ul><li><p>不能给输出操作指定目的IP地址和端口号，而是改用write或send</p> <ul><li>不使用sendto<li>使用sendto，但是不能指定目的地址，sendto的第五个参数为空指针，第六个参数为0</ul> <blockquote><p>POSIX规范指出当第五个参数是空指针时，第六个参数的取值就不再考虑</blockquote><li><p>不必使用recvfrom以获悉数据报的发送者，而改用read、recv或recvmsg。限制一个已连接UDP套接字能且仅能与一个对端交换数据报。</p> <ul><li>准确说是仅能与一个IP地址交换数据报，可能connect到多播或广播地址</ul><li><p>已连接UDP套接字的异步错误会返回给它们所在的进程，而未连接UDP套接字不接受任何异步错误</p></ul><p><img alt=image-20200816103351241 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816103351241.png><p><img alt=image-20200816103527775 src=Unix%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B-%E7%AC%AC8%E7%AB%A0/image-20200816103527775.png><p>UDP客户进程或服务进程只在使用自己的UDP套接字与确定的唯一对端进行通信时，才可以调用connect，调用connect的通常是UDP客户，不过有些网络应用中的UDP服务器会与单个客户长时间通信（如TFTP），这种情况下，客户和服务器都可能调用connect。<h3 id=8-11-1-gei-yi-ge-udptao-jie-zi-duo-ci-diao-yong-connect>8.11.1 给一个UDP套接字多次调用connect</h3><p>一个已连接UDP套接字的进程可由下列两个目的再次调用connect：<ul><li>指定新的IP地址和端口号 <ul><li>TCP套接字connect只能调用一次</ul><li>断开套接字 <ul><li>为了断开一个已连接UDP套接字，我们再次调用connect时把套接字地址结构的地址族成员（对于IPv4为sin_family，对于IPv6为sin6_family）设置为AF_UNSPEC，这样做可能会返回一个EAFNOSUPPORT错误，不过没关系<li>有些系统可以用空的套接字地址结构指针调用connect，POSIX规范和BSD手册只是提示必须使用一个空地址而没有提到出错返回值。最便于移植的解决办法是：<strong>清零一个地址结构后把它的地址族成员设置为AF_UNSPEC，再把它传递给connect</strong></ul></ul><h3 id=8-11-2-xing-neng>8.11.2 性能</h3><p>在一个未连接UDP套接字上给两个数据报调用sendto函数涉及6个步骤（源自Berkeley内核）：<ul><li>连接套接字（第一次很可能搜索路由表）<li>输出第一个数据报<li>断开套接字连接<li>连接套接字（第二次的目的地址可能等同第一次，则无需搜索路由表）<li>输出第二个数据报<li>断开套接字连接</ul><p>当应用进程知道自己要给同一目的地址发送多个数据报时，显示连接套接字效率更高，调用connect后调用两次write涉及内核的执行步骤如下：<ul><li>连接套接字<li>输出第一个数据报<li>输出第二个数据报</ul><h2 id=8-12-dg-clihan-shu-xiu-ding-ban>8.12 dg_cli函数（修订版）</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>dg_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>const</span><span> SA *</span><span style=color:#bf616a;>pservaddr</span><span>, socklen_t </span><span style=color:#bf616a;>servlen</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>            n;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>        sendline[MAXLINE], recvline[MAXLINE + </span><span style=color:#d08770;>1</span><span>];</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>Connect</span><span>(sockfd, (SA *) pservaddr, servlen);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#bf616a;>Fgets</span><span>(sendline, MAXLINE, fp) != </span><span style=color:#d08770;>NULL</span><span>) {</span><span>
+</span><span>
+</span><span>        </span><span style=color:#bf616a;>Write</span><span>(sockfd, sendline, </span><span style=color:#96b5b4;>strlen</span><span>(sendline));</span><span>
+</span><span>
+</span><span>        n = </span><span style=color:#bf616a;>Read</span><span>(sockfd, recvline, MAXLINE);</span><span>
+</span><span>
+</span><span>        recvline[n] = </span><span style=color:#d08770;>0</span><span>;    </span><span style=color:#65737e;>/* null terminate */</span><span>
+</span><span>        </span><span style=color:#bf616a;>Fputs</span><span>(recvline, stdout);</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><p>函数不查看传递给connect的套接字地址结构的内容，仍是协议无关的。<h2 id=8-13-udpque-fa-liu-liang-kong-zhi>8.13 UDP缺乏流量控制</h2><p><strong>UDP套接字接收缓冲区</strong>：由UDP给某个特定套接字排队的UDP数据报数目受限于该套接字接收缓冲区的大小，可以使用SO_RCVBUF套接字选项修改改制。<p>增加流量控制的UDP示例：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>#define    </span><span>NDG        </span><span style=color:#d08770;>2000    </span><span style=color:#65737e;>/* datagrams to send */</span><span>
+</span><span style=color:#b48ead;>#define    </span><span>DGLEN    </span><span style=color:#d08770;>1400    </span><span style=color:#65737e;>/* length of each datagram */</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>dg_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>const</span><span> SA *</span><span style=color:#bf616a;>pservaddr</span><span>, socklen_t </span><span style=color:#bf616a;>servlen</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>        i;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>    sendline[DGLEN];</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(i = </span><span style=color:#d08770;>0</span><span>; i < NDG; i++) {</span><span>
+</span><span>        </span><span style=color:#bf616a;>Sendto</span><span>(sockfd, sendline, DGLEN, </span><span style=color:#d08770;>0</span><span>, pservaddr, servlen);</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span></code></pre><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>static void    </span><span style=color:#8fa1b3;>recvfrom_int</span><span>(</span><span style=color:#bf616a;>int</span><span>);</span><span>
+</span><span style=color:#b48ead;>static int</span><span>    count;</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void</span><span>
+</span><span style=color:#8fa1b3;>dg_echo</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, SA *</span><span style=color:#bf616a;>pcliaddr</span><span>, socklen_t </span><span style=color:#bf616a;>clilen</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>            n;</span><span>
+</span><span>    socklen_t      len;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>           mesg[MAXLINE];</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>Signal</span><span>(SIGINT, recvfrom_int);</span><span>
+</span><span>
+</span><span>    n = </span><span style=color:#d08770;>220 </span><span>* </span><span style=color:#d08770;>1024</span><span>;</span><span>
+</span><span>    </span><span style=color:#bf616a;>Setsockopt</span><span>(sockfd, SOL_SOCKET, SO_RCVBUF, &n, sizeof(n));</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>( ; ; ) {</span><span>
+</span><span>        len = clilen;</span><span>
+</span><span>        </span><span style=color:#bf616a;>Recvfrom</span><span>(sockfd, mesg, MAXLINE, </span><span style=color:#d08770;>0</span><span>, pcliaddr, &len);</span><span>
+</span><span>
+</span><span>        count++;</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span><span>
+</span><span style=color:#b48ead;>static void</span><span>
+</span><span style=color:#8fa1b3;>recvfrom_int</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>signo</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#96b5b4;>\n</span><span style=color:#a3be8c;>received </span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> datagrams</span><span style=color:#96b5b4;>\n</span><span>", count);</span><span>
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=8-14-udpzhong-de-wai-chu-jie-kou-de-que-ding>8.14 udp中的外出接口的确定</h2><p>已连接UDP套接字还可以用来确定用于某个特定目的地址的外出接口。因为connect函数应用到UDP套接字时有一个副作用：内核选择本地IP地址（未使用bind），这个本地IP地址通过为目的地址搜索路由表得到外出接口，然后选用该接口的主IP地址而选定。<p>在UDP套接字上调用connect并不给对端主机发送任何信息，它完全是一个本地操作，只是保存对端的IP地址和端口号。<p>在一个未绑定端口号的UDP套接字上调用connect同时也给该套接字指派一个临时端口。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//使用connect来确定输出接口的UDP程序</span><span style=color:#65737e;>
+</span><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>                        sockfd;</span><span>
+</span><span>    socklen_t                  len;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in         cliaddr, servaddr;</span><span>
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(argc != </span><span style=color:#d08770;>2</span><span>)</span><span>
+</span><span>        </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>usage: udpcli &LTIPaddress></span><span>");</span><span>
+</span><span>
+</span><span>    sockfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_DGRAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family </span><span>= AF_INET;</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>    </span><span style=color:#bf616a;>Inet_pton</span><span>(AF_INET, argv[</span><span style=color:#d08770;>1</span><span>], &servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>Connect</span><span>(sockfd, (SA *) &servaddr, sizeof(servaddr));</span><span>
+</span><span>
+</span><span>    len = sizeof(cliaddr);</span><span>
+</span><span>    </span><span style=color:#bf616a;>Getsockname</span><span>(sockfd, (SA *) &cliaddr, &len);</span><span>
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>local address </span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>Sock_ntop</span><span>((SA *) &cliaddr, len));</span><span>
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>}</span><span>
+</span></code></pre><h2 id=8-15-shi-yong-selecthan-shu-de-tcphe-udphui-she-fu-wu-qi-cheng-xu>8.15 使用select函数的tcp和udp回射服务器程序</h2><p>将并发TCP回射服务器程序与迭代UDP回射服务器程序组合成单个使用select来复用TCP和UDP套接字的服务器程序。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>/* include udpservselect01 */</span><span>
+</span><span style=color:#b48ead;>#include    </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span>
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)</span><span>
+</span><span>{</span><span>
+</span><span>    </span><span style=color:#b48ead;>int</span><span>                    listenfd, connfd, udpfd, nready, maxfdp1;</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span>                   mesg[MAXLINE];</span><span>
+</span><span>    pid_t                  childpid;</span><span>
+</span><span>    fd_set                 rset;</span><span>
+</span><span>    ssize_t                n;</span><span>
+</span><span>    socklen_t              len;</span><span>
+</span><span>    </span><span style=color:#b48ead;>const int</span><span>              on = </span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in     cliaddr, servaddr;</span><span>
+</span><span>    </span><span style=color:#b48ead;>void                   </span><span style=color:#bf616a;>sig_chld</span><span>(</span><span style=color:#b48ead;>int</span><span>);</span><span>
+</span><span>
+</span><span>        </span><span style=color:#65737e;>/* create listening TCP socket */</span><span>
+</span><span>    listenfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family      </span><span>= AF_INET;</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port        </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//设置SO_REUSEADDR套接字选项防止该端口上已有连接存在</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#bf616a;>Setsockopt</span><span>(listenfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));</span><span>
+</span><span>    </span><span style=color:#bf616a;>Bind</span><span>(listenfd, (SA *) &servaddr, sizeof(servaddr));</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>Listen</span><span>(listenfd, LISTENQ);</span><span>
+</span><span>
+</span><span>        </span><span style=color:#65737e;>/* create UDP socket */</span><span>
+</span><span>    udpfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_DGRAM, </span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family      </span><span>= AF_INET;</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);</span><span>
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port        </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>Bind</span><span>(udpfd, (SA *) &servaddr, sizeof(servaddr));</span><span>
+</span><span style=color:#65737e;>/* end udpservselect01 */</span><span>
+</span><span>
+</span><span style=color:#65737e;>/* include udpservselect02 */</span><span>
+</span><span>    </span><span style=color:#65737e;>//给SIGCHLD建立信号处理程序，因为TCP连接将由某个子进程处理</span><span style=color:#65737e;>
+</span><span>    </span><span style=color:#bf616a;>Signal</span><span>(SIGCHLD, sig_chld);    </span><span style=color:#65737e;>/* must call waitpid() */</span><span>
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>FD_ZERO</span><span>(&rset);</span><span>
+</span><span>    maxfdp1 = </span><span style=color:#bf616a;>max</span><span>(listenfd, udpfd) + </span><span style=color:#d08770;>1</span><span>;</span><span>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>( ; ; ) {</span><span>
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(listenfd, &rset);</span><span>
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(udpfd, &rset);</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>( (nready = </span><span style=color:#bf616a;>select</span><span>(maxfdp1, &rset, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>)) < </span><span style=color:#d08770;>0</span><span>) {</span><span>
+</span><span>            </span><span style=color:#b48ead;>if </span><span>(errno == EINTR)</span><span>
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;        </span><span style=color:#65737e;>/* back to for() */</span><span>
+</span><span>            </span><span style=color:#b48ead;>else</span><span>
+</span><span>                </span><span style=color:#65737e;>//sig_chld信号处理程序可能会中断select调用，需要处理EINTR错误</span><span style=color:#65737e;>
+</span><span>                </span><span style=color:#bf616a;>err_sys</span><span>("</span><span style=color:#a3be8c;>select error</span><span>");</span><span>
+</span><span>        }</span><span>
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(listenfd, &rset)) {</span><span>
+</span><span>            len = sizeof(cliaddr);</span><span>
+</span><span>            connfd = </span><span style=color:#bf616a;>Accept</span><span>(listenfd, (SA *) &cliaddr, &len);</span><span>
+</span><span>    </span><span>
+</span><span>            </span><span style=color:#b48ead;>if </span><span>( (childpid = </span><span style=color:#bf616a;>Fork</span><span>()) == </span><span style=color:#d08770;>0</span><span>) {    </span><span style=color:#65737e;>/* child process */</span><span>
+</span><span>                </span><span style=color:#bf616a;>Close</span><span>(listenfd);    </span><span style=color:#65737e;>/* close listening socket */</span><span>
+</span><span>                </span><span style=color:#bf616a;>str_echo</span><span>(connfd);    </span><span style=color:#65737e;>/* process the request */</span><span>
+</span><span>                </span><span style=color:#96b5b4;>exit</span><span>(</span><span style=color:#d08770;>0</span><span>);</span><span>
+</span><span>            }</span><span>
+</span><span>            </span><span style=color:#bf616a;>Close</span><span>(connfd);            </span><span style=color:#65737e;>/* parent closes connected socket */</span><span>
+</span><span>        }</span><span>
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(udpfd, &rset)) {</span><span>
+</span><span>            len = sizeof(cliaddr);</span><span>
+</span><span>            n = </span><span style=color:#bf616a;>Recvfrom</span><span>(udpfd, mesg, MAXLINE, </span><span style=color:#d08770;>0</span><span>, (SA *) &cliaddr, &len);</span><span>
+</span><span>
+</span><span>            </span><span style=color:#bf616a;>Sendto</span><span>(udpfd, mesg, n, </span><span style=color:#d08770;>0</span><span>, (SA *) &cliaddr, len);</span><span>
+</span><span>        }</span><span>
+</span><span>    }</span><span>
+</span><span>}</span><span>
+</span><span style=color:#65737e;>/* end udpservselect02 */</span><span>
+</span><span>
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

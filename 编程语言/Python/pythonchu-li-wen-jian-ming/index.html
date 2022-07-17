@@ -1,0 +1,38 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/pythonchu-li-wen-jian-ming/>处理文件名</a></h1><div class=post-meta-inline><span class=post-date> 2020-03-01 </span></div><div class=post-content><p>使用python批量处理一些文件的命名问题<h2 id=fen-chi-wen-jian-ming-he-kuo-zhan-ming-os-path-splitext>分离文件名和扩展名——os.path.splitext()</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#分离文件名和扩展名，默认返回（frame,fextension）元组
+</span><span>#可用作分片操作
+</span><span>
+</span><span>import os
+</span><span>
+</span><span>path_01='E:\STH\Foobar2000\install.log'
+</span><span>path_02='E:\STH\Foobar2000'
+</span><span>res_01=os.path.splitext(path_01)
+</span><span>res_02=os.path.splitext(path_02)
+</span><span>print(root_01) #('E:\\STH\\Foobar2000\\install', '.log')
+</span><span>print(root_02) #('E:\\STH\\Foobar2000', '')
+</span><span>
+</span></code></pre><h2 id=pythondao-ru-wen-jian-ming-wen-jian-hou-de-pai-xu-wen-ti>python导入文件名/文件后的排序问题</h2><p>用库函数sorted()对字符串排序，操作对象是字符<p>用函数sort()对数字排序，操作对象是数字，如果处理文件名需处理后缀（字符串）<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#测试sorted()
+</span><span>
+</span><span>import numpy as np
+</span><span>import os
+</span><span>
+</span><span>img_path='./img/'
+</span><span>
+</span><span>img_list=sorted(os.listdir(img_path))	#文件名按字母排序
+</span><span>img_nums=len(img_list)
+</span><span>for i in range(img_nums):
+</span><span>    img_name=img_path+img_list[i]
+</span><span>    print(img_name)
+</span></code></pre><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#测试sort函数
+</span><span>
+</span><span>import numpy as np
+</span><span>import os
+</span><span>img_path='./img/'
+</span><span>
+</span><span>img_list=os.listdir(img_path)
+</span><span>img_list.sort()
+</span><span>img_list.sort(key = lambda x: int(x[:-4])) ##文件名按数字排序
+</span><span>img_nums=len(img_list)
+</span><span>for i in range(img_nums):
+</span><span>    img_name=img_path+img_list[i]
+</span><span>    print(img_name)
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

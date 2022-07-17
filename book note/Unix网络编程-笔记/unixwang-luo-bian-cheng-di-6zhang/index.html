@@ -1,0 +1,263 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/book note/Unix网络编程-笔记/unixwang-luo-bian-cheng-di-6zhang/">Unix网络编程-第6章 I/O复用：select和poll函数</a></h1><div class=post-meta-inline><span class=post-date> 2019-12-24 </span></div><div class=post-content><p>第6章 I/O复用：select和poll函数<h2 id=6-1-gai-shu>6.1 概述</h2><p>内核一旦发现进程指定的一个或多个I/O条件就绪（也就是说输入已准备好被读取，或者描述符已能承接更多的输出），它就通知进程，这个能力称为I/O复用。<p>I/O复用由select和poll两个函数支持，前者较新的称为pselect的POSIX变种。<p>I/O复用并非只限于网络编程，I/O复用典型使用在下列网络应用场合：<ul><li>当客户处理多个描述符（通常是交互式输入和网络套接字）时，必须使用I/O复用<li>一个客户同时处理多个套接字是可能的，不过比较少见<li>如果一个TCP服务器既要处理监听套接字，又要处理已连接套接字，一般就要使用I/O复用<li>如果一个服务器既要处理TCP，又要处理UDP，一般就要使用I/O复用<li>如果一个服务器要处理多个服务或者多个协议，一般就要使用I/O复用</ul><h2 id=6-2-i-omo-xing>6.2 I/O模型</h2><p>Unix下可用的I/O模型有五种：<ul><li>阻塞式I/O<li>非阻塞式I/O<li>I/O复用（select和poll）<li>信号驱动式I/O（SIGIO）<li>异步I/O（POSIX的aio_系列函数）</ul><p>一个输入操作通常包括两个不同的阶段：<ol><li>等待数据准备好<li>从内核向进程复制数据</ol><p>对于一个套接字上的输入操作：<ol><li>第一步通常涉及等待数据从网络中到达，当所等待的分组到达时，它被复制到内核中的某个缓冲区<li>把数据从内核缓冲区复制到应用进程缓冲区</ol><h3 id=6-2-1-zu-sai-shi-i-ozu-sai>6.2.1 阻塞式I/O阻塞</h3><p>最流行的I/O模型是阻塞式I/O模型。默认情况下，所有套接字都是阻塞的。<p><img alt=image-20200220142525476 src=6.1.1.png><h3 id=6-2-2-fei-zu-sai-shi-i-omo-xing>6.2.2 非阻塞式I/O模型</h3><p>进程把一个套接字设置为非阻塞是在通知内核：当所请求的I/O操作非把本进程投入睡眠才能完成时，不要把本进程投入睡眠，而是返回一个错误。<p><img alt=image-20200220143123892 src=6.2.2.png><p><strong>轮询（polling)</strong>：应用进程持续轮询内核，以查看某个操作是否就绪，这样做往往耗费大量CPU时间。<h3 id=6-2-3-i-ofu-yong-mo-xing>6.2.3 I/O复用模型</h3><p>通过调用select或poll，阻塞在这两个系统调用中的某一个之上，而不是阻塞在真正的I/O调用上<p><img alt=image-20200220211237813 src=6.2.3.png><p>I/O复用需要两个系统调用<p>优势：可以等待多个描述符就绪<h3 id=6-2-4-xin-hao-qu-dong-shi-i-omo-xing>6.2.4 信号驱动式I/O模型</h3><p>使用信号，让内核在描述符就绪时发送SIGIO信号通知我们，这种模式为信号驱动式I/O。<p><img alt=image-20200220211730610 src=6.2.4.png><p>优势：等待数据报到达期间进程不被阻塞，主循环可以继续执行，只要等待来自信号处理函数的通知：既可以是数据已经准备好被处理，也可以是数据报已准备好被读取<h3 id=6-2-5-yi-bu-i-omo-xing>6.2.5 异步I/O模型</h3><p>异步I/O由POSIX规范定义。<p>异步函数的工作机制是：告知内核启动某个操作，并让内核在整个操作（包括将数据从内核复制到我们自己的缓冲区）完成后通知我们。<p>与信号驱动模型的主要区别在于：信号驱动式I/O是由内核通知我们何时可以启动一个I/O操作，而异步I/O模型是由内核通知我们I/O操作何时完成。<p><img alt=image-20200220222137004 src=6.2.5.png><p>POSIX异步函数以aio_或lio_开头。<p>这里调用aio_read函数，给内核传递描述符、缓冲区指针、缓冲区大小（与read相同的三个参数）和文件偏移（与lseek类似），并告诉内核当整个操作完成时如何通知我们。该系统调用立即返回，而且在等待I/O完成期间，进程不被阻塞。<h3 id=6-2-6-ge-chong-i-omo-xing-de-bi-jiao>6.2.6 各种I/O模型的比较</h3><p>POSIX定义：<ul><li><p>同步I/O操作：导致请求进程阻塞，知道I/O操作完成</p><li><p>异步I/O操作：不导致请求进程阻塞</p></ul><p><img alt=image-20200220222618152 src=6.2.6.png><p>前4种模型都是同步I/O模型，因为其中真正的I/O操作（recvfrom）将进程阻塞。只有异步I/O模型与POSIX定义的异步I/O相匹配。<h2 id=6-3-selecthan-shu>6.3 select函数</h2><p>该函数允许进程指示内核等待多个事件中的任何一个发送，并只在有一个或多个事件发生或经历一段指定的时间后才唤醒它。<p>select函数告知内核对哪些描述符（就读、写或异常条件）感兴趣以及等待多长时间。描述符不局限于套接字，任何描述符都可以使用select来测试。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/select.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/time.h</span><span>>
+</span><span>
+</span><span style=color:#65737e;>//若有就绪描述符则返回其数目，若超时则返回0，若出错则返回-1
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>select</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>maxfdp1</span><span>, fd_set *</span><span style=color:#bf616a;>readset</span><span>, fd_set *</span><span style=color:#bf616a;>writeset</span><span>, 
+</span><span>           fd_set *</span><span style=color:#bf616a;>exceptset</span><span>, </span><span style=color:#b48ead;>const struct</span><span> timeval *</span><span style=color:#bf616a;>timeout</span><span>);
+</span></code></pre><p>参数解析：<ol><li><p>timeout：告知内核等待所指定描述符中的任何一个就绪可花多长时间</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>struct </span><span>timeval{
+</span><span>    </span><span style=color:#b48ead;>long</span><span>     tv_sec;    </span><span style=color:#65737e;>//秒数
+</span><span>    </span><span style=color:#b48ead;>long</span><span>     tv_usec;   </span><span style=color:#65737e;>//微秒数
+</span><span>}
+</span></code></pre> <p>该参数有三种情况：</p> <ul><li>永远等待下去：仅在有一个描述符准备好I/O时才返回，此时将该参数设置为空指针<li>等待一段固定时间：在有一个描述符准备好I/O时返回，但是不超过由该参数所指向的timeval结构中指定的秒数和微秒数<li>根本不等待：检测描述符后立即返回，这称为轮询。该参数指向timeval结构，其中定时器的值必须为0</ul> <p>前两种情况的等待通常会被进程在等待期间捕获的信号中断，并从信号处理函数返回。</p> <p>timeval结构允许我们指定一个微秒级的分辨率，然而内核支持的真实分辨率往往粗糙得多，许多Unix内核把超时值向上舍入成10ms的倍数，另外内核还需要额外的调度延迟。</p> <p>timeout参数的const限定词表示它在函数返回时不会被select修改，无法通过该参数计算出实际等待时间。</p><li><p>中间三个参数readset、writeset和exceptset指定我们要让内核测试读、写和异常条件的描述符</p> <ul><li><p>目前支持的异常条件只有两个：</p> <ol><li>某个套接字的带外数据的到达<li>某个已置为分组模式的伪终端存在可从其主端读取的控制状态信息</ol><li><p>select使用<strong>描述符集</strong>来给3个参数中的每一个参数指定一个或多个描述符值，通常是一个整数数组，其中<strong>每个整数中的每一位</strong>对应一个描述符。具体实现与应用程序无关，隐藏在数据类型fd_set和以下四个宏中：</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_ZERO</span><span>(fd_set *</span><span style=color:#bf616a;>fdset</span><span>);		</span><span style=color:#65737e;>//clear all bits of fdset
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_SET</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>fd</span><span>, fd_set *</span><span style=color:#bf616a;>fdset</span><span>);	</span><span style=color:#65737e;>//turn on the bit for fd in fdset
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_CLR</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>fd</span><span>, fd_set *</span><span style=color:#bf616a;>fdset</span><span>);	</span><span style=color:#65737e;>//turn off the bit for fd in fdset
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>FD_ISSET</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>fd</span><span>, fd_set *</span><span style=color:#bf616a;>fdset</span><span>);</span><span style=color:#65737e;>//is the bit for fd on fdset ?
+</span></code></pre> <p>我们分配一个fd_set类型的描述符集，并用这些宏设置和测试集合中的每一位，也可以使用赋值语句将它赋值成另一个描述符集：</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>fd_set rset;
+</span><span>
+</span><span style=color:#bf616a;>FD_ZERO</span><span>(&rset);	</span><span style=color:#65737e;>//初始化
+</span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#d08770;>1</span><span>, &rset);
+</span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#d08770;>4</span><span>, &rset);
+</span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#d08770;>5</span><span>, &rset);
+</span></code></pre></ul> <ol start=3><li>maxfdpl参数指定待测试的描述符的个数，它的值是待测试的最大描述符加1，描述符0，1，2……一直到maxfdpl-1均将被测试<li>头文件&LTsys/select.h>中定义的FD_SETSIZE常值是数据类型fd_set中描述符总数，通常是1024，通常使用不了那么多<li>select函数修改由指针readset、writeset和exceptset所指向的描述符集，因此这三个参数都是值-结果传参。函数返回时，指示哪些描述符已就绪，描述符集内任何与未就绪描述符对应的位返回时均清零，因此每次重新调用select函数时，都需要重新为关心的位均置1。</ol></ol><h3 id=6-3-1-miao-shu-fu-jiu-xu-tiao-jian>6.3.1 描述符就绪条件</h3><p>满足下列条件之一，则套接字准备好读：<ol><li>该套接字的接收缓冲区中的数据字节数大于等于套接字接收缓冲区低水位标记SO_RCVLOWAT的当前大小，对该套接字读操作不阻塞并返回一个大于0的值<li>该连接的读半部关闭（也就是接收了FIN的TCP连接），读操作不阻塞并返回0<li>该套接字是一个监听套接字，且已完成的连接数不为0，不阻塞<li>其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件。此时可以使用getsockopt来读取和清除该错误</ol><p>满足下列条件之一，则套接字准备好写：<ol><li>该套接字的发送缓冲区中的可用空间字节数大于等于套接字发送缓冲区低水位标记的当前大小，并且该套接字已经连接或者不需要连接（如UDP套接字），对该套接字写操作不阻塞并返回一个大于0的值<li>该连接的写半部关闭，对这样的套接字的写操作将产生SIGPIPE信号<li>使用非阻塞式connect的套接字已建立连接，或者connect已经以失败告终<li>其上有一个套接字错误待处理，不阻塞并返回-1，同时把设置errno为错误条件</ol><p>如果一个套接字存在带外数据或者仍处于带外标记，那么它有异常条件待处理。当某个套接字上发生错误时，它将由select标记为既可读又可写。<blockquote><p>接收低水位标记和发送低水位标记的目的在于：允许应用进程控制在select返回可读或可写条件之前有多少数据可读或有多大空间可用于写。<p>举例：当数据少于64字节时，应用程序没有任何有效工作可做，则把接收低水位标记设置为64，以防少于64字节的数据准备好时select唤醒程序。<p>任何UDP套接字只要其发送低水位标记小于等于发送缓冲区大小（默认关系）就总是可写的，这是因为UDP套接字不需要连接。</blockquote><p><img alt=image-20200805213132250 src=image-20200805213132250.png><h3 id=6-3-2-selectde-zui-da-miao-shu-fu-shu>6.3.2 select的最大描述符数</h3><p>最初设计select时，操作系统通常对每个进程可用的最大描述符数设置了上限，select就使用了相同的限制。<p>当今的Unix版本允许每个进程使用事实上无数目限制的描述符（往往仅受限于内存总量和管理性限制）。<p>表面上可以通过将FD_SETSIZE定义为某个更大的值，实际上却行不通，首先它是内核集成的，修改后需要重新编译内核，其次可能存在扩展性问题。<p>有些应用程序开始改用poll代替select，典型例子是需要复选大量描述符的事件驱动型服务器程序，所需描述符量超过1024个<h2 id=6-4-str-clihan-shu-xiu-ding-ban>6.4 str_cli函数（修订版）</h2><p>原先版本可能阻塞于fgets调用，新版改为阻塞于select调用，或是等待标准输入可读，或是等待套接字可读。<p><img alt=image-20200805220011258 src=image-20200805220011258.png><p>客户的套接字上的三个条件处理如下：<ul><li>如果对端TCP发送数据，那么该套接字变为可读，并且read返回一个大于0的值（读入数据的字节数）<li>如果对端TCP发送一个FIN（对端进程终止），那么该套接字变为可读，并且read返回0（EOF）<li>如果对端TCP发送一个RST（对端主机崩溃并重新启动），那么该套接字变为可读，并且read返回-1，而errno中含有确切的错误码</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>void
+</span><span style=color:#8fa1b3;>str_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> 	maxfdpl;
+</span><span>    fd_set	rset;
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	sendline[MAXLINE], recvline[MAXLINE];
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>FD_ZERO</span><span>(&rset);
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset);
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(sockfd, &rset);
+</span><span>        </span><span style=color:#65737e;>//fileno函数把标准I/O文件指针转换为对应的描述符
+</span><span>        maxfdpl = </span><span style=color:#bf616a;>max</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), sockfd) + </span><span style=color:#d08770;>1</span><span>;
+</span><span>        </span><span style=color:#bf616a;>Select</span><span>(maxfdpl, &rset, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>        
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(sockfd, &rset)){		</span><span style=color:#65737e;>//socket is readable
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>Readline</span><span>(sockfd, recvline, MAXLINE) == </span><span style=color:#d08770;>0</span><span>)
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>str_cli: server terminated prematurely</span><span>");
+</span><span>            </span><span style=color:#bf616a;>Fputs</span><span>(recvline, stdout);
+</span><span>        }
+</span><span>        
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset)){	</span><span style=color:#65737e;>//input is readable
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>Fgets</span><span>(sendline, MAXLINE, fp) == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>                </span><span style=color:#b48ead;>return</span><span>;
+</span><span>            </span><span style=color:#bf616a;>Writen</span><span>(sockfd, sendline, </span><span style=color:#96b5b4;>strlen</span><span>(sendline));
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre><h2 id=6-5-pi-liang-shu-ru>6.5 批量输入</h2><p>当客户端使用停-等方式工作时，虽然对交互式使用是合适的，但是却不能实现对通信管道的高效利用。<p>如果把客户与服务器之间的网络作为全双工管道考虑，请求从客户想服务器发送，应答从服务器向客户发送，则停-等方式如下图：<p><img alt=image-20200806100510176 src=image-20200806100510176.png><p>在Unix的shell环境下，很容易实现重定向标准输入和标准输出，从而可以批量运行客户。当我们把标准输入和标准输出重定向到文件来运行新的客户程序时，却发现输出文件总是小于输入文件（对于回射服务器而言理应相等）。<p><img alt=image-20200806101504809 src=image-20200806101504809.png><p>当运行一个客户程序时，标准输入的EOF同时意味着完成从套接字的读入。批量运行客户程序时，客户程序写完请求时，并不能立即关闭连接，因为管道中还有其它的请求和应答，但是修订版的str_cli函数对标准输入EOF的处理却是返回到main函数，而main函数随后终止。<p>我们需要的是一种关闭TCP连接其中一半的方法，即给服务器发送一个FIN告诉它我们已经完成了数据发送，但仍然保持套接字描述符打开以便读取。由shutdown函数完成。<p>为了提升性能而引入的缓冲机制增加了网络应用程序的复杂性：<ul><li><p>fgets读取输入，将数据存放在stdio缓冲区，但是fgets只返回其中一行，其余仍在缓冲区。select处理完一行后再次被调用等待新的工作，并不知道stdio使用了缓冲区——它只是从read系统的角度指出是否有数据可读，而不是从fgets之类的调用角度</p><li><p>readline调用时，select不可见的数据隐藏在readline自己的缓冲区中</p></ul><h2 id=6-6-shutdownhan-shu>6.6 shutdown函数</h2><p>终止网络连接的通常方法是调用close函数，不过close函数有两个限制，却可以使用shutdown来避免：<ul><li>close把描述符引用计数减1，仅在计数变为0时才关闭套接字。shutdown可以不管引用计数就激发TCP的正常连接终止序列<li>close终止读和写两个方向的数据传送。既然TCP连接是全双工的，有时候我们需要告知对端已经完成数据发送，即使对端仍有数据要发送给我们。</ul><p><img alt=image-20200806105214830 src=image-20200806105214830.png><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/socket.h</span><span>>
+</span><span style=color:#65737e;>//成功返回0，出错返回-1
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>shutdown</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>howto</span><span>);
+</span></code></pre><p>函数行为依赖于<code>howto</code>参数的值：<ul><li>SHUT_RD：关闭连接的读一半——套接字中不再有数据可接收，套接字接收缓冲区中的现有数据都被丢弃。进程不能再对套接字调用任何读函数。TCP套接字调用shutdown函数后，由该套接字接收的来自对端的任何数据都将被确认，然后悄然丢弃<li>SHUT_WR：关闭连接的写一半——对于TCP套接字，这称为半关闭。当前留在套接字发送缓冲区的数据将被发送掉，后跟TCP正常连接终止序列。不能再对套接字调用任何写函数<li>SHUT_RDWR：连接的读半部和写半部都关闭——等效于调用两次shutdown，第一次指定SHUT_RD，第二次指定SHUT_WR</ul><blockquote><p>这三个SHUT_XXX名字由POSIX规范定义，howto参数的典型值将会是0（关闭读半部）、1（关闭写半部）和2（读半部和写半部都关闭）。</blockquote><h2 id=6-7-str-clihan-shu-zai-xiu-ding-ban>6.7 str_cli函数（再修订版）</h2><p>改进（且正确）版本：<ul><li>服务器一关闭它那一端的连接立马得到通知<li>可以正确处理批量输入<li>废弃以文本行为中心，改而针对缓冲区操作</ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>void
+</span><span style=color:#8fa1b3;>str_cli</span><span>(FILE *</span><span style=color:#bf616a;>fp</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>sockfd</span><span>){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> 	maxfdpl, stdineof;
+</span><span>    fd_set	rset;
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	buf[MAXLINE];
+</span><span>    </span><span style=color:#b48ead;>int</span><span> n;
+</span><span>    
+</span><span>    stdineof = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#bf616a;>FD_ZERO</span><span>(&rset);
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(stdineof == </span><span style=color:#d08770;>0</span><span>)
+</span><span>            </span><span style=color:#bf616a;>FD_SET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset);
+</span><span>        </span><span style=color:#bf616a;>FD_SET</span><span>(sockfd, &rset);
+</span><span>        </span><span style=color:#65737e;>//fileno函数把标准I/O文件指针转换为对应的描述符
+</span><span>        maxfdpl = </span><span style=color:#bf616a;>max</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), sockfd) + </span><span style=color:#d08770;>1</span><span>;
+</span><span>        </span><span style=color:#bf616a;>Select</span><span>(maxfdpl, &rset, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>        
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(sockfd, &rset)){		</span><span style=color:#65737e;>//socket is readable
+</span><span>            </span><span style=color:#b48ead;>if</span><span>( (n = </span><span style=color:#bf616a;>Read</span><span>(sockfd, buf, MAXLINE)) == </span><span style=color:#d08770;>0</span><span>){
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(stdineof == </span><span style=color:#d08770;>1</span><span>)
+</span><span>                    </span><span style=color:#b48ead;>return</span><span>;
+</span><span>                </span><span style=color:#b48ead;>else
+</span><span>                    </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>str_cli: server terminated prematurely</span><span>");
+</span><span>            }
+</span><span>            </span><span style=color:#bf616a;>Write</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(stdout), buf, n)
+</span><span>        }
+</span><span>        
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset)){	</span><span style=color:#65737e;>//input is readable
+</span><span>            </span><span style=color:#b48ead;>if</span><span>( (n = </span><span style=color:#bf616a;>Read</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), buf, MAXLINE)) == </span><span style=color:#d08770;>0</span><span>){
+</span><span>                stdineof = </span><span style=color:#d08770;>1</span><span>;
+</span><span>                </span><span style=color:#bf616a;>Shutdown</span><span>(sockfd, SHUT_WR);
+</span><span>                </span><span style=color:#bf616a;>FD_CLR</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp), &rset);
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>            }
+</span><span>            </span><span style=color:#bf616a;>Writen</span><span>(sockfd, buf, n);
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre><h2 id=6-8-tcphui-she-fu-wu-qi-cheng-xu-xiu-ding-ban>6.8 TCP回射服务器程序（修订版）</h2><p>使用select来处理任意个客户的单进程程序，而不是为每个客户派生一个子进程。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>int
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>){
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		i, maxi, maxfd, listenfd, connfd, sockfd;
+</span><span>    </span><span style=color:#65737e;>//服务器所能处理的最大客户数目的限制是：
+</span><span>    </span><span style=color:#65737e;>//	min[FD_SETSIZE, 内核允许本进程打开的最大描述符数]
+</span><span>    </span><span style=color:#65737e;>//进程能打开的描述符数数目上已经无限制，只受资源和内存限制
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		nready, client[FD_SETSIZE];
+</span><span>    ssize_t	n;
+</span><span>    fd_set	rset, allset;
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	buf[MAXLINE];
+</span><span>    socklen_t	clilen;
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in cliaddr, servaddr;
+</span><span>    
+</span><span>    listenfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family </span><span>= AF_INET;
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>Bind</span><span>(listenfd, (SA*)&servaddr, sizeof(servaddr));
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>Listen</span><span>(listenfd, LISTENQ);
+</span><span>    
+</span><span>    </span><span style=color:#65737e;>//描述符集前三位分别被设置为：标准输入、标准输出和标准错误输出
+</span><span>    </span><span style=color:#65737e;>//select第一个参数为：maxfd+1
+</span><span>    maxfd = listenfd;
+</span><span>    maxi = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>0</span><span>; i < FD_SETSIZE; i++)
+</span><span>        client[i] = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#bf616a;>FD_ZERO</span><span>(&allset);
+</span><span>    </span><span style=color:#bf616a;>FD_SET</span><span>(listenfd, &allset);
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){
+</span><span>        rset = allset;
+</span><span>        nready = </span><span style=color:#bf616a;>Select</span><span>(maxfd+</span><span style=color:#d08770;>1</span><span>, &rset, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>        
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(listenfd, &rset)){
+</span><span>            clilen = sizeof(cliaddr);
+</span><span>            connfd = </span><span style=color:#bf616a;>Accept</span><span>(listenfd, (SA*) &cliaddr, &clilen);
+</span><span>            
+</span><span>            </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>0</span><span>; i < FD_SETSIZE; i++){
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(client[i] < </span><span style=color:#d08770;>0</span><span>){
+</span><span>                    client[i] = connfd;
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i == FD_SETSIZE)
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>too many clients</span><span>");
+</span><span>            </span><span style=color:#bf616a;>FD_SET</span><span>(connfd, &allset);
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(connfd > maxfd)
+</span><span>                maxfd = connfd;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i > maxi)
+</span><span>                maxi = i;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>0</span><span>; i <= maxi; i++){
+</span><span>            </span><span style=color:#b48ead;>if</span><span>((sockfd = client[i]) < </span><span style=color:#d08770;>0</span><span>)
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>FD_ISSET</span><span>(sockfd, &rset)){
+</span><span>                </span><span style=color:#b48ead;>if</span><span>((n = </span><span style=color:#bf616a;>Read</span><span>(sockfd, buf, MAXLINE)) == </span><span style=color:#d08770;>0</span><span>){
+</span><span>                    </span><span style=color:#bf616a;>Close</span><span>(sockfd);
+</span><span>                    </span><span style=color:#bf616a;>FD_CLR</span><span>(sockfd, &allset);
+</span><span>                    client[i] = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>                }</span><span style=color:#b48ead;>else
+</span><span>                    </span><span style=color:#bf616a;>Writen</span><span>(sockfd, buf, n);
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre><p>面向文本行服务器程序存在一个问题：如果一个恶意的客户连接到服务器，发送一个字节的数据（不是换行符）后进入睡眠，服务器将会调用readline从客户读入这个单字节的数据，然后阻塞于下一个read（readline内部的read）调用，等待客户其它数据。服务器因此阻塞而不能再为其它客户提供服务，直到那个恶意的客户发出一个换行符或终止为止。<p>当前版本的服务器程序已经弃用面向文本行的方法，等待换行输入或EOF而引起的拒绝服务攻击已经不复存在。<blockquote><p>拒绝服务型攻击：当一个服务器在处理多个客户时，它绝对不能阻塞于只与单个客户相关的某个函数调用。否则可能导致服务器被挂起，拒绝为所有其它客户提供服务。<p>可能的解决办法：<ul><li>使用非阻塞式I/O<li>让每个客户由单独的控制线程提供服务<li>对I/O操作设置一个超时</ul></blockquote><h2 id=6-9-pselecthan-shu>6.9 pselect函数</h2><p>pselect函数是由POSIX发明的，如今许多Unix变种支持它<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/select.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>signal.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>time.h</span><span>>
+</span><span style=color:#65737e;>//若有就绪描述符则返回其数目，超时返回0，出错返回-1
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>pselect</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>maxfdpl</span><span>, fd_set *</span><span style=color:#bf616a;>readset</span><span>, 
+</span><span>            fd_set *</span><span style=color:#bf616a;>writeset</span><span>, fd_set *</span><span style=color:#bf616a;>exceptset</span><span>,
+</span><span>            </span><span style=color:#b48ead;>const struct</span><span> timespec *</span><span style=color:#bf616a;>timeout</span><span>, </span><span style=color:#b48ead;>const</span><span> sigset_t *</span><span style=color:#bf616a;>sigmark</span><span>);
+</span></code></pre><p>pselect相对于通常的select有两个变化：<ul><li><p>pselect使用timespec结构（POSIX的一个发明），不使用timeval结构</p> <pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>struct </span><span>timespec{
+</span><span>    time_t	tv_sec;
+</span><span>    </span><span style=color:#65737e;>//新结构第二个成员指定纳秒数，旧结构指定微秒数
+</span><span>    </span><span style=color:#b48ead;>long</span><span>	tv_nsec;
+</span><span>};
+</span></code></pre><li><p>pselect函数增加了第六个参数：一个指向信号掩码的指针。该参数允许程序先禁止递交某些信号，再测试由这些当前被禁止信号的信号处理函数设置的全局变量，然后调用pselect，然后告诉它重新设置信号掩码</p></ul><h2 id=6-10-pollhan-shu>6.10 poll函数</h2><p>poll函数起源于SVR3，最初局限于流设备，SVR4取消了这种限制，允许poll工作在任何描述符上。<p>poll提供的功能与select类似，不过在处理流设备时，它能够提供额外的信息。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>poll.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>struct </span><span>pollfd{
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		fd;
+</span><span>    </span><span style=color:#b48ead;>short</span><span>	events;	</span><span style=color:#65737e;>//指定要测试的条件
+</span><span>    </span><span style=color:#b48ead;>short</span><span>	revents;</span><span style=color:#65737e;>//返回描述符的状态
+</span><span>}
+</span><span style=color:#65737e;>//若有就绪描述符返回其数目，超时返回0，出错返回-1
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>poll</span><span>(</span><span style=color:#b48ead;>struct</span><span> pollfd *</span><span style=color:#bf616a;>fdarray</span><span>, </span><span style=color:#b48ead;>unsigned long </span><span style=color:#bf616a;>nfds</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>timeout</span><span>);
+</span></code></pre><p><img alt=image-20210122225638690 src=image-20210122225638690.png><p>图分为三个部分：<ul><li>第一部分：处理输入的四个常值<li>第二部分：处理输出的三个常值<li>第三部分：处理错误的三个常值，不能在events中设置，但是当相应条件存在时就在revents中返回</ul><p>poll识别三类数据：普通（normal）、优先级带（priority band）、高优先级（high priority）<p>就TCP和UDP套接字而言，以下条件引起poll返回特定的revent。不幸的是，POSIX在其poll的实现中留了许多空洞（即有多种方法可返回相同的条件）：<ul><li>所有正规的TCP数据和所有UDP数据都被认为是普通数据<li>TCP的带外数据被认为是优先级带数据<li>当TCP连接的读半部关闭时，也被认为是普通数据，随后读操作返回0<li>TCP连接存在错误既可以认为是普通数据，也可以是错误（POLLERR）。读操作后都将返回-1，并设置errno，可用于收到RST或发生超时等条件<li>在监听套接字上有新的连接可用既可以认为是普通数据，也可以认为是优先级数据。大多数实现视为普通数据<li>非阻塞connect的完成被认为是使相应套接字可写</ul><p>参数nfds指定结构数组中元素的个数；timeout参数指定poll函数返回前等待多长时间，它是一个指定应等待毫秒数的正值。<p><img alt=image-20200806153002725 src=image-20200806153002725.png><blockquote><p>INFTIM常值被定义为一个负值，如果系统不能提供毫秒级精度的定时器，该值就向上舍入到最接近的支持值。</blockquote><p>两种方法用来（也许只是暂时的）关闭对单个文件描述符的检查，而不需要重新建立整个fds列表：<ul><li>将events设为0<li>如果不再关心某个特定描述符，那么可以把与它对应的pollfd结构的fd成员设置成一个负值，poll函数将忽略这样的pollfd结构的events成员，返回时将它的revents成员的值设置为0。</ul><h2 id=6-11-tcphui-she-fu-wu-qi-cheng-xu-zai-xiu-ding-ban>6.11 TCP回射服务器程序（再修订版）</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>unp.h</span><span>"
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>limits.h</span><span>>	</span><span style=color:#65737e;>//for OPEN_MAX
+</span><span>
+</span><span style=color:#b48ead;>int
+</span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>){
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		i, maxi, listenfd, connfd, sockfd;
+</span><span>    </span><span style=color:#b48ead;>int</span><span>		nready;
+</span><span>    ssize_t	n;
+</span><span>    </span><span style=color:#b48ead;>char</span><span>	buf[MAXLINE];
+</span><span>    socklen_t	clilen;
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> pollfd client[OPEN_MAX];
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> sockaddr_in cliaddr, servaddr;
+</span><span>    
+</span><span>    listenfd = </span><span style=color:#bf616a;>Socket</span><span>(AF_INET, SOCK_STREAM, </span><span style=color:#d08770;>0</span><span>);
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>bzero</span><span>(&servaddr, sizeof(servaddr));
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_family </span><span>= AF_INET;
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_addr</span><span>.</span><span style=color:#bf616a;>s_addr </span><span>= </span><span style=color:#bf616a;>htonl</span><span>(INADDR_ANY);
+</span><span>    servaddr.</span><span style=color:#bf616a;>sin_port </span><span>= </span><span style=color:#bf616a;>htons</span><span>(SERV_PORT);
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>Bind</span><span>(listenfd, (SA*)&servaddr, sizeof(servaddr));
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>Listen</span><span>(listenfd, LISTENQ);
+</span><span>    
+</span><span>    client[</span><span style=color:#d08770;>0</span><span>].</span><span style=color:#bf616a;>fd </span><span>= listenfd;
+</span><span>    client[</span><span style=color:#d08770;>1</span><span>].</span><span style=color:#bf616a;>events </span><span>= POLLRDNORM;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>1</span><span>; i < OPEN_MAX; i++)
+</span><span>        client[i].</span><span style=color:#bf616a;>fd </span><span>= -</span><span style=color:#d08770;>1</span><span>;
+</span><span>    maxi = </span><span style=color:#d08770;>0</span><span>;	</span><span style=color:#65737e;>//含义client数组当前正在使用的最大下标值
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>for</span><span>( ; ; ){
+</span><span>        nready = </span><span style=color:#bf616a;>Poll</span><span>(client, maxi + </span><span style=color:#d08770;>1</span><span>, INFTIM);
+</span><span>        
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(client[</span><span style=color:#d08770;>0</span><span>].</span><span style=color:#bf616a;>revents </span><span>& POLLRDNORM){
+</span><span>            clilen = sizeof(cliaddr);
+</span><span>            connfd = </span><span style=color:#bf616a;>Accept</span><span>(listenfd, (SA*) &cliaddr, &clilen);
+</span><span>            
+</span><span>            </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>1</span><span>; i < OPEN_MAX; i++){
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(client[i].</span><span style=color:#bf616a;>fd </span><span>< </span><span style=color:#d08770;>0</span><span>){
+</span><span>                    client[i].</span><span style=color:#bf616a;>fd </span><span>= connfd;
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;
+</span><span>                }
+</span><span>            }
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i == OPEN_MAX)
+</span><span>                </span><span style=color:#bf616a;>err_quit</span><span>("</span><span style=color:#a3be8c;>too many clients</span><span>");
+</span><span>            client[i].</span><span style=color:#bf616a;>events </span><span>= POLLRDNORM;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i > maxfi)
+</span><span>                maxfi = i;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(i > maxi)
+</span><span>                maxi = i;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(i = </span><span style=color:#d08770;>1</span><span>; i <= maxi; i++){
+</span><span>            </span><span style=color:#b48ead;>if</span><span>((sockfd = client[i].</span><span style=color:#bf616a;>fd</span><span>) < </span><span style=color:#d08770;>0</span><span>)
+</span><span>                </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(client[i].</span><span style=color:#bf616a;>revents </span><span>& (POLLRDNORM | POLLERR)){
+</span><span>                </span><span style=color:#b48ead;>if</span><span>((n = </span><span style=color:#bf616a;>Read</span><span>(sockfd, buf, MAXLINE)) < </span><span style=color:#d08770;>0</span><span>){
+</span><span>                    </span><span style=color:#b48ead;>if</span><span>(errno == ECONNRESET){
+</span><span>                        </span><span style=color:#bf616a;>Close</span><span>(sockfd);
+</span><span>                        client[i].</span><span style=color:#bf616a;>fd </span><span>= -</span><span style=color:#d08770;>1</span><span>;
+</span><span>                    }</span><span style=color:#b48ead;>else
+</span><span>                        </span><span style=color:#bf616a;>err_SYS</span><span>("</span><span style=color:#a3be8c;>read error</span><span>");
+</span><span>                }</span><span style=color:#b48ead;>else if</span><span>(n == </span><span style=color:#d08770;>0</span><span>){
+</span><span>                    </span><span style=color:#bf616a;>Close</span><span>(sockfd);
+</span><span>                    client[i].</span><span style=color:#bf616a;>fd </span><span>= -</span><span style=color:#d08770;>1</span><span>;
+</span><span>                }</span><span style=color:#b48ead;>else
+</span><span>                    </span><span style=color:#bf616a;>Writen</span><span>(sockfd, buf, n);
+</span><span>                </span><span style=color:#b48ead;>if</span><span>(--nready <= </span><span style=color:#d08770;>0</span><span>)
+</span><span>                    </span><span style=color:#b48ead;>break</span><span>;
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

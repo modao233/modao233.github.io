@@ -1,0 +1,35 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/xu-lie-shi-rong-qi-listde-pai-xu-suan-fa-bi-ji/>序列式容器list的排序算法笔记</a></h1><div class=post-meta-inline><span class=post-date> 2020-05-28 </span></div><div class=post-content><p>序列式容器list的排序算法笔记<p>list 不能使用STL算法sort()，因为STL的sort函数要求random_access_iterator，而list的迭代器是bidirectional_iterator，所以必须使用自己的成员函数sort()。<p>SGI STL的list_sort使用的是非递归的归并排序，先将前两个元素归并，再将后两个元素归并，归并这两个小子序列成为4个元素的有序子序列；重复这一过程，得到8个元素的有序子序列，16个的，32个的……，直到全部处理完。<p>为何list不使用普通的merge_sort呢？这比较好理解，因为每次找到中间元素再一分为二的代价实在太大了，不适合list这种非random_access_iterator的容器。<p>该排序算法主要调用了swap()和merge()，而这些又依赖于内部实现的transfer()(其时间代价为O(1))。该算法时间代价亦为n*log(n)：分析代码可以发现，代码使用了64个list暂存部分有序list_node，将list总共分成n个有序list，第n个list存的node数量要么为0要么为$2^n$。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>template &LTclass T, class Alloc>
+</span><span>void list&LTT, Alloc>::sort(){
+</span><span>    //如果元素个数小于等于1，直接返回
+</span><span>    if(node->next == node || link_type(node->next)->next == node)
+</span><span>        return;
+</span><span>    // 保存下层merge返回的结果
+</span><span>    list&LTT, Alloc> carry;
+</span><span>    // 模拟merge sort使用的堆栈，保存部分有序的list
+</span><span>    // 64应该写作sizeof(size_type) * 8，即最大的递归调用层次。
+</span><span>    list&LTT, Alloc> counter[64];
+</span><span>    // 指示堆栈层次
+</span><span>    int fill = 0;
+</span><span>    while(!empty()){
+</span><span>        // 将begin处的元素从list取下，insert到carry中
+</span><span>        carry.splice(carry.begin(), *this, begin());
+</span><span>        int i = 0;
+</span><span>        while(i < fill && !counter[i].empty()){
+</span><span>            //将carry中的元素合并到counter[i]中,然后carry变为空的
+</span><span>            counter[i].merge(carry);
+</span><span>            //交换之后counter[i-1]为空
+</span><span>            carry.swap(counter[i++]);
+</span><span>        }
+</span><span>        // carry将结果保存到堆栈
+</span><span>        carry.swap(counter[i]);
+</span><span>        // 更新递归层次
+</span><span>        if(i == fill) ++fill;
+</span><span>    }
+</span><span>
+</span><span>    for(int i=1; i < fill; ++i){
+</span><span>        counter[i].merge(counter[i-1]);
+</span><span>    swap(counter[fill -1]);
+</span><span>    }
+</span><span>}
+</span><span>
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

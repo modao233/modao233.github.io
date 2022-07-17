@@ -1,0 +1,56 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/Linux/archlinuxpei-zhi-ji-lu/>ArchLinux配置</a></h1><div class=post-meta-inline><span class=post-date> 2022-01-12 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a></span><div class=post-content><p>rufus：U盘写镜像时要用dd 插网线，不用连wifi步骤<h2 id=xiu-fu-grubyin-dao>修复grub引导</h2><p>archiso烧录U盘，挂载，先挂根分区 挂载自己的系统盘（先挂根目录）<p>如有错误，使用fsck.ext4修复<p>arch-chroot 到挂载点<p>grub-install --target=i386-pc --recheck /dev/sda （根据实际情况修改） grub-mkconfig -o /boot/grub/grub.cfg<h2 id=qi-dong-sshd>启动sshd</h2><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 启动sshd服务
+</span><span style=color:#bf616a;>systemctl</span><span> start sshd.service
+</span><span style=color:#65737e;># 设置ssh登录的root密码
+</span><span style=color:#bf616a;>passwd
+</span><span style=color:#65737e;># 查看ip
+</span><span style=color:#bf616a;>ip</span><span> add
+</span></code></pre><h2 id=an-zhuang-guo-cheng>安装过程</h2><p>分区，格式化，挂载，设置镜像源，安装系统，生成分区表（检查），chroot。<p>这次将 根分区 格式化成xfs了，启用了交换分区<p>pacstrap安装时，多加了 + xfsprogs：包含了管理 XFS 文件系统所需的必要工具 + intel-ucode：CPU微码更新<p>进入新系统，进行一系列配置后，安装引导，退出chroot，umount，重启<h2 id=pei-zhi-guo-cheng>配置过程</h2><p>进入系统，安装sudo，创建新用户，并使其加入wheel组 执行<code>SUDO_EDITOR=nano visudo</code>编辑 <a href=https://wiki.archlinux.org/title/Sudo>sudo</a> 配置文件，删除<code># %wheel ALL=(ALL) ALL</code>行前面的<code>#</code>以便让 wheel 用户组可以使用<code>sudo</code>获取 root 权限。<p>添加archlinuxcn源<p>安装显示管理器和桌面环境： <code>sudo pacman -S --noconfirm plasma sddm konsole noto-fonts noto-fonts-cjk noto-fonts-emoji</code><p>安装 Plasma 可选依赖（使其更好的工作）：<code>sudo pacman -S --asdeps gst-plugins-good packagekit-qt5 xsettingsd</code><p>卸载无用软件包：<code>sudo pacman -Rns bluedevil drkonqi kgamma5 ksshaskpass plasma-browser-integration plasma-firewall plasma-sdk plasma-thunderbolt plasma-vault plasma-workspace-wallpapers</code><p>更改显示管理器（SSDM）本地化环境（可选）： 如果要让 SDDM 的本地化环境为非英文，可以执行以下更改。 PS：本地化环境除了影响语言显示，还有时间格式。<p>执行<code>sudo SYSTEMD_EDITOR=nano systemctl edit sddm</code>编辑 SDDM 服务单元，在文件底部添加：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>[Service]
+</span><span>Environment=LANG=zh_CN.UTF-8
+</span></code></pre><p>如果是其他语言用户，可以把<code>zh_CN</code>替换为你需要的本地化。<p>执行<code>sudo systemctl enable sddm</code>启用 SDDM<p>执行<code>sudo reboot</code>重启系统，重启后应该会看到如下图所示的界面，输入密码登陆桌面环境。<p>dolphin = 文件管理器、ark = 压缩工具、kwrite = 文本编辑器、gwenview = 图片浏览器，这些软件都属于 KDE 家族，搭配 KDE Plasma 桌面使用更佳。<p>firefox: 火狐浏览器 firefox-i18n-zh-cn firefox-i18n-zh-tw: 简繁中文语言包，可以只安装需要的语言包。<p>安装 yay 步骤：<p>使用 git 克隆存储库：<code>git clone https://aur.archlinux.org/yay.git /var/tmp/yay</code><p>转到存储库目录：<code>pushd /var/tmp/yay</code><p>构建依赖：gcc，make 构建软件包并安装：<code>makepkg -i -r -s</code>，构建过程很慢，设置go的下载镜像可以解决<pre style=background-color:#2b303b;color:#c0c5ce;><code><span># [golang 设置代理](https://www.cnblogs.com/feiquan/p/13357971.html)
+</span><span>1
+</span><span>`go env` `-``w GOPROXY``=``https:``/``/``goproxy.cn,direct`
+</span><span>-   阿里云  
+</span><span>    配置如下：
+</span><span>export GOPROXY=https://mirrors.aliyun.com/goproxy/
+</span><span>-   nexus社区提供的  
+</span><span>    配置如下：
+</span><span>export GOPROXY=https://gonexus.dev
+</span><span>-   goproxy.io 的  
+</span><span>    配置如下：
+</span><span>export GOPROXY=https://goproxy.io/
+</span><span>-   基于athens的公共服务  
+</span><span>    配置如下：
+</span><span>export GOPROXY=https://athens.azurefd.net  
+</span><span>-   官方提供的(jfrog,golang)
+</span><span>export GOPROXY=https://gocenter.io
+</span><span>export GOPROXY=https://proxy.golang.org  
+</span><span>-   七牛云赞助支持的
+</span><span>export GOPROXY=https://goproxy.cn
+</span></code></pre><p>清理工作：<code>pushd && rm -rf /var/tmp/yay</code><ul><li>https://www.mivm.cn/archlinux-installation-guide-simple</ul><p>设置软件源时，最好只设置一个 https://mirrors.ustc.edu.cn/help/archlinuxcn.html<p>安装wine时，有依赖错误，需要启用32位软件源： 执行<code>sudo nano /etc/pacman.conf</code>编辑 Pacman 配置文件，删除以下行前面的<code>#</code>以启用 32 位系统库支持。<p>#[multilib] #Include = /etc/pacman.d/mirrorlist<p>保存后执行<code>sudo pacman -Sy</code>更新软件数据库<p>配置kde时，从主题网站下载了压缩包，使用方法： 下载对应的压缩包，解压之后移动到对应的目录：<p>/home/hzt/.local/share/plasma/desktoptheme 这是存放plasma主题<br> /home/hzt/.local/share/plasma/look-and-feel/ 存放全局主题<br> /home/hzt/.local/share/plasma/plasmoids/ 存放插件<br> 以上目录如果没有就自行创建<p>手动安装字体，详见archwiki： 要在系统范围内（对所有用户有效）安装字体，请将文件夹移动到 /usr/share/fonts/ 目录。这些文件需要对每个用户而言都是可读的，使用 chmod 来设置合理的权限 (比如，文件至少为 0444 ，而目录至少为 0555)。要为单个用户安装字体，请使用 ~/.local/share/fonts (~/.fonts/ 现在已经过时了)。 要让 Xserver 能直接载入字体（而不使用某些字体服务），就需要将新增字体的目录加入到 FontPath 中。它位于您的 Xorg 设置目录中（例如 /etc/X11/xorg.conf 或 /etc/xorg.conf) 中。<p>然后更新 fontconfig 的字体缓存：fc-cache -vf<p>安装nginx，默认启动用户是http，这样会导致权限问题访问不了<p>archlinux 解压zip文件乱码问题解决： 在尝试p7z unrar convmv 等命令均无法实现正确显示问题，找到以下解决办法。 一：安装 sudo pacman -S unarchiver 二：使用unar -e GBK file.zip命令解压文件<h3 id=arch-linuxxia-jie-jue-zipjie-ya-luan-ma-de-fang-fa>Arch Linux下解决zip解压乱码的方法</h3><p>安装unarchiver，用unar解压zip文件<h3 id=zai-archlinuxshang-gua-zai-ke-du-xie-de-ntfs>在Archlinux上挂载可读写的ntfs</h3><p>https://zzzsy.top/notes/essay/archlinux-mount-ntfs-rw/<p>今天想把在linux上下载的一个文件放到公共的分区Data时，发现它是不可写的。<p>于是整开/etc/fstab在挂载语句后面加上rw，变成<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>UUID=6A268974849B /home/username/Data ntfs-3g rw,uid=1000,gid=users,umask=0022 0 0
+</span></code></pre><p>UUID获取方法：sudo blkid<blockquote><p>其中参数意义参见 fstab</blockquote><p>先取消挂载：sudo umount /home/username/Data 重新挂载：mount -a<p>爆出错误：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>Error mounting: mount exited with exit code 1: helper failed with:
+</span><span>Unprivileged user can not mount NTFS block devices using the external FUSE
+</span><span>library. Either mount the volume as root, or rebuild NTFS-3G with integrated
+</span><span>FUSE support and make it setuid root. Please see more information at
+</span><span>http://tuxera.com/community/ntfs-3g-faq/#unprivileged
+</span></code></pre><p>大概意思是非特权用户不能加载使用了额外FUSE库的NTFS文件系统<p>使用sudo命令，发现又有新的错误<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>The disk contains an unclean file system (0, 0).
+</span><span>Metadata kept in Windows cache, refused to mount.
+</span><span>Falling back to read-only mount because the NTFS partition is in an
+</span><span>unsafe state. Please resume and shutdown Windows fully (no hibernation
+</span><span>or fast restarting.)
+</span></code></pre><p>意思是元数据保存在其中，拒绝挂载<p>查找了一下解决办法<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>yay -Sy ntfsprogs
+</span><span>sudo ntfsfix /dev/nvme0n1p4
+</span><span>sudo umount /home/username/Data
+</span><span>sudo mount -a
+</span></code></pre><p>成功解决<p>参考： <a href=https://wiki.archlinux.org/title/NTFS-3G_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#%E6%8D%9F%E5%9D%8F%E7%9A%84NTFS%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F>NTFS-3G (简体中文)</a><p><a href=https://www.cnblogs.com/zhishuai/p/7822810.html>kali 2016：mount ntfs 分区只读</a><h2 id=hdmiwai-jie-ping-mu>hdmi外接屏幕</h2><p>有的型号笔记本 hdmi 接口是接的独立显卡，所以如果没启用独立显卡或者安装驱动的话是无法用 hdmi 接口外接显示器的。 需要安装驱动并启用才能输出画面<p>前往 <a href=https://www.nvidia.com/en-us/drivers/unix/legacy-gpu/>https://www.nvidia.com/en-us/drivers/unix/legacy-gpu/</a> 查看 Nvidia 私有驱动最新版本不支持的显卡列表，如果你的显卡不在这个列表里，那么你可以使用最新的 Nvidia 私有驱动，反之则需要使用开源驱动或旧版私有驱动（通过 AUR 安装）。<p>最新私有驱动：<code>sudo pacman -S nvidia nvidia-settings cuda xorg-server-devel lib32-nvidia-utils lib32-opencl-nvidia</code><p>最新私有驱动的 OpenCL: <code>sudo pacman -S opencl-nvidia ocl-icd</code><p><strong>如果是双显卡的笔记本，运行软件时可以选择使用的显卡（默认是集成显卡）</strong><p>安装optimus-manager<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>yay -S</span><span> optimus-manager
+</span></code></pre><p>也可以在终端使用命令切换显卡<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 切换为英伟达显卡
+</span><span style=color:#bf616a;>optimus-manager --switch</span><span> nvidia
+</span><span style=color:#65737e;># 切换为intel核显
+</span><span style=color:#bf616a;>optimus-manager --switch</span><span> intel
+</span></code></pre><p>切换后，使用glxinfo命令可以查看当前正在使用的显卡。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># Intel
+</span><span style=color:#bf616a;>[wenjie@wj ~</span><span>]$ glxinfo | </span><span style=color:#bf616a;>grep </span><span>"</span><span style=color:#a3be8c;>OpenGL renderer</span><span>"
+</span><span style=color:#bf616a;>OpenGL</span><span> renderer string: Mesa Intel(R) </span><span style=color:#bf616a;>UHD</span><span> Graphics 630 (CFL GT2)
+</span><span style=color:#65737e;># 切换NVIDIA显卡后
+</span><span style=color:#bf616a;>[wenjie@wj ~</span><span>]$ glxinfo | </span><span style=color:#bf616a;>grep </span><span>"</span><span style=color:#a3be8c;>OpenGL renderer</span><span>"
+</span><span style=color:#bf616a;>OpenGL</span><span> renderer string: NVIDIA GeForce GTX 1050 Ti/PCIe/SSE2
+</span></code></pre><p>可选：安装图形化切换工具<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>yay -S</span><span> optimus-manager-qt
+</span></code></pre><p>不设置的话，开机默认使用intel集显，需要手动切换。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

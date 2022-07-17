@@ -1,0 +1,132 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/pythonpa-chong-beautifulsoupzhu-fang-fa-bian-xi/>python爬虫-BeautifulSoup诸方法辨析</a></h1><div class=post-meta-inline><span class=post-date> 2019-10-12 </span></div><div class=post-content><p>记录下BeautifulSoup 的 find、find_all、select 方法的区别及各自的用处。<h2 id=fang-fa-jian-jie>方法简介</h2><ul><li>find()：返回找到的第一个标签<li>find_all()：以list的形式返回找到的所有标签<li>limit()：指定返回的标签个数<li>attrs()：将标签属性放到一个字典中<li>string：获取标签下的非标签字符串(值), 返回字符串<li>strings：获取标签下的所有非标签字符串， 返回生成器。<li>stripped_strings：获取标签下的所有非标签字符串，并剔除空白字符，返回生成器。<li>get_text：获取标签下的所有非标签字符串,返回字符串格式<li>contents：返回某个标签下的直接子元素，包含字符串，返回的是一个列表<li>children：返回某个标签下的直接子元素，包含字符串，返回的是一个生成器</ul><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>//构建html用于解析
+</span><span style=color:#b48ead;>from </span><span>bs4 </span><span style=color:#b48ead;>import </span><span>BeautifulSoup
+</span><span>html = '''
+</span><span style=color:#a3be8c;>&LTtable>
+</span><span style=color:#a3be8c;>&LTtr class='a1'>
+</span><span style=color:#a3be8c;>    &LTtd>职位名称&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>职位类别&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>时间&LT/td>
+</span><span style=color:#a3be8c;>&LT/tr>
+</span><span style=color:#a3be8c;>&LTtr class='a1'>
+</span><span style=color:#a3be8c;>    &LTtd>&LTa id='test' class='test' target='_blank' href='https://www.baidu.com/'>职位一&LT/a>&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>类别一&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>时间1&LT/td>
+</span><span style=color:#a3be8c;>&LT/tr>
+</span><span style=color:#a3be8c;>&LTtr class='a2'>
+</span><span style=color:#a3be8c;>    &LTtd>&LTa id='test' class='test' target='_blank' href='https://www.baidu.com/'>职位二&LT/a>&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>类别二&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>时间2&LT/td>
+</span><span style=color:#a3be8c;>&LT/tr class='a3'>
+</span><span style=color:#a3be8c;>&LTtr>
+</span><span style=color:#a3be8c;>    &LTtd>&LTa id='test' class='test' target='_blank' href='https://www.baidu.com/'>职位3&LT/a>&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>类别3&LT/td>
+</span><span style=color:#a3be8c;>    &LTtd>时间3&LT/td>
+</span><span style=color:#a3be8c;>&LT/tr>
+</span><span style=color:#a3be8c;>&LT/table>
+</span><span style=color:#a3be8c;>&LTdiv>
+</span><span style=color:#a3be8c;>这是一个div
+</span><span style=color:#a3be8c;>&LTp>
+</span><span style=color:#a3be8c;>&LT!-- 这是一个注释 -->
+</span><span style=color:#a3be8c;>&LT/p>
+</span><span style=color:#a3be8c;>&LT/div>
+</span><span>'''
+</span><span>soup = </span><span style=color:#bf616a;>BeautifulSoup</span><span>(html,'</span><span style=color:#a3be8c;>lxml</span><span>') </span><span style=color:#65737e;># 解析html
+</span></code></pre><p><strong>select 方法和find_all极其相似</strong><h2 id=find-all>find_all()</h2><h3 id=tong-guo-biao-qian-ming-cha-zhao>通过标签名查找</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#96b5b4;>print</span><span>(soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>title</span><span>'))
+</span><span style=color:#65737e;># [&LTtitle>The Dormouse's story&LT/title>]
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>a</span><span>'))
+</span><span style=color:#65737e;># [&LTa class="sister" href="http://example.com/elsie" id="link1">&LT!-- Elsie -->&LT/a>, &LTa class="sister" href="http://example.com/lacie" id="link2">Lacie&LT/a>, &LTa class="sister" href="http://example.com/tillie" id="link3">Tillie&LT/a>]
+</span><span>
+</span><span style=color:#96b5b4;>print</span><span>(soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>b</span><span>'))
+</span><span style=color:#65737e;># [&LTb>The Dormouse's story&LT/b>]
+</span></code></pre><p>find 返回找到的第一个标签，find_all 以list的形式返回找到的所有标签<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>') </span><span style=color:#65737e;># 返回列表
+</span><span>n=</span><span style=color:#d08770;>1
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>trs: 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>第</span><span style=color:#d08770;>{}</span><span style=color:#a3be8c;>个tr标签：</span><span>'.</span><span style=color:#bf616a;>format</span><span>(n)) 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(i)
+</span><span>    n+=</span><span style=color:#d08770;>1
+</span></code></pre><p>limit 可指定返回的标签数量<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>',</span><span style=color:#bf616a;>limit</span><span>=</span><span style=color:#d08770;>2</span><span>)[</span><span style=color:#d08770;>1</span><span>]  </span><span style=color:#65737e;># 从列表中获取第二个元素，limit 获取标签个数
+</span><span style=color:#96b5b4;>print</span><span>(trs)
+</span></code></pre><h3 id=tong-guo-lei-ming-cha-zhao>通过类名查找</h3><p>方法一： class_<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>',</span><span style=color:#bf616a;>class_</span><span>='</span><span style=color:#a3be8c;>a1</span><span>')
+</span><span>n=</span><span style=color:#d08770;>1
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>trs: </span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>第</span><span style=color:#d08770;>{}</span><span style=color:#a3be8c;>个class=</span><span>''</span><span style=color:#a3be8c;>a1</span><span>''</span><span style=color:#a3be8c;>的tr标签：</span><span>'.</span><span style=color:#bf616a;>format</span><span>(n)) </span><span style=color:#96b5b4;>print</span><span>(i)
+</span><span>    n+=</span><span style=color:#d08770;>1
+</span></code></pre><p>方法二：attrs 将标签属性放到一个字典中<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>',</span><span style=color:#bf616a;>attrs</span><span>={'</span><span style=color:#a3be8c;>class</span><span>':'</span><span style=color:#a3be8c;>a1</span><span>'})
+</span><span>n=</span><span style=color:#d08770;>1
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>trs:
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>第</span><span style=color:#d08770;>{}</span><span style=color:#a3be8c;>个class=</span><span>''</span><span style=color:#a3be8c;>a1</span><span>''</span><span style=color:#a3be8c;>的tr标签：</span><span>'.</span><span style=color:#bf616a;>format</span><span>(n))
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(i)
+</span><span>    n+=</span><span style=color:#d08770;>1
+</span></code></pre><h3 id=tong-guo-idming-cha-zhao>通过id名查找</h3><p>方法一：id和class_<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>alist = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>a</span><span>',</span><span style=color:#bf616a;>id</span><span>='</span><span style=color:#a3be8c;>test</span><span>',</span><span style=color:#bf616a;>class_</span><span>='</span><span style=color:#a3be8c;>test</span><span>')
+</span><span>n=</span><span style=color:#d08770;>1
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>alist:
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>第</span><span style=color:#d08770;>{}</span><span style=color:#a3be8c;>个id=</span><span>''</span><span style=color:#a3be8c;>test</span><span>''</span><span style=color:#a3be8c;>且class=</span><span>''</span><span style=color:#a3be8c;>test</span><span>''</span><span style=color:#a3be8c;>的a标签：</span><span>'.</span><span style=color:#bf616a;>format</span><span>(n))
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(i)
+</span><span>    n+=</span><span style=color:#d08770;>1
+</span></code></pre><p>方法二：attrs<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>alist = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>a</span><span>',</span><span style=color:#bf616a;>attrs</span><span>={'</span><span style=color:#a3be8c;>id</span><span>':'</span><span style=color:#a3be8c;>test</span><span>','</span><span style=color:#a3be8c;>class</span><span>':'</span><span style=color:#a3be8c;>test</span><span>'})
+</span><span>n=</span><span style=color:#d08770;>1
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>alist: 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>('</span><span style=color:#a3be8c;>第</span><span style=color:#d08770;>{}</span><span style=color:#a3be8c;>个id=</span><span>''</span><span style=color:#a3be8c;>test</span><span>''</span><span style=color:#a3be8c;>且class=</span><span>''</span><span style=color:#a3be8c;>test</span><span>''</span><span style=color:#a3be8c;>的a标签：</span><span>'.</span><span style=color:#bf616a;>format</span><span>(n)) 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(i)
+</span><span>    n+=</span><span style=color:#d08770;>1
+</span></code></pre><h3 id=huo-qu-suo-you-abiao-qian-de-hrefshu-xing>获取所有a标签的href属性</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>alist = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>a</span><span>') </span><span style=color:#65737e;>#方法一：通过下标获取
+</span><span style=color:#b48ead;>for </span><span>a </span><span style=color:#b48ead;>in </span><span>alist:
+</span><span>    href = a['</span><span style=color:#a3be8c;>href</span><span>'] 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(href) </span><span style=color:#65737e;>#方法二： 通过attrs获取
+</span><span style=color:#b48ead;>for </span><span>a </span><span style=color:#b48ead;>in </span><span>alist:
+</span><span>    href = a.attrs['</span><span style=color:#a3be8c;>href</span><span>'] 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(href)
+</span></code></pre><h3 id=huo-qu-suo-you-de-zhi-wei-xin-xi-suo-you-wen-ben-xin-xi>获取所有的职位信息(所有文本信息)</h3><p>string 获取标签下的非标签字符串(值), 返回字符串<p>注：第一个tr为标题信息，不获取。从第二个tr开始获取。<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>')[</span><span style=color:#d08770;>1</span><span>:]
+</span><span>movies = [] 
+</span><span style=color:#b48ead;>for </span><span>tr </span><span style=color:#b48ead;>in </span><span>trs:
+</span><span>    move = {}
+</span><span>    tds = tr.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>td</span><span>')
+</span><span>    move['</span><span style=color:#a3be8c;>td1</span><span>'] = tds[</span><span style=color:#d08770;>0</span><span>].string  </span><span style=color:#65737e;># string 取td的值
+</span><span>    move['</span><span style=color:#a3be8c;>td2</span><span>'] = tds[</span><span style=color:#d08770;>1</span><span>].string
+</span><span>    move['</span><span style=color:#a3be8c;>td3</span><span>'] = tds[</span><span style=color:#d08770;>2</span><span>].string
+</span><span>    movies.</span><span style=color:#bf616a;>append</span><span>(move)
+</span><span style=color:#96b5b4;>print</span><span>(movies)
+</span></code></pre><h3 id=huo-qu-suo-you-fei-biao-ji-xing-zi-fu>获取所有非标记性字符</h3><p>strings 获取标签下的所有非标签字符串， 返回生成器。<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>')[</span><span style=color:#d08770;>1</span><span>:] 
+</span><span style=color:#b48ead;>for </span><span>tr </span><span style=color:#b48ead;>in </span><span>trs:
+</span><span>    infos = </span><span style=color:#bf616a;>list</span><span>(tr.strings)  </span><span style=color:#65737e;># 获取所有非标记性字符，包含换行、空格
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(infos)
+</span></code></pre><h3 id=huo-qu-suo-you-fei-kong-zi-fu>获取所有非空字符</h3><p>stripped_strings 获取标签下的所有非标签字符串，并剔除空白字符，返回生成器。<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>')[</span><span style=color:#d08770;>1</span><span>:]
+</span><span style=color:#b48ead;>for </span><span>tr </span><span style=color:#b48ead;>in </span><span>trs:
+</span><span>    infos = </span><span style=color:#bf616a;>list</span><span>(tr.stripped_strings)  </span><span style=color:#65737e;># 获取所有非空字符，不包含换行、空格
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(infos)
+</span></code></pre><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;># stripped_strings 获取所有职位信息
+</span><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>')[</span><span style=color:#d08770;>1</span><span>:]
+</span><span>movies = [] 
+</span><span style=color:#b48ead;>for </span><span>tr </span><span style=color:#b48ead;>in </span><span>trs:
+</span><span>    move = {}
+</span><span>    infos = </span><span style=color:#bf616a;>list</span><span>(tr.stripped_strings)
+</span><span>    move['</span><span style=color:#a3be8c;>职位</span><span>'] = infos[</span><span style=color:#d08770;>0</span><span>]
+</span><span>    move['</span><span style=color:#a3be8c;>类别</span><span>'] = infos[</span><span style=color:#d08770;>1</span><span>]
+</span><span>    move['</span><span style=color:#a3be8c;>时间</span><span>'] = infos[</span><span style=color:#d08770;>2</span><span>]
+</span><span>    movies.</span><span style=color:#bf616a;>append</span><span>(move) 
+</span><span style=color:#96b5b4;>print</span><span>(movies)
+</span></code></pre><h3 id=get-text-huo-qu-suo-you-zhi-wei-xin-xi>get_text 获取所有职位信息</h3><p>get_text  获取标签下的所有非标签字符串，返回字符串格式<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>find_all</span><span>('</span><span style=color:#a3be8c;>tr</span><span>')[</span><span style=color:#d08770;>1</span><span>]
+</span><span>text = trs.</span><span style=color:#bf616a;>get_text</span><span>() </span><span style=color:#65737e;># 返回字符串格式
+</span><span style=color:#96b5b4;>print</span><span>(text)
+</span></code></pre><h2 id=select>select()</h2><p>返回类型是list<h3 id=tong-guo-biao-qian-ming-cha-zhao-1>通过标签名查找</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>tr</span><span>') 
+</span></code></pre><p>获取第二个tr标签<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>tr</span><span>')[</span><span style=color:#d08770;>1</span><span>] 
+</span></code></pre><h3 id=tong-guo-lei-ming-cha-zhao-1>通过类名查找</h3><p>Python爬虫用select方法提取的标签的<strong>属性带有空格</strong>的解决方法：把空格的位置换成<code>.</code>就可以了<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;># 方法一：
+</span><span>trs = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>tr.a1</span><span>')  </span><span style=color:#65737e;># tr标签的class属性
+</span><span style=color:#65737e;># 方法二：
+</span><span>trs = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>tr[class="a1"]</span><span>')  </span><span style=color:#65737e;># tr标签的class属性
+</span></code></pre><h3 id=gen-ju-idming-cha-zhao>根据id名查找</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>alist = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>#test</span><span>');
+</span></code></pre><h3 id=shu-xing-cha-zhao>属性查找</h3><p>查找时还可以加入属性元素，属性需要用中括号括起来，注意属性和标签属于同一节点，所以中间不能加空格，否则会无法匹配到。<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>alist = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>a[href="https://www.baidu.com/"]</span><span>');
+</span></code></pre><h3 id=zu-he-cha-zhao>组合查找</h3><p>组合查找是使用以上4种查找方式，查询条件使用空格分隔。<pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>alist = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>tr #test</span><span>');</span><span style=color:#65737e;># tr标签中，id为test的标签
+</span><span>alist = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>table > tr</span><span>');</span><span style=color:#65737e;># 子标签查找
+</span></code></pre><h3 id=ti-qu-suo-you-abiao-qian-de-hrefshu-xing>提取所有a标签的href属性</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span style=color:#65737e;># 方法一：
+</span><span>a = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>a</span><span>') 
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>a: 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(i['</span><span style=color:#a3be8c;>href</span><span>']) 
+</span><span style=color:#65737e;># 方法二：
+</span><span>a = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>a</span><span>') 
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>a: 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(i.attrs['</span><span style=color:#a3be8c;>href</span><span>'])
+</span></code></pre><h3 id=huo-qu-suo-you-de-zhi-wei-xin-xi>获取所有的职位信息</h3><pre class=language-python data-lang=python style=background-color:#2b303b;color:#c0c5ce;><code class=language-python data-lang=python><span>trs = soup.</span><span style=color:#bf616a;>select</span><span>('</span><span style=color:#a3be8c;>tr</span><span>') 
+</span><span style=color:#b48ead;>for </span><span>i </span><span style=color:#b48ead;>in </span><span>trs: 
+</span><span>    </span><span style=color:#96b5b4;>print</span><span>(</span><span style=color:#bf616a;>list</span><span>(i.stripped_strings))
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

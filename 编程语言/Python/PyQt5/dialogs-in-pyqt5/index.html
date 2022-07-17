@@ -1,0 +1,216 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/dialogs-in-pyqt5/>PyQt5 中的对话框</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-19 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/dialogs/>翻译自原文：Dialogs in PyQt5</a><p>翻译时间 2020 年 8 月 19 日<p>对话定义为两个或多人之间的对话。在计算机应用程序中，对话框是用户与应用程序"对话"的窗口。对话框用于从用户获取数据或更改应用程序设置等操作。<h2 id=pyqt5-qinputdialog>PyQt5 QInputDialog</h2><p><code>QInputDialog</code>提供了一个简便对话框，从用户获取单个值。输入值可以是字符串、数字或列表中的项。<p>input_dialog.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QPushButton, QLineEdit,</span><span>
+</span><span>                             QInputDialog, QApplication)</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        self.btn = QPushButton('Dialog', self)</span><span>
+</span><span>        self.btn.move(20, 20)</span><span>
+</span><span>        self.btn.clicked.connect(self.showDialog)</span><span>
+</span><span>
+</span><span>        self.le = QLineEdit(self)</span><span>
+</span><span>        self.le.move(130, 22)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 450, 350)</span><span>
+</span><span>        self.setWindowTitle('Input dialog')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def showDialog(self):</span><span>
+</span><span>        text, ok = QInputDialog.getText(self, 'Input Dialog',</span><span>
+</span><span>                                        'Enter your name:')</span><span>
+</span><span>
+</span><span>        if ok:</span><span>
+</span><span>            self.le.setText(str(text))</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>该示例具有一个按钮和一个行编辑部件。该按钮显示用于获取文本值的输入对话框。输入的文本将显示在行编辑部件中。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>text, ok = QInputDialog.getText(self, 'Input Dialog',</span><span>
+</span><span>    'Enter your name:')</span><span>
+</span></code></pre><p>此行显示输入对话框。第一个字符串是对话框标题，第二个字符串是对话框中的消息。该对话框返回输入的文本和布尔值。如果我们单击"确定"按钮，则布尔值为 true。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if ok:</span><span>
+</span><span>    self.le.setText(str(text))</span><span>
+</span></code></pre><p>我们通过<code>setText()</code>将行编辑部件的文本内容设置为从对话框中收到的文本。<p><img alt=image-20200819170027455 src=Dialogs-in-PyQt5/image-20200819170027455.png></p><center>图：输入对话框</center><h2 id=pyqt5-qcolordialog>PyQt5 QColorDialog</h2><p><code>QColorDialog</code>提供用于选择颜色值的对话框部件。<p>color_dialog.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QPushButton, QFrame,</span><span>
+</span><span>                             QColorDialog, QApplication)</span><span>
+</span><span>from PyQt5.QtGui import QColor</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        col = QColor(0, 0, 0)</span><span>
+</span><span>
+</span><span>        self.btn = QPushButton('Dialog', self)</span><span>
+</span><span>        self.btn.move(20, 20)</span><span>
+</span><span>
+</span><span>        self.btn.clicked.connect(self.showDialog)</span><span>
+</span><span>
+</span><span>        self.frm = QFrame(self)</span><span>
+</span><span>        self.frm.setStyleSheet("QWidget { background-color: %s }"</span><span>
+</span><span>                               % col.name())</span><span>
+</span><span>        self.frm.setGeometry(130, 22, 200, 200)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 450, 350)</span><span>
+</span><span>        self.setWindowTitle('Color dialog')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def showDialog(self):</span><span>
+</span><span>        col = QColorDialog.getColor()</span><span>
+</span><span>
+</span><span>        if col.isValid():</span><span>
+</span><span>            self.frm.setStyleSheet('QWidget { background-color: %s }'</span><span>
+</span><span>                                   % col.name())</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>应用程序示例显示按钮和 。<code>QFrame</code>部件背景设置为黑色。使用 <code>QColorDialog</code>我们可以更改其背景。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>col = QColor(0, 0, 0)</span><span>
+</span></code></pre><p>这是<code>QFrame</code>背景的初始颜色。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>col = QColorDialog.getColor()</span><span>
+</span></code></pre><p>弹出<code>QColorDialog</code>。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if col.isValid():</span><span>
+</span><span>    self.frm.setStyleSheet("QWidget { background-color: %s }"</span><span>
+</span><span>        % col.name())</span><span>
+</span></code></pre><p>我们检查颜色是否有效。如果我们单击"取消"按钮，则不会返回任何有效颜色。如果颜色有效，我们使用样式表更改背景颜色。<p><img alt=image-20200819170635485 src=Dialogs-in-PyQt5/image-20200819170635485.png><h2 id=pyqt5-qfontdialog>PyQt5 QFontDialog</h2><p><code>QFontDialog</code>是用于选择字体的对话框部件。<p>font_dialog.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QPushButton,</span><span>
+</span><span>                             QSizePolicy, QLabel, QFontDialog, QApplication)</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        vbox = QVBoxLayout()</span><span>
+</span><span>
+</span><span>        btn = QPushButton('Dialog', self)</span><span>
+</span><span>        btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)</span><span>
+</span><span>        btn.move(20, 20)</span><span>
+</span><span>
+</span><span>        vbox.addWidget(btn)</span><span>
+</span><span>
+</span><span>        btn.clicked.connect(self.showDialog)</span><span>
+</span><span>
+</span><span>        self.lbl = QLabel('Knowledge only matters', self)</span><span>
+</span><span>        self.lbl.move(130, 20)</span><span>
+</span><span>
+</span><span>        vbox.addWidget(self.lbl)</span><span>
+</span><span>        self.setLayout(vbox)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 450, 350)</span><span>
+</span><span>        self.setWindowTitle('Font dialog')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def showDialog(self):</span><span>
+</span><span>
+</span><span>        font, ok = QFontDialog.getFont()</span><span>
+</span><span>        if ok:</span><span>
+</span><span>            self.lbl.setFont(font)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们有一个按钮和一个标签。使用<code>QFontDialog</code>我们更改标签的字体。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>font, ok = QFontDialog.getFont()</span><span>
+</span></code></pre><p>在这里，我们弹出字体对话框。<code>getFont</code>方法返回字体名称和 OK 参数。如果用户单击"确定"，<code>OK</code>将等于"True"，否则它是”False“的。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if ok:</span><span>
+</span><span>    self.label.setFont(font)</span><span>
+</span></code></pre><p>如果我们单击"确定"，则<code>setFont</code>将更改标签的字体。<p><img alt=image-20200819171024413 src=Dialogs-in-PyQt5/image-20200819171024413.png><h2 id=pyqt5-qfiledialog>PyQt5 QFileDialog</h2><p><code>QFileDialog</code>是允许用户选择文件或目录的对话框。可以选择这些文件进行打开和保存。<p>file_dialog.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QMainWindow, QTextEdit,</span><span>
+</span><span>                             QAction, QFileDialog, QApplication)</span><span>
+</span><span>from PyQt5.QtGui import QIcon</span><span>
+</span><span>import sys</span><span>
+</span><span>from pathlib import Path</span><span>
+</span><span>from PyQt5.QtCore import QFileInfo</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QMainWindow):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        self.textEdit = QTextEdit()</span><span>
+</span><span>        self.setCentralWidget(self.textEdit)</span><span>
+</span><span>        self.statusBar()</span><span>
+</span><span>
+</span><span>        root = QFileInfo(__file__).absolutePath()</span><span>
+</span><span>        openFile = QAction(QIcon(root + '/web.png'), 'Open', self)</span><span>
+</span><span>        openFile.setShortcut('Ctrl+O')</span><span>
+</span><span>        openFile.setStatusTip('Open new File')</span><span>
+</span><span>        openFile.triggered.connect(self.showDialog)</span><span>
+</span><span>
+</span><span>        menubar = self.menuBar()</span><span>
+</span><span>        fileMenu = menubar.addMenu('&File')</span><span>
+</span><span>        fileMenu.addAction(openFile)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 550, 450)</span><span>
+</span><span>        self.setWindowTitle('File dialog')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def showDialog(self):</span><span>
+</span><span>
+</span><span>        home_dir = str(Path.home())</span><span>
+</span><span>        fname = QFileDialog.getOpenFileName(self, 'Open file', home_dir)</span><span>
+</span><span>
+</span><span>        if fname[0]:</span><span>
+</span><span>            f = open(fname[0], 'r')</span><span>
+</span><span>
+</span><span>            with f:</span><span>
+</span><span>                data = f.read()</span><span>
+</span><span>                self.textEdit.setText(data)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>该示例显示菜单栏、文本编辑部件（中心部件）和状态栏。菜单项显示用于选择文件的<code>QFileDialog</code>。文件的内容加载到文本编辑部件中。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>class Example(QMainWindow):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span></code></pre><p>该示例基于<code>QMainWindow</code>部件，因为我们设置了文本编辑小部件为center。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>home_dir = str(Path.home())</span><span>
+</span><span>fname = QFileDialog.getOpenFileName(self, 'Open file', home_dir)</span><span>
+</span></code></pre><p>我们弹出<code>QFileDialog</code>，<code>getOpenFileName()</code>方法中的第一个字符串是标题，第二个字符串指定对话框工作目录。我们使用<code>path</code>模块来确定用户主目录。默认情况下，文件筛选器设置为"所有文件"（*）。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if fname[0]:</span><span>
+</span><span>    f = open(fname[0], 'r')</span><span>
+</span><span>
+</span><span>    with f:</span><span>
+</span><span>        data = f.read()</span><span>
+</span><span>        self.textEdit.setText(data)</span><span>
+</span></code></pre><p>读取所选文件名，将文件内容设置为文本编辑小部件。<p>在 PyQt5 教程的这一部分中，我们使用对话框。<p><img alt=image-20200819172232428 src=Dialogs-in-PyQt5/image-20200819172232428.png></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

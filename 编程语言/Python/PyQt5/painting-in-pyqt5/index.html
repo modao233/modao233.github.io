@@ -1,0 +1,333 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/painting-in-pyqt5/>PyQt5 中的绘画板</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-20 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/painting/>翻译自原文：Painting in PyQt5</a><p>翻译时间 2020 年 8 月 20 日<p>PyQt5 绘画系统能够渲染矢量图形、图像和基于字体的提纲文本。当我们想要更改或增强现有部件，或者我们从头开始创建自定义部件时，可能需要绘制。要进行绘图，我们使用 PyQt5 工具包提供的绘画 API。<h2 id=qpainter>QPainter</h2><p><code>QPainter</code>在部件和其他绘画设备上执行low-level绘画。它可以绘制从简单线条到复杂形状的所有内容。<h2 id=the-paintevent-method>The paintEvent method</h2><p>绘画在<code>paintEvent</code>方法内完成。绘制代码放置在<code>QPainter</code>对象的<code>begin</code>和<code>end</code>方法之间。它在小部件和其他油漆设备上执行低级绘画。<h2 id=pyqt5-hui-zhi-wen-ben>PyQt5 绘制文本</h2><p>我们首先在窗口的工作区上绘制一些 Unicode 文本。<p>draw_text.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import sys</span><span>
+</span><span>from PyQt5.QtWidgets import QWidget, QApplication</span><span>
+</span><span>from PyQt5.QtGui import QPainter, QColor, QFont</span><span>
+</span><span>from PyQt5.QtCore import Qt</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        self.text = "Hello World\nHello World"</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 350, 300)</span><span>
+</span><span>        self.setWindowTitle('Drawing text')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def paintEvent(self, event):</span><span>
+</span><span>        qp = QPainter()</span><span>
+</span><span>        qp.begin(self)</span><span>
+</span><span>        self.drawText(event, qp)</span><span>
+</span><span>        qp.end()</span><span>
+</span><span>
+</span><span>    def drawText(self, event, qp):</span><span>
+</span><span>        qp.setPen(QColor(168, 34, 3))</span><span>
+</span><span>        qp.setFont(QFont('Monaco', 10))</span><span>
+</span><span>        qp.drawText(event.rect(), Qt.AlignCenter, self.text)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们绘制一些文本。文本垂直和水平对齐。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def paintEvent(self, event):</span><span>
+</span><span>...</span><span>
+</span></code></pre><p>绘制在绘制事件中完成。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>qp = QPainter()</span><span>
+</span><span>qp.begin(self)</span><span>
+</span><span>self.drawText(event, qp)</span><span>
+</span><span>qp.end()</span><span>
+</span></code></pre><p>这个<code>QPainter</code>负责所有的低级绘画。所有的绘画方法都介于<code>begin</code>和<code>end</code>方法之间。实际绘制委派给<code>drawText</code>方法。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>qp.setPen(QColor(168, 34, 3))</span><span>
+</span><span>qp.setFont(QFont('Monaco', 10))</span><span>
+</span></code></pre><p>在这里，我们定义一个笔和一个字体，用于绘制文本。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>qp.drawText(event.rect(), Qt.AlignCenter, self.text)</span><span>
+</span></code></pre><p><code>drawText</code>方法在窗口上绘制文本。绘制事件的<code>rect</code>方法返回需要更新的矩形。使用 <code>Qt.AlignCenter</code>，我们在两个维度中对齐文本。<p><img alt=image-20200820175256627 src=Painting-in-PyQt5/image-20200820175256627.png></p><center>图：绘图文本</center><h2 id=pyqt5-hui-zhi-dian>PyQt5 绘制点</h2><p>点是可以绘制的最简单的图形对象。它是应用窗口上的一个小点。<p>draw_points.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import QWidget, QApplication</span><span>
+</span><span>from PyQt5.QtGui import QPainter</span><span>
+</span><span>from PyQt5.QtCore import Qt</span><span>
+</span><span>import sys, random</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        self.setGeometry(300, 300, 300, 190)</span><span>
+</span><span>        self.setWindowTitle('Points')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def paintEvent(self, e):</span><span>
+</span><span>        qp = QPainter()</span><span>
+</span><span>        qp.begin(self)</span><span>
+</span><span>        self.drawPoints(qp)</span><span>
+</span><span>        qp.end()</span><span>
+</span><span>
+</span><span>    def drawPoints(self, qp):</span><span>
+</span><span>        qp.setPen(Qt.red)</span><span>
+</span><span>        size = self.size()</span><span>
+</span><span>
+</span><span>        if size.height() <= 1 or size.height() <= 1:</span><span>
+</span><span>            return</span><span>
+</span><span>
+</span><span>        for i in range(1000):</span><span>
+</span><span>            x = random.randint(1, size.width() - 1)</span><span>
+</span><span>            y = random.randint(1, size.height() - 1)</span><span>
+</span><span>            qp.drawPoint(x, y)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们在窗口的工作区上随机绘制 1000 个红点。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>qp.setPen(Qt.red)</span><span>
+</span></code></pre><p>我们把钢笔设置为红色。我们使用预定义的颜色常数<code>Qt.red</code>。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>size = self.size()</span><span>
+</span></code></pre><p>每次调整窗口大小时，将生成一个绘制事件。我们使用<code>size()</code>方法获取窗口的当前大小。我们使用窗口的大小将点分布到窗口的工作区。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>qp.drawPoint(x, y) </span><span>
+</span></code></pre><p>通过 <code>drawPoint()</code>方法画点。<p><img alt=image-20200820175628711 src=Painting-in-PyQt5/image-20200820175628711.png></p><center>图：点</center><h2 id=pyqt5-yan-se>PyQt5 颜色</h2><p>颜色是表示红色、绿色和蓝色 （RGB） 强度值组合的对象。有效 RGB 值在 0 到 255 之间。我们可以用各种方式定义颜色。最常见的是 RGB 十进制值或十六进制值。我们还可以使用代表红色、绿色、蓝色和 Alpha 的 RGBA 值。在这里，我们添加一些有关透明度的额外信息。Alpha 值 255 定义完全不透明度，0 表示完全透明，例如颜色不可见。<p>colours.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import QWidget, QApplication</span><span>
+</span><span>from PyQt5.QtGui import QPainter, QColor, QBrush</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        self.setGeometry(300, 300, 350, 100)</span><span>
+</span><span>        self.setWindowTitle('Colours')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def paintEvent(self, e):</span><span>
+</span><span>        qp = QPainter()</span><span>
+</span><span>        qp.begin(self)</span><span>
+</span><span>        self.drawRectangles(qp)</span><span>
+</span><span>        qp.end()</span><span>
+</span><span>
+</span><span>    def drawRectangles(self, qp):</span><span>
+</span><span>        col = QColor(0, 0, 0)</span><span>
+</span><span>        col.setNamedColor('#d4d4d4')</span><span>
+</span><span>        qp.setPen(col)</span><span>
+</span><span>
+</span><span>        qp.setBrush(QColor(200, 0, 0))</span><span>
+</span><span>        qp.drawRect(10, 15, 90, 60)</span><span>
+</span><span>
+</span><span>        qp.setBrush(QColor(255, 80, 0, 160))</span><span>
+</span><span>        qp.drawRect(130, 15, 90, 60)</span><span>
+</span><span>
+</span><span>        qp.setBrush(QColor(25, 0, 90, 200))</span><span>
+</span><span>        qp.drawRect(250, 15, 90, 60)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们绘制三个彩色矩形。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>color = QColor(0, 0, 0)</span><span>
+</span><span>color.setNamedColor('#d4d4d4')</span><span>
+</span></code></pre><p>在这里，我们使用十六进制表示法定义颜色。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>qp.setBrush(QColor(200, 0, 0))</span><span>
+</span><span>qp.drawRect(10, 15, 90, 60)</span><span>
+</span></code></pre><p>在这里，我们定义一个画笔并绘制一个矩形。笔刷是一个基本的图形对象，用于绘制形状的背景。<code>drawRect()</code>方法接受四个参数。前两个值是轴上的 x 和 y 值。第三个和第四个参数是矩形的宽度和高度。该方法使用当前笔和笔刷绘制矩形。<p><img alt=image-20200820180516295 src=Painting-in-PyQt5/image-20200820180516295.png></p><center>图：颜色</center><h2 id=pyqt5-qpen>PyQt5 QPen</h2><p><code>QPen</code>是基本图形对象。它用于绘制矩形、椭圆、多边形或其他形状的线条、曲线和轮廓。<p>pens.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import QWidget, QApplication</span><span>
+</span><span>from PyQt5.QtGui import QPainter, QPen</span><span>
+</span><span>from PyQt5.QtCore import Qt</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        self.setGeometry(300, 300, 280, 270)</span><span>
+</span><span>        self.setWindowTitle('Pen styles')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def paintEvent(self, e):</span><span>
+</span><span>        qp = QPainter()</span><span>
+</span><span>        qp.begin(self)</span><span>
+</span><span>        self.drawLines(qp)</span><span>
+</span><span>        qp.end()</span><span>
+</span><span>
+</span><span>    def drawLines(self, qp):</span><span>
+</span><span>        pen = QPen(Qt.black, 2, Qt.SolidLine)</span><span>
+</span><span>
+</span><span>        qp.setPen(pen)</span><span>
+</span><span>        qp.drawLine(20, 40, 250, 40)</span><span>
+</span><span>
+</span><span>        pen.setStyle(Qt.DashLine)</span><span>
+</span><span>        qp.setPen(pen)</span><span>
+</span><span>        qp.drawLine(20, 80, 250, 80)</span><span>
+</span><span>
+</span><span>        pen.setStyle(Qt.DashDotLine)</span><span>
+</span><span>        qp.setPen(pen)</span><span>
+</span><span>        qp.drawLine(20, 120, 250, 120)</span><span>
+</span><span>
+</span><span>        pen.setStyle(Qt.DotLine)</span><span>
+</span><span>        qp.setPen(pen)</span><span>
+</span><span>        qp.drawLine(20, 160, 250, 160)</span><span>
+</span><span>
+</span><span>        pen.setStyle(Qt.DashDotDotLine)</span><span>
+</span><span>        qp.setPen(pen)</span><span>
+</span><span>        qp.drawLine(20, 200, 250, 200)</span><span>
+</span><span>
+</span><span>        pen.setStyle(Qt.CustomDashLine)</span><span>
+</span><span>        pen.setDashPattern([1, 4, 5, 4])</span><span>
+</span><span>        qp.setPen(pen)</span><span>
+</span><span>        qp.drawLine(20, 240, 250, 240)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们绘制了六条线。线条以六种不同的钢笔样式绘制。有五种预定义的笔样式。我们还可以创建自定义笔样式。最后一行使用自定义笔样式绘制。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pen = QPen(Qt.black, 2, Qt.SolidLine)</span><span>
+</span></code></pre><p>我们创建一个<code>QPen</code>对象。颜色是黑色的。宽度设置为 2 像素，以便我们可以看到笔样式之间的差异。 <code>Qt.SolidLine</code>是预定义的笔样式之一。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pen.setStyle(Qt.CustomDashLine)</span><span>
+</span><span>pen.setDashPattern([1, 4, 5, 4])</span><span>
+</span><span>qp.setPen(pen)</span><span>
+</span></code></pre><p>在这里，我们定义自定义笔样式。我们设置了<code>Qt.CustomDashLine</code>笔样式并调用<code>setDashPattern</code>方法。数字列表定义样式。一定有一个均匀的数字数。奇数定义破折号，偶数空白。数字多，空间或破折号也更大。我们的模式是 1 px 破折号， 4 px 空白， 5 px 破折号， 4 px 空白等.<p><img alt=image-20200820211021199 src=Painting-in-PyQt5/image-20200820211021199.png></p><center>图：钢笔样式</center><h2 id=pyqt5-qbrush>PyQt5 QBrush</h2><p>``QBrush`是一个基本的图形对象。它用于绘制图形形状的背景，如矩形、椭圆或多边形。画笔可以有三种不同类型的：预定义画笔、渐变或纹理图案。<p>brushes.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import QWidget, QApplication</span><span>
+</span><span>from PyQt5.QtGui import QPainter, QBrush</span><span>
+</span><span>from PyQt5.QtCore import Qt</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        self.setGeometry(300, 300, 355, 280)</span><span>
+</span><span>        self.setWindowTitle('Brushes')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def paintEvent(self, e):</span><span>
+</span><span>        qp = QPainter()</span><span>
+</span><span>        qp.begin(self)</span><span>
+</span><span>        self.drawBrushes(qp)</span><span>
+</span><span>        qp.end()</span><span>
+</span><span>
+</span><span>    def drawBrushes(self, qp):</span><span>
+</span><span>        brush = QBrush(Qt.SolidPattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(10, 15, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.Dense1Pattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(130, 15, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.Dense2Pattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(250, 15, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.DiagCrossPattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(10, 105, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.Dense5Pattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(130, 105, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.Dense6Pattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(250, 105, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.HorPattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(10, 195, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.VerPattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(130, 195, 90, 60)</span><span>
+</span><span>
+</span><span>        brush.setStyle(Qt.BDiagPattern)</span><span>
+</span><span>        qp.setBrush(brush)</span><span>
+</span><span>        qp.drawRect(250, 195, 90, 60)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们绘制了九个不同的矩形。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>brush = QBrush(Qt.SolidPattern)</span><span>
+</span><span>qp.setBrush(brush)</span><span>
+</span><span>qp.drawRect(10, 15, 90, 60)</span><span>
+</span></code></pre><p>我们定义画笔对象。我们把它设置为绘制器对象，然后通过调用<code>drawRect</code>方法绘制矩形。<p><img alt=image-20200820211145652 src=Painting-in-PyQt5/image-20200820211145652.png></p><center>图：画笔</center><h2 id=bei-sai-er-qu-xian>贝塞尔曲线</h2><p>贝塞尔曲线是立方线。PyQt5 中的贝塞尔曲线可以使用<code>QPainterPath</code>创建。绘制器路径是由许多图形构建基块（如矩形、椭圆、线条和曲线）组成的对象。<p>bezier_curve.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import sys</span><span>
+</span><span>
+</span><span>from PyQt5.QtGui import QPainter, QPainterPath</span><span>
+</span><span>from PyQt5.QtWidgets import QWidget, QApplication</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        self.setGeometry(300, 300, 380, 250)</span><span>
+</span><span>        self.setWindowTitle('Bézier curve')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def paintEvent(self, e):</span><span>
+</span><span>        qp = QPainter()</span><span>
+</span><span>        qp.begin(self)</span><span>
+</span><span>        qp.setRenderHint(QPainter.Antialiasing)</span><span>
+</span><span>        self.drawBezierCurve(qp)</span><span>
+</span><span>        qp.end()</span><span>
+</span><span>
+</span><span>    def drawBezierCurve(self, qp):</span><span>
+</span><span>        path = QPainterPath()</span><span>
+</span><span>        path.moveTo(30, 30)</span><span>
+</span><span>        path.cubicTo(30, 30, 200, 350, 350, 30)</span><span>
+</span><span>
+</span><span>        qp.drawPath(path)</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>本示例绘制贝塞尔曲线。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>path = QPainterPath()</span><span>
+</span><span>path.moveTo(30, 30)</span><span>
+</span><span>path.cubicTo(30, 30, 200, 350, 350, 30)</span><span>
+</span></code></pre><p>我们创建带<code>QPainterPath</code>路径的贝塞尔曲线。曲线使用<code>cubicTo()</code>方法创建，该方法采用三个点：起点、控制点和终点。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>qp.drawPath(path)</span><span>
+</span></code></pre><p>最后路径使用<code>drawPath()</code>方法绘制。<p><img alt=image-20200820211503379 src=Painting-in-PyQt5/image-20200820211503379.png></p><center>图：贝塞尔曲线</center><p>在 PyQt5 教程的这一部分中，我们做了一些基本的绘画。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

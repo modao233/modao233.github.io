@@ -1,0 +1,106 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/编程语言/Linux shell/linux-shell-zhong-de-zuo-yong/">Linux Shell中()、(())、[]、[[]]、{}的作用</a></h1><div class=post-meta-inline><span class=post-date> 2020-11-19 </span></div><div class=post-content><blockquote><p>转自： 乌托邦2号<p>blog.csdn.net/taiyang1987912/article/details/39551385</blockquote><h1 id=yi-xiao-gua-hao-yuan-gua-hao>一、小括号，圆括号（）</h1><h2 id=1-dan-xiao-gua-hao>1、单小括号 ()</h2><ul><li>命令组。括号中的命令将会新开一个子shell顺序执行，所以括号中的变量不能够被脚本余下的部分使用。括号中多个命令之间用分号隔开，最后一个命令可以没有分号，各命令和括号之间不必有空格。<li>替换。等同于<code>cmd</code>，shell扫描一遍命令行，发现了<code>$(cmd)</code>结构，便将<code>$(cmd)</code>中的<code>cmd</code>执行一次，得到其标准输出，再将此输出替换原来命令。有些shell不支持，如tcsh。<li>初始化数组。如：array=(a b c d)</ul><h2 id=2-shuang-xiao-gua-hao>2、双小括号 (( ))</h2><ul><li>整数扩展。这种扩展计算是整数型的计算，不支持浮点型。 <ul><li><code>((exp))</code>结构扩展并计算一个算术表达式的值，如果表达式的结果为0，那么返回的退出状态码为1，或者是"假"，而一个非零值的表达式所返回的退出状态码将为0，或者是"true"。<li>若是逻辑判断，表达式<code>exp</code>为真则为1，假则为0。</ul><li>括号中的运算符、表达式符合C语言运算规则，都可用在<code>$((exp))</code>中，甚至是三目运算符。作不同进位(如二进制、八进制、十六进制)运算时，输出结果全都自动转化成了十进制。如：<code>echo $((16#5f))</code> 结果为95 (16进位转十进制)<li>用 (( )) 也可重定义变量值，比如 a=5; ((a++)) 可将<code>$a</code> 重定义为6<li>于算术运算比较，双括号中的变量可以不使用<code>$符号前缀</code>。括号内支持多个表达式用逗号分开。 只要括号中的表达式符合C语言运算规则，比如可以直接使用<code>for((i=0;i&LT5;i++))</code>, 如果不使用双括号, 则为for i in `seq 0 4`或者<code>for i in {0..4}</code>。再如可以直接使用<code>if (($i&LT5))</code>, 如果不使用双括号, 则为<code>if [ $i -lt 5 ]</code>。</ul><h1 id=er-zhong-gua-hao-fang-gua-hao>二、中括号，方括号[]</h1><h2 id=1-dan-zhong-gua-hao>1、单中括号 []</h2><ul><li>bash 的内部命令，[和test是等同的。如果我们不用绝对路径指明，通常我们用的都是bash自带的命令。if/test结构中的左中括号是调用test的命令标识，右中括号是关闭条件判断的。这个命令把它的参数作为比较表达式或者作为文件测试，并且根据比较的结果来返回一个退出状态码。if/test结构中并不是必须右中括号，但是新版的Bash中要求必须这样。<li>Test和[]中可用的比较运算符只有==和!=，两者都是用于字符串比较的，不可用于整数比较，整数比较只能使用-eq，-gt这种形式。无论是字符串比较还是整数比较都不支持大于号小于号。如果实在想用，对于字符串比较可以使用转义形式，如果比较"ab"和"bc"：<code>[ ab \< bc ]</code>，结果为真，也就是返回状态为0。[ ]中的逻辑与和逻辑或使用-a 和-o 表示。<li>字符范围。用作正则表达式的一部分，描述一个匹配的字符范围。作为test用途的中括号内不能使用正则。<li>一个array 结构的上下文中，中括号用来引用数组中每个元素的编号。</ul><h2 id=2-shuang-zhong-gua-hao>2、双中括号[[ ]]</h2><ul><li>[[是 bash 程序语言的关键字。并不是一个命令，[[ ]] 结构比[ ]结构更加通用。在[[和]]之间所有的字符都不会发生文件名扩展或者单词分割，但是会发生参数扩展和命令替换。<li>字符串的模式匹配，使用<code>=~</code>操作符时甚至支持shell的正则表达式。字符串比较时可以把右边的作为一个模式，而不仅仅是一个字符串，比如<code>[[ hello == hell? ]]</code>，结果为真。[[ ]] 中匹配字符串或通配符，不需要引号。<li>[[ ... ]]条件判断结构，而不是[ ... ]，能够防止脚本中的许多逻辑错误。比如，&&、||、<和> 操作符能够正常存在于[[ ]]条件判断结构中，但是如果出现在[ ]结构中的话，会报错。比如可以直接使用<code>if [[ $a != 1 && $a != 2 ]]</code>, 如果不适用双括号, 则为<code>if [ $a -ne 1] && [ $a != 2 ]</code>或者<code>if [ $a -ne 1 -a $a != 2 ]</code><li>把双中括号中的表达式看作一个单独的元素，并返回一个退出状态码。</ul><p><strong>例子：</strong><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>if ($i&LT5)  
+</span><span>if [ $i -lt 5 ]  
+</span><span>if [ $a -ne 1 -a $a != 2 ]  
+</span><span>if [ $a -ne 1] && [ $a != 2 ]  
+</span><span>if [[ $a != 1 && $a != 2 ]]  
+</span><span>   
+</span><span>for i in $(seq 0 4);do echo $i;done  
+</span><span>for i in `seq 0 4`;do echo $i;done  
+</span><span>for ((i=0;i&LT5;i++));do echo $i;done  
+</span><span>for i in {0..4};do echo $i;done  
+</span></code></pre><h1 id=san-da-gua-hao-hua-gua-hao>三、大括号、花括号 {}</h1><h2 id=1-chang-gui-yong-fa>1、常规用法</h2><ul><li>大括号拓展。(通配(globbing))将对大括号中的文件名做扩展。在大括号中，不允许有空白，除非这个空白被引用或转义。 <ul><li>第一种：对大括号中的以逗号分割的文件列表进行拓展。如 touch {a,b}.txt 结果为a.txt b.txt。<li>第二种：对大括号中以点点（..）分割的顺序文件列表起拓展作用，如：touch {a..d}.txt 结果为a.txt b.txt c.txt d.txt</ul></ul><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span># ls {ex1,ex2}.sh  
+</span><span>ex1.sh  ex2.sh  
+</span><span># ls {ex{1..3},ex4}.sh  
+</span><span>ex1.sh  ex2.sh  ex3.sh  ex4.sh  
+</span><span># ls {ex[1-3],ex4}.sh  
+</span><span>ex1.sh  ex2.sh  ex3.sh  ex4.sh  
+</span></code></pre><ul><li>代码块，又被称为内部组，这个结构事实上创建了一个匿名函数 。与小括号中的命令不同，大括号内的命令不会新开一个子shell运行，即脚本余下部分仍可使用括号内变量。括号内的命令间用分号隔开，最后一个也必须有分号。{}的第一个命令和左括号之间必须要有一个空格。</ul><h2 id=2-ji-chong-te-shu-de-ti-huan-jie-gou>2、几种特殊的替换结构</h2><p>带冒号的情况：<ul><li><code>${var:-string}</code>：若变量var为空，则用在命令行中用string来替换<code>${var:-string}</code>，变量var不为空时，则用变量var的值来替换<code>${var:-string}</code>；<li><code>${var:=string}</code>：替换规则和<code>${var:-string}</code>是一样的，所不同之处是<code>${var:=string}</code>若var为空时，用string替换<code>${var:=string}</code>的同时，把string赋给变量var。<code>${var:=string}</code>很常用的一种用法是，判断某个变量是否赋值，没有的话则给它赋上一个默认值。<li><code>${var:+string}</code>：替换规则和上面的相反，即只有当var不是空的时候才替换成string，若var为空时则不替换，或者说是替换成变量 var的值，即空值。(因为变量var此时为空，所以这两种说法是等价的)<li><code>${var:?string}</code>：替换规则为若变量var不为空，则用变量var的值来替换<code>${var:?string}</code>；若变量var为空，则把string输出到标准错误中，并从脚本中退出。我们可利用此特性来检查是否设置了变量的值。<li>补充扩展：在上面这五种替换结构中string不一定是常值的，可用另外一个变量的值或是一种命令的输出。</ul><p>去除冒号的情况：<ul><li><p><code>${var=string}</code>：只有当var变量完全没有定义时，将<code>${var=string}</code>设置为变量string的值</p> <pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>modao@modao-hp:~$</span><span> a=a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>a</span><span>=$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>b</span><span>=$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span style=color:#bf616a;>modao
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span style=color:#bf616a;>modao
+</span></code></pre><li><p><code>${var-string}</code>：只有当var变量完全没有定义时，将<code>${var-string}</code>设置为变量string的值</p> <pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>modao@modao-hp:~$</span><span> a=a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>a</span><span>=$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>a</span><span>-$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>a
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>b</span><span>-$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span style=color:#bf616a;>modao
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$
+</span></code></pre><li><p><code>${var?string}</code>：如果var被定义，则使用var；如果var变量没有被定义，使用LOGNAME，脚本退出运行，并显示退出时所在代码行在脚本中的位置</p> <pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>modao@modao-hp:~$</span><span> a=""
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>a
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>a</span><span>?$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>a
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>b</span><span>?$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span style=color:#bf616a;>-bash:</span><span> b: modao
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$
+</span></code></pre><li><p><code>${var+string}</code>：如果var被定义，则使用LOGNAME</p> <pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>modao@modao-hp:~$</span><span> a=""
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>a
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>a</span><span>+$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span style=color:#bf616a;>modao
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>a
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo ${</span><span style=color:#bf616a;>b</span><span>+$</span><span style=color:#bf616a;>LOGNAME</span><span>}
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$</span><span> echo $</span><span style=color:#bf616a;>b
+</span><span>
+</span><span style=color:#bf616a;>modao@modao-hp:~$
+</span></code></pre></ul><p><strong>对比总结</strong>：带冒号的检查是否为空，不带冒号的检查是否未定义<h2 id=3-si-chong-mo-shi-pi-pei-ti-huan-jie-gou>3、四种模式匹配替换结构</h2><p>模式匹配记忆方法：<ul><li># 是去掉左边(在键盘上#在$之左边)<li>% 是去掉右边(在键盘上%在​$之右边)<li>#和%中的单一符号是最小匹配，两个相同符号是最大匹配。</ul><p><code>${var%pattern}</code>、<code>${var%%pattern}</code>、<code>${var#pattern}</code>、<code>${var##pattern}</code><ul><li>第一种模式：<code>${variable%pattern}</code>，这种模式时，shell在variable中查找，看它是否一给的模式pattern结尾，如果是，就从命令行把variable中的内容去掉右边最短的匹配模式<li>第二种模式：<code>${variable%%pattern}</code>，这种模式时，shell在variable中查找，看它是否一给的模式pattern结尾，如果是，就从命令行把variable中的内容去掉右边最长的匹配模式<li>第三种模式：<code>${variable#pattern} </code>这种模式时，shell在variable中查找，看它是否一给的模式pattern开始，如果是，就从命令行把variable中的内容去掉左边最短的匹配模式<li>第四种模式： <code>${variable##pattern} </code>这种模式时，shell在variable中查找，看它是否一给的模式pattern结尾，如果是，就从命令行把variable中的内容去掉右边最长的匹配模式</ul><p>这四种模式中都不会改变variable的值，其中，只有在pattern中使用了*匹配符号时，%和%%，#和##才有区别。<p>结构中的pattern支持通配符<ul><li>*表示零个或多个任意字符<li>?表示仅与一个任意字符匹配<li>[...]表示匹配中括号里面的字符<li>[!...]表示不匹配中括号里面的字符。</ul><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span># var=testcase  
+</span><span># echo $var  
+</span><span>testcase  
+</span><span># echo ${var%s*e} 
+</span><span>testca  
+</span><span># echo $var  
+</span><span>testcase 
+</span><span># echo ${var%%s*e} 
+</span><span>te
+</span><span># echo ${var#?e}  
+</span><span>stcase
+</span><span># echo ${var##?e}  
+</span><span>stcase
+</span><span># echo ${var##*e}  
+</span><span> 
+</span><span># echo ${var##*s}  
+</span><span>e  
+</span><span># echo ${var##test}  
+</span><span>case  
+</span></code></pre><h2 id=4-zi-fu-chuan-ti-qu-he-ti-huan>4、字符串提取和替换</h2><p><code>${var:num}</code>,<code>${var:num1:num2}</code>,<code>${var/pattern/pattern}</code>,<code>${var//pattern/pattern}</code><ul><li><p>第一种模式：<code>${var:num}</code>，这种模式时，shell在 var中提取第num个字符到末尾的所有字符。若num为正数，从左边0处开始；若num为负数，从右边开始提取字串，但必须使用在冒号后面加空格或一个数字或整个num加上括号，如${var: -2}、${var:1-3}或${var:(-2)}</p><li><p>第二种模式：<code>${var:num1:num2}</code>，num1是位置，num2是长度。表示从$var字符串的第$num1个位置开始提取长度为$num2的子串。不能为负数</p><li><p>第三种模式：<code>${var/pattern/pattern}</code>表示将var字符串的第一个匹配的pattern替换为另一个pattern</p><li><p>第四种模式：<code>${var//pattern/pattern}</code>表示将var字符串中的所有能匹配的pattern替换为另一个pattern</p></ul><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>[root@centos ~]# var=/home/centos
+</span><span>[root@centos ~]# echo $var
+</span><span>/home/centos
+</span><span>[root@centos ~]# echo ${var:5}
+</span><span>/centos
+</span><span>[root@centos ~]# echo ${var: -6}
+</span><span>centos
+</span><span>[root@centos ~]# echo ${var:(-6)}
+</span><span>centos
+</span><span>[root@centos ~]# echo ${var:1:4}
+</span><span>home
+</span><span>[root@centos ~]# echo ${var/o/h}
+</span><span>/hhme/centos
+</span><span>[root@centos ~]# echo ${var//o/h}
+</span><span>/hhme/cenths
+</span></code></pre><h1 id=si-fu-hao-hou-de-gua-hao>四、符号$后的括号</h1><ul><li>${a} 变量a的值, 在不引起歧义的情况下可以省略大括号。<li><code>$(cmd)</code>命令替换，和<code>cmd</code>效果相同，结果为shell命令cmd的输，过某些Shell版本不支持$()形式的命令替换, 如tcsh。<li>$((expression)) 和<code>expr expression</code>效果相同, 计算数学表达式exp的数值, 其中exp只要符合C语言的运算规则即可, 甚至三目运算符和逻辑表达式都可以计算。</ul><h1 id=wu-shi-yong>五、使用</h1><p>1、<strong>多条命令执行</strong><ul><li>单小括号，(cmd1;cmd2;cmd3) 新开一个子shell顺序执行命令cmd1,cmd2,cmd3, 各命令之间用分号隔开, 最后一个命令后可以没有分号。<li>单大括号，{ cmd1;cmd2;cmd3;} 在当前shell顺序执行命令cmd1,cmd2,cmd3, 各命令之间用分号隔开, 最后一个命令后必须有分号, 第一条命令和左括号之间必须用空格隔开。</ul><p>对{}和()而言, 括号中的重定向符只影响该条命令， 而括号外的重定向符影响到括号中的所有命令。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

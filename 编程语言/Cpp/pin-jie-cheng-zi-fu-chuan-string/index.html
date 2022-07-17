@@ -1,0 +1,59 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/pin-jie-cheng-zi-fu-chuan-string/>多类型拼接成string，类型转换</a></h1><div class=post-meta-inline><span class=post-date> 2020-05-28 </span></div><div class=post-content><p>多类型拼接成string<h2 id=pin-jie-feng-ge>拼接风格</h2><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sstream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span style=color:#65737e;>//C风格
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>testC</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a[] = "</span><span style=color:#a3be8c;>hello</span><span>";
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b = </span><span style=color:#d08770;>10</span><span>;
+</span><span>    </span><span style=color:#b48ead;>double</span><span> c = </span><span style=color:#d08770;>6.6</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>char</span><span> buf[</span><span style=color:#d08770;>100</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#96b5b4;>sprintf</span><span>(buf, "</span><span style=color:#d08770;>%s%d%lf</span><span>", a, b, c);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", buf);
+</span><span>}
+</span><span>
+</span><span style=color:#65737e;>//Cpp风格
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>testCpp</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a[] = "</span><span style=color:#a3be8c;>hello</span><span>";
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b = </span><span style=color:#d08770;>10</span><span>;
+</span><span>    </span><span style=color:#b48ead;>double</span><span> c = </span><span style=color:#d08770;>6.6</span><span>;
+</span><span>
+</span><span>    std::ostringstream out;
+</span><span>    out << a << b << c;
+</span><span>    cout << out.</span><span style=color:#bf616a;>str</span><span>() << endl;
+</span><span>}
+</span><span>
+</span><span style=color:#65737e;>//Cpp11风格
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>testCpp11</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a[] = "</span><span style=color:#a3be8c;>hello</span><span>";
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b = </span><span style=color:#d08770;>10</span><span>;
+</span><span>    </span><span style=color:#b48ead;>double</span><span> c = </span><span style=color:#d08770;>6.6</span><span>;
+</span><span>
+</span><span>    std::string res = a + std::</span><span style=color:#bf616a;>to_string</span><span>(b) + std::</span><span style=color:#bf616a;>to_string</span><span>(c);
+</span><span>    cout << res << endl;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>() {
+</span><span>    </span><span style=color:#bf616a;>testC</span><span>();		</span><span style=color:#65737e;>//hello106.600000
+</span><span>    </span><span style=color:#bf616a;>testCpp</span><span>();		</span><span style=color:#65737e;>//hello106.6
+</span><span>    </span><span style=color:#bf616a;>testCpp11</span><span>();	</span><span style=color:#65737e;>//hello106.600000
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=c-lei-xing-zhuan-huan-han-shu>C++类型转换函数</h2><h3 id=intzhuan-huan-cheng-string>int转换成string</h3><p>c++11标准增加了全局函数std::to_string，包括九种重载实现：<ul><li>string to_string (int val);<li>string to_string (long val);<li>string to_string (long long val);<li>string to_string (unsigned val);<li>string to_string (unsigned long val);<li>string to_string (unsigned long long val);<li>string to_string (float val);<li>string to_string (double val);<li>string to_string (long double val);</ul><h3 id=stringzhuan-huan-cheng-int>string转换成int</h3><p>标准库函数：<ul><li><p>整形：<code>atoi()</code></p><li><p>浮点型：<code>atof()</code></p><li><p>长整型：<code>atol()</code></p></ul><p><strong>Example：</strong><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>std::string str = "</span><span style=color:#a3be8c;>123</span><span>";
+</span><span style=color:#b48ead;>int</span><span> n = </span><span style=color:#96b5b4;>atoi</span><span>(str.</span><span style=color:#bf616a;>c_str</span><span>());
+</span><span>cout<&LTn; </span><span style=color:#65737e;>//123
+</span></code></pre><h2 id=jie-zhu-zi-fu-chuan-liu-zhuan-huan>借助字符串流转换</h2><p>标准库定义了三种类型字符串流（在sstream头文件）：<ul><li><code>istringstream</code>：输入字符串流<li><code>ostringstream</code>：输出字符串流<li><code>stringstream</code>：字符串流，可输入输出</ul><p>除了从iostream继承来的操作<ol><li>sstream类型定义了一个有string形参的构造函数 <ul><li>stringstream stream(s)：创建了存储s副本的stringstream对象，s为string类型对象</ul><li>定义了名为str的成员，用来读取或设置stringstream对象所操纵的string值： <ul><li>stream.str()：返回stream中存储的string类型对象<li>stream.str(s)：将string类型的s复制给stream，返回void</ul></ol><p><strong>Example：</strong><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int</span><span> aa = </span><span style=color:#d08770;>30</span><span>;
+</span><span>stringstream ss;
+</span><span>ss<&LTaa; 
+</span><span>string s1 = ss.</span><span style=color:#bf616a;>str</span><span>();
+</span><span>cout << s1 << endl; </span><span style=color:#65737e;>// 30
+</span><span>
+</span><span>istringstream </span><span style=color:#8fa1b3;>is</span><span>("</span><span style=color:#a3be8c;>12</span><span>"); </span><span style=color:#65737e;>//构造输入字符串流，流的内容初始化为“12”的字符串   
+</span><span style=color:#b48ead;>int</span><span> i;   
+</span><span>is >> i; </span><span style=color:#65737e;>//从is流中读入一个int整数存入i中  
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

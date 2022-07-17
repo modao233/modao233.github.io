@@ -1,0 +1,109 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/propertytreejie-xi/>Chapter 31. Boost.PropertyTree</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-18 </span></div><div class=post-content><p>PropertyTree库可以为一些数据格式提供解析器和生成器，这些格式可以由这样的树表示，包括XML、INFO、INI和JSON。<h2 id=jian-dan-jie-shao>简单介绍</h2><p>PropertyTree库提供了一个数据结构，存储一个任意深度嵌套的value树，在每个级别上由某个key索引。 树的每个节点都存储自己的值，加上其子节点及其键的有序列表。 树允许通过路径轻松访问其任何节点，路径是多个键的级联。<p>PropertyTree是通用的数据结构，但特别适合保存配置数据。 树提供了自己的特定于树的接口，每个节点也是其子节点的STL兼容序列。<p>从概念上讲，一个节点可以被认为是以下结构：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>struct </span><span>ptree
+</span><span>{
+</span><span>   data_type data;                         </span><span style=color:#65737e;>// data associated with the node
+</span><span>   list< pair&LTkey_type, ptree> > children; </span><span style=color:#65737e;>// ordered list of named children
+</span><span>};
+</span></code></pre><h2 id=kuai-su-shi-yong>快速使用</h2><p>PropertyTree库可以为一些数据格式提供解析器和生成器，这些格式可以由这样的树表示，包括XML、INFO、INI和JSON。<p>使用一个XML文件来介绍用法：<pre class=language-xml data-lang=xml style=background-color:#2b303b;color:#c0c5ce;><code class=language-xml data-lang=xml><span><</span><span style=color:#bf616a;>debug</span><span>>
+</span><span>    <</span><span style=color:#bf616a;>filename</span><span>>debug.log&LT/</span><span style=color:#bf616a;>filename</span><span>>
+</span><span>    <</span><span style=color:#bf616a;>modules</span><span>>
+</span><span>        <</span><span style=color:#bf616a;>module</span><span>>Finance&LT/</span><span style=color:#bf616a;>module</span><span>>
+</span><span>        <</span><span style=color:#bf616a;>module</span><span>>Admin&LT/</span><span style=color:#bf616a;>module</span><span>>
+</span><span>        <</span><span style=color:#bf616a;>module</span><span>>HR&LT/</span><span style=color:#bf616a;>module</span><span>>
+</span><span>    &LT/</span><span style=color:#bf616a;>modules</span><span>>
+</span><span>    <</span><span style=color:#bf616a;>level</span><span>>2&LT/</span><span style=color:#bf616a;>level</span><span>>
+</span><span>&LT/</span><span style=color:#bf616a;>debug</span><span>>
+</span></code></pre><p>首先需要include一些头文件：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>boost/property_tree/ptree.hpp</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>boost/property_tree/xml_parser.hpp</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>boost/foreach.hpp</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>set</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>exception</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>namespace </span><span>pt = boost::property_tree;
+</span></code></pre><p>程序需要一个用来存储读取数据的类型，创建一个结构体：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>struct </span><span>debug_settings
+</span><span>{
+</span><span>    std::string </span><span style=color:#bf616a;>m_file</span><span>;               </span><span style=color:#65737e;>// log filename
+</span><span>    </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>m_level</span><span>;                      </span><span style=color:#65737e;>// debug level
+</span><span>    std::set&LTstd::string> </span><span style=color:#bf616a;>m_modules</span><span>;  </span><span style=color:#65737e;>// modules where logging is enabled
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>load</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &</span><span style=color:#bf616a;>filename</span><span>);
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>save</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &</span><span style=color:#bf616a;>filename</span><span>);
+</span><span>};
+</span></code></pre><p>编写load成员函数的定义：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>void </span><span>debug_settings::</span><span style=color:#8fa1b3;>load</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &</span><span style=color:#bf616a;>filename</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#65737e;>// Create empty property tree object
+</span><span>    pt::ptree tree;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// Parse the XML into the property tree.
+</span><span>    pt::</span><span style=color:#bf616a;>read_xml</span><span>(filename, tree);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// Use the throwing version of get to find the debug filename.
+</span><span>    </span><span style=color:#65737e;>// If the path cannot be resolved, an exception is thrown.
+</span><span>    </span><span style=color:#bf616a;>m_file </span><span>= tree.</span><span style=color:#bf616a;>get</span><span>&LTstd::string>("</span><span style=color:#a3be8c;>debug.filename</span><span>");
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// Use the default-value version of get to find the debug level.
+</span><span>    </span><span style=color:#65737e;>// Note that the default value is used to deduce the target type.
+</span><span>    </span><span style=color:#bf616a;>m_level </span><span>= tree.</span><span style=color:#bf616a;>get</span><span>("</span><span style=color:#a3be8c;>debug.level</span><span>", </span><span style=color:#d08770;>0</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// Use get_child to find the node containing the modules, and iterate over
+</span><span>    </span><span style=color:#65737e;>// its children. If the path cannot be resolved, get_child throws.
+</span><span>    </span><span style=color:#65737e;>// A C++11 for-range loop would also work.
+</span><span>    </span><span style=color:#bf616a;>BOOST_FOREACH</span><span>(pt::ptree::value_type &v, tree.</span><span style=color:#bf616a;>get_child</span><span>("</span><span style=color:#a3be8c;>debug.modules</span><span>")) {
+</span><span>        </span><span style=color:#65737e;>// The data function is used to access the data stored in a node.
+</span><span>        </span><span style=color:#bf616a;>m_modules</span><span>.</span><span style=color:#bf616a;>insert</span><span>(v.</span><span style=color:#bf616a;>second</span><span>.</span><span style=color:#bf616a;>data</span><span>());
+</span><span>    }
+</span><span>}
+</span></code></pre><p>编写save成员函数的定义：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>void </span><span>debug_settings::</span><span style=color:#8fa1b3;>save</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &</span><span style=color:#bf616a;>filename</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#65737e;>// Create an empty property tree object.
+</span><span>    pt::ptree tree;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// Put the simple values into the tree. The integer is automatically
+</span><span>    </span><span style=color:#65737e;>// converted to a string. Note that the "debug" node is automatically
+</span><span>    </span><span style=color:#65737e;>// created if it doesn't exist.
+</span><span>    tree.</span><span style=color:#bf616a;>put</span><span>("</span><span style=color:#a3be8c;>debug.filename</span><span>", </span><span style=color:#bf616a;>m_file</span><span>);
+</span><span>    tree.</span><span style=color:#bf616a;>put</span><span>("</span><span style=color:#a3be8c;>debug.level</span><span>", </span><span style=color:#bf616a;>m_level</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// Add all the modules. Unlike put, which overwrites existing nodes, add
+</span><span>    </span><span style=color:#65737e;>// adds a new node at the lowest level, so the "modules" node will have
+</span><span>    </span><span style=color:#65737e;>// multiple "module" children.
+</span><span>    </span><span style=color:#bf616a;>BOOST_FOREACH</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &name, m_modules)
+</span><span>        tree.</span><span style=color:#bf616a;>add</span><span>("</span><span style=color:#a3be8c;>debug.modules.module</span><span>", name);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// Write property tree to XML file
+</span><span>    pt::</span><span style=color:#bf616a;>write_xml</span><span>(filename, tree);
+</span><span>}
+</span></code></pre><p>main函数：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>try
+</span><span>    {
+</span><span>        debug_settings ds;
+</span><span>        ds.</span><span style=color:#bf616a;>load</span><span>("</span><span style=color:#a3be8c;>debug_settings.xml</span><span>");
+</span><span>        ds.</span><span style=color:#bf616a;>save</span><span>("</span><span style=color:#a3be8c;>debug_settings_out.xml</span><span>");
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>Success</span><span style=color:#96b5b4;>\n</span><span>";
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>catch </span><span>(std::exception &e)
+</span><span>    {
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>Error: </span><span>" << e.</span><span style=color:#bf616a;>what</span><span>() << "</span><span style=color:#96b5b4;>\n</span><span>";
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=du-qu-shu-ju>读取数据</h2><ol><li><p>抛出异常版本</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>ptree pt;
+</span><span style=color:#65737e;>/* ... */
+</span><span style=color:#b48ead;>float</span><span> v = pt.</span><span style=color:#bf616a;>get</span><span><</span><span style=color:#b48ead;>float</span><span>>("</span><span style=color:#a3be8c;>a.path.to.float.value</span><span>");
+</span></code></pre> <p>根据参数path定位节点位置，读取数据，将其转换成float类型返回，如果失败则抛出异常：</p> <ul><li>如果路径不存在，抛出ptree_bad_path异常<li>如果值不能被转换，抛出ptree_bad_data<li>它们都是从ptree_error派生而来，从而使通用处理成为可能</ul><li><p>默认值版本</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>ptree pt;
+</span><span style=color:#65737e;>/* ... */
+</span><span style=color:#b48ead;>float</span><span> v = pt.</span><span style=color:#bf616a;>get</span><span>("</span><span style=color:#a3be8c;>a.path.to.float.value</span><span>", -</span><span style=color:#d08770;>1.</span><span style=color:#b48ead;>f</span><span>);
+</span></code></pre> <p>执行与上面相同的操作，失败则返回第二个参数指定的默认值，不抛出异常。</p> <p>返回值类型由默认值决定，无需声明。</p><li><p>附加选项版本</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>ptree pt;
+</span><span style=color:#65737e;>/* ... */
+</span><span>boost::optional<</span><span style=color:#b48ead;>float</span><span>> v = pt.</span><span style=color:#bf616a;>get_optional</span><span><</span><span style=color:#b48ead;>float</span><span>>("</span><span style=color:#a3be8c;>a.path.to.float.value</span><span>");
+</span></code></pre> <p>此版本使用boost::optional类处理提取失败，在成功提取时，它将返回由提取值初始化的boost::optional；否则，它将返回未初始化的boost::optional</p></ol><p>path的分隔符默认是<code>.</code>，要使用除默认之外的分隔符，需要显式构造一个path对象。路径类型是一个string_path实例化，因此引用它最简单的方法是<code>::path_type</code>。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>typedef</span><span> ptree::path_type path;
+</span><span>pt.</span><span style=color:#bf616a;>get</span><span><</span><span style=color:#b48ead;>float</span><span>>(</span><span style=color:#bf616a;>path</span><span>("</span><span style=color:#a3be8c;>p.a.t.h/t.o/v.a.l.u.e</span><span>", '</span><span style=color:#a3be8c;>/</span><span>'));
+</span><span>pt.</span><span style=color:#bf616a;>get</span><span>(</span><span style=color:#bf616a;>path</span><span>("</span><span style=color:#a3be8c;>p.a.t.h/t.o/v.a.l.u.e</span><span>", '</span><span style=color:#a3be8c;>/</span><span>'), </span><span style=color:#d08770;>0</span><span>, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>pt.</span><span style=color:#bf616a;>get_optional</span><span>&LTstd::string>(</span><span style=color:#bf616a;>path</span><span>("</span><span style=color:#a3be8c;>p.a.t.h/t.o/v.a.l.u.e</span><span>", '</span><span style=color:#a3be8c;>/</span><span>'));
+</span></code></pre><h2 id=tian-jia-shu-ju>添加数据</h2><p>添加数据不需要处理路径为空的异常，因此如果提供的值不能转换为树的数据类型，函数将抛出。<p>添加数据会在路径遍历期间插入任何丢失的路径元素。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>ptree pt;
+</span><span>pt.</span><span style=color:#bf616a;>put</span><span>("</span><span style=color:#a3be8c;>a.path.to.float.value</span><span>", </span><span style=color:#d08770;>3.14</span><span style=color:#b48ead;>f</span><span>);
+</span><span style=color:#65737e;>// Overwrites the value
+</span><span>pt.</span><span style=color:#bf616a;>put</span><span>("</span><span style=color:#a3be8c;>a.path.to.float.value</span><span>", </span><span style=color:#d08770;>2.72</span><span style=color:#b48ead;>f</span><span>);
+</span><span style=color:#65737e;>// Adds a second node with the new value.
+</span><span>pt.</span><span style=color:#bf616a;>add</span><span>("</span><span style=color:#a3be8c;>a.path.to.float.value</span><span>", </span><span style=color:#d08770;>3.14</span><span style=color:#b48ead;>f</span><span>);
+</span></code></pre><p>put将覆盖现有值(如果有的话)，而add将创建一个新节点来保存该值，即使指定的路径引用了现有节点。<h2 id=can-kao-zi-liao>参考资料</h2><p><a href=https://www.boost.org/doc/libs/1_74_0/doc/html/property_tree.html>Chapter 31. Boost.PropertyTree</a></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

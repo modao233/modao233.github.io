@@ -1,0 +1,230 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/json-for-modern-c-shi-yong-zhi-nan/>JSON for Modern C++ </a></h1><div class=post-meta-inline><span class=post-date> 2020-09-10 </span></div><div class=post-content><p>JSON for Modern C++是一个简单且强大的json处理库，只需要包含一个头文件便可使用。<p>本文代码说明：单行注释解释代码，多行注释展示输出。<h2 id=jian-dan-jie-shao>简单介绍</h2><p>JSON for Modern C++有如下特点：<ul><li>语法直观，容易理解<li>集成至一个库文件，使用方便<li>代码经过严格测试，质量高</ul><h2 id=shi-yong-jian-jie>使用简介</h2><h3 id=json-as-first-class-data-type>JSON as first-class data type</h3><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fstream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>json.hpp</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span style=color:#b48ead;>using </span><span>json = nlohmann::json;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>) {
+</span><span>    </span><span style=color:#65737e;>// create an empty structure (null)
+</span><span>    json j;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// add a number that is stored as double (note the implicit conversion of j to an object)
+</span><span>    j["</span><span style=color:#a3be8c;>pi</span><span>"] = </span><span style=color:#d08770;>3.141</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// add a Boolean that is stored as bool
+</span><span>    j["</span><span style=color:#a3be8c;>happy</span><span>"] = </span><span style=color:#d08770;>true</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// add a string that is stored as std::string
+</span><span>    j["</span><span style=color:#a3be8c;>name</span><span>"] = "</span><span style=color:#a3be8c;>Niels</span><span>";
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// add another null object by passing nullptr
+</span><span>    j["</span><span style=color:#a3be8c;>nothing</span><span>"] = </span><span style=color:#d08770;>nullptr</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// add an object inside the object
+</span><span>    j["</span><span style=color:#a3be8c;>answer</span><span>"]["</span><span style=color:#a3be8c;>everything</span><span>"] = </span><span style=color:#d08770;>42</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// add an array that is stored as std::vector (using an initializer list)
+</span><span>    j["</span><span style=color:#a3be8c;>list</span><span>"] = {</span><span style=color:#d08770;>1</span><span>, </span><span style=color:#d08770;>0</span><span>, </span><span style=color:#d08770;>2</span><span>};
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// add another object (using an initializer list of pairs)
+</span><span>    j["</span><span style=color:#a3be8c;>object</span><span>"] = {{"</span><span style=color:#a3be8c;>currency</span><span>", "</span><span style=color:#a3be8c;>USD</span><span>"},
+</span><span>                   {"</span><span style=color:#a3be8c;>value</span><span>",    </span><span style=color:#d08770;>42.99</span><span>}};
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// instead, you could also write (which looks very similar to the JSON above)
+</span><span>    json j2 = {
+</span><span>            {"</span><span style=color:#a3be8c;>pi</span><span>",      </span><span style=color:#d08770;>3.141</span><span>},
+</span><span>            {"</span><span style=color:#a3be8c;>happy</span><span>",   </span><span style=color:#d08770;>true</span><span>},
+</span><span>            {"</span><span style=color:#a3be8c;>name</span><span>",    "</span><span style=color:#a3be8c;>Niels</span><span>"},
+</span><span>            {"</span><span style=color:#a3be8c;>nothing</span><span>", </span><span style=color:#d08770;>nullptr</span><span>},
+</span><span>            {"</span><span style=color:#a3be8c;>answer</span><span>",  {
+</span><span>                                {"</span><span style=color:#a3be8c;>everything</span><span>", </span><span style=color:#d08770;>42</span><span>}
+</span><span>                        }},
+</span><span>            {"</span><span style=color:#a3be8c;>list</span><span>",    {       </span><span style=color:#d08770;>1</span><span>, </span><span style=color:#d08770;>0</span><span>, </span><span style=color:#d08770;>2</span><span>}},
+</span><span>            {"</span><span style=color:#a3be8c;>object</span><span>",  {
+</span><span>                                {"</span><span style=color:#a3be8c;>currency</span><span>",   "</span><span style=color:#a3be8c;>USD</span><span>"},
+</span><span>                                   {"</span><span style=color:#a3be8c;>value</span><span>", </span><span style=color:#d08770;>42.99</span><span>}
+</span><span>                        }}
+</span><span>    };
+</span><span>
+</span><span>    cout << j.</span><span style=color:#bf616a;>dump</span><span>(</span><span style=color:#d08770;>4</span><span>) << endl;
+</span><span>    cout << j2.</span><span style=color:#bf616a;>dump</span><span>(</span><span style=color:#d08770;>4</span><span>) << endl;
+</span><span>    </span><span style=color:#65737e;>/*  相同的输出：
+</span><span style=color:#65737e;>    {
+</span><span style=color:#65737e;>        "answer": {
+</span><span style=color:#65737e;>            "everything": 42
+</span><span style=color:#65737e;>        },
+</span><span style=color:#65737e;>        "happy": true,
+</span><span style=color:#65737e;>        "list": [
+</span><span style=color:#65737e;>            1,
+</span><span style=color:#65737e;>            0,
+</span><span style=color:#65737e;>            2
+</span><span style=color:#65737e;>        ],
+</span><span style=color:#65737e;>        "name": "Niels",
+</span><span style=color:#65737e;>        "nothing": null,
+</span><span style=color:#65737e;>        "object": {
+</span><span style=color:#65737e;>            "currency": "USD",
+</span><span style=color:#65737e;>            "value": 42.99
+</span><span style=color:#65737e;>        },
+</span><span style=color:#65737e;>        "pi": 3.141
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;>    */
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>一般情况无需声明json的值类型，但也支持显示声明特定的值类型：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fstream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>json.hpp</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span style=color:#b48ead;>using </span><span>json = nlohmann::json;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>) {
+</span><span>    </span><span style=color:#65737e;>// a way to express the empty array []
+</span><span>    json empty_array_explicit = json::</span><span style=color:#bf616a;>array</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// ways to express the empty object {}
+</span><span>    json empty_object_implicit = </span><span style=color:#bf616a;>json</span><span>({});      </span><span style=color:#65737e;>//隐式使用
+</span><span>    json empty_object_explicit = json::</span><span style=color:#bf616a;>object</span><span>();</span><span style=color:#65737e;>//显示使用
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// a way to express an _array_ of key/value pairs [["currency", "USD"], ["value", 42.99]]
+</span><span>    json array_not_object = json::</span><span style=color:#bf616a;>array</span><span>({ {"</span><span style=color:#a3be8c;>currency</span><span>", "</span><span style=color:#a3be8c;>USD</span><span>"}, {"</span><span style=color:#a3be8c;>value</span><span>", </span><span style=color:#d08770;>42.99</span><span>} });
+</span><span>    cout << array_not_object.</span><span style=color:#bf616a;>dump</span><span>(</span><span style=color:#d08770;>4</span><span>) << endl;
+</span><span>    </span><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>    [
+</span><span style=color:#65737e;>        [
+</span><span style=color:#65737e;>            "currency",
+</span><span style=color:#65737e;>            "USD"
+</span><span style=color:#65737e;>        ],
+</span><span style=color:#65737e;>        [
+</span><span style=color:#65737e;>            "value",
+</span><span style=color:#65737e;>            42.99
+</span><span style=color:#65737e;>        ]
+</span><span style=color:#65737e;>    ]
+</span><span style=color:#65737e;>     */
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h3 id=serialization-deserialization-xu-lie-hao-fan-xu-lie-hua>Serialization / Deserialization（序列号/反序列化）</h3><ol><li><p>json与string类型的转换</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fstream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>json.hpp</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span style=color:#b48ead;>using </span><span>json = nlohmann::json;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>) {
+</span><span>    </span><span style=color:#65737e;>// create object from string literal
+</span><span>    json j = "</span><span style=color:#a3be8c;>{ </span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>happy</span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>: true, </span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>pi</span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>: 3.141 }</span><span>"_json;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// or even nicer with a raw string literal
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> j2 = </span><span style=color:#b48ead;>R</span><span>"(
+</span><span style=color:#a3be8c;>    {
+</span><span style=color:#a3be8c;>        "happy": true,
+</span><span style=color:#a3be8c;>        "pi": 3.141
+</span><span style=color:#a3be8c;>    }
+</span><span style=color:#a3be8c;>    </span><span>)"_json;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// parse explicitly
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> j3 = json::</span><span style=color:#bf616a;>parse</span><span>("</span><span style=color:#a3be8c;>{ </span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>happy</span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>: true, </span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>pi</span><span style=color:#96b5b4;>\"</span><span style=color:#a3be8c;>: 3.141 }</span><span>");
+</span><span>
+</span><span>    cout << j.</span><span style=color:#bf616a;>dump</span><span>() << endl;
+</span><span>    cout << j2.</span><span style=color:#bf616a;>dump</span><span>() << endl;
+</span><span>    cout << j3.</span><span style=color:#bf616a;>dump</span><span>() << endl;
+</span><span>    </span><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>    {"happy":true,"pi":3.141}
+</span><span style=color:#65737e;>    {"happy":true,"pi":3.141}
+</span><span style=color:#65737e;>    {"happy":true,"pi":3.141}
+</span><span style=color:#65737e;>     */
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre> <p>序列号与赋值的区别：</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fstream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>json.hpp</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span style=color:#b48ead;>using </span><span>json = nlohmann::json;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>) {
+</span><span>    </span><span style=color:#65737e;>// store a string in a JSON value
+</span><span>    json j_string = "</span><span style=color:#a3be8c;>this is a string</span><span>";
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// retrieve the string value
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> cpp_string = j_string.</span><span style=color:#bf616a;>get</span><span>&LTstd::string>();
+</span><span>    </span><span style=color:#65737e;>// retrieve the string value (alternative when an variable already exists)
+</span><span>    std::string cpp_string2;
+</span><span>    j_string.</span><span style=color:#bf616a;>get_to</span><span>(cpp_string2);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// retrieve the serialized value (explicit JSON serialization)
+</span><span>    std::string serialized_string = j_string.</span><span style=color:#bf616a;>dump</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// output of original string
+</span><span>    std::cout << cpp_string << "</span><span style=color:#a3be8c;> == </span><span>" << cpp_string2 << "</span><span style=color:#a3be8c;> == </span><span>" << j_string.</span><span style=color:#bf616a;>get</span><span>&LTstd::string>() << '</span><span style=color:#96b5b4;>\n</span><span>';
+</span><span>    </span><span style=color:#65737e;>// output of serialized value
+</span><span>    std::cout << j_string << "</span><span style=color:#a3be8c;> == </span><span>" << serialized_string << std::endl;
+</span><span>    </span><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>    this is a string == this is a string == this is a string
+</span><span style=color:#65737e;>    "this is a string" == "this is a string"
+</span><span style=color:#65737e;>     */
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre> <blockquote><p><code>dump()</code>函数返回最初存储的字符串的值<p>注意：该库仅支持UTF-8，当在库中存储不同编码的字符串时，调用dump()可能会抛出异常，除非异常json::error_handler_t::replace或json::error_handler_t::ignore被错误处理程序正确处理。</blockquote><li><p>json与stream类型的转换</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fstream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>json.hpp</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span style=color:#b48ead;>using </span><span>json = nlohmann::json;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>) {
+</span><span>    </span><span style=color:#65737e;>// deserialize from standard input
+</span><span>    json j;
+</span><span>    std::cin >> j;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// serialize to standard output
+</span><span>    std::cout << j << endl;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// the setw manipulator was overloaded to set the indentation for pretty printing
+</span><span>    std::cout << std::</span><span style=color:#bf616a;>setw</span><span>(</span><span style=color:#d08770;>4</span><span>) << j << std::endl;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>    {"happy":true,"pi":3.141}
+</span><span style=color:#65737e;>    {"happy":true,"pi":3.141}
+</span><span style=color:#65737e;>    {
+</span><span style=color:#65737e;>        "happy": true,
+</span><span style=color:#65737e;>        "pi": 3.141
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;>     */
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// read a JSON file
+</span><span>    std::ifstream </span><span style=color:#bf616a;>i</span><span>("</span><span style=color:#a3be8c;>file.json</span><span>");
+</span><span>    json j;
+</span><span>    i >> j;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// write prettified JSON to another file
+</span><span>    std::ofstream </span><span style=color:#bf616a;>o</span><span>("</span><span style=color:#a3be8c;>pretty.json</span><span>");
+</span><span>    o << std::</span><span style=color:#bf616a;>setw</span><span>(</span><span style=color:#d08770;>4</span><span>) << j << std::endl;
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><li><p>根据迭代器范围读取json</p> <p>如果迭代器的value_type是一个1、2或4字节的整型类型，那么它将分别被解释为UTF-8、UTF-16和UTF-32。</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fstream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iomanip</span><span>>
+</span><span style=color:#b48ead;>#include </span><span>"</span><span style=color:#a3be8c;>json.hpp</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span style=color:#b48ead;>using </span><span>json = nlohmann::json;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>) {
+</span><span>    std::vector&LTstd::uint8_t> v = {'</span><span style=color:#a3be8c;>t</span><span>', '</span><span style=color:#a3be8c;>r</span><span>', '</span><span style=color:#a3be8c;>u</span><span>', '</span><span style=color:#a3be8c;>e</span><span>'};
+</span><span>    json j = json::</span><span style=color:#bf616a;>parse</span><span>(v.</span><span style=color:#bf616a;>begin</span><span>(), v.</span><span style=color:#bf616a;>end</span><span>());
+</span><span>    json j2 = json::</span><span style=color:#bf616a;>parse</span><span>(v);
+</span><span>    cout << j.</span><span style=color:#bf616a;>dump</span><span>() << endl;
+</span><span>    cout << j2.</span><span style=color:#bf616a;>dump</span><span>() << endl;
+</span><span>    </span><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>    true
+</span><span style=color:#65737e;>    true
+</span><span style=color:#65737e;>     */
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><li><p>其他使用</p> <ol><li>自定义容器和迭代器<li>SAX接口</ol></ol><h2 id=can-kao-zi-liao>参考资料</h2><p>项目地址：<a href=https://github.com/nlohmann/json>JSON for Modern C++</a><p>json支持：<a href=https://www.json.org>json官网</a></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

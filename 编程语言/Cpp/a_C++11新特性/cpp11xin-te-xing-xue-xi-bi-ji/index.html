@@ -1,0 +1,76 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/a_C++11新特性/cpp11xin-te-xing-xue-xi-bi-ji/>C++11/14新特性学习笔记</a></h1><div class=post-meta-inline><span class=post-date> 2020-01-10 </span></div><div class=post-content><p>闲暇之余，在B站看到了侯捷老师的C++2.0课程视频，通过学习，了解了C++2.0的一些新特性。侯捷老师的课程从语言层面和标准库层面分别介绍了这些新特性。<h2 id=yu-yan-ceng-mian>语言层面</h2><p>通过输出打印宏定义“__cplusplus”的值可以查看编译器提供的版本。若数字大于等于201103，则表示支持C++11。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#include &LTiostream>
+</span><span>
+</span><span>using std::cout;
+</span><span>using std::endl;
+</span><span>
+</span><span>int main(int argc, char* argv[]){
+</span><span>    cout << __cplusplus << endl;
+</span><span>    return 0;
+</span><span>}
+</span><span>
+</span><span>//--std=c++2a -> 201709
+</span><span>//--std=c++17 -> 201703
+</span><span>//--std=c++14 -> 201402
+</span><span>//--std=c++11 -> 201103
+</span><span>//我的环境下不加编译选项  -> 201402
+</span></code></pre><h3 id=guan-yu-mo-ban-de-gai-jin>关于模板的改进</h3><ol><li><p>模板的右尖括号</p> <p>C++1.0是不允许两个右尖括号连在一起出现的，会被认为是右移操作符，所以在C++11之前的模板会用空格将两个右尖括号分开。</p> <p>C++11之后就不需要这样了。</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#include &LTiostream>
+</span><span>#include &LTvector>
+</span><span>
+</span><span>using std::cout;
+</span><span>using std::endl;
+</span><span>using std::vector;
+</span><span>
+</span><span>int main(int argc, char* argv[]){
+</span><span>    cout << __cplusplus << endl;
+</span><span>    vector&LTvector&LTchar>> a;
+</span><span>    return 0;
+</span><span>}
+</span><span>//--std=c++98
+</span><span>//error: '>>' should be '> >' within a nested template argument list
+</span></code></pre><li><p>别名模板</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code></code></pre></ol><p>template <模板形参类表> using 标识符 attr(可选) = 类型标识; ```<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>C++11引入了using定义别名的方法，可替代typedef，使得定义别名更加通俗易懂。typedef是不接受参数的，也就无法使用别名模板的模板实参替换类型标识。
+</span><span>
+</span><span>与任何模板声明相似，别名模版仅可声明于类作用域或命名空间作用域。
+</span></code></pre><p>在推导模板模板形参时，模板实参推导始终不推导别名模板。不可能部分特化或显式特化别名模板。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>```
+</span><span>template &LTclass T>
+</span><span>struct Alloc {};
+</span><span>template &LTclass T>
+</span><span>using Vec = std::vector&LTT, Alloc&LTT>>;
+</span><span>Vec&LTint> coll;	//等同于std::vector&LTint, Alloc&LTint>>
+</span></code></pre><p>​<br> ​ template <typename t> ​ struct Container{ ​ using value_type = T; ​ } ​ template <typename containertype> ​ void g(const ContainerType& c){ ​ typename ContainerType::value_type n; ​ } ​ ```<p><p>​</p> <h3 id=zhi-zhen-zi-mian-liang-nullptr>指针字面量：nullptr</h3> <p>关键词 nullptr 代表指针字面量。它是 std::nullptr_t 类型的纯右值。存在从 nullptr 到任何指针类型及任何成员指针类型的隐式转换。</p> <p>std::nullptr_t 是空指针字面量 nullptr 的类型。它是既非指针类型亦非指向成员指针类型的独立类型。</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#include &LTcstddef>
+</span><span>#include &LTiostream>
+</span><span> 
+</span><span>template&LTclass F, class A>
+</span><span>void Fwd(F f, A a)
+</span><span>{
+</span><span>    f(a);
+</span><span>}
+</span><span> 
+</span><span>void g(int* i)
+</span><span>{
+</span><span>    std::cout << "Function g called\n";
+</span><span>}
+</span><span> 
+</span><span>int main()
+</span><span>{
+</span><span>    g(NULL);           // 良好
+</span><span>    g(0);              // 良好
+</span><span> 
+</span><span>    Fwd(g, nullptr);   // 良好
+</span><span>//  Fwd(g, NULL);  // 错误：不存在函数 g(int)
+</span><span>}
+</span></code></pre> <p>宏 <code>NULL</code> 是实现定义的空指针常量，C++11后可能为零值整数字面量，或为 std::nullptr_t 类型纯右值。</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#define NULL 0
+</span><span>//C++11起
+</span><span>#define NULL nullptr
+</span></code></pre> <h3 id=zhan-wei-fu-lei-xing-shuo-ming-fu-auto>占位符类型说明符：auto</h3> <p>对于变量，指定要从其初始化器自动推导出其类型。</p> <p>对于函数，指定要从其 return 语句推导出其返回类型。 (C++14 起)</p> <p>对于非类型模板形参，指定要从实参推导出其类型。 (C++17 起)</p> <pre style=background-color:#2b303b;color:#c0c5ce;><code><span>//auto 常用于无名类型，例如 lambda 表达式的类型
+</span><span>auto lambda = [](int x) { return x + 3; };
+</span><span>
+</span><span>//auto 常用于迭代器类型
+</span><span>vecotr&LTint> a;
+</span><span>auto i = a.begin();
+</span><span>
+</span><span>template&LTauto n> // C++17 auto 形参声明
+</span><span>auto f() -> std::pair&LTdecltype(n), decltype(n)> // auto 不能从花括号初始化器列表推导
+</span><span>{
+</span><span>    return {n, n};
+</span><span>}
+</span></code></pre> <div></div> <div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div> 

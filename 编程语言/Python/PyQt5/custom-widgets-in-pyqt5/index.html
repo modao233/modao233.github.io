@@ -1,0 +1,159 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/custom-widgets-in-pyqt5/>PyQt5 中的自定义部件</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-20 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/customwidgets/>翻译自原文：Custom widgets in PyQt5</a><p>翻译时间 2020 年 8 月 20 日<p>PyQt5 有一组丰富的部件。但是，没有任何工具包可以提供程序员在应用程序中可能需要的所有部件。工具包通常只提供最常见的部件，如按钮、文本部件或滑块。如果需要更专业的部件，我们必须自己创建它。<p>使用工具包提供的绘图工具创建自定义部件。有两个基本的可能性：程序员可以修改或增强现有的部件，或者他可以从头开始创建自定义部件。<h2 id=pyqt5-ke-lu-xiao-bu-jian>PyQt5 刻录小部件</h2><p>这是一个部件，我们可以在 Nero、K3B 或其他 CD/DVD 刻录软件中看到。<p>custom_widget.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QSlider, QApplication,</span><span>
+</span><span>                             QHBoxLayout, QVBoxLayout)</span><span>
+</span><span>from PyQt5.QtCore import QObject, Qt, pyqtSignal</span><span>
+</span><span>from PyQt5.QtGui import QPainter, QFont, QColor, QPen</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Communicate(QObject):</span><span>
+</span><span>    updateBW = pyqtSignal(int)</span><span>
+</span><span>
+</span><span>
+</span><span>class BurningWidget(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        self.setMinimumSize(1, 30)</span><span>
+</span><span>        self.value = 75</span><span>
+</span><span>        self.num = [75, 150, 225, 300, 375, 450, 525, 600, 675]</span><span>
+</span><span>
+</span><span>    def setValue(self, value):</span><span>
+</span><span>
+</span><span>        self.value = value</span><span>
+</span><span>
+</span><span>    def paintEvent(self, e):</span><span>
+</span><span>
+</span><span>        qp = QPainter()</span><span>
+</span><span>        qp.begin(self)</span><span>
+</span><span>        self.drawWidget(qp)</span><span>
+</span><span>        qp.end()</span><span>
+</span><span>
+</span><span>    def drawWidget(self, qp):</span><span>
+</span><span>
+</span><span>        MAX_CAPACITY = 700</span><span>
+</span><span>        OVER_CAPACITY = 750</span><span>
+</span><span>
+</span><span>        font = QFont('Serif', 7, QFont.Light)</span><span>
+</span><span>        qp.setFont(font)</span><span>
+</span><span>
+</span><span>        size = self.size()</span><span>
+</span><span>        w = size.width()</span><span>
+</span><span>        h = size.height()</span><span>
+</span><span>
+</span><span>        step = int(round(w / 10))</span><span>
+</span><span>
+</span><span>        till = int(((w / OVER_CAPACITY) * self.value))</span><span>
+</span><span>        full = int(((w / OVER_CAPACITY) * MAX_CAPACITY))</span><span>
+</span><span>
+</span><span>        if self.value >= MAX_CAPACITY:</span><span>
+</span><span>
+</span><span>            qp.setPen(QColor(255, 255, 255))</span><span>
+</span><span>            qp.setBrush(QColor(255, 255, 184))</span><span>
+</span><span>            qp.drawRect(0, 0, full, h)</span><span>
+</span><span>            qp.setPen(QColor(255, 175, 175))</span><span>
+</span><span>            qp.setBrush(QColor(255, 175, 175))</span><span>
+</span><span>            qp.drawRect(full, 0, till - full, h)</span><span>
+</span><span>
+</span><span>        else:</span><span>
+</span><span>
+</span><span>            qp.setPen(QColor(255, 255, 255))</span><span>
+</span><span>            qp.setBrush(QColor(255, 255, 184))</span><span>
+</span><span>            qp.drawRect(0, 0, till, h)</span><span>
+</span><span>
+</span><span>        pen = QPen(QColor(20, 20, 20), 1,</span><span>
+</span><span>                   Qt.SolidLine)</span><span>
+</span><span>
+</span><span>        qp.setPen(pen)</span><span>
+</span><span>        qp.setBrush(Qt.NoBrush)</span><span>
+</span><span>        qp.drawRect(0, 0, w - 1, h - 1)</span><span>
+</span><span>
+</span><span>        j = 0</span><span>
+</span><span>
+</span><span>        for i in range(step, 10 * step, step):</span><span>
+</span><span>
+</span><span>            qp.drawLine(i, 0, i, 5)</span><span>
+</span><span>            metrics = qp.fontMetrics()</span><span>
+</span><span>            fw = metrics.width(str(self.num[j]))</span><span>
+</span><span>
+</span><span>            x, y = int(i - fw/2), int(h / 2)</span><span>
+</span><span>            qp.drawText(x, y, str(self.num[j]))</span><span>
+</span><span>            j = j + 1</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        OVER_CAPACITY = 750</span><span>
+</span><span>
+</span><span>        sld = QSlider(Qt.Horizontal, self)</span><span>
+</span><span>        sld.setFocusPolicy(Qt.NoFocus)</span><span>
+</span><span>        sld.setRange(1, OVER_CAPACITY)</span><span>
+</span><span>        sld.setValue(75)</span><span>
+</span><span>        sld.setGeometry(30, 40, 150, 30)</span><span>
+</span><span>
+</span><span>        self.c = Communicate()</span><span>
+</span><span>        self.wid = BurningWidget()</span><span>
+</span><span>        self.c.updateBW[int].connect(self.wid.setValue)</span><span>
+</span><span>
+</span><span>        sld.valueChanged[int].connect(self.changeValue)</span><span>
+</span><span>        hbox = QHBoxLayout()</span><span>
+</span><span>        hbox.addWidget(self.wid)</span><span>
+</span><span>        vbox = QVBoxLayout()</span><span>
+</span><span>        vbox.addStretch(1)</span><span>
+</span><span>        vbox.addLayout(hbox)</span><span>
+</span><span>        self.setLayout(vbox)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 390, 210)</span><span>
+</span><span>        self.setWindowTitle('Burning widget')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def changeValue(self, value):</span><span>
+</span><span>        self.c.updateBW.emit(value)</span><span>
+</span><span>        self.wid.repaint()</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们有一个<code>QSlider</code>和一个自定义部件。滑块控制自定义部件。此部件以图形方式显示介质的总容量和可用的可用空间。我们自定义部件的最小值为 1，最大值为OVER_CAPACITY。如果我们达到价值MAX_CAPACITY，我们开始以红色绘制。这通常表示过度燃烧。<p>刻录部件放置在窗口底部。这是通过使用<code>QHBoxLayout</code>和<code>QVBoxLayout</code>实现的。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>class BurningWidget(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span></code></pre><p>表示燃烧的刻录条部件，它基于<code>QWidget</code>部件。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.setMinimumSize(1, 30)</span><span>
+</span></code></pre><p>我们更改小部件的最小大小（高度）。默认值对我们来说有点小。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>font = QFont('Serif', 7, QFont.Light)</span><span>
+</span><span>qp.setFont(font)</span><span>
+</span></code></pre><p>我们使用的字体比默认字体小。这更符合我们的需要。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>size = self.size()</span><span>
+</span><span>w = size.width()</span><span>
+</span><span>h = size.height()</span><span>
+</span><span>
+</span><span>step = int(round(w / 10))</span><span>
+</span><span>
+</span><span>
+</span><span>till = int(((w / OVER_CAPACITY) * self.value))</span><span>
+</span><span>full = int(((w / OVER_CAPACITY) * MAX_CAPACITY))</span><span>
+</span></code></pre><p>我们动态绘制部件。窗口更大，刻录部件更大，反之亦然。这就是为什么我们绘制自定义部件的时候必须计算小部件的大小。<code>till</code>参数确定要绘制的总大小，此值来自滑块部件，它是整个区域的一部分。<code>full</code>参数确定我们开始以红色绘制的点。<p>实际绘图由三个步骤组成。我们绘制黄色或红色和黄色矩形。然后，我们绘制垂直线，将小部件分成几个部分。最后，我们绘制指示介质容量的数字。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>metrics = qp.fontMetrics()</span><span>
+</span><span>fw = metrics.width(str(self.num[j]))</span><span>
+</span><span>
+</span><span>x, y = int(i - fw/2), int(h / 2)</span><span>
+</span><span>qp.drawText(x, y, str(self.num[j]))</span><span>
+</span></code></pre><p>我们使用字体指标来绘制文本。我们必须知道文本的宽度，以便以垂直线为中心。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def changeValue(self, value):</span><span>
+</span><span>
+</span><span>    self.c.updateBW.emit(value)</span><span>
+</span><span>    self.wid.repaint()</span><span>
+</span></code></pre><p>当我们移动滑块时，将调用<code>changeValue()</code>该方法。在方法内，我们发送一个带参数的自定义信号<code>updateBW</code>。参数是滑块的当前值，该值稍后用于计算要绘制的刻录小部件的容量，然后重新绘制自定义小部件。<p><img alt=image-20200820214024211 src=Custom-widgets-in-PyQt5/image-20200820214024211.png></p><center>图：刻录小部件</center><p>在 PyQt5 教程的这一部分中，我们创建了一个自定义部件。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

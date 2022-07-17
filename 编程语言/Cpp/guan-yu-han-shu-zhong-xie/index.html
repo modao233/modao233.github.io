@@ -1,0 +1,39 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/guan-yu-han-shu-zhong-xie/>运行时多态：函数重写</a></h1><div class=post-meta-inline><span class=post-date> 2020-12-17 </span></div><div class=post-content><p>普通重写和虚函数重写，一般情况区别不大，得涉及指针或者引用才会动态分发<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>atomic</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using</span><span> std::cin;
+</span><span style=color:#b48ead;>using</span><span> std::cout;
+</span><span style=color:#b48ead;>using</span><span> std::endl;
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>People </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>say</span><span style=color:#eff1f5;>() { cout </span><span><< "</span><span style=color:#a3be8c;>people say</span><span>" <<</span><span style=color:#eff1f5;> endl;}
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>virtual void </span><span style=color:#8fa1b3;>eat</span><span style=color:#eff1f5;>(){};
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Man </span><span style=color:#eff1f5;>: </span><span style=color:#b48ead;>public </span><span style=color:#a3be8c;>People </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>say</span><span style=color:#eff1f5;>() { cout </span><span><< "</span><span style=color:#a3be8c;>man say</span><span>" <<</span><span style=color:#eff1f5;> endl;}
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>eat</span><span style=color:#eff1f5;>() { cout </span><span><< "</span><span style=color:#a3be8c;>man eat</span><span>" <<</span><span style=color:#eff1f5;> endl;}
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    Man man;
+</span><span>    man.</span><span style=color:#bf616a;>say</span><span>();</span><span style=color:#65737e;>/*man say */
+</span><span>    man.</span><span style=color:#bf616a;>eat</span><span>();</span><span style=color:#65737e;>/*man eat */
+</span><span>
+</span><span>    People* man2 = </span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>Man</span><span>();
+</span><span>    man2 -> </span><span style=color:#bf616a;>say</span><span>();</span><span style=color:#65737e;>/*people say */
+</span><span>    man2 -> </span><span style=color:#bf616a;>eat</span><span>();</span><span style=color:#65737e;>/*man eat */
+</span><span>
+</span><span>    People& man3 = man;
+</span><span>    man3.</span><span style=color:#bf616a;>say</span><span>();</span><span style=color:#65737e;>/*people say */
+</span><span>    man3.</span><span style=color:#bf616a;>eat</span><span>();</span><span style=color:#65737e;>/*man eat */
+</span><span>
+</span><span>    People& man4 = *man2;
+</span><span>    man4.</span><span style=color:#bf616a;>say</span><span>();</span><span style=color:#65737e;>/*people say */
+</span><span>    man4.</span><span style=color:#bf616a;>eat</span><span>();</span><span style=color:#65737e;>/*man eat */
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>**总结：**普通重写和虚函数重写，一般情况区别不大，得涉及指针或者引用才会动态分发</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

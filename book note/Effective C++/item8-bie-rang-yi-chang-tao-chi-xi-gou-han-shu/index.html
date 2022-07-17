@@ -1,0 +1,72 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/book note/Effective C++/item8-bie-rang-yi-chang-tao-chi-xi-gou-han-shu/">Item8-别让异常逃离析构函数</a></h1><div class=post-meta-inline><span class=post-date> 2021-01-06 </span></div><div class=post-content><p>Item8-别让异常逃离析构函数<h2 id=xi-gou-han-shu-zhong-fa-sheng-yi-chang-shi-jian-ji-shou-de-shi>析构函数中发生异常是件棘手的事</h2><p>由于析构函数常常被自动调用，在析构函数中抛出的异常往往会难以捕获，引发程序非正常退出或未定义行为<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Widget </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#8fa1b3;>~Widget</span><span style=color:#eff1f5;>() { </span><span>... </span><span style=color:#eff1f5;>}              </span><span style=color:#65737e;>// assume this might emit an exception</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>doSomething</span><span>()</span><span>
+</span><span>{</span><span>
+</span><span>  std::vector&LTWidget> v;</span><span>
+</span><span>  ...</span><span>
+</span><span>}     </span><span>
+</span></code></pre><p>当 v 被析构时，它有责任析构它包含的所有 Widgets。假设 v 中有十个 Widgets，在第一个的析构过程中，抛出一个异常。其它 9 个 Widgets 仍然必须被析构，否则它们持有的所有资源将被泄漏。这时如果第二个 Widget 析构又抛出异常，现在有两个同时活动的异常，程序若不是结束执行就是引发未定义行为。<p>假设使用一个类负责数据库连接：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>DBConnection </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>static</span><span style=color:#eff1f5;> DBConnection </span><span style=color:#8fa1b3;>create</span><span style=color:#eff1f5;>();   </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>close</span><span style=color:#eff1f5;>();                       </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;              </span><span>
+</span></code></pre><p>为了确保客户不会忘记在对象上调用 close，一个合理的主意是为 DBConnection 建立一个资源管理类，在它的析构函数中调用 close。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>DBConn </span><span style=color:#eff1f5;>{               </span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:                                </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#8fa1b3;>~DBConn</span><span style=color:#eff1f5;>()                          </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  {                                   </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>   db.</span><span style=color:#bf616a;>close</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  }</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  DBConnection db;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span></code></pre><p>使用时：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>{                                      </span><span>
+</span><span>   DBConn </span><span style=color:#bf616a;>dbc</span><span>(DBConnection::</span><span style=color:#bf616a;>create</span><span>()); </span><span>
+</span><span>   ...                                   </span><span>
+</span><span>}                                                      </span><span>
+</span></code></pre><p>如果 DBConn 析构函数调用close导致异常，则析构函数就会传播该异常，也就是允许异常离开这个析构函数，这会造成麻烦。<h2 id=xi-gou-han-shu-zhong-chu-li-yi-chang-de-liang-chong-si-lu>析构函数中处理异常的两种思路</h2><p>有两个办法可以避免这一问题，DBConn的析构函数可以：<ul><li><p>如果close抛出异常就结束程序，通常通过调用 abort完成：</p> <pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>DBConn::</span><span style=color:#8fa1b3;>~DBConn</span><span>()</span><span>
+</span><span>{</span><span>
+</span><span> </span><span style=color:#b48ead;>try </span><span>{ db.</span><span style=color:#bf616a;>close</span><span>(); }</span><span>
+</span><span> </span><span style=color:#b48ead;>catch </span><span>(...) {</span><span>
+</span><span>   make log entry that the call to close failed;</span><span>
+</span><span>   std::</span><span style=color:#96b5b4;>abort</span><span>();</span><span>
+</span><span> }</span><span>
+</span><span>}</span><span>
+</span></code></pre><li><p>吞下因调用close而发生的异常：</p> <pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>DBConn::</span><span style=color:#8fa1b3;>~DBConn</span><span>()</span><span>
+</span><span>{</span><span>
+</span><span> </span><span style=color:#b48ead;>try </span><span>{ db.</span><span style=color:#bf616a;>close</span><span>(); }</span><span>
+</span><span> </span><span style=color:#b48ead;>catch </span><span>(...) {</span><span>
+</span><span>      make log entry that the call to close failed;</span><span>
+</span><span> }</span><span>
+</span><span>}</span><span>
+</span></code></pre></ul><p>如果程序遭遇一个“于析构期间发生的错误”后无法继续执行，“强迫结束程序”是个合理的选项，毕竟它可以阻止异常从析构函数传播出去从而导致未定义行为。<p>一般而言，吞掉异常是个坏主意，因为它压制了“某些动作失败”的重要信息，然而有些时候吞下异常也比负担“草率结束程序”或“不明确行为带来的风险”好。<h2 id=ti-gong-lei-yong-hu-yi-chang-chu-li-jie-kou>提供类用户异常处理接口</h2><p>在遭遇并忽略了一个错误后，程序必须能够继续可靠地执行，这才是一个可行的方案。<p>一个极佳的策略是重新设计 DBConn的接口，使其客户有机会对可能出现的问题作出反应。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>DBConn </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span>...</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>close</span><span style=color:#eff1f5;>() </span><span style=color:#65737e;>//@ new function for client use</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>  {                                              </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    db.</span><span style=color:#bf616a;>close</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    closed </span><span>= </span><span style=color:#d08770;>true</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#8fa1b3;>~DBConn</span><span style=color:#eff1f5;>()</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  {</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>   </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>closed) {</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>   </span><span style=color:#b48ead;>try </span><span style=color:#eff1f5;>{             </span><span style=color:#65737e;>//@ close the connection if the client didn't</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>     db.</span><span style=color:#bf616a;>close</span><span style=color:#eff1f5;>();                                    </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>   }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>   </span><span style=color:#b48ead;>catch </span><span style=color:#eff1f5;>(</span><span>...</span><span style=color:#eff1f5;>) {             </span><span style=color:#65737e;>//@ if closing fails,note that and terminate or swallow</span><span style=color:#65737e;>
+</span><span style=color:#eff1f5;>     make log entry that call to close failed;      </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>     </span><span>...                                 </span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>   }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>private:</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  DBConnection db;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>  </span><span style=color:#b48ead;>bool</span><span style=color:#eff1f5;> closed;</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>};</span><span style=color:#eff1f5;>
+</span></code></pre><p>将调用 close 的责任从析构函数移交给 DBConn 的客户，同时在 DBConn 的析构函数中包含一个“候补”调用。<p>如果某个操作可能在失败时抛出异常，而又存在某种需要必须处理该异常，那么这个异常必须来自析构函数以外的某个函数。因为析构函数吐出异常就是危险，总会带来“过早结束程序”或“发生不明确行为”的风险。所以，让客户自己调用 close 并不是对他们带来负担，而是给他们一个处理错误的机会，否则他们没有机会响应。<h2 id=zong-jie>总结</h2><ul><li>析构函数绝对不要吐出异常。如果析构函数调用了可能抛出异常的函数，析构函数应该捕捉所有异常，然后吞下它们（不传播）或者结束程序。<li>如果客户需要对某个操作函数运行期间抛出的异常做出反应，那么 class 应该提供一个普通的函数（而非析构函数）执行该操作。</ul></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

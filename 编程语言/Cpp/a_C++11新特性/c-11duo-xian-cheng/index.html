@@ -1,0 +1,801 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/a_C++11新特性/c-11duo-xian-cheng/>C++11多线程</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-29 </span></div><div class=post-content><p>==非原创，充当缝合怪而已==<p>在Windows中通过CreateThread()创建进程，而在linux中使用POSIX thread模型，pthread_create()创建线程，并且在编译是要加入-pthread选项来表示正在使用POSIX thread库。可见，不同操作系统有着相似的线程概念，却包含这很多不同的实现细节。因此想要进行跨平台的多线程开发，就需要一种线程库作为thread wrapper。<p>Boost thread就是这样一种线程库，并且被加入到C++11标准中。在C++11以前，C++的多线程编程均需依赖系统或第三方接口实现，一定程度上影响了代码的移植性。C++11中，引入了boost库中的多线程部分内容，形成C++标准，形成标准后的boost多线程编程部分接口基本没有变化，这样方便了以前使用boost接口开发的使用者切换使用C++标准接口，很容易把boost接口升级为C++标准接口。<h2 id=std-thread><code>std::thread</code></h2><h3 id=xian-cheng-chuang-jian>线程创建</h3><p>创建线程时，传入的可调用对象有多样化：<ul><li><p>可调用对象可以是lambda表达式，std::function，也可以是重载了调用运算符的类，或者是成员函数或普通函数</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span>()
+</span><span>{
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>sample func</span><span>" << std::endl;
+</span><span>     
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(threadfunc);
+</span><span>    std::thread </span><span style=color:#bf616a;>t2</span><span>([](){
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>lambda func</span><span>" << std::endl;
+</span><span>    });
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t2.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><li><p>可以在线程的构造函数中传入可调用对象的参数，此时线程构造函数的第一个参数为可调用对象，此后的参数为可调用对象的参数：</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>TestThread</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>operator()</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>id</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>receive a id: </span><span>" <<</span><span style=color:#eff1f5;> id </span><span><<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(</span><span style=color:#bf616a;>TestThread</span><span>{}, </span><span style=color:#d08770;>0</span><span>);
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><li><p>如果传入的可调用对象是某个类的成员函数，则线程构造函数的第一个参数为该类型的成员函数指针，第二个参数为指向该类型的实例的指针，其后为成员函数的参数：</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>TestThread</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>sample</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>id</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>receive a id: </span><span>" <<</span><span style=color:#eff1f5;> id </span><span><<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    TestThread obj;
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(&TestThread::sample, &obj, </span><span style=color:#d08770;>0</span><span>);
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><li><p>在向线程中传递参数时需要注意的一点是：默认情况下会将传递的参数拷贝到线程的独立内存中，即使传入参数的类型为引用，但是可以使用std::ref将参数传递的方式更改为引用。</p> <pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> real_id = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>([](</span><span style=color:#b48ead;>int </span><span>&id){
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>lambda func</span><span>" << std::endl;
+</span><span>    }, std::</span><span style=color:#bf616a;>ref</span><span>(real_id));
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre></ul><h3 id=zu-sai-xian-cheng-fen-chi-xian-cheng>阻塞线程 & 分离线程</h3><p>在C++11之前，C++语言层面是不支持多线程的，想利用C++实现并发程序，借助操作系统的API实现跨平台的并发程序存在着诸多不便，当C++11在语言层面支持多线程后，编写跨平台的多线程代码就方便了许多。<p>C++11提供的<code>std::thread</code>在开发多线程方面带来了便捷。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span>(){
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>thread func</span><span>" << std::endl;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(threadfunc);
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();   </span><span style=color:#65737e;>//等待threadfunc运行结束
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>首先定义线程对象<code>t1</code>，线程函数<code>threadfunc</code>运行在线程对象<code>t1</code>中，当线程创建成功并执行线程函数后，一定要保证线程函数运行结束才能退出，这里调用了<code>join()</code>函数阻塞线程，直到<code>threadfunc()</code>运行结束，回收对应创建线程的资源。如果不阻塞线程，就不能保证线程对象<code>t1</code>在<code>threadfunc()</code>运行期间有效，下面不调用<code>join()</code>阻塞线程。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span>(){
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>thread func</span><span>" << std::endl;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(threadfunc);
+</span><span>    </span><span style=color:#65737e;>//t1.join();   //等待threadfunc运行结束
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>在运行时引起了程序崩溃。<p><img alt=image-20200729103841752 src=C++11%E5%A4%9A%E7%BA%BF%E7%A8%8B/image-20200729103841752.png><p>除了调用<code>join()</code>阻塞线程，保证线程对象在线程函数运行期间的有效性，还可以通过线程分离的手段实现，调用<code>detach()</code>函数使得线程对象与线程函数分离，这样，在线程函数运行期间，线程对象与线程函数就没有联系了，此时的线程是作为后台线程去执行，<code>detach()</code>后就无法再和线程发生联系，也不能通过<code>join()</code>来等待线程执行完毕，线程何时执行完无法控制，它的资源会被<code>init</code>进程回收，所以，通常不采用<code>detach()</code>方法。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span>(){
+</span><span>    std::cout << "</span><span style=color:#a3be8c;> detach thread func</span><span>" << std::endl;
+</span><span>     
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(threadfunc);
+</span><span>    t1.</span><span style=color:#bf616a;>detach</span><span>();      </span><span style=color:#65737e;>//线程分离
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><p>这里调用<code>detach()</code>实现线程分离，但是运行后，主线程退出的时候<code>threadfunc()</code>还没有输出<code>“detach thread func”</code>，<code>threadfunc()</code>什么时候运行结束也无法确定，为了看到所创建的线程运行结果，在主线程等待一下再退出。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>   </span><span style=color:#65737e;>//时间
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span>(){
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>detach thread func</span><span>" << std::endl;
+</span><span>}
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(threadfunc);
+</span><span>    t1.</span><span style=color:#bf616a;>detach</span><span>();
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>milliseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));</span><span style=color:#65737e;>//睡眠1000毫秒
+</span><span>        </span><span style=color:#b48ead;>break</span><span>;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><p>此时运行结果：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>detach thread </span><span style=color:#8fa1b3;>func
+</span></code></pre><p>使用detach时一定要注意，如果被调用detach的线程使用了调用detach线程的局部变量，那么在局部变量生命周期结束后，若被调用detach的线程还试图访问该局部变量时，就会出现错误：<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    
+</span><span>    size_t length = </span><span style=color:#d08770;>10</span><span>;
+</span><span>	</span><span style=color:#b48ead;>int </span><span>*value = </span><span style=color:#b48ead;>new int </span><span>[length];
+</span><span>	</span><span style=color:#b48ead;>for </span><span>(size_t i = </span><span style=color:#d08770;>0</span><span>; i < length; i++)
+</span><span>	{
+</span><span>		value[i] = i;
+</span><span>	}
+</span><span>
+</span><span>	std::thread </span><span style=color:#bf616a;>worker</span><span>([&]() {
+</span><span>		</span><span style=color:#b48ead;>using namespace</span><span> std::chrono_literals;
+</span><span>		std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(</span><span style=color:#d08770;>5</span><span style=color:#b48ead;>s</span><span>);
+</span><span>		</span><span style=color:#b48ead;>for </span><span>(size_t i = </span><span style=color:#d08770;>0</span><span>; i < length; i++)
+</span><span>		{
+</span><span>			</span><span style=color:#65737e;>//会出现悬空指针
+</span><span>			std::cout << value[i] << std::endl;
+</span><span>		}
+</span><span>	});
+</span><span>	worker.</span><span style=color:#bf616a;>detach</span><span>();
+</span><span>	</span><span style=color:#65737e;>//局部变量已经被释放
+</span><span>	</span><span style=color:#b48ead;>delete[]</span><span> value;
+</span><span>	std::cout << "</span><span style=color:#a3be8c;>test exit</span><span>" << std::endl;
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>对于一个std::thread对象，只能对其调用一次join或者detach，被调用join后就无法再次调用join或者detach，同样被调用detach后也无法再次被调用join或者detach。<p>可以使用std::thread的joinable方法判断std::thread对象是否时可以被join的，对一个std::thread对象在如下几种情况下joinable方法会返回false：<ul><li>空线程(在构造没有附加任何运行任务)<li>已经被调用join方法的线程<li>已经被调用detach方法的线程<li>已经被move的线程</ul><blockquote><p>detach：由C++ Runtime 进行托管<p>join：由当前线程进行负责空间回收等事务<p>无论是detach还是join操作都将使得joinable()都返回false</blockquote><h3 id=xian-cheng-yi-dong>线程移动</h3><p>通过<code>std::thread</code>创建的线程是不可以复制的，但是可以移动，转移线程的所有权。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span>()
+</span><span>{ 
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>move thread func</span><span>" << std::endl;   
+</span><span>}
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(threadfunc);
+</span><span>    std::thread </span><span style=color:#bf616a;>t2</span><span>(std::</span><span style=color:#bf616a;>move</span><span>(t1));
+</span><span>   
+</span><span>    t2.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>milliseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));</span><span style=color:#65737e;>//睡眠1000毫秒
+</span><span>        </span><span style=color:#b48ead;>break</span><span>;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>输出结果：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>move thread </span><span style=color:#8fa1b3;>func
+</span></code></pre><p>移动后<code>t1</code>就不代表任何线程了，<code>t2</code>对象代表着线程<code>threadfunc()</code>。另外，还可以通过<code>std::bind</code>来创建线程函数。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>     </span><span style=color:#65737e;>//时间
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>functional</span><span>>  </span><span style=color:#65737e;>//std::bind
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>bind thread func</span><span>" <<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    A a;
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(std::</span><span style=color:#bf616a;>bind</span><span>(&A::threadfunc,&a));
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>milliseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));</span><span style=color:#65737e;>//睡眠1000毫秒
+</span><span>        </span><span style=color:#b48ead;>break</span><span>;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><p>创建一个类<code>A</code>，然后再<code>main</code>函数中将类A中的成员函数绑定到线程对象<code>t1</code>上，运行结果：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>bind thread </span><span style=color:#8fa1b3;>func
+</span></code></pre><h3 id=huo-qu-xian-cheng-id>获取线程id</h3><p>标准库中出了std::thread和id定义外，还有定义了一个std::this_thread命名空间：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>namespace </span><span>this_thead {
+</span><span>	thread::id </span><span style=color:#8fa1b3;>get_id</span><span>();
+</span><span>	</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>yield</span><span>();
+</span><span>	</span><span style=color:#b48ead;>template</span><span><</span><span style=color:#b48ead;>class</span><span> Clock, </span><span style=color:#b48ead;>class </span><span>Duration>
+</span><span>	</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>sleep_until</span><span>(</span><span style=color:#b48ead;>const</span><span> chrono::time_point&LTClock, Duration>& </span><span style=color:#bf616a;>abs_time</span><span>);
+</span><span>	</span><span style=color:#b48ead;>template</span><span><</span><span style=color:#b48ead;>class</span><span> Rep, </span><span style=color:#b48ead;>class</span><span> Period>
+</span><span>	</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>sleep_for</span><span>(</span><span style=color:#b48ead;>const</span><span> chromo::duration&LTRep, Period>& </span><span style=color:#bf616a;>rel_time</span><span>);
+</span><span>}
+</span></code></pre><p>通过getid方法可以获得当前线程的id，而yield，sleep_until和sleep_for方法则可以用于线程的调度。<p>调用yield方法会使操作系统重新调度当前线程，并允许其他线程运行一段时间。yield函数的准确行为依赖于具体实现，特别是使用中的 OS 调度器机制和系统状态。<a href="https://link.zhihu.com/?target=https%3A//zh.cppreference.com/w/cpp/thread/yield">例如，先进先出实时调度器（ Linux 的SCHED_FIFO）将悬挂当前线程并将它放到准备运行的同优先级线程的队列尾（而若无其他线程在同优先级，则yield无效果）</a>。<p>每个线程都有自己的线程标识，也就是线程ID，当线程创建成功后，可以通过<code>get_id()</code>来获取线程的ID。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>functional</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>bind thread func</span><span>" <<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    A a;
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(std::</span><span style=color:#bf616a;>bind</span><span>(&A::threadfunc,&a));
+</span><span>    
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>main thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>t1 thread ID is : </span><span>" << t1.</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>    
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>milliseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));</span><span style=color:#65737e;>//睡眠1000毫秒
+</span><span>        </span><span style=color:#b48ead;>break</span><span>;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p><code>std::this_thread::get_id()</code>获取的是当前线程的ID，<code>t1.get_id()</code>获取的是所创建的t1对象中运行的线程ID，对应的ID分别为：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>main thread ID is : </span><span style=color:#d08770;>11932
+</span><span>t1 thread ID is : </span><span style=color:#d08770;>12076
+</span><span>bind thread </span><span style=color:#8fa1b3;>func
+</span></code></pre><p>虽然<code>get_id()</code>可以获取线程的ID，但是其返回类型是<code>thread::id</code>，通过<code>std::cout</code>可以输出线程ID，但是这样使用似乎不太方面，要是能转换为整形就好了。其实可以将得到的线程ID写入到<code>ostreamstring</code>流中，转换成<code>string</code>类型，再转换成整形。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>functional</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sstream</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfunc</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>bind thread func</span><span>" <<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    A a;
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(std::</span><span style=color:#bf616a;>bind</span><span>(&A::threadfunc, &a));
+</span><span>
+</span><span>    std::ostringstream os1;
+</span><span>    os1 << t1.</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>    std::string strID = os1.</span><span style=color:#bf616a;>str</span><span>();            </span><span style=color:#65737e;>//转换成string类型
+</span><span>    </span><span style=color:#b48ead;>int</span><span> threadID = </span><span style=color:#96b5b4;>atoi</span><span>(strID.</span><span style=color:#bf616a;>c_str</span><span>());       </span><span style=color:#65737e;>//转换成int类型
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>t1 thread ID is : </span><span>" << threadID << std::endl;
+</span><span>
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>milliseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));</span><span style=color:#65737e;>//睡眠1000毫秒
+</span><span>        </span><span style=color:#b48ead;>break</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>输出结果：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>t1 thread ID is : </span><span style=color:#d08770;>6956
+</span><span>bind thread </span><span style=color:#8fa1b3;>func
+</span></code></pre><p>sleep_for则是将当前线程阻塞一定时间段后唤醒，而sleep_until则是阻塞当前线程直至某一时间点后将当前线程唤醒：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test</span><span>()
+</span><span>{
+</span><span>	std::thread </span><span style=color:#bf616a;>thread_a</span><span>([]() {
+</span><span>		</span><span style=color:#b48ead;>using namespace</span><span> std::chrono_literals;
+</span><span>		</span><span style=color:#65737e;>//线程a将被阻塞2s
+</span><span>		std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(</span><span style=color:#d08770;>2</span><span style=color:#b48ead;>s</span><span>);
+</span><span>	});
+</span><span>
+</span><span>	</span><span style=color:#b48ead;>using namespace</span><span> std::chrono_literals;
+</span><span>	</span><span style=color:#b48ead;>auto</span><span> time_point = std::chrono::steady_clock::</span><span style=color:#bf616a;>now</span><span>() + </span><span style=color:#d08770;>10</span><span style=color:#b48ead;>s</span><span>;
+</span><span>	std::thread </span><span style=color:#bf616a;>thread_b</span><span>([=]() {
+</span><span>		</span><span style=color:#65737e;>//线程b将被阻塞，并在10s后被唤醒
+</span><span>		std::this_thread::</span><span style=color:#bf616a;>sleep_until</span><span>(time_point);
+</span><span>	});
+</span><span>
+</span><span>	thread_a.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>	thread_b.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>}
+</span></code></pre><p>---+++<h2 id=std-mutex><code>std::mutex</code></h2><h3 id=suo-ji-zhi-jian-jie>锁机制简介</h3><p>进入多线程编程的世界，除了要牢牢掌握<code>std::thread</code>使用方法，还要掌握互斥量（锁）的使用，这是一种线程同步机制，在C++11中提供了4中互斥量。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>std::mutex;                  </span><span style=color:#65737e;>//非递归的互斥量
+</span><span>std::timed_mutex;            </span><span style=color:#65737e;>//带超时的非递归互斥量
+</span><span>std::recursive_mutex;        </span><span style=color:#65737e;>//递归互斥量
+</span><span>std::recursive_timed_mutex;  </span><span style=color:#65737e;>//带超时的递归互斥量
+</span></code></pre><p>C++标准库中提供的互斥量一般都有定义<code>lock</code>，<code>unlock</code>，<code>trylock</code>三个方法。这里以<code>std::mutex</code>为例做说明。<ul><li>使用<code>std::mutex</code>的lock方法可以在调用lock的线程上锁住互斥量，若互斥量已被其他线程上锁，则当前调用<code>lock</code>的线程将被阻塞，直其他占有互斥量的线程解锁互斥量使得当前线程获得互斥量。对<code>std::mutex</code>来说，在已经占有互斥量的线程上调用lock方法是未定义行为。<li><code>std::mutex</code>的<code>unlock</code>方法可以解锁当前线程占有的互斥量，若在未占有互斥量的线程上调用<code>unlock</code>则为未定义行为。<li><code>std::mutex</code>的<code>trylock</code>方法可以尝试锁定互斥量，若成功锁定互斥量则返回true，否则返回false。在已经占有互斥量的线程上调用<code>trylock</code>为未定义行为。在互斥量未被任何线程锁定的情况下，此函数也可能会返回false。</ul><p>在调用<code>std::mutex</code>的<code>lock</code>方法锁定互斥量后一定要记得在不需要占有互斥量的时候调用<code>unlock</code>解锁互斥量，否则其他任何想要获取锁的线程都会被阻塞，此时多线程就可能会退化成为单线程。占有 <code>std::mutex</code>的线程在<code>std::mutex</code>对象销毁前未调用其<code>unlock</code>方法则为未定义行为，且<code>std::mutex</code>对象不可复制也不可移动。<h3 id=suo-de-shi-yong>锁的使用</h3><p>从各种互斥量的名字可以看出其具有的特性，在实际开发中，常用就是<code>std::mutex</code>，它就像是一把锁，我们需要做的就是对它进行加锁与解锁。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>mutex</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span>
+</span><span>std::mutex g_mutex;
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>func</span><span>()
+</span><span>{
+</span><span>
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>entry func test thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>    
+</span><span>    std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>microseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));
+</span><span>    
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>leave func test thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t2</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t3</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t4</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t5</span><span>(func);
+</span><span>
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t2.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t3.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t4.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t5.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>创建了5个线程，然后分别调用<code>func()</code>函数，得到结果：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>entry func test thread ID is : entry func test thread ID is : </span><span style=color:#d08770;>19180
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>3596
+</span><span style=color:#d08770;>13632
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>9520
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>4460
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>13632
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>19180
+</span><span>leave func test thread ID is : leave func test thread ID is : </span><span style=color:#d08770;>9520
+</span><span style=color:#d08770;>3596
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>4460
+</span></code></pre><p>可以看出，并没有按顺序去执行线程函数，后面创建的线程并没有等待前面的线程执行完毕，导致结果混乱，下面用<code>std::mutex</code>进行控制：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>mutex</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span>
+</span><span>std::mutex g_mutex;
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>func</span><span>()
+</span><span>{
+</span><span>   g_mutex.</span><span style=color:#bf616a;>lock</span><span>();
+</span><span>
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>entry func test thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>    
+</span><span>    std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>microseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));
+</span><span>    
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>leave func test thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>
+</span><span>    g_mutex.</span><span style=color:#bf616a;>unlock</span><span>();
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t2</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t3</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t4</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t5</span><span>(func);
+</span><span>
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t2.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t3.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t4.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t5.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>只要线程进入<code>func()</code>函数就进行加锁处理，当线程执行完毕后进行解锁，保证每个线程都能按顺序执行，输出结果：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>entry func test thread ID is : </span><span style=color:#d08770;>8852
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>8852
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>15464
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>15464
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>17600
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>17600
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>16084
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>16084
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>4156
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>4156
+</span></code></pre><p>虽然通过<code>lock()</code>与<code>unlock()</code>可以解决线程之间的资源竞争问题，但是这里也存在不足。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#bf616a;>func</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#65737e;>//加锁
+</span><span>    执行逻辑处理;    </span><span style=color:#65737e;>//如果该过程抛出异常导致程序退出了，就没法unlock
+</span><span>    </span><span style=color:#65737e;>//解锁
+</span><span>      
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    ......
+</span><span>}
+</span></code></pre><p><code>func()</code>中再执行逻辑处理中程序因为某些原因退出了，此时就无法<code>unlock()</code>了，这样其他线程也就无法获取<code>std::mutex</code>，造成死锁现象，其实在加锁之前可以通过<code>trylock()</code>尝试一下能不能加锁。实际开发中，通常也不会这样写代码，而是采用<code>lock_guard</code>来控制<code>std::mutex</code>。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>template </span><span><</span><span style=color:#b48ead;>class</span><span> _Mutex>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>lock_guard </span><span style=color:#eff1f5;>{ 
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>using </span><span style=color:#eff1f5;>mutex_type </span><span>=</span><span style=color:#eff1f5;> _Mutex;
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>explicit </span><span style=color:#8fa1b3;>lock_guard</span><span style=color:#eff1f5;>(_Mutex</span><span>& </span><span style=color:#bf616a;>_Mtx</span><span style=color:#eff1f5;>) : </span><span style=color:#bf616a;>_MyMutex</span><span style=color:#eff1f5;>(_Mtx) 
+</span><span style=color:#eff1f5;>    { 
+</span><span style=color:#eff1f5;>        _MyMutex.</span><span style=color:#bf616a;>lock</span><span style=color:#eff1f5;>();     </span><span style=color:#65737e;>//构造函数加锁       
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>lock_guard</span><span style=color:#eff1f5;>(_Mutex</span><span>& </span><span style=color:#bf616a;>_Mtx</span><span style=color:#eff1f5;>, </span><span style=color:#bf616a;>adopt_lock_t</span><span style=color:#eff1f5;>) : </span><span style=color:#bf616a;>_MyMutex</span><span style=color:#eff1f5;>(_Mtx)
+</span><span style=color:#eff1f5;>    { 
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>~lock_guard</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>noexcept
+</span><span style=color:#eff1f5;>    { 
+</span><span style=color:#eff1f5;>        _MyMutex.</span><span style=color:#bf616a;>unlock</span><span style=color:#eff1f5;>();   </span><span style=color:#65737e;>//析构函数解锁
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>lock_guard</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> lock_guard</span><span>&</span><span style=color:#eff1f5;>) </span><span>= </span><span style=color:#b48ead;>delete</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    lock_guard</span><span>& </span><span style=color:#8fa1b3;>operator=</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> lock_guard</span><span>&</span><span style=color:#eff1f5;>) </span><span>= </span><span style=color:#b48ead;>delete</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    _Mutex</span><span>&</span><span style=color:#eff1f5;> _MyMutex;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span></code></pre><p><code>lock_guard</code>是类模板，在其构造函数中自动给<code>std::mutex</code>加锁，在退出作用域的时候自动解锁，这样就可以保证<code>std::mutex</code>的正确操作，这也是**RAII（获取资源便初始化）**技术的体现。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>mutex</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span>
+</span><span>std::mutex g_mutex;
+</span><span>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>func</span><span>()
+</span><span>{
+</span><span>    std::lock_guard&LTstd::mutex> </span><span style=color:#bf616a;>lock</span><span>(g_mutex);   </span><span style=color:#65737e;>//加锁
+</span><span>
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>entry func test thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>    
+</span><span>    std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>microseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));
+</span><span>    
+</span><span>    std::cout << "</span><span style=color:#a3be8c;>leave func test thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>
+</span><span>   </span><span style=color:#65737e;>//退出作用域后，lock_guard对象析构就自动解锁
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t2</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t3</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t4</span><span>(func);
+</span><span>    std::thread </span><span style=color:#bf616a;>t5</span><span>(func);
+</span><span>
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t2.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t3.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t4.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t5.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><p>运行结果：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>entry func test thread ID is : </span><span style=color:#d08770;>19164
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>19164
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>15124
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>15124
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>2816
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>2816
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>17584
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>17584
+</span><span>entry func test thread ID is : </span><span style=color:#d08770;>15792
+</span><span>leave func test thread ID is : </span><span style=color:#d08770;>15792
+</span></code></pre><h3 id=stdti-gong-de-suo-gong-ju>std提供的锁工具</h3><p>std::lock_guard是标准库提供的基于RAII的锁管理工具。std::lock_guard类提供了两种构造函数：<ul><li>在std::lock_guard类的对象在构造时接受一个互斥量作为参数，并对该互斥量进行上锁操作。<li>在std::lock_guard类的对象在构造时接受一个互斥量和std::adopt_lock作为参数，互斥的获取互斥量的所有权，但并不对互斥量进行上锁。</ul><p>在std::lock_guard类对象析构时回对其占有的互斥量解锁，除析构和构造函数外std::lock_guard没有定义其他任何方法。<p>std::unique_lock则RAII式锁管理的基础上提供了更多的灵活性。std::unique_lock提供的lock，unlock，trylock方法与其所管理的互斥量提供的lock，unlock，trylock行为相同。std::unique_lock还提供了移动构造和移动赋值操作(支持移动操作意味着我们可以在函数和容器中转移std::unique_lock的所有权)，std::unique_lock的移动构造函数会以参数的内容初始化当前对象，并解除参数与其所管理的互斥量之前的关系。在调用std::unique_lock的移动赋值函数时，若当前对象有互斥量与其关联且已对其上锁，则对互斥量解锁并解除关联，随后获取参数所管理的互斥量，并解除参数锁管理的互斥量与参数间的关系。<p>std::unique_lock的构造函数同std::lock_guard的构造函数一样也提供了初始化策略：<ul><li>在std::unique_lock类的对象在构造时接受一个互斥量作为参数，并对该互斥量进行上锁操作。<li>在std::unique_lock类的对象在构造时接受一个互斥量和std::defer_lock作为参数，则不对该互斥量进行上锁。<li>在std::unique_lock类的对象在构造时接受一个互斥量和std::try_to_lock作为参数，则尝试对互斥量上锁，上锁失败时不会阻塞线程。<li>在std::unique_lock类的对象在构造时接受一个互斥量和std::adopt_lock作为参数，则假定当前线程已经拥有互斥量的所有权。</ul><p>std::unique_lock的owns_lock方法可以检查std::unique_lock是否有互斥量与其关联，且是否已对互斥量上锁，若有互斥量与std::unique_lock对象关联，且已经被std::unique_lock对象获得所有权则返回true，否则返回false。<p>下面是std::lock_guard与std::unique_lock的简单使用示例：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test</span><span>()
+</span><span>{
+</span><span>	Person </span><span style=color:#bf616a;>person</span><span>{ "</span><span style=color:#a3be8c;>Jonathan Joestar</span><span>", </span><span style=color:#d08770;>21</span><span>, </span><span style=color:#d08770;>0 </span><span>};
+</span><span>	std::mutex mutex;
+</span><span>
+</span><span>	std::thread </span><span style=color:#bf616a;>thread_a</span><span>([&]() {
+</span><span>		</span><span style=color:#b48ead;>using namespace</span><span> std::chrono_literals;
+</span><span>		std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(</span><span style=color:#d08770;>10</span><span style=color:#b48ead;>ns</span><span>);
+</span><span>
+</span><span>		</span><span style=color:#65737e;>//关联到mutex并对其上锁
+</span><span>		std::lock_guard </span><span style=color:#bf616a;>lg</span><span>(mutex);
+</span><span>
+</span><span>		</span><span style=color:#65737e;>//等价代码
+</span><span>		</span><span style=color:#65737e;>//std::unique_lock ul(mutex);
+</span><span>
+</span><span>		person.</span><span style=color:#bf616a;>m_name </span><span>= "</span><span style=color:#a3be8c;>Dio Brando</span><span>";
+</span><span>		person.</span><span style=color:#bf616a;>m_age </span><span>= </span><span style=color:#d08770;>121</span><span>;
+</span><span>		person.</span><span style=color:#bf616a;>m_gender </span><span>= </span><span style=color:#d08770;>0</span><span>;
+</span><span>
+</span><span>		</span><span style=color:#65737e;>//lg(或ul)生命周期结束后解锁mutex
+</span><span>	});
+</span><span>
+</span><span>	std::thread </span><span style=color:#bf616a;>thread_b</span><span>([&]() {
+</span><span>		</span><span style=color:#b48ead;>using namespace</span><span> std::chrono_literals;
+</span><span>		std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(</span><span style=color:#d08770;>10</span><span style=color:#b48ead;>ns</span><span>);
+</span><span>
+</span><span>		</span><span style=color:#65737e;>//关联到mutex并对其上锁
+</span><span>		std::lock_guard </span><span style=color:#bf616a;>lg</span><span>(mutex);
+</span><span>
+</span><span>		</span><span style=color:#65737e;>//等价代码
+</span><span>		</span><span style=color:#65737e;>//std::unique_lock ul(mutex);
+</span><span>
+</span><span>		std::cout << person.</span><span style=color:#bf616a;>m_name </span><span><< "</span><span style=color:#a3be8c;>, </span><span>" << person.</span><span style=color:#bf616a;>m_age </span><span><< "</span><span style=color:#a3be8c;>, </span><span>" << person.</span><span style=color:#bf616a;>m_gender</span><span>;
+</span><span>
+</span><span>		</span><span style=color:#65737e;>//lg(或ul)生命周期结束后解锁mutex
+</span><span>	});
+</span><span>
+</span><span>	thread_b.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>	thread_a.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>}
+</span></code></pre><p>标准库提供的std::lock函数可以配合std::unique_lock或std::lock_guard来避免死锁。<p>在C++17中提供了基于RAII的更便于使用的std::scopedlock类也可以用于避免死锁。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>struct </span><span>Datum
+</span><span>{
+</span><span>	</span><span style=color:#65737e;>//数据项
+</span><span>	std::string </span><span style=color:#bf616a;>m_name</span><span>;
+</span><span>	</span><span style=color:#65737e;>//互斥量
+</span><span>	std::mutex </span><span style=color:#bf616a;>m_mutex</span><span>;
+</span><span>
+</span><span>	</span><span style=color:#8fa1b3;>Datum</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string </span><span style=color:#bf616a;>name</span><span>) : </span><span style=color:#bf616a;>m_name</span><span>(name) {}
+</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>swap_data</span><span>(Datum &</span><span style=color:#bf616a;>lhs</span><span>, Datum &</span><span style=color:#bf616a;>rhs</span><span>)
+</span><span>{
+</span><span>	</span><span style=color:#b48ead;>using namespace</span><span> std::chrono_literals;
+</span><span>	std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(</span><span style=color:#d08770;>10</span><span style=color:#b48ead;>ns</span><span>);
+</span><span>
+</span><span>	</span><span style=color:#65737e;>//使用std::lock避免死锁
+</span><span>	std::</span><span style=color:#bf616a;>lock</span><span>(lhs.</span><span style=color:#bf616a;>m_mutex</span><span>, rhs.</span><span style=color:#bf616a;>m_mutex</span><span>);
+</span><span>	std::lock_guard </span><span style=color:#bf616a;>lg0</span><span>(lhs.</span><span style=color:#bf616a;>m_mutex</span><span>, std::adopt_lock);
+</span><span>	std::lock_guard </span><span style=color:#bf616a;>lg1</span><span>(rhs.</span><span style=color:#bf616a;>m_mutex</span><span>, std::adopt_lock);
+</span><span>
+</span><span>	</span><span style=color:#65737e;>//等价代码
+</span><span>	</span><span style=color:#65737e;>//std::unique_lock ul0(lhs.m_mutex, std::defer_lock);
+</span><span>	</span><span style=color:#65737e;>//std::unique_lock ul1(rhs.m_mutex, std::defer_lock);
+</span><span>	</span><span style=color:#65737e;>//std::lock(ul0, ul1);
+</span><span>
+</span><span>	</span><span style=color:#65737e;>//C++17等价代码，使用std::scoped_lock避免死锁
+</span><span>	</span><span style=color:#65737e;>//std::scoped_lock sl(lhs.m_mutex, rhs.m_mutex);
+</span><span>
+</span><span>	std::string temp = lhs.</span><span style=color:#bf616a;>m_name</span><span>;
+</span><span>	lhs.</span><span style=color:#bf616a;>m_name </span><span>= rhs.</span><span style=color:#bf616a;>m_name</span><span>;
+</span><span>	rhs.</span><span style=color:#bf616a;>m_name </span><span>= temp;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test</span><span>()
+</span><span>{
+</span><span>	Datum </span><span style=color:#bf616a;>leon</span><span>("</span><span style=color:#a3be8c;>Leon</span><span>"), </span><span style=color:#bf616a;>claire</span><span>("</span><span style=color:#a3be8c;>Claire</span><span>"), </span><span style=color:#bf616a;>ada</span><span>("</span><span style=color:#a3be8c;>Ada</span><span>"), </span><span style=color:#bf616a;>sherry</span><span>("</span><span style=color:#a3be8c;>Sherry</span><span>");
+</span><span>
+</span><span>	std::vector&LTstd::thread> workers;
+</span><span>
+</span><span>	workers.</span><span style=color:#bf616a;>emplace_back</span><span>(swap_data, std::</span><span style=color:#bf616a;>ref</span><span>(leon), std::</span><span style=color:#bf616a;>ref</span><span>(ada));
+</span><span>	workers.</span><span style=color:#bf616a;>emplace_back</span><span>(swap_data, std::</span><span style=color:#bf616a;>ref</span><span>(claire), std::</span><span style=color:#bf616a;>ref</span><span>(ada));
+</span><span>	workers.</span><span style=color:#bf616a;>emplace_back</span><span>(swap_data, std::</span><span style=color:#bf616a;>ref</span><span>(leon), std::</span><span style=color:#bf616a;>ref</span><span>(sherry));
+</span><span>	workers.</span><span style=color:#bf616a;>emplace_back</span><span>(swap_data, std::</span><span style=color:#bf616a;>ref</span><span>(sherry), std::</span><span style=color:#bf616a;>ref</span><span>(claire));
+</span><span>	workers.</span><span style=color:#bf616a;>emplace_back</span><span>(swap_data, std::</span><span style=color:#bf616a;>ref</span><span>(sherry), std::</span><span style=color:#bf616a;>ref</span><span>(ada));
+</span><span>	workers.</span><span style=color:#bf616a;>emplace_back</span><span>(swap_data, std::</span><span style=color:#bf616a;>ref</span><span>(claire), std::</span><span style=color:#bf616a;>ref</span><span>(leon));
+</span><span>
+</span><span>	</span><span style=color:#b48ead;>for </span><span>(</span><span style=color:#b48ead;>auto </span><span>&t : workers)
+</span><span>	{
+</span><span>		t.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>	}
+</span><span>
+</span><span>	std::cout << "</span><span style=color:#a3be8c;>Leon's current name is :</span><span>" << leon.</span><span style=color:#bf616a;>m_name </span><span><< std::endl;
+</span><span>	std::cout << "</span><span style=color:#a3be8c;>Claire's current name is :</span><span>" << claire.</span><span style=color:#bf616a;>m_name </span><span><< std::endl;
+</span><span>	std::cout << "</span><span style=color:#a3be8c;>Ada's current name is :</span><span>" << ada.</span><span style=color:#bf616a;>m_name </span><span><< std::endl;
+</span><span>	std::cout << "</span><span style=color:#a3be8c;>Sherry's current name is :</span><span>" << sherry.</span><span style=color:#bf616a;>m_name </span><span><< std::endl;
+</span><span>}
+</span></code></pre><p>上面代码的可能输出为：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>Leon'</span><span style=color:#a3be8c;>s current name is :Sherry
+</span><span style=color:#a3be8c;>Claire</span><span>'s current name is :Claire
+</span><span>Ada'</span><span style=color:#a3be8c;>s current name is :Leon
+</span><span style=color:#a3be8c;>Sherry</span><span>'s current name is :Ada
+</span></code></pre><p>---+++<h2 id=std-condition-variable><code>std::condition_variable</code></h2><p>条件变量是C++11提供的另外一种线程同步机制，通过判断条件是否满足，决定是否阻塞线程，当线程执行条件满足的时候就会唤醒阻塞的线程，常与<code>std::mutex</code>配合使用，C++11提供了两种条件变量。<ul><li><code>std::condition_variable</code>，配合<code>std::unique_lock&LTstd::mutex></code>使用，通过<code>wait()</code>函数阻塞线程；<li><code>std::condition_variable_any</code>，可以和任意带有<code>lock()</code>、<code>unlock()</code>语义的<code>std::mutex</code>搭配使用，比较灵活，但是其效率不及<code>std::condition_variable</code>；</ul><blockquote><p><code>std::unique_lock</code>：C++11提供的 <code>std::unique_lock</code> 是通用互斥包装器，允许延迟锁定、锁定的有时限尝试、递归锁定、所有权转移和与条件变量一同使用。<code>std::unique_lock</code>比<code>std::lock_guard</code>使用更加灵活，功能更加强大。使用<code>std::unique_lock</code>需要付出更多的时间、性能成本。</blockquote><p>下面利用<code>std::mutex</code>与<code>std::condition_variable</code>实现生产者与消费者模式。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>condition_variable</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>list</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>mutex</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>CTask </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>CTask</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>taskID</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>this</span><span style=color:#eff1f5;>-></span><span style=color:#bf616a;>taskId </span><span>=</span><span style=color:#eff1f5;> taskID;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>dotask</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        std::cout </span><span><< "</span><span style=color:#a3be8c;>consumer a task Id is </span><span>" <<</span><span style=color:#eff1f5;> taskId </span><span><<</span><span style=color:#eff1f5;> std::endl;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> taskId;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span>
+</span><span>std::list&LTstd::shared_ptr&LTCTask>> g_task;
+</span><span>std::mutex g_mutex;
+</span><span>std::condition_variable g_conv;
+</span><span>
+</span><span style=color:#65737e;>//生产者线程
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>ProdecerFunc</span><span>()
+</span><span>{
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>int</span><span> n_taskId = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    std::shared_ptr&LTCTask> ptask = </span><span style=color:#d08770;>nullptr</span><span>;
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        ptask = std::</span><span style=color:#bf616a;>make_shared</span><span>&LTCTask >(n_taskId); </span><span style=color:#65737e;>//创建任务
+</span><span>      
+</span><span>        {
+</span><span>            std::lock_guard&LTstd::mutex> </span><span style=color:#bf616a;>lock</span><span>(g_mutex);
+</span><span>            g_task.</span><span style=color:#bf616a;>push_back</span><span>(ptask);
+</span><span>            std::cout << "</span><span style=color:#a3be8c;>produce a task Id is </span><span>" << n_taskId << std::endl;
+</span><span>
+</span><span>        }
+</span><span>        </span><span style=color:#65737e;>//唤醒线程
+</span><span>        g_conv.</span><span style=color:#bf616a;>notify_one</span><span>();
+</span><span>
+</span><span>        n_taskId++;
+</span><span>
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>milliseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style=color:#65737e;>//消费者线程
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>ConsumerFunc</span><span>()
+</span><span>{
+</span><span>    std::shared_ptr&LTCTask> ptask = </span><span style=color:#d08770;>nullptr</span><span>; 
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        std::unique_lock&LTstd::mutex> </span><span style=color:#bf616a;>lock</span><span>(g_mutex);
+</span><span>        </span><span style=color:#b48ead;>while </span><span>(g_task.</span><span style=color:#bf616a;>empty</span><span>())  </span><span style=color:#65737e;>//即使被唤醒还要循环判断一次，防止虚假唤醒
+</span><span>        {
+</span><span>            g_conv.</span><span style=color:#bf616a;>wait</span><span>(lock);
+</span><span>        }
+</span><span>
+</span><span>        ptask = g_task.</span><span style=color:#bf616a;>front</span><span>();  </span><span style=color:#65737e;>//取出任务
+</span><span>        g_task.</span><span style=color:#bf616a;>pop_front</span><span>();
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(ptask == </span><span style=color:#d08770;>nullptr</span><span>)
+</span><span>        {
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>        ptask-></span><span style=color:#bf616a;>dotask</span><span>();       </span><span style=color:#65737e;>//执行任务
+</span><span>        
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(ConsumerFunc);
+</span><span>    std::thread </span><span style=color:#bf616a;>t2</span><span>(ConsumerFunc);
+</span><span>    std::thread </span><span style=color:#bf616a;>t3</span><span>(ConsumerFunc);
+</span><span>
+</span><span>    std::thread </span><span style=color:#bf616a;>t4</span><span>(ProdecerFunc);
+</span><span>
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t2.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t3.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t4.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>创建3个消费者线程，一个生产者线程，当存放任务的std::list为空时，消费者线程阻塞，当生产者线程生产一个任务放入std::list中时候，此时满足条件，条件变量就可以唤醒阻塞的线程去执行任务。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>produce a task Id is 0
+</span><span>consumer a task Id is 0
+</span><span>produce a task Id is 1
+</span><span>consumer a task Id is 1
+</span><span>produce a task Id is 2
+</span><span>consumer a task Id is 2
+</span><span>produce a task Id is 3
+</span><span>consumer a task Id is 3
+</span><span>produce a task Id is 4
+</span><span>consumer a task Id is 4
+</span><span>produce a task Id is 5
+</span><span>consumer a task Id is 5
+</span><span>produce a task Id is 6
+</span><span>consumer a task Id is 6
+</span><span>produce a task Id is 7
+</span><span>consumer a task Id is 7
+</span><span>......
+</span></code></pre><p>条件变量的使用过程可以归纳如下：<ul><li>拥有条件变量的线消费者程获取互斥锁；<li>消费者线程循环检查条件是否满足，不满足则阻塞等待，此时释放互斥锁；<li>当生产者线程产生任务后，调用notify_one()或者notify_all()唤醒阻塞的消费者线程；<li>当消费者线程被唤醒后再次获得互斥锁去执行任务；</ul><p>---+++<h2 id=thread-local>thread_local</h2><p>C++11中提供了<code>thread_local</code>，<code>thread_local</code>定义的变量在每个线程都保存一份副本，而且互不干扰，在线程退出的时候自动销毁。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>chrono</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>thread_local int</span><span> g_k = </span><span style=color:#d08770;>0</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>func1</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        ++g_k;
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>func2</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#d08770;>true</span><span>)
+</span><span>    {
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>func2 thread ID is : </span><span>" << std::this_thread::</span><span style=color:#bf616a;>get_id</span><span>() << std::endl;
+</span><span>        std::cout << "</span><span style=color:#a3be8c;>func2 g_k = </span><span>" << g_k << std::endl;
+</span><span>        
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>sleep_for</span><span>(std::chrono::</span><span style=color:#bf616a;>milliseconds</span><span>(</span><span style=color:#d08770;>1000</span><span>));
+</span><span>    }
+</span><span>
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::thread </span><span style=color:#bf616a;>t1</span><span>(func1);
+</span><span>    std::thread </span><span style=color:#bf616a;>t2</span><span>(func2);
+</span><span>
+</span><span>    t1.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    t2.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>在<code>func1()</code>对<code>g_k</code>循环加1操作，在<code>func2()</code>每个1000毫秒输出一次<code>g_k</code>的值：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>func2 thread ID is : </span><span style=color:#d08770;>15312
+</span><span>func2 g_k = </span><span style=color:#d08770;>0
+</span><span>
+</span><span>......
+</span><span>
+</span></code></pre><p>可以看出<code>func2()</code>中的<code>g_k</code>始终保持不变。<p>-+++<h2 id=std-atomic>std::atomic</h2><p>std::atomic为C++11封装的原子数据类型。 什么是原子数据类型？从功能上看，简单地说，原子数据类型不会发生数据竞争，能直接用在多线程中而不必我们用户对其进行添加互斥资源锁的类型。从实现上来看，我们可以理解为这些原子类型内部自己加了锁。<p>我们下面通过一个测试例子说明原子类型std::atomic的特点。<p>我们使用10个线程，把std::atomic类型的变量iCount从10减到1。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//c11.cpp
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>thread</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>atomic</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>list</span><span>>
+</span><span>std::atomic<</span><span style=color:#b48ead;>bool</span><span>> </span><span style=color:#8fa1b3;>bIsReady</span><span>(</span><span style=color:#bf616a;>false</span><span>);
+</span><span>std::atomic<</span><span style=color:#b48ead;>int</span><span>> </span><span style=color:#8fa1b3;>iCount</span><span>(</span><span style=color:#d08770;>10</span><span>);
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>threadfun1</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(!bIsReady) {
+</span><span>        std::this_thread::</span><span style=color:#bf616a;>yield</span><span>();
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(iCount > </span><span style=color:#d08770;>0</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>iCount:</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\r\n</span><span>", iCount--);
+</span><span>    }
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    std::list&LTstd::thread> lstThread;
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>; i < </span><span style=color:#d08770;>10</span><span>; ++i)
+</span><span>    {
+</span><span>        lstThread.</span><span style=color:#bf616a;>push_back</span><span>(std::</span><span style=color:#bf616a;>thread</span><span>(threadfun1));
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(</span><span style=color:#b48ead;>auto</span><span>& th : lstThread)
+</span><span>    {
+</span><span>        th.</span><span style=color:#bf616a;>join</span><span>();
+</span><span>    }
+</span><span>}
+</span></code></pre><p>运行结果：<pre class=language-text data-lang=text style=background-color:#2b303b;color:#c0c5ce;><code class=language-text data-lang=text><span>iCount:10
+</span><span>iCount:9
+</span><span>iCount:8
+</span><span>iCount:7
+</span><span>iCount:6
+</span><span>iCount:5
+</span><span>iCount:4
+</span><span>iCount:3
+</span><span>iCount:2
+</span><span>iCount:1
+</span></code></pre><p>从上面的结果可以看到，iCount的最小结果是1，没有出现小于等于0的情况，大家可以把iCount改成100甚至1000看看，可能会更直观一点。<h2 id=can-kao-wen-zhang>参考文章</h2><p><a href=https://zhuanlan.zhihu.com/p/83789529>C++ 多线程编程 （一）</a><p><a href=https://zhuanlan.zhihu.com/p/157171731>C++11多线程</a><p><a href=https://zhuanlan.zhihu.com/p/74204918>c++11&14-多线程专题</a><p><a href=https://zhuanlan.zhihu.com/p/55836312>C++标准库多线程简介Part1</a></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

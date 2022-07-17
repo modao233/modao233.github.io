@@ -1,0 +1,224 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/book note/CppPrimer/cppprimer-di-7zhang/">C++ Primer 第7章 类</a></h1><div class=post-meta-inline><span class=post-date> 2018-06-20 </span></div><div class=post-content><p>数据抽象能帮助我们将对象的具体实现与对象所能执行的操作分离开来。<p>类的基本思想是<strong>数据抽象</strong>和<strong>封装</strong>。数据抽象是一种依赖于<strong>接口</strong>和<strong>实现分离</strong>的编程（以及设计）技术。类的接口包括用户所能执行的操作；类的实现则包括类的数据成员、赋值接口实现的函数体以及定义类所需的各种私有函数。<p>封装实现了类的接口和实现的分离。类要想实现数据的抽象和封装，首先要定义一个<strong>抽象数据类型</strong>。<h2 id=7-1-ding-yi-chou-xiang-shu-ju-lei-xing>7.1 定义抽象数据类型</h2><p>一个抽象数据类型，我们可以通过它的接口使用它的对象，不可以直接访问它的数据成员。<p>定义在类内部的函数是隐式的inline函数。<p>成员函数通过一个名为<strong>this</strong>的额外的隐式参数来访问调用它的那个对象。当我们调用一个成员函数时，用请求该函数的对象地址初始化this。this形参是隐式定义的，任何定义名为this的参数或变量的行为都是非法的。this的目的总是指向“这个”对象，所以this是一个常量指针，不允许改变this中保存的地址。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>total.</span><span style=color:#bf616a;>isbn</span><span>();
+</span><span style=color:#65737e;>//total的地址传递给isbn的隐式形参this
+</span></code></pre><p>默认情况下，this的类型是指向类类型非常量版本的常量指针，所以尽管this是隐式的，也要遵循初始化规则，意味着我们不能把this绑定到一个常量对象上。这一情况也就使得我们<strong>不能在一个常量对象上调用普通的成员函数。</strong><p>如果isbn是一个普通函数，this是一个普通的指针参数，则应该把this声明为<code>const Sales_data *const</code>。然而，this是隐式的并且不会出现在参数列表中，C++语言的做法是允许把const关键字放在成员函数的参数列表之后，此时，紧跟在参数列表后面的const表示this是一个指向常量的指针。像这样使用const的成员函数被称作<strong>常量成员函数</strong>。<p>常量对象、常量对象的引用或者指针都只能调用常量成员函数。<p>一般来说，当我们定义的函数类似于某个内置运算符时，应该令该函数的行为尽量模仿这个运算符。内置的赋值运算符把它的左侧运算对象当作左值返回，因此为了与它一致，combine函数必须返回引用类型：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>Sales_data& Sales_data::</span><span style=color:#8fa1b3;>combine</span><span>(</span><span style=color:#b48ead;>const</span><span> Sales_data &</span><span style=color:#bf616a;>rhs</span><span>){
+</span><span>    units_sold += rhs.</span><span style=color:#bf616a;>units_sold</span><span>;
+</span><span>    revenue += rhs.</span><span style=color:#bf616a;>revenue</span><span>;
+</span><span>    </span><span style=color:#b48ead;>return </span><span>*</span><span style=color:#bf616a;>this</span><span>;
+</span><span>}
+</span></code></pre><p>类的作者常需要定义一些辅助函数，如add、read和print等。尽管这些函数定义的操作从概念上来说属于类的接口的组成部分，但实际上并不属于类本身，这种函数的声明（而非定义）通常和类声明在同一个头文件中。在这种方式下，用户使用接口的任何部分都只需要引入一个文件。<p>每个类都分别定义了它的对象初始化的方式，控制类对象初始化的函数称为构造函数。构造函数的任务是初始化类对象的数据成员。构造函数的名字和类名相同，无返回类型。<p>构造函数不能被声明成const的。当我们创建一个类的const对象时，直到构造函数完成初始化过程，对象才能真正取得其“常量”属性。因此，构造函数在const对象的构造过程中可以向其写值。<p><strong>默认构造函数</strong>：无须任何实参，对对象执行默认初始化，无显示定义构造函数时，由编译器隐式定义。编译器创建的构造函数又称为<strong>合成的默认构造函数</strong>：<ul><li>如果存在类内初始值，用它来初始化成员<li>否则，默认初始化该成员</ul><p>合成的默认构造函数只适合非常简单的类，对于一个普通的类来说，必须定义自己的默认构造函数，原因有三：<ul><li><p>编译器只在发现类不包含任何构造函数的情况下才会替我们生成一个默认的构造函数。</p> <p>一旦定义了一些其他的构造函数，除非显示定义默认的构造函数，否则类将没有默认构造函数。这条规则的依据是：如果一个类在某种情况下需要（类编写者）控制对象初始化，那么该类很可能在所有情况下都需要（类编写者）控制。</p><li><p>对于某些类来说，合成的默认构造函数可能执行错误的操作。</p> <p>如果定义在块内的内置类型或复合类型（比如数组和指针）的对象被默认初始化，则它们的值是未定义的。该准则同一适用于默认初始化的内置类型成员。</p><li><p>有的时候编译器不能为某些类合成默认的构造函数。</p> <p>例如，如果类中包含一个其他类型的成员且这个成员的类型没有默认构造函数，那么编译器将无法初始化该成员。（只有当数据成员都被赋予了类内初始值时，才适合使用合成的默认构造函数）</p></ul><p>在C++11新标准中，如果我们需要其他形式的构造函数，也需要默认的构造函数，那么可以通过在参数列表后面写上<code>= default</code>来要求编译器生成构造函数。<code>= default</code>和声明一起出现在类内部时，默认构造函数是内联的；如果作为定义出现在类外部，则该成员默认情况下不是内联的。<p>可以使用<strong>构造函数初始值列表</strong>为鑫创建的对象的一个或多个数据成员赋初值，当某个数据成员被构造函数初始值列表忽略时，它将以与合成默认构造函数相同的方式隐式初始化：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#bf616a;>Sales_data</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &s):</span><span style=color:#bf616a;>bookNo</span><span>(s){}
+</span><span style=color:#bf616a;>Sales_data</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &s, </span><span style=color:#b48ead;>unsigned</span><span> n, </span><span style=color:#b48ead;>double</span><span> p):</span><span style=color:#bf616a;>bookNo</span><span>(s), </span><span style=color:#bf616a;>units_sold</span><span>(n), </span><span style=color:#bf616a;>revenue</span><span>(p*n){}
+</span><span style=color:#bf616a;>Sales_data</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &s):</span><span style=color:#bf616a;>bookNo</span><span>(s), </span><span style=color:#bf616a;>units_sold</span><span>(</span><span style=color:#d08770;>0</span><span>), </span><span style=color:#bf616a;>revenue</span><span>(</span><span style=color:#d08770;>0</span><span>){}
+</span></code></pre><p>除了定义类的对象如何初始化之外，类还需要控制拷贝、赋值和销毁对象时发生的行为。如果我们不主动定义这些操作，则编译器将替我们合成它们。尽管编译器能替我们合成拷贝、赋值和销毁的操作，然而对于某些类来说合成的版本是无法正常工作的，特别是，当类需要分配类对象之外的资源外，合成的版本常常会失效。<h2 id=7-2-fang-wen-kong-zhi-yu-feng-zhuang>7.2 访问控制与封装</h2><p>C++语言中，使用<strong>访问说明符</strong>加强类的封装性：<ul><li>定义在public说明符之后的成员在整个程序内可被访问，public成员定义类的接口<li>定义在private说明符之后的成员可以被类的成员函数访问，但不能被使用该类的代码访问，private部分封装了（隐藏了）类的实现细节。</ul><p>一个类可以包含0个或多个访问说明符，而且对于某个访问说明符能出现的次数也没有严格规定。每个访问说明符指定了接下来的成员的访问级别，其有效范围直到出现下一个访问说明符或者到达类的结尾处为止。<p>封装有两个重要的优点：<ul><li>确保用户代码不会无意间破坏封装对象的状态<li>被封装的类的具体实现细节可以随时改变，而无需调整用户级别的代码</ul><p>struct和class的默认访问权限不一样，这是使用它们定义类的唯一区别。类可以在第一个访问说明符之前定义成员，对这种成员的访问权限依赖于类定义的方式：<ul><li>使用struct关键字，定义在第一个访问说明符之前的成员是public的<li>使用class关键字，定义在第一个访问说明符之前的成员是private的</ul><h3 id=7-2-1-you-yuan>7.2.1 友元</h3><p>当数据成员是private时，外部函数即使是类的接口的一部分，但不是类的成员，则无法访问类的数据成员。<p>类可以允许其他类或者函数访问它的非公有成员，方法是令其他类或者函数成为它的<strong>友元</strong>。如果把一个函数作为它的友元，只需要增加一条以friend关键字开始的函数声明语句即可。友元声明只能出现在类定义的内部，但是出现位置没有限制，一般最好在类定义开始或结束的位置集中声明友元。友元不是类的成员也不受它所在区域访问控制级别的约束。<p>友元的声明仅仅指定了访问的权限，而非一个通常意义上的函数声明。如果我们希望类的用户能够调用某个友元函数，那么我们就<strong>必须在友元声明之外再专门对函数进行一次声明</strong>。<p>为了使友元对类的用户可见，我们通常把友元的声明与类本身放置在同一个头文件中（类的外部）。<p>有些编译器允许在尚无友元函数的初始声明的情况下就调用它。但最好不要这样做，这样的话即使换了编译器也没必要改代码。<h2 id=7-3-lei-de-qi-ta-te-xing>7.3 类的其他特性</h2><h3 id=7-3-1-lei-cheng-yuan-zai-tan>7.3.1 类成员再探</h3><p>用来定义类型的成员必须先定义后再使用，这一点与普通成员有所区别。因此，类型成员通常出现在类开始的地方。<p>定义在类内部的成员函数是自动inline的。我们可以在类内部把inline作为声明的一部分显示地声明成员函数，也可以在类的外部用inline关键字修饰函数的定义。虽然无须在声明和定义的地方同时说明inline，但是这么做也是合法的。最好只在类外部定义的地方说明inline，方便理解。与头文件中定义inline函数一样，inline成员函数也应该与相应的类定义在同一个文件中。<p>一个<strong>可变数据成员</strong>永远不会是const，即使它是const对象的成员。因此，一个const成员函数可以改变一个可变成员的值。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Screen</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>some_member</span><span style=color:#eff1f5;>() </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>;
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>mutable </span><span style=color:#eff1f5;>size_t access_ctr;</span><span style=color:#65737e;>//即使在一个const对象内也能被修改
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//该成员是一个可变成员，因此在任何成员函数，包括const函数在内都能改变它的值
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span style=color:#b48ead;>void </span><span>Screen::</span><span style=color:#8fa1b3;>some_member</span><span>() </span><span style=color:#b48ead;>const</span><span>{
+</span><span>    ++access_ctr;
+</span><span>}
+</span></code></pre><p>类内数据成员初始值必须使用=的初始化形式或者花括号括起来的直接初始化形式。<h3 id=7-3-2-fan-hui-thisde-cheng-yuan-han-shu>7.3.2 返回*this的成员函数</h3><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>inline</span><span> Screen &Screen::</span><span style=color:#8fa1b3;>set</span><span>(</span><span style=color:#b48ead;>char </span><span style=color:#bf616a;>c</span><span>);
+</span><span style=color:#b48ead;>inline</span><span> Screen &Screen::</span><span style=color:#8fa1b3;>move</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>a</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>b</span><span>);
+</span><span>
+</span><span>myScreen.</span><span style=color:#bf616a;>move</span><span>(</span><span style=color:#d08770;>4</span><span>,</span><span style=color:#d08770;>0</span><span>).</span><span style=color:#bf616a;>set</span><span>('</span><span style=color:#a3be8c;>#</span><span>');
+</span><span style=color:#65737e;>//等价写法：
+</span><span>myScreen.</span><span style=color:#bf616a;>move</span><span>(</span><span style=color:#d08770;>4</span><span>,</span><span style=color:#d08770;>0</span><span>);
+</span><span>myScreen.</span><span style=color:#bf616a;>set</span><span>('</span><span style=color:#a3be8c;>#</span><span>')
+</span></code></pre><p>返回引用的函数左值的，函数返回的是对象本身而非对象的副本。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>inline</span><span> Screen Screen::</span><span style=color:#8fa1b3;>set</span><span>(</span><span style=color:#b48ead;>char </span><span style=color:#bf616a;>c</span><span>);
+</span><span style=color:#b48ead;>inline</span><span> Screen Screen::</span><span style=color:#8fa1b3;>move</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>a</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>b</span><span>);
+</span><span>
+</span><span>
+</span><span>Screen temp = myScreen.</span><span style=color:#bf616a;>move</span><span>(</span><span style=color:#d08770;>4</span><span>,</span><span style=color:#d08770;>0</span><span>);
+</span><span>temp.</span><span style=color:#bf616a;>set</span><span>('</span><span style=color:#a3be8c;>#</span><span>')	</span><span style=color:#65737e;>//不会改变myScreen
+</span></code></pre><p>如果不是返回引用，则move的返回值将是*this的副本。<p>一个const成员函数如果以引用的形式返回*this，那么它的返回类型将是常量引用。<p>通过区分成员函数是否const的，我们可以对其进行重载，根据隐式参数*this指针是否指向const而重载：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Screen</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//根据对象是否是const重载了display函数
+</span><span style=color:#eff1f5;>    Screen </span><span>&</span><span style=color:#8fa1b3;>display</span><span style=color:#eff1f5;>(std::ostream </span><span>&</span><span style=color:#bf616a;>os</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>		</span><span style=color:#bf616a;>do_display</span><span style=color:#eff1f5;>(os);</span><span style=color:#b48ead;>return </span><span>*</span><span style=color:#bf616a;>this</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;> Screen </span><span>&</span><span style=color:#8fa1b3;>display</span><span style=color:#eff1f5;>(std::ostream </span><span>&</span><span style=color:#bf616a;>os</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>		</span><span style=color:#bf616a;>do_display</span><span style=color:#eff1f5;>(os);</span><span style=color:#b48ead;>return </span><span>*</span><span style=color:#bf616a;>this</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>do_display</span><span style=color:#eff1f5;>(std::ostream </span><span>&</span><span style=color:#bf616a;>os</span><span style=color:#eff1f5;>) </span><span style=color:#b48ead;>const</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>        od </span><span><<</span><span style=color:#eff1f5;> contents;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}
+</span></code></pre><p>当一个成员调用另一个成员时，this指针在其中隐式传递。当display的非常量版本调用do_display时，this指针将隐式地从指向非常量的指针转换成指向常量的指针。当do_display完成后，display函数各自返回解引用的this所得的对象，在非常量版本中，this指向一个非常量对象，因此返回一个非常量引用。<h3 id=7-3-3-lei-lei-xing>7.3.3 类类型</h3><p>每个类定义了唯一的类型。对于两个类，即使成员完全一样，这两个类也是两个不同的类型。<p>类名可以作为类型名使用，或者跟在关键字class或struct后面：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>Sales_data item1;
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Sales_data</span><span style=color:#eff1f5;> item1</span><span>;</span><span style=color:#65737e;>//继承自C语言
+</span></code></pre><p>类的声明和定义和函数一样，也可以分离开来。仅声明而暂时没定义的声明称作<strong>前向声明</strong>，引入名字并指明是一种类类型。类类型在声明之后定义之前是一个<strong>不完全类型</strong>：只知道是一个类类型，但不清楚包含哪些成员。<p>不完全类型只能在非常有限的情景下使用：可以定义指向这种类型的指针或引用，也可以声明（但是不能定义）以不完成类型作为参数或者返回类型的函数。<p>创建类的对象之前类必须被定义过，类只有被定义了，才能用引用和指针访问其成员。<p>直到类被定义之后数据成员才能被声明成这种类类型，然而，一旦一个类的名字出现后，它就被认为声明过了（但尚未定义），因此类允许包含指向它自身类型的引用或指针：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Link_screen</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    Screen window;
+</span><span style=color:#eff1f5;>    Link_screen </span><span>*</span><span style=color:#eff1f5;>prev;
+</span><span style=color:#eff1f5;>    Link_screen </span><span>*</span><span style=color:#eff1f5;>next;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><h3 id=7-3-4-you-yuan-zai-tan>7.3.4 友元再探</h3><p>友元：<ul><li><p>可以把普通的非成员函数定义成友元，友元函数能定义在类的内部，这样的函数是隐式内联的，但是类外部仍必须提供相应的声明从而使得函数可见</p><li><p>可以把其他类（之前已经定义过的）成员函数定义成友元</p> <p>只为某个成员函数提供访问权限</p> <pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//B::clear必须在A类之前被声明
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend void</span><span style=color:#eff1f5;> B::clear(index);
+</span><span style=color:#eff1f5;>}
+</span></code></pre> <p>要想令某个成员函数作为友元，必须仔细组织程序的结构以满足声明和定义的彼此依赖关系：</p> <ul><li>首先定义B类，其中声明clear函数，但是不能定义它，在clear使用A类的成员之前必须先声明A<li>接下来定义A，包括对于clear的友元声明<li>最后定义clear，此时clear可以使用A类的成员</ul><li><p>可以把其他的类定义成友元</p> <ul><li>被定义成友元的类可以合法访问该类的私有成员<li>友元关系不具备传递性<li>每个类负责控制自己的友元类或友元函数</ul> <pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//B的成员可以访问A类的私有部分
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend class</span><span style=color:#eff1f5;> B;
+</span><span style=color:#eff1f5;>}
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//友元关系没有传递性，C的成员不能访问A的私有部分
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend class</span><span style=color:#eff1f5;> C;
+</span><span style=color:#eff1f5;>}
+</span></code></pre></ul><p>重载函数尽管名字相同，但是它们仍然是不同的函数。如果一个类想把一组重载函数声明成它的友元，它需要对这组函数的每一个分别声明友元。<p>类和非成员函数的声明不是必须在它们的友元声明之前。当一个名字第一次出现在一个友元声明中时，我们隐式地假定该名字在当前作用域中是可见的。然而，友元本身不一定真的声明在当前作用域中。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>struct </span><span>X{
+</span><span>    </span><span style=color:#b48ead;>friend void </span><span style=color:#8fa1b3;>f</span><span>(){
+</span><span>        </span><span style=color:#65737e;>//友元函数可以定义在类内部
+</span><span>    }
+</span><span>    </span><span style=color:#8fa1b3;>X</span><span>() {</span><span style=color:#bf616a;>f</span><span>();}	</span><span style=color:#65737e;>//错误，f还没有被声明
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>g</span><span>();
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>h</span><span>();
+</span><span>};
+</span><span style=color:#b48ead;>void </span><span>X::</span><span style=color:#8fa1b3;>g</span><span>(){</span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>f</span><span>();}</span><span style=color:#65737e;>//错误，f还没有被声明
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>f</span><span>();
+</span><span style=color:#b48ead;>void </span><span>X::</span><span style=color:#8fa1b3;>h</span><span>(){</span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>f</span><span>();}</span><span style=color:#65737e;>//正确，现在f的声明在作用域中
+</span></code></pre><p><strong>友元声明的作用是影响访问权限，本身并非普通意义上的声明</strong><p><strong>常见情况都需要添加前置声明，因为声明友元主要就是能够访问类的私有成员：</strong><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>声明友元类
+</span><span style=color:#65737e;>*/
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B</span><span>;		</span><span style=color:#65737e;>//前置声明
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    B</span><span>*</span><span style=color:#eff1f5;> ptr;		</span><span style=color:#65737e;>//A是B的友元类就，A可以访问B的私有成员
+</span><span style=color:#eff1f5;>    			</span><span style=color:#65737e;>//使用B类作为对象，需要在A类的声明之前有B的声明
+</span><span style=color:#eff1f5;>}
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend class</span><span style=color:#eff1f5;> A;	</span><span style=color:#65737e;>//声明A为友元类，所以A的声明必须在B之前
+</span><span style=color:#eff1f5;>}
+</span></code></pre><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>声明类的成员函数为友元
+</span><span style=color:#65737e;>*/
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B</span><span>;
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>A</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>F</span><span style=color:#eff1f5;>(B</span><span>& </span><span style=color:#bf616a;>b</span><span style=color:#eff1f5;>);	</span><span style=color:#65737e;>//函数声明之前必须有B的声明
+</span><span style=color:#eff1f5;>}
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>B</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>friend void</span><span style=color:#eff1f5;> A::F(B</span><span>&</span><span style=color:#eff1f5;> b);	</span><span style=color:#65737e;>//友元声明要求A::F(B& b)的声明在B类之前
+</span><span style=color:#eff1f5;>}
+</span><span style=color:#b48ead;>void </span><span>A::</span><span style=color:#8fa1b3;>F</span><span>(B& </span><span style=color:#bf616a;>b</span><span>){		</span><span style=color:#65737e;>//F函数定义之前必须有B的定义
+</span><span>    
+</span><span>}
+</span></code></pre><h2 id=7-4-lei-de-zuo-yong-yu>7.4 类的作用域</h2><p>每个类都会定义自己的作用域，一个类就算一个作用域的事实很好地解释了类外部定义成员函数时必须同时提供类名和函数名。<p>一旦遇到类名，定义的剩余部分就在类的作用域之内了，包括参数列表和函数体。我们可以直接使用类的其他成员而无需再次授权。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>void </span><span>Window_mgr::</span><span style=color:#8fa1b3;>clear</span><span>(ScreenIndex </span><span style=color:#bf616a;>i</span><span>){
+</span><span>    </span><span style=color:#65737e;>//...
+</span><span>}
+</span></code></pre><p>函数返回类型通常出现在函数名之前，因此当成员函数定义在类外部时，返回类型使用的名字位于类的作用域之外，这时，返回类型必须指明它是哪个类的成员：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>Window_mgr::ScreenIndex Window_mgr::</span><span style=color:#8fa1b3;>addScreen</span><span>(</span><span style=color:#b48ead;>const</span><span> Screen &</span><span style=color:#bf616a;>s</span><span>){
+</span><span>    </span><span style=color:#65737e;>//...
+</span><span>}
+</span></code></pre><h3 id=7-4-1-ming-zi-cha-zhao-yu-lei-de-zuo-yong-yu>7.4.1 名字查找与类的作用域</h3><p>一般程序中<strong>名字查找</strong>的过程：<ul><li>首先，在名字所在的块中寻找其声明语句，只考虑在名字使用之前出现的声明<li>如果没有找到，继续查找外层作用域<li>如果最终没有找到匹配的声明，则程序报错</ul><p>定义在类内部的函数来说，类的定义分两步处理：<ul><li>首先，编译所有成员的声明<li>直到类全部可见后才编译函数体</ul><p>编译器处理完类中的全部声明后才会处理成员函数的定义。<p>一般来说，内层作用域可以重新定义外层作用域中的名字，即使该名字已经在内存作用域中使用过。然而在类中，如果成员使用了外层作用域中的某个名字，而该名字代表一种类型，则类不能在之后重新定义该名字：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>typedef double </span><span>Money;
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Account</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    Money </span><span style=color:#8fa1b3;>balance</span><span style=color:#eff1f5;>(){}
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>typedef double </span><span style=color:#eff1f5;>Money;</span><span style=color:#65737e;>//错误：不能重新定义Money
+</span><span style=color:#eff1f5;>    Money bal;
+</span><span style=color:#eff1f5;>}
+</span></code></pre><p><strong>成员定义中的普通块作用域的名字查找</strong><ul><li>首先，在成员函数内查找该名字的声明，只考虑在函数使用之前出现的声明<li>如果成员函数内没有找到，则在类内继续查找，类的所有成员都可以被考虑<li>如果类内没有找到该名字的声明，在成员函数定义之前的作用域内继续查找</ul><p>最好不要把成员名字作为参数或其他局部变量使用。<p>尽管外层的对象被隐藏了，仍可以用作用域运算符访问它。<p><strong>当成员定义在类外部时，名字查找的第三步不仅要考虑类定义之前的全局作用域，还需要考虑在成员函数定义之前的全局作用域中的声明：</strong><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>int</span><span> height;
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Screen</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>typedef</span><span style=color:#eff1f5;> std::string::size_type pos;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>setHeight</span><span style=color:#eff1f5;>(</span><span style=color:#bf616a;>pos</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>    pos height </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;	</span><span style=color:#65737e;>//隐藏了外层作用域中的height
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>Screen::pos </span><span style=color:#8fa1b3;>verify</span><span>(Screen::</span><span style=color:#bf616a;>pos</span><span>);
+</span><span style=color:#b48ead;>void </span><span>Screen::</span><span style=color:#8fa1b3;>setHeight</span><span>(</span><span style=color:#bf616a;>pos</span><span>){
+</span><span>	</span><span style=color:#65737e;>//var: 参数
+</span><span>    </span><span style=color:#65737e;>//height: 类的成员
+</span><span>    </span><span style=color:#65737e;>//verify: 全局函数
+</span><span>    height = </span><span style=color:#bf616a;>verify</span><span>(var);
+</span><span>}
+</span></code></pre><p>全局函数verify的声明在Screen类的定义之前是不可见的，然而，名字查找的第三步包括了成员函数出现之前的全局作用域，verify在setHeight的定义之前出现，因此可以正常使用。<h2 id=7-5-gou-zao-han-shu-zai-tan>7.5 构造函数再探</h2><h3 id=7-5-1-gou-zao-han-shu-chu-shi-hua-lie-biao>7.5.1 构造函数初始化列表</h3><p>当我们定义变量时习惯于立即对其进行初始化，而非先定义、再赋值：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>string foo = "</span><span style=color:#a3be8c;>Hello World</span><span>";</span><span style=color:#65737e;>//定义并初始化
+</span><span>string bar;</span><span style=color:#65737e;>//默认初始化成空string
+</span><span>bar = "</span><span style=color:#a3be8c;>Hello World</span><span>";</span><span style=color:#65737e;>//
+</span></code></pre><p>对象的数据成员的初始化和赋值也有类似区别。如果<strong>没有在构造函数的初始值列表中</strong>显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。<p>有时我们可以忽略数据成员初始化和赋值之间的差异，但并非总能这样。如果成员是const或者是引用的话，必须将其初始化。类似的，当成员属于某种类类型且该类类型没有定义默认构造函数时，也必须初始化。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>ConstRef</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>ConstRef</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>ii</span><span style=color:#eff1f5;>);
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>const int</span><span style=color:#eff1f5;> ci;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span>&</span><span style=color:#eff1f5;>ri;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>ConstRef::</span><span style=color:#8fa1b3;>ConstRef</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>ii</span><span>){
+</span><span>	</span><span style=color:#65737e;>//赋值
+</span><span>    i = ii;		</span><span style=color:#65737e;>//正确
+</span><span>    ci = ii;	</span><span style=color:#65737e;>//错误：不能给const赋值
+</span><span>    ri = i;		</span><span style=color:#65737e;>//错误：ri没被初始化
+</span><span>}
+</span><span>
+</span><span style=color:#65737e;>//正确：显示地初始化引用和const成员
+</span><span>ConstRef::</span><span style=color:#8fa1b3;>ConstRef</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>ii</span><span>):</span><span style=color:#bf616a;>i</span><span>(ii), </span><span style=color:#bf616a;>ci</span><span>(ii), </span><span style=color:#bf616a;>ri</span><span>(i){ }
+</span></code></pre><p>随着构造函数体一开始执行，初始化就完成了，因此初始化const和引用类型的唯一机会就算通过构造函数初始值列表。<p>在很多类中，初始化和赋值的区别还事关底层效率问题：前者直接初始化数据成员，后者则先初始化再赋值。<p>构造函数初始值中每个成员只能出现一次。构造函数初始值列表只说明用于初始化成员的值，而不限定初始化的具体执行顺序。<strong>成员的初始化顺序与它们在类定义中的出现顺序一致，构造函数初始值列表中初始值的前后位置并不会影响实际的初始化顺序</strong>。<p>一般来说，初始化的顺序没有什么特别的要求，但是如果一个成员是用另一个成员来初始化的，那么这两个成员的初始化顺序就很关键了。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>X</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> j;
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//未定义错误：i在j之前被初始化
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>X</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>val</span><span style=color:#eff1f5;>): </span><span style=color:#bf616a;>j</span><span style=color:#eff1f5;>(val), </span><span style=color:#bf616a;>i</span><span style=color:#eff1f5;>(j){}
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><p>在此例中，从构造函数初始值的形式上看仿佛是先用val初始化了j，再用j初始化i。实际上，i先被初始化，因此这个初始值的效果是试图使用未定义的值j初始化i。<p>建议：<ul><li>最好令构造函数初始值的顺序与成员声明顺序一致<li>尽量避免使用某些成员初始化其他成员<li>最好用构造函数的参数作为成员的初始值，避免使用同一个对象的其他成员，则不必考虑成员的初始化顺序</ul><p>如果一个类的构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数<h3 id=7-5-2-wei-tuo-gou-zao-han-shu>7.5.2 委托构造函数</h3><p>C++11新标准扩展了构造函数初始值的功能，使得我们可以定义所谓的<strong>委托构造函数</strong>：使用它所属类的其他构造函数执行它自己的初始化过程，或者说它把自己的一些（或者全部）职责委托给了其他构造函数。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Sales_data</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Sales_data</span><span style=color:#eff1f5;>(std::string </span><span style=color:#bf616a;>s</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>unsigned </span><span style=color:#bf616a;>cnt</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>double </span><span style=color:#bf616a;>price</span><span style=color:#eff1f5;>):
+</span><span style=color:#eff1f5;>    	</span><span style=color:#bf616a;>bookNo</span><span style=color:#eff1f5;>(s), </span><span style=color:#bf616a;>units_sold</span><span style=color:#eff1f5;>(cnt), </span><span style=color:#bf616a;>revenue</span><span style=color:#eff1f5;>(cnt</span><span>*</span><span style=color:#eff1f5;>price) {}
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Sales_data</span><span style=color:#eff1f5;>():</span><span style=color:#bf616a;>Sales_data</span><span style=color:#eff1f5;>(</span><span>""</span><span style=color:#eff1f5;>, </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>, </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>){}
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Sales_data</span><span style=color:#eff1f5;>(std::string </span><span style=color:#bf616a;>s</span><span style=color:#eff1f5;>): </span><span style=color:#bf616a;>Sales_data</span><span style=color:#eff1f5;>(s, </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>, </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>){}
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Salse_data</span><span style=color:#eff1f5;>(std::istream </span><span>&</span><span style=color:#bf616a;>is</span><span style=color:#eff1f5;>): </span><span style=color:#bf616a;>Sales_data</span><span style=color:#eff1f5;>(){
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>read</span><span style=color:#eff1f5;>(is, </span><span>*</span><span style=color:#bf616a;>this</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}
+</span></code></pre><p>当一个构造函数委托给另一个构造函数时，受委托的构造函数的初始值列表和函数体依次执行。受委托的构造函数的函数体如果不为空，将先执行受委托的构造函数的函数体，然后控制权才会交还给委托者的函数体。<h3 id=7-5-3-mo-ren-gou-zao-han-shu-de-zuo-yong>7.5.3 默认构造函数的作用</h3><p>当对象被默认初始化或值初始化时，自动执行默认构造函数。<p>默认初始化在以下情况发生：<ul><li>当我们在块作用域内不使用任何初始值定义一个非静态变量<li>当一个类本身含有类类型的成员且使用合成的默认构造函数时<li>当类类型的成员没有在构造函数初始值列表中显示地初始化时</ul><p>值初始化在以下情况发生：<ul><li>当数组初始化过程中如果我们提供的初始值量少于数组的大小时<li>当我们不使用初始值定义一个局部静态变量时<li>当我们通过书写形如T() 的表达式显示地请求值初始化时，T是类型名</ul><p>类必须包含一个默认的构造函数以便在以上情况下使用，在实际中，如果定义了其他构造函数，那么最好也提供一个默认构造函数。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>Sales_data </span><span style=color:#8fa1b3;>obj</span><span>();	</span><span style=color:#65737e;>//正确：一个函数声明
+</span><span>Sales_data obj2;	</span><span style=color:#65737e;>//正确：一个使用默认构造函数进行初始化的对象
+</span></code></pre><h3 id=7-5-4-yin-shi-de-lei-lei-xing-zhuan-huan>7.5.4 隐式的类类型转换</h3><p>如果构造函数只接受一个实参，则它实际上定义了转换为此类类型的隐式转换机制，有时候我们把这种构造函数称作<strong>转换构造函数</strong>。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Sales_data</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Sales_data</span><span style=color:#eff1f5;>(std::string </span><span style=color:#bf616a;>s</span><span style=color:#eff1f5;>): </span><span style=color:#bf616a;>bookNo</span><span style=color:#eff1f5;>(s), </span><span style=color:#bf616a;>units_sold</span><span style=color:#eff1f5;>(</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>), </span><span style=color:#bf616a;>revenue</span><span style=color:#eff1f5;>(</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>) {}
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//...
+</span><span style=color:#eff1f5;>}
+</span><span>string null_book = "</span><span style=color:#a3be8c;>9-999-99999-9</span><span>";
+</span><span style=color:#65737e;>//构造一个临时的Sales_data对象
+</span><span style=color:#65737e;>//该对象的units_sold和revenue等于0，bookNo等于null_book
+</span><span>item.</span><span style=color:#bf616a;>combine</span><span>(null_book);
+</span></code></pre><p>该调用是合法的，编译器用给定的string自动创建了一个Sales_data对象。<p>编译器只会自动地执行一步类型转换，如果代码<strong>隐式</strong>地使用了两种转换规则，则是错误的：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//错误：需要用户定义的两种转换
+</span><span style=color:#65737e;>//（1）把“9-999-99999-9”转换成string
+</span><span style=color:#65737e;>//（2）再把这个临时的string转换成Sales_data
+</span><span>item.</span><span style=color:#bf616a;>combine</span><span>("</span><span style=color:#a3be8c;>9-999-99999-9</span><span>");
+</span><span>
+</span><span style=color:#65737e;>//正确：显示地转换成string，隐式地转换成Sales_data
+</span><span>item.</span><span style=color:#bf616a;>combine</span><span>(</span><span style=color:#bf616a;>string</span><span>("</span><span style=color:#a3be8c;>9-999-99999-9</span><span>"));
+</span><span style=color:#65737e;>//正确：隐式地转换成string，显示地转换成Sales_data
+</span><span>item.</span><span style=color:#bf616a;>combine</span><span>(</span><span style=color:#bf616a;>Sales_data</span><span>("</span><span style=color:#a3be8c;>9-999-99999-9</span><span>"));
+</span></code></pre><p>在要求隐式转换的程序上下文中，我们可以通过将构造函数声明为<strong>explicit</strong>阻止其实参进行隐式转换。<strong>关键字explicit只对一个实参的构造函数有效</strong>，需要多个实参的构造函数不能用于隐式转换，所以无须声明explicit。<strong>explicit声明只能在类内声明，类外部定义时不应重复</strong>。<p>发生隐式转换的一种情况是当我们执行拷贝形式的初始化时（使用=），此时只能使用直接初始化而不能使用explicit构造函数：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span>Sales_data </span><span style=color:#8fa1b3;>item</span><span>(</span><span style=color:#bf616a;>null_book</span><span>);		</span><span style=color:#65737e;>//正确：直接初始化
+</span><span>Sales_data item2 = null_book;	</span><span style=color:#65737e;>//错误：不能将explicit构造函数用于拷贝形式的初始化过程
+</span></code></pre><p>尽管编译器不会将explicit的构造函数用于隐式转换过程，但是我们可以使用这样的构造函数显示地强制进行转换：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>explicit </span><span style=color:#bf616a;>Sales_data</span><span>(</span><span style=color:#b48ead;>const</span><span> std::string &s): </span><span style=color:#bf616a;>bookNo</span><span>(s){}
+</span><span style=color:#b48ead;>explicit </span><span style=color:#bf616a;>Sales_data</span><span>(std::istream&){}
+</span><span>
+</span><span style=color:#65737e;>//正确：实参是一个显示构造的Sales_data对象
+</span><span>item.</span><span style=color:#bf616a;>combine</span><span>(</span><span style=color:#bf616a;>Sales_data</span><span>(null_book));
+</span><span style=color:#65737e;>//正确：static_cast使用explicit的构造函数创建了一个临时的Sales_data对象
+</span><span>item.</span><span style=color:#bf616a;>combine</span><span>(static_cast&LTSales_data>(cin));
+</span></code></pre><h3 id=7-5-5-ju-he-lei>7.5.5 聚合类</h3><p><strong>聚合类</strong>使得用户可以直接访问其成员，并且具有特殊的初始化语法形式。当一个类满足如下条件时，我们说它是聚合的：<ul><li>所有成员都是public的<li>没有定义任何构造函数<li>没有类内初始值<li>没有基类，也没有virtual函数</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#65737e;>//聚合类：Data
+</span><span style=color:#b48ead;>struct </span><span>Data{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> ival;
+</span><span>    string s;
+</span><span>};
+</span><span>
+</span><span style=color:#65737e;>//使用成员初始值列表初始化聚合类的数据成员
+</span><span>Data val = {</span><span style=color:#d08770;>0</span><span>, "</span><span style=color:#a3be8c;>Anna</span><span>"};
+</span><span style=color:#65737e;>//错误：初始值的顺序必须与声明一致
+</span><span>Data val2 = {"</span><span style=color:#a3be8c;>Anna</span><span>", </span><span style=color:#d08770;>1024</span><span>};
+</span></code></pre><p>与初始化数组元素的规则一样，如果初始值列表中的元素个数少于类的成员数量，则靠后的成员被值初始化。初始化列表的元素个数绝对不能超过类的成员数量。<p>显示初始化类的对象的成员，存在三个明显的缺点：<ul><li>要求类的所有成员都是public的<li>将正确初始化每个对象的每个成员的重任交给了用户，容易出错<li>添加或删除一个成员之后，所有的初始化语句都需要更新</ul><h3 id=7-5-6-zi-mian-zhi-chang-liang-lei>7.5.6 字面值常量类</h3><p>除了算术类型、引用和指针外，某些类也是字面值类型。字面值类型的类可能含有constexpr函数成员，这样的车关于必须符合constexpr函数的所有要求，它们是隐式const的。<p><strong>数据成员都是字面值类型的聚合类是字面值常量类</strong>。如果一个类不是聚合类，但它符合下述要求，则它也是一个字面值常量类：<ul><li>数据成员都必须是字面值类型<li>类必须至少含有一个constexpr构造函数<li>如果一个数据成员含有类内初始值，则内置类型成员的初始值必须是一条常量表达式；或者如果成员属于某种类型，则初始值必须使用成员自己的constexpr构造函数<li>类必须使用析构函数的默认定义，该成员赋值销毁类的对象</ul><p>尽管构造函数不能是const的，但是字面值常量类的构造函数可以是constexpr函数。事实上，一个字面值常量类必须至少提供一个constexpr构造函数。<p>constexpr构造函数可以声明成=default的形式或者=delete的形式。否则，它必须同时满足构造函数（不包含返回语句）和constexpr函数（能拥有的唯一可执行语句就是返回语句）的要求。综合这两点，constexpr构造函数的函数体一般是空的。<p>constexpr构造函数必须初始化所有数据成员，成员的初始值或者使用constexpr构造函数或者是一条常量表达式。<p>constexpr构造函数用于生成constexpr对象以及constexpr函数的参数或返回类型。<h2 id=7-6-lei-de-jing-tai-cheng-yuan>7.6 类的静态成员</h2><p>类的静态成员与类本身直接相关，而不是与类的各个对象保持关联。<p>通过在成员的声明之前加上关键字static使得其与类关联在一起。静态数据成员的类型可以是常量、引用、指针、类类型等。静态成员可以是public的或private的。<p>类的静态成员存在于任何对象之外，对象中不包含任何于静态数据成员有关的数据。<p>静态成员函数也不与任何对象绑定在一起，它们不包含this指针。<p>静态成员函数不能声明成const的，而且我们<strong>不能在static函数体内使用this指针。</strong><p>使用类的静态成员：<ul><li>使用作用域运算符直接访问静态成员<li>静态成员虽然不属于某个对象，但是仍然可以使用类的对象、引用或者指针来访问静态成员<li>成员函数不用通过作用域运算符就能直接使用静态成员</ul><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>double</span><span> r = Account::</span><span style=color:#bf616a;>rate</span><span>();
+</span><span>Account ac1;
+</span><span>Account *ac2 = &ac1;
+</span><span>r = ac1.</span><span style=color:#bf616a;>rate</span><span>();
+</span><span>r = ac2-></span><span style=color:#bf616a;>rate</span><span>();
+</span></code></pre><p>当在类外部定义成员函数时，不能重复static关键字，static关键字只能出现在类内部。<p>因为静态成员不属于类的任何一个对象，所以它们并不是在创建类的对象时被定义的，这意味着它们不是由类的构造函数初始化的，而且，一般来说， 不能在类的内部初始化静态成员，必须在类的外部定义和初始化每个静态成员，和其他对象一样，一个静态成员只能定义一次。<p>我们可以为静态成员提供<strong>const整数类型的类内初始值</strong>，不过要求静态成员类型是字面值常量类型的constexpr。初始值必须是常量表达式，因为这些成员本身就是常量表达式，所以它们能用在所以适合于常量表达式的地方：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Account</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>static double </span><span style=color:#8fa1b3;>rate</span><span style=color:#eff1f5;>(){</span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> intereastRate;}
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>static void </span><span style=color:#8fa1b3;>rate</span><span style=color:#eff1f5;>(</span><span style=color:#bf616a;>double</span><span style=color:#eff1f5;>);
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>static constexpr int</span><span style=color:#eff1f5;> period </span><span>= </span><span style=color:#d08770;>30</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>double</span><span style=color:#eff1f5;> daily_tbl[period];
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#65737e;>//如果在类内部提供了一个初始值，则成员的定义不能再指定一个初始值了：
+</span><span style=color:#b48ead;>constexpr int</span><span> Account::period;	</span><span style=color:#65737e;>//初始值在类的定义内提供
+</span></code></pre><p>如果某个静态成员的应用场景仅限于编译器可以替换它的值的情况，则一个初始化的const或constexpr static不需要分别定义。相反，如果我们将它用于值不能替换的场景中，则该成员必须有一条定义语句。<p>即使一个常量静态数据成员在类内部被初始化了，通常情况下也应该在类的外部定义一下该成员。<p>静态成员可以是不安全类型，特别的，静态成员的类型可以就是它所属的类类型，而非静态成员则受到限制，只能声明成它所属的类的指针或引用。静态成员和普通成员的另一个区别是我们可以使用静态成员作为默认实参。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

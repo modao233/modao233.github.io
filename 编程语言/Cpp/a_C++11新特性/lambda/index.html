@@ -1,0 +1,194 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Cpp/a_C++11新特性/lambda/>lambda 表达式</a></h1><div class=post-meta-inline><span class=post-date> 2020-12-07 </span></div><div class=post-content><p><strong>C++是唯一一个lambda用完所有括号的语言</strong><h2 id=yong-fa-shi-li>用法示例</h2><p>lambda 表达式（通常称为 " <em>lambda</em>"）是一种在被调用的位置或作为自变量传递给函数的位置定义匿名函数对象（<em>闭包</em>）的简便方法。 Lambda 通常用于封装传递给算法或异步方法的少量代码行。<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>algorithm</span><span>>   </span><span style=color:#65737e;>// sort函数模板、for_each函数模板
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>vector</span><span>>
+</span><span> 
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span> 
+</span><span>
+</span><span style=color:#65737e;>//[capture list](parameter list)-> return type {function body}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main </span><span>( )
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f1 = []() { cout << "</span><span style=color:#a3be8c;>lambda test</span><span>" << endl; };
+</span><span>    </span><span style=color:#bf616a;>f1</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//use paramter list
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f2 = [](</span><span style=color:#b48ead;>int</span><span> a, </span><span style=color:#b48ead;>int</span><span> b) { cout << a << ' ' << b << endl; };
+</span><span>    </span><span style=color:#bf616a;>f2</span><span>(</span><span style=color:#d08770;>3</span><span>, </span><span style=color:#d08770;>4</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//use capture list
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f3 = [a]() { cout << a << endl; }; </span><span style=color:#65737e;>//值捕获
+</span><span>    </span><span style=color:#bf616a;>f3</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f4 = [&a]() { a++; cout << a << endl; };</span><span style=color:#65737e;>//引用捕获
+</span><span>    </span><span style=color:#bf616a;>f4</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f5 = [&]() { a++; cout << a << endl; };</span><span style=color:#65737e;>//隐式捕获引用
+</span><span>    </span><span style=color:#bf616a;>f5</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f6 = [=]() { cout << a << endl; };</span><span style=color:#65737e;>//隐式捕获值
+</span><span>    </span><span style=color:#bf616a;>f6</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f7 = [=]() </span><span style=color:#b48ead;>mutable </span><span>{ a++; cout << a << endl; }; </span><span style=color:#65737e;>//隐式捕获值，可变lambda，捕获的值在函数体改变不影响外面变量
+</span><span>    </span><span style=color:#bf616a;>f7</span><span>();
+</span><span>    cout << "</span><span style=color:#a3be8c;>after mutable</span><span>" << a << endl;
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f8 = [&,a]() { cout << a << endl; };
+</span><span>    </span><span style=color:#bf616a;>f8</span><span>();
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> f9 = [=, &a]() { a++; cout << a << endl; };
+</span><span>    </span><span style=color:#bf616a;>f9</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//return type
+</span><span>    </span><span style=color:#65737e;>//函数体包含除return之外的任何语句，编译器默认此lambda返回void，可手动声明返回类型
+</span><span>    vector<</span><span style=color:#b48ead;>int</span><span>> v1 = {</span><span style=color:#d08770;>1</span><span>, </span><span style=color:#d08770;>3</span><span>, -</span><span style=color:#d08770;>2</span><span>, -</span><span style=color:#d08770;>4</span><span>, </span><span style=color:#d08770;>5</span><span>, -</span><span style=color:#d08770;>6</span><span>};
+</span><span>    </span><span style=color:#65737e;>//下面按照标准是不能通过编译的，但是编译器实现了类型推断（可能是实现了C++14）
+</span><span>    </span><span style=color:#65737e;>//lambda返回auto，auto推断成int，推断成功的前提是返回的都是相同类型
+</span><span>    </span><span style=color:#65737e;>//https://stackoverflow.com/questions/26692637/c11-restrictions-on-lambda-return-type
+</span><span>    </span><span style=color:#bf616a;>transform</span><span>(v1.</span><span style=color:#bf616a;>begin</span><span>(), v1.</span><span style=color:#bf616a;>end</span><span>(), v1.</span><span style=color:#bf616a;>begin</span><span>(), [](</span><span style=color:#b48ead;>int</span><span> a) {</span><span style=color:#b48ead;>if</span><span>(a > </span><span style=color:#d08770;>0</span><span>)</span><span style=color:#b48ead;>return</span><span> a; </span><span style=color:#b48ead;>else return </span><span>-a; });
+</span><span>    </span><span style=color:#65737e;>//标准用法：
+</span><span>    </span><span style=color:#bf616a;>transform</span><span>(v1.</span><span style=color:#bf616a;>begin</span><span>(), v1.</span><span style=color:#bf616a;>end</span><span>(), v1.</span><span style=color:#bf616a;>begin</span><span>(), [](</span><span style=color:#b48ead;>int</span><span> a) -> </span><span style=color:#bf616a;>int </span><span>{</span><span style=color:#b48ead;>if</span><span>(a > </span><span style=color:#d08770;>0</span><span>)</span><span style=color:#b48ead;>return</span><span> a; </span><span style=color:#b48ead;>else return </span><span>-a; });
+</span><span>    </span><span style=color:#bf616a;>for_each</span><span>(v1.</span><span style=color:#bf616a;>begin</span><span>(), v1.</span><span style=color:#bf616a;>end</span><span>(), [](</span><span style=color:#b48ead;>int</span><span> a) { cout << a; });
+</span><span>    </span><span style=color:#65737e;>//error :return type 'char' must match previous return type 'int' when lambda expression has unspecified explicit return type
+</span><span>    </span><span style=color:#65737e;>//transform(v1.begin(), v1.end(), v1.begin(), [](int a) {if(a > 0)return a; else return 'a'; });
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=ji-lu-xiang-guan>记录相关</h2><h3 id=lazy-evaluation-duo-xing-qiu-zhi><em>lazy evaluation</em> <em>（惰性求值）</em></h3><p>trpl：可以创建一个存放闭包和调用闭包结果的结构体。该结构体只会在需要结果时执行闭包，并会缓存结果值，这样余下的代码就不必再负责保存结果并可以复用该值。你可能见过这种模式被称 <em>memoization</em> 或 <em>lazy evaluation</em> <em>（惰性求值）</em>。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>functional</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>memory</span><span>>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span>
+</span><span style=color:#b48ead;>template</span><span><</span><span style=color:#b48ead;>typename</span><span> T>
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Lazy
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Lazy</span><span style=color:#eff1f5;>() {}
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//保存需要延迟执行的函数
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>template</span><span style=color:#eff1f5;><</span><span style=color:#b48ead;>typename</span><span style=color:#eff1f5;> Func, </span><span style=color:#b48ead;>typename </span><span>...</span><span style=color:#eff1f5;>Args>
+</span><span style=color:#eff1f5;>    </span><span style=color:#8fa1b3;>Lazy</span><span style=color:#eff1f5;>(Func</span><span>& </span><span style=color:#bf616a;>f</span><span style=color:#eff1f5;>, Args</span><span>&& ...</span><span style=color:#bf616a;>args</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        </span><span style=color:#65737e;>//两种写法
+</span><span style=color:#eff1f5;>        </span><span style=color:#65737e;>//m_function = [&f, &args...]() { return f(std::forward&LTArgs>(args)...); };
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>m_function </span><span>= </span><span style=color:#eff1f5;>std::</span><span style=color:#bf616a;>bind</span><span style=color:#eff1f5;>(f, std::</span><span style=color:#bf616a;>forward</span><span style=color:#eff1f5;>&LTArgs>(args)</span><span>...</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#65737e;>//延迟执行，将结果保存起来
+</span><span style=color:#eff1f5;>    T</span><span>& </span><span style=color:#8fa1b3;>value</span><span style=color:#eff1f5;>()
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#bf616a;>m_isCreate</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>        {
+</span><span style=color:#eff1f5;>            </span><span style=color:#bf616a;>m_result </span><span>= </span><span style=color:#bf616a;>m_function</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>            </span><span style=color:#bf616a;>m_isCreate </span><span>= </span><span style=color:#d08770;>true</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>m_result</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    std::function&LTT()> </span><span style=color:#bf616a;>m_function</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    T                  </span><span style=color:#bf616a;>m_result</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>bool</span><span style=color:#eff1f5;>               m_isCreate </span><span>= </span><span style=color:#d08770;>false</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span><span>
+</span><span style=color:#65737e;>//帮助函数 -> 将要执行的函数以及函数的入参保存成Lazy对象
+</span><span style=color:#b48ead;>template</span><span><</span><span style=color:#b48ead;>class</span><span> Func, </span><span style=color:#b48ead;>typename </span><span>...Args>
+</span><span>Lazy<</span><span style=color:#b48ead;>typename</span><span> std::result_of&LTFunc(Args...)>::type>
+</span><span style=color:#8fa1b3;>lazy</span><span>(Func&& </span><span style=color:#bf616a;>f</span><span>, Args&& ...</span><span style=color:#bf616a;>args</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>return</span><span> Lazy<</span><span style=color:#b48ead;>typename</span><span> std::result_of&LTFunc(Args...)>::type>(
+</span><span>        std::</span><span style=color:#bf616a;>forward</span><span>&LTFunc>(f), std::</span><span style=color:#bf616a;>forward</span><span>&LTArgs>(args)...);
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>struct </span><span>Object       </span><span style=color:#65737e;>//big object
+</span><span>{
+</span><span style=color:#b48ead;>public</span><span>:
+</span><span>    </span><span style=color:#8fa1b3;>Object</span><span>()
+</span><span>    {
+</span><span>        cout << "</span><span style=color:#a3be8c;>big object create</span><span>" << endl;
+</span><span>    }
+</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>struct </span><span>MyStruct     </span><span style=color:#65737e;>//operation struct
+</span><span>{
+</span><span>    </span><span style=color:#8fa1b3;>MyStruct</span><span>()
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>auto</span><span> fun = [] {</span><span style=color:#b48ead;>return </span><span>std::</span><span style=color:#bf616a;>make_shared</span><span>&LTObject>(); };
+</span><span>        </span><span style=color:#bf616a;>m_obj </span><span>= </span><span style=color:#bf616a;>lazy</span><span>(fun);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>load</span><span>()
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>m_obj</span><span>.</span><span style=color:#bf616a;>value</span><span>();
+</span><span>    }
+</span><span>
+</span><span>    Lazy&LTstd::shared_ptr&LTObject>> </span><span style=color:#bf616a;>m_obj</span><span>;
+</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>foo</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>x</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>return</span><span> x * </span><span style=color:#d08770;>20</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#65737e;>//测试大对象延迟加载
+</span><span>    MyStruct t;
+</span><span>    t.</span><span style=color:#bf616a;>load</span><span>();
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//测试普通函数加载延迟加载
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> lazyer1 = </span><span style=color:#bf616a;>lazy</span><span>(foo, </span><span style=color:#d08770;>4</span><span>);
+</span><span>    cout << lazyer1.</span><span style=color:#bf616a;>value</span><span>() << endl;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//测试无参数lamda
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> lazy_func2 = []() {</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>12</span><span>; };
+</span><span>    Lazy<</span><span style=color:#b48ead;>int</span><span>> lazyer2 = </span><span style=color:#bf616a;>lazy</span><span>(lazy_func2);
+</span><span>    cout << lazyer2.</span><span style=color:#bf616a;>value</span><span>() << endl;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//测试有参数lamda    
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> lazy_func3 = [](</span><span style=color:#b48ead;>int</span><span> x) {</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>10 </span><span>+ x; };
+</span><span>    Lazy<</span><span style=color:#b48ead;>int</span><span>> lazyer3 = </span><span style=color:#bf616a;>lazy</span><span>(lazy_func3, </span><span style=color:#d08770;>20</span><span>);
+</span><span>    cout << lazyer3.</span><span style=color:#bf616a;>value</span><span>() << endl;
+</span><span>
+</span><span>    </span><span style=color:#65737e;>//测试有参数的function
+</span><span>    std::function<</span><span style=color:#b48ead;>int</span><span>(</span><span style=color:#b48ead;>int</span><span>)> f = [](</span><span style=color:#b48ead;>int</span><span> x) {</span><span style=color:#b48ead;>return</span><span> x + </span><span style=color:#d08770;>3</span><span>; };
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> lazyer4 = </span><span style=color:#bf616a;>lazy</span><span>(f, </span><span style=color:#d08770;>4</span><span>);
+</span><span>    cout << lazyer4.</span><span style=color:#bf616a;>value</span><span>() << endl;
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>system</span><span>("</span><span style=color:#a3be8c;>pause</span><span>");
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h3 id=fei-bo-na-qi-lambdaxie-fa>斐波那契lambda写法</h3><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>functional</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#65737e;>//必须捕获引用，按值捕获会产生复制，如果按值捕获，就是”先有鸡还是先有蛋“问题了
+</span><span>    </span><span style=color:#65737e;>//闭包存在的价值是立即捕获，对于lazy类型（惰性求值）也可用捕获引用
+</span><span>    std::function<</span><span style=color:#b48ead;>int</span><span>(</span><span style=color:#b48ead;>int</span><span>)> f = [&f](</span><span style=color:#b48ead;>int</span><span> i){
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(i < </span><span style=color:#d08770;>2</span><span>) </span><span style=color:#b48ead;>return</span><span> i;
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>f</span><span>(i - </span><span style=color:#d08770;>1</span><span>) + </span><span style=color:#bf616a;>f</span><span>(i - </span><span style=color:#d08770;>2</span><span>);
+</span><span>    };
+</span><span>
+</span><span>    std::cout << </span><span style=color:#bf616a;>f</span><span>(</span><span style=color:#d08770;>10</span><span>) << std::endl;
+</span><span>
+</span><span>    std::cout << [](</span><span style=color:#b48ead;>int</span><span> i){
+</span><span>        </span><span style=color:#b48ead;>auto</span><span> f = [&](</span><span style=color:#b48ead;>auto</span><span> f, </span><span style=color:#b48ead;>int</span><span> n){
+</span><span>            </span><span style=color:#b48ead;>if</span><span>(n < </span><span style=color:#d08770;>2</span><span>) </span><span style=color:#b48ead;>return</span><span> n;
+</span><span>            </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>f</span><span>(f, n - </span><span style=color:#d08770;>1</span><span>) + </span><span style=color:#bf616a;>f</span><span>(f, n - </span><span style=color:#d08770;>2</span><span>);
+</span><span>        };
+</span><span>        </span><span style=color:#b48ead;>return </span><span style=color:#bf616a;>f</span><span>(f, i);
+</span><span>    }(</span><span style=color:#d08770;>10</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h3 id=autolei-xing-de-can-shu>auto类型的参数</h3><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>functional</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#65737e;>//lambda对auto类型的参数可识别出其类型
+</span><span>    </span><span style=color:#b48ead;>auto</span><span> fn = [](</span><span style=color:#b48ead;>auto</span><span> val){
+</span><span>        std::cout << typeid(val).</span><span style=color:#bf616a;>name</span><span>() << std::endl;
+</span><span>    };
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>fn</span><span>(</span><span style=color:#d08770;>123</span><span>);
+</span><span>    </span><span style=color:#bf616a;>fn</span><span>(</span><span style=color:#d08770;>123.</span><span style=color:#b48ead;>f</span><span>);
+</span><span>    </span><span style=color:#bf616a;>fn</span><span>("</span><span style=color:#a3be8c;>123</span><span>");
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=lambdabu-huo>lambda捕获</h2><p>声明捕获的几种形式：<p>lambda-capture：<ul><li>capture-default：隐式捕获 <ul><li>&：捕获引用<li>=：捕获值</ul><li>capture-list：显示声明捕获列表 <ul><li><strong>capture</strong>...opt<li>capture-list, capture...opt</ul><li>capture-default, capture-list：声明隐式捕获方式，并显示声明捕获列表，捕获列表的捕获方式同隐式捕获方式相反</ul><blockquote><p>capture：<ul><li>simple-capture <ul><li>identifier<li>&identifier<li>this：捕获<code>this</code>意味着<strong>通过引用</strong>捕获<code>*this</code>（它是对象的左值），<strong>而不是通过值</strong>捕获指针<li><code>*this</code>：捕获本地实体的值</ul><li>init-capture <ul><li>identifier initializer<li>&identifier initializer</ul></ul></blockquote><p>参考：https://stackoverflow.com/questions/16323032/why-cant-i-capture-this-by-reference-this-in-lambda</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

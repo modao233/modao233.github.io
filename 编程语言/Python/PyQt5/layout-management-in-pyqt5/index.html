@@ -1,0 +1,198 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/layout-management-in-pyqt5/>PyQt5 中的布局管理</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-19 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/layout/>翻译自原文：Layout management in PyQt5</a><p>翻译时间 2020 年 8 月 19 日<p>布局管理是部件在应用程序窗口上的排放方式。我们可以使用绝对定位或<strong>布局类</strong>放置我们的部件。使用布局管理器管理布局是组织部件的首选方式。<h2 id=jue-dui-ding-wei>绝对定位</h2><p>程序员指定每个部件的位置和大小（以像素为单位）。当使用绝对定位时，我们必须了解以下限制：<ul><li>如果我们调整窗口大小，部件的大小和位置不会改变<li>应用程序在各种平台上可能看起来不同<li>更改应用程序中的字体可能会破坏布局<li>如果我们决定改变我们的布局，我们必须完全重做我们的布局，这是乏味和耗时的</ul><p>下面的示例将小部件定位在绝对坐标中。<p>absolute.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import sys</span><span>
+</span><span>from PyQt5.QtWidgets import QWidget, QLabel, QApplication</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        lbl1 = QLabel('ZetCode', self)</span><span>
+</span><span>        lbl1.move(15, 10)</span><span>
+</span><span>
+</span><span>        lbl2 = QLabel('tutorials', self)</span><span>
+</span><span>        lbl2.move(35, 40)</span><span>
+</span><span>
+</span><span>        lbl3 = QLabel('for programmers', self)</span><span>
+</span><span>        lbl3.move(55, 70)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 250, 150)</span><span>
+</span><span>        self.setWindowTitle('Absolute')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>我们使用<code>move()</code>方法来定位我们的部件。在我们的案例中，这些是标签。我们通过提供 x 和 y 坐标来定位它们。坐标系的开头位于左上角。x 值从左到右增长。y 值从上到下增长。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>lbl1 = QLabel('ZetCode', self)</span><span>
+</span><span>lbl1.move(15, 10)</span><span>
+</span></code></pre><p>标签小部件位于<code>x=15</code>和<code>y=10</code>。<p><img alt=image-20200819104258956 src=Layout-management-in-PyQt5/image-20200819104258956.png></p><center>图：绝对定位</center><h2 id=pyqt5-qhboxlayout>PyQt5 QHBoxLayout</h2><p><code>QHBoxLayout</code>和<code>QVBoxLayout</code>是水平和垂直排列部件的基本布局类。<p>假设我们想要在右下角放置两个按钮。要创建这样的布局，我们使用一个水平和一个垂直框。为了创造必要的空间，我们增加了一个<strong>拉伸因子</strong>。<p>box_layout.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import sys</span><span>
+</span><span>from PyQt5.QtWidgets import (QWidget, QPushButton,</span><span>
+</span><span>                             QHBoxLayout, QVBoxLayout, QApplication)</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        okButton = QPushButton("OK")</span><span>
+</span><span>        cancelButton = QPushButton("Cancel")</span><span>
+</span><span>
+</span><span>        hbox = QHBoxLayout()</span><span>
+</span><span>        hbox.addStretch(1)</span><span>
+</span><span>        hbox.addWidget(okButton)</span><span>
+</span><span>        hbox.addWidget(cancelButton)</span><span>
+</span><span>
+</span><span>        vbox = QVBoxLayout()</span><span>
+</span><span>        vbox.addStretch(1)</span><span>
+</span><span>        vbox.addLayout(hbox)</span><span>
+</span><span>
+</span><span>        self.setLayout(vbox)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 300, 150)</span><span>
+</span><span>        self.setWindowTitle('Buttons')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>该示例将两个按钮放在窗口的右下角。当我们调整应用程序窗口的大小时，它们会留在那里。我们同时使用<code>HBoxLayout</code> 和 <code>QVBoxLayout</code>。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>okButton = QPushButton("OK")</span><span>
+</span><span>cancelButton = QPushButton("Cancel")</span><span>
+</span></code></pre><p>在这里，我们创建两个按钮。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>hbox = QHBoxLayout()</span><span>
+</span><span>hbox.addStretch(1)</span><span>
+</span><span>hbox.addWidget(okButton)</span><span>
+</span><span>hbox.addWidget(cancelButton)</span><span>
+</span></code></pre><p>我们创建一个水平框布局，并添加拉伸因子和两个按钮。拉伸在两个按钮之前添加一个可拉伸的空间。这会将它们推到窗口的右侧。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>vbox = QVBoxLayout()</span><span>
+</span><span>vbox.addStretch(1)</span><span>
+</span><span>vbox.addLayout(hbox)</span><span>
+</span></code></pre><p>水平布局将放入垂直布局中。垂直框中的拉伸系数将按带有按钮的水平框到窗口的底部。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.setLayout(vbox)</span><span>
+</span></code></pre><p>最后，我们设置了窗口的主布局。<p><img alt=image-20200819104612728 src=Layout-management-in-PyQt5/image-20200819104612728.png></p><center>图：按钮</center><h2 id=pyqt5-qgridlayout>PyQt5 QGridLayout</h2><p>栅格布局类<code>QGridLayout</code>是最通用的布局类。它将空间划分为行和列。<p>calculator.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import sys</span><span>
+</span><span>from PyQt5.QtWidgets import (QWidget, QGridLayout,</span><span>
+</span><span>                             QPushButton, QApplication)</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        grid = QGridLayout()</span><span>
+</span><span>        self.setLayout(grid)</span><span>
+</span><span>
+</span><span>        names = ['Cls', 'Bck', '', 'Close',</span><span>
+</span><span>                 '7', '8', '9', '/',</span><span>
+</span><span>                 '4', '5', '6', '*',</span><span>
+</span><span>                 '1', '2', '3', '-',</span><span>
+</span><span>                 '0', '.', '=', '+']</span><span>
+</span><span>
+</span><span>        positions = [(i, j) for i in range(5) for j in range(4)]</span><span>
+</span><span>
+</span><span>        for position, name in zip(positions, names):</span><span>
+</span><span>
+</span><span>            if name == '':</span><span>
+</span><span>                continue</span><span>
+</span><span>            button = QPushButton(name)</span><span>
+</span><span>            grid.addWidget(button, *position)</span><span>
+</span><span>
+</span><span>        self.move(300, 150)</span><span>
+</span><span>        self.setWindowTitle('Calculator')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们创建一个按钮网格。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>grid = QGridLayout()</span><span>
+</span><span>self.setLayout(grid)</span><span>
+</span></code></pre><p>创建<code>QGridLayout</code>的实例并设置为应用程序窗口的布局。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>names = ['Cls', 'Bck', '', 'Close',</span><span>
+</span><span>         '7', '8', '9', '/',</span><span>
+</span><span>         '4', '5', '6', '*',</span><span>
+</span><span>         '1', '2', '3', '-',</span><span>
+</span><span>         '0', '.', '=', '+']</span><span>
+</span></code></pre><p>这些是以后用于按钮的标签。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>positions = [(i,j) for i in range(5) for j in range(4)]</span><span>
+</span></code></pre><p>我们创建网格中的位置列表。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>for position, name in zip(positions, names):</span><span>
+</span><span>    </span><span>
+</span><span>    if name == '':</span><span>
+</span><span>        continue</span><span>
+</span><span>    button = QPushButton(name)</span><span>
+</span><span>    grid.addWidget(button, *position)</span><span>
+</span></code></pre><p>创建按钮并使用<code>addWidget()</code>方法将按钮添加到布局中。<p><img alt=image-20200819105047246 src=Layout-management-in-PyQt5/image-20200819105047246.png></p><center>图：计算器骨架</center><h2 id=review-shi-li>Review 示例</h2><p>部件可以跨越网格中的多个列或行。在下面的示例中，我们说明了这一点。<p>review.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>import sys</span><span>
+</span><span>from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit,</span><span>
+</span><span>                             QTextEdit, QGridLayout, QApplication)</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        title = QLabel('Title')</span><span>
+</span><span>        author = QLabel('Author')</span><span>
+</span><span>        review = QLabel('Review')</span><span>
+</span><span>
+</span><span>        titleEdit = QLineEdit()</span><span>
+</span><span>        authorEdit = QLineEdit()</span><span>
+</span><span>        reviewEdit = QTextEdit()</span><span>
+</span><span>
+</span><span>        grid = QGridLayout()</span><span>
+</span><span>        grid.setSpacing(10)</span><span>
+</span><span>
+</span><span>        grid.addWidget(title, 1, 0)</span><span>
+</span><span>        grid.addWidget(titleEdit, 1, 1)</span><span>
+</span><span>
+</span><span>        grid.addWidget(author, 2, 0)</span><span>
+</span><span>        grid.addWidget(authorEdit, 2, 1)</span><span>
+</span><span>
+</span><span>        grid.addWidget(review, 3, 0)</span><span>
+</span><span>        grid.addWidget(reviewEdit, 3, 1, 5, 1)</span><span>
+</span><span>
+</span><span>        self.setLayout(grid)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 350, 300)</span><span>
+</span><span>        self.setWindowTitle('Review')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>我们创建一个窗口，其中我们有三个标签，两个行编辑和一个文本编辑小部件。布局使用<code>QGridLayout</code>。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>grid = QGridLayout()</span><span>
+</span><span>grid.setSpacing(10)</span><span>
+</span></code></pre><p>我们创建网格布局并在部件之间设置间距。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>grid.addWidget(reviewEdit, 3, 1, 5, 1)</span><span>
+</span></code></pre><p>如果我们向网格添加部件，我们可以提供部件的行范围和列范围。在我们的案例中，我们使<code>reviewEdit</code>部件跨越 5 行。<p><img alt=image-20200819105433312 src=Layout-management-in-PyQt5/image-20200819105433312.png></p><center>图：查看示例</center><p>PyQt5 教程的这一部分专门介绍布局管理。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

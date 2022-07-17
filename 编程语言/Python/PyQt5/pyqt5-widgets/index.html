@@ -1,0 +1,324 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Python/PyQt5/pyqt5-widgets/>PyQt5 小部件</a></h1><div class=post-meta-inline><span class=post-date> 2020-08-19 </span></div><div class=post-content><p><a href=http://zetcode.com/gui/pyqt5/widgets/>翻译自原文：PyQt5 widgets</a><p>翻译时间 2020 年 8 月 19 日<p>部件是应用程序的基本构建基块。PyQt5 具有多种部件，包括按钮、复选框、滑块或列表框。在本教程的这一部分中，我们将介绍几个有用的小部件：<code>QCheckBox</code>，<code>QPushButton</code>，<code>QSlider</code>，<code>QProgressBar</code>，<code>QCalendarWidget</code>。<h2 id=pyqt5-qcheckbox>PyQt5 QCheckBox</h2><p><code>QCheckBox</code>是具有两种状态的小部件：开和关。它是一个带标签的盒子。复选框通常用于表示应用程序中可以启用或禁用的功能。<p>check_box.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import QWidget, QCheckBox, QApplication</span><span>
+</span><span>from PyQt5.QtCore import Qt</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        cb = QCheckBox('Show title', self)</span><span>
+</span><span>        cb.move(20, 20)</span><span>
+</span><span>        cb.toggle()</span><span>
+</span><span>        cb.stateChanged.connect(self.changeTitle)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 350, 250)</span><span>
+</span><span>        self.setWindowTitle('QCheckBox')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def changeTitle(self, state):</span><span>
+</span><span>
+</span><span>        if state == Qt.Checked:</span><span>
+</span><span>            self.setWindowTitle('QCheckBox')</span><span>
+</span><span>        else:</span><span>
+</span><span>            self.setWindowTitle(' ')</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们将创建一个复选框，用于切换窗口标题。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cb = QCheckBox('Show title', self)</span><span>
+</span></code></pre><p>这是一个构造函数。<code>QCheckBox</code><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cb.toggle()</span><span>
+</span></code></pre><p>我们已设置窗口标题，因此我们也选中复选框。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cb.stateChanged.connect(self.changeTitle)</span><span>
+</span></code></pre><p>我们将用户定义的<code>changeTitle()</code>方法连接到<code>stateChanged</code>信号。<code>changeTitle()</code>方法将切换窗口标题。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def changeTitle(self, state):</span><span>
+</span><span>
+</span><span>    if state == Qt.Checked:</span><span>
+</span><span>        self.setWindowTitle('QCheckBox')</span><span>
+</span><span>    else:</span><span>
+</span><span>        self.setWindowTitle(' ')</span><span>
+</span></code></pre><p>部件的状态将传递给<code>changeTitle()</code>方法的<code>state</code>变量。如果部件选中，我们将设置窗口的标题。否则，我们将空字符串设置为标题栏。<p><img alt=image-20200819174338161 src=PyQt5-widgets/image-20200819174338161.png></p><center>图： QCheckBox</center><h2 id=qie-huan-an-niu>切换按钮</h2><p>切换按钮<code>QPushButton</code>是处于特殊模式的。这是一个按钮，有两个状态：按下和未按下。我们通过单击这两种状态在两种状态之间切换。<p>toggle_button.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QPushButton,</span><span>
+</span><span>                             QFrame, QApplication)</span><span>
+</span><span>from PyQt5.QtGui import QColor</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        self.col = QColor(0, 0, 0)</span><span>
+</span><span>
+</span><span>        redb = QPushButton('Red', self)</span><span>
+</span><span>        redb.setCheckable(True)</span><span>
+</span><span>        redb.move(10, 10)</span><span>
+</span><span>
+</span><span>        redb.clicked[bool].connect(self.setColor)</span><span>
+</span><span>
+</span><span>        greenb = QPushButton('Green', self)</span><span>
+</span><span>        greenb.setCheckable(True)</span><span>
+</span><span>        greenb.move(10, 60)</span><span>
+</span><span>
+</span><span>        greenb.clicked[bool].connect(self.setColor)</span><span>
+</span><span>
+</span><span>        blueb = QPushButton('Blue', self)</span><span>
+</span><span>        blueb.setCheckable(True)</span><span>
+</span><span>        blueb.move(10, 110)</span><span>
+</span><span>
+</span><span>        blueb.clicked[bool].connect(self.setColor)</span><span>
+</span><span>
+</span><span>        self.square = QFrame(self)</span><span>
+</span><span>        self.square.setGeometry(150, 20, 100, 100)</span><span>
+</span><span>        self.square.setStyleSheet("QWidget { background-color: %s }" %</span><span>
+</span><span>                                  self.col.name())</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 300, 250)</span><span>
+</span><span>        self.setWindowTitle('Toggle button')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def setColor(self, pressed):</span><span>
+</span><span>
+</span><span>        source = self.sender()</span><span>
+</span><span>
+</span><span>        if pressed:</span><span>
+</span><span>            val = 255</span><span>
+</span><span>        else:</span><span>
+</span><span>            val = 0</span><span>
+</span><span>
+</span><span>        if source.text() == "Red":</span><span>
+</span><span>            self.col.setRed(val)</span><span>
+</span><span>        elif source.text() == "Green":</span><span>
+</span><span>            self.col.setGreen(val)</span><span>
+</span><span>        else:</span><span>
+</span><span>            self.col.setBlue(val)</span><span>
+</span><span>
+</span><span>        self.square.setStyleSheet("QFrame { background-color: %s }" %</span><span>
+</span><span>                                  self.col.name())</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们创建三个切换按钮和一个<code>QWidget</code>。我们把<code>QWidget</code>背景颜色设置为黑色。切换按钮将切换颜色值的红色、绿色和蓝色部分。背景颜色取决于按下切换按钮。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.col = QColor(0, 0, 0)</span><span>
+</span></code></pre><p>这是初始的黑色颜色值。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>redb = QPushButton('Red', self)</span><span>
+</span><span>redb.setCheckable(True)</span><span>
+</span><span>redb.move(10, 10)</span><span>
+</span></code></pre><p>若要创建切换按钮，我们创建一个<code>QPushButton</code>，并通过调用<code>setCheckable()</code>方法使其可选中。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>redb.clicked[bool].connect(self.setColor)</span><span>
+</span></code></pre><p>我们将<code>clicked</code>信号连接到用户定义的方法。我们使用具有布尔值的<code>clicked</code>信号。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>source = self.sender()</span><span>
+</span></code></pre><p>得到被切换的按钮。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if source.text() == "Red":</span><span>
+</span><span>    self.col.setRed(val)</span><span>
+</span></code></pre><p>如果是红色按钮，我们会相应地更新颜色的红色部分。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.square.setStyleSheet("QFrame { background-color: %s }" %</span><span>
+</span><span>    self.col.name())</span><span>
+</span></code></pre><p>我们使用样式表来更改背景颜色。样式表使用<code>setStyleSheet()</code>方法进行更新。<p><img alt=image-20200819180417775 src=PyQt5-widgets/image-20200819180417775.png></p><center>图：切换按钮</center><h2 id=pyqt5-qsliider>PyQt5 QSliider</h2><p><code>QSlider</code>是具有简单滑动条的部件。此滑动条可以来回拉。这样，我们为特定任务选择一个值。有时使用滑块比输入数字或使用旋转框更自然。<p>在我们的示例中，我们显示一个滑块和一个标签。标签显示图像。滑块控制标签。<p>slider.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QSlider,</span><span>
+</span><span>                             QLabel, QApplication)</span><span>
+</span><span>from PyQt5.QtCore import Qt, QFileInfo</span><span>
+</span><span>from PyQt5.QtGui import QPixmap</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        sld = QSlider(Qt.Horizontal, self)</span><span>
+</span><span>        sld.setFocusPolicy(Qt.NoFocus)</span><span>
+</span><span>        sld.setGeometry(30, 40, 200, 30)</span><span>
+</span><span>        sld.valueChanged[int].connect(self.changeValue)</span><span>
+</span><span>
+</span><span>        self.label = QLabel(self)</span><span>
+</span><span>        root = QFileInfo(__file__).absolutePath()</span><span>
+</span><span>        self.label.setPixmap(QPixmap(root + '/mute.png'))</span><span>
+</span><span>        self.label.setGeometry(250, 40, 80, 30)</span><span>
+</span><span>        </span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 350, 250)</span><span>
+</span><span>        self.setWindowTitle('QSlider')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def changeValue(self, value):</span><span>
+</span><span>
+</span><span>        if value == 0:</span><span>
+</span><span>
+</span><span>            self.label.setPixmap(QPixmap('mute.png'))</span><span>
+</span><span>        elif 0 < value <= 30:</span><span>
+</span><span>
+</span><span>            self.label.setPixmap(QPixmap('min.png'))</span><span>
+</span><span>        elif 30 < value < 80:</span><span>
+</span><span>
+</span><span>            self.label.setPixmap(QPixmap('med.png'))</span><span>
+</span><span>        else:</span><span>
+</span><span>
+</span><span>            self.label.setPixmap(QPixmap('max.png'))</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们模拟音量控制。通过拖动滑块的手柄，我们更改标签上的图像。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>sld = QSlider(Qt.Horizontal, self)</span><span>
+</span></code></pre><p>在这里，我们创建一个水平<code>QSlider</code>。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.label = QLabel(self)</span><span>
+</span><span>self.label.setPixmap(QPixmap('mute.png'))</span><span>
+</span></code></pre><p>我们创建一个<code>QLabel</code>部件，并设置一个初始静音图像。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>sld.valueChanged[int].connect(self.changeValue)</span><span>
+</span></code></pre><p>我们将<code>valueChanged</code>信号连接到用户定义的<code>changeValue()</code>方法。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if value == 0:</span><span>
+</span><span>    self.label.setPixmap(QPixmap('mute.png'))</span><span>
+</span><span>...</span><span>
+</span></code></pre><p>根据滑块的值，我们将图像设置为标签。在上面的代码中，如果滑块等于零，我们将图像<code>mute.jpg</code>设置为标签。<p><img alt=image-20200819184720870 src=PyQt5-widgets/image-20200819184720870.png><p><img alt=image-20200819184710483 src=PyQt5-widgets/image-20200819184710483.png></p><center>图： QSlider 小部件</center><h2 id=pyqt5-qprogressbar>PyQt5 QProgressBar</h2><p>进度条是处理冗长任务时使用的部件。它进行动画处理，以便用户知道任务正在进行中。<code>QProgressBar</code>部件在 PyQt5 工具包中提供水平或垂直进度条。程序员可以设置进度条的最小值和最大值。默认值为 0 和 99。<p>progressbar.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QProgressBar,</span><span>
+</span><span>                             QPushButton, QApplication)</span><span>
+</span><span>from PyQt5.QtCore import QBasicTimer</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>
+</span><span>        self.pbar = QProgressBar(self)</span><span>
+</span><span>        self.pbar.setGeometry(30, 40, 200, 25)</span><span>
+</span><span>
+</span><span>        self.btn = QPushButton('Start', self)</span><span>
+</span><span>        self.btn.move(40, 80)</span><span>
+</span><span>        self.btn.clicked.connect(self.doAction)</span><span>
+</span><span>
+</span><span>        self.timer = QBasicTimer()</span><span>
+</span><span>        self.step = 0</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 280, 170)</span><span>
+</span><span>        self.setWindowTitle('QProgressBar')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def timerEvent(self, e):</span><span>
+</span><span>
+</span><span>        if self.step >= 100:</span><span>
+</span><span>            self.timer.stop()</span><span>
+</span><span>            self.btn.setText('Finished')</span><span>
+</span><span>            return</span><span>
+</span><span>
+</span><span>        self.step = self.step + 1</span><span>
+</span><span>        self.pbar.setValue(self.step)</span><span>
+</span><span>
+</span><span>    def doAction(self):</span><span>
+</span><span>
+</span><span>        if self.timer.isActive():</span><span>
+</span><span>            self.timer.stop()</span><span>
+</span><span>            self.btn.setText('Start')</span><span>
+</span><span>        else:</span><span>
+</span><span>            self.timer.start(100, self)</span><span>
+</span><span>            self.btn.setText('Stop')</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>在我们的示例中，我们有一个水平进度条和一个按钮。按钮启动并停止进度条。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.pbar = QProgressBar(self)</span><span>
+</span></code></pre><p><code>QProgressBar</code>是一个构造函数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.timer = QBasicTimer()</span><span>
+</span></code></pre><p>要激活进度条，我们得有一个计时器对象。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>self.timer.start(100, self)</span><span>
+</span></code></pre><p>要启动计时器事件，我们调用其<code>start()</code>方法。此方法有两个参数：超时和将接收事件的对象。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def timerEvent(self, e):</span><span>
+</span><span>
+</span><span>    if self.step >= 100:</span><span>
+</span><span>
+</span><span>        self.timer.stop()</span><span>
+</span><span>        self.btn.setText('Finished')</span><span>
+</span><span>        return</span><span>
+</span><span>
+</span><span>    self.step = self.step + 1</span><span>
+</span><span>    self.pbar.setValue(self.step)</span><span>
+</span></code></pre><p>每个<code>QObject</code>及其后代都有一个事件处理程序<code>timerEvent()</code>。为了对计时器事件做出反应，我们重新实现事件处理程序。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def doAction(self):</span><span>
+</span><span>
+</span><span>    if self.timer.isActive():</span><span>
+</span><span>        self.timer.stop()</span><span>
+</span><span>        self.btn.setText('Start')</span><span>
+</span><span>
+</span><span>    else:</span><span>
+</span><span>        self.timer.start(100, self)</span><span>
+</span><span>        self.btn.setText('Stop')</span><span>
+</span></code></pre><p>在<code>doAction()</code>方法内，我们开始和停止计时器。<p><img alt=image-20200819185436693 src=PyQt5-widgets/image-20200819185436693.png></p><center>图：进度栏</center><h2 id=pyqt5-qcalendarwidget>PyQt5 QCalendarWidget</h2><p><code>QCalendarWidget</code>提供基于月份的日历部件。它允许用户以简单直观的方式选择日期。<p>calendar.py<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>from PyQt5.QtWidgets import (QWidget, QCalendarWidget,</span><span>
+</span><span>                             QLabel, QApplication, QVBoxLayout)</span><span>
+</span><span>from PyQt5.QtCore import QDate</span><span>
+</span><span>import sys</span><span>
+</span><span>
+</span><span>
+</span><span>class Example(QWidget):</span><span>
+</span><span>
+</span><span>    def __init__(self):</span><span>
+</span><span>        super().__init__()</span><span>
+</span><span>
+</span><span>        self.initUI()</span><span>
+</span><span>
+</span><span>    def initUI(self):</span><span>
+</span><span>        vbox = QVBoxLayout(self)</span><span>
+</span><span>
+</span><span>        cal = QCalendarWidget(self)</span><span>
+</span><span>        cal.setGridVisible(True)</span><span>
+</span><span>        cal.clicked[QDate].connect(self.showDate)</span><span>
+</span><span>
+</span><span>        vbox.addWidget(cal)</span><span>
+</span><span>
+</span><span>        self.lbl = QLabel(self)</span><span>
+</span><span>        date = cal.selectedDate()</span><span>
+</span><span>        self.lbl.setText(date.toString())</span><span>
+</span><span>
+</span><span>        vbox.addWidget(self.lbl)</span><span>
+</span><span>
+</span><span>        self.setLayout(vbox)</span><span>
+</span><span>
+</span><span>        self.setGeometry(300, 300, 350, 300)</span><span>
+</span><span>        self.setWindowTitle('Calendar')</span><span>
+</span><span>        self.show()</span><span>
+</span><span>
+</span><span>    def showDate(self, date):</span><span>
+</span><span>        self.lbl.setText(date.toString())</span><span>
+</span><span>
+</span><span>
+</span><span>def main():</span><span>
+</span><span>    app = QApplication(sys.argv)</span><span>
+</span><span>    ex = Example()</span><span>
+</span><span>    sys.exit(app.exec_())</span><span>
+</span><span>
+</span><span>
+</span><span>if __name__ == '__main__':</span><span>
+</span><span>    main()</span><span>
+</span></code></pre><p>该示例具有日历小部件和标签小部件。当前选择的日期显示在标签小部件中。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cal = QCalendarWidget(self)</span><span>
+</span></code></pre><p>创建<code>QCalendarWidget</code>。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cal.clicked[QDate].connect(self.showDate)</span><span>
+</span></code></pre><p>如果我们从部件中选择一个日期，则发出<code>clicked[QDate]</code>信号。我们将此信号连接到用户定义的<code>showDate()</code>方法。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>date = cal.selectedDate()</span><span>
+</span></code></pre><p>我们可以通过调用<code>selectedDate()</code>方法来检索<code>QCalendarWidget</code>所选定的日期。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>def showDate(self, date):</span><span>
+</span><span>
+</span><span>    self.lbl.setText(date.toString())</span><span>
+</span></code></pre><p>我们将 date 对象转换为字符串，并将其设置为标签部件。<p><img alt=image-20200819190053748 src=PyQt5-widgets/image-20200819190053748.png><p>在 PyQt5 教程的这一部分中，我们介绍了几种常见的部件。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

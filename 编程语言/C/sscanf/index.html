@@ -1,0 +1,39 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/C/sscanf/>sscanf()程序示例</a></h1><div class=post-meta-inline><span class=post-date> 2021-12-04 </span></div><div class=post-content><p>sscanf()程序示例</p><span id=continue-reading></span><pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>iostream</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>cstdio</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>using namespace</span><span> std;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#b48ead;>char</span><span> str[</span><span style=color:#d08770;>10</span><span>];
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a = '</span><span style=color:#a3be8c;>a</span><span>';
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>; i < </span><span style=color:#d08770;>10</span><span>; i++) str[i] = a++;
+</span><span>    cout<&LTstr;
+</span><span>    </span><span style=color:#65737e;>//把源字符串"123456"拷贝到str的前6个字符，并且把str的第7个字符设为null字符，也就是\0
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>123456</span><span>", "</span><span style=color:#d08770;>%s</span><span>", str);
+</span><span>    cout<&LTstr<&LTendl;
+</span><span>    </span><span style=color:#65737e;>//只拷贝3个字符给str，然后把第4个字符设为null字符
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>123456</span><span>", "</span><span style=color:#d08770;>%3s</span><span>", str);
+</span><span>    cout<&LTstr<&LTendl;
+</span><span>    </span><span style=color:#65737e;>//%表示选择，%后面的是条件表示从a到z的任意字符，贪婪匹配
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>asdfDsfd</span><span>", "</span><span style=color:#d08770;>%[a-z]</span><span>", str);
+</span><span>    cout<&LTstr<&LTendl;
+</span><span>    </span><span style=color:#65737e;>//%表示选择，符号^表示逻辑非，贪婪匹配
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>ASdfAsfd</span><span>", "</span><span style=color:#d08770;>%[^a-z]</span><span>", str);
+</span><span>    cout<&LTstr<&LTendl;
+</span><span>    </span><span style=color:#65737e;>//不匹配则不修改str，即不添加'\0'
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>asdfAsfd</span><span>", "</span><span style=color:#d08770;>%[^a-z]</span><span>", str);
+</span><span>    cout<&LTstr<&LTendl;
+</span><span>    </span><span style=color:#65737e;>//
+</span><span>    </span><span style=color:#b48ead;>char</span><span> str2[</span><span style=color:#d08770;>10</span><span>] = "</span><span style=color:#a3be8c;>adfsdfsf</span><span>";
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>AAddaDd</span><span>", "</span><span style=color:#d08770;>%[A-Z]%[a-z]</span><span>", str, str2);
+</span><span>    cout << str << "</span><span style=color:#a3be8c;>-</span><span>" << str2 << endl;
+</span><span>    </span><span style=color:#65737e;>//%*表示不将匹配结果读入参数，匹配但不保存，起过滤作用
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>AAddaDd</span><span>", "</span><span style=color:#d08770;>%*[A-Z]%[a-z]</span><span>", str, str2);
+</span><span>    cout << str << "</span><span style=color:#a3be8c;>-</span><span>" << str2 << endl;
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>("</span><span style=color:#a3be8c;>adf123413</span><span>", "</span><span style=color:#d08770;>%*[^0-9]%[0-9]</span><span>", str);
+</span><span>    cout << str;
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

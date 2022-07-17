@@ -1,0 +1,83 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/Java/lei-ji-cheng-chu-shi-hua-shun-xu/>类继承初始化顺序</a></h1><div class=post-meta-inline><span class=post-date> 2018-02-20 </span></div><div class=post-content><p>子类继承父类的代码可分为：静态代码块，普通代码块，静态方法，静态成员变量，普通成员变量，普通方法。<p>转载：<a href=https://blog.csdn.net/qq_27093465/article/details/70292221>Java类的各种成员初始化顺序如：父子类继承时的静态代码块,普通代码块,静态方法,构造方法,等先后顺序</a><p>Java类的各种成员的初始化顺序：<ol><li>父类【静态成员】和【静态代码块】，按在代码中出现的顺序依次执行。<li>子类【静态成员】和【静态代码块】，按在代码中出现的顺序依次执行。<li>父类的【普通成员变量被普通成员方法赋值】和【普通代码块】，按在代码中出现的顺序依次执行。<li>执行父类的构造方法。<li>子类的【普通成员变量被普通成员方法赋值】和【普通代码块】，按在代码中出现的顺序依次执行。<li>执行子类的构造方法。</ol><p>测试代码：<ul><li><p>父类：</p> <pre class=language-java data-lang=java style=background-color:#2b303b;color:#c0c5ce;><code class=language-java data-lang=java><span style=color:#b48ead;>package </span><span>com.lxk.ClassInitTest;
+</span><span> 
+</span><span style=color:#65737e;>/**
+</span><span style=color:#65737e;> * 父类
+</span><span style=color:#65737e;> * <</span><span style=color:#bf616a;>p</span><span style=color:#65737e;>>
+</span><span style=color:#65737e;> * Created by lxk on 2017-04-20
+</span><span style=color:#65737e;> */
+</span><span style=color:#65737e;>public class Parent {
+</span><span style=color:#65737e;>    static {
+</span><span style=color:#65737e;>        System.out.println("父类：静态代码块");
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    {
+</span><span style=color:#65737e;>        System.out.println("父类：构造代码块");
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    private static String staticStringInParent = initStaticStringInParent();
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    private String stringInParent = initStringInParent();
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    public Parent() {
+</span><span style=color:#65737e;>        System.out.println("父类：构造方法");
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    private static String initStaticStringInParent() {
+</span><span style=color:#65737e;>        System.out.println("父类：静态方法，被静态成员变量赋值调用。");
+</span><span style=color:#65737e;>        return "initStaticStringInParent";
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;>    private String initStringInParent() {
+</span><span style=color:#65737e;>        System.out.println("父类：普通成员方法，被普通成员变量赋值调用。");
+</span><span style=color:#65737e;>        return "initStringInParent";
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>}
+</span></code></pre><li><p>子类</p> <pre class=language-java data-lang=java style=background-color:#2b303b;color:#c0c5ce;><code class=language-java data-lang=java><span style=color:#b48ead;>package </span><span>com.lxk.ClassInitTest;
+</span><span> 
+</span><span style=color:#65737e;>/**
+</span><span style=color:#65737e;> * 子类
+</span><span style=color:#65737e;> * <</span><span style=color:#bf616a;>p</span><span style=color:#65737e;>>
+</span><span style=color:#65737e;> * Created by lxk on 2017-04-20
+</span><span style=color:#65737e;> */
+</span><span style=color:#65737e;>public class Child extends Parent {
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    private String stringInChild = initStringInChild();
+</span><span style=color:#65737e;>    private static String staticStringInChild = initStaticStringInChild();
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    {
+</span><span style=color:#65737e;>        System.out.println("子类：构造代码块");
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    static {
+</span><span style=color:#65737e;>        System.out.println("子类：静态代码块");
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    public Child() {
+</span><span style=color:#65737e;>        System.out.println("子类：构造方法");
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    private static String initStaticStringInChild() {
+</span><span style=color:#65737e;>        System.out.println("子类：静态方法，被静态成员变量赋值调用。");
+</span><span style=color:#65737e;>        return "initStaticStringInChild";
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;> 
+</span><span style=color:#65737e;>    private String initStringInChild() {
+</span><span style=color:#65737e;>        System.out.println("子类：普通成员方法，被普通成员变量赋值调用。");
+</span><span style=color:#65737e;>        return "initStringInChild";
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;>}
+</span></code></pre><li><p>main方法</p> <pre class=language-java data-lang=java style=background-color:#2b303b;color:#c0c5ce;><code class=language-java data-lang=java><span style=color:#b48ead;>package </span><span>com.lxk.ClassInitTest;
+</span><span> 
+</span><span style=color:#65737e;>/**
+</span><span style=color:#65737e;> * 测试Java类的成员和初始化块（代码块）初始化顺序
+</span><span style=color:#65737e;> * <</span><span style=color:#bf616a;>p</span><span style=color:#65737e;>>
+</span><span style=color:#65737e;> * Created by lxk on 2017-04-20
+</span><span style=color:#65737e;> */
+</span><span style=color:#65737e;>public class ClassInitTest {
+</span><span style=color:#65737e;>    public static void main(String[] args) {
+</span><span style=color:#65737e;>        System.out.println("测试代码开始");
+</span><span style=color:#65737e;>        new Child();
+</span><span style=color:#65737e;>        System.out.println("测试代码结束");
+</span><span style=color:#65737e;>    }
+</span><span style=color:#65737e;>}
+</span></code></pre><li><p>执行结果</p> <p><img alt=image-20200722102612888 src=%E7%B1%BB%E7%BB%A7%E6%89%BF%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%BA%E5%BA%8F/image-20200722102612888.png></p></ul><blockquote><h4 id=pu-tong-dai-ma-kuai>普通代码块：</h4><p>在<strong>方法或语句</strong>中出现的{}就称为普通代码块。 普通代码块和一般的语句执行顺序由他们在代码中出现的次序决定–“先出现先执行”<h4 id=jing-tai-dai-ma-kuai>静态代码块:</h4><p>在java中使用<strong>static关键字声明的</strong>代码块。 静态块用于初始化类，为类的属性初始化。每个静态代码块只会执行一次。 由于JVM在加载类时会执行静态代码块，所以静态代码块先于主方法执行。 如果类中包含多个静态代码块，那么将按照"先定义的代码先执行，后定义的代码后执行"。 <strong>注意：</strong><ol><li>静态代码块不能存在于任何方法体内。<li>静态代码块不能直接访问静态实例变量和实例方法，需要通过类的实例对象来访问。</ol><h4 id=gou-zao-dai-ma-kuai>构造代码块：</h4><p><strong>直接在类中定义且没有加static关键字的代码块称为{}构造代码块</strong>。 构造代码块在创建对象时被调用，每次创建对象都会被调用，并<strong>且构造代码块的执行次序优先于类构造函数</strong>。 这个构造代码块的执行顺序不会因为方法所在位置而影响，我特意将他放在构造函数之后。</blockquote></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

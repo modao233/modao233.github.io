@@ -1,0 +1,47 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/Windows/nginxmu-lu-liu-lan/>nginx目录浏览（顺便美化）</a></h1><div class=post-meta-inline><span class=post-date> 2020-09-23 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/windows/>#Windows</a></span><div class=post-content><p>nginx开启目录浏览<h2 id=huan-jing-da-jian>环境搭建</h2><p>本次在我的win10上安装，所以阅读的相关文档是win10系统下的。<p>首先，<a href=http://nginx.org/en/download.html>下载</a>nginx/Windows的压缩包。<p>接着，找个位置将其解压，并在cmd中cd到解压位置，将其运行。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#65737e;># 进入目录
+</span><span style=color:#bf616a;>D:</span><span style=color:#96b5b4;>\></span><span style=color:#bf616a;>cd</span><span> nginx-1.19.2
+</span><span style=color:#65737e;># 启动运行
+</span><span style=color:#bf616a;>D:</span><span style=color:#96b5b4;>\n</span><span style=color:#bf616a;>ginx-1.19.2</span><span>>start nginx.exe
+</span><span style=color:#65737e;># 查看进程
+</span><span style=color:#bf616a;>D:</span><span style=color:#96b5b4;>\n</span><span style=color:#bf616a;>ginx-1.19.2</span><span>>tasklist /fi "</span><span style=color:#a3be8c;>imagename eq nginx.exe</span><span>"
+</span><span>
+</span><span style=color:#bf616a;>映像名称</span><span>                       PID 会话名              会话#       内存使用
+</span><span>=</span><span style=color:#a3be8c;>======================== </span><span>=</span><span style=color:#a3be8c;>======= </span><span>=</span><span style=color:#a3be8c;>=============== </span><span>=</span><span style=color:#a3be8c;>========== </span><span>=</span><span style=color:#a3be8c;>===========
+</span><span style=color:#bf616a;>nginx.exe</span><span>                    22300 Console                   11     13,092 K
+</span><span style=color:#bf616a;>nginx.exe</span><span>                    24444 Console                   11     13,428 K
+</span></code></pre><blockquote><p>启动失败看错误报告，详情见参考文章里的第一篇</blockquote><p>相关nginx操作指令：<table><thead><tr><th>指令<th>描述<tbody><tr><td>nginx -s stop<td>fast shutdown<tr><td>nginx -s quit<td>graceful shutdown<tr><td>nginx -s reload<td>changing configuration, starting new worker processes with a new configuration, graceful shutdown of old worker processes<tr><td>nginx -s reopen<td>re-opening log files</table><h2 id=pei-zhi-xiu-gai>配置修改</h2><p>编辑：<code>D:\nginx-1.19.2\conf\nginx.conf</code><p>在http{}里的server{}里修改相关配置：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>listen       80;
+</span><span>server_name  localhost;
+</span><span>charset utf-8;
+</span><span>#access_log  logs/host.access.log  main;
+</span><span>location / {
+</span><span>    #root   html;
+</span><span>    #index  index.html index.htm;
+</span><span>    # 设置要显示目录的路径
+</span><span>    root modao;
+</span><span>    # 开启目录浏览
+</span><span>    autoindex on;
+</span><span>    # 切换为 off 后，以可读的方式显示文件大小，单位为 KB、MB 或者 GB
+</span><span>    autoindex_exact_size off;
+</span><span>    # 以服务器的文件时间作为显示的时间
+</span><span>    autoindex_localtime on;
+</span><span>}
+</span></code></pre><blockquote><p>每次修改配置后，都需要运行<code>nginx -s reload</code>才能看到修改。</blockquote><h2 id=xian-shi-mei-hua>显示美化</h2><p>这里介绍简单的美化，<a href=https://github.com/Hzlarm/autoindex.git>下载插件</a>，将里面的<code>.autoindex</code>目录放到资源所在目录，修改相关配置：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>listen       80;
+</span><span>server_name  localhost;
+</span><span>charset utf-8;
+</span><span>#access_log  logs/host.access.log  main;
+</span><span>location / {
+</span><span>    #root   html;
+</span><span>    #index  index.html index.htm;
+</span><span>    # 设置要显示目录的路径
+</span><span>    root modao;
+</span><span>    # 开启目录浏览
+</span><span>    autoindex on;
+</span><span>    # 切换为 off 后，以可读的方式显示文件大小，单位为 KB、MB 或者 GB
+</span><span>    autoindex_exact_size off;
+</span><span>    # 以服务器的文件时间作为显示的时间
+</span><span>    autoindex_localtime on;
+</span><span>    
+</span><span>    add_before_body /.autoindex/header.html;
+</span><span>    add_after_body /.autoindex/footer.html;
+</span><span>}
+</span></code></pre><p>另一个美化方法可参考：https://github.com/Naereen/Nginx-Fancyindex-Theme<p>设置为开机启动：<p>这里采用一种简单方便的办法。新建一个nginx快捷方式放到<code>C:\Users\[用户名]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</code>目录即可。<blockquote><p>win10下，显示的目录里如果有中文，将会无法访问</blockquote><h2 id=can-kao-wen-zhang>参考文章</h2><p><a href=http://nginx.org/en/docs/windows.html>nginx for Windows</a><p><a href=https://blog.csdn.net/hzlarm/article/details/103781416>windows环境nginx搭建文件服务器及美化</a><h2 id=luan-ma-tan-jiu>乱码探究</h2><p>win10下，nginx中文乱码，设置：<code>charset utf-8,gb2312;</code><p>解决了中文乱码，但是nginx无法访问中文文件名，目前无法解决，除非系统使用utf-8<p>[win10的utf-8目前无法获得良好的体验]<p>网上有人说在后端个别目录用APACHE代理了，APACHE支持中文码：<p>location /~doc/ { proxy_pass http://127.0.0.1:81/;#apache server }<p>==Linux下两个工具convmv和iconv==<p>convmv就是更改文件名编码方式的一个工具。比如<p>sudo convmv -f gbk -t utf-8 -r –notest /home<p>就是将/home目录下原来文件名是gbk编码方式的全部改为utf-8格式的。这里 -f 后面为原来的编码方式，-t 后面是要更改为的编码方式， -r 表示这个目录下面的所有文件， –notest 表示马上执行，而不是仅仅测试而已。另外这命令好像要root才能执行，因此要加上 sudo。<p>iconv是更改文件编码方式的一个工具：<p>sudo iconv -f gbk -t utf-8 -o outfile infile<p>-f为原来的编码方式，-t 为输出文件的编码方式， -o表示输出文件名，这利用outfile表示，最后跟上要更改编码方式的文件名sourcefile 。<p>通过这两个工具，中文文件乱码的问题终于解决。</div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>

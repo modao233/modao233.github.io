@@ -1,0 +1,65 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/Proxy/archlinuxdai-li-shi-jian/>ArchLinux代理实践</a></h1><div class=post-meta-inline><span class=post-date> 2020-11-05 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/proxy/>#Proxy</a>  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a></span><div class=post-content><h2 id=pei-zhi-v2raydai-li-ke-hu-duan>配置v2ray代理客户端</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 安装v2ray
+</span><span>pacman -S v2ray
+</span><span>
+</span><span>#编辑代理配置文件
+</span><span>vim /etc/v2ray/config.json
+</span><span>
+</span><span>#启动v2ray
+</span><span>systemctl start v2ray
+</span></code></pre><h2 id=pei-zhi-privoxy>配置Privoxy</h2><p><a href=http://www.privoxy.org/>Privoxy</a> 是一个 HTTP 协议过滤代理，常结合 Tor 使用。Privoxy 是有着先进的过滤能力和保护隐私的代理工具，它可以过滤网页内容，管理cookies，控制访问，除广告、横幅、弹出窗口等等，它同时支持单系统和多用户网络。<p>当用户直接使用 <a href=https://en.wikipedia.org/wiki/SOCKS>SOCKS</a> 代理访问网络时，浏览器会泄漏 DNS 请求，降低匿名性，这时应该使用 Privoxy。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 安装privoxy
+</span><span>pacman -S privoxy
+</span><span>
+</span><span># 配置转发规则
+</span><span>vim /etc/privoxy/config
+</span><span>
+</span><span># 找到 forward-socks5t 一行反注释
+</span><span># 更改其值为v2ray代理监听的地址
+</span><span># 注意最后面有一个空格和点号
+</span><span>forward-socks5t   /               127.0.0.1:10808 .
+</span><span>
+</span><span># 启动privoxy
+</span><span>systemctl start privoxy
+</span></code></pre><blockquote><p>在使用 privoxy 对 sock5 等代理协议进行转发成 http 的时候 forward-socks5 和 forward-socks5t 区别虽然不是很大，但是有时候却非常头疼，只能 GET 不能 POST。经过排查发现，forward-socks5 的 DNS 解析会在远程服务器上进行，而 forward-socks5t 却不会，这就导致使用后者访问境外网站的时候 ，国内 DNS 无法解析境外网址的情况，从而也就不知道去访问哪个IP。一般来说，还是建议使用 forward-socks5。</blockquote><h2 id=pei-zhi-proxychains>配置proxychains</h2><p>有些linux命令行工具没有配置代理的方法, 可以用proxychains强制应用使用代理网络<p>安装proxychains<p>修改配置文件/etc/proxychains.conf最后一行<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>socks5  127.0.0.1 10808
+</span></code></pre><p>使用proxychains方法, 在命令前加上proxychains, 如<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>proxychains cargo build
+</span><span>proxychains git clone
+</span></code></pre><p>设置了proxy环境变量后，proxychain用不了<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>[modao@modao ~]$ proxychains curl google.com
+</span><span>[proxychains] config file found: /etc/proxychains.conf
+</span><span>[proxychains] preloading /usr/lib/libproxychains4.so
+</span><span>[proxychains] DLL init: proxychains-ng 4.16
+</span><span>[proxychains] Strict chain  ...  127.0.0.1:10808  ...  google.com:80  ...  OK
+</span><span>&LTHTML>&LTHEAD>&LTmeta http-equiv="content-type" content="text/html;charset=utf-8">
+</span><span>&LTTITLE>301 Moved&LT/TITLE>&LT/HEAD>&LTBODY>
+</span><span>&LTH1>301 Moved&LT/H1>
+</span><span>The document has moved
+</span><span>&LTA HREF="http://www.google.com/">here&LT/A>.
+</span><span>&LT/BODY>&LT/HTML>
+</span><span>[modao@modao ~]$ export all_proxy=127.0.0.1:8118
+</span><span>[modao@modao ~]$ proxychains curl google.com
+</span><span>[proxychains] config file found: /etc/proxychains.conf
+</span><span>[proxychains] preloading /usr/lib/libproxychains4.so
+</span><span>[proxychains] DLL init: proxychains-ng 4.16
+</span><span>[proxychains] Strict chain  ...  127.0.0.1:10808  ...  127.0.0.1:8118  ...  OK
+</span><span>^C
+</span><span>[modao@modao ~]$ export all_proxy=127.0.0.1:10808
+</span><span>[modao@modao ~]$ proxychains curl google.com
+</span><span>[proxychains] config file found: /etc/proxychains.conf
+</span><span>[proxychains] preloading /usr/lib/libproxychains4.so
+</span><span>[proxychains] DLL init: proxychains-ng 4.16
+</span><span>[proxychains] Strict chain  ...  127.0.0.1:10808  ...  127.0.0.1:10808  ...  OK
+</span><span>^C
+</span><span>[modao@modao ~]$
+</span></code></pre><h2 id=pei-zhi-zhong-duan-dai-li>配置终端代理</h2><p>写入配置文件，永久生效<p>在命令行执行，临时生效<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#b48ead;>export </span><span style=color:#bf616a;>http_proxy</span><span>="</span><span style=color:#a3be8c;>127.0.0.1:8118</span><span>"
+</span><span style=color:#b48ead;>export </span><span style=color:#bf616a;>https_proxy</span><span>="</span><span style=color:#a3be8c;>127.0.0.1:8118</span><span>"
+</span></code></pre><p>以上设置，有些场景无法成功代理，比如yay、git 正确的设置方法是：<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#b48ead;>export </span><span style=color:#bf616a;>http_proxy</span><span>="</span><span style=color:#a3be8c;>http://127.0.0.1:8118</span><span>"
+</span><span style=color:#b48ead;>export </span><span style=color:#bf616a;>https_proxy</span><span>="</span><span style=color:#a3be8c;>http://127.0.0.1:8118</span><span>"
+</span></code></pre><p>通过<code>curl www.google.com</code>命令检查是否设置成功。<p>取消代理设置<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>unset http_proxy
+</span><span>unset https_proxy
+</span></code></pre><blockquote><p>note：通过脚本设置临时代理是不起作用的<p>有效操作：<code>source ./set.sh</code>，<code>. ./set.sh</code><p>在UNIX系统中,我们在运行shell程序或系统命令的过程如下:<ul><li>假设在当前的shell环境下,我们运行ps -f命令<li>首先,当前的shell会调用fork()命令，产生一个subprocess，该子进程完全复制了父进程的所有环境<li>之后，当前的shell会调用exec ps -f命令，在新的子进程的环境中运行ps -f 命令。子进程的环境变量会根据新的应用进行调整，并使之运行，当应用完成之后，子进程结束，返回到父进程</ul></blockquote><h2 id=pei-zhi-gitdai-li>配置Git代理</h2><h3 id=using-git-config>Using git-config</h3><p>Git reads its configuration from four INI-type configuration files:<ul><li><code>/etc/gitconfig</code> for system-wide defaults<li><code>~/.gitconfig</code> and <code>~/.config/git/config</code> (since 1.7.12) for user-specific configuration<li><code>.git/config</code> for repository-specific configuration</ul><h3 id=pei-zhi-git-http-httpsdai-li>配置Git http/https代理</h3><p>在<code>~/.config/git/config</code>文件中加入以下配置：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>[http]
+</span><span>	proxy = socks5://127.0.0.1:10808
+</span></code></pre><p>注意，上明配置等同于命令<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>git config --global http.proxy 'socks5://127.0.0.1:10808'
+</span></code></pre><p>Git不认https.proxy，设置http.proxy就可以支持 https 了。<h3 id=pei-zhi-git-sshdai-li>配置Git SSH代理</h3><p>在 ~/.ssh/config 文件中加入以下配置:<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>Host github.com
+</span><span>HostName github.com
+</span><span>User git
+</span><span>Port 22
+</span><span>ProxyCommand /usr/bin/ncat --proxy 127.0.0.1:10808 --proxy-type socks5 %h %p
+</span></code></pre></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>
