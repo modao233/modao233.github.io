@@ -1,5 +1,131 @@
-<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/vscodexiang-guan/>vscode相关</a></h1><div class=post-meta-inline><span class=post-date> 2022-07-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a></span><div class=post-content><h2 id=vscodean-zhuang-pei-zhi>vscode安装配置</h2><p>update: 2020-12-3<p>下载编译器，一般是用mingw-w64，可以选离线版安装包（<code>x86_64-posix-seh</code>）、或者msys2附带（最新）。<p>接着，配置环境变量Path，讲mingw的bin目录添加进去，在cmd输入<code>gcc -v</code>可以显示出gcc的版本，用于验证环境是否配置正确。<p>vscode拓展插件：<ul><li>C/C++：提供Debug和Format功能<li>Code Runner：右键运行单文件，无法Debug<li>Bracket Pair Colorizer 2：彩虹花括号<li>One Dark Pro：好看的暗色主题</ul><p>需要配置调试功能，则需要添加4个json文件。<h2 id=vscodeyuan-cheng-kai-fa>vscode远程开发</h2><p>update: 2020-12-12<p>在VScode中，使用<code>ctrl+shift+x</code>快捷键打开插件搜索窗口，输入插件<code>Remote Development</code>，并点击安装。<p>将本地密钥对的公钥内容复制到远程主机的<code>~/.ssh/authorized_keys</code>文件中。<p>若没有<code>~/.ssh</code>目录，先在远程主机执行一遍<code>ssh localhost</code>，此时会有如下提示(SSH首次登陆提示)，输入 yes 。然后按提示输入密码，这样就登陆到本机了。<p>在VS code中，使用<code>cmd+shift+p</code>快捷键打开命令输入窗口，输入<code>Remote-SSH:Connect to Host...</code>，第一次使用时需要选择<code>Add New SSH Host</code>配置一下，输入完成后选择第一个配置文件：<code>xxx/.ssh/config</code>(xxx是省略的意思)。<p>把登录服务器的信息添加到配置文件<code>.ssh/config</code>中的，该文件格式为：<pre class=language-text data-lang=text style=background-color:#2b303b;color:#c0c5ce;><code class=language-text data-lang=text><span>Host alias
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/vscodexiang-guan/>vscode相关</a></h1><div class=post-meta-inline><span class=post-date> 2022-07-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a></span><div class=post-content><h2 id=vscodean-zhuang-pei-zhi>vscode安装配置</h2><p>update: 2020-12-3<p>下载编译器，一般是用mingw-w64，可以选离线版安装包（<code>x86_64-posix-seh</code>）、或者msys2附带（最新）。<p>接着，配置环境变量Path，讲mingw的bin目录添加进去，在cmd输入<code>gcc -v</code>可以显示出gcc的版本，用于验证环境是否配置正确。<p>vscode拓展插件：<ul><li>C/C++：提供Debug和Format功能<li>Code Runner：右键运行单文件，无法Debug<li>Bracket Pair Colorizer 2：彩虹花括号<li>One Dark Pro：好看的暗色主题</ul><p>需要配置调试功能，则需要添加4个json文件。<h2 id=vscodeyuan-cheng-kai-fa>vscode远程开发</h2><p>update: 2020-12-12<p>在VScode中，使用<code>ctrl+shift+x</code>快捷键打开插件搜索窗口，输入插件<code>Remote Development</code>，并点击安装。<p>将本地密钥对的公钥内容复制到远程主机的<code>~/.ssh/authorized_keys</code>文件中。<p>若没有<code>~/.ssh</code>目录，先在远程主机执行一遍<code>ssh localhost</code>，此时会有如下提示(SSH首次登陆提示)，输入 yes 。然后按提示输入密码，这样就登陆到本机了。<p>在VS code中，使用<code>cmd+shift+p</code>快捷键打开命令输入窗口，输入<code>Remote-SSH:Connect to Host...</code>，第一次使用时需要选择<code>Add New SSH Host</code>配置一下，输入完成后选择第一个配置文件：<code>xxx/.ssh/config</code>(xxx是省略的意思)。<p>把登录服务器的信息添加到配置文件<code>.ssh/config</code>中的，该文件格式为：<pre class=language-text data-lang=text style=background-color:#2b303b;color:#c0c5ce;><code class=language-text data-lang=text><span>Host alias
 </span><span>  HostName host_id
 </span><span>  User user_name
 </span><span>  Port 22
-</span></code></pre><ul><li><code>alias</code>：该远程的命名<li><code>HostName</code>：远程主机的IP地址<li><code>User</code>：远程主机的用户名<li><code>port</code>：远程主机的端口号，不填写的话，ssh默认端口号为22，如果要用其他端口号，可以在这里更改</ul><p>远程端安装插件：<ul><li>C/C++：查看定义，跳转函数<li>Code Runner：右键运行</ul><h2 id=jie-jue-vscodeti-shi-codean-zhuang-si-hu-sun-pi>解决Vscode提示code安装似乎损坏</h2><p>update: 2020-12-8<p>原因：安装了一个叫background的拓展 解决：<ol><li>下载一个叫<code>Fix VSCode Checksums</code>的拓展<li><code>ctrl+shift+P</code>打开命令面板<li>输入<code>Fix Checksums: Apply</code><li>重启vscode</ol></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 modao</span><span class=copyright-theme> <span class=copyright-theme-sep>:: </span> Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman </span></div></div></footer></div>
+</span></code></pre><ul><li><code>alias</code>：该远程的命名<li><code>HostName</code>：远程主机的IP地址<li><code>User</code>：远程主机的用户名<li><code>port</code>：远程主机的端口号，不填写的话，ssh默认端口号为22，如果要用其他端口号，可以在这里更改</ul><p>远程端安装插件：<ul><li>C/C++：查看定义，跳转函数<li>Code Runner：右键运行</ul><h2 id=jie-jue-vscodeti-shi-codean-zhuang-si-hu-sun-pi>解决Vscode提示code安装似乎损坏</h2><p>update: 2020-12-8<p>原因：安装了一个叫background的拓展 解决：<ol><li>下载一个叫<code>Fix VSCode Checksums</code>的拓展<li><code>ctrl+shift+P</code>打开命令面板<li>输入<code>Fix Checksums: Apply</code><li>重启vscode</ol><h2 id=win10-vscodexiang-mu-pei-zhi>win10-VScode项目配置</h2><p>update = 2022-07-21<p>launch.json：设置调试器，并通过<code>preLaunchTask</code>选择编译器<p>下方配置中clang_lldb暂时用不了，缺少lldm-mi.exe<p><a href=https://github.com/microsoft/vscode-cpptools/issues/6617>vscode lldb-mi issue</a><p><a href=https://github.com/lldb-tools/lldb-mi>lldb-mi</a><pre class=language-json data-lang=json style=background-color:#2b303b;color:#c0c5ce;><code class=language-json data-lang=json><span>{
+</span><span>    "</span><span style=color:#a3be8c;>version</span><span>": "</span><span style=color:#a3be8c;>0.2.0</span><span>",
+</span><span>    "</span><span style=color:#a3be8c;>configurations</span><span>": [
+</span><span>        {
+</span><span>        "</span><span style=color:#a3be8c;>name</span><span>": "</span><span style=color:#a3be8c;>(clang_lldb) Launch</span><span>", </span><span style=color:#65737e;>// 配置名称，将会在启动配置的下拉菜单中显示
+</span><span>        "</span><span style=color:#a3be8c;>type</span><span>": "</span><span style=color:#a3be8c;>cppdbg</span><span>", </span><span style=color:#65737e;>// 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg
+</span><span>        "</span><span style=color:#a3be8c;>request</span><span>": "</span><span style=color:#a3be8c;>launch</span><span>", </span><span style=color:#65737e;>// 请求配置类型，可以为launch（启动）或attach（附加）
+</span><span>        "</span><span style=color:#a3be8c;>program</span><span>": "</span><span style=color:#a3be8c;>${fileDirname}/${fileBasenameNoExtension}.exe</span><span>", </span><span style=color:#65737e;>// 将要进行调试的程序的路径
+</span><span>        "</span><span style=color:#a3be8c;>args</span><span>": [], </span><span style=color:#65737e;>// 程序调试时传递给程序的命令行参数，一般设为空即可
+</span><span>        "</span><span style=color:#a3be8c;>stopAtEntry</span><span>": </span><span style=color:#d08770;>false</span><span>, </span><span style=color:#65737e;>// 设为true时程序将暂停在程序入口处，相当于在main上打断点
+</span><span>        "</span><span style=color:#a3be8c;>cwd</span><span>": "</span><span style=color:#a3be8c;>${workspaceFolder}</span><span>", </span><span style=color:#65737e;>// 调试程序时的工作目录，此为工作区文件夹；改成${fileDirname}可变为文件所在目录
+</span><span>        "</span><span style=color:#a3be8c;>environment</span><span>": [], </span><span style=color:#65737e;>// 环境变量
+</span><span>        "</span><span style=color:#a3be8c;>externalConsole</span><span>": </span><span style=color:#d08770;>true</span><span>, </span><span style=color:#65737e;>// 使用单独的cmd窗口，与其它IDE一致；为false时使用内置终端
+</span><span>        "</span><span style=color:#a3be8c;>internalConsoleOptions</span><span>": "</span><span style=color:#a3be8c;>neverOpen</span><span>", </span><span style=color:#65737e;>// 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
+</span><span>        "</span><span style=color:#a3be8c;>MIMode</span><span>": "</span><span style=color:#a3be8c;>lldb</span><span>", </span><span style=color:#65737e;>// 指定连接的调试器，可以为gdb或lldb。但我没试过lldb
+</span><span>        "</span><span style=color:#a3be8c;>miDebuggerPath</span><span>": "</span><span style=color:#a3be8c;>C:/Program Files/LLVM/bin/lldb-mi.exe</span><span>", </span><span style=color:#65737e;>// 调试器路径，Windows下后缀不能省略，Linux下则不要
+</span><span>        "</span><span style=color:#a3be8c;>setupCommands</span><span>": [
+</span><span>            { </span><span style=color:#65737e;>// 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google
+</span><span>                "</span><span style=color:#a3be8c;>description</span><span>": "</span><span style=color:#a3be8c;>Enable pretty-printing for gdb</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>text</span><span>": "</span><span style=color:#a3be8c;>-enable-pretty-printing</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>ignoreFailures</span><span>": </span><span style=color:#d08770;>false
+</span><span>            }
+</span><span>        ],
+</span><span>        "</span><span style=color:#a3be8c;>preLaunchTask</span><span>": "</span><span style=color:#a3be8c;>Compile_clang++</span><span>" </span><span style=color:#65737e;>// 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应
+</span><span>    },
+</span><span>    {
+</span><span>        "</span><span style=color:#a3be8c;>name</span><span>": "</span><span style=color:#a3be8c;>(clang_gdb) Launch</span><span>", </span><span style=color:#65737e;>// 配置名称，将会在启动配置的下拉菜单中显示
+</span><span>        "</span><span style=color:#a3be8c;>type</span><span>": "</span><span style=color:#a3be8c;>cppdbg</span><span>", </span><span style=color:#65737e;>// 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg
+</span><span>        "</span><span style=color:#a3be8c;>request</span><span>": "</span><span style=color:#a3be8c;>launch</span><span>", </span><span style=color:#65737e;>// 请求配置类型，可以为launch（启动）或attach（附加）
+</span><span>        "</span><span style=color:#a3be8c;>program</span><span>": "</span><span style=color:#a3be8c;>${fileDirname}/${fileBasenameNoExtension}.exe</span><span>", </span><span style=color:#65737e;>// 将要进行调试的程序的路径
+</span><span>        "</span><span style=color:#a3be8c;>args</span><span>": [], </span><span style=color:#65737e;>// 程序调试时传递给程序的命令行参数，一般设为空即可
+</span><span>        "</span><span style=color:#a3be8c;>stopAtEntry</span><span>": </span><span style=color:#d08770;>false</span><span>, </span><span style=color:#65737e;>// 设为true时程序将暂停在程序入口处，相当于在main上打断点
+</span><span>        "</span><span style=color:#a3be8c;>cwd</span><span>": "</span><span style=color:#a3be8c;>${workspaceFolder}</span><span>", </span><span style=color:#65737e;>// 调试程序时的工作目录，此为工作区文件夹；改成${fileDirname}可变为文件所在目录
+</span><span>        "</span><span style=color:#a3be8c;>environment</span><span>": [], </span><span style=color:#65737e;>// 环境变量
+</span><span>        "</span><span style=color:#a3be8c;>externalConsole</span><span>": </span><span style=color:#d08770;>true</span><span>, </span><span style=color:#65737e;>// 使用单独的cmd窗口，与其它IDE一致；为false时使用内置终端
+</span><span>        "</span><span style=color:#a3be8c;>internalConsoleOptions</span><span>": "</span><span style=color:#a3be8c;>neverOpen</span><span>", </span><span style=color:#65737e;>// 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
+</span><span>        "</span><span style=color:#a3be8c;>MIMode</span><span>": "</span><span style=color:#a3be8c;>gdb</span><span>", </span><span style=color:#65737e;>// 指定连接的调试器，可以为gdb或lldb。但我没试过lldb
+</span><span>        "</span><span style=color:#a3be8c;>miDebuggerPath</span><span>": "</span><span style=color:#a3be8c;>gdb.exe</span><span>", </span><span style=color:#65737e;>// 调试器路径，Windows下后缀不能省略，Linux下则不要
+</span><span>        "</span><span style=color:#a3be8c;>setupCommands</span><span>": [
+</span><span>            { </span><span style=color:#65737e;>// 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google
+</span><span>                "</span><span style=color:#a3be8c;>description</span><span>": "</span><span style=color:#a3be8c;>Enable pretty-printing for gdb</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>text</span><span>": "</span><span style=color:#a3be8c;>-enable-pretty-printing</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>ignoreFailures</span><span>": </span><span style=color:#d08770;>false
+</span><span>            }
+</span><span>        ],
+</span><span>        "</span><span style=color:#a3be8c;>preLaunchTask</span><span>": "</span><span style=color:#a3be8c;>Compile_clang++</span><span>" </span><span style=color:#65737e;>// 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应
+</span><span>    },
+</span><span>    {
+</span><span>        "</span><span style=color:#a3be8c;>name</span><span>": "</span><span style=color:#a3be8c;>(gcc_gdb) Launch</span><span>", </span><span style=color:#65737e;>// 配置名称，将会在启动配置的下拉菜单中显示
+</span><span>        "</span><span style=color:#a3be8c;>type</span><span>": "</span><span style=color:#a3be8c;>cppdbg</span><span>", </span><span style=color:#65737e;>// 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg
+</span><span>        "</span><span style=color:#a3be8c;>request</span><span>": "</span><span style=color:#a3be8c;>launch</span><span>", </span><span style=color:#65737e;>// 请求配置类型，可以为launch（启动）或attach（附加）
+</span><span>        "</span><span style=color:#a3be8c;>program</span><span>": "</span><span style=color:#a3be8c;>${fileDirname}/${fileBasenameNoExtension}.exe</span><span>", </span><span style=color:#65737e;>// 将要进行调试的程序的路径
+</span><span>        "</span><span style=color:#a3be8c;>args</span><span>": [], </span><span style=color:#65737e;>// 程序调试时传递给程序的命令行参数，一般设为空即可
+</span><span>        "</span><span style=color:#a3be8c;>stopAtEntry</span><span>": </span><span style=color:#d08770;>false</span><span>, </span><span style=color:#65737e;>// 设为true时程序将暂停在程序入口处，相当于在main上打断点
+</span><span>        "</span><span style=color:#a3be8c;>cwd</span><span>": "</span><span style=color:#a3be8c;>${workspaceFolder}</span><span>", </span><span style=color:#65737e;>// 调试程序时的工作目录，此为工作区文件夹；改成${fileDirname}可变为文件所在目录
+</span><span>        "</span><span style=color:#a3be8c;>environment</span><span>": [], </span><span style=color:#65737e;>// 环境变量
+</span><span>        "</span><span style=color:#a3be8c;>externalConsole</span><span>": </span><span style=color:#d08770;>true</span><span>, </span><span style=color:#65737e;>// 使用单独的cmd窗口，与其它IDE一致；为false时使用内置终端
+</span><span>        "</span><span style=color:#a3be8c;>internalConsoleOptions</span><span>": "</span><span style=color:#a3be8c;>neverOpen</span><span>", </span><span style=color:#65737e;>// 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
+</span><span>        "</span><span style=color:#a3be8c;>MIMode</span><span>": "</span><span style=color:#a3be8c;>gdb</span><span>", </span><span style=color:#65737e;>// 指定连接的调试器，可以为gdb或lldb。但我没试过lldb
+</span><span>        "</span><span style=color:#a3be8c;>miDebuggerPath</span><span>": "</span><span style=color:#a3be8c;>gdb.exe</span><span>", </span><span style=color:#65737e;>// 调试器路径，Windows下后缀不能省略，Linux下则不要
+</span><span>        "</span><span style=color:#a3be8c;>setupCommands</span><span>": [
+</span><span>            { </span><span style=color:#65737e;>// 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google
+</span><span>                "</span><span style=color:#a3be8c;>description</span><span>": "</span><span style=color:#a3be8c;>Enable pretty-printing for gdb</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>text</span><span>": "</span><span style=color:#a3be8c;>-enable-pretty-printing</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>ignoreFailures</span><span>": </span><span style=color:#d08770;>false
+</span><span>            }
+</span><span>        ],
+</span><span>        "</span><span style=color:#a3be8c;>preLaunchTask</span><span>": "</span><span style=color:#a3be8c;>Compile_g++</span><span>" </span><span style=color:#65737e;>// 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应
+</span><span>    },
+</span><span>    ]
+</span><span>}
+</span></code></pre><p>task.json：编译器及编译选项设置 如果是在windows上使用clang 并且同时安装有vs和mingw, clang链接是会自动使用msvs, 链接时会有LINK error。解决方法是在clang++的编译选项中添加<code>--target=x86_64-w64-mingw</code><pre class=language-json data-lang=json style=background-color:#2b303b;color:#c0c5ce;><code class=language-json data-lang=json><span>{
+</span><span>    "</span><span style=color:#a3be8c;>version</span><span>": "</span><span style=color:#a3be8c;>2.0.0</span><span>",
+</span><span>    "</span><span style=color:#a3be8c;>tasks</span><span>": [
+</span><span>        {
+</span><span>            "</span><span style=color:#a3be8c;>label</span><span>": "</span><span style=color:#a3be8c;>Compile_g++</span><span>",
+</span><span>            "</span><span style=color:#a3be8c;>command</span><span>": "</span><span style=color:#a3be8c;>g++</span><span>",
+</span><span>            "</span><span style=color:#a3be8c;>args</span><span>": [
+</span><span>                "</span><span style=color:#a3be8c;>${file}</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-o</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>${fileDirname}/${fileBasenameNoExtension}.exe</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-g</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-m64</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-Wall</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-static-libgcc</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-fexec-charset=GBK</span><span>"
+</span><span>            ],
+</span><span>            "</span><span style=color:#a3be8c;>type</span><span>": "</span><span style=color:#a3be8c;>process</span><span>",
+</span><span>            "</span><span style=color:#a3be8c;>group</span><span>": {
+</span><span>                "</span><span style=color:#a3be8c;>kind</span><span>": "</span><span style=color:#a3be8c;>build</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>isDefault</span><span>": </span><span style=color:#d08770;>false
+</span><span>            },
+</span><span>            "</span><span style=color:#a3be8c;>presentation</span><span>": {
+</span><span>                "</span><span style=color:#a3be8c;>echo</span><span>": </span><span style=color:#d08770;>true</span><span>,
+</span><span>                "</span><span style=color:#a3be8c;>reveal</span><span>": "</span><span style=color:#a3be8c;>always</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>focus</span><span>": </span><span style=color:#d08770;>false</span><span>,
+</span><span>                "</span><span style=color:#a3be8c;>panel</span><span>": "</span><span style=color:#a3be8c;>shared</span><span>"
+</span><span>            },
+</span><span>            "</span><span style=color:#a3be8c;>problemMatcher</span><span>": "</span><span style=color:#a3be8c;>$gcc</span><span>"
+</span><span>        },
+</span><span>        {
+</span><span>            "</span><span style=color:#a3be8c;>type</span><span>": "</span><span style=color:#a3be8c;>cppbuild</span><span>",
+</span><span>            "</span><span style=color:#a3be8c;>label</span><span>": "</span><span style=color:#a3be8c;>Compile_clang++</span><span>",
+</span><span>            "</span><span style=color:#a3be8c;>command</span><span>": "</span><span style=color:#a3be8c;>C:</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>Program Files</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>LLVM</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>bin</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>clang++.exe</span><span>",
+</span><span>            "</span><span style=color:#a3be8c;>args</span><span>": [
+</span><span>                "</span><span style=color:#a3be8c;>-fdiagnostics-color=always</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-g</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>--target=x86_64-w64-mingw</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>${file}</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>-o</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>${fileDirname}</span><span style=color:#96b5b4;>\\</span><span style=color:#a3be8c;>${fileBasenameNoExtension}.exe</span><span>"
+</span><span>            ],
+</span><span>            "</span><span style=color:#a3be8c;>options</span><span>": {
+</span><span>                "</span><span style=color:#a3be8c;>cwd</span><span>": "</span><span style=color:#a3be8c;>${fileDirname}</span><span>"
+</span><span>            },
+</span><span>            "</span><span style=color:#a3be8c;>problemMatcher</span><span>": [
+</span><span>                "</span><span style=color:#a3be8c;>$gcc</span><span>"
+</span><span>            ],
+</span><span>            "</span><span style=color:#a3be8c;>group</span><span>": {
+</span><span>                "</span><span style=color:#a3be8c;>kind</span><span>": "</span><span style=color:#a3be8c;>build</span><span>",
+</span><span>                "</span><span style=color:#a3be8c;>isDefault</span><span>": </span><span style=color:#d08770;>true
+</span><span>            },
+</span><span>            "</span><span style=color:#a3be8c;>detail</span><span>": "</span><span style=color:#a3be8c;>调试器生成的任务。</span><span>"
+</span><span>        }
+</span><span>    ]
+</span><span>}
+</span></code></pre><p>ref：<ul><li>https://www.cnblogs.com/nikiss/p/14208341.html<li>https://code.visualstudio.com/docs/cpp/launch-json-reference<li>https://blog.csdn.net/qq_21567385/article/details/122795215</ul></div></div></div><footer class=footer__poweredby><p class=caption>© 2022 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
