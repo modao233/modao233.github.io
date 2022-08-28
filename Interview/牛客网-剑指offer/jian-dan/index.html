@@ -1,294 +1,298 @@
-<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Interview/牛客网-剑指offer/jian-dan/>牛客网-剑指offer算法专栏</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-09 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/interview/>#Interview</a></span><div class=post-content><p>对算法题的一些记录。<h2 id=jz1-er-wei-shu-zu-zhong-cha-zhao><code>JZ1</code>：二维数组中查找</h2><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>/* 思路</span><span>
-</span><span>* 矩阵是有序的，从左下角来看，向上数字递减，向右数字递增，</span><span>
-</span><span>* 因此从左下角开始查找，当要查找数字比左下角数字大时。右移</span><span>
-</span><span>* 要查找数字比左下角数字小时，上移</span><span>
-</span><span>*/</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>bool </span><span style=color:#8fa1b3;>Find</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>target</span><span style=color:#eff1f5;>, vector&LTvector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> > </span><span style=color:#bf616a;>array</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> row </span><span>=</span><span style=color:#eff1f5;> array.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> col </span><span>=</span><span style=color:#eff1f5;> array[</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>].</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> m </span><span>=</span><span style=color:#eff1f5;> row</span><span>-</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>, n </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(m</span><span>>=</span><span style=color:#d08770;>0 </span><span>&&</span><span style=color:#eff1f5;> n </span><span><</span><span style=color:#eff1f5;> col){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(target </span><span>==</span><span style=color:#eff1f5;> array[m][n])</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>true</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else if</span><span style=color:#eff1f5;>(target </span><span>></span><span style=color:#eff1f5;> array[m][n])</span><span>++</span><span style=color:#eff1f5;>n;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else </span><span>--</span><span style=color:#eff1f5;>m;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>false</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><p><strong>循环判断的条件不使用无符号类型</strong><h2 id=jz2-ti-huan-kong-ge><code>JZ2</code>：替换空格</h2><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>/*</span><span>
-</span><span>问题1：替换字符串，是在原来的字符串上做替换，还是新开辟一个字符串做替换！</span><span>
-</span><span>问题2：在当前字符串替换，怎么替换才更有效率（不考虑java里现有的replace方法）。</span><span>
-</span><span>   ``从前往后替换，后面的字符要不断往后移动，要多次移动，所以效率低下</span><span>
-</span><span>   ``从后往前，先计算需要多少空间，然后从后往前移动，则每个字符只为移动一次，这样效率更高一点。</span><span>
-</span><span>*/</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>replaceSpace</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>str</span><span style=color:#eff1f5;>,</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>length</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> count</span><span>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i</span><span>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;i</span><span><</span><span style=color:#eff1f5;>length;i</span><span>++</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(str[i]</span><span>==' '</span><span style=color:#eff1f5;>)</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                count</span><span>++</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i</span><span>=</span><span style=color:#eff1f5;>length</span><span>-</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;i</span><span>>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;i</span><span>--</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(str[i]</span><span>!=' '</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count]</span><span>=</span><span style=color:#eff1f5;>str[i];</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                count</span><span>--</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count]</span><span>='</span><span style=color:#a3be8c;>%</span><span>'</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count</span><span>+</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>]</span><span>='</span><span style=color:#a3be8c;>2</span><span>'</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count</span><span>+</span><span style=color:#d08770;>2</span><span style=color:#eff1f5;>]</span><span>='</span><span style=color:#a3be8c;>0</span><span>'</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>	}</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><h2 id=jz3cong-wei-dao-tou-da-yin-lian-biao><code>JZ3</code>从尾到头打印链表</h2><p>输入一个链表，按链表从尾到头的顺序返回一个ArrayList。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>思路1：利用栈先入后出的特性完成</span><span>
-</span><span>思路2：保存数组，数组翻转</span><span>
-</span><span>思路3：递归</span><span>
-</span><span>/**</span><span>
-</span><span>*  struct ListNode {</span><span>
-</span><span>*        int val;</span><span>
-</span><span>*        struct ListNode *next;</span><span>
-</span><span>*        ListNode(int x) :</span><span>
-</span><span>*              val(x), next(NULL) {</span><span>
-</span><span>*        }</span><span>
-</span><span>*  };</span><span>
-</span><span>*/</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#8fa1b3;>printListFromTailToHead</span><span style=color:#eff1f5;>(ListNode</span><span>* </span><span style=color:#bf616a;>head</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        stack<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> temp;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(head </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            temp.</span><span style=color:#bf616a;>push</span><span style=color:#eff1f5;>(head-></span><span style=color:#bf616a;>val</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            head </span><span>=</span><span style=color:#eff1f5;> head -> </span><span style=color:#bf616a;>next</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> a;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>temp.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>()){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            a.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(temp.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>());</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            temp.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> a;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#8fa1b3;>printListFromTailToHead</span><span style=color:#eff1f5;>(ListNode</span><span>* </span><span style=color:#bf616a;>head</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> a;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(head </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            a.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(head-></span><span style=color:#bf616a;>val</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            head </span><span>=</span><span style=color:#eff1f5;> head -> </span><span style=color:#bf616a;>next</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>reverse</span><span style=color:#eff1f5;>(a.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), a.</span><span style=color:#bf616a;>end</span><span style=color:#eff1f5;>());</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> a;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#8fa1b3;>printListFromTailToHead</span><span style=color:#eff1f5;>(ListNode</span><span>* </span><span style=color:#bf616a;>head</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> a;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(head </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            a.</span><span style=color:#bf616a;>insert</span><span style=color:#eff1f5;>(a.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), head-></span><span style=color:#bf616a;>val</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(head -> </span><span style=color:#bf616a;>next </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> b </span><span>= </span><span style=color:#bf616a;>printListFromTailToHead</span><span style=color:#eff1f5;>(head -> </span><span style=color:#bf616a;>next</span><span style=color:#eff1f5;>);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>b.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>())a.</span><span style=color:#bf616a;>insert</span><span style=color:#eff1f5;>(a.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), b.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), b.</span><span style=color:#bf616a;>end</span><span style=color:#eff1f5;>());</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> a;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><h2 id=jz4-zhong-jian-er-cha-shu><code>JZ4</code> 重建二叉树</h2><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>思路：因为是树的结构，一般都是用递归来实现。</span><span>
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Interview/牛客网-剑指offer/jian-dan/>牛客网-剑指offer算法专栏</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-09 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/interview/>#Interview</a></span><div class=post-content><p>对算法题的一些记录。<h2 id=jz1-er-wei-shu-zu-zhong-cha-zhao><code>JZ1</code>：二维数组中查找</h2><p>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>/* 思路
+</span><span>* 矩阵是有序的，从左下角来看，向上数字递减，向右数字递增，
+</span><span>* 因此从左下角开始查找，当要查找数字比左下角数字大时。右移
+</span><span>* 要查找数字比左下角数字小时，上移
+</span><span>*/
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>bool </span><span style=color:#8fa1b3;>Find</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>target</span><span style=color:#eff1f5;>, vector&LTvector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> > </span><span style=color:#bf616a;>array</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> row </span><span>=</span><span style=color:#eff1f5;> array.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> col </span><span>=</span><span style=color:#eff1f5;> array[</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>].</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> m </span><span>=</span><span style=color:#eff1f5;> row</span><span>-</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>, n </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(m</span><span>>=</span><span style=color:#d08770;>0 </span><span>&&</span><span style=color:#eff1f5;> n </span><span><</span><span style=color:#eff1f5;> col){
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(target </span><span>==</span><span style=color:#eff1f5;> array[m][n])</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>true</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else if</span><span style=color:#eff1f5;>(target </span><span>></span><span style=color:#eff1f5;> array[m][n])</span><span>++</span><span style=color:#eff1f5;>n;
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else </span><span>--</span><span style=color:#eff1f5;>m;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>false</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><p><strong>循环判断的条件不使用无符号类型</strong><h2 id=jz2-ti-huan-kong-ge><code>JZ2</code>：替换空格</h2><p>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>/*
+</span><span>问题1：替换字符串，是在原来的字符串上做替换，还是新开辟一个字符串做替换！
+</span><span>问题2：在当前字符串替换，怎么替换才更有效率（不考虑java里现有的replace方法）。
+</span><span>   ``从前往后替换，后面的字符要不断往后移动，要多次移动，所以效率低下
+</span><span>   ``从后往前，先计算需要多少空间，然后从后往前移动，则每个字符只为移动一次，这样效率更高一点。
+</span><span>*/
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>	</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>replaceSpace</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>str</span><span style=color:#eff1f5;>,</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>length</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> count</span><span>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i</span><span>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;i</span><span><</span><span style=color:#eff1f5;>length;i</span><span>++</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(str[i]</span><span>==' '</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>                count</span><span>++</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i</span><span>=</span><span style=color:#eff1f5;>length</span><span>-</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;i</span><span>>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;i</span><span>--</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(str[i]</span><span>!=' '</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count]</span><span>=</span><span style=color:#eff1f5;>str[i];
+</span><span style=color:#eff1f5;>            }
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>                count</span><span>--</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count]</span><span>='</span><span style=color:#a3be8c;>%</span><span>'</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count</span><span>+</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>]</span><span>='</span><span style=color:#a3be8c;>2</span><span>'</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>                str[i</span><span>+</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#eff1f5;>count</span><span>+</span><span style=color:#d08770;>2</span><span style=color:#eff1f5;>]</span><span>='</span><span style=color:#a3be8c;>0</span><span>'</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>            }
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>	}
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><h2 id=jz3cong-wei-dao-tou-da-yin-lian-biao><code>JZ3</code>从尾到头打印链表</h2><p>输入一个链表，按链表从尾到头的顺序返回一个ArrayList。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>思路1：利用栈先入后出的特性完成
+</span><span>思路2：保存数组，数组翻转
+</span><span>思路3：递归
+</span><span>/**
+</span><span>*  struct ListNode {
+</span><span>*        int val;
+</span><span>*        struct ListNode *next;
+</span><span>*        ListNode(int x) :
+</span><span>*              val(x), next(NULL) {
+</span><span>*        }
+</span><span>*  };
+</span><span>*/
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#8fa1b3;>printListFromTailToHead</span><span style=color:#eff1f5;>(ListNode</span><span>* </span><span style=color:#bf616a;>head</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        stack<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> temp;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(head </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            temp.</span><span style=color:#bf616a;>push</span><span style=color:#eff1f5;>(head-></span><span style=color:#bf616a;>val</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>            head </span><span>=</span><span style=color:#eff1f5;> head -> </span><span style=color:#bf616a;>next</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> a;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>temp.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>()){
+</span><span style=color:#eff1f5;>            a.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(temp.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>());
+</span><span style=color:#eff1f5;>            temp.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> a;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#8fa1b3;>printListFromTailToHead</span><span style=color:#eff1f5;>(ListNode</span><span>* </span><span style=color:#bf616a;>head</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> a;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(head </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            a.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(head-></span><span style=color:#bf616a;>val</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>            head </span><span>=</span><span style=color:#eff1f5;> head -> </span><span style=color:#bf616a;>next</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#bf616a;>reverse</span><span style=color:#eff1f5;>(a.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), a.</span><span style=color:#bf616a;>end</span><span style=color:#eff1f5;>());
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> a;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#8fa1b3;>printListFromTailToHead</span><span style=color:#eff1f5;>(ListNode</span><span>* </span><span style=color:#bf616a;>head</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> a;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(head </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            a.</span><span style=color:#bf616a;>insert</span><span style=color:#eff1f5;>(a.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), head-></span><span style=color:#bf616a;>val</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(head -> </span><span style=color:#bf616a;>next </span><span>!= </span><span style=color:#d08770;>NULL</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>                vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> b </span><span>= </span><span style=color:#bf616a;>printListFromTailToHead</span><span style=color:#eff1f5;>(head -> </span><span style=color:#bf616a;>next</span><span style=color:#eff1f5;>);
+</span><span style=color:#eff1f5;>                </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>b.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>())a.</span><span style=color:#bf616a;>insert</span><span style=color:#eff1f5;>(a.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), b.</span><span style=color:#bf616a;>begin</span><span style=color:#eff1f5;>(), b.</span><span style=color:#bf616a;>end</span><span style=color:#eff1f5;>());
+</span><span style=color:#eff1f5;>            }
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> a;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><h2 id=jz4-zhong-jian-er-cha-shu><code>JZ4</code> 重建二叉树</h2><p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>思路：因为是树的结构，一般都是用递归来实现。
 </span><span>
-</span><span>用数学归纳法的思想就是，假设最后一步，就是root的左右子树都已经重建好了，那么我只要考虑将root的左右子树安上去即可。</span><span>
+</span><span>用数学归纳法的思想就是，假设最后一步，就是root的左右子树都已经重建好了，那么我只要考虑将root的左右子树安上去即可。
 </span><span>
-</span><span>根据前序遍历的性质，第一个元素必然就是root，那么下面的工作就是如何确定root的左右子树的范围。</span><span>
+</span><span>根据前序遍历的性质，第一个元素必然就是root，那么下面的工作就是如何确定root的左右子树的范围。
 </span><span>
-</span><span>根据中序遍历的性质，root元素前面都是root的左子树，后面都是root的右子树。那么我们只要找到中序遍历中root的位置，就可以确定好左右子树的范围。</span><span>
+</span><span>根据中序遍历的性质，root元素前面都是root的左子树，后面都是root的右子树。那么我们只要找到中序遍历中root的位置，就可以确定好左右子树的范围。
 </span><span>
-</span><span>正如上面所说，只需要将确定的左右子树安到root上即可。递归要注意出口，假设最后只有一个元素了，那么就要返回。</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>/**</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> * Definition for binary tree</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> * struct TreeNode {</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> *     int val;</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> *     TreeNode *left;</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> *     TreeNode *right;</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> * };</span><span style=color:#65737e;>
-</span><span style=color:#65737e;> */</span><span>
-</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    TreeNode</span><span>* </span><span style=color:#8fa1b3;>reConstructBinaryTree</span><span style=color:#eff1f5;>(vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#bf616a;>pre</span><span style=color:#eff1f5;>,vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#bf616a;>vin</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> vinlen </span><span>=</span><span style=color:#eff1f5;> vin.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>vinlen)</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>nullptr</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        TreeNode </span><span>*</span><span style=color:#eff1f5;>root </span><span>= </span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>TreeNode</span><span style=color:#eff1f5;>(pre[</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>]);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(vinlen </span><span>== </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>)</span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> root;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> gen </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i</span><span>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>; i</span><span><</span><span style=color:#eff1f5;> vinlen; i</span><span>++</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(pre[</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>] </span><span>==</span><span style=color:#eff1f5;> vin[i]){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                gen </span><span>=</span><span style=color:#eff1f5;> i;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                </span><span style=color:#b48ead;>break</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> pre_l, pre_r, vin_l, vin_r;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>; i </span><span><</span><span style=color:#eff1f5;> gen; i</span><span>++</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            vin_l.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(vin[i]);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            pre_l.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(pre[i</span><span>+</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>]);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i </span><span>=</span><span style=color:#eff1f5;> gen</span><span>+</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>; i </span><span><</span><span style=color:#eff1f5;> vinlen; i</span><span>++</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            vin_r.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(vin[i]);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            pre_r.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(pre[i]);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        root -> </span><span style=color:#bf616a;>left </span><span>= </span><span style=color:#bf616a;>reConstructBinaryTree</span><span style=color:#eff1f5;>(pre_l, vin_l);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        root -> </span><span style=color:#bf616a;>right </span><span>= </span><span style=color:#bf616a;>reConstructBinaryTree</span><span style=color:#eff1f5;>(pre_r, vin_r);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> root;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><h2 id=jz5yong-liang-ge-zhan-shi-xian-dui-lie><code>JZ5</code>用两个栈实现队列</h2><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>用两个栈实现一个队列的功能:</span><span>
+</span><span>正如上面所说，只需要将确定的左右子树安到root上即可。递归要注意出口，假设最后只有一个元素了，那么就要返回。
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>/**
+</span><span style=color:#65737e;> * Definition for binary tree
+</span><span style=color:#65737e;> * struct TreeNode {
+</span><span style=color:#65737e;> *     int val;
+</span><span style=color:#65737e;> *     TreeNode *left;
+</span><span style=color:#65737e;> *     TreeNode *right;
+</span><span style=color:#65737e;> *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+</span><span style=color:#65737e;> * };
+</span><span style=color:#65737e;> */
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    TreeNode</span><span>* </span><span style=color:#8fa1b3;>reConstructBinaryTree</span><span style=color:#eff1f5;>(vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#bf616a;>pre</span><span style=color:#eff1f5;>,vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#bf616a;>vin</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> vinlen </span><span>=</span><span style=color:#eff1f5;> vin.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>vinlen)</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>nullptr</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        TreeNode </span><span>*</span><span style=color:#eff1f5;>root </span><span>= </span><span style=color:#b48ead;>new </span><span style=color:#bf616a;>TreeNode</span><span style=color:#eff1f5;>(pre[</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>]);
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(vinlen </span><span>== </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>)</span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> root;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> gen </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i</span><span>=</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>; i</span><span><</span><span style=color:#eff1f5;> vinlen; i</span><span>++</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(pre[</span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>] </span><span>==</span><span style=color:#eff1f5;> vin[i]){
+</span><span style=color:#eff1f5;>                gen </span><span>=</span><span style=color:#eff1f5;> i;
+</span><span style=color:#eff1f5;>                </span><span style=color:#b48ead;>break</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>            }
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> pre_l, pre_r, vin_l, vin_r;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>; i </span><span><</span><span style=color:#eff1f5;> gen; i</span><span>++</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            vin_l.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(vin[i]);
+</span><span style=color:#eff1f5;>            pre_l.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(pre[i</span><span>+</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>]);
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i </span><span>=</span><span style=color:#eff1f5;> gen</span><span>+</span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>; i </span><span><</span><span style=color:#eff1f5;> vinlen; i</span><span>++</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            vin_r.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(vin[i]);
+</span><span style=color:#eff1f5;>            pre_r.</span><span style=color:#bf616a;>push_back</span><span style=color:#eff1f5;>(pre[i]);
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        root -> </span><span style=color:#bf616a;>left </span><span>= </span><span style=color:#bf616a;>reConstructBinaryTree</span><span style=color:#eff1f5;>(pre_l, vin_l);
+</span><span style=color:#eff1f5;>        root -> </span><span style=color:#bf616a;>right </span><span>= </span><span style=color:#bf616a;>reConstructBinaryTree</span><span style=color:#eff1f5;>(pre_r, vin_r);
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> root;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><h2 id=jz5yong-liang-ge-zhan-shi-xian-dui-lie><code>JZ5</code>用两个栈实现队列</h2><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>用两个栈实现一个队列的功能:
 </span><span>
-</span><span>入队：将元素进栈A</span><span>
-</span><span>出队：</span><span>
-</span><span>	判断栈B是否为空，如果不为空，栈B直接出栈。</span><span>
-</span><span>	如果为空，则将栈A中所有元素pop，并push进栈B，栈B出栈；</span><span>
+</span><span>入队：将元素进栈A
+</span><span>出队：
+</span><span>	判断栈B是否为空，如果不为空，栈B直接出栈。
+</span><span>	如果为空，则将栈A中所有元素pop，并push进栈B，栈B出栈；
 </span><span>
-</span><span>用两个队列实现一个栈的功能:</span><span>
+</span><span>用两个队列实现一个栈的功能:
 </span><span>
-</span><span>入栈：将元素进队列A</span><span>
-</span><span>出栈：判断队列A中元素的个数是否为1，如果等于1，则出队列，</span><span>
-</span><span>否则将队列A中的元素出队列，并放入队列B，直到队列A中的元素留下一个，然后队列A出队列，再把队列B中的元素出队列以此放入队列A中。</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>push</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>node</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        stack1.</span><span style=color:#bf616a;>push</span><span style=color:#eff1f5;>(node);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span>入栈：将元素进队列A
+</span><span>出栈：判断队列A中元素的个数是否为1，如果等于1，则出队列，
+</span><span>否则将队列A中的元素出队列，并放入队列B，直到队列A中的元素留下一个，然后队列A出队列，再把队列B中的元素出队列以此放入队列A中。
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution
+</span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>push</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>node</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        stack1.</span><span style=color:#bf616a;>push</span><span style=color:#eff1f5;>(node);
+</span><span style=color:#eff1f5;>    }
 </span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>pop</span><span style=color:#eff1f5;>() {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> res </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>stack2.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>()){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            res </span><span>=</span><span style=color:#eff1f5;> stack2.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            stack2.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>else</span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(stack1.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>()){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> temp </span><span>=</span><span style=color:#eff1f5;> stack1.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                stack1.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                stack2.</span><span style=color:#bf616a;>push</span><span style=color:#eff1f5;>(temp);</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            res </span><span>=</span><span style=color:#eff1f5;> stack2.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            stack2.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> res;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>pop</span><span style=color:#eff1f5;>() {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> res </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(</span><span>!</span><span style=color:#eff1f5;>stack2.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>()){
+</span><span style=color:#eff1f5;>            res </span><span>=</span><span style=color:#eff1f5;> stack2.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>            stack2.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>else</span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(stack1.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>()){
+</span><span style=color:#eff1f5;>                </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> temp </span><span>=</span><span style=color:#eff1f5;> stack1.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>                stack1.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>                stack2.</span><span style=color:#bf616a;>push</span><span style=color:#eff1f5;>(temp);
+</span><span style=color:#eff1f5;>            }
+</span><span style=color:#eff1f5;>            res </span><span>=</span><span style=color:#eff1f5;> stack2.</span><span style=color:#bf616a;>top</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>            stack2.</span><span style=color:#bf616a;>pop</span><span style=color:#eff1f5;>();
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> res;
+</span><span style=color:#eff1f5;>    }
 </span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    stack<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> stack1;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    stack<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> stack2;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><h2 id=jz6xuan-zhuan-shu-zu-de-zui-xiao-shu-zi><code>JZ6</code>旋转数组的最小数字</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span> 思路：</span><span>
+</span><span style=color:#b48ead;>private</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    stack<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> stack1;
+</span><span style=color:#eff1f5;>    stack<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> stack2;
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><h2 id=jz6xuan-zhuan-shu-zu-de-zui-xiao-shu-zi><code>JZ6</code>旋转数组的最小数字</h2><p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span> 思路：
 </span><span>
-</span><span>（1）我们用两个指针left,right分别指向数组的第一个元素和最后一个元素。按照题目的旋转的规则，第一个元素应该是大于最后一个元素的（没有重复的元素）。</span><span>
+</span><span>（1）我们用两个指针left,right分别指向数组的第一个元素和最后一个元素。按照题目的旋转的规则，第一个元素应该是大于最后一个元素的（没有重复的元素）。
 </span><span>
-</span><span>但是如果不是旋转，第一个元素肯定小于最后一个元素。</span><span>
+</span><span>但是如果不是旋转，第一个元素肯定小于最后一个元素。
 </span><span>
-</span><span>（2）找到数组的中间元素。</span><span>
+</span><span>（2）找到数组的中间元素。
 </span><span>
-</span><span>中间元素大于第一个元素，则中间元素位于前面的递增子数组，此时最小元素位于中间元素的后面。我们可以让第一个指针left指向中间元素。</span><span>
+</span><span>中间元素大于第一个元素，则中间元素位于前面的递增子数组，此时最小元素位于中间元素的后面。我们可以让第一个指针left指向中间元素。
 </span><span>
-</span><span>移动之后，第一个指针仍然位于前面的递增数组中。</span><span>
+</span><span>移动之后，第一个指针仍然位于前面的递增数组中。
 </span><span>
-</span><span>中间元素小于第一个元素，则中间元素位于后面的递增子数组，此时最小元素位于中间元素的前面。我们可以让第二个指针right指向中间元素。</span><span>
+</span><span>中间元素小于第一个元素，则中间元素位于后面的递增子数组，此时最小元素位于中间元素的前面。我们可以让第二个指针right指向中间元素。
 </span><span>
-</span><span>移动之后，第二个指针仍然位于后面的递增数组中。</span><span>
+</span><span>移动之后，第二个指针仍然位于后面的递增数组中。
 </span><span>
-</span><span>这样可以缩小寻找的范围。</span><span>
+</span><span>这样可以缩小寻找的范围。
 </span><span>
-</span><span>（3）按照以上思路，第一个指针left总是指向前面递增数组的元素，第二个指针right总是指向后面递增的数组元素。</span><span>
+</span><span>（3）按照以上思路，第一个指针left总是指向前面递增数组的元素，第二个指针right总是指向后面递增的数组元素。
 </span><span>
-</span><span>最终第一个指针将指向前面数组的最后一个元素，第二个指针指向后面数组中的第一个元素。</span><span>
+</span><span>最终第一个指针将指向前面数组的最后一个元素，第二个指针指向后面数组中的第一个元素。
 </span><span>
-</span><span>也就是说他们将指向两个相邻的元素，而第二个指针指向的刚好是最小的元素，这就是循环的结束条件。 </span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>//C++ 二分法</span><span style=color:#65737e;>
-</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>minNumberInRotateArray</span><span style=color:#eff1f5;>(vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#bf616a;>rotateArray</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(rotateArray.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>()) </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> left </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>, right </span><span>=</span><span style=color:#eff1f5;> rotateArray.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>() </span><span>- </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while </span><span style=color:#eff1f5;>(left </span><span><</span><span style=color:#eff1f5;> right) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//确认子数组是否是类似1,1,2,4,5,..,7的非递减数组</span><span style=color:#65737e;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(rotateArray[left] </span><span><</span><span style=color:#eff1f5;> rotateArray[right]) </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> rotateArray[left];</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>             </span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> mid </span><span>=</span><span style=color:#eff1f5;> left </span><span>+ </span><span style=color:#eff1f5;>(right </span><span>-</span><span style=color:#eff1f5;> left) </span><span>/ </span><span style=color:#d08770;>2</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//如果左半数组为有序数组</span><span style=color:#65737e;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(rotateArray[left] </span><span><</span><span style=color:#eff1f5;> rotateArray[mid])</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                left </span><span>=</span><span style=color:#eff1f5;> mid </span><span>+ </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//如果右半数组为有序数组</span><span style=color:#65737e;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else if </span><span style=color:#eff1f5;>(rotateArray[mid] </span><span><</span><span style=color:#eff1f5;> rotateArray[right])</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                right </span><span>=</span><span style=color:#eff1f5;> mid;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//否则，rotateArray[left] >= rotateArray[mid] >= rotateArray[right]</span><span style=color:#65737e;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>/*</span><span style=color:#65737e;>
-</span><span style=color:#65737e;>            例如： 5 4 3 2 1</span><span style=color:#65737e;>
-</span><span style=color:#65737e;>			应该为rotateArray[left] >= rotateArray[mid] >= rotateArray[right]</span><span style=color:#65737e;>
-</span><span style=color:#65737e;>			所以要++left，而不能是--right。</span><span style=color:#65737e;>
-</span><span style=color:#65737e;>			不然按照你的 rotateArray[left] == rotateArray[mid] == rotateArray[right] 话，--right也可行。</span><span style=color:#65737e;>
-</span><span style=color:#65737e;>            */</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>                </span><span>++</span><span style=color:#eff1f5;>left;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> rotateArray[left];</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><h2 id=jz7fei-bo-na-qi-shu-lie><code>JZ7</code>斐波那契数列</h2><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0，第1项是1）。<p>n<=39<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>思路：</span><span>
-</span><span>    1. </span><span style=color:#bf616a;>常规算法</span><span>
-</span><span>    2. </span><span style=color:#bf616a;>动态规划</span><span>
-</span><span>    3. </span><span style=color:#bf616a;>矩阵快速幂</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>Fibonacci</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>n</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(n </span><span>== </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(n </span><span>== </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> a </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>,b </span><span>= </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> m </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i </span><span>= </span><span style=color:#d08770;>2</span><span style=color:#eff1f5;>;i </span><span><=</span><span style=color:#eff1f5;> n;i</span><span>++</span><span style=color:#eff1f5;>){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            m </span><span>=</span><span style=color:#eff1f5;> a </span><span>+</span><span style=color:#eff1f5;> b;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            a </span><span>=</span><span style=color:#eff1f5;> b;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            b </span><span>=</span><span style=color:#eff1f5;> m;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> m;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>// c++动态规划版 </span><span style=color:#65737e;>
-</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>Fibonacci</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>n</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> f </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>, g </span><span>= </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(n</span><span>--></span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>) {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            g </span><span>+=</span><span style=color:#eff1f5;> f;		</span><span style=color:#65737e;>//最后g是算到第n+1个</span><span style=color:#65737e;>
-</span><span style=color:#eff1f5;>            f </span><span>=</span><span style=color:#eff1f5;> g </span><span>-</span><span style=color:#eff1f5;> f;	</span><span style=color:#65737e;>//通过g，算出第n个，算了第n+1个数，然后倒推</span><span style=color:#65737e;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> f;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
-</span></code></pre><h2 id=jz48-bu-yong-jia-jian-cheng-chu-zuo-jia-fa><code>JZ48</code> 不用加减乘除做加法</h2><p>写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>思路：位运算</span><span>
+</span><span>也就是说他们将指向两个相邻的元素，而第二个指针指向的刚好是最小的元素，这就是循环的结束条件。 
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>//C++ 二分法
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>minNumberInRotateArray</span><span style=color:#eff1f5;>(vector<</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;>> </span><span style=color:#bf616a;>rotateArray</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(rotateArray.</span><span style=color:#bf616a;>empty</span><span style=color:#eff1f5;>()) </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> left </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>, right </span><span>=</span><span style=color:#eff1f5;> rotateArray.</span><span style=color:#bf616a;>size</span><span style=color:#eff1f5;>() </span><span>- </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while </span><span style=color:#eff1f5;>(left </span><span><</span><span style=color:#eff1f5;> right) {
+</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//确认子数组是否是类似1,1,2,4,5,..,7的非递减数组
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(rotateArray[left] </span><span><</span><span style=color:#eff1f5;> rotateArray[right]) </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> rotateArray[left];
+</span><span style=color:#eff1f5;>             
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> mid </span><span>=</span><span style=color:#eff1f5;> left </span><span>+ </span><span style=color:#eff1f5;>(right </span><span>-</span><span style=color:#eff1f5;> left) </span><span>/ </span><span style=color:#d08770;>2</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//如果左半数组为有序数组
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>if </span><span style=color:#eff1f5;>(rotateArray[left] </span><span><</span><span style=color:#eff1f5;> rotateArray[mid])
+</span><span style=color:#eff1f5;>                left </span><span>=</span><span style=color:#eff1f5;> mid </span><span>+ </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//如果右半数组为有序数组
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else if </span><span style=color:#eff1f5;>(rotateArray[mid] </span><span><</span><span style=color:#eff1f5;> rotateArray[right])
+</span><span style=color:#eff1f5;>                right </span><span>=</span><span style=color:#eff1f5;> mid;
+</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>//否则，rotateArray[left] >= rotateArray[mid] >= rotateArray[right]
+</span><span style=color:#eff1f5;>            </span><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>            例如： 5 4 3 2 1
+</span><span style=color:#65737e;>			应该为rotateArray[left] >= rotateArray[mid] >= rotateArray[right]
+</span><span style=color:#65737e;>			所以要++left，而不能是--right。
+</span><span style=color:#65737e;>			不然按照你的 rotateArray[left] == rotateArray[mid] == rotateArray[right] 话，--right也可行。
+</span><span style=color:#65737e;>            */
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>else </span><span style=color:#eff1f5;>{
+</span><span style=color:#eff1f5;>                </span><span>++</span><span style=color:#eff1f5;>left;
+</span><span style=color:#eff1f5;>            }
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> rotateArray[left];
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><h2 id=jz7fei-bo-na-qi-shu-lie><code>JZ7</code>斐波那契数列</h2><p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0，第1项是1）。<p>n<=39<pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span>思路：
+</span><span>    1. </span><span style=color:#bf616a;>常规算法
+</span><span>    2. </span><span style=color:#bf616a;>动态规划
+</span><span>    3. </span><span style=color:#bf616a;>矩阵快速幂
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>Fibonacci</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>n</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(n </span><span>== </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>if</span><span style=color:#eff1f5;>(n </span><span>== </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> a </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>,b </span><span>= </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> m </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>for</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> i </span><span>= </span><span style=color:#d08770;>2</span><span style=color:#eff1f5;>;i </span><span><=</span><span style=color:#eff1f5;> n;i</span><span>++</span><span style=color:#eff1f5;>){
+</span><span style=color:#eff1f5;>            m </span><span>=</span><span style=color:#eff1f5;> a </span><span>+</span><span style=color:#eff1f5;> b;
+</span><span style=color:#eff1f5;>            a </span><span>=</span><span style=color:#eff1f5;> b;
+</span><span style=color:#eff1f5;>            b </span><span>=</span><span style=color:#eff1f5;> m;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> m;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#65737e;>// c++动态规划版 
+</span><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>Fibonacci</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>n</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> f </span><span>= </span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>, g </span><span>= </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(n</span><span>--></span><span style=color:#d08770;>0</span><span style=color:#eff1f5;>) {
+</span><span style=color:#eff1f5;>            g </span><span>+=</span><span style=color:#eff1f5;> f;		</span><span style=color:#65737e;>//最后g是算到第n+1个
+</span><span style=color:#eff1f5;>            f </span><span>=</span><span style=color:#eff1f5;> g </span><span>-</span><span style=color:#eff1f5;> f;	</span><span style=color:#65737e;>//通过g，算出第n个，算了第n+1个数，然后倒推
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> f;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
+</span></code></pre><h2 id=jz48-bu-yong-jia-jian-cheng-chu-zuo-jia-fa><code>JZ48</code> 不用加减乘除做加法</h2><p>写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>思路：位运算
 </span><span>
-</span><span>1. 两个数异或：相当于每一位相加，而不考虑进位；</span><span>
-</span><span>2. 两个数相与，并左移一位：相当于求得进位；</span><span>
-</span><span>3. 将上述两步的结果相加 </span><span>
-</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{</span><span style=color:#eff1f5;>
-</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>Add</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>num1</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>num2</span><span style=color:#eff1f5;>)</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    {</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(num2){</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> temp </span><span>=</span><span style=color:#eff1f5;> num1 </span><span>^</span><span style=color:#eff1f5;> num2;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            num2 </span><span>= </span><span style=color:#eff1f5;>(num1 </span><span>&</span><span style=color:#eff1f5;> num2) </span><span><< </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>            num1 </span><span>=</span><span style=color:#eff1f5;> temp;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> num1;</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>    }</span><span style=color:#eff1f5;>
-</span><span style=color:#eff1f5;>}</span><span>;</span><span>
+</span><span>1. 两个数异或：相当于每一位相加，而不考虑进位；
+</span><span>2. 两个数相与，并左移一位：相当于求得进位；
+</span><span>3. 将上述两步的结果相加 
+</span></code></pre><pre class=language-c++ data-lang=c++ style=background-color:#2b303b;color:#c0c5ce;><code class=language-c++ data-lang=c++><span style=color:#b48ead;>class </span><span style=color:#ebcb8b;>Solution </span><span style=color:#eff1f5;>{
+</span><span style=color:#b48ead;>public</span><span style=color:#eff1f5;>:
+</span><span style=color:#eff1f5;>    </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>Add</span><span style=color:#eff1f5;>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>num1</span><span style=color:#eff1f5;>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>num2</span><span style=color:#eff1f5;>)
+</span><span style=color:#eff1f5;>    {
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>while</span><span style=color:#eff1f5;>(num2){
+</span><span style=color:#eff1f5;>            </span><span style=color:#b48ead;>int</span><span style=color:#eff1f5;> temp </span><span>=</span><span style=color:#eff1f5;> num1 </span><span>^</span><span style=color:#eff1f5;> num2;
+</span><span style=color:#eff1f5;>            num2 </span><span>= </span><span style=color:#eff1f5;>(num1 </span><span>&</span><span style=color:#eff1f5;> num2) </span><span><< </span><span style=color:#d08770;>1</span><span style=color:#eff1f5;>;
+</span><span style=color:#eff1f5;>            num1 </span><span>=</span><span style=color:#eff1f5;> temp;
+</span><span style=color:#eff1f5;>        }
+</span><span style=color:#eff1f5;>        </span><span style=color:#b48ead;>return</span><span style=color:#eff1f5;> num1;
+</span><span style=color:#eff1f5;>    }
+</span><span style=color:#eff1f5;>}</span><span>;
 </span></code></pre><h2 id=jz><code>JZ</code></h2><h2 id=jz-1><code>JZ</code></h2><h2 id=jz-2><code>JZ</code></h2><h2 id=jz-3><code>JZ</code></h2><h2 id=jz-4><code>JZ</code></h2><h2 id=jz-5><code>JZ</code></h2><h2 id=jz-6><code>JZ</code></h2><p>v<h2 id=jz-7><code>JZ</code></h2><h2 id=jz-8><code>JZ</code></h2><h2 id=jz-9><code>JZ</code></h2><p>v<p>v<h2 id=jz-10><code>JZ</code></h2><h2 id=jz-11><code>JZ</code></h2><h2 id=jz-12><code>JZ</code></h2><h2 id=jz-13><code>JZ</code></h2><h2 id=jz-14><code>JZ</code></h2><h2 id=jz-15><code>JZ</code></h2><h2 id=jz-16><code>JZ</code></h2><h2 id=jz-17><code>JZ</code></h2><h2 id=jz-18><code>JZ</code></h2><h2 id=jz-19><code>JZ</code></h2><h2 id=jz-20><code>JZ</code></h2><h2 id=jz-jz><code>JZ``JZ</code></h2><h2 id=jz-21><code>JZ</code></h2><h2 id=jz-22><code>JZ</code></h2><h2 id=jz-23><code>JZ</code></h2><h2 id=jz-24><code>JZ</code></h2><h2 id=jz-25><code>JZ</code></h2></div></div></div><footer class=footer__poweredby><p class=caption>© 2022 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

@@ -1,4 +1,8 @@
-<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/vscodexiang-guan/>vscode相关</a></h1><div class=post-meta-inline><span class=post-date> 2022-07-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a></span><div class=post-content><h2 id=vscodean-zhuang-pei-zhi>vscode安装配置</h2><p>update: 2020-12-3<p>下载编译器，一般是用mingw-w64，可以选离线版安装包（<code>x86_64-posix-seh</code>）、或者msys2附带（最新）。<p>接着，配置环境变量Path，讲mingw的bin目录添加进去，在cmd输入<code>gcc -v</code>可以显示出gcc的版本，用于验证环境是否配置正确。<p>vscode拓展插件：<ul><li>C/C++：提供Debug和Format功能<li>Code Runner：右键运行单文件，无法Debug<li>Bracket Pair Colorizer 2：彩虹花括号<li>One Dark Pro：好看的暗色主题</ul><p>需要配置调试功能，则需要添加4个json文件。<h2 id=vscodeyuan-cheng-kai-fa>vscode远程开发</h2><p>update: 2020-12-12<p>在VScode中，使用<code>ctrl+shift+x</code>快捷键打开插件搜索窗口，输入插件<code>Remote Development</code>，并点击安装。<p>将本地密钥对的公钥内容复制到远程主机的<code>~/.ssh/authorized_keys</code>文件中。<p>若没有<code>~/.ssh</code>目录，先在远程主机执行一遍<code>ssh localhost</code>，此时会有如下提示(SSH首次登陆提示)，输入 yes 。然后按提示输入密码，这样就登陆到本机了。<p>在VS code中，使用<code>cmd+shift+p</code>快捷键打开命令输入窗口，输入<code>Remote-SSH:Connect to Host...</code>，第一次使用时需要选择<code>Add New SSH Host</code>配置一下，输入完成后选择第一个配置文件：<code>xxx/.ssh/config</code>(xxx是省略的意思)。<p>把登录服务器的信息添加到配置文件<code>.ssh/config</code>中的，该文件格式为：<pre class=language-text data-lang=text style=background-color:#2b303b;color:#c0c5ce;><code class=language-text data-lang=text><span>Host alias
+<!doctype html><html lang=zh-Hans-CN><head><title>modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Programming-Language</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/vscodexiang-guan/>vscode相关</a></h1><div class=post-meta-inline><span class=post-date> 2022-07-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/software/>#Software</a></span><div class=post-content><h2 id=vscodean-zhuang-pei-zhi>vscode安装配置</h2><p>update: 2020-12-3<p>下载编译器，一般是用mingw-w64，可以选离线版安装包（<code>x86_64-posix-seh</code>）、或者msys2附带（最新）。<p>接着，配置环境变量Path，讲mingw的bin目录添加进去，在cmd输入<code>gcc -v</code>可以显示出gcc的版本，用于验证环境是否配置正确。<p>vscode拓展插件：<ul><li>C/C++：提供Debug和Format功能<li>Code Runner：右键运行单文件，无法Debug<li>Bracket Pair Colorizer 2：彩虹花括号<li>One Dark Pro：好看的暗色主题</ul><p>需要配置调试功能，则需要添加4个json文件。<h2 id=vscodeyuan-cheng-kai-fa>vscode远程开发</h2><p>update: 2020-12-12<p>在VScode中，使用<code>ctrl+shift+x</code>快捷键打开插件搜索窗口，输入插件<code>Remote Development</code>，并点击安装。<p>将本地密钥对的公钥内容复制到远程主机的<code>~/.ssh/authorized_keys</code>文件中。<p>若没有<code>~/.ssh</code>目录，先在远程主机执行一遍<code>ssh localhost</code>，此时会有如下提示(SSH首次登陆提示)，输入 yes 。然后按提示输入密码，这样就登陆到本机了。<p>在VS code中，使用<code>cmd+shift+p</code>快捷键打开命令输入窗口，输入<code>Remote-SSH:Connect to Host...</code>，第一次使用时需要选择<code>Add New SSH Host</code>配置一下，输入完成后选择第一个配置文件：<code>xxx/.ssh/config</code>(xxx是省略的意思)。<p>把登录服务器的信息添加到配置文件<code>.ssh/config</code>中的，该文件格式为：<pre class=language-text data-lang=text style=background-color:#2b303b;color:#c0c5ce;><code class=language-text data-lang=text><span>Host alias
 </span><span>  HostName host_id
 </span><span>  User user_name
 </span><span>  Port 22
@@ -128,4 +132,189 @@
 </span><span>        }
 </span><span>    ]
 </span><span>}
-</span></code></pre><p>ref：<ul><li>https://www.cnblogs.com/nikiss/p/14208341.html<li>https://code.visualstudio.com/docs/cpp/launch-json-reference<li>https://blog.csdn.net/qq_21567385/article/details/122795215</ul></div></div></div><footer class=footer__poweredby><p class=caption>© 2022 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
+</span></code></pre><p>ref：<ul><li>https://www.cnblogs.com/nikiss/p/14208341.html<li>https://code.visualstudio.com/docs/cpp/launch-json-reference<li>https://blog.csdn.net/qq_21567385/article/details/122795215</ul><h2 id=linux-vscodexiang-mu-pei-zhi>Linux-VScode项目配置</h2><p>tasks.json<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>{
+</span><span>    "version": "2.0.0",
+</span><span>    "tasks": [
+</span><span>        {
+</span><span>            "label": "Compile_g++",
+</span><span>            "command": "g++",
+</span><span>            "args": [
+</span><span>                "${file}",
+</span><span>                "-o",
+</span><span>                "${fileDirname}/${fileBasenameNoExtension}",
+</span><span>                "-g",
+</span><span>                "-O0",
+</span><span>                "-m64",
+</span><span>                "-Wall",
+</span><span>                "-static-libgcc",
+</span><span>                "-ltlpi"
+</span><span>                // "-fexec-charset=GBK"
+</span><span>            ],
+</span><span>            "type": "process",
+</span><span>            "group": {
+</span><span>                "kind": "build",
+</span><span>                "isDefault": false
+</span><span>            },
+</span><span>            "presentation": {
+</span><span>                "echo": true,
+</span><span>                "reveal": "always",
+</span><span>                "focus": false,
+</span><span>                "panel": "shared"
+</span><span>            },
+</span><span>            "problemMatcher": "$gcc"
+</span><span>        },
+</span><span>        {
+</span><span>            "type": "cppbuild",
+</span><span>            "label": "Compile_clang++",
+</span><span>            "command": "C:\\Program Files\\LLVM\\bin\\clang++.exe",
+</span><span>            "args": [
+</span><span>                "-fdiagnostics-color=always",
+</span><span>                "-g",
+</span><span>                "--target=x86_64-w64-mingw",
+</span><span>                "${file}",
+</span><span>                "-o",
+</span><span>                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+</span><span>            ],
+</span><span>            "options": {
+</span><span>                "cwd": "${fileDirname}"
+</span><span>            },
+</span><span>            "problemMatcher": [
+</span><span>                "$gcc"
+</span><span>            ],
+</span><span>            "group": {
+</span><span>                "kind": "build",
+</span><span>                "isDefault": true
+</span><span>            },
+</span><span>            "detail": "调试器生成的任务。"
+</span><span>        }
+</span><span>    ]
+</span><span>}
+</span><span>
+</span></code></pre><p>launch.json<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>// https://code.visualstudio.com/docs/cpp/launch-json-reference
+</span><span>{
+</span><span>    "version": "0.2.0",
+</span><span>    "configurations": [
+</span><span>        {
+</span><span>            "name": "(gdb) 启动",
+</span><span>            "type": "cppdbg",
+</span><span>            "request": "launch",
+</span><span>            "program": "${fileDirname}/${fileBasenameNoExtension}",
+</span><span>            "args": ["Makefile", "R5"],
+</span><span>            "stopAtEntry": false,
+</span><span>            "cwd": "${workspaceFolder}",
+</span><span>            "environment": [],
+</span><span>            "externalConsole": false,
+</span><span>            "MIMode": "gdb",
+</span><span>            "setupCommands": [
+</span><span>                {
+</span><span>                    "description": "为 gdb 启用整齐打印",
+</span><span>                    "text": "-enable-pretty-printing",
+</span><span>                    "ignoreFailures": true
+</span><span>                },
+</span><span>                {
+</span><span>                    "description":  "将反汇编风格设置为 Intel",
+</span><span>                    "text": "-gdb-set disassembly-flavor intel",
+</span><span>                    "ignoreFailures": true
+</span><span>                }
+</span><span>            ],
+</span><span>            "additionalSOLibSearchPath":"${workspaceFolder}/lib",
+</span><span>            "preLaunchTask": "Compile_g++"
+</span><span>        },
+</span><span>        {
+</span><span>        "name": "(clang_lldb) Launch", // 配置名称，将会在启动配置的下拉菜单中显示
+</span><span>        "type": "cppdbg", // 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg
+</span><span>        "request": "launch", // 请求配置类型，可以为launch（启动）或attach（附加）
+</span><span>        "program": "${fileDirname}/${fileBasenameNoExtension}.exe", // 将要进行调试的程序的路径
+</span><span>        "args": [], // 程序调试时传递给程序的命令行参数，一般设为空即可
+</span><span>        "stopAtEntry": false, // 设为true时程序将暂停在程序入口处，相当于在main上打断点
+</span><span>        "cwd": "${workspaceFolder}", // 调试程序时的工作目录，此为工作区文件夹；改成${fileDirname}可变为文件所在目录
+</span><span>        "environment": [], // 环境变量
+</span><span>        "externalConsole": true, // 使用单独的cmd窗口，与其它IDE一致；为false时使用内置终端
+</span><span>        "internalConsoleOptions": "neverOpen", // 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
+</span><span>        "MIMode": "lldb", // 指定连接的调试器，可以为gdb或lldb。但我没试过lldb
+</span><span>        "miDebuggerPath": "C:/Program Files/LLVM/bin/lldb-mi.exe", // 调试器路径，Windows下后缀不能省略，Linux下则不要
+</span><span>        "setupCommands": [
+</span><span>            { // 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google
+</span><span>                "description": "Enable pretty-printing for gdb",
+</span><span>                "text": "-enable-pretty-printing",
+</span><span>                "ignoreFailures": false
+</span><span>            }
+</span><span>        ],
+</span><span>        "preLaunchTask": "Compile_clang++" // 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应
+</span><span>    },
+</span><span>    {
+</span><span>        "name": "(clang_gdb) Launch", // 配置名称，将会在启动配置的下拉菜单中显示
+</span><span>        "type": "cppdbg", // 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg
+</span><span>        "request": "launch", // 请求配置类型，可以为launch（启动）或attach（附加）
+</span><span>        "program": "${fileDirname}/${fileBasenameNoExtension}.exe", // 将要进行调试的程序的路径
+</span><span>        "args": [], // 程序调试时传递给程序的命令行参数，一般设为空即可
+</span><span>        "stopAtEntry": false, // 设为true时程序将暂停在程序入口处，相当于在main上打断点
+</span><span>        "cwd": "${workspaceFolder}", // 调试程序时的工作目录，此为工作区文件夹；改成${fileDirname}可变为文件所在目录
+</span><span>        "environment": [], // 环境变量
+</span><span>        "externalConsole": true, // 使用单独的cmd窗口，与其它IDE一致；为false时使用内置终端
+</span><span>        "internalConsoleOptions": "neverOpen", // 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
+</span><span>        "MIMode": "gdb", // 指定连接的调试器，可以为gdb或lldb。但我没试过lldb
+</span><span>        "miDebuggerPath": "gdb.exe", // 调试器路径，Windows下后缀不能省略，Linux下则不要
+</span><span>        "setupCommands": [
+</span><span>            { // 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google
+</span><span>                "description": "Enable pretty-printing for gdb",
+</span><span>                "text": "-enable-pretty-printing",
+</span><span>                "ignoreFailures": false
+</span><span>            }
+</span><span>        ],
+</span><span>        "preLaunchTask": "Compile_clang++" // 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应
+</span><span>    },
+</span><span>    {
+</span><span>        "name": "(gcc_gdb) Launch", // 配置名称，将会在启动配置的下拉菜单中显示
+</span><span>        "type": "cppdbg", // 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg
+</span><span>        "request": "launch", // 请求配置类型，可以为launch（启动）或attach（附加）
+</span><span>        "program": "${fileDirname}/${fileBasenameNoExtension}", // 将要进行调试的程序的路径
+</span><span>        "args": ["Makefile", "R5"], // 程序调试时传递给程序的命令行参数，一般设为空即可
+</span><span>        "stopAtEntry": false, // 设为true时程序将暂停在程序入口处，相当于在main上打断点
+</span><span>        "cwd": "${fileDirname}", // 调试程序时的工作目录，此为工作区文件夹；改成${fileDirname}可变为文件所在目录
+</span><span>        "environment": [], // 环境变量
+</span><span>        "externalConsole": false, // 使用单独的cmd窗口，与其它IDE一致；为false时使用内置终端，远程调试时必须为false
+</span><span>        "internalConsoleOptions": "neverOpen", // 如果不设为neverOpen，调试时会跳到“调试控制台”选项卡，你应该不需要对gdb手动输命令吧？
+</span><span>        "MIMode": "gdb", // 指定连接的调试器，可以为gdb或lldb。但我没试过lldb
+</span><span>        "miDebuggerPath": "gdb", // 调试器路径，Windows下后缀不能省略，Linux下则不要
+</span><span>        "setupCommands": [
+</span><span>            { // 模板自带，好像可以更好地显示STL容器的内容，具体作用自行Google
+</span><span>                "description": "Enable pretty-printing for gdb",
+</span><span>                "text": "-enable-pretty-printing",
+</span><span>                "ignoreFailures": false
+</span><span>            }
+</span><span>        ],
+</span><span>        "preLaunchTask": "Compile_g++" // 调试会话开始前执行的任务，一般为编译程序。与tasks.json的label相对应
+</span><span>    },
+</span><span>    ]
+</span><span>}
+</span><span>
+</span></code></pre><h2 id=vscodezheng-ze>vscode正则</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>有正则替换功能的文本编辑器都可用，这里只是用了vscode演示而已。
+</span><span>去除重复行正则字符串（全文重复行检索删除）：
+</span><span>查找：^(.+)((?:\r?\n.*)*)(?:\r?\n\1)$
+</span><span>替换：$1$2
+</span><span>不能一次全部替换，要一直按「替换」或「全部替换」，虽然按的是「全部替换」，但是并没有一次「全部替换」
+</span></code></pre><p>hexo转zola，通过vscode替换meta数据格式<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>替换title:
+</span><span>(^title: )(.*)(\n)
+</span><span>$1"$2"$3
+</span><span>
+</span><span>
+</span><span>替换date：
+</span><span>(\d{4})/(\d{1,2})/(\d{1,2})
+</span><span>$1-$2-$3
+</span><span>
+</span><span>
+</span><span>2020/5/16 10:10:05 == (\d{4})/(\d{1,2})/(\d{1,2})(.*)(\n)
+</span><span>(\d{4})-(\d{1})-(\d{1,2})
+</span><span>
+</span><span>
+</span><span>(^categories: )(.*)(\n)
+</span><span>[taxonomies]\ntags = ["Linux"]\n
+</span><span>
+</span><span>
+</span><span>---\n
+</span><span>+++\n
+</span></code></pre><p>提取telegram图片URL：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>blob:https://web.telegram.org/772f50bd-d111-4f06-acaa-1c0e2d5f5ffb
+</span><span>
+</span><span>(src=")(blob:https://web.telegram.org/)(.{8}-.{4}-.{4}-.{4}-.{12})
+</span></code></pre><p>VScode选中所有被正则匹配的结果：<p>windows：Alt+Enter选中全部结果<h2 id=vscodecha-jian>vscode插件</h2><p>vscode删除重复行并排序<p>安装插件:Transformer，使用前需要先信任文件<p>ctrl + a 全选文字 ctrl + shift + P 打开命令窗口 输入：Transform:Unique Lines //删除重复行 或 Transform:Sort Lines //排序</div></div></div><footer class=footer__poweredby><p class=caption>© 2022 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
