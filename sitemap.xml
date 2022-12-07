@@ -4,6 +4,9 @@
         <loc>https://modao.site/</loc>
     </url>
     <url>
+        <loc>https://modao.site/Friends/</loc>
+    </url>
+    <url>
         <loc>https://modao.site/Interview/c-ji-zhu-mian-shi-ji-chu-zhi-shi-zong-jie/</loc>
         <lastmod>2020-12-30</lastmod>
     </url>
@@ -198,6 +201,10 @@
     <url>
         <loc>https://modao.site/Software/Linux/opensuseshi-yong-ji-lu/</loc>
         <lastmod>2021-06-14</lastmod>
+    </url>
+    <url>
+        <loc>https://modao.site/Software/Linux/securecrtwu-xian-shi-yong/</loc>
+        <lastmod>2022-12-04</lastmod>
     </url>
     <url>
         <loc>https://modao.site/Software/Linux/ubuntu/</loc>
@@ -553,9 +560,6 @@
         <loc>https://modao.site/books/unixwang-luo-bian-cheng/</loc>
     </url>
     <url>
-        <loc>https://modao.site/friend/</loc>
-    </url>
-    <url>
         <loc>https://modao.site/language/</loc>
     </url>
     <url>
@@ -586,13 +590,16 @@
         <loc>https://modao.site/links/</loc>
     </url>
     <url>
-        <loc>https://modao.site/links/all/</loc>
-    </url>
-    <url>
         <loc>https://modao.site/links/blog/</loc>
     </url>
     <url>
         <loc>https://modao.site/links/c/</loc>
+    </url>
+    <url>
+        <loc>https://modao.site/links/embedded/</loc>
+    </url>
+    <url>
+        <loc>https://modao.site/links/interest/</loc>
     </url>
     <url>
         <loc>https://modao.site/links/interview/</loc>
@@ -625,10 +632,10 @@
         <loc>https://modao.site/links/source/</loc>
     </url>
     <url>
-        <loc>https://modao.site/links/vczh/</loc>
+        <loc>https://modao.site/links/tools/</loc>
     </url>
     <url>
-        <loc>https://modao.site/site_pages/links/all/</loc>
+        <loc>https://modao.site/links/vczh/</loc>
     </url>
     <url>
         <loc>https://modao.site/site_pages/links/blog/</loc>
@@ -658,6 +665,9 @@
         <loc>https://modao.site/site_pages/links/proxy/</loc>
     </url>
     <url>
+        <loc>https://modao.site/site_pages/links/qian-ru-shi/</loc>
+    </url>
+    <url>
         <loc>https://modao.site/site_pages/links/resource/</loc>
     </url>
     <url>
@@ -665,6 +675,9 @@
     </url>
     <url>
         <loc>https://modao.site/site_pages/links/source/</loc>
+    </url>
+    <url>
+        <loc>https://modao.site/site_pages/links/tools/</loc>
     </url>
     <url>
         <loc>https://modao.site/site_pages/links/vczh/</loc>
