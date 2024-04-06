@@ -1,0 +1,35 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>linux操作系统标识宏 | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Linux内核/linuxcao-zuo-xi-tong-biao-shi-hong/>linux操作系统标识宏</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-11 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/other/>#Other</a></span><div class=post-content><p>查看gcc所定义的宏的命令: + cpp -dM /dev/null + gcc -dM -E - < /dev/null<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>1:OS MACRO:
+</span><span>WINDOWS: _WIN32、WIN32;
+</span><span>UNIX/LINUX: unix、__unix、__unix__;
+</span><span>SunOS/SOLARIS: __SVR4、__svr4__、sun、__sun、__sun__、sparc、__sparc、__sparc__;
+</span><span>HPUX: __hppa、__hppa__、__hpux、__hpux__、_HPUX_SOURCE;
+</span><span>AIX: _AIX、_AIX32、_AIX41、_AIX43、_AIX51、_AIX52;
+</span><span>LINUX: linux、__linux、__linux__、__gnu_linux__;
+</span><span>CPU: __x86_64、__x86_64__(Intel); __amd64、__amd64__(AMD); sparc、__sparc、__sparc__(Sun-SPARC);
+</span><span>2:Compiler MACRO:
+</span><span>__STDC__: ANSI C标志,值为1,说明兼容ANSI C标准;
+</span><span>__GNUC__: 它是gcc编译器编译代码时预定义的一个宏;需要针对gcc编写代码时,可以使用这个宏进行条件编译;__GNUC__的值表示gcc的版本号,需要针对特定版本的gcc编写代码时,也可以使用这个宏进行条件编译;__GNUC__的类型是int;
+</span><span>__GNUC_MINOR__: gcc的次版本号;
+</span><span>__GNUC_PATCHLEVEL__: gcc的修订号; 比如:gcc3.4.6版本,则__GNUC__=3;__GNUC_MINOR__=4;__GNUC_PATCHLEVEL__=6;
+</span><span>__GLIBC__: glib的主版本号;
+</span><span>__GLIBC_MINOR__: glib的次版本号;
+</span><span>3:常量宏:
+</span><span>__PRETTY_FUNCTION__: 记录当前函数的函数头信息;
+</span><span>__FUNCTION__: 仅记录当前函数名;
+</span><span>__VA_ARGS__: 保存了可变参数列表"...";
+</span><span>
+</span><span>__PRETTY_FUNCTION__与__FUNCTION__的区别：
+</span><span>
+</span><span>__PRETTY_FUNCTION__对函数的打印是函数名带上参数和返回值类型，__FUNCTION__只会打印函数名。
+</span><span>4.VC++的版本号宏:
+</span><span>Visual Studio 5.0--> VC++5.0 _MSC_VER = 1100
+</span><span>Visual Studio 6.0--> VC++6.0 _MSC_VER = 1200
+</span><span>Visual Studio 2002 --> VC++7.0 _MSC_VER = 1300
+</span><span>Visual Studio 2003 --> VC++7.1 _MSC_VER = 1310
+</span><span>Visual Studio 2005 --> VC++8.0 _MSC_VER = 1400
+</span><span>Visual Studio 2008 --> VC++9.0 _MSC_VER = 1500
+</span></code></pre></div></div></div><footer class=footer__poweredby><p class=caption>© 2024 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

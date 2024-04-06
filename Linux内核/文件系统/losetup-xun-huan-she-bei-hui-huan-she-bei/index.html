@@ -1,0 +1,31 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>losetup-循环设备(回环设备) | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Linux内核/文件系统/losetup-xun-huan-she-bei-hui-huan-she-bei/>losetup-循环设备(回环设备)</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a></span><div class=post-content><p>losetup命令：设置循环设备<p>循环设备可以把文件虚拟成块设备（block device)，以便模拟整个文件系统，这样用户可以将其看作是硬盘驱动器，光驱或软驱等设备，并挂入当作目录来使用。<p>比较常用的是将.iso文件当作循环设备加载并访问。<p>常见参数：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>
+</span><span>显示所有循环设备的状态
+</span><span>losetup -a
+</span><span>卸除设备
+</span><span>losetup -d /dev/loop10
+</span><span>寻找第一个未使用的循环设备
+</span><span>losetup -f
+</span><span>将文件虚拟成循环设备，指定循环设备
+</span><span>losetup /dev/loop10 img.bin
+</span><span>将文件虚拟成循环设备，自动查找未使用的循环设备
+</span><span>losetup -f img.bin
+</span><span>查询循环设备信息
+</span><span>losetup /dev/loop10
+</span></code></pre><p>example：<p>ext4<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>dd if=/dev/zero of=./img.bin bs=5M count=1
+</span><span>sudo losetup /dev/loop10 ./img.bin
+</span><span>sudo mkfs.ext4 /dev/loop10
+</span><span>mkdir test_ext4/
+</span><span>sudo mount  /dev/loop10 test_ext4/
+</span><span>
+</span><span>or
+</span><span>
+</span><span>dd if=/dev/zero of=./img.bin bs=5M count=1
+</span><span>mkfs.ext4 img.bin
+</span><span>sudo losetup /dev/loop10 ./img.bin
+</span><span>mkdir test_ext4/
+</span><span>sudo mount  /dev/loop10 test_ext4/
+</span></code></pre><p>通过mount命令或df -h命令可以查看挂载信息</div></div></div><footer class=footer__poweredby><p class=caption>© 2024 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

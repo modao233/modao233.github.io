@@ -1,0 +1,53 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>ubireader&nanddump tools安装 | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/开发工具/ubireaderan-zhuang-ji-lu-and-nanddump-tools/>ubireader&nanddump tools安装</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a>  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/kai-fa-gong-ju/>#开发工具</a></span><div class=post-content><p>ubifs镜像分析，可以借助相应工具。<pre class=language-text data-lang=text style=background-color:#2b303b;color:#c0c5ce;><code class=language-text data-lang=text><span>sudo apt install python3-pip
+</span></code></pre><h2 id=ubireader>UBIReader</h2><p>https://github.com/onekey-sec/ubi_reader/tree/main/ubireader<p>https://github.com/TinyNiko/ubi_reader_rust<p>UBIFS镜像分析，UBI read， UBI dump<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pip install --user ubi_reader
+</span></code></pre><p>vim .bashrc 添加 export PATH=$PATH:~/.local/bin<p>ubi_reader需要依赖python-lzo pip install --user python-lzo 安装时构建wheel报错：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>Building wheels for collected packages: python-lzo
+</span><span>  Running setup.py bdist_wheel for python-lzo ... error
+</span><span>  Complete output from command /usr/bin/python3 -u -c "import setuptools, tokenize;__file__='/tmp/pip-install-6tq5axea/python-lzo/setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" bdist_wheel -d /tmp/pip-wheel-_z6ku6oq --python-tag cp37:
+</span><span>  lzomodule.c: In function ‘compress’:
+</span><span>  lzomodule.c:121:13: warning: comparison of integer expressions of different signedness: ‘Py_ssize_t’ {aka ‘long int’} and ‘long unsigned int’ [-Wsign-compare]
+</span><span>       if (len > LZO_UINT_MAX) {
+</span><span>               ^
+</span><span>  lzomodule.c:126:35: warning: comparison of integer expressions of different signedness: ‘Py_ssize_t’ {aka ‘long int’} and ‘long unsigned int’ [-Wsign-compare]
+</span><span>       if ((len + len / 16 + 64 + 3) > LZO_UINT_MAX) {
+</span><span>                                     ^
+</span><span>  lzomodule.c: In function ‘optimize’:
+</span><span>  lzomodule.c:453:44: warning: pointer targets in passing argument 1 of ‘PyBytes_FromStringAndSize’ differ in signedness [-Wpointer-sign]
+</span><span>       result_str = PyBytes_FromStringAndSize(in, len);
+</span><span>                                              ^~
+</span><span>  In file included from /usr/include/python3.7m/Python.h:98,
+</span><span>                   from lzomodule.c:36:
+</span><span>  /usr/include/python3.7m/bytesobject.h:51:24: note: expected ‘const char *’ but argument is of type ‘unsigned char *’
+</span><span>   PyAPI_FUNC(PyObject *) PyBytes_FromStringAndSize(const char *, Py_ssize_t);
+</span><span>                          ^~~~~~~~~~~~~~~~~~~~~~~~~
+</span><span>  At top level:
+</span><span>  lzomodule.c:577:25: warning: ‘module_documentation’ defined but not used [-Wunused-variable]
+</span><span>   static /* const */ char module_documentation[]=
+</span><span>                           ^~~~~~~~~~~~~~~~~~~~
+</span><span>  /usr/bin/ld: /usr/lib/liblzo2.a(lzo1b_1.o): relocation R_X86_64_32 against `.text' can not be used when making a shared object; recompile with -fPIC
+</span><span>  /usr/bin/ld: /usr/lib/liblzo2.a(lzo1c_1.o): relocation R_X86_64_32 against `.text' can not be used when making a shared object; recompile with -fPIC
+</span><span>  /usr/bin/ld: /usr/lib/liblzo2.a(lzo1x_9x.o): relocation R_X86_64_32S against `.rodata' can not be used when making a shared object; recompile with -fPIC
+</span><span>  /usr/bin/ld: /usr/lib/liblzo2.a(lzo1y_9x.o): relocation R_X86_64_32S against `.rodata' can not be used when making a shared object; recompile with -fPIC
+</span><span>  /usr/bin/ld: /usr/lib/liblzo2.a(lzo1z_9x.o): relocation R_X86_64_32S against `.rodata' can not be used when making a shared object; recompile with -fPIC
+</span><span>  /usr/bin/ld: /usr/lib/liblzo2.a(lzo_crc.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+</span><span>  /usr/bin/ld: /usr/lib/liblzo2.a(lzo_util.o): relocation R_X86_64_32 against `.rodata' can not be used when making a shared object; recompile with -fPIC
+</span><span>  /usr/bin/ld: 最后的链结失败: nonrepresentable section on output
+</span><span>  collect2: error: ld returned 1 exit status
+</span><span>  error: command '/usr/bin/x86_64-linux-gnu-gcc' failed with exit code 1
+</span><span>  
+</span><span>  ----------------------------------------
+</span><span>  Failed building wheel for python-lzo
+</span></code></pre><p>需要为系统安装lzo依赖：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.10.tar.gz 
+</span><span>tar -xvzf lzo-2.10.tar.gz 
+</span><span>cd lzo-2.10
+</span><span>./configure --enable-pic --enable-shared
+</span><span>make
+</span><span>sudo make install
+</span><span>sudo cp /usr/local/lib/*lzo* /usr/lib
+</span></code></pre><h2 id=nanddump-tool>nanddump tool</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>git clone https://github.com/SySS-Research/nand-dump-tools.git
+</span><span>pip install bchlib
+</span><span>./nand_dump_decoder.py --help
+</span></code></pre></div></div></div><footer class=footer__poweredby><p class=caption>© 2024 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

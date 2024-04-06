@@ -1,0 +1,1142 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>code snipaste | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/编程语言/C/code-snippets/>code snipaste</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-11 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/code-snipaste/>#Code Snipaste</a></span><div class=post-content><h2 id=zi-fu-chuan-pin-jie-han-shu-strcat>字符串拼接函数：strcat</h2><p><a href=http://metaphors.name/2018-08-02-c01.html>出处</a><p>使用strcat进行字符串拼接<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*firstName = "</span><span style=color:#a3be8c;>Theo</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*lastName = "</span><span style=color:#a3be8c;>Tsao</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*name = (</span><span style=color:#b48ead;>char </span><span>*) </span><span style=color:#96b5b4;>malloc</span><span>(</span><span style=color:#96b5b4;>strlen</span><span>(firstName) + </span><span style=color:#96b5b4;>strlen</span><span>(lastName));
+</span><span>    </span><span style=color:#96b5b4;>strcpy</span><span>(name, firstName);
+</span><span>    </span><span style=color:#96b5b4;>strcat</span><span>(name, lastName);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", name);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><ol start=2><li>使用sprintf进行字符串拼接</ol><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*firstName = "</span><span style=color:#a3be8c;>Theo</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*lastName = "</span><span style=color:#a3be8c;>Tsao</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*name = (</span><span style=color:#b48ead;>char </span><span>*) </span><span style=color:#96b5b4;>malloc</span><span>(</span><span style=color:#96b5b4;>strlen</span><span>(firstName) + </span><span style=color:#96b5b4;>strlen</span><span>(lastName));
+</span><span>    </span><span style=color:#96b5b4;>sprintf</span><span>(name, "</span><span style=color:#d08770;>%s%s</span><span>", firstName, lastName);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", name);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=zi-fu-chuan-fen-ge-han-shu-strtokhe-strsep>字符串分割函数：strtok和strsep</h2><p>strtok是C标准库函数，Linux内核代码里的函数均有自己的一份实现，但内核的strtok函数在2.6之后便被strsep替换。（Linux内核2.0.1版本的代码还有strtok）<p>strtok函数是用来分解字符串的，其原型是：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char </span><span>*</span><span style=color:#8fa1b3;>strtok</span><span>(</span><span style=color:#b48ead;>char </span><span style=color:#bf616a;>str</span><span>[], </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>delim</span><span>);
+</span></code></pre><p>其中str是要分解的字符串，delim是字符串中用来分解的字符，该函数返回分解后的字符串的起始位置指针。之所以是分解，就是说并没有生成新的字符串，只是在源字符串上面做了一些手脚，使得源字符串发生了变化<p>C 语言字符串分割可使用 strsep，是 strtok 函数的替代，而且可用于内核。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char </span><span>*</span><span style=color:#8fa1b3;>strsep</span><span>(</span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>stringp</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>delim</span><span>);
+</span></code></pre><p>函数接受的第一个参数是 in-out prarameter，在函数执行后会被更改，总指向当前要被分割的字符串；第二个参数顾名思义，是分割符。函数返回分割后的第一个字符串。函数执行的过程，是在 <code>*stringp</code> 中查找分割符，并将其替换为<code>\0</code>，返回分割出的第一个字符串指针（NULL 表示到达字符串尾），并更新 <code>*stringp</code> 指向下一个字符串。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>linux/string.h</span><span>> </span><span style=color:#65737e;>// 或 string.h
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>argv</span><span>[]) {
+</span><span>  </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#b48ead;>const</span><span> delim = "</span><span style=color:#a3be8c;>/</span><span>";
+</span><span>  </span><span style=color:#b48ead;>char</span><span> str[] = "</span><span style=color:#a3be8c;>some/split/string</span><span>";
+</span><span> 
+</span><span>  </span><span style=color:#b48ead;>char </span><span>*token, *cur = str;
+</span><span>  </span><span style=color:#b48ead;>while </span><span>(token = </span><span style=color:#bf616a;>strsep</span><span>(&cur, delim)) {
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", token);
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>注意：“char str[]”不能用“char *str”代替，前者填充为数组，后者指向常量不可更改，而 strsep 函数需要更改目标字符串。如果不了解 strsep 的执行过程，很容易用错。<p>strsep分割<code>\r\n</code>时，需要连一起作分隔符：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp,"</span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span style=color:#b48ead;>while</span><span>(p){
+</span><span>	p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp,"</span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>}
+</span></code></pre><p>而不能分开：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp,"</span><span style=color:#96b5b4;>\r</span><span>");
+</span><span style=color:#b48ead;>while</span><span>(p)
+</span><span>{
+</span><span>	p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp,"</span><span style=color:#96b5b4;>\r</span><span>");
+</span><span>}
+</span><span>
+</span><span>p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp,"</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span style=color:#b48ead;>while</span><span>(p)
+</span><span>{
+</span><span>	p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp,"</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>}
+</span></code></pre><p>strtok 对比 strsep<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>DEVICEPARASTATIC_PATH "</span><span style=color:#a3be8c;>/etc/deviceParaStatic.conf</span><span>"
+</span><span style=color:#b48ead;>#define </span><span>DEVICEPARASTATIC_PATH_TEST "</span><span style=color:#a3be8c;>./deviceParaStatic.conf</span><span>"
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>get_profile_str_new_strtok</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>keyname</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>str_return</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>size</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>path</span><span>)
+</span><span>{
+</span><span>    FILE *fp;
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*str_key = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>    </span><span style=color:#b48ead;>char</span><span> stream[</span><span style=color:#d08770;>128</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>int</span><span> totalLength = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*p = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>    fp = </span><span style=color:#96b5b4;>fopen</span><span>(path, "</span><span style=color:#a3be8c;>r</span><span>");
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(fp == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>Can't open </span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", path);
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#96b5b4;>memset</span><span>(str_return, </span><span style=color:#d08770;>0</span><span>, size);
+</span><span>    </span><span style=color:#96b5b4;>fseek</span><span>(fp, </span><span style=color:#d08770;>0</span><span>, SEEK_SET);
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#96b5b4;>fgets</span><span>(stream, </span><span style=color:#d08770;>128</span><span>, fp) != </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>    {
+</span><span>        str_key = </span><span style=color:#96b5b4;>strstr</span><span>(stream, keyname);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(str_key == </span><span style=color:#d08770;>NULL </span><span>|| str_key != stream)
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>memset</span><span>(stream, </span><span style=color:#d08770;>0</span><span>, sizeof(stream));
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>
+</span><span>        p = </span><span style=color:#96b5b4;>strtok</span><span>(stream, "</span><span style=color:#96b5b4;>\r</span><span>");
+</span><span>        </span><span style=color:#b48ead;>while </span><span>(p)
+</span><span>        {
+</span><span>            p = </span><span style=color:#96b5b4;>strtok</span><span>(</span><span style=color:#d08770;>NULL</span><span>, "</span><span style=color:#96b5b4;>\r</span><span>");
+</span><span>        }
+</span><span>
+</span><span>        p = </span><span style=color:#96b5b4;>strtok</span><span>(stream, "</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>        </span><span style=color:#b48ead;>while </span><span>(p)
+</span><span>        {
+</span><span>            p = </span><span style=color:#96b5b4;>strtok</span><span>(</span><span style=color:#d08770;>NULL</span><span>, "</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>        }
+</span><span>
+</span><span>        totalLength = </span><span style=color:#96b5b4;>strlen</span><span>(stream) - </span><span style=color:#96b5b4;>strlen</span><span>(keyname);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(size < totalLength + </span><span style=color:#d08770;>1</span><span>)
+</span><span>        { </span><span style=color:#65737e;>/*total length + '\0' should not less than buffer*/
+</span><span>            </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>Too small buffer to catch the </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> frome get_profile_str_new</span><span style=color:#96b5b4;>\n</span><span>", keyname);
+</span><span>            </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>            </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>else if </span><span>(totalLength < </span><span style=color:#d08770;>0</span><span>)
+</span><span>        { </span><span style=color:#65737e;>/*can't get a negative length string*/
+</span><span>            </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>No profile string can get</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>            </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>else
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>strncpy</span><span>(str_return, stream + </span><span style=color:#96b5b4;>strlen</span><span>(keyname), totalLength);
+</span><span>            str_return[totalLength] = '</span><span style=color:#96b5b4;>\0</span><span>';
+</span><span>            </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>            </span><span style=color:#b48ead;>return </span><span style=color:#96b5b4;>strlen</span><span>(str_return);
+</span><span>        }
+</span><span>    }
+</span><span>    </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>    </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>File </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> content </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> is worng</span><span style=color:#96b5b4;>\n</span><span>", path, keyname);
+</span><span>    </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>
+</span><span>} </span><span style=color:#65737e;>/* end get_profile_str */
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>get_profile_str_new_strsep</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>keyname</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>str_return</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>size</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>path</span><span>)
+</span><span>{
+</span><span>    FILE *fp;
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*str_key = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>    </span><span style=color:#b48ead;>char</span><span> stream[</span><span style=color:#d08770;>128</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>int</span><span> totalLength = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*p = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>    fp = </span><span style=color:#96b5b4;>fopen</span><span>(path, "</span><span style=color:#a3be8c;>r</span><span>");
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(fp == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>Can't open </span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", path);
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#96b5b4;>memset</span><span>(str_return, </span><span style=color:#d08770;>0</span><span>, size);
+</span><span>    </span><span style=color:#96b5b4;>fseek</span><span>(fp, </span><span style=color:#d08770;>0</span><span>, SEEK_SET);
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(</span><span style=color:#96b5b4;>fgets</span><span>(stream, </span><span style=color:#d08770;>128</span><span>, fp) != </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>    {
+</span><span>        str_key = </span><span style=color:#96b5b4;>strstr</span><span>(stream, keyname);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(str_key == </span><span style=color:#d08770;>NULL </span><span>|| str_key != stream)
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>memset</span><span>(stream, </span><span style=color:#d08770;>0</span><span>, sizeof(stream));
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>
+</span><span>        </span><span style=color:#b48ead;>char </span><span>*tmp = stream;
+</span><span>
+</span><span>        p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp, "</span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>        </span><span style=color:#b48ead;>while </span><span>(p)
+</span><span>        {
+</span><span>            p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp, "</span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>        }
+</span><span>
+</span><span>        p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp, "</span><span style=color:#96b5b4;>\r</span><span>");
+</span><span>        </span><span style=color:#b48ead;>while </span><span>(p)
+</span><span>        {
+</span><span>            p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp, "</span><span style=color:#96b5b4;>\r</span><span>");
+</span><span>        }
+</span><span>
+</span><span>        p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp, "</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>        </span><span style=color:#b48ead;>while </span><span>(p)
+</span><span>        {
+</span><span>            p = </span><span style=color:#bf616a;>strsep</span><span>(&tmp, "</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>        }
+</span><span>        totalLength = </span><span style=color:#96b5b4;>strlen</span><span>(stream) - </span><span style=color:#96b5b4;>strlen</span><span>(keyname);
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(size < totalLength + </span><span style=color:#d08770;>1</span><span>)
+</span><span>        { </span><span style=color:#65737e;>/*total length + '\0' should not less than buffer*/
+</span><span>            </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>Too small buffer to catch the </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> frome get_profile_str_new</span><span style=color:#96b5b4;>\n</span><span>", keyname);
+</span><span>            </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>            </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>else if </span><span>(totalLength < </span><span style=color:#d08770;>0</span><span>)
+</span><span>        { </span><span style=color:#65737e;>/*can't get a negative length string*/
+</span><span>            </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>No profile string can get</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>            </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>            </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>else
+</span><span>        {
+</span><span>            </span><span style=color:#96b5b4;>strncpy</span><span>(str_return, stream + </span><span style=color:#96b5b4;>strlen</span><span>(keyname), totalLength);
+</span><span>            str_return[totalLength] = '</span><span style=color:#96b5b4;>\0</span><span>';
+</span><span>            </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>            </span><span style=color:#b48ead;>return </span><span style=color:#96b5b4;>strlen</span><span>(str_return);
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>    </span><span style=color:#96b5b4;>fprintf</span><span>(stderr, "</span><span style=color:#a3be8c;>File </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> content </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;> is worng</span><span style=color:#96b5b4;>\n</span><span>", path, keyname);
+</span><span>    </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>} </span><span style=color:#65737e;>/* end get_profile_str */
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>get_modename</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>attrVal</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> attrName[</span><span style=color:#d08770;>32</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#65737e;>// char attrVal[128] = {0};
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> ret = </span><span style=color:#d08770;>0</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>snprintf</span><span>(attrName, sizeof(attrName), "</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>=</span><span>", "</span><span style=color:#a3be8c;>ModelName</span><span>");
+</span><span>
+</span><span>    ret = </span><span style=color:#bf616a;>get_profile_str_new_strtok</span><span>(attrName, attrVal, len, DEVICEPARASTATIC_PATH_TEST);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>strtok: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>,</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", attrVal, ret);
+</span><span>
+</span><span>    ret = </span><span style=color:#bf616a;>get_profile_str_new_strtok</span><span>(attrName, attrVal, len, DEVICEPARASTATIC_PATH_TEST);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>strsep: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>,</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", attrVal, ret);
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> attrVal[</span><span style=color:#d08770;>128</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#bf616a;>get_modename</span><span>(attrVal, sizeof(attrVal));
+</span><span>    </span><span style=color:#65737e;>// char test[100] = "hello";
+</span><span>    </span><span style=color:#65737e;>// sprintf(test, "%s world", test);
+</span><span>    </span><span style=color:#65737e;>// printf("%s", test);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><pre class=language-deviceParaStatic.conf data-lang=deviceParaStatic.conf style=background-color:#2b303b;color:#c0c5ce;><code class=language-deviceParaStatic.conf data-lang=deviceParaStatic.conf><span>Manufacturer=UNIONMAN
+</span><span>CustomerSWVersion=V01.00.1
+</span><span>CustomerHWVersion=V01.00
+</span><span>BatCode=Device ID 54321
+</span><span>ModelName=UNG430N-C
+</span><span>Category=HGW
+</span><span>option60Code=0000
+</span><span>option60Mode
+</span><span>option125Code=01020304
+</span><span>option125String=SHCTCIPTVDHCPAAA
+</span><span>version=V01.00.1
+</span></code></pre><h2 id=shu-zu-he-zhi-zhen-zai-han-shu-can-shu-de-qu-bie>数组和指针在函数参数的区别</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include</span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>> 
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>foo</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>a</span><span>[]) 
+</span><span>{ 
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b[</span><span style=color:#d08770;>10</span><span>]; 
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>foo :</span><span style=color:#d08770;>%p %p</span><span style=color:#96b5b4;>\n</span><span>",a,&a); 
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>foo :</span><span style=color:#d08770;>%p %p</span><span style=color:#96b5b4;>\n</span><span>",b,&b); 
+</span><span>} 
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[]) 
+</span><span>{ 
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a[</span><span style=color:#d08770;>10</span><span>]; 
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>main:</span><span style=color:#d08770;>%p %p</span><span style=color:#96b5b4;>\n</span><span>", a, &a); 
+</span><span>    </span><span style=color:#bf616a;>foo</span><span>(a); 
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>; 
+</span><span>} 
+</span></code></pre><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>main:0x7fffb4ded680 0x7fffb4ded680 
+</span><span>foo :0x7fffb4ded680 0x7fffb4ded628 
+</span><span>foo :0x7fffb4ded630 0x7fffb4ded630 
+</span></code></pre><p>在main函数中，a是数组类型，a和&a的地址值是一样的 在foo函数中，a是一个指针，指向数组类型，由于指针本身是对象，所以在内存中有专门空间存放其值。由此，在foo函数中，a的地址是指针的地址，&a的地址则是数组的地址。<h2 id=jie-gou-ti-chu-shi-hua>结构体初始化</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>typedef struct</span><span> test {
+</span><span>	</span><span style=color:#b48ead;>char</span><span> a;
+</span><span>	</span><span style=color:#b48ead;>int</span><span> b;
+</span><span>	</span><span style=color:#b48ead;>const char </span><span>*c;
+</span><span>}Test;
+</span></code></pre><p>方法一：按照成员的声明顺序，顺序初始化<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>Test t1 = {'</span><span style=color:#a3be8c;>A</span><span>', </span><span style=color:#d08770;>1</span><span>, "</span><span style=color:#a3be8c;>test</span><span>"};
+</span></code></pre><p>方法二：指定初始化，成员顺序可以不定，Linux 内核多采用此方式<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>Test t2 = {
+</span><span>	.</span><span style=color:#bf616a;>b </span><span>= </span><span style=color:#d08770;>1</span><span>,
+</span><span>	.</span><span style=color:#bf616a;>a </span><span>= '</span><span style=color:#a3be8c;>A</span><span>',
+</span><span>	.</span><span style=color:#bf616a;>c </span><span>= "</span><span style=color:#a3be8c;>test</span><span>",
+</span><span>};
+</span></code></pre><p>方法三：指定初始化，成员顺序可以不定<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>Test t3 = {
+</span><span>	c: "</span><span style=color:#a3be8c;>test</span><span>",
+</span><span>	b: </span><span style=color:#d08770;>1</span><span>,
+</span><span>	a: '</span><span style=color:#a3be8c;>A</span><span>',
+</span><span>};
+</span></code></pre><p>将结构体初始化为0的两种方法：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>// 1
+</span><span>Test t4 = {</span><span style=color:#d08770;>0</span><span>};
+</span><span style=color:#65737e;>// 2
+</span><span>Test t4;
+</span><span style=color:#bf616a;>memset</span><span>(&t4, </span><span style=color:#d08770;>0</span><span>, sizeof(Test));
+</span></code></pre><h2 id=jie-gou-ti-kao-bei>结构体拷贝</h2><p>浅拷贝：拷贝后结构体内的指针指向同一块区域，不会分配新的内存<ul><li>通过memcpy进行复制<li>直接用=运算符复制，C语言中，结构体是一篇连续的内存空间，使用=赋值操作，底层用到的就是memcpy</ul><p>浅拷贝：拷贝过程中是按字节复制的，对于指针型成员变量只复制指针本身，而不复制指针所指向的目标<p>浅拷贝在有指针的情况下，会导致对内存进行重复释放引发错误。<h2 id=jie-gou-ti-dui-qi>结构体对齐</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>typedef struct</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a;
+</span><span>    </span><span style=color:#b48ead;>short</span><span> b;
+</span><span>    </span><span style=color:#b48ead;>char</span><span> c;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> d;
+</span><span>}B;
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> len_2 = sizeof(B);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d %d %d</span><span>", sizeof(</span><span style=color:#b48ead;>short</span><span>), sizeof(</span><span style=color:#b48ead;>int</span><span>), len_2);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span style=color:#65737e;>//output: 2 4 12
+</span></code></pre><p>64位系统会进行 4字节对齐<h2 id=strduphan-shu>strdup函数</h2><p>字符串拷贝库函数，一般和free（）函数成对出现。 等效于malloc + memcpy，所以需要free。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>char </span><span>* </span><span style=color:#8fa1b3;>__strdup</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>s</span><span>)
+</span><span>{
+</span><span>   size_t  len = </span><span style=color:#96b5b4;>strlen</span><span>(s) +</span><span style=color:#d08770;>1</span><span>;
+</span><span>   </span><span style=color:#b48ead;>void </span><span>*new = </span><span style=color:#96b5b4;>malloc</span><span>(len);
+</span><span>   </span><span style=color:#b48ead;>if </span><span>(new == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>      </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>   </span><span style=color:#b48ead;>return </span><span>(</span><span style=color:#b48ead;>char </span><span>*)</span><span style=color:#bf616a;>memecpy</span><span>(new,s,len);
+</span><span>}
+</span></code></pre><h2 id=shi-yong-randhuo-qu-sui-ji-shu>使用rand获取随机数</h2><p>在头文件 <code>#include &LTstdlib.h></code> rand()函数产生0到RAND_MAX范围的随机数<p>a + rand() % b：产生一个a到(a+b-1)的随机数，b表示范围<p>因为rand() 的内部实现是用线性同余法做的，它不是真的随机数，只不过是因为其周期特别长，所以有一定的范围里可看成是随机的，<br> rand() 会返回一随机数值，范围在 0 至 RAND_MAX 间。<br> 在调用此函数产生随机数前，必须先利用 srand()设置好随机数种子，如果未设随机数种子，rand()在调用时会自动设随机数种子为 1。<br> rand()产生的是假随机数字，每次执行时是相同的。若要不同,以不同的值来初始化它.初始化的函数就是 srand()。<p>一般用当前时间生成随机种子：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>time.h</span><span>>
+</span><span>
+</span><span style=color:#bf616a;>srand</span><span>( (</span><span style=color:#b48ead;>unsigned</span><span>)</span><span style=color:#96b5b4;>time</span><span>(</span><span style=color:#d08770;>NULL</span><span>) );
+</span></code></pre><h2 id=memsetchu-shi-hua-wei-1>memset初始化为1</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>int</span><span> val = </span><span style=color:#d08770;>0</span><span>;
+</span><span style=color:#bf616a;>memset</span><span>(buf, val, sizeof(buf));
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> val = </span><span style=color:#d08770;>1</span><span>;
+</span><span style=color:#bf616a;>memset</span><span>(buf, val, sizeof(buf));
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> val = -</span><span style=color:#d08770;>1</span><span>;
+</span><span style=color:#bf616a;>memset</span><span>(buf, val, sizeof(buf));
+</span></code></pre><p>memset是按字节赋值的，取变量val的后8位二进制进行赋值。 0 ，二进制是（00000000 00000000 00000000 00000000），取后8位（00000000） 1 ，二进制是（00000000 00000000 00000000 00000001），取后8位（00000001） -1，负数在计算机中以补码存储，二进制是（11111111 11111111 11111111 11111111），取后8位（11111111）<p>总结：memset()只有在初始化-1,0时才会正确。初始化其它值可能结果与预期不符合。<h2 id=linuxxi-tong-cyu-yan-ji-shi>Linux系统C语言计时</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/time.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>math.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>time.h</span><span>>
+</span><span> 
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>do_func</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> k;
+</span><span>    </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> i=</span><span style=color:#d08770;>0</span><span>;i<</span><span style=color:#d08770;>1000</span><span>;i++)
+</span><span>        </span><span style=color:#b48ead;>for</span><span>(</span><span style=color:#b48ead;>int</span><span> j=</span><span style=color:#d08770;>0</span><span>;j<</span><span style=color:#d08770;>1000</span><span>;j++)
+</span><span>            k=i+j;
+</span><span>}
+</span><span style=color:#65737e;>//int gettimeofday(struct timeval *tv,struct timezone *tz);精度到微秒
+</span><span style=color:#b48ead;>long </span><span style=color:#8fa1b3;>us_timer</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timeval start,end;
+</span><span>    </span><span style=color:#bf616a;>gettimeofday</span><span>(&start,</span><span style=color:#d08770;>NULL</span><span>);
+</span><span>    </span><span style=color:#bf616a;>do_func</span><span>();
+</span><span>    </span><span style=color:#bf616a;>gettimeofday</span><span>(&end,</span><span style=color:#d08770;>NULL</span><span>);
+</span><span>    </span><span style=color:#b48ead;>return </span><span>(end.</span><span style=color:#bf616a;>tv_sec</span><span>-start.</span><span style=color:#bf616a;>tv_sec</span><span>)*</span><span style=color:#d08770;>10</span><span>^</span><span style=color:#d08770;>6</span><span>+end.</span><span style=color:#bf616a;>tv_usec</span><span>-start.</span><span style=color:#bf616a;>tv_usec</span><span>;
+</span><span>}
+</span><span style=color:#65737e;>/*
+</span><span style=color:#65737e;>int clock_gettime(clockid_t clk_id,struct timespec *tp);精确到纳秒
+</span><span style=color:#65737e;>CLOCK_REALTIME:系统实时时间,随系统实时时间改变而改变,即从UTC1970-1-1 0:0:0开始计时,中间时刻如果系统时间被用户改成其他,则对应的时间相应改变
+</span><span style=color:#65737e;>CLOCK_MONOTONIC:从系统启动这一刻起开始计时,不受系统时间被用户改变的影响
+</span><span style=color:#65737e;>CLOCK_PROCESS_CPUTIME_ID:本进程到当前代码系统CPU花费的时间
+</span><span style=color:#65737e;>CLOCK_THREAD_CPUTIME_ID:本线程到当前代码系统CPU花费的时间
+</span><span style=color:#65737e;>*/
+</span><span style=color:#b48ead;>long </span><span style=color:#8fa1b3;>ns_timer</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timespec start,end;
+</span><span>    </span><span style=color:#bf616a;>clock_gettime</span><span>(CLOCK_MONOTONIC,&start);
+</span><span>    </span><span style=color:#bf616a;>do_func</span><span>();
+</span><span>    </span><span style=color:#bf616a;>clock_gettime</span><span>(CLOCK_MONOTONIC,&end);
+</span><span>    </span><span style=color:#b48ead;>return </span><span>(end.</span><span style=color:#bf616a;>tv_sec</span><span>-start.</span><span style=color:#bf616a;>tv_sec</span><span>)*</span><span style=color:#d08770;>10</span><span>^</span><span style=color:#d08770;>9</span><span>+end.</span><span style=color:#bf616a;>tv_nsec</span><span>-start.</span><span style=color:#bf616a;>tv_nsec</span><span>;
+</span><span>}
+</span><span> 
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>花费时间 : </span><span style=color:#d08770;>%ld</span><span style=color:#a3be8c;> 微秒(us)</span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>us_timer</span><span>());
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>花费时间 : </span><span style=color:#d08770;>%ld</span><span style=color:#a3be8c;> 纳秒(ns)</span><span style=color:#96b5b4;>\n</span><span>", </span><span style=color:#bf616a;>ns_timer</span><span>());
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>运行结果<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#time ./a.out
+</span><span> 
+</span><span>花费时间 : 2016 微秒(us)
+</span><span>花费时间 : 2563087 纳秒(ns)
+</span><span> 
+</span><span>real	0m0.005s
+</span><span>user	0m0.005s
+</span><span>sys	0m0.000s
+</span></code></pre><h2 id=zi-fu-chuan-shu-zu-chu-shi-hua>字符串数组初始化</h2><p>在C语言编程中，当我们声明一个字符串数组的时候，常常需要把它初始化为空字符（Null）。总结起来有以下三种方式：<p>(1) char str[10]="";<p>(2) char str[10]={'\0'}  = {0};<p>(3) char str[10]; str[0]='\0';<p>\0和'0'是不一样的<p>char a[2] = {32}; 这是所有字符初始化为空格<p>char a[10] = {'0'}; 意思将第一个字符初始化为0，其他为空字符即\0<p>第(1)(2)种方式是将str数组的所有元素都初始化为'\0'，而第(3)种方式是只将str数组的第一个元素初始化为'\0'。如果数组的size非常大，那么前两种方式将会造成很大的开销。所以，除非必要（即我们需要将str数组的所有元素都初始化为0的情况），我们都应该选用第(3)种方式来初始化字符串数组。<h2 id=huo-qu-wen-jian-da-xiao>获取文件大小</h2><p>一、获取文件系统属性，读取文件大小。<p>在C语言库函数中有stat函数，可以获取文件的基本信息，其中就有文件大小。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/stat.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>file_size</span><span>(</span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>filename</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> stat statbuf;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> ret;
+</span><span>    ret = </span><span style=color:#bf616a;>stat</span><span>(filename,&statbuf);</span><span style=color:#65737e;>//调用stat函数
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(ret != </span><span style=color:#d08770;>0</span><span>) </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;</span><span style=color:#65737e;>//获取失败。
+</span><span>    </span><span style=color:#b48ead;>return</span><span> statbuf.</span><span style=color:#bf616a;>st_size</span><span>;</span><span style=color:#65737e;>//返回文件大小。
+</span><span>}
+</span></code></pre><p>二、通过C语言文件操作，获取文件大小。<p>以fopen打开的文件，通过fseek可以定位到文件尾，这时使用ftell函数，返回的文件指针偏移值，就是文件的实际大小。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>file_size</span><span>(</span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>filename</span><span>)
+</span><span>{
+</span><span>    FILE *fp = </span><span style=color:#96b5b4;>fopen</span><span>(filename, "</span><span style=color:#a3be8c;>rb</span><span>");</span><span style=color:#65737e;>//打开文件。
+</span><span>    </span><span style=color:#b48ead;>int</span><span> size;
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(fp == </span><span style=color:#d08770;>NULL</span><span>) </span><span style=color:#65737e;>// 打开文件失败
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#96b5b4;>fseek</span><span>(fp, </span><span style=color:#d08770;>0</span><span>, SEEK_END);</span><span style=color:#65737e;>//定位文件指针到文件尾。
+</span><span>    size=</span><span style=color:#96b5b4;>ftell</span><span>(fp);</span><span style=color:#65737e;>//获取文件指针偏移量，即文件大小。
+</span><span>    </span><span style=color:#96b5b4;>fclose</span><span>(fp);</span><span style=color:#65737e;>//关闭文件。
+</span><span>    </span><span style=color:#b48ead;>return</span><span> size;
+</span><span>}
+</span></code></pre><p>三、注意事项： 第一种方式为直接读取文件信息，无需打开文件，所以更高效。 实测耗时差异为微秒级，忽略不计<p>四、测试代码：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/stat.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/time.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>file_size1</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>filename</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timeval start = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timeval end = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#bf616a;>gettimeofday</span><span>(&start, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> stat statbuf;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> ret;
+</span><span>    ret = </span><span style=color:#bf616a;>stat</span><span>(filename, &statbuf); </span><span style=color:#65737e;>//调用stat函数
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(ret != </span><span style=color:#d08770;>0</span><span>)
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>; </span><span style=color:#65737e;>//获取失败。
+</span><span>    </span><span style=color:#bf616a;>gettimeofday</span><span>(&end, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>    </span><span style=color:#b48ead;>long</span><span> times = (end.</span><span style=color:#bf616a;>tv_sec </span><span>- start.</span><span style=color:#bf616a;>tv_sec</span><span>) * </span><span style=color:#d08770;>1000000 </span><span>+ (end.</span><span style=color:#bf616a;>tv_usec </span><span>- start.</span><span style=color:#bf616a;>tv_usec</span><span>);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>: </span><span style=color:#d08770;>%ld</span><span style=color:#96b5b4;>\n</span><span>", __FUNCTION__, times);
+</span><span>    </span><span style=color:#b48ead;>return</span><span> statbuf.</span><span style=color:#bf616a;>st_size</span><span>; </span><span style=color:#65737e;>//返回文件大小。
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>file_size2</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>filename</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timeval start = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>struct</span><span> timeval end = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#bf616a;>gettimeofday</span><span>(&start, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>    FILE *fp = </span><span style=color:#96b5b4;>fopen</span><span>(filename, "</span><span style=color:#a3be8c;>rb</span><span>"); </span><span style=color:#65737e;>//打开文件。
+</span><span>    </span><span style=color:#b48ead;>int</span><span> size;
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(fp == </span><span style=color:#d08770;>NULL</span><span>) </span><span style=color:#65737e;>// 打开文件失败
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#96b5b4;>fseek</span><span>(fp, </span><span style=color:#d08770;>0</span><span>, SEEK_END); </span><span style=color:#65737e;>//定位文件指针到文件尾。
+</span><span>    size = </span><span style=color:#96b5b4;>ftell</span><span>(fp);       </span><span style=color:#65737e;>//获取文件指针偏移量，即文件大小。
+</span><span>    </span><span style=color:#96b5b4;>fclose</span><span>(fp);             </span><span style=color:#65737e;>//关闭文件。
+</span><span>    </span><span style=color:#bf616a;>gettimeofday</span><span>(&end, </span><span style=color:#d08770;>NULL</span><span>);
+</span><span>    </span><span style=color:#b48ead;>long</span><span> times = (end.</span><span style=color:#bf616a;>tv_sec </span><span>- start.</span><span style=color:#bf616a;>tv_sec</span><span>) * </span><span style=color:#d08770;>1000000 </span><span>+ (end.</span><span style=color:#bf616a;>tv_usec </span><span>- start.</span><span style=color:#bf616a;>tv_usec</span><span>);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>: </span><span style=color:#d08770;>%ld</span><span style=color:#96b5b4;>\n</span><span>", __FUNCTION__, times);
+</span><span>    </span><span style=color:#b48ead;>return</span><span> size;
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>**</span><span style=color:#bf616a;>argv</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*path = argv[</span><span style=color:#d08770;>1</span><span>];
+</span><span>    </span><span style=color:#b48ead;>int</span><span> pid = </span><span style=color:#bf616a;>fork</span><span>();
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(pid == </span><span style=color:#d08770;>0</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>int</span><span> a = </span><span style=color:#bf616a;>file_size1</span><span>(path);
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>else
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>int</span><span> b = </span><span style=color:#bf616a;>file_size2</span><span>(path);
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=vprinfshi-yong-feng-zhuang-da-yin-han-shu>vprinf使用 && 封装打印函数</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdarg.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>static int</span><span> printf_flag = </span><span style=color:#d08770;>0</span><span>;   				</span><span style=color:#65737e;>/* 打印标记 */
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Printf</span><span>(</span><span style=color:#b48ead;>const char</span><span>* </span><span style=color:#bf616a;>format</span><span>, ...)
+</span><span>{
+</span><span>	</span><span style=color:#b48ead;>if</span><span>(printf_flag)
+</span><span>	{
+</span><span>		va_list marker;
+</span><span>		</span><span style=color:#96b5b4;>va_start</span><span>(marker, format);
+</span><span>		</span><span style=color:#96b5b4;>vprintf</span><span>(format, marker);
+</span><span>		</span><span style=color:#96b5b4;>va_end</span><span>(marker);
+</span><span>	}
+</span><span>	</span><span style=color:#b48ead;>else 
+</span><span>	{
+</span><span>		</span><span style=color:#65737e;>/* 打印标记未开启 */
+</span><span>	}
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(argc > </span><span style=color:#d08770;>1 </span><span>&& !</span><span style=color:#96b5b4;>strcmp</span><span>(argv[</span><span style=color:#d08770;>1</span><span>], "</span><span style=color:#a3be8c;>debug</span><span>"))printf_flag=</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#bf616a;>Printf</span><span>("</span><span style=color:#d08770;>%s %s</span><span style=color:#96b5b4;>\n</span><span>", "</span><span style=color:#a3be8c;>hello</span><span>", "</span><span style=color:#a3be8c;> world</span><span>");
+</span><span>}
+</span></code></pre><h2 id=huo-qu-dang-qian-xi-tong-shi-jian-localtime>获取当前系统时间：localtime</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>time.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>	</span><span style=color:#b48ead;>char</span><span> cur_time[</span><span style=color:#d08770;>32</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>	time_t time_tmp = </span><span style=color:#d08770;>0</span><span>;
+</span><span>	</span><span style=color:#b48ead;>struct</span><span> tm *time_ptr;
+</span><span>	</span><span style=color:#96b5b4;>time</span><span>(&time_tmp);
+</span><span>
+</span><span>	time_ptr = </span><span style=color:#96b5b4;>localtime</span><span>(&time_tmp);
+</span><span>	</span><span style=color:#96b5b4;>sprintf</span><span>(cur_time, "</span><span style=color:#d08770;>%d%d%d%d%d%d</span><span>", </span><span style=color:#d08770;>1900 </span><span>+ time_ptr->tm_year, </span><span style=color:#d08770;>1 </span><span>+ time_ptr->tm_mon, time_ptr->tm_mday, time_ptr->tm_hour, time_ptr->tm_min, time_ptr->tm_sec);
+</span><span>
+</span><span>	</span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>: </span><span style=color:#d08770;>%d</span><span>", cur_time, </span><span style=color:#96b5b4;>strlen</span><span>(cur_time));
+</span><span>	</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><p>此外，time()函数： 在计算机中时间都是从（1970年01月01日 0:00:00)开始计算秒数的 + 首先定义 time_t 类型（本质上是长整型long）来存储从1970年到现在经过了多少秒 + 再通过函数time()来获取从1970年到现在经过了多少秒 + 为了便于阅读，采用函数将“过了多少秒”进行转化<h2 id=c-wen-jian-du-fread>C-文件读：fread</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>   FILE *fp;
+</span><span>   </span><span style=color:#b48ead;>char</span><span> c[] = "</span><span style=color:#a3be8c;>This is runoob</span><span>";
+</span><span>   </span><span style=color:#b48ead;>char</span><span> buffer[</span><span style=color:#d08770;>20</span><span>];
+</span><span>
+</span><span>   </span><span style=color:#65737e;>/* 打开文件用于读写 */
+</span><span>   fp = </span><span style=color:#96b5b4;>fopen</span><span>("</span><span style=color:#a3be8c;>data</span><span>", "</span><span style=color:#a3be8c;>a</span><span>");
+</span><span>
+</span><span>   </span><span style=color:#65737e;>/* 读取并显示数据 */
+</span><span>   </span><span style=color:#96b5b4;>fread</span><span>(buffer, </span><span style=color:#96b5b4;>strlen</span><span>(c) + </span><span style=color:#d08770;>1</span><span>, </span><span style=color:#d08770;>1</span><span>, fp);
+</span><span>   </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", buffer);
+</span><span>   </span><span style=color:#96b5b4;>fclose</span><span>(fp);
+</span><span>
+</span><span>   </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><h2 id=gen-ju-lian-he-ti-pan-duan-zi-jie-xu>根据联合体判断字节序</h2><p>大端：低位字节存放在高位地址<p>小端：低位字节存放在低位地址<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>typedef union
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>unsigned long</span><span> bits32;
+</span><span>    </span><span style=color:#b48ead;>unsigned char</span><span> bytes[</span><span style=color:#d08770;>4</span><span>];
+</span><span>} TheValue;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    TheValue theValue;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> isLittleEndian = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    theValue.</span><span style=color:#bf616a;>bytes</span><span>[</span><span style=color:#d08770;>0</span><span>] = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    theValue.</span><span style=color:#bf616a;>bytes</span><span>[</span><span style=color:#d08770;>1</span><span>] = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    theValue.</span><span style=color:#bf616a;>bytes</span><span>[</span><span style=color:#d08770;>2</span><span>] = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    theValue.</span><span style=color:#bf616a;>bytes</span><span>[</span><span style=color:#d08770;>3</span><span>] = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    isLittleEndian = (theValue.</span><span style=color:#bf616a;>bits32 </span><span>== </span><span style=color:#d08770;>256</span><span>);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%u</span><span>", theValue.</span><span style=color:#bf616a;>bits32</span><span>);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><h2 id=shu-ju-de-zi-jie-xu-da-xiao-duan-zhuan-huan>数据的(字节序)大小端转换</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span>
+</span><span style=color:#65737e;>/* 数据的大小端转换 */
+</span><span style=color:#b48ead;>#define </span><span style=color:#8fa1b3;>um_data_byte_swap</span><span>(</span><span style=color:#bf616a;>in</span><span>, </span><span style=color:#bf616a;>out</span><span>) \
+</span><span style=color:#b48ead;>do </span><span>{ \
+</span><span>    out = ((in & </span><span style=color:#d08770;>0x000000ff</span><span>) << </span><span style=color:#d08770;>24</span><span>) | ((in & </span><span style=color:#d08770;>0x0000ff00</span><span>) << </span><span style=color:#d08770;>8</span><span>) | ((in & </span><span style=color:#d08770;>0x00ff0000</span><span>) >> </span><span style=color:#d08770;>8</span><span>) | ((in & </span><span style=color:#d08770;>0xff000000</span><span>) >> </span><span style=color:#d08770;>24</span><span>); \
+</span><span>} </span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>0</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a = </span><span style=color:#d08770;>0x11223344</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b = </span><span style=color:#d08770;>0x0</span><span>;
+</span><span>    </span><span style=color:#bf616a;>um_data_byte_swap</span><span>(a, b);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%x</span><span>", b);
+</span><span>    </span><span style=color:#96b5b4;>system</span><span>("</span><span style=color:#a3be8c;>echo [cjf] hello</span><span>");
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=yun-suan-fu-te-dian>&&、||运算符特点</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i, j;
+</span><span>    i = j = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#65737e;>// int a = (++i && ++j) || i++;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a = !(++i && j++) || i++;
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\t</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\t</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", i, j, a);</span><span style=color:#65737e;>//0	-1	1
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=hong-ti-huan-de-te-dian>宏替换的特点</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span style=color:#8fa1b3;>max</span><span>(</span><span style=color:#bf616a;>a</span><span>,</span><span style=color:#bf616a;>b</span><span>) (a) > (b) ? (a) : (b)
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>10</span><span>, j = </span><span style=color:#d08770;>2</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> z = </span><span style=color:#bf616a;>max</span><span>(i++, j);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>,</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>,</span><span style=color:#d08770;>%d</span><span>", i, j, z);</span><span style=color:#65737e;>//12,2,11
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=zi-fu-shu-zu-shi-you-zhi-zi-fu-zhi-zhen-shi-zuo-zhi>字符数组是右值，字符指针是左值</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>// had note
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a[] = "</span><span style=color:#a3be8c;>abcd</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*b = "</span><span style=color:#a3be8c;>ABCD</span><span>";
+</span><span>    a[</span><span style=color:#d08770;>0</span><span>] = '</span><span style=color:#a3be8c;>A</span><span>';
+</span><span>    </span><span style=color:#65737e;>// b[0] = 'a';
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", a);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", b);
+</span><span>
+</span><span>    </span><span style=color:#65737e;>// a++; //不允许对a（右值）作自增，error: lvalue required as increment operand
+</span><span>    b++;
+</span><span>
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", a);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", b);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=macdi-zhi-he-fa-xing-jian-cha>MAC地址合法性检查</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>_mac_without_colons</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>src</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>dst</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*p = src;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>, index = </span><span style=color:#d08770;>0</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(!src || !dst)
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#96b5b4;>strlen</span><span>(src) != </span><span style=color:#d08770;>17</span><span>)
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>for </span><span>(i = </span><span style=color:#d08770;>0</span><span>; i < </span><span style=color:#d08770;>17</span><span>; i++)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(p[i] != '</span><span style=color:#a3be8c;>:</span><span>')
+</span><span>        {
+</span><span>            dst[index++] = p[i];
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>else
+</span><span>        {
+</span><span>            </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>macCheck</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>mac</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> ret = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> count = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*macTemp = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>    </span><span style=color:#b48ead;>char</span><span> macOne[</span><span style=color:#d08770;>3</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>char</span><span> macTwo[</span><span style=color:#d08770;>3</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>char</span><span> macThree[</span><span style=color:#d08770;>3</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>char</span><span> macFour[</span><span style=color:#d08770;>3</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>char</span><span> macFive[</span><span style=color:#d08770;>3</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>char</span><span> macSix[</span><span style=color:#d08770;>3</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(mac == </span><span style=color:#d08770;>NULL</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#65737e;>/* 检查是不是0-9、A-E */
+</span><span>    ret = </span><span style=color:#96b5b4;>sscanf</span><span>(mac, "</span><span style=color:#d08770;>%[0-9A-F]</span><span style=color:#a3be8c;>:</span><span style=color:#d08770;>%[0-9A-F]</span><span style=color:#a3be8c;>:</span><span style=color:#d08770;>%[0-9A-F]</span><span style=color:#a3be8c;>:</span><span style=color:#d08770;>%[0-9A-F]</span><span style=color:#a3be8c;>:</span><span style=color:#d08770;>%[0-9A-F]</span><span style=color:#a3be8c;>:</span><span style=color:#d08770;>%[0-9A-F]</span><span>",
+</span><span>                 macOne, macTwo, macThree, macFour, macFive, macSix);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s %s %s %s %s %s</span><span style=color:#96b5b4;>\n</span><span>", macOne, macTwo, macThree, macFour, macFive, macSix);
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(ret <= </span><span style=color:#d08770;>0</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#65737e;>/* 检查mac每个分段的长度 */
+</span><span>    </span><span style=color:#b48ead;>if </span><span>((</span><span style=color:#d08770;>2 </span><span>!= </span><span style=color:#96b5b4;>strlen</span><span>(macOne)) || (</span><span style=color:#d08770;>2 </span><span>!= </span><span style=color:#96b5b4;>strlen</span><span>(macTwo)) || (</span><span style=color:#d08770;>2 </span><span>!= </span><span style=color:#96b5b4;>strlen</span><span>(macThree)) || (</span><span style=color:#d08770;>2 </span><span>!= </span><span style=color:#96b5b4;>strlen</span><span>(macFour)) || (</span><span style=color:#d08770;>2 </span><span>!= </span><span style=color:#96b5b4;>strlen</span><span>(macFive)) || (</span><span style=color:#d08770;>2 </span><span>!= </span><span style=color:#96b5b4;>strlen</span><span>(macSix)))
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#65737e;>/* 检查“:”符号 */
+</span><span>    macTemp = mac;
+</span><span>    </span><span style=color:#b48ead;>while </span><span>(*macTemp != '</span><span style=color:#96b5b4;>\0</span><span>')
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(*macTemp++ == '</span><span style=color:#a3be8c;>:</span><span>')
+</span><span>        {
+</span><span>            count++;
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(count != </span><span style=color:#d08770;>5</span><span>)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> mac[] = "</span><span style=color:#a3be8c;>00:19:F0:FF:FD:36</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char</span><span> new[</span><span style=color:#d08770;>13</span><span>] = "</span><span style=color:#a3be8c;>0</span><span>";
+</span><span>    </span><span style=color:#bf616a;>_mac_without_colons</span><span>(mac, new);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>origin: </span><span style=color:#d08770;>%s </span><span style=color:#96b5b4;>\n</span><span style=color:#a3be8c;>checkresult: </span><span style=color:#d08770;>%s </span><span style=color:#96b5b4;>\n</span><span style=color:#a3be8c;>newMac: </span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", mac, </span><span style=color:#bf616a;>macCheck</span><span>(mac) == </span><span style=color:#d08770;>0 </span><span>? "</span><span style=color:#a3be8c;>yes</span><span>" : "</span><span style=color:#a3be8c;>no</span><span>", new);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><h2 id=strsepgen-ju-zi-fu-fen-ge-zi-fu-chuan>strsep根据字符分割字符串</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>linux/string.h</span><span>> </span><span style=color:#65737e;>// 或 string.h
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>  </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#b48ead;>const</span><span> delim = "</span><span style=color:#a3be8c;>/</span><span>";
+</span><span>  </span><span style=color:#b48ead;>char</span><span> str[] = "</span><span style=color:#a3be8c;>some/split/string</span><span style=color:#96b5b4;>\r\n</span><span style=color:#a3be8c;>abc</span><span>";
+</span><span>
+</span><span>  </span><span style=color:#b48ead;>char </span><span>*token, *cur = str;
+</span><span>  </span><span style=color:#b48ead;>while </span><span>(token = </span><span style=color:#bf616a;>strsep</span><span>(&cur, delim))
+</span><span>  {
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", token);
+</span><span>  }
+</span><span>  </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=zhong-fu-hong-ding-yi>重复宏定义</h2><p>先定义的会被后定义的覆盖<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>// had note
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span style=color:#8fa1b3;>max</span><span>(</span><span style=color:#bf616a;>a</span><span>, </span><span style=color:#bf616a;>b</span><span>) (a) > (b) ? (a) : (b)
+</span><span>
+</span><span style=color:#65737e;>// 先定义的会被后定义的覆盖
+</span><span style=color:#b48ead;>#define </span><span>MULTI_UPGRADE_MEMORY_LEN </span><span style=color:#d08770;>0 </span><span style=color:#65737e;>/*128M , 131072 bits is 16384 bytes*/
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>UM_MULTI_UPGRADE
+</span><span style=color:#b48ead;>#ifdef</span><span> UM_MULTI_UPGRADE
+</span><span style=color:#65737e;>/* 预估升级文件的最大大小为128MB：在hitmap中一个位代表一个1024KB的报文 */
+</span><span style=color:#b48ead;>#define </span><span>MULTI_UPGRADE_MEMORY_LEN (</span><span style=color:#d08770;>128 </span><span>* </span><span style=color:#d08770;>1024 </span><span>/ </span><span style=color:#d08770;>8</span><span>)
+</span><span style=color:#b48ead;>#endif
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>10</span><span>, j = </span><span style=color:#d08770;>2</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> z = </span><span style=color:#bf616a;>max</span><span>(i++, j);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>,</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;>,</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", i, j, z);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d</span><span>", MULTI_UPGRADE_MEMORY_LEN);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=wen-jian-du-xie>文件读写</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>// will
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fcntl.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>sys/stat.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>ZX279127S </span><span style=color:#d08770;>1
+</span><span style=color:#b48ead;>#define </span><span>ZX279128S </span><span style=color:#d08770;>0
+</span><span>
+</span><span style=color:#b48ead;>typedef struct
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> aes_en_key[</span><span style=color:#d08770;>16</span><span>]; </span><span style=color:#65737e;>//证书解密的秘钥，密文存放                			//0x0    //0  ~15
+</span><span>    </span><span style=color:#b48ead;>char</span><span> chip_id[</span><span style=color:#d08770;>4</span><span>];       </span><span style=color:#65737e;>// 空片标识 "128s"							//0x10  //16  ~19
+</span><span>} boot_header_simple;
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>get_cputype</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>1</span><span>;
+</span><span>}
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    boot_header_simple head = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#b48ead;>int</span><span> fdin = </span><span style=color:#bf616a;>open</span><span>("</span><span style=color:#a3be8c;>uboot.bin</span><span>", O_RDWR);
+</span><span>    </span><span style=color:#b48ead;>int</span><span> iRet = </span><span style=color:#bf616a;>lseek</span><span>(fdin, </span><span style=color:#d08770;>0</span><span>, SEEK_SET);
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#d08770;>0 </span><span>> iRet)
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>ERR: fail to lseek</span><span>");
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>read</span><span>(fdin, &head, sizeof(boot_header_simple)) != sizeof(boot_header_simple))
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>Read bootloader header failed</span><span>");
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#bf616a;>get_cputype</span><span>() == ZX279127S)
+</span><span>        </span><span style=color:#96b5b4;>memcpy</span><span>(&head.</span><span style=color:#bf616a;>chip_id</span><span>, "</span><span style=color:#a3be8c;>127s</span><span>", sizeof(head.</span><span style=color:#bf616a;>chip_id</span><span>));
+</span><span>    </span><span style=color:#b48ead;>else if </span><span>(</span><span style=color:#bf616a;>get_cputype</span><span>() == ZX279128S)
+</span><span>        </span><span style=color:#96b5b4;>memcpy</span><span>(&head.</span><span style=color:#bf616a;>chip_id</span><span>, "</span><span style=color:#a3be8c;>128s</span><span>", sizeof(head.</span><span style=color:#bf616a;>chip_id</span><span>));
+</span><span>    iRet = </span><span style=color:#bf616a;>lseek</span><span>(fdin, </span><span style=color:#d08770;>0</span><span>, SEEK_SET);
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#d08770;>0 </span><span>> iRet)
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>ERR: fail to lseek</span><span>");
+</span><span>        </span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>    }
+</span><span>    </span><span style=color:#bf616a;>write</span><span>(fdin, &head, sizeof(boot_header_simple));
+</span><span>}
+</span><span>
+</span></code></pre><h2 id=can-shu-ru-zhan-qing-kuang>参数入栈情况</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdlib.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>unistd.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>errno.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>fcntl.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test2</span><span>();
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test1</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> a = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>a </span><span style=color:#d08770;>%p</span><span style=color:#96b5b4;>\n</span><span>", &a);
+</span><span>    
+</span><span>    </span><span style=color:#bf616a;>test2</span><span>();
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test2</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>int</span><span> b = </span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>b </span><span style=color:#d08770;>%p</span><span style=color:#96b5b4;>\n</span><span>", &b);
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>a</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>b</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>aa</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>bb</span><span>, </span><span style=color:#b48ead;>char </span><span style=color:#bf616a;>aaa</span><span>,</span><span style=color:#b48ead;>char </span><span style=color:#bf616a;>bbb</span><span>){
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%p %p %p %p %p %p</span><span style=color:#96b5b4;>\n</span><span>", &a, &b, &aa, &bb, &aaa, &bbb);
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>argv</span><span>[]){
+</span><span>    </span><span style=color:#65737e;>//确定栈增长方向
+</span><span>    </span><span style=color:#bf616a;>test1</span><span>();
+</span><span>    </span><span style=color:#65737e;>//确定参数入栈顺序
+</span><span>    </span><span style=color:#bf616a;>test</span><span>(</span><span style=color:#d08770;>1</span><span>,</span><span style=color:#d08770;>2</span><span>,"</span><span style=color:#a3be8c;>沧浪水</span><span>", "</span><span style=color:#a3be8c;>http://www.freecls.com</span><span>",'</span><span style=color:#a3be8c;>a</span><span>','</span><span style=color:#a3be8c;>b</span><span>');
+</span><span>    
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=strchryong-fa>strchr用法</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(){
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a[] = "</span><span style=color:#a3be8c;>[fe80::5258:ec0f:a218:3b0b]:18080</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*b = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>    </span><span style=color:#b48ead;>int</span><span> c = </span><span style=color:#d08770;>0</span><span>;
+</span><span>    b = </span><span style=color:#96b5b4;>strchr</span><span>(a, '</span><span style=color:#a3be8c;>]</span><span>');
+</span><span>    b = </span><span style=color:#96b5b4;>strchr</span><span>(b, '</span><span style=color:#a3be8c;>:</span><span>');
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", b+</span><span style=color:#d08770;>1</span><span>);
+</span><span>    </span><span style=color:#96b5b4;>sscanf</span><span>( b+</span><span style=color:#d08770;>1</span><span>, "</span><span style=color:#d08770;>%i</span><span>", &c);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%i</span><span style=color:#96b5b4;>\n</span><span>", c);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>C语言中 %d 与 %i 的区别 和注意事项 在 printf 格式串中使用时，没有区别 在 scanf 格式串中使用时，有点区别，如下： + 在scanf格式中，%d 只与十进制形式的整数相匹配。 + 而%i 则可以匹配八进制、十进制、十六进制表示的整数。· + 例如： 如果输入的数字有前缀 0（018、025），%i将会把它当作八进制数来处理，如果有前缀0x (0x54),它将以十六进制来处理。 所以注意事项： + 如果你是个新手，且习惯性在数字前放个零啥的，劝你使用%d。<h2 id=jie-xi-url>解析URL</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>parseTestURL</span><span>(</span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>testURL</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>destIP</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len_ip</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>destPort</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len_port</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>filepath</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>len_file</span><span>)
+</span><span>{
+</span><span>
+</span><span>	</span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>[func: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>]: URL is </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>, len is </span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\n</span><span>", __FUNCTION__, testURL, </span><span style=color:#96b5b4;>strlen</span><span>(testURL));
+</span><span>	</span><span style=color:#b48ead;>char </span><span>*ptoken = </span><span style=color:#d08770;>NULL</span><span>, *pstart = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>	</span><span style=color:#b48ead;>int</span><span> offset = </span><span style=color:#d08770;>0</span><span>;
+</span><span>	
+</span><span>	</span><span style=color:#b48ead;>if </span><span>( </span><span style=color:#d08770;>NULL </span><span>== testURL || </span><span style=color:#d08770;>NULL </span><span>== destIP || </span><span style=color:#d08770;>NULL </span><span>== destPort || </span><span style=color:#d08770;>NULL </span><span>== filepath )
+</span><span>		</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>
+</span><span>	</span><span style=color:#b48ead;>if </span><span>( </span><span style=color:#d08770;>NULL </span><span>== ( ptoken = </span><span style=color:#96b5b4;>strstr</span><span>(testURL, "</span><span style=color:#a3be8c;>://</span><span>") ) )
+</span><span>		</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>
+</span><span>	</span><span style=color:#65737e;>/* ignore the symbol '://' */
+</span><span>	pstart = ptoken + </span><span style=color:#d08770;>3</span><span>;
+</span><span>
+</span><span>	</span><span style=color:#65737e;>/* cut url */
+</span><span>	ptoken = </span><span style=color:#96b5b4;>strstr</span><span>(pstart, "</span><span style=color:#a3be8c;>/</span><span>");
+</span><span>	</span><span style=color:#b48ead;>if </span><span>( ptoken )
+</span><span>	{
+</span><span>		offset =  </span><span style=color:#96b5b4;>strlen</span><span>(pstart) - </span><span style=color:#96b5b4;>strlen</span><span>(ptoken);
+</span><span>		</span><span style=color:#96b5b4;>strncpy</span><span>(filepath, ptoken + </span><span style=color:#d08770;>1</span><span>, len_file - </span><span style=color:#d08770;>1</span><span>);
+</span><span>		pstart[offset] = '</span><span style=color:#96b5b4;>\0</span><span>';
+</span><span>	}
+</span><span>	</span><span style=color:#b48ead;>else
+</span><span>	{
+</span><span>		</span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>:</span><span style=color:#d08770;>%d</span><span style=color:#a3be8c;> parse TestURL error.</span><span style=color:#96b5b4;>\n</span><span>", __FUNCTION__, __LINE__);
+</span><span>		</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>	}
+</span><span>
+</span><span>	
+</span><span>	ptoken = </span><span style=color:#96b5b4;>strstr</span><span>(pstart, "</span><span style=color:#a3be8c;>:</span><span>");
+</span><span>	</span><span style=color:#b48ead;>if </span><span>( ptoken ) 
+</span><span>	{
+</span><span>		offset = </span><span style=color:#96b5b4;>strlen</span><span>(pstart) - </span><span style=color:#96b5b4;>strlen</span><span>(ptoken);
+</span><span>		</span><span style=color:#96b5b4;>strncpy</span><span>(destPort, ptoken + </span><span style=color:#d08770;>1</span><span>, len_port - </span><span style=color:#d08770;>1</span><span>);
+</span><span>		pstart[offset] = '</span><span style=color:#96b5b4;>\0</span><span>';
+</span><span>		</span><span style=color:#96b5b4;>strncpy</span><span>(destIP, pstart, len_ip - </span><span style=color:#d08770;>1</span><span>);
+</span><span>	}
+</span><span>	</span><span style=color:#b48ead;>else 
+</span><span>	{
+</span><span>		</span><span style=color:#96b5b4;>strncpy</span><span>(destPort, "</span><span style=color:#a3be8c;>80</span><span>", len_port - </span><span style=color:#d08770;>1</span><span>);
+</span><span>		</span><span style=color:#96b5b4;>strncpy</span><span>(destIP, pstart, len_ip - </span><span style=color:#d08770;>1</span><span>);
+</span><span>	}
+</span><span>	
+</span><span>	</span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>[func: </span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>]: parse result is [</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>]:[</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>]/[</span><span style=color:#d08770;>%s</span><span style=color:#a3be8c;>]</span><span style=color:#96b5b4;>\n</span><span>", __FUNCTION__, destIP, destPort, filepath);
+</span><span>	</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>() {
+</span><span>    </span><span style=color:#b48ead;>char</span><span> hostname[] = "</span><span style=color:#a3be8c;>http://58.248.23.61:8080/services/contractrate/contract/rate/</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char</span><span> dst_ip[</span><span style=color:#d08770;>16</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>	</span><span style=color:#b48ead;>char</span><span> dst_port[</span><span style=color:#d08770;>8</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>	</span><span style=color:#b48ead;>char</span><span> dst_uri[</span><span style=color:#d08770;>128</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>
+</span><span>    </span><span style=color:#bf616a;>parseTestURL</span><span>(hostname, dst_ip, sizeof(dst_ip), dst_port, sizeof(dst_port), dst_uri, sizeof(dst_uri));
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=zi-zeng-zi-jian-demo>自增自减demo</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>() {
+</span><span>	</span><span style=color:#b48ead;>int</span><span> i ,j;
+</span><span>	i = j = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>
+</span><span>	</span><span style=color:#b48ead;>int</span><span> z = (i++ && j++) | ++i;
+</span><span>	</span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\t</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\t</span><span style=color:#d08770;>%d</span><span style=color:#96b5b4;>\t</span><span>", i, j, z);</span><span style=color:#65737e;>// 1 0 1
+</span><span>
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=urlte-shu-zi-fu-bian-ma-chu-li>URL特殊字符编码处理</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>string.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>encodeURL</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>orginURL</span><span>, </span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>resultURL</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>resultSize</span><span>)
+</span><span>{
+</span><span>	</span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>, j = </span><span style=color:#d08770;>0</span><span>;
+</span><span>	</span><span style=color:#b48ead;>int</span><span> len = </span><span style=color:#96b5b4;>strlen</span><span>(orginURL);
+</span><span>	</span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#d08770;>0 </span><span>== len)
+</span><span>	{
+</span><span>		</span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>ERROR: The URL is NULL.</span><span style=color:#96b5b4;>\n</span><span>");
+</span><span>		</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>1</span><span>;
+</span><span>	}
+</span><span>	</span><span style=color:#b48ead;>for </span><span>(i = </span><span style=color:#d08770;>0</span><span>; i <= len; i++)
+</span><span>	{
+</span><span>		</span><span style=color:#b48ead;>char</span><span> tmp = orginURL[i];
+</span><span>		</span><span style=color:#b48ead;>if </span><span>(tmp == '</span><span style=color:#a3be8c;>%</span><span>')
+</span><span>		{
+</span><span>			resultURL[j++] = '</span><span style=color:#a3be8c;>%</span><span>';
+</span><span>			resultURL[j++] = '</span><span style=color:#a3be8c;>2</span><span>';
+</span><span>			resultURL[j++] = '</span><span style=color:#a3be8c;>5</span><span>';
+</span><span>		}
+</span><span>		</span><span style=color:#b48ead;>else 
+</span><span>		{
+</span><span>			resultURL[j] = orginURL[i];
+</span><span>			j++;
+</span><span>		}
+</span><span>	}
+</span><span>	</span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char</span><span> a[</span><span style=color:#d08770;>256</span><span>] = "</span><span style=color:#a3be8c;>http://192.168.1.1/telnet_on?usr=CMCCAdmin&pwd=aDm8H%MdA</span><span>";
+</span><span>    </span><span style=color:#b48ead;>char</span><span> b[</span><span style=color:#d08770;>256</span><span>] = {</span><span style=color:#d08770;>0</span><span>};
+</span><span>    </span><span style=color:#bf616a;>encodeURL</span><span>(a, b, </span><span style=color:#d08770;>256</span><span>);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span style=color:#96b5b4;>\n</span><span>", a);
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%s</span><span>", b);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><h2 id=nei-he-tai-an-xing-du-qu-wen-jian>内核态按行读取文件</h2><p>note：新版本内核不允许在内核态读写文件<p>内核态下没有fgets函数，如果要按行读取文件，需要用户自己实现。<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>static char </span><span>*</span><span style=color:#8fa1b3;>read_line</span><span>(</span><span style=color:#b48ead;>char </span><span>*</span><span style=color:#bf616a;>buf</span><span>, </span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>buf_len</span><span>, </span><span style=color:#b48ead;>struct</span><span> file *</span><span style=color:#bf616a;>fp</span><span>)
+</span><span>{
+</span><span>        </span><span style=color:#b48ead;>int</span><span> ret;
+</span><span>        </span><span style=color:#b48ead;>int</span><span> i = </span><span style=color:#d08770;>0</span><span>;
+</span><span>        mm_segment_t fs;
+</span><span> 
+</span><span>        fs=</span><span style=color:#bf616a;>get_fs</span><span>();
+</span><span>        </span><span style=color:#bf616a;>set_fs</span><span>(KERNEL_DS);
+</span><span>        ret = fp-></span><span style=color:#bf616a;>f_op</span><span>-></span><span style=color:#bf616a;>read</span><span>(fp, buf, buf_len, &(fp-></span><span style=color:#bf616a;>f_pos</span><span>));
+</span><span>        </span><span style=color:#bf616a;>set_fs</span><span>(fs);
+</span><span> 
+</span><span>        </span><span style=color:#b48ead;>if </span><span>(ret <= </span><span style=color:#d08770;>0</span><span>)
+</span><span>                </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>NULL</span><span>;
+</span><span> 
+</span><span>        </span><span style=color:#b48ead;>while</span><span>(buf[i++] != '</span><span style=color:#96b5b4;>\n</span><span>' && i < ret);
+</span><span> 
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(i < ret) {
+</span><span>                fp-></span><span style=color:#bf616a;>f_pos </span><span>+= i-ret;
+</span><span>        }
+</span><span> 
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(i < buf_len) {
+</span><span>                buf[i] = </span><span style=color:#d08770;>0</span><span>;
+</span><span>        }
+</span><span>        </span><span style=color:#b48ead;>return</span><span> buf;
+</span><span>}
+</span></code></pre><h2 id=si-ge-shi-liu-jin-zhi-shu-he-bing-cheng-yi-ge-shi-liu-jin-zhi-shu>四个十六进制数合并成一个十六进制数</h2><p>char sDec[4] = {0x05,0xc5,0xb3,0xea};<p>低字节序的情况下. 并且 int 占用 32bit.<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> sDec[</span><span style=color:#d08770;>4</span><span>] = {</span><span style=color:#d08770;>0x05</span><span>,</span><span style=color:#d08770;>0xc5</span><span>,</span><span style=color:#d08770;>0xb3</span><span>,</span><span style=color:#d08770;>0xea</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> val = </span><span style=color:#d08770;>0</span><span>;
+</span><span style=color:#b48ead;>char </span><span>*pBuf = (</span><span style=color:#b48ead;>char</span><span>*)&val;
+</span><span>pBuf[</span><span style=color:#d08770;>0</span><span>] = </span><span style=color:#bf616a;>sDec</span><span>[</span><span style=color:#d08770;>3</span><span>];
+</span><span>pBuf[</span><span style=color:#d08770;>1</span><span>] = </span><span style=color:#bf616a;>sDec</span><span>[</span><span style=color:#d08770;>2</span><span>];
+</span><span>pBuf[</span><span style=color:#d08770;>2</span><span>] = </span><span style=color:#bf616a;>sDec</span><span>[</span><span style=color:#d08770;>1</span><span>];
+</span><span>pBuf[</span><span style=color:#d08770;>3</span><span>] = </span><span style=color:#bf616a;>sDec</span><span>[</span><span style=color:#d08770;>0</span><span>];
+</span><span>
+</span><span>
+</span></code></pre><p>这时val==0x05c5b3ea;<p>如果是高字节序那就更简单了.<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> sDec[</span><span style=color:#d08770;>4</span><span>] = {</span><span style=color:#d08770;>0x05</span><span>,</span><span style=color:#d08770;>0xc5</span><span>,</span><span style=color:#d08770;>0xb3</span><span>,</span><span style=color:#d08770;>0xea</span><span>};
+</span><span style=color:#b48ead;>int</span><span> val = *(</span><span style=color:#b48ead;>int</span><span>*)</span><span style=color:#bf616a;>sDesc</span><span>;
+</span></code></pre><h2 id=how-to-suppress-unused-parameter-warnings-in-c>How to suppress “unused parameter” warnings in C</h2><p>在C语言代码里看到了如下宏定义：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#define </span><span style=color:#8fa1b3;>UNUSED</span><span>(</span><span style=color:#bf616a;>x</span><span>) ((x)=(x))
+</span><span>
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>test</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>a</span><span>){
+</span><span>    </span><span style=color:#bf616a;>UNUSED</span><span>(a);
+</span><span>}
+</span></code></pre><ul><li>有些编译器，在变量或者参数未使用时会发出警告<li>编译参数<code>--Werror</code> 视警告为错误，出现任何警告即放弃编译。</ul><p>当两者一起出现时，未使用变量就会报错，所以使用该宏规避编译器警告。<p>但是，x有些特殊情况并不能用赋值运算符，所以，更好的写法是：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#define </span><span style=color:#8fa1b3;>UNUSED</span><span>(</span><span style=color:#bf616a;>x</span><span>) (</span><span style=color:#b48ead;>void</span><span>)(x)
+</span></code></pre><p>抑制编译器警告：<p>In C++ I was able to put a /<em>...</em>/ comment around the parameters. But not in C of course, where it gives me the error error: parameter name omitted.<pre class=language-java data-lang=java style=background-color:#2b303b;color:#c0c5ce;><code class=language-java data-lang=java><span style=color:#65737e;>// C++ only
+</span><span>void </span><span style=color:#bf616a;>some_func</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#65737e;>/*x*/</span><span>)
+</span></code></pre><p>Or<pre class=language-csharp data-lang=csharp style=background-color:#2b303b;color:#c0c5ce;><code class=language-csharp data-lang=csharp><span>// C and C++
+</span><span>void some_func(int x)
+</span><span>{
+</span><span>    (void)x;
+</span><span>}
+</span></code></pre><p>其它等效方法:<ul><li>completely remove the variable : <code>void foo( int )</code><li>out comment the variable : <code>void foo( int /* value */ )</code><li>use that macro : <code>void foo( int value ){ UNUSED(value); }</code></ul><h2 id=do-while-0-de-shi-yong>do{...}while(0)的使用</h2><h3 id=sheng-ming-fu-za-de-hong>声明复杂的宏</h3><p>使用do{...}while(0)构造后的宏定义不会受到大括号、分号等的影响，总是会按你期望的方式调用运行。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>#defne </span><span style=color:#bf616a;>DOSOMETHING</span><span>()\
+</span><span>				</span><span style=color:#bf616a;>foo1</span><span>();\
+</span><span>				</span><span style=color:#bf616a;>foo2</span><span>();
+</span><span>
+</span><span style=color:#b48ead;>if</span><span>(a></span><span style=color:#d08770;>0</span><span>)
+</span><span>	</span><span style=color:#bf616a;>DOSOMETHING</span><span>();
+</span><span>
+</span><span style=color:#65737e;>//替换后就是
+</span><span style=color:#b48ead;>if</span><span>(a></span><span style=color:#d08770;>0</span><span>)
+</span><span>    </span><span style=color:#bf616a;>foo1</span><span>();
+</span><span style=color:#bf616a;>foo2</span><span>();
+</span></code></pre><p>使用大括号括起来可能有所改善，但要是if...else...又不行了<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>#defne </span><span style=color:#bf616a;>DOSOMETHING</span><span>()\
+</span><span>			{\
+</span><span>				</span><span style=color:#bf616a;>foo1</span><span>();\
+</span><span>				</span><span style=color:#bf616a;>foo2</span><span>();\
+</span><span>			}
+</span><span>
+</span><span style=color:#b48ead;>if</span><span>(a></span><span style=color:#d08770;>0</span><span>)
+</span><span>	</span><span style=color:#bf616a;>DOSOMETHING</span><span>();
+</span><span style=color:#b48ead;>else
+</span><span>	</span><span style=color:#bf616a;>foo3</span><span>();
+</span><span>
+</span><span style=color:#65737e;>//替换后就是
+</span><span style=color:#b48ead;>if</span><span>(a></span><span style=color:#d08770;>0</span><span>) {
+</span><span>	</span><span style=color:#bf616a;>foo1</span><span>();
+</span><span>	</span><span style=color:#bf616a;>foo2</span><span>();
+</span><span>}; 
+</span><span style=color:#b48ead;>else 
+</span><span>	</span><span style=color:#bf616a;>foo3</span><span>();
+</span></code></pre><p>使用do{}while(0)可以避免受大括号、分号等的影响<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>#defne </span><span style=color:#bf616a;>DOSOMETHING</span><span>()\
+</span><span>			</span><span style=color:#b48ead;>do</span><span>{\
+</span><span>				</span><span style=color:#bf616a;>foo1</span><span>();\
+</span><span>				</span><span style=color:#bf616a;>foo2</span><span>();\
+</span><span>			}</span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>0</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>if</span><span>(a></span><span style=color:#d08770;>0</span><span>)
+</span><span>	</span><span style=color:#bf616a;>DOSOMETHING</span><span>();
+</span><span style=color:#b48ead;>else
+</span><span>	</span><span style=color:#bf616a;>foo3</span><span>();
+</span><span>
+</span><span style=color:#65737e;>//替换后就是
+</span><span style=color:#b48ead;>if</span><span>(a></span><span style=color:#d08770;>0</span><span>) 
+</span><span>	</span><span style=color:#b48ead;>do</span><span>{
+</span><span>		</span><span style=color:#bf616a;>foo1</span><span>();
+</span><span>		</span><span style=color:#bf616a;>foo2</span><span>();
+</span><span>	}</span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span style=color:#b48ead;>else 
+</span><span>	</span><span style=color:#bf616a;>foo3</span><span>();
+</span></code></pre><p><strong><code>Linux和其它代码库里的宏都用do{}while(0)来包围执行逻辑，因为它能确保宏的行为总是相同的，而不管在调用代码中使用了多少分号和大括号。</code></strong><h3 id=ti-huan-gotodai-ma>替换goto代码</h3><p>在一些函数中，我们在return语句之前可能需要做一些工作，比如释放在函数一开始由malloc函数申请的内存空间，使用goto总是一种简单的方法：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>foo</span><span>()
+</span><span>{
+</span><span>    somestruct* ptr = </span><span style=color:#96b5b4;>malloc</span><span>(...);
+</span><span>
+</span><span>    dosomething...;
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(error)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>goto</span><span> END;
+</span><span>    }
+</span><span> 
+</span><span>    dosomething...;
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(error)
+</span><span>    {
+</span><span>        </span><span style=color:#b48ead;>goto</span><span> END;
+</span><span>    }
+</span><span>    dosomething...;
+</span><span> 
+</span><span>END:
+</span><span>    </span><span style=color:#96b5b4;>free</span><span>(ptr);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span> 
+</span><span>}
+</span></code></pre><p>但由于goto关键字可能会使代码不易读，因此许多人都不推荐使用它，那么我们可以使用do{...}while(0)来解决这一问题：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>foo</span><span>()
+</span><span>{
+</span><span> 
+</span><span>    somestruct* ptr = </span><span style=color:#96b5b4;>malloc</span><span>(...);
+</span><span> 
+</span><span>    </span><span style=color:#b48ead;>do</span><span>{
+</span><span>        dosomething...;
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(error)
+</span><span>        {
+</span><span>            </span><span style=color:#b48ead;>break</span><span>;
+</span><span>        }
+</span><span> 
+</span><span>        dosomething...;
+</span><span>        </span><span style=color:#b48ead;>if</span><span>(error)
+</span><span>        {
+</span><span>            </span><span style=color:#b48ead;>break</span><span>;
+</span><span>        }
+</span><span>        dosomething...;
+</span><span>    }</span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>0</span><span>);
+</span><span> 
+</span><span>    </span><span style=color:#96b5b4;>free</span><span>(ptr);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span> 
+</span><span>}
+</span></code></pre><p>这里，我们使用do{...}while(0)来包含函数的主要部分，同时使用break替换goto，代码的可读性增强了。<h3 id=bi-mian-you-hong-yin-qi-de-jing-gao>避免由宏引起的警告</h3><p>由于内核不同体系结构的限制，我们可能需要多次使用空宏。在编译的时候，这些空宏会产生警告，为了避免这种警告，我们可以使用do{...}while(0)来定义空宏：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#define </span><span>EMPTYMICRO </span><span style=color:#b48ead;>do</span><span>{}</span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>0</span><span>)
+</span></code></pre><p>这样在编译的时候就不会产生警告。<h3 id=ding-yi-dan-yi-de-han-shu-kuai-lai-wan-cheng-fu-za-de-cao-zuo>定义单一的函数块来完成复杂的操作</h3><p>如果你有一个复杂的函数且你不想要创建新的函数，那么使用do{...}while(0)，你可以将一些代码放在这里面并定义一些变量，这样你就不必担心do{...}while(0)外面的变量名是否与do{...}while(0)里面的变量名相同造成重复了。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>#defne </span><span style=color:#bf616a;>FUNC_01</span><span>()\
+</span><span>			</span><span style=color:#b48ead;>do</span><span>{\
+</span><span>				</span><span style=color:#b48ead;>int</span><span> a;
+</span><span>				</span><span style=color:#bf616a;>foo1</span><span>();\
+</span><span>			}</span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>0</span><span>)
+</span><span>                
+</span><span>#defne </span><span style=color:#bf616a;>FUNC_02</span><span>()\
+</span><span>			</span><span style=color:#b48ead;>do</span><span>{\
+</span><span>				</span><span style=color:#b48ead;>char</span><span> a;
+</span><span>				</span><span style=color:#bf616a;>foo1</span><span>();\
+</span><span>			}</span><span style=color:#b48ead;>while</span><span>(</span><span style=color:#d08770;>0</span><span>)
+</span></code></pre><h2 id=shi-liu-jin-zhi-zi-fu-chuan-zhuan-shu-zi>十六进制字符串转数字</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>	</span><span style=color:#b48ead;>char</span><span> tmp[] = "</span><span style=color:#a3be8c;>0x11050001</span><span>";
+</span><span>	</span><span style=color:#b48ead;>int</span><span> id = </span><span style=color:#d08770;>0</span><span>;
+</span><span>	</span><span style=color:#65737e;>//sprintf(id, "%x", tmp);
+</span><span>	</span><span style=color:#96b5b4;>sscanf</span><span>(tmp, "</span><span style=color:#d08770;>%x</span><span>", &id);
+</span><span>    </span><span style=color:#b48ead;>int</span><span> new = id & </span><span style=color:#d08770;>0x0000ffff</span><span>;
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#d08770;>%x</span><span>", new);
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre><h2 id=jin-zhi-sprintf-jing-gao-directive-writing-between-1-and-11-bytes-into-a-region-of-size-6>禁止sprintf()警告 'directive writing between 1 and 11 bytes into a region of size 6 '</h2><p>https://www.coder.work/article/7530838#google_vignette<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> tag[</span><span style=color:#d08770;>16</span><span>];
+</span><span style=color:#bf616a;>sprintf</span><span>(tag, "</span><span style=color:#a3be8c;>Literal - </span><span style=color:#d08770;>%d</span><span>", literal); 
+</span></code></pre><p>上述代码，在开启所有警告视为错误时，会编译报错:<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>error: ‘%d’ directive writing between </span><span style=color:#d08770;>1</span><span> and </span><span style=color:#d08770;>11</span><span> bytes into a region of size </span><span style=color:#d08770;>6 </span><span>[-Werror=format-overflow=]  
+</span><span>   </span><span style=color:#bf616a;>sprintf</span><span>(tag, "</span><span style=color:#a3be8c;>Literal - </span><span style=color:#d08770;>%d</span><span>", literal);    </span><span style=color:#65737e;>//snprintf(tag, 16, "Literal - %d", literal);  
+</span><span>           ^~   
+</span><span>apps/ziptest/test_literals_lzma.</span><span style=color:#bf616a;>c</span><span>:</span><span style=color:#d08770;>42</span><span>:</span><span style=color:#d08770;>15</span><span>: note: directive argument in the range [-</span><span style=color:#d08770;>2147483648</span><span>, </span><span style=color:#d08770;>255</span><span>]   </span><span style=color:#96b5b4;>sprintf</span><span>(tag, "</span><span style=color:#a3be8c;>Literal - </span><span style=color:#d08770;>%d</span><span>", literal);    </span><span style=color:#65737e;>//snprintf(tag, 16, "Literal
+</span><span>    - %d"</span><span style=color:#a3be8c;>, literal);  
+</span><span style=color:#a3be8c;>                   ^~~~~~~~~~~~~~   
+</span><span style=color:#a3be8c;>apps/ziptest/test_literals_lzma.c:42:2: note: ‘sprintf’ output between 12 and 22 bytes into a destination of size 16   sprintf(tag, </span><span>"Literal - %d"</span><span style=color:#a3be8c;>, literal);    //snprintf(tag, 16, </span><span>"Literal - %d"</span><span style=color:#a3be8c;>, literal);     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+</span><span style=color:#a3be8c;>cc1: all warnings being treated as errors Makefile:370: recipe for target 
+</span></code></pre><p>原因：因为字符串数组是16个字节，前缀是10个字节，所以剩下5个字节来写<code>literal</code>的字符串表示形式。由于<code>int</code>可能是32位，因此最大范围是2147483647，负数范围是-2147483648(11个字符)，编译器会警告您(因为它能够计算所有大小)<p>现在，由于您知道范围不能在0-255之外，因此只需减小<code>literal</code>的大小即可，例如，将其声明为<code>unsigned short</code>(<code>short</code>可以是字符串的6个字节长:<code>-32768</code>如注释中指出的chux)，因此您有余地您的值(value)。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>unsigned short</span><span> literal = </span><span style=color:#d08770;>123</span><span>;
+</span><span style=color:#bf616a;>sprintf</span><span>(tag, "</span><span style=color:#a3be8c;>Literal - </span><span style=color:#d08770;>%hu</span><span>", literal); 
+</span></code></pre><p>(您可以使用<code>unsigned char</code>格式说明符，使用范围从0到255的<code>%hhu</code>)<p>或仅在打印时进行转换:<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#bf616a;>sprintf</span><span>(tag, "</span><span style=color:#a3be8c;>Literal - </span><span style=color:#d08770;>%hu</span><span>", (</span><span style=color:#b48ead;>unsigned short</span><span>)literal); 
+</span></code></pre><p>(<code>%u</code>可能也可以工作，但是取决于编译器的智能程度:它仅分析变量args的格式还是大小？)<p>现在我们知道了为什么会出现警告，我们不要忘记最明显的解决方案:让我们定义一个足够大的数组。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>char</span><span> tag[</span><span style=color:#d08770;>25</span><span>];  </span><span style=color:#65737e;>// 21 would have been okay
+</span></code></pre><p>应该做。将其剃得太近通常不是一个好主意，除非您的资源不足。<h2 id=cyu-yan-bian-yi-cuo-wu-warning-suggest-parentheses-around-assignment-used-as-truth-value>c语言编译错误：warning: suggest parentheses around assignment used as truth value</h2><p>https://blog.csdn.net/smilefxx/article/details/85029062<p>warning: suggest parentheses around assignment used as truth value 警告：建议使用赋值周围的括号作为真值<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>DIR *imagedir = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span style=color:#b48ead;>struct</span><span> dirent *dirinfo = </span><span style=color:#d08770;>NULL</span><span>;
+</span><span>
+</span><span style=color:#b48ead;>while</span><span>(dirinfo = </span><span style=color:#bf616a;>readdir</span><span>(imagedir)）  </span><span style=color:#65737e;>//出现此错误。
+</span></code></pre><p>原因：在C语言中，非0即代表TRUE，反之为FALSE。上面的语句以dirinfo的值用于最后的判断。但是由于长期的编程实践告诉我们，人们经常在赋值 <code>=</code> 和 大小判断 <code>==</code> 的使用上出现手误，所以gcc编译器为此要求我们明确地告诉编译器它是 <code>=</code> 而不是 <code>==</code>，是故意，而非手误。<p>修改方法： while((dirinfo = readdir(imagedir))) while((dirinfo = readdir(imagedir)) != NULL)<h2 id=error-unknown-type-name-loff-t>error: unknown type name 'loff_t'</h2><p>The only APIs loff_t is to be used with are under _GNU_SOURCE. These functions are in fcntl.h, and it will #define loff_t off_t when _GNU_SOURCE is defined, so either -D_GNU_SOURCE or -Dloff_t=off_t would be a workaround<pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 海思makefile这样加
+</span><span>HI_EXT_CFLAGS += -D_GNU_SOURCE
+</span></code></pre><h2 id=ying-yong-ceng-tong-guo-ioctlpan-duan-nand-flashpi-kuai>应用层通过ioctl判断nand flash坏块</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>mtd/mtd-user.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> fd = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>loff_t offset = </span><span style=color:#d08770;>0</span><span>;
+</span><span style=color:#b48ead;>if </span><span>((fd = </span><span style=color:#bf616a;>open</span><span>(mtd_dev, O_SYNC | O_RDONLY)) < </span><span style=color:#d08770;>0</span><span>)
+</span><span>{
+</span><span>	</span><span style=color:#96b5b4;>perror</span><span>("</span><span style=color:#a3be8c;>open()</span><span>");
+</span><span>	</span><span style=color:#b48ead;>return </span><span>-</span><span style=color:#d08770;>1</span><span>;
+</span><span>}
+</span><span style=color:#65737e;>/*分区内跳坏块*/
+</span><span style=color:#b48ead;>int</span><span> ret = </span><span style=color:#d08770;>0</span><span>;
+</span><span>ret = </span><span style=color:#bf616a;>ioctl</span><span>(fd, MEMGETBADBLOCK, &offset);
+</span><span style=color:#65737e;>// printf("[UMTEST]offset = %08llx, ret = %d, errno=%d, %s\n", offset, ret, errno, strerror(errno));
+</span><span style=color:#b48ead;>if</span><span>(ret > </span><span style=color:#d08770;>0</span><span>) {
+</span><span>    </span><span style=color:#bf616a;>Printf</span><span>("</span><span style=color:#96b5b4;>\n</span><span style=color:#a3be8c;>Skipping mtdblock bad block at 0x</span><span style=color:#d08770;>%08llx</span><span style=color:#96b5b4;>\n</span><span>", offset);
+</span><span>    offset += g_block_size;
+</span><span>    </span><span style=color:#b48ead;>if </span><span>(offset != </span><span style=color:#bf616a;>lseek</span><span>(fd, offset, SEEK_SET))
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>perror</span><span>("</span><span style=color:#a3be8c;>lseek()</span><span>");
+</span><span>        </span><span style=color:#b48ead;>goto</span><span> err;
+</span><span>    }
+</span><span>        </span><span style=color:#b48ead;>continue</span><span>;
+</span><span>}
+</span></code></pre><h2 id=export-symbol-cuo-wu>EXPORT_SYMBOL() 错误</h2><p>最近使用EXPORT_SYMBOL() 导出函数到内核符号表时，出现如下面的错误：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    warning: data definition has no type or storage class
+</span><span>
+</span><span>    warning: type defaults to 'int' in declaration of 'EXPORT_SYMBOL'
+</span><span>
+</span><span>    warning: parameter names (without types) in function declaration
+</span></code></pre><p>经查找资料，原来自己犯了一个非常低级的错误：没有包含module.h头文件，在文件中包含该头文件即可解决该告警：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>linux/module.h</span><span>>
+</span></code></pre><h2 id=xie-wen-jian-hou-de-fflushhe-fsync>写文件后的fflush和fsync</h2><p>read/write/fsync与fread/fwrite/fflush的关系和区别：<ul><li>read/write/fsync：linux底层操作；内核调用，涉及到进程上下文的切换，即用户态到核心态的转换，这是个比较消耗性能的操作。<li>fread/fwrite/fflush：c语言标准规定的io流操作，建立在read/write/fsync之上 在用户层， 又增加了一层缓冲机制，用于减少内核调用次数，但是增加了一次内存拷贝。</ul><p><img alt=image-20231205091650337 src=image-20231205091650337.png><p>对于输入设备，调用fsync/fflush将清空相应的缓冲区，其内数据将被丢弃;<p>对于输出设备或磁盘文件，fflush只能保证数据到达内核缓冲区，并不能保证数据到达物理设备, 因此应该在调用fflush后，调用fsync(fileno(stream))，确保数据存入磁盘。<p>sync()、fflush()、fsync()这3个函数的区别：<ul><li><p>用途不一样：</p> <ul><li>sync,是同步整个系统的磁盘数据的.<li>fsync是同步打开的一个文件到缓冲区数据到磁盘上.<li>fflush是刷新打开的流的.</ul><li><p>同步等级不一样：</p> <ul><li>sync, 将缓冲区数据写回磁盘, 保持同步.(无参数)<li>fsync, 将缓冲区的数据写到文件中.(有一个参数 int fd)<li>fflush, 将文件流里未写出的数据立刻写出</ul></ul><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>FILE* fp;
+</span><span style=color:#bf616a;>fflush</span><span>(fp);
+</span><span style=color:#bf616a;>fsync</span><span>(</span><span style=color:#bf616a;>fileno</span><span>(fp));
+</span></code></pre><h2 id=fopenda-kai-xiang-dui-lu-jing-he-jue-dui-lu-jing>fopen打开相对路径和绝对路径</h2><p>https://zhuanlan.zhihu.com/p/603549501<h2 id=charlei-xing-he-signed-char-unsigned-char>char类型和signed char、unsigned char</h2><p>https://gcc.gnu.org/bugzilla/show_bug.cgi?id=23087<p>char is a seperate type from signed char and unsigned char so they are always incompatiable when it comes to pointers to them.<p>gcc test.c -Wall -Werror<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#include </span><span><</span><span style=color:#a3be8c;>stdio.h</span><span>>
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>()
+</span><span>{
+</span><span>    </span><span style=color:#b48ead;>char </span><span>*a = "</span><span style=color:#a3be8c;>a</span><span>";
+</span><span>    </span><span style=color:#b48ead;>signed char </span><span>*b = a;
+</span><span>    </span><span style=color:#b48ead;>unsigned char </span><span>*c = a;
+</span><span>    </span><span style=color:#b48ead;>signed char </span><span>*ps = "</span><span style=color:#a3be8c;>signed?</span><span>";
+</span><span>    </span><span style=color:#b48ead;>unsigned char </span><span>*pu = "</span><span style=color:#a3be8c;>unsigned?</span><span>";
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span><span>
+</span></code></pre></div></div></div><footer class=footer__poweredby><p class=caption>© 2024 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

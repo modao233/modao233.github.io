@@ -1,0 +1,48 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>用户进程页-bss段数据 | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Linux内核/yong-hu-jin-cheng-ye-bssduan-shu-ju/>用户进程页-bss段数据</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-11 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/nei-cun-guan-li/>#内存管理</a></span><div class=post-content><p>记录Git的一些使用<p>bss段 ： BSS段属于静态内存分配。通常是指用来存放程序中未初始化的全局变量和未初始化的局部静态变量。未初始化的全局变量和未初始化的局部静态变量默认值是0，本来这些变量也可以放到data段的，但是因为他们都是0，所以为他们在data段分配空间并且存放数据0是没有必要的。 <strong>程序在运行时，才会给BSS段里面的变量分配内存空间</strong>。在目标文件(<code>*.o</code>)和可执行文件中，BSS段只是为未初始化的全局变量和未初始化的局部静态变量预留位置而已，它并没有内容，所以它不占据空间。 section table中保存了BSS段（未初始化的全局变量和未初始化的局部静态变量）内存空间大小总和。（<code>objdump -h *.o</code> 命令可以看到）<p>data段 ：<p>数据段（datasegment）通常是指用来存放程序中已初始化的全局变量和已初始化的静态变量的一块内存区域。数据段属于静态内存分配。<h2 id=1>1</h2><p>BSS段(Started by Symbol)通常是指用来存放程序中未初始化的全局变量和静态变量的内存区域。<p>问1：同样是全局变量和静态变量，为什么要区分data与BSS？<p>原因是为了节省目标文件体积，因为未初始化的全局变量和静态变量默认初值为0，我们都知道了，就没必要 存放在二进制文件空间里，只需要描述一下这个BSS区域占了多大（相当于预约这块空间，运行时再分配给我），这是编译阶段所采用的措施；<p>问2：那对于代码里引用到这些变量地址怎么处理？<p>引用变量的实际形式都是内存地址，对于属于BSS段的变量，编译器正常设置变量的地址（不管这地址有没存放东西），处理规则没有特别的不同。<p>问3：那我运行时需要赋值或引用这些全局变量的值怎么找到它们？<p>虽然目标文件里没有储存BSS段（只描述大小信息），但程序运行时，要根据这个描述来分配运行内存，同时要把BSS段的内存清零（这也是为什么 未初始化的全局变量和静态变量默认值为0），此时BSS真正占据内存空间；程序的加载与清零动作由加载器来完成。<p>作者：Anson<br> 链接：https://www.zhihu.com/question/23059602/answer/2421277304<br> 来源：知乎<br> 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<h2 id=2>2</h2><p>BBS段<p>http://en.wikipedia.org/wiki/BSS_segment<p>通常是指用来存放程序中未初始化的全局变量和静态变量的内存区域（段，Segment）。<p>在一些常见的编译器里，通常对BBS段的处理方法是：只描述大小，不增加目标文件的体积。<p>因为变量实际都是内存地址，所以对于属于BSS段的变量，编译器正常设置变量的地址，处理规则没有特别的不同。<p>负责将BSS段清零的工作一般是由加载器完成的，<strong>当一个可执行文件被加载的时候</strong>，加载器（可以简单的理解为操作系统）负责把BSS段的内存清零。<p>一个简单的验证方法，下面的代码：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>int</span><span> bss[</span><span style=color:#d08770;>655360</span><span>];
+</span><span>
+</span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>main</span><span>(</span><span style=color:#b48ead;>int </span><span style=color:#bf616a;>argc</span><span>, </span><span style=color:#b48ead;>char</span><span>* </span><span style=color:#bf616a;>argv</span><span>[])
+</span><span>{
+</span><span>    bss[</span><span style=color:#d08770;>1</span><span>] = -</span><span style=color:#d08770;>1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>return </span><span style=color:#d08770;>0</span><span>;
+</span><span>}
+</span></code></pre><p>不开优化，目标文件大小远远小于655360个int，但如果给bss赋初值：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>int</span><span> bss[</span><span style=color:#d08770;>655360</span><span>] = {-</span><span style=color:#d08770;>1</span><span>};
+</span></code></pre><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>▶</span><span> cat x.c
+</span><span style=color:#bf616a;>long</span><span> long int bss</span><span style=color:#b48ead;>[</span><span>955360</span><span style=color:#b48ead;>]</span><span>;
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>int</span><span> main()
+</span><span>{
+</span><span>    </span><span style=color:#bf616a;>bss[1]</span><span> =</span><span style=color:#bf616a;> -1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>return</span><span> 0;
+</span><span>}
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>▶</span><span> tgcc</span><span style=color:#bf616a;> -c -O0</span><span> x.c</span><span style=color:#bf616a;> -o</span><span> before.o
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>▶</span><span> vi x.c
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>▶</span><span> cat x.c
+</span><span style=color:#bf616a;>/*</span><span> long long int bss</span><span style=color:#b48ead;>[</span><span>955360</span><span style=color:#b48ead;>]</span><span>; </span><span style=color:#bf616a;>*/
+</span><span style=color:#bf616a;>long</span><span> long int bss</span><span style=color:#b48ead;>[</span><span>955360</span><span style=color:#b48ead;>]</span><span>={-1};
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>int</span><span> main()
+</span><span>{
+</span><span>    </span><span style=color:#bf616a;>bss[1]</span><span> =</span><span style=color:#bf616a;> -1</span><span>;
+</span><span>    </span><span style=color:#b48ead;>return</span><span> 0;
+</span><span>}
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>▶</span><span> tgcc</span><span style=color:#bf616a;> -c -O0</span><span> x.c</span><span style=color:#bf616a;> -o</span><span> after.o
+</span><span>
+</span><span>
+</span><span style=color:#bf616a;>▶</span><span> ls</span><span style=color:#bf616a;> -al </span><span>*.o
+</span><span style=color:#bf616a;>-rw-r--r--</span><span>  1 yonghaohu  wheel  7643552  2 16 11:56 after.o
+</span><span style=color:#bf616a;>-rw-r--r--</span><span>  1 yonghaohu  wheel      592  2 16 11:56 before.o
+</span></code></pre><p>目标文件瞬间变大。<h2 id=3>3</h2><p>CSAPP ＂bss 是请求二进制零的，映射到匿名文件．＂加载器只是将bss区域映射到匿名文件，当cpu引用该区域的虚拟页面时，再发生页面调度（内存中找一个牺牲页），用二进制零覆盖牺牲页面，实际上和内存与磁盘之间并没有传送交互数据．所以，bss 的初始化实际上是在运行时．<p>``</div></div></div><footer class=footer__poweredby><p class=caption>© 2024 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
