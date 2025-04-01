@@ -1,0 +1,48 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>C语言常见位操作 | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/嵌入式/cyu-yan-chang-jian-wei-cao-zuo/>C语言常见位操作</a></h1><div class=post-meta-inline><span class=post-date> 2025-01-04 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/qian-ru-shi/>#嵌入式</a></span><div class=post-content><h2 id=mou-wei-qing-ling>某位清零</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//定义一个变量a = 1001 1111 b (二进制数)
+</span><span style=color:#b48ead;>unsigned char</span><span> a = </span><span style=color:#d08770;>0x9f</span><span>;
+</span><span>
+</span><span style=color:#65737e;>//对bit2 清零
+</span><span>
+</span><span>a &= ~(</span><span style=color:#d08770;>1</span><span><<</span><span style=color:#d08770;>2</span><span>);
+</span><span>
+</span><span style=color:#65737e;>//括号中的1左移两位，(1<&LT2)得二进制数：0000 0100 b
+</span><span style=color:#65737e;>//按位取反，~(1<&LT2)得1111 1011 b
+</span><span style=color:#65737e;>//假如a中原来的值为二进制数： a = 1001 1111 b
+</span><span style=color:#65737e;>//所得的数与a作”位与&”运算，a = (1001 1111 b)&(1111 1011 b),
+</span><span style=color:#65737e;>//经过运算后，a的值 a=1001 1011 b
+</span><span style=color:#65737e;>// a的bit2 位被清零，而其它位不变。
+</span></code></pre><h2 id=mou-ji-ge-lian-xu-wei-qing-ling>某几个连续位清零</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//若把a中的二进制位分成2个一组
+</span><span style=color:#65737e;>//即bit0、bit1为第0组，bit2、bit3为第1组，
+</span><span style=color:#65737e;>//  bit4、bit5为第2组，bit6、bit7为第3组
+</span><span style=color:#65737e;>//要对第1组的bit2、bit3清零
+</span><span>
+</span><span>a &= ~(</span><span style=color:#d08770;>3</span><span><<</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#d08770;>1</span><span>);
+</span><span>
+</span><span style=color:#65737e;>//括号中的3左移两位，(3<&LT2*1)得二进制数：0000 1100 b
+</span><span style=color:#65737e;>//按位取反，~(3<&LT2*1)得1111 0011 b
+</span><span style=color:#65737e;>//假如a中原来的值为二进制数： a = 1001 1111 b
+</span><span style=color:#65737e;>//所得的数与a作”位与&”运算，a = (1001 1111 b)&(1111 0011 b),
+</span><span style=color:#65737e;>//经过运算后，a的值 a=1001 0011 b
+</span><span style=color:#65737e;>// a的第1组的bit2、bit3被清零，而其它位不变。
+</span><span>
+</span><span style=color:#65737e;>//上述(~(3<&LT2*1))中的(1)即为组编号;如清零第3组bit6、bit7此处应为3
+</span><span style=color:#65737e;>//括号中的(2)为每组的位数，每组有2个二进制位;若分成4个一组，此处即为4
+</span><span style=color:#65737e;>//括号中的(3)是组内所有位都为1时的值;若分成4个一组，此处即为二进制数“1111 b”
+</span><span>
+</span><span style=color:#65737e;>//例如对第2组bit4、bit5清零
+</span><span>a &= ~(</span><span style=color:#d08770;>3</span><span><<</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#d08770;>2</span><span>);
+</span></code></pre><h2 id=mou-ji-wei-jin-xing-fu-zhi>某几位进行赋值</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//a = 1000 0011 b
+</span><span style=color:#65737e;>//此时对清零后的第2组bit4、bit5设置成二进制数“01 b ”
+</span><span>
+</span><span>a |= (</span><span style=color:#d08770;>1</span><span><<</span><span style=color:#d08770;>2</span><span>*</span><span style=color:#d08770;>2</span><span>);
+</span><span style=color:#65737e;>//a = 1001 0011 b，成功设置了第2组的值，其它组不变
+</span></code></pre><p><code>1<&LT2*2</code>： + 1：是要赋予的值 + 第一个2：分组大小为2 + 第二个2：第2组<h2 id=mou-wei-qu-fan>某位取反</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//a = 1001 0011 b
+</span><span style=color:#65737e;>//把bit6取反，其它位不变
+</span><span>
+</span><span>a ^=(</span><span style=color:#d08770;>1</span><span><<</span><span style=color:#d08770;>6</span><span>);
+</span><span style=color:#65737e;>//a = 1101 0011 b
+</span></code></pre><p>用1去异或某个位，如果该位原本值为0，则异或结果则为1，反之则为0。 用0去异或某个位，如果该位原本值为0，则异或结果则为0，反之则为1。</div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

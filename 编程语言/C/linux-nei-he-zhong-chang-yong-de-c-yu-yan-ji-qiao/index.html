@@ -25,20 +25,45 @@
 </span><span style=color:#65737e;>//参数是表达式  
 </span><span style=color:#b48ead;>int </span><span style=color:#8fa1b3;>foo</span><span>();  
 </span><span style=color:#bf616a;>typeof</span><span>(</span><span style=color:#bf616a;>foo</span><span>()) var;</span><span style=color:#65737e;>//声明了int类型的var变量，因为表达式foo()是int类型的。由于表达式不会被执行，所以不会调用foo函数。
-</span></code></pre><h2 id=ling-chang-shu-zu>零长数组</h2><p>零长数组，又叫<strong>柔性数组</strong>。而它的作用主要就是<strong>为了满足需要变长度的结构体</strong>，因此有时也习惯性地称为<strong>变长数组</strong>。<p>用法：<strong>在一个结构体的最后, 申明一个长度为0的数组, 就可以使得这个结构体是可变长的</strong>。<p>对于编译器来说, 此时长度为0的数组并不占用空间, 因为数组名本身不占空间, 它只是一个偏移量, 数组名这个符号本身代表了一个不可修改的地址常量<p>结构体中定义零长数组：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>
-</span><span>&LTmm/percpu.</span><span style=color:#bf616a;>c</span><span>>
-</span><span style=color:#b48ead;>struct </span><span>pcpu_chunk {
-</span><span>    </span><span style=color:#b48ead;>struct</span><span> list_head  list;
-</span><span>    </span><span style=color:#b48ead;>unsigned long</span><span>    populated[];  </span><span style=color:#65737e;>/* 变长数组 */
+</span></code></pre><h2 id=ling-chang-shu-zu-rou-xing-shu-zu>零长数组，柔性数组</h2><p><code>char a[0]</code>的写法是C99以前GNU支持的拓展，这个叫零长数组，<strong>比柔性数组多出来的性质是可以在嵌套结合体中使用和可以放在结构体中间位置</strong>。比如说你想要对结构体部分成员memset，就可以放一个不占大小的零长数组作为标记来指定内存地址。另外使用时需要注意这个数组虽然不占大小，但其类型也会影响结构图的对齐。零长数组是GNU C的实现，非标准，因此并不是所有的编译器都支持。 现在某种程度上已经弃用了，它不太安全（会混淆编译器对类型的检查）。详见这两篇文章：<ol><li><a href=https://lwn.net/Articles/908817/>Safer flexible arrays for the kernel</a><li><a href=https://people.kernel.org/kees/bounded-flexible-arrays-in-c>Bounded Flexible Arrays in C</a></ol><p><code>char a[]</code>的写法是c99开始支持的，这个叫柔性数组。柔性数组也不占大小，只能出现在结构体定义的最后一个成员。包含柔性数组的结构体或包含这样结构体的联合体，不能成为结构体的成员或数组元素。<p>一般零长数组/柔性数组的用法都差不多（在网络协议里payload不定长的情况），主要思路都是申请比结构体size更大的内存空间，然后将malloc返回的地址赋给该结构体类型的指针变量。 通常我们在数据传输时有数据包头固定，但是payload长度可变的情况，就非常适合使用柔性数组。 比如下面的例子：<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>struct </span><span>package {
+</span><span>	</span><span style=color:#b48ead;>char</span><span> version[</span><span style=color:#d08770;>3</span><span>];
+</span><span>	...
+</span><span>	</span><span style=color:#b48ead;>int</span><span> size;
+</span><span>	</span><span style=color:#b48ead;>char</span><span> data[];
 </span><span>};
-</span></code></pre><p>数据结构最后一个元素被定义为零长度数组，不占结构体空间。这样，我们可以根据对象大小动态地分配结构的大小。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>struct </span><span>line {  
-</span><span>    </span><span style=color:#b48ead;>int</span><span> length;  
-</span><span>    </span><span style=color:#b48ead;>char</span><span> contents[</span><span style=color:#d08770;>0</span><span>];  
-</span><span>};  
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> data_len = xxx;
+</span><span>
+</span><span>package *p = (</span><span style=color:#b48ead;>struct</span><span> package *)</span><span style=color:#96b5b4;>malloc</span><span>(sizeof(package) + data_len * sizeof(</span><span style=color:#b48ead;>char</span><span>));
+</span></code></pre><p>为什么要这么写，还有别的写法能实现相同的效果，比如这样<pre class=language-cpp data-lang=cpp style=background-color:#2b303b;color:#c0c5ce;><code class=language-cpp data-lang=cpp><span style=color:#b48ead;>struct </span><span>package {
+</span><span>	</span><span style=color:#b48ead;>char</span><span> version[</span><span style=color:#d08770;>3</span><span>];
+</span><span>	...
+</span><span>	</span><span style=color:#b48ead;>int</span><span> size;
+</span><span>	</span><span style=color:#b48ead;>char</span><span> data*;
+</span><span>};
+</span><span>
+</span><span style=color:#b48ead;>int</span><span> data_len = xxx;
+</span><span>package *p = (</span><span style=color:#b48ead;>struct</span><span> package *)</span><span style=color:#96b5b4;>malloc</span><span>(sizeof(package)
+</span><span>p-></span><span style=color:#bf616a;>data </span><span>= </span><span style=color:#96b5b4;>malloc</span><span>(data_len * sizeof(</span><span style=color:#b48ead;>char</span><span>))
+</span></code></pre><p>但这个操作起来就没有上面这么方便，但是这样会更灵活，可以只重新申请数据，包头重复利用。 这么写的原因：<ol><li>减少一次内存分配<li>metadata和payload在内存连续存放</ol><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>typedef struct</span><span> DLLReference {  
+</span><span style=color:#b48ead;>int</span><span> level;  
+</span><span style=color:#b48ead;>void </span><span>*handle;  
+</span><span style=color:#b48ead;>char</span><span> name[</span><span style=color:#d08770;>1</span><span>];  
+</span><span>} DLLReference;  
 </span><span>  
-</span><span style=color:#b48ead;>struct</span><span> line *thisline = </span><span style=color:#96b5b4;>malloc</span><span>(sizeof(</span><span style=color:#b48ead;>struct</span><span> line) + this_length);  
-</span><span>thisline->length = this_length;
-</span></code></pre><p>如上例所示，<code>struct line</code>数据结构定义了一个int length变量和一个变长数组contents[0]，这个struct line数据结构的大小<strong>只包含int类型的大小，不包含contents的大小</strong>，也就是<strong>sizeof (struct line) = sizeof (int)</strong>。<p>创建结构体对象时，可根据实际的需要指定这个可变长数组的长度，并分配相应的空间，如上述实例代码分配了this_length 字节的内存，并且可以通过<code>contents[index]</code>来访问第index个地址的数据。<h2 id=casefan-wei>case范围</h2><p>GNU C语言支持指定一个case的范围作为一个标签，如：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>case</span><span> low ...high:</span><span style=color:#b48ead;>case </span><span>'</span><span style=color:#a3be8c;>A</span><span>' ...'</span><span style=color:#a3be8c;>Z</span><span>':
+</span><span style=color:#b48ead;>static int </span><span style=color:#8fa1b3;>add_dllref</span><span>(TCCState *</span><span style=color:#bf616a;>s1</span><span>, </span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>dllname</span><span>)  
+</span><span>{  
+</span><span>DLLReference *dllref;  
+</span><span style=color:#b48ead;>int</span><span> i;  
+</span><span style=color:#b48ead;>for </span><span>(i = </span><span style=color:#d08770;>0</span><span>; i < s1->nb_loaded_dlls; ++i)  
+</span><span style=color:#b48ead;>if </span><span>(</span><span style=color:#d08770;>0 </span><span>== </span><span style=color:#96b5b4;>strcmp</span><span>(s1->loaded_dlls[i]->name, dllname))  
+</span><span style=color:#b48ead;>return</span><span> i + </span><span style=color:#d08770;>1</span><span>;  
+</span><span>dllref = </span><span style=color:#bf616a;>tcc_mallocz</span><span>(sizeof(DLLReference) + </span><span style=color:#96b5b4;>strlen</span><span>(dllname));  
+</span><span style=color:#96b5b4;>strcpy</span><span>(dllref->name, dllname);  
+</span><span style=color:#bf616a;>dynarray_add</span><span>(&s1->loaded_dlls, &s1->nb_loaded_dlls, dllref);  
+</span><span style=color:#b48ead;>return</span><span> s1->nb_loaded_dlls;  
+</span><span>}
+</span></code></pre><p>这里char name[1] 而不是char name[0] 的原因是提前考虑到字符串的末尾0字符，这样后续计算会更方便更安全。<h2 id=casefan-wei>case范围</h2><p>GNU C语言支持指定一个case的范围作为一个标签，如：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>case</span><span> low ...high:</span><span style=color:#b48ead;>case </span><span>'</span><span style=color:#a3be8c;>A</span><span>' ...'</span><span style=color:#a3be8c;>Z</span><span>':
 </span></code></pre><p>这里low到high表示一个区间范围，在ASCII字符代码中也非常有用。下面是Linux内核中的代码例子。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>&LTarch/x86/platform/uv/tlb_uv.</span><span style=color:#bf616a;>c</span><span>>
 </span><span>    
 </span><span style=color:#b48ead;>static int </span><span style=color:#8fa1b3;>local_atoi</span><span>(</span><span style=color:#b48ead;>const char </span><span>*</span><span style=color:#bf616a;>name</span><span>){
@@ -133,4 +158,4 @@
 </span></code></pre><p><strong>attribute</strong>((regparm(0)))：告诉编译器该函数不需要通过任何寄存器来传递参数，<strong>只通过堆栈来传递</strong>。<p>对于<code>ARM</code>来说，函数参数的传递有一套<code>ATPCS</code>标准，即<strong>通过寄存器来传递</strong>。ARM中的R0～R4寄存器存放传入参数，当参数超过5个时，多余的参数被存放在局部堆栈中。所以，<strong>ARM平台没有定义asmlinkage</strong>。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span>&LTinclude/linux/linkage.</span><span style=color:#bf616a;>h</span><span>>
 </span><span style=color:#b48ead;>#define </span><span>asmlinkage CPP_ASMLINKAGE
 </span><span style=color:#b48ead;>#define </span><span>asmlinkage CPP_ASMLINKAGE
-</span></code></pre><h2 id=ul>UL</h2><p>在Linux内核代码中，我们经常会看到一些数字的定义使用了UL后缀修饰。<p>数字常量会被隐形定义为int类型，两个int类型相加的结果可能会发生溢出。<p>因此使用UL强制把<code>int</code>类型数据转换为<code>unsigned long</code>类型，这是为了保证运算过程不会因为<code>int</code>的位数不同而导致溢出。<ul><li><p>1 ：表示有符号整型数字1</p><li><p>UL：表示无符号长整型数字1</p></ul></div></div></div><footer class=footer__poweredby><p class=caption>© 2024 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
+</span></code></pre><h2 id=ul>UL</h2><p>在Linux内核代码中，我们经常会看到一些数字的定义使用了UL后缀修饰。<p>数字常量会被隐形定义为int类型，两个int类型相加的结果可能会发生溢出。<p>因此使用UL强制把<code>int</code>类型数据转换为<code>unsigned long</code>类型，这是为了保证运算过程不会因为<code>int</code>的位数不同而导致溢出。<ul><li><p>1 ：表示有符号整型数字1</p><li><p>UL：表示无符号长整型数字1</p></ul></div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

@@ -1,0 +1,111 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>STM32 汇编分析实例 - 指令基础与函数调用 | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/嵌入式/单片机/stm32-hui-bian-fen-xi-shi-li-zhi-ling-ji-chu-yu-han-shu-diao-yong/>STM32 汇编分析实例 - 指令基础与函数调用</a></h1><div class=post-meta-inline><span class=post-date> 2025-01-04 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/dan-pian-ji/>#单片机</a></span><div class=post-content><p>https://init.blog/1790/<p>今天我们对一则简单的 STM32 程序进行分析，通过寄存器的状态以及反汇编指令对 STM32 的指令流水线进行一个简单的了解。<p>我们今天只对从 <code>main</code> 函数开始的部分进行分析，STM32 的启动过程在 <code>startup_stm32f10x_md-vl.s</code> 文件中以汇编指令进行编写，留作以后分析。<p>下面给出本次需要分析的 <code>C</code> 代码：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#define A1 123// = 0x7B
+</span><span>#define M1 0x000000F0
+</span><span>
+</span><span>volatile unsigned int uiMas[20] = { 0, 1, 2, 3 };
+</span><span>
+</span><span>int Fun(unsigned int a, unsigned int b, unsigned int c, unsigned int d, unsigned int e) {
+</span><span>int iLoc;
+</span><span>iLoc = a;
+</span><span>iLoc *= (b - c + d);
+</span><span>iLoc = (iLoc - A1)  (M1 & e);
+</span><span>return iLoc;
+</span><span>}
+</span><span>
+</span><span>int main(void) {
+</span><span>
+</span><span>int a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7, h = 8, i = 9, j = 10, k = 11, l = 12;
+</span><span>
+</span><span>a += b += c += d += e += g += f += h += i += k += l += j;
+</span><span>
+</span><span>uiMas[1] = Fun(a, b, c, d, 0xabcd);
+</span><span>
+</span><span>a += b += c += d += e += g += f += h += i += k += l += j;
+</span><span>
+</span><span>return 0;
+</span><span>}
+</span></code></pre><p>在 <code>μVision</code> 中新建工程，在调试中选择使用模拟器调试，之后对程序进行 <code>ReBuild</code>，就可以开始我们的分析了。<p><img alt=img src=stm32.start.jpg><hr><p>我们从 <code>main</code> 函数的入口开始分析，所以将函数断点设置在 <code>int main(void)</code> 处，按下 <code>Ctrl + F5</code>，程序自动为我们执行到了断点处，并给出了 <code>main</code> 函数入口处的反汇编代码：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    57: int main(void) {
+</span><span>0x080001D8 E92D4FF0  PUSH     {r4-r11,lr}
+</span><span>0x080001DC B085      SUB      sp,sp,#0x14
+</span></code></pre><p>首先第一行，我们看到程序执行了 <code>PUSH</code> 对 <code>r4</code>至<code>r11</code>以及<code>lr</code> 指令集进行了入栈，这里我们主要关注两个点：<ol><li>为什么在程序在通用寄存器中仅仅对 <code>r4 - r11</code> 进行了入栈状态保存？<li>为什么需要对 <code>lr</code> 寄存器进行状态保存？</ol><p><strong>我们首先来看第一个问题 - 为什么只对 <code>r4 - r11</code> 进行了状态保存</strong><p>这个问题与 <code>STM32</code> 中对寄存器的分类有关：<p><code>r0 - r3</code> 在 <code>STM32</code> 除了通用的寄存器作用之外，需要用作传入参数的状态保存；而在程序返回值时，他们则负责保存程序的返回值。而在子程序的调用之间，程序可以将 <code>r0 - r3</code> 用作任何用途；这也就说明在被调用函数返回之前不需要恢复他们的值。<p>而如果调用函数需要再次使用他们的内容，程序反而需要保留他们的内容（最常见的例子一般是递归调用）<p>而 <code>r4 - r10</code> 寄存器保存的内容根据 <code>STM32</code> 的规定，在函数返回之前必须要恢复这些寄存器的值。<p><img alt=寄存器状态 src=stm32.register.lr.jpg><p><img alt=函数入口 src=stm32.main.entry.jpg><p><strong>第二个问题 - <code>lr</code> 寄存器的作用以及为什么需要保存它</strong><p>首先对这个寄存器进行简单的介绍：<code>lr</code> - <code>Link Register</code>（链接寄存器）执行子程序调用指令（BL ）时，会自动完成将当前的PC的值减去4的结果数据保存到LR寄存器。即将调用指令的下紧邻指令的地址保存到LR。<p>而如果我们此时观察寄存器中 <code>lr</code> 的值：<p>会发现它保存了一个地址 - <code>0x080001AB</code>；那么这个地址代表什么呢？<p>可以看到，我们的 <code>main</code> 函数实际上是由 <code>0x080001A6</code> 处的 <code>BL.W</code> 指令跳转执行到的，而紧接着下一条执行的便是位于<code>0x080001AA</code>的跳转至 <code>BL.W exit (0x080004C4)</code>指令。<p>也就是说：<code>lr</code> 寄存器在进入函数之前对函数返回后需要跳转的地址进行保存；当函数返回之后，<code>lr</code> 寄存器的值会被更新，指示流水线下面需要继续执行哪一步的指令。<hr><p>我们继续，程序执行到了：<code>SUB sp,sp,#0x14</code> 这一行。<p>有基础编程经验的朋友应该都知道 <code>sp</code> 寄存器 - <code>Stack Pointer</code> 作为栈指针保存了当前栈顶的位置，当在程序中需要为在栈上分配内存时就会推动该指针为程序保留指定大小的栈内存；而在脱离了变量作用域之后则会回推该指针表示释放了指定大小的栈内存。<p>这里我们的 <code>SUB</code> 指令将栈指针推动了 <code>0x14</code> - 也就是20字节，这也就意味着在下面程序中变量比较多，其中有20字节的栈内存被使用 - 这点我们下面会做印证。<p>下面我们的的程序进行到了变量初始化并赋值的阶段：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    59:         int a = 1, b = 2, c = 3, d = 4, e = 5, f = 6, g = 7, h = 8, i = 9, j = 10, k = 11, l = 12; 
+</span><span>0x080001DE 2401      MOVS     r4,#0x01
+</span><span>0x080001E0 2502      MOVS     r5,#0x02
+</span><span>0x080001E2 2603      MOVS     r6,#0x03
+</span><span>0x080001E4 2704      MOVS     r7,#0x04
+</span><span>0x080001E6 F04F0805  MOV      r8,#0x05
+</span><span>0x080001EA F04F0906  MOV      r9,#0x06
+</span><span>0x080001EE F04F0A07  MOV      r10,#0x07
+</span><span>0x080001F2 F04F0B08  MOV      r11,#0x08
+</span><span>0x080001F6 2009      MOVS     r0,#0x09
+</span><span>0x080001F8 9004      STR      r0,[sp,#0x10]
+</span><span>0x080001FA 200A      MOVS     r0,#0x0A
+</span><span>0x080001FC 9003      STR      r0,[sp,#0x0C]
+</span><span>0x080001FE 200B      MOVS     r0,#0x0B
+</span><span>0x08000200 9002      STR      r0,[sp,#0x08]
+</span><span>0x08000202 200C      MOVS     r0,#0x0C
+</span><span>0x08000204 9001      STR      r0,[sp,#0x04]
+</span></code></pre><p>这段看起来比较多，但大都是重复的，我们有这几个点需要注意：<ol><li>为什么立即数赋值操作一部分使用的是 <code>MOVS</code> 指令，另一部分是 <code>MOV</code> 指令？<li><code>MOV + STR</code> - 栈内存的赋值操作</ol><p><img alt=img src=stm32.general.registers.jpg><p><strong>第一个问题 - 为什么一部分移动使用 <code>MOV</code>，另一部分使用 <code>MOVS</code></strong><p>这个问题同样与 <code>STM32</code> 的寄存器分配有关，根据官方的说明文档：<p>我们可以看到，官方对 <code>r0 - r7</code> 这8个通用寄存器称为 “低位寄存器”；而相对的 <code>r8 - r12</code> 则为 “高位寄存器”；而在程序中涉及到高位寄存器的四步操作，程序统一使用了 32 位的 <code>MOV</code> 指令（<code>ARM</code> 指令集）；<p>这也就意味着，在低位寄存器进行立即数赋值操作时，程序总是需要使用 16 位的 <code>MOV</code> 指令（<code>thumb</code> 指令集），而如果表示的是符号数的话，则需要使用 <code>MOVS</code> 对其进行符号位扩展。<p>而在高位寄存器的立即数赋值中 <code>STM32</code> 默认使用了符号位扩展，所以只需要直接调用 <code>MOV</code> 指令即可，这一点在官方文档中也得到了印证：<p><img alt=img src=stm32.mov.vs.movs.jpg><p><strong>第二部分 - 栈内存的赋值操作</strong><p>因为寄存器数量不够，没有办法保存我们程序中要用到的所有变量，编译器向栈内存申请了一部分空间进行保存，这个保存的过程使用 <code>MOVS + STR</code> 两条指令完成：<p>首先将立即数保存至 <code>r0</code> 寄存器<p>之后使用 <code>STR</code> 指令将 <code>r0</code> 寄存器的内容保存至栈内存，这个栈内存的地址通过栈指针 <code>sp</code> 加上一个偏移量确认<p>请大家记住，我们已经使用了4个 <code>int</code> 类型长度的栈内存 - 也就是 16 字节<hr><p>程序现在运行到了最关键的部分 - 子程序调用以及数组赋值；我们来看生成的反汇编代码：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    63:         uiMas[1] = Fun(a, b, c, d, 0xabcd); 
+</span><span>0x08000238 F64A30CD  MOVW     r0,#0xABCD
+</span><span>0x0800023C 463B      MOV      r3,r7
+</span><span>0x0800023E 4632      MOV      r2,r6
+</span><span>0x08000240 4629      MOV      r1,r5
+</span><span>0x08000242 9000      STR      r0,[sp,#0x00]
+</span><span>0x08000244 4620      MOV      r0,r4
+</span><span>0x08000246 F7FFFFB9  BL.W     Fun (0x080001BC)
+</span><span>0x0800024A 490F      LDR      r1,[pc,#60]  ; @0x08000288
+</span><span>0x0800024C 6048      STR      r0,[r1,#0x04]
+</span></code></pre><p>首先，程序将立即数 <code>0xABCD</code> 移动到了 <code>r0</code> 寄存器以备使用（<code>MOVW</code> 表示移动2个字节）；而参数中按照顺序调用了 <code>a, b, c, d</code> 这四个参数，可以看到程序按照倒序依次将 <code>d, c, b</code> 三个变量的值移动至了 <code>r3, r2, r1</code> 这三个寄存器作为参数。<p>按照我们上面对参数的四个寄存器的描述，剩下需要将 <code>a</code> 变量移动至 <code>r0</code> 寄存器，可是现在 <code>r0</code> 寄存器被用来存放临时的立即数 <code>0xABCD</code>，所以程序使用 <code>STR</code> 将这个立即数保存至栈内存 <code>sp</code> 指针的地址。请注意，这里我们再次使用了 4 个字节的栈内存空间 - 至此，我们在 <code>main</code> 函数开始时分配的 20 字节栈内存被全部使用。<p>解决了 <code>r0</code> 的冲突问题，程序将 <code>a</code> 变量移动至 <code>r0</code> 寄存器。<p>下面是这次需要关注的重点：<code>BL.W</code> 指令，我们的程序使用它来进行子程序调用；通过对寄存器状态的关注，我们来看看这条指令在执行时发生了什么：<ol><li><code>lr</code> 寄存器被更新至 <code>0x8000024B</code> - 也正是我们刚刚执行函数跳转之后的指令地址<li><code>pc</code> 寄存器被更新至 <code>0x080001BC</code> - 也就是 <code>Fun</code> 函数的入口，指示流水线下面一步该执行的指令位置</ol><hr><p>我们现在进入了 <code>Fun</code> 函数，关注生成的反汇编代码：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    49: int Fun(unsigned int a, unsigned int b, unsigned int c, unsigned int d, unsigned int e) { 
+</span><span>    50:         int iLoc; 
+</span><span>0x080001BC B5F0      PUSH     {r4-r7,lr}
+</span><span>0x080001BE 4604      MOV      r4,r0
+</span><span>0x080001C0 9D05      LDR      r5,[sp,#0x14]
+</span></code></pre><p>和进入 <code>main</code> 函数时相同，程序对 <code>r4 - r7</code> 以及 <code>lr</code> 寄存器的值进行了入栈。<p>之后程序将 <code>r0</code> 寄存器分配给变量 <code>iLoc</code> 使用，为了保存函数参数 <code>a</code> 的值，程序将 <code>r0</code> 的数据移动至寄存器 <code>r4</code>。<p>之后程序从数据地址 <code>sp + 0x14</code> 进行了 <code>LDR</code> 操作，可以看到这个地址存储着值 <code>0x0000ABCD</code> - 也就是我们刚刚在栈内存存储的临时值，并把它移动到 <code>r5</code> 寄存器，以备使用。<p>由于 <code>Fun</code> 函数内部剩下的代码并不是很难理解，我们将几条语句放在一起分析：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    51:         iLoc = a; 
+</span><span>0x080001C2 4620      MOV      r0,r4
+</span><span>    52:         iLoc *= (b - c + d); 
+</span><span>0x080001C4 1A8E      SUBS     r6,r1,r2
+</span><span>0x080001C6 441E      ADD      r6,r6,r3
+</span><span>0x080001C8 4370      MULS     r0,r6,r0
+</span><span>    53:         iLoc = (iLoc - A1)  (M1 & e); 
+</span><span>    54:         return iLoc; 
+</span><span>0x080001CA F1A0067B  SUB      r6,r0,#0x7B
+</span><span>0x080001CE F00507F0  AND      r7,r5,#0xF0
+</span><span>0x080001D2 EA460007  ORR      r0,r6,r7
+</span><span>    55: } 
+</span><span>0x080001D6 BDF0      POP      {r4-r7,pc}
+</span></code></pre><p>因为 <code>iLoc</code> 存储在 <code>r0</code>，程序将刚刚备份的参数 <code>a</code> 从寄存器 <code>r4</code> 拷贝回寄存器 <code>r0</code>。<p>之后进行了一些普通的算术运算，并将临时的结果存储在 <code>r6</code> 寄存器，当运算结果完成之后将结果重新放回了 <code>r0</code> 寄存器。<p>好了，现在 <code>r0</code> 寄存器保存着我们的 <code>iLoc</code> 变量 - 也正是 <code>Fun</code> 函数的返回值，函数开始进行返回的操作 - 使用 <code>POP</code> 指令从栈内存中调出函数执行前的程序状态，更新 <code>pc</code> 寄存器到需要执行的指令地址。至此，<code>Fun</code> 函数的调用过程全部完成。<hr><p>我们现在来关注得到返回值之后，程序是如何对数组进行赋值的：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>0x0800024A 490F      LDR      r1,[pc,#60]  ; @0x08000288
+</span><span>0x0800024C 6048      STR      r0,[r1,#0x04]
+</span></code></pre><p><img alt=img src=stm32.array.assign.jpg><p>程序首先将 <code>0x08000288</code> 处的值拷贝至 <code>r1</code> 寄存器，我们来看看这个地址存储着什么：<p>这个地址存储着一个地址，指向了 <code>0x20000000</code> 这个地址，而这个地址正是数组 <code>uiMas</code> 的首地址。<p>之后程序对该地址偏移量 4 的地址进行了 <code>STR</code> 操作，也就是数组的第2位被改变了。<hr><p>现在程序需要对一串值进行累加操作，我们来看看这部分的反汇编代码：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    65:         a += b += c += d += e += g += f += h += i += k += l += j; 
+</span><span>0x0800024E 9903      LDR      r1,[sp,#0x0C]
+</span><span>0x08000250 9801      LDR      r0,[sp,#0x04]
+</span><span>0x08000252 4401      ADD      r1,r1,r0
+</span><span>0x08000254 9101      STR      r1,[sp,#0x04]
+</span><span>0x08000256 9802      LDR      r0,[sp,#0x08]
+</span><span>0x08000258 4401      ADD      r1,r1,r0
+</span><span>0x0800025A 9102      STR      r1,[sp,#0x08]
+</span><span>0x0800025C 9804      LDR      r0,[sp,#0x10]
+</span><span>0x0800025E 4408      ADD      r0,r0,r1
+</span><span>0x08000260 9004      STR      r0,[sp,#0x10]
+</span><span>0x08000262 4458      ADD      r0,r0,r11
+</span><span>0x08000264 4683      MOV      r11,r0
+</span><span>0x08000266 4448      ADD      r0,r0,r9
+</span><span>0x08000268 4681      MOV      r9,r0
+</span><span>0x0800026A 4450      ADD      r0,r0,r10
+</span><span>0x0800026C 4682      MOV      r10,r0
+</span><span>0x0800026E 4440      ADD      r0,r0,r8
+</span><span>0x08000270 4680      MOV      r8,r0
+</span><span>0x08000272 4438      ADD      r0,r0,r7
+</span><span>0x08000274 4607      MOV      r7,r0
+</span><span>0x08000276 4430      ADD      r0,r0,r6
+</span><span>0x08000278 4606      MOV      r6,r0
+</span><span>0x0800027A 4428      ADD      r0,r0,r5
+</span><span>0x0800027C 4605      MOV      r5,r0
+</span><span>0x0800027E 4404      ADD      r4,r4,r0
+</span></code></pre><p>这部分与上部分一样，需要注意的是，刚刚存储在栈上的变量现在仍然需要在栈上更新 - 也就是说，这部分变量的更新需要首先调用 <code>LDR</code> 将值保存至寄存器，之后使用 <code>STR</code> 保存回栈上。<hr><p>现在进入程序的最后一部分：<code>main</code> 函数的返回：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    67:         return 0; 
+</span><span>0x08000280 2000      MOVS     r0,#0x00
+</span><span>    68: } 
+</span><span>0x08000282 B005      ADD      sp,sp,#0x14
+</span><span>0x08000284 E8BD8FF0  POP      {r4-r11,pc}
+</span></code></pre><p>首先我们看到，因为函数的返回值是 0 ，程序将 <code>r0</code> 寄存器更新至立即数 0。<p>之后将 <code>sp</code> 寄存器增加了 20 - 也就是推回20个字节，释放了刚刚在 <code>main</code> 函数内申请的栈内存。<p>在这之后将 <code>r4 - r11</code> 寄存器恢复至执行 <code>main</code> 函数之前的状态，而 <code>lr</code> 寄存器的状态被更新至 <code>pc</code> 寄存器，用于指示下一步执行的函数 - 也就是我们开始所说的 <code>0x080001AA</code>，这里存储着跳转至 <code>exit</code> 函数的指令。<hr><p>至此，我们的分析过程全部完成。<p>从这次的分析过程中我们可以了解到 <code>STM32</code> 指令流水线的一些基本特点；我们还学习了 <code>B</code> 指令的特点，了解了函数传参以及返回值的方式。在这个基础上我们对 <code>STM32</code> 的寄存器有了更加深入的了解。</div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

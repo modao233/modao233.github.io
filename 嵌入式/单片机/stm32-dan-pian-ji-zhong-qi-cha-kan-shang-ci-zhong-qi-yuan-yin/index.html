@@ -1,0 +1,79 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>STM32 单片机重启（查看上次重启原因） | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/嵌入式/单片机/stm32-dan-pian-ji-zhong-qi-cha-kan-shang-ci-zhong-qi-yuan-yin/>STM32 单片机重启（查看上次重启原因）</a></h1><div class=post-meta-inline><span class=post-date> 2025-01-04 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/dan-pian-ji/>#单片机</a></span><div class=post-content><p>如何判断是软复位还是上电复位<p>带boot的时候，可能boot里有<strong>清除复位标志</strong>的操作，会影响判断，需要先注释掉。<h2 id=stm32-hal-fu-wei-yuan-shi-bie>STM32 HAL 复位源识别</h2><p>STM32启动后可以识别本次启动是对应哪一种复位源，从而可以根据复位源的状态，做一些特殊处理。 HAL库的复位源识别<p>以下代码，识别是那种方式进行复位的，只需要将自己在那种方式复位运行的程序添加进去即刻，在这里面尽量进行一些事件更改，不要进行长时间任务运行。<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Check_Rst</span><span>(</span><span style=color:#b48ead;>void</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#bf616a;>my_printf</span><span>("</span><span style=color:#a3be8c;> CSR = </span><span style=color:#d08770;>%x</span><span style=color:#96b5b4;>\r\n</span><span>", RCC->CSR);
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>__HAL_RCC_GET_FLAG</span><span>(RCC_FLAG_PINRST) != RESET ) </span><span style=color:#65737e;>// NRST 引脚复位
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>my_printf</span><span>("</span><span style=color:#a3be8c;>PIN reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>__HAL_RCC_GET_FLAG</span><span>(RCC_FLAG_PORRST) != RESET ) </span><span style=color:#65737e;>// 上电掉电复位
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>my_printf</span><span>("</span><span style=color:#a3be8c;>POR/PDR reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>__HAL_RCC_GET_FLAG</span><span>(RCC_FLAG_SFTRST) != RESET ) </span><span style=color:#65737e;>//  软件复位
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>my_printf</span><span>("</span><span style=color:#a3be8c;>Software reset  </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>__HAL_RCC_GET_FLAG</span><span>(RCC_FLAG_IWDGRST) != RESET ) </span><span style=color:#65737e;>// 独立看门狗复位
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>my_printf</span><span>("</span><span style=color:#a3be8c;>Independent watchdog reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>__HAL_RCC_GET_FLAG</span><span>(RCC_FLAG_WWDGRST) != RESET ) </span><span style=color:#65737e;>// 窗口看门狗复位
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>my_printf</span><span>("</span><span style=color:#a3be8c;>Window watchdog reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>__HAL_RCC_GET_FLAG</span><span>(RCC_FLAG_LPWRRST) != RESET ) </span><span style=color:#65737e;>// 低功耗复位
+</span><span>    {
+</span><span>        </span><span style=color:#bf616a;>my_printf</span><span>("</span><span style=color:#a3be8c;>(Low-power reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#bf616a;>__HAL_RCC_CLEAR_RESET_FLAGS</span><span>();			</span><span style=color:#65737e;>//清除复位标志
+</span><span>	
+</span><span>}
+</span></code></pre><p>HAL库的复位源类型主要有如下几种：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#define RCC_FLAG_BORRST                ((uint8_t)0x95)
+</span><span>#define RCC_FLAG_PINRST                ((uint8_t)0x96)
+</span><span>#define RCC_FLAG_PORRST                ((uint8_t)0x97)
+</span><span>#define RCC_FLAG_SFTRST                ((uint8_t)0x98)
+</span><span>#define RCC_FLAG_IWDG1RST              ((uint8_t)0x9A)
+</span><span>#define RCC_FLAG_WWDG1RST              ((uint8_t)0x9C)
+</span></code></pre><p>其中： RCC_FLAG_BORRST是供电电压低于阀值产生的复位 RCC_FLAG_PINRST是RESET管脚产生的复位 RCC_FLAG_PORRST是上电复位（冷启动） RCC_FLAG_SFTRST是软件重启产生的复位 RCC_FLAG_IWDG1RST是内置看门狗产生的复位 RCC_FLAG_WWDG1RST是外置看门狗产生的复位<p>另外，基于芯片的功能，还有其它的一些复位源，如： RCC_FLAG_CPURST RCC_FLAG_D1RST RCC_FLAG_D2RST RCC_FLAG_OBLRST RCC_FLAG_FWRST RCC_FLAG_LPWRRST RCC_FLAG_LPWR1RST RCC_FLAG_LPWR2RST<h2 id=biao-zhun-ku-de-fu-wei-yuan-shi-bie>标准库的复位源识别</h2><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>Check_Rst</span><span>(</span><span style=color:#b48ead;>void</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;> CSR = </span><span style=color:#d08770;>%x</span><span style=color:#96b5b4;>\r\n</span><span>", RCC->CSR);
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>RCC_GetFlagStatus</span><span>(RCC_FLAG_PINRST) != RESET ) </span><span style=color:#65737e;>// NRST 引脚复位
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>PIN reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>RCC_GetFlagStatus</span><span>(RCC_FLAG_PORRST) != RESET ) </span><span style=color:#65737e;>// 上电掉电复位
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>POR/PDR reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>RCC_GetFlagStatus</span><span>(RCC_FLAG_SFTRST) != RESET ) </span><span style=color:#65737e;>//  软件复位
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>Software reset  </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>RCC_GetFlagStatus</span><span>(RCC_FLAG_IWDGRST) != RESET ) </span><span style=color:#65737e;>// 独立看门狗复位
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>Independent watchdog reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>RCC_GetFlagStatus</span><span>(RCC_FLAG_WWDGRST) != RESET ) </span><span style=color:#65737e;>// 窗口看门狗复位
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>Window watchdog reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#b48ead;>if</span><span>(</span><span style=color:#bf616a;>RCC_GetFlagStatus</span><span>(RCC_FLAG_LPWRRST) != RESET ) </span><span style=color:#65737e;>// 低功耗复位
+</span><span>    {
+</span><span>        </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#a3be8c;>(Low-power reset </span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span>    }
+</span><span>    </span><span style=color:#bf616a;>RCC_ClearFlag</span><span>();			</span><span style=color:#65737e;>//清除复位标志
+</span><span>    </span><span style=color:#96b5b4;>printf</span><span>("</span><span style=color:#96b5b4;>\r\n</span><span>");
+</span><span> 
+</span><span>}
+</span></code></pre><pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#65737e;>//系统复位  所有电路都会复位
+</span><span style=color:#b48ead;>void </span><span style=color:#8fa1b3;>mcuSysRestart</span><span>(</span><span style=color:#b48ead;>void</span><span>)
+</span><span>{
+</span><span>    </span><span style=color:#bf616a;>__set_FAULTMASK</span><span>(</span><span style=color:#d08770;>1</span><span>);	 </span><span style=color:#65737e;>//关闭所有中断
+</span><span>    </span><span style=color:#bf616a;>NVIC_SystemReset</span><span>();  </span><span style=color:#65737e;>//系统复位   源码见 core_cm3.h 文件 static __INLINE void NVIC_SystemReset(void) 函数
+</span><span> 
+</span><span>}
+</span></code></pre></div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

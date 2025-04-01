@@ -1,0 +1,60 @@
+<!doctype html><html lang=zh-Hans-CN><head><title>STM32标准库中的GPIO_Pin_N与GPIO_PinSourceN | modao's blog</title><meta content="text/html; charset=utf-8" http-equiv=content-type><meta content="width=device-width,initial-scale=1.0,maximum-scale=1" name=viewport><meta content=noodp name=robots><link href=https://modao.site/style.css rel=stylesheet><link href=https://modao.site/color/green.css rel=stylesheet><link href=https://modao.site/color/background_dark.css rel=stylesheet><link href=https://modao.site/font-hack.css rel=stylesheet><script src="https://www.googletagmanager.com/gtag/js?id=G-N2WTGJE0M5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/嵌入式/单片机/stm32biao-zhun-ku-zhong-de-gpio-pin-nyu-gpio-pinsourcen/>STM32标准库中的GPIO_Pin_N与GPIO_PinSourceN</a></h1><div class=post-meta-inline><span class=post-date> 2025-01-04 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/dan-pian-ji/>#单片机</a></span><div class=post-content><p><strong>在使用STM32F042芯片开发产品，用到其中的硬件I2C。利用ST官方提供的标准固件库开发应用软件。他说发现I2C功能基本不受控，尤其令他奇怪的是，I2C即使关闭了，却发现I2C脚上还有脉冲出现。</strong> 原因就是将有关PA9,PA10的复用功能配置语句做了调整就OK。显然，这里PA9,PA10是被复用为I2C通信脚。 调整前的代码<br> GPIO_PinAFConfig(GPIOA,GPIO_Pin_9,GPIO_AF_4);<br> GPIO_PinAFConfig(GPIOA,GPIO_Pin_10,GPIO_AF_4);<p>调整后的代码<br> GPIO_PinAFConfig(GPIOA,GPIO_Pin<strong>Source</strong>9,GPIO_AF_4);<br> GPIO_PinAFConfig(GPIOA,GPIO_Pin<strong>Source</strong>10,GPIO_AF_4);<p>GPIO_Pin_N,一个是GPIO_PinSourceN，其实这2个参数是不一样的。<p>GPIO_Pin_n可以理解为某端口脚在整个端口的位置。比方某GPIO口的第6管脚位置编码GPIO_Pin_6 被定义为 ((uint16_t)0x0040) ，在对相应GPIO管脚做基本属性配置时会用到，如配置输入输出模式、模拟输入模式的选择等。有兴趣的话，可以点击GPIO_Init( )进去看看。<p>而GPIO_PinSourceN一般是在对某GPIO口相应pin脚的复用功能进行选择配置才会用到。它是根据端口各脚位的位置按顺序从0开始依次递增编号，可以理解为该管脚在该端口的序号。比方某GPIO口的第6号复用功能脚的序号GPIO_PinSource6 被定义为 ((uint8_t)0x06) 。有兴趣的话，也可以打开GPIO_PinAFConfig( )函数看看。显然，GPIO_PinSource6跟上面的GPIO_Pin_6的值相差甚远。<p>下面是ST官方库代码中有关GPIO_Pin_N的定义：<pre class=language-c data-lang=c style=background-color:#2b303b;color:#c0c5ce;><code class=language-c data-lang=c><span style=color:#b48ead;>#define </span><span>GPIO_Pin_0 ((uint16_t)</span><span style=color:#d08770;>0x0001</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_1 ((uint16_t)</span><span style=color:#d08770;>0x0002</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_2 ((uint16_t)</span><span style=color:#d08770;>0x0004</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_3 ((uint16_t)</span><span style=color:#d08770;>0x0008</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_4 ((uint16_t)</span><span style=color:#d08770;>0x0010</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_5 ((uint16_t)</span><span style=color:#d08770;>0x0020</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_6 ((uint16_t)</span><span style=color:#d08770;>0x0040</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_7 ((uint16_t)</span><span style=color:#d08770;>0x0080</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_8 ((uint16_t)</span><span style=color:#d08770;>0x0100</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_9 ((uint16_t)</span><span style=color:#d08770;>0x0200</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_10 ((uint16_t)</span><span style=color:#d08770;>0x0400</span><span>)
+</span><span>
+</span><span>。。。。。。
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_15 ((uint16_t)</span><span style=color:#d08770;>0x8000</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_Pin_All ((uint16_t)</span><span style=color:#d08770;>0xFFFF</span><span>)
+</span><span>
+</span><span>下面是有关GPIO_PinSourceN的定义：
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource0 ((uint8_t)</span><span style=color:#d08770;>0x00</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource1 ((uint8_t)</span><span style=color:#d08770;>0x01</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource2 ((uint8_t)</span><span style=color:#d08770;>0x02</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource3 ((uint8_t)</span><span style=color:#d08770;>0x03</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource4 ((uint8_t)</span><span style=color:#d08770;>0x04</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource5 ((uint8_t)</span><span style=color:#d08770;>0x05</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource6 ((uint8_t)</span><span style=color:#d08770;>0x06</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource7 ((uint8_t)</span><span style=color:#d08770;>0x07</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource8 ((uint8_t)</span><span style=color:#d08770;>0x08</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource9 ((uint8_t)</span><span style=color:#d08770;>0x09</span><span>)
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource10 ((uint8_t)</span><span style=color:#d08770;>0x0A</span><span>)
+</span><span>
+</span><span>。。。。。。
+</span><span>
+</span><span style=color:#b48ead;>#define </span><span>GPIO_PinSource15 ((uint8_t)</span><span style=color:#d08770;>0x0F</span><span>)
+</span></code></pre><p>小结：上面的问题只有基于STM32官方固件库开发时才会碰到。说实在的，这两个参数的确容易让人误解成一个东西或者弄混淆，尤其刚接触的人。经常有人在这个地方遇到麻烦，之前我在一篇文章中提到过。这里再特意提醒下。<p>不过ST官方后来推出的STM32CUBE库在这个地方的代码写法做了调整，不再定义GPIO_PinSourceN。当然，因为管脚配置导致异常的问题时有发生，建议使用ST官方推出的STM32CUBE配置环境及CUBE参考固件库着手开发，这样会省不少事。</div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
