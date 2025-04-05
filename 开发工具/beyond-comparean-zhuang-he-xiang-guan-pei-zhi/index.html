@@ -2,18 +2,18 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/开发工具/beyond-comparean-zhuang-he-xiang-guan-pei-zhi/>Beyond Compare安装和相关配置</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a>  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/kai-fa-gong-ju/>#开发工具</a></span><div class=post-content><h2 id=linuxxia-an-zhuang-beyond-compare-4-er-jin-zhi-bi-jiao>Linux下安装beyond compare 4（二进制比较）</h2><p>官网下载：https://www.scootersoftware.com/download.php<p>Debian系选择Linux下的Debian格式，32还是64位根据自己的系统下载。<p>安装：sudo dpkg -i 安装包名.deb<p>破解： 在本地创建一个每次启动bcompare就自动清除bcompare使用日志的脚本 sudo nvim /usr/local/bin/clear_bc_reg.sh<p>将下面的内容复制进去<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#!/bin/sh
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a href=https://modao.site style=text-decoration:none> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/开发工具/beyond-comparean-zhuang-he-xiang-guan-pei-zhi/>Beyond Compare安装和相关配置</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-10 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a>  <a class=post-tag href=https://modao.site/tags/software/>#Software</a>  <a class=post-tag href=https://modao.site/tags/kai-fa-gong-ju/>#开发工具</a></span><div class=post-content><span id=continue-reading></span><h2 id=linuxxia-an-zhuang-beyond-compare-4-er-jin-zhi-bi-jiao>Linux下安装beyond compare 4（二进制比较）</h2><p>官网下载：https://www.scootersoftware.com/download.php<p>Debian系选择Linux下的Debian格式，32还是64位根据自己的系统下载。<p>安装：sudo dpkg -i 安装包名.deb<p>破解： 在本地创建一个每次启动bcompare就自动清除bcompare使用日志的脚本 sudo nvim /usr/local/bin/clear_bc_reg.sh<p>将下面的内容复制进去<pre style=color:#c0c5ce;background-color:#2b303b><code><span>#!/bin/sh
 </span><span>
 </span><span>rm -rf ~/.config/bcompare/registry.dat
 </span><span>bcompare
-</span></code></pre><p>sudo chmod 777 /usr/local/bin/clear_bc_reg.sh<p>创建一个快捷命令（软连接）（我这里设置的是bcp，可以根据自己的习惯设置。） sudo ln -s /usr/local/bin/clear_bc_reg.sh /usr/local/bin/bc<p>在命令行中输入bcp就可以启动bcompare软件了<p>可能有用：https://gist.github.com/rise-worlds/5a5917780663aada8028f96b15057a67?permalink_comment_id=3745352<h2 id=beyond-comparetian-jia-you-jian>beyond compare添加右键</h2><p>deepin linux ，dde 桌面<p>beyond compare：官网下载，Debian格式<h3 id=chuang-jian-ji-ge-jiao-ben>创建几个脚本</h3><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>cd .config/bcompare
+</span></code></pre><p>sudo chmod 777 /usr/local/bin/clear_bc_reg.sh<p>创建一个快捷命令（软连接）（我这里设置的是bcp，可以根据自己的习惯设置。） sudo ln -s /usr/local/bin/clear_bc_reg.sh /usr/local/bin/bc<p>在命令行中输入bcp就可以启动bcompare软件了<p>可能有用：https://gist.github.com/rise-worlds/5a5917780663aada8028f96b15057a67?permalink_comment_id=3745352<h2 id=beyond-comparetian-jia-you-jian>beyond compare添加右键</h2><p>deepin linux ，dde 桌面<p>beyond compare：官网下载，Debian格式<h3 id=chuang-jian-ji-ge-jiao-ben>创建几个脚本</h3><pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>cd .config/bcompare
 </span><span>mkdir right_key
 </span><span>cd right_key
 </span><span>touch bcomparelater
 </span><span>touch bcomparewith
 </span><span>touch bcomparediff
 </span><span>chmod +x bcomparelater bcomparewith bcomparediff
-</span></code></pre><p>bcomparediff：<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>#!/bin/bash
+</span></code></pre><p>bcomparediff：<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>#!/bin/bash
 </span><span>#选中两个文件才比较
 </span><span>
 </span><span>TMP_FILE="/home/modao/.config/bcompare/right_key/bcomparetxt"
@@ -54,40 +54,40 @@
 </span><span>fi
 </span><span>
 </span><span>
-</span></code></pre><p>bcomparelater：<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>#!/bin/sh
+</span></code></pre><p>bcomparelater：<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>#!/bin/sh
 </span><span>
 </span><span>comparefile=$(echo $@ | awk 'BEGIN { FS = "\n" } { printf "\"%s\" ",$1 }' | sed -e s#\"\"##)
 </span><span>
 </span><span>echo $comparefile > /home/modao/.config/bcompare/right_key/bcomparetxt
-</span></code></pre><p>bcomparewith：<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>#!/bin/sh
+</span></code></pre><p>bcomparewith：<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>#!/bin/sh
 </span><span>
 </span><span>arg2=$(cat /home/modao/.config/bcompare/right_key/bcomparetxt)
 </span><span>
 </span><span>arg1=$(echo $@ | awk 'BEGIN { FS = "\n" } { printf "\"%s\" ",$1 }' | sed -e s#\"\"##)
 </span><span>
 </span><span>bcompare $arg2 $arg1
-</span></code></pre><h3 id=chuang-jian-ruan-lian-jie>创建软连接</h3><pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>sudo ln -s ~/.config/bcompare/right_key/bcomparelater /usr/local/bin/bcomparelater
+</span></code></pre><h3 id=chuang-jian-ruan-lian-jie>创建软连接</h3><pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>sudo ln -s ~/.config/bcompare/right_key/bcomparelater /usr/local/bin/bcomparelater
 </span><span>sudo ln -s ~/.config/bcompare/right_key/bcomparewith /usr/local/bin/bcomparewith
 </span><span>sudo ln -s ~/.config/bcompare/right_key/bcomparediff /usr/local/bin/bcomparediff
-</span></code></pre><h3 id=chuang-jian-you-jian-lian-jie>创建右键连接</h3><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>sudo touch /usr/share/deepin/dde-file-manager/oem-menuextensions/open-by-bcomparelater.desktop
+</span></code></pre><h3 id=chuang-jian-you-jian-lian-jie>创建右键连接</h3><pre style=color:#c0c5ce;background-color:#2b303b><code><span>sudo touch /usr/share/deepin/dde-file-manager/oem-menuextensions/open-by-bcomparelater.desktop
 </span><span>sudo touch /usr/share/deepin/dde-file-manager/oem-menuextensions/open-by-bcomparewith.desktop
 </span><span>sudo touch /usr/share/deepin/dde-file-manager/oem-menuextensions/open-by-bcomparediff.desktop
-</span></code></pre><p>open-by-bcomparelater.desktop ：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>[Desktop Entry]
+</span></code></pre><p>open-by-bcomparelater.desktop ：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>[Desktop Entry]
 </span><span>Name=晚点比较
 </span><span>Type=Application
 </span><span>X-DFM-MenuTypes=SingleFile;SingleDir
 </span><span>Exec=bcomparelater %u
 </span><span>Icon=bcompare
-</span></code></pre><p>open-by-bcomparewith.desktop ：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>[Desktop Entry]
+</span></code></pre><p>open-by-bcomparewith.desktop ：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>[Desktop Entry]
 </span><span>Name=现在比较
 </span><span>Type=Application
 </span><span>X-DFM-MenuTypes=SingleFile;SingleDir
 </span><span>Exec=bcomparewith %u
 </span><span>Icon=bcompare
-</span></code></pre><p>open-by-bcomparediff.desktop ：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>[Desktop Entry]
+</span></code></pre><p>open-by-bcomparediff.desktop ：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>[Desktop Entry]
 </span><span>Name=比较差异
 </span><span>Type=Application
 </span><span>X-DFM-MenuTypes=MultiFileDirs
 </span><span>Exec=bcomparediff %U
 </span><span>Icon=bcompare
-</span></code></pre><p><a href=https://bbs.chinauos.com/en/post/12984>https://bbs.chinauos.com/en/post/12984</a><h2 id=beyond-compareshe-zhi-dui-qi-fang-shi>beyond compare设置对齐方式</h2><p>会话->会话设置<p><img alt=image src=Pasted%20image%2020220629144717.png><p>选择对齐方式，底部可将该设置保存到全局（默认）<p><img alt=image src=Pasted%20image%2020220629144756.png><p><img alt=image src=Pasted%20image%2020220629144820.png></div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
+</span></code></pre><p><a href=https://bbs.chinauos.com/en/post/12984>https://bbs.chinauos.com/en/post/12984</a><h2 id=beyond-compareshe-zhi-dui-qi-fang-shi>beyond compare设置对齐方式</h2><p>会话->会话设置<p><img alt=image src=https://modao.site/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/beyond-comparean-zhuang-he-xiang-guan-pei-zhi/Pasted%20image%2020220629144717.png><p>选择对齐方式，底部可将该设置保存到全局（默认）<p><img alt=image src=https://modao.site/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/beyond-comparean-zhuang-he-xiang-guan-pei-zhi/Pasted%20image%2020220629144756.png><p><img alt=image src=https://modao.site/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/beyond-comparean-zhuang-he-xiang-guan-pei-zhi/Pasted%20image%2020220629144820.png></div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

@@ -2,7 +2,7 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/Linux/vsftpdpei-zhi-xiang-shuo-ming/>vsftpd配置项说明</a></h1><div class=post-meta-inline><span class=post-date> 2022-01-29 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a>  <a class=post-tag href=https://modao.site/tags/software/>#Software</a></span><div class=post-content><p>https://www.cnblogs.com/halberd-lee/p/11734363.html<h1 id=vsftpd-chang-yong-gong-neng-can-shu-pei-zhi-ji-can-shu-xiang-jie>vsftpd 常用功能参数配置及参数详解</h1><h2 id=1-pei-zhi-chao-ji-fu-wu>1 <strong>配置超级服务</strong></h2><pre class=language-plain data-lang=plain style=background-color:#2b303b;color:#c0c5ce;><code class=language-plain data-lang=plain><span>vi /etc/xinetd.d/vsftpd
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a href=https://modao.site style=text-decoration:none> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/Software/Linux/vsftpdpei-zhi-xiang-shuo-ming/>vsftpd配置项说明</a></h1><div class=post-meta-inline><span class=post-date> 2022-01-29 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/linux/>#Linux</a>  <a class=post-tag href=https://modao.site/tags/software/>#Software</a></span><div class=post-content><p>https://www.cnblogs.com/halberd-lee/p/11734363.html<h1 id=vsftpd-chang-yong-gong-neng-can-shu-pei-zhi-ji-can-shu-xiang-jie>vsftpd 常用功能参数配置及参数详解</h1><h2 id=1-pei-zhi-chao-ji-fu-wu>1 <strong>配置超级服务</strong></h2><pre class=language-plain data-lang=plain style=color:#c0c5ce;background-color:#2b303b><code class=language-plain data-lang=plain><span>vi /etc/xinetd.d/vsftpd
 </span><span>service ftp
 </span><span>{
 </span><span>    disable           = no
@@ -23,9 +23,9 @@
 </span><span>
 </span><span>[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf
 </span><span>listen=NO
-</span></code></pre><h2 id=2-pei-zhi-ni-ming-yong-hu>2 <strong>配置匿名用户</strong></h2><pre class=language-plain data-lang=plain style=background-color:#2b303b;color:#c0c5ce;><code class=language-plain data-lang=plain><span>[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf
+</span></code></pre><h2 id=2-pei-zhi-ni-ming-yong-hu>2 <strong>配置匿名用户</strong></h2><pre class=language-plain data-lang=plain style=color:#c0c5ce;background-color:#2b303b><code class=language-plain data-lang=plain><span>[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf
 </span><span>anonymous_enable=YES
-</span></code></pre><p>Table 1: 匿名用户配置<table><thead><tr><th>参数<th>说明<tbody><tr><td>anonymous_enable=YES<td>是否允许匿名登录 yes=允许 no= 不允许<tr><td>ftp_username=ftp<td>设置ftp匿名登录时的用户名，默认 ftp<tr><td>no_anon_password=YES<td>匿名用户登录不需要输入密码 默认 YES<tr><td>deny_email_enable=YES<td>以banned_email_file里面的电子邮件为密码的匿名用户不能登录<tr><td>anon_root<td>匿名用户登录后的默认目录，不设置，默认为/var/ftp<tr><td>anon_upload_enable=YES<td>允许匿名登录用户上传文件 默认NO<tr><td>anon_mkdir_write_enable=YES<td>允许匿名登录用户创建目录 默认NO<tr><td>anon_other_write_enable=NO<td>允许匿名用户有较高的写权限包括 删除目录和重命名等 默认NO<tr><td>anon_world_readable_only=YES<td>允许匿名用户下载可读文件 默认YES , 设置为yes时只能下载不能直接在Ftp中阅读。<tr><td>chown_uploads=YES<td>设置是否改变匿名用户上传文件（非目录）的属主。默认值为NO。</table><h2 id=3-pei-zhi-ben-di-yong-hu-deng-lu>3 <strong>配置本地用户登录</strong></h2><pre class=language-plain data-lang=plain style=background-color:#2b303b;color:#c0c5ce;><code class=language-plain data-lang=plain><span>[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf
+</span></code></pre><p>Table 1: 匿名用户配置<table><thead><tr><th>参数<th>说明<tbody><tr><td>anonymous_enable=YES<td>是否允许匿名登录 yes=允许 no= 不允许<tr><td>ftp_username=ftp<td>设置ftp匿名登录时的用户名，默认 ftp<tr><td>no_anon_password=YES<td>匿名用户登录不需要输入密码 默认 YES<tr><td>deny_email_enable=YES<td>以banned_email_file里面的电子邮件为密码的匿名用户不能登录<tr><td>anon_root<td>匿名用户登录后的默认目录，不设置，默认为/var/ftp<tr><td>anon_upload_enable=YES<td>允许匿名登录用户上传文件 默认NO<tr><td>anon_mkdir_write_enable=YES<td>允许匿名登录用户创建目录 默认NO<tr><td>anon_other_write_enable=NO<td>允许匿名用户有较高的写权限包括 删除目录和重命名等 默认NO<tr><td>anon_world_readable_only=YES<td>允许匿名用户下载可读文件 默认YES , 设置为yes时只能下载不能直接在Ftp中阅读。<tr><td>chown_uploads=YES<td>设置是否改变匿名用户上传文件（非目录）的属主。默认值为NO。</table><h2 id=3-pei-zhi-ben-di-yong-hu-deng-lu>3 <strong>配置本地用户登录</strong></h2><pre class=language-plain data-lang=plain style=color:#c0c5ce;background-color:#2b303b><code class=language-plain data-lang=plain><span>[root@localhost ~]# vi /etc/vsftpd/vsftpd.conf
 </span><span>#下面是允许某些用户登入的项目  存在user_list文件中的用户不允许登入
 </span><span>userlist_enable=YES
 </span><span>userlist_deny=YES #如果这里改为NO  反过来只能存在user_list文件中的用户允许登入
@@ -36,7 +36,7 @@
 </span><span>chroot_local_user=YES
 </span><span>chroot_list_enable=YES
 </span><span>chroot_list_file=/etc/vsftpd/chroot_list
-</span></code></pre><h2 id=4-pei-zhi-xu-ni-yong-hu-deng-lu>4 <strong>配置虚拟用户登录</strong></h2><pre class=language-plain data-lang=plain style=background-color:#2b303b;color:#c0c5ce;><code class=language-plain data-lang=plain><span>#创建虚拟用户的专用目录
+</span></code></pre><h2 id=4-pei-zhi-xu-ni-yong-hu-deng-lu>4 <strong>配置虚拟用户登录</strong></h2><pre class=language-plain data-lang=plain style=color:#c0c5ce;background-color:#2b303b><code class=language-plain data-lang=plain><span>#创建虚拟用户的专用目录
 </span><span>[root@localhost ~]# mkdir /home/vsftpd/admin
 </span><span>
 </span><span>
@@ -101,7 +101,7 @@
 </span><span>
 </span><span>#如果不能读写操作 可能是目录权限不够需要设置权限 试试看
 </span><span>[root@localhost ~]# chmod 777 /home/vsftpd/admin
-</span></code></pre><h2 id=5-shi-yong-ssldeng-ru>5 <strong>使用SSL登入</strong></h2><pre class=language-plain data-lang=plain style=background-color:#2b303b;color:#c0c5ce;><code class=language-plain data-lang=plain><span>[root@localhost ~]# cd /etc/pki/tls/certs/
+</span></code></pre><h2 id=5-shi-yong-ssldeng-ru>5 <strong>使用SSL登入</strong></h2><pre class=language-plain data-lang=plain style=color:#c0c5ce;background-color:#2b303b><code class=language-plain data-lang=plain><span>[root@localhost ~]# cd /etc/pki/tls/certs/
 </span><span>[root@localhost ~]# openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem
 </span><span>[root@localhost ~]#vi /usr/local/etc/vsftpd.conf
 </span><span>ssl_enable=YES(开启vsftpd对ssl协议的支持)

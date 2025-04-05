@@ -2,4 +2,153 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/嵌入式/单片机/i2cdiao-shi/>I2C调试</a></h1><div class=post-meta-inline><span class=post-date> 2025-01-04 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/dan-pian-ji/>#单片机</a></span><div class=post-content><p>协议规定，SCL时钟和SDA数据线都必须是双向开漏结构的，通过总线上的上拉电阻拉到逻辑高电平，空闲状态SCL和SDA应该被上拉到高电平，这样的结构可以实现线与的操作。 一般情况下I2C的SDA只有在SCL为低电平的时候才能改变，为高电平的时候需要保持。对应到芯片设计上则是上升沿采样，下降沿变化。两个例外情况由主机发出的总线起始条件START（SCL为高时SDA由高变低）和停止条件STOP（SCL为高时SDA由低变高）<p>MCU做主机SCL一直拉低 是因为SDA被从机锁死，主机拉低SCL想要控制SDA，导致的，加个超时错误，重新IIC失能就可以不复位MCU解决<p>SDA被拉低： 主机会发送9个clk尝试拉高SDA，如果不能成功，需要硬件复位 <img src=4419895ab4a4ce5e1517bd8654b8dd1a.png> SCL被拉低： 主机主动拉低SCL是合理的行为，在IP初始化配置的时候，可以选择时钟展频功能。 如下图在从机访问地址与写入数据之间加入一点延时，就会出现SCL被主机拉低的情况 <img src=a0c436665a3529f1a4eab0ae3115f6e2.png><p>其它情况的SCL拉低就要考虑代码实现是否合理了： 1、I2C是否被意外关闭了 2、是否在某个位置有while等待，一直无法跳出循环<p>**线与&**结构，是I2C总线设计上最关键的特征，用了这种结构才能实现:<ul><li>多主机仲裁同步<li>慢从机同步快主机</ul><p>因为这个特性，只要总线上任何一个器件拉低了SDA或者SCL，其他器件都无法拉高它们，看到的都是低电平。如果有器件不释放总线，则整个总线上的通讯都会被暂停，我们成为<strong>I2C bus hangs</strong>：I2C总线挂死<p>因为I2C主机一般是可编程的器件，受我们控制，如果主机主动拉低了总线，我们可以通过调试代码了解原因，也可以很方便的通过复位I2C外设或者复位芯片来退出这种状态。而I2C从机往往不带RESET引脚，如果挂死了总线即使整个系统复位都无法解除，仅重新上下电才可以恢复。很多系统上是不可接受的，因此我们需要更加小心的处理I2C从机挂死的情况，下面分析也是针对I2C从机挂死来写的。</div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a href=https://modao.site style=text-decoration:none> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://modao.site/嵌入式/单片机/i2cdiao-shi/>I2C调试</a></h1><div class=post-meta-inline><span class=post-date> 2025-01-04 </span></div><span class=post-tags-inline> :: tags:  <a class=post-tag href=https://modao.site/tags/dan-pian-ji/>#单片机</a></span><div class=post-content><p>协议规定，SCL时钟和SDA数据线都必须是双向开漏结构的，通过总线上的上拉电阻拉到逻辑高电平，空闲状态SCL和SDA应该被上拉到高电平，这样的结构可以实现线与的操作。 一般情况下I2C的SDA只有在SCL为低电平的时候才能改变，为高电平的时候需要保持。对应到芯片设计上则是上升沿采样，下降沿变化。两个例外情况由主机发出的总线起始条件START（SCL为高时SDA由高变低）和停止条件STOP（SCL为高时SDA由低变高）<p>MCU做主机SCL一直拉低 是因为SDA被从机锁死，主机拉低SCL想要控制SDA，导致的，加个超时错误，重新IIC失能就可以不复位MCU解决<p>SDA被拉低： 主机会发送9个clk尝试拉高SDA，如果不能成功，需要硬件复位 <img alt src=https://modao.site/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/i2cdiao-shi/4419895ab4a4ce5e1517bd8654b8dd1a.png> SCL被拉低： 主机主动拉低SCL是合理的行为，在IP初始化配置的时候，可以选择时钟展频功能。 如下图在从机访问地址与写入数据之间加入一点延时，就会出现SCL被主机拉低的情况 <img alt src=https://modao.site/%E5%B5%8C%E5%85%A5%E5%BC%8F/%E5%8D%95%E7%89%87%E6%9C%BA/i2cdiao-shi/a0c436665a3529f1a4eab0ae3115f6e2.png><p>其它情况的SCL拉低就要考虑代码实现是否合理了： 1、I2C是否被意外关闭了 2、是否在某个位置有while等待，一直无法跳出循环<p>**线与&**结构，是I2C总线设计上最关键的特征，用了这种结构才能实现:<ul><li>多主机仲裁同步<li>慢从机同步快主机</ul><p>因为这个特性，只要总线上任何一个器件拉低了SDA或者SCL，其他器件都无法拉高它们，看到的都是低电平。如果有器件不释放总线，则整个总线上的通讯都会被暂停，我们成为<strong>I2C bus hangs</strong>：I2C总线挂死<p>因为I2C主机一般是可编程的器件，受我们控制，如果主机主动拉低了总线，我们可以通过调试代码了解原因，也可以很方便的通过复位I2C外设或者复位芯片来退出这种状态。而I2C从机往往不带RESET引脚，如果挂死了总线即使整个系统复位都无法解除，仅重新上下电才可以恢复。很多系统上是不可接受的，因此我们需要更加小心的处理I2C从机挂死的情况，下面分析也是针对I2C从机挂死来写的。<h2 id=stm32shou-dong-fa-song-i2cshu-ju>STM32手动发送I2C数据</h2><pre class=language-c data-lang=c style=color:#c0c5ce;background-color:#2b303b><code class=language-c data-lang=c><span style=color:#65737e>//========【配置IIC总线的信号读写和时序】=======
+</span><span>
+</span><span style=color:#65737e>//主机拉高SCL
+</span><span>
+</span><span style=color:#b48ead>#define </span><span>TM1650_IIC_SCL_HIGH     </span><span style=color:#bf616a>GPIO_SetBits</span><span>(TM1650_CLK_PORT,TM1650_CLK_PIN)
+</span><span>
+</span><span style=color:#65737e>//主机拉低SCL
+</span><span>
+</span><span style=color:#b48ead>#define </span><span>TM1650_IIC_SCL_LOW      </span><span style=color:#bf616a>GPIO_ResetBits</span><span>(TM1650_CLK_PORT,TM1650_CLK_PIN)
+</span><span>
+</span><span style=color:#65737e>//主机拉高SDA
+</span><span>
+</span><span style=color:#b48ead>#define </span><span>TM1650_IIC_SDA_HIGH     </span><span style=color:#bf616a>GPIO_SetBits</span><span>(TM1650_DIN_PORT,TM1650_DIN_PIN)
+</span><span>
+</span><span style=color:#65737e>//主机拉低SDA
+</span><span>
+</span><span style=color:#b48ead>#define </span><span>TM1650_IIC_SDA_LOW      </span><span style=color:#bf616a>GPIO_ResetBits</span><span>(TM1650_DIN_PORT,TM1650_DIN_PIN)
+</span><span>
+</span><span style=color:#65737e>//参数b为0时主机拉低SDA，非0则拉高SDA
+</span><span>
+</span><span style=color:#b48ead>#define </span><span style=color:#8fa1b3>TM1650_IIC_SDA_WR</span><span>(</span><span style=color:#bf616a>b</span><span>)    </span><span style=color:#b48ead>do</span><span>{                                       \
+</span><span>
+</span><span>                               </span><span style=color:#b48ead>if</span><span>(b) </span><span style=color:#bf616a>GPIO_SetBits</span><span>(TM1650_DIN_PORT,TM1650_DIN_PIN);   \
+</span><span>
+</span><span>                               </span><span style=color:#b48ead>else  </span><span style=color:#bf616a>GPIO_ResetBits</span><span>(TM1650_DIN_PORT,TM1650_DIN_PIN); \
+</span><span>
+</span><span>                              </span><span style=color:#2b303b;background-color:#bf616a>}</span><span style=color:#b48ead>while</span><span>(</span><span style=color:#d08770>0</span><span>)
+</span><span>
+</span><span style=color:#65737e>//主机读取SDA线电平状态，返回值为0为低电平，非0则为高电平
+</span><span>
+</span><span style=color:#b48ead>#define </span><span style=color:#8fa1b3>TM1650_IIC_SDA_RD</span><span>()    </span><span style=color:#bf616a>GPIO_ReadInputDataBit</span><span>(TM1650_DIN_PORT,TM1650_DIN_PIN)
+</span><span>
+</span><span style=color:#65737e>//软件延时2us
+</span><span>
+</span><span style=color:#b48ead>#define </span><span>TM1650_IIC_DELAY_2US   </span><span style=color:#b48ead>do</span><span>{</span><span style=color:#b48ead>for</span><span>(</span><span style=color:#b48ead>int</span><span> i=</span><span style=color:#d08770>0</span><span>;i<</span><span style=color:#d08770>11</span><span>;i++);}</span><span style=color:#b48ead>while</span><span>(</span><span style=color:#d08770>0</span><span>)
+</span><span>
+</span><span style=color:#65737e>//软件延时4us
+</span><span>
+</span><span style=color:#b48ead>#define </span><span>TM1650_IIC_DELAY_4US   </span><span style=color:#b48ead>do</span><span>{</span><span style=color:#b48ead>for</span><span>(</span><span style=color:#b48ead>int</span><span> i=</span><span style=color:#d08770>0</span><span>;i<</span><span style=color:#d08770>21</span><span>;i++);}</span><span style=color:#b48ead>while</span><span>(</span><span style=color:#d08770>0</span><span>)
+</span><span>
+</span><span style=color:#65737e>//================================
+</span><span>
+</span><span>  
+</span><span>
+</span><span style=color:#b48ead>static void </span><span style=color:#8fa1b3>TM1650_IIC_start</span><span>(</span><span style=color:#b48ead>void</span><span>)
+</span><span>
+</span><span>{
+</span><span>
+</span><span>    TM1650_IIC_SCL_HIGH;     </span><span style=color:#65737e>//SCL=1
+</span><span>
+</span><span>    TM1650_IIC_SDA_HIGH;    </span><span style=color:#65737e>//SDA=1
+</span><span>
+</span><span>    TM1650_IIC_DELAY_4US;
+</span><span>
+</span><span>    TM1650_IIC_SDA_LOW;     </span><span style=color:#65737e>//SDA=0
+</span><span>
+</span><span>    TM1650_IIC_DELAY_4US;
+</span><span>
+</span><span>    TM1650_IIC_SCL_LOW;      </span><span style=color:#65737e>//SCL=0
+</span><span>
+</span><span>}
+</span><span>
+</span><span style=color:#65737e>//产生IIC总线结束信号
+</span><span>
+</span><span style=color:#b48ead>static void </span><span style=color:#8fa1b3>TM1650_IIC_stop</span><span>(</span><span style=color:#b48ead>void</span><span>)
+</span><span>
+</span><span>{
+</span><span>
+</span><span>    TM1650_IIC_SCL_LOW;      </span><span style=color:#65737e>//SCL=0
+</span><span>
+</span><span>    TM1650_IIC_SDA_LOW;      </span><span style=color:#65737e>//SDA=0
+</span><span>
+</span><span>    TM1650_IIC_DELAY_4US;
+</span><span>
+</span><span>    TM1650_IIC_SCL_HIGH;     </span><span style=color:#65737e>//SCL=1
+</span><span>
+</span><span>    TM1650_IIC_DELAY_4US;
+</span><span>
+</span><span>    TM1650_IIC_SDA_HIGH;    </span><span style=color:#65737e>//SDA=1
+</span><span>
+</span><span>}
+</span><span>
+</span><span style=color:#65737e>//通过IIC总线发送一个字节
+</span><span>
+</span><span style=color:#b48ead>static void </span><span style=color:#8fa1b3>TM1650_IIC_write_byte</span><span>(uint8_t </span><span style=color:#bf616a>dat</span><span>)
+</span><span>
+</span><span>{
+</span><span>
+</span><span>    uint8_t i;
+</span><span>
+</span><span>    </span><span style=color:#b48ead>for</span><span>(i=</span><span style=color:#d08770>0</span><span>;i<</span><span style=color:#d08770>8</span><span>;i++)
+</span><span>
+</span><span>    {
+</span><span>
+</span><span>        TM1650_IIC_SCL_LOW;
+</span><span>
+</span><span>        </span><span style=color:#b48ead>if</span><span>(dat&</span><span style=color:#d08770>0x01</span><span>)
+</span><span>
+</span><span>        {
+</span><span>
+</span><span>        TM1650_IIC_SDA_HIGH;
+</span><span>
+</span><span>        }
+</span><span>
+</span><span>        </span><span style=color:#b48ead>else
+</span><span>
+</span><span>        {
+</span><span>
+</span><span>        TM1650_IIC_SDA_LOW;
+</span><span>
+</span><span>        }      
+</span><span>
+</span><span>        TM1650_IIC_SCL_HIGH;
+</span><span>
+</span><span>        TM1650_IIC_DELAY_2US;
+</span><span>
+</span><span>        dat>>=</span><span style=color:#d08770>1</span><span>;
+</span><span>
+</span><span>    }
+</span><span>
+</span><span>}
+</span><span>
+</span><span>  
+</span><span>
+</span><span style=color:#65737e>//通过IIC总线接收从机响应的ACK信号
+</span><span>
+</span><span style=color:#b48ead>static </span><span>uint8_t </span><span style=color:#8fa1b3>TM1650_IIC_wait_ack</span><span>(</span><span style=color:#b48ead>void</span><span>)
+</span><span>
+</span><span>{
+</span><span>
+</span><span>    uint8_t ack_signal = </span><span style=color:#d08770>0</span><span>;
+</span><span>
+</span><span>    TM1650_IIC_SDA_HIGH;    </span><span style=color:#65737e>//SDA=1
+</span><span>
+</span><span>    TM1650_IIC_DELAY_2US;
+</span><span>
+</span><span>    TM1650_IIC_SCL_HIGH;
+</span><span>
+</span><span>    TM1650_IIC_DELAY_2US;
+</span><span>
+</span><span>    </span><span style=color:#b48ead>if</span><span>(</span><span style=color:#bf616a>TM1650_IIC_SDA_RD</span><span>()) ack_signal = </span><span style=color:#d08770>1</span><span>;   </span><span style=color:#65737e>//如果读取到的是NACK信号
+</span><span>
+</span><span>    TM1650_IIC_SCL_LOW;
+</span><span>
+</span><span>    TM1650_IIC_DELAY_2US;
+</span><span>
+</span><span>    </span><span style=color:#b48ead>return</span><span> ack_signal;
+</span><span>
+</span><span>}
+</span></code></pre></div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

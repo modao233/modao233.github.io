@@ -2,48 +2,48 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/编程语言/Linux shell/echo/">echo详解</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-13 </span></div><div class=post-content><p>常用echo来进行简单的文本重定向。<p>注意：your shell may have its own version of echo, which usually supersedes the version described here. Please refer to your shell's documentation for details about the options it supports.<h2 id=ming-zi>名字</h2><p>echo —— display a line of text<p>echo作者：Written by Brian Fox and Chet Ramey.<h2 id=shi-li>示例</h2><ol><li><p>短选项模式</p> <pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#96b5b4;>echo </span><span style=color:#b48ead;>[</span><span>short选项</span><span style=color:#b48ead;>]</span><span>... </span><span style=color:#b48ead;>[</span><span>文本</span><span style=color:#b48ead;>]</span><span>...
-</span></code></pre><li><p>长选项模式</p> <pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#96b5b4;>echo </span><span style=color:#b48ead;>[</span><span>long选项</span><span style=color:#b48ead;>]
-</span></code></pre></ol><h2 id=miao-shu>描述</h2><p>echo：打印文本到标准输出并换行。<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#bf616a;>-n：输出后不换行
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a href=https://modao.site style=text-decoration:none> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/编程语言/Linux shell/echo/">echo详解</a></h1><div class=post-meta-inline><span class=post-date> 2020-07-13 </span></div><div class=post-content><p>常用echo来进行简单的文本重定向。<p>注意：your shell may have its own version of echo, which usually supersedes the version described here. Please refer to your shell's documentation for details about the options it supports.</p><span id=continue-reading></span><h2 id=ming-zi>名字</h2><p>echo —— display a line of text<p>echo作者：Written by Brian Fox and Chet Ramey.<h2 id=shi-li>示例</h2><ol><li><p>短选项模式</p> <pre class=language-bash data-lang=bash style=color:#c0c5ce;background-color:#2b303b><code class=language-bash data-lang=bash><span style=color:#96b5b4>echo </span><span style=color:#b48ead>[</span><span>short选项</span><span style=color:#b48ead>]</span><span>... </span><span style=color:#b48ead>[</span><span>文本</span><span style=color:#b48ead>]</span><span>...
+</span></code></pre><li><p>长选项模式</p> <pre class=language-bash data-lang=bash style=color:#c0c5ce;background-color:#2b303b><code class=language-bash data-lang=bash><span style=color:#96b5b4>echo </span><span style=color:#b48ead>[</span><span>long选项</span><span style=color:#b48ead>]
+</span></code></pre></ol><h2 id=miao-shu>描述</h2><p>echo：打印文本到标准输出并换行。<pre class=language-bash data-lang=bash style=color:#c0c5ce;background-color:#2b303b><code class=language-bash data-lang=bash><span style=color:#bf616a>-n：输出后不换行
 </span><span>
-</span><span style=color:#bf616a;>-e：开启转义字符解释
+</span><span style=color:#bf616a>-e：开启转义字符解释
 </span><span>
-</span><span style=color:#bf616a;>-E：关闭转义字符解释（默认）
+</span><span style=color:#bf616a>-E：关闭转义字符解释（默认）
 </span><span>
-</span><span style=color:#bf616a;>--help：显示帮助文档并退出echo
+</span><span style=color:#bf616a>--help：显示帮助文档并退出echo
 </span><span>
-</span><span style=color:#bf616a;>--version：显示版本信息并退出echo
-</span></code></pre><h2 id=zhuan-yi-zi-fu>转义字符</h2><p>如果<code>-e</code>选项开启，则以下转义字符有独特含义<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#96b5b4;>\\		</span><span style=color:#bf616a;>反斜杠字符
+</span><span style=color:#bf616a>--version：显示版本信息并退出echo
+</span></code></pre><h2 id=zhuan-yi-zi-fu>转义字符</h2><p>如果<code>-e</code>选项开启，则以下转义字符有独特含义<pre class=language-bash data-lang=bash style=color:#c0c5ce;background-color:#2b303b><code class=language-bash data-lang=bash><span style=color:#96b5b4>\\		</span><span style=color:#bf616a>反斜杠字符
 </span><span>
-</span><span style=color:#96b5b4;>\a		</span><span style=color:#bf616a;>蜂鸣器警告声
+</span><span style=color:#96b5b4>\a		</span><span style=color:#bf616a>蜂鸣器警告声
 </span><span>
-</span><span style=color:#96b5b4;>\b		</span><span style=color:#bf616a;>退格操作
+</span><span style=color:#96b5b4>\b		</span><span style=color:#bf616a>退格操作
 </span><span>
-</span><span style=color:#96b5b4;>\c		</span><span style=color:#bf616a;>打印完不换行（遇到</span><span style=color:#96b5b4;>\c</span><span style=color:#bf616a;>后echo结束）
+</span><span style=color:#96b5b4>\c		</span><span style=color:#bf616a>打印完不换行（遇到</span><span style=color:#96b5b4>\c</span><span style=color:#bf616a>后echo结束）
 </span><span>
-</span><span style=color:#96b5b4;>\f		</span><span style=color:#bf616a;>文本换行，光标不换行
+</span><span style=color:#96b5b4>\f		</span><span style=color:#bf616a>文本换行，光标不换行
 </span><span>
-</span><span style=color:#96b5b4;>\n		</span><span style=color:#bf616a;>标准换行
+</span><span style=color:#96b5b4>\n		</span><span style=color:#bf616a>标准换行
 </span><span>
-</span><span style=color:#96b5b4;>\r		</span><span style=color:#bf616a;>不换行，光标移至行首（遇到</span><span style=color:#96b5b4;>\r</span><span style=color:#bf616a;>后echo结束）
+</span><span style=color:#96b5b4>\r		</span><span style=color:#bf616a>不换行，光标移至行首（遇到</span><span style=color:#96b5b4>\r</span><span style=color:#bf616a>后echo结束）
 </span><span>
-</span><span style=color:#96b5b4;>\t		</span><span style=color:#bf616a;>水平制表符
+</span><span style=color:#96b5b4>\t		</span><span style=color:#bf616a>水平制表符
 </span><span>
-</span><span style=color:#96b5b4;>\v		</span><span style=color:#bf616a;>垂直制表符
+</span><span style=color:#96b5b4>\v		</span><span style=color:#bf616a>垂直制表符
 </span><span>
-</span><span style=color:#96b5b4;>\0</span><span style=color:#bf616a;>NNN</span><span>	(数字0开头)</span><span style=color:#bf616a;>打印八进制字符
+</span><span style=color:#96b5b4>\0</span><span style=color:#bf616a>NNN</span><span>	(数字0开头)</span><span style=color:#bf616a>打印八进制字符
 </span><span>
-</span><span style=color:#96b5b4;>\x</span><span style=color:#bf616a;>HH</span><span>	十六进制字符
+</span><span style=color:#96b5b4>\x</span><span style=color:#bf616a>HH</span><span>	十六进制字符
 </span><span>
-</span><span style=color:#96b5b4;>\e</span><span style=color:#bf616a;>[nm</span><span> 	(n为数字代码，多个以“;</span><span style=color:#bf616a;>”隔开</span><span>)</span><span style=color:#bf616a;>打印带特效的文字
-</span><span>	</span><span style=color:#bf616a;>文字颜色码: 
-</span><span>	</span><span style=color:#bf616a;>重置</span><span>=</span><span style=color:#a3be8c;>0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37
+</span><span style=color:#96b5b4>\e</span><span style=color:#bf616a>[nm</span><span> 	(n为数字代码，多个以“;</span><span style=color:#bf616a>”隔开</span><span>)</span><span style=color:#bf616a>打印带特效的文字
+</span><span>	</span><span style=color:#bf616a>文字颜色码: 
+</span><span>	</span><span style=color:#bf616a>重置</span><span>=</span><span style=color:#a3be8c>0，黑色=30，红色=31，绿色=32，黄色=33，蓝色=34，洋红=35，青色=36，白色=37
 </span><span>
-</span><span>	</span><span style=color:#bf616a;>背景颜色码: 
-</span><span>	</span><span style=color:#bf616a;>重置</span><span>=</span><span style=color:#a3be8c;>0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47
+</span><span>	</span><span style=color:#bf616a>背景颜色码: 
+</span><span>	</span><span style=color:#bf616a>重置</span><span>=</span><span style=color:#a3be8c>0，黑色=40，红色=41，绿色=42，黄色=43，蓝色=44，洋红=45，青色=46，白色=47
 </span><span>
-</span><span>	</span><span style=color:#bf616a;>其他数字参数：
-</span><span>	</span><span style=color:#bf616a;>0</span><span> 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐
-</span></code></pre><p><img alt=image-20210224170351368 src=echo/image-20210224170351368.png><h2 id=zhong-ding-xiang>重定向</h2><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span>>	输出覆盖
+</span><span>	</span><span style=color:#bf616a>其他数字参数：
+</span><span>	</span><span style=color:#bf616a>0</span><span> 关闭所有属性、1 设置高亮度（加粗）、4 下划线、5 闪烁、7 反显、8 消隐
+</span></code></pre><p><img alt=image-20210224170351368 src=https://modao.site/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Linux%20shell/echo/echo/image-20210224170351368.png><h2 id=zhong-ding-xiang>重定向</h2><pre class=language-bash data-lang=bash style=color:#c0c5ce;background-color:#2b303b><code class=language-bash data-lang=bash><span>>	输出覆盖
 </span><span>>>	输出追加
 </span></code></pre></div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>

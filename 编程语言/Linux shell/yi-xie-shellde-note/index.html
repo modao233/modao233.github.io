@@ -2,29 +2,29 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a style="text-decoration: none;" href=https://modao.site> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/编程语言/Linux shell/yi-xie-shellde-note/">一些shell的note</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-14 </span></div><div class=post-content><h2 id=basenameming-ling-he-dirnameming-ling>basename命令和dirname命令</h2><p><strong>basename</strong>：从文件名中去掉路径信息, 只打印出文件名. 结构 <code>basename $0</code> 可以让脚本知道它自己的名字<p>可以用来显示用法信息, 比如如果你调用脚本的时候缺少参数, 可以使用如下语句：<br> echo "Usage: <code>basename $0</code> arg1 arg2 ... argn"<p><strong>$0</strong>：显示会包括当前脚本或命令的路径<p><strong>dirname</strong>：从带路径的文件名中去掉文件名, 只打印出路径信息<p>basename 和 dirname 可以操作任意字符串. 参数可以不是一个真正存在的文件, 甚至可以不是一个文件名<h2 id=cd-dirname-0-he-pwdyong-fa>cd <code>dirname $0</code> 和PWD用法</h2><p>在命令行状态下单纯执行 $ cd <code>dirname $0</code> 是毫无意义的。因为他返回当前路径的"."。 <strong>这个命令写在脚本文件里才有作用，他返回这个脚本文件放置的目录，并可以根据这个目录来定位所要运行程序的相对位置（绝对位置除外）。</strong> 在/home/admin/test/下新建test.sh内容如下：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cd `dirname $0`
+        gtag('config', 'G-N2WTGJE0M5');</script><body><div class=container><header class=header><div class=header__inner><div class=header__logo><a href=https://modao.site style=text-decoration:none> <div class=logo>MODAO</div> </a></div></div><nav class=menu><ul class=menu__inner><li class=active><a href=https://modao.site>Home</a><li><a href=https://modao.site/tags>Tags</a><li><a href=https://modao.site/language>Code</a><li><a href=https://modao.site/books>Books</a><li><a href=https://modao.site/links>Links</a><li><a href=https://modao.site/friend>Friend</a><li><a href=https://modao.site/about>About Me</a></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href="https://modao.site/编程语言/Linux shell/yi-xie-shellde-note/">一些shell的note</a></h1><div class=post-meta-inline><span class=post-date> 2023-06-14 </span></div><div class=post-content><h2 id=basenameming-ling-he-dirnameming-ling>basename命令和dirname命令</h2><p><strong>basename</strong>：从文件名中去掉路径信息, 只打印出文件名. 结构 <code>basename $0</code> 可以让脚本知道它自己的名字<p>可以用来显示用法信息, 比如如果你调用脚本的时候缺少参数, 可以使用如下语句：<br> echo "Usage: <code>basename $0</code> arg1 arg2 ... argn"<p><strong>$0</strong>：显示会包括当前脚本或命令的路径<p><strong>dirname</strong>：从带路径的文件名中去掉文件名, 只打印出路径信息<p>basename 和 dirname 可以操作任意字符串. 参数可以不是一个真正存在的文件, 甚至可以不是一个文件名<h2 id=cd-dirname-0-he-pwdyong-fa>cd <code>dirname $0</code> 和PWD用法</h2><p>在命令行状态下单纯执行 $ cd <code>dirname $0</code> 是毫无意义的。因为他返回当前路径的"."。 <strong>这个命令写在脚本文件里才有作用，他返回这个脚本文件放置的目录，并可以根据这个目录来定位所要运行程序的相对位置（绝对位置除外）。</strong> 在/home/admin/test/下新建test.sh内容如下：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>cd `dirname $0`
 </span><span>echo `pwd`
-</span></code></pre><p>然后返回到/home/admin/执行：<code>bash test/test.sh</code> 运行结果: <code>/home/admin/test</code><p>这样就可以知道一些和脚本一起部署的文件的位置了，只要知道相对位置就可以根据这个目录来定位，而可以不用关心绝对位置。这样脚本的可移植性就提高了，扔到任何一台服务器，（如果是部署脚本）都可以执行。<h2 id=bash-or-zsh-tian-jia-huan-jing-bian-liang-path>bash or zsh 添加环境变量PATH</h2><p>bash：.bashrc zsh：.zshrc<p>在最后一行添加以下命令，其中:表示路径分隔符，~/bin就是我们刚才创建的文件路径 export PATH=$PATH:~/bin<p>这样的话，在~/bin添加一些脚本，就可以直接在别的路径通过名字执行了<h2 id=bash-shelljiao-ben-da-yin-chu-zheng-zai-zhi-xing-de-ming-ling>Bash shell脚本打印出正在执行的命令</h2><p>默认情况下，bash脚本不会打印执行的每个命令，这个有时候不太方面。<p>如下的方法可以让bash脚本打印出执行的命令：<p>1、在脚本里添加<p>set -v<p>或者 #!/bin/bash -v<p>以加 set -v 最好。<p>set -v 和 set -o verbose 是一样的<p>2、添加<p>set -x<p>或者 #!/bin/bash -x<p>3、 bash -v script.sh 或者 bash -x script.sh<h2 id=bash-shellzhong-shiftyong-fa>Bash Shell中Shift用法</h2><p>shift可以用来向左移动位置参数。<br> Shell的名字 $0<br> 第一个参数 $1<br> 第二个参数 $2<br> 第n个参数 $n<br> 所有参数 $@ 或 $*<br> 参数个数 $#<p>shift默认是shift 1<p>例：<pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span>
-</span><span style=color:#65737e;>#----------------------------输出文字-开始---------------------------- #!/bin/bash #Filename: shift.sh 
-</span><span style=color:#65737e;>#by www.jbxue.com
-</span><span style=color:#b48ead;>until </span><span style=color:#96b5b4;>[ </span><span style=color:#bf616a;>-z </span><span>"$</span><span style=color:#bf616a;>1</span><span>" </span><span style=color:#96b5b4;>] </span><span style=color:#65737e;># Until all parameters used up
-</span><span style=color:#b48ead;>do
-</span><span style=color:#96b5b4;>echo </span><span>"$</span><span style=color:#bf616a;>@ </span><span>" shift done
-</span><span style=color:#65737e;>#----------------------------输出文字-结束----------------------------
-</span><span> </span><span style=color:#bf616a;>sh</span><span> shift.sh 1 2 3 4 5 6 7 8 9
-</span><span style=color:#65737e;>#----------------------------输出文字-开始----------------------------
-</span><span style=color:#bf616a;>1</span><span> 2 3 4 5 6 7 8 9
-</span><span style=color:#bf616a;>2</span><span> 3 4 5 6 7 8 9
-</span><span style=color:#bf616a;>3</span><span> 4 5 6 7 8 9
-</span><span style=color:#bf616a;>4</span><span> 5 6 7 8 9
-</span><span style=color:#bf616a;>5</span><span> 6 7 8 9
-</span><span style=color:#bf616a;>6</span><span> 7 8 9
-</span><span style=color:#bf616a;>7</span><span> 8 9
-</span><span style=color:#bf616a;>8</span><span> 9
-</span><span style=color:#bf616a;>9
-</span><span style=color:#65737e;>#----------------------------输出文字-结束----------------------------
+</span></code></pre><p>然后返回到/home/admin/执行：<code>bash test/test.sh</code> 运行结果: <code>/home/admin/test</code><p>这样就可以知道一些和脚本一起部署的文件的位置了，只要知道相对位置就可以根据这个目录来定位，而可以不用关心绝对位置。这样脚本的可移植性就提高了，扔到任何一台服务器，（如果是部署脚本）都可以执行。<h2 id=bash-or-zsh-tian-jia-huan-jing-bian-liang-path>bash or zsh 添加环境变量PATH</h2><p>bash：.bashrc zsh：.zshrc<p>在最后一行添加以下命令，其中:表示路径分隔符，<del>/bin就是我们刚才创建的文件路径 export PATH=$PATH:</del>/bin<p>这样的话，在~/bin添加一些脚本，就可以直接在别的路径通过名字执行了<h2 id=bash-shelljiao-ben-da-yin-chu-zheng-zai-zhi-xing-de-ming-ling>Bash shell脚本打印出正在执行的命令</h2><p>默认情况下，bash脚本不会打印执行的每个命令，这个有时候不太方面。<p>如下的方法可以让bash脚本打印出执行的命令：<p>1、在脚本里添加<p>set -v<p>或者 #!/bin/bash -v<p>以加 set -v 最好。<p>set -v 和 set -o verbose 是一样的<p>2、添加<p>set -x<p>或者 #!/bin/bash -x<p>3、 bash -v script.sh 或者 bash -x script.sh<h2 id=bash-shellzhong-shiftyong-fa>Bash Shell中Shift用法</h2><p>shift可以用来向左移动位置参数。<br> Shell的名字 $0<br> 第一个参数 $1<br> 第二个参数 $2<br> 第n个参数 $n<br> 所有参数 $@ 或 $*<br> 参数个数 $#<p>shift默认是shift 1<p>例：<pre class=language-bash data-lang=bash style=color:#c0c5ce;background-color:#2b303b><code class=language-bash data-lang=bash><span>
+</span><span style=color:#65737e>#----------------------------输出文字-开始---------------------------- #!/bin/bash #Filename: shift.sh 
+</span><span style=color:#65737e>#by www.jbxue.com
+</span><span style=color:#b48ead>until </span><span style=color:#96b5b4>[ </span><span style=color:#bf616a>-z </span><span>"$</span><span style=color:#bf616a>1</span><span>" </span><span style=color:#96b5b4>] </span><span style=color:#65737e># Until all parameters used up
+</span><span style=color:#b48ead>do
+</span><span style=color:#96b5b4>echo </span><span>"$</span><span style=color:#bf616a>@ </span><span>" shift done
+</span><span style=color:#65737e>#----------------------------输出文字-结束----------------------------
+</span><span> </span><span style=color:#bf616a>sh</span><span> shift.sh 1 2 3 4 5 6 7 8 9
+</span><span style=color:#65737e>#----------------------------输出文字-开始----------------------------
+</span><span style=color:#bf616a>1</span><span> 2 3 4 5 6 7 8 9
+</span><span style=color:#bf616a>2</span><span> 3 4 5 6 7 8 9
+</span><span style=color:#bf616a>3</span><span> 4 5 6 7 8 9
+</span><span style=color:#bf616a>4</span><span> 5 6 7 8 9
+</span><span style=color:#bf616a>5</span><span> 6 7 8 9
+</span><span style=color:#bf616a>6</span><span> 7 8 9
+</span><span style=color:#bf616a>7</span><span> 8 9
+</span><span style=color:#bf616a>8</span><span> 9
+</span><span style=color:#bf616a>9
+</span><span style=color:#65737e>#----------------------------输出文字-结束----------------------------
 </span><span>
-</span></code></pre><p>shift 命令：可以使脚本的所有参数位置向左移动一位（删除第一位，第二个参数变成了第一个，以此类推）<p>因为shell脚本最多定位九个变量，所以需要 shift 来获取超出9个之外的 参数<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>#! bin/bash
+</span></code></pre><p>shift 命令：可以使脚本的所有参数位置向左移动一位（删除第一位，第二个参数变成了第一个，以此类推）<p>因为shell脚本最多定位九个变量，所以需要 shift 来获取超出9个之外的 参数<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>#! bin/bash
 </span><span>func()
 </span><span>{
 </span><span> #通过while和shift命令一次获取参数值
@@ -35,8 +35,8 @@
 </span><span> done
 </span><span>}
 </span><span>func 1 2 3 4 5 6 7 8 9 0
-</span></code></pre><blockquote><p>shift 命令会影响到系统变量 $# 的值</blockquote><h2 id=shell-wen-jian-lu-jing>shell 文件路径</h2><p>假设我们定义了一个变量为：<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>file=/dir1/dir2/dir3/my.file.txt
-</span></code></pre><p>可以用${ }分别替换得到不同的值：<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>${file#*/}：删掉第一个 / 及其左边的字符串：dir1/dir2/dir3/my.file.txt
+</span></code></pre><blockquote><p>shift 命令会影响到系统变量 $# 的值</blockquote><h2 id=shell-wen-jian-lu-jing>shell 文件路径</h2><p>假设我们定义了一个变量为：<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>file=/dir1/dir2/dir3/my.file.txt
+</span></code></pre><p>可以用${ }分别替换得到不同的值：<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>${file#*/}：删掉第一个 / 及其左边的字符串：dir1/dir2/dir3/my.file.txt
 </span><span>${file##*/}：删掉最后一个 /  及其左边的字符串：my.file.txt
 </span><span>${file#*.}：删掉第一个 .  及其左边的字符串：file.txt
 </span><span>${file##*.}：删掉最后一个 .  及其左边的字符串：txt
@@ -46,12 +46,12 @@
 </span><span>${file%%.*}：删掉第一个  .   及其右边的字符串：/dir1/dir2/dir3/my
 </span><span>${file:0:5}：提取最左边的 5 个字节：/dir1  
 </span><span>${file:5:5}：提取第 5 个字节右边的连续5个字节：/dir2
-</span></code></pre><p>记忆的方法为：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 是去掉左边（键盘上#在 $ 的左边）  
+</span></code></pre><p>记忆的方法为：<pre style=color:#c0c5ce;background-color:#2b303b><code><span># 是去掉左边（键盘上#在 $ 的左边）  
 </span><span>% 是去掉右边（键盘上% 在$ 的右边）  
 </span><span>单一符号是最小匹配；两个符号是最大匹配  
-</span></code></pre><p>也可以对变量值里的字符串作替换：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt  
+</span></code></pre><p>也可以对变量值里的字符串作替换：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>${file/dir/path}：将第一个dir 替换为path：/path1/dir2/dir3/my.file.txt  
 </span><span>${file//dir/path}：将全部dir 替换为 path：/path1/path2/path3/my.file.txt
-</span></code></pre><p>利用 ${ } 还可针对不同的变数状态赋值(沒设定、空值、非空值)： ${file-my.file.txt} ：假如 $file 沒有设定，則使用 my.file.txt 作传回值。(空值及非空值時不作处理) ${file:-my.file.txt} ：假如 $file 沒有設定或為空值，則使用 my.file.txt 作傳回值。 (非空值時不作处理) ${file+my.file.txt} ：假如 $file 設為空值或非空值，均使用 my.file.txt 作傳回值。(沒設定時不作处理) ${file:+my.file.txt} ：若 $file 為非空值，則使用 my.file.txt 作傳回值。 (沒設定及空值時不作处理) ${file=my.file.txt} ：若 $file 沒設定，則使用 my.file.txt 作傳回值，同時將 $file 賦值為 my.file.txt 。 (空值及非空值時不作处理) ${file:=my.file.txt} ：若 $file 沒設定或為空值，則使用 my.file.txt 作傳回值，同時將 $file 賦值為my.file.txt 。 (非空值時不作处理) ${file?my.file.txt} ：若 $file 沒設定，則將 my.file.txt 輸出至 STDERR。 (空值及非空值時不作处理)<p>${file:?my.file.txt} ：若 $file 没设定或为空值，则将 my.file.txt 输出至 STDERR。 (非空值時不作处理) ${#var} 可计算出变量值的长度：<p>${#file} 可得到 27 ，因为/dir1/dir2/dir3/my.file.txt 是27个字节<h2 id=shellchan-sheng-sui-ji-shu-qi-chong-fang-fa>shell产生随机数七种方法</h2><p><a href=https://blog.csdn.net/taiyang1987912/article/details/39997303>https://blog.csdn.net/taiyang1987912/article/details/39997303</a><p>方法1：系统环境变量<p>echo $RANDOM<p>生成0-32767之间的整数随机数，若超过5位可以加个固定10位整数，然后进行求余。 生成400000~500000的随机数：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    #!/bin/bash  
+</span></code></pre><p>利用 ${ } 还可针对不同的变数状态赋值(沒设定、空值、非空值)： ${file-my.file.txt} ：假如 $file 沒有设定，則使用 my.file.txt 作传回值。(空值及非空值時不作处理) ${file:-my.file.txt} ：假如 $file 沒有設定或為空值，則使用 my.file.txt 作傳回值。 (非空值時不作处理) ${file+my.file.txt} ：假如 $file 設為空值或非空值，均使用 my.file.txt 作傳回值。(沒設定時不作处理) ${file:+my.file.txt} ：若 $file 為非空值，則使用 my.file.txt 作傳回值。 (沒設定及空值時不作处理) ${file=my.file.txt} ：若 $file 沒設定，則使用 my.file.txt 作傳回值，同時將 $file 賦值為 my.file.txt 。 (空值及非空值時不作处理) ${file:=my.file.txt} ：若 $file 沒設定或為空值，則使用 my.file.txt 作傳回值，同時將 $file 賦值為my.file.txt 。 (非空值時不作处理) ${file?my.file.txt} ：若 $file 沒設定，則將 my.file.txt 輸出至 STDERR。 (空值及非空值時不作处理)<p>${file:?my.file.txt} ：若 $file 没设定或为空值，则将 my.file.txt 输出至 STDERR。 (非空值時不作处理) ${#var} 可计算出变量值的长度：<p>${#file} 可得到 27 ，因为/dir1/dir2/dir3/my.file.txt 是27个字节<h2 id=shellchan-sheng-sui-ji-shu-qi-chong-fang-fa>shell产生随机数七种方法</h2><p><a href=https://blog.csdn.net/taiyang1987912/article/details/39997303>https://blog.csdn.net/taiyang1987912/article/details/39997303</a><p>方法1：系统环境变量<p>echo $RANDOM<p>生成0-32767之间的整数随机数，若超过5位可以加个固定10位整数，然后进行求余。 生成400000~500000的随机数：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>    #!/bin/bash  
 </span><span>      
 </span><span>    function rand(){  
 </span><span>        min=$1  
@@ -64,16 +64,16 @@
 </span><span>    echo $rnd  
 </span><span>      
 </span><span>    exit 0  
-</span></code></pre><p>方法2：使用awk的随机函数<p>csh没有$RANDOM，awk刚好能用<pre style=background-color:#2b303b;color:#c0c5ce;><code><span> awk 'BEGIN{srand();print rand()*1000000}'    #可以加上if判断，779644
-</span></code></pre><p>方法3：openssl rand产生随机数<p>openssl rand 用于产生指定长度个bytes的随机字符。-base64或-hex对随机字符串进行base64编码或用hex格式显示。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>openssl rand -base64 8 | md5sum | cut -c1-8    #八位字母和数字的组合，3a61800e
+</span></code></pre><p>方法2：使用awk的随机函数<p>csh没有$RANDOM，awk刚好能用<pre style=color:#c0c5ce;background-color:#2b303b><code><span> awk 'BEGIN{srand();print rand()*1000000}'    #可以加上if判断，779644
+</span></code></pre><p>方法3：openssl rand产生随机数<p>openssl rand 用于产生指定长度个bytes的随机字符。-base64或-hex对随机字符串进行base64编码或用hex格式显示。<pre style=color:#c0c5ce;background-color:#2b303b><code><span>openssl rand -base64 8 | md5sum | cut -c1-8    #八位字母和数字的组合，3a61800e
 </span><span>
 </span><span>openssl rand -base64 8 | cksum | cut -c1-8       #八位数字，10784736
-</span></code></pre><p>方法4：通过时间获得随机数（date）<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>date +%s%N       #生成19位数字，1287764807051101270
+</span></code></pre><p>方法4：通过时间获得随机数（date）<pre style=color:#c0c5ce;background-color:#2b303b><code><span>date +%s%N       #生成19位数字，1287764807051101270
 </span><span>
 </span><span>date +%s%N | cut -c6-13   #取八位数字，21793709
 </span><span>
 </span><span>date +%s%N | md5sum | head -c 8   #八位字母和数字的组合，87022fda
-</span></code></pre><p>生成1~50的随机数：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    #!/bin/bash  
+</span></code></pre><p>生成1~50的随机数：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>    #!/bin/bash  
 </span><span>      
 </span><span>    function rand(){  
 </span><span>        min=$1  
@@ -87,7 +87,7 @@
 </span><span>      
 </span><span>    exit 0
 </span><span> 
-</span></code></pre><p>方法5：通过系统内唯一数据生成随机数（/dev/random及/dev/urandom）<p>/dev/random存储系统当前运行的环境的实时数据，可以看作系统某时候的唯一值数据，提供优质随机数。<p>/dev/urandom是非阻塞的随机数产生器，读取时不会产生阻塞，速度更快、安全性较差的随机数发生器。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cat /dev/urandom | head -n 10 | md5sum | head -c 10     #32f1e953ac
+</span></code></pre><p>方法5：通过系统内唯一数据生成随机数（/dev/random及/dev/urandom）<p>/dev/random存储系统当前运行的环境的实时数据，可以看作系统某时候的唯一值数据，提供优质随机数。<p>/dev/urandom是非阻塞的随机数产生器，读取时不会产生阻塞，速度更快、安全性较差的随机数发生器。<pre style=color:#c0c5ce;background-color:#2b303b><code><span>cat /dev/urandom | head -n 10 | md5sum | head -c 10     #32f1e953ac
 </span><span>
 </span><span>cat /dev/urandom | strings -n 8 | head -n 1      #生成全字符的随机字符串，08?WU$ZU
 </span><span>
@@ -96,12 +96,12 @@
 </span><span>其中 strings -n设置字符串的字符数，head -n设置输出的行数。
 </span><span>
 </span><span>head-200/dev/urandom| cksum |cut-d" " -f1   #urandom的数据很多使用cat会比较慢，在此使用head读200行，cksum将读取文件内容生成唯一的表示整型数据，cut以” “分割然后得到分割的第一个字段数据
-</span></code></pre><blockquote><p>在UNIX操作系统（包括类UNIX系统）中，<a href=https://zh.wikipedia.org/wiki//dev/random>/dev/random</a> 是一个特殊的设备文件，可以用作随机数发生器或伪随机数发生器。</blockquote><p><code>/dev/urandom</code> 是 <code>/dev/random</code> 一个副本，非阻塞的随机数发生器，它会重复使用熵池中的数据以产生伪随机数据。这表示对 <code>/dev/urandom</code> 的读取操作不会产生阻塞，但其输出的熵可能小于 <code>/dev/random</code> 的。它可以作为生成较低强度密码的伪随机数生成器，不建议用于生成高强度长期密码。<p>常用的生成随机数的方法<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 32 | xargs  
-</span></code></pre><p>该命令生成 32 位的带有 <code>A-Za-z0-9_!@#$%^&*()-+=</code> 的随机数，在 MacOS 中需要指定语言环境为 C 语言才行<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 32 | xargs
-</span></code></pre><p>方法6：读取linux的uuid码<p>UUID码全称是通用唯一识别码 (Universally Unique Identifier, UUID)，UUID格式是：包含32个16进制数字，以“-”连接号分为五段，形式为8-4-4-4-12的32个字符。linux的uuid码也是有内核提供的，在/proc/sys/kernel/random/uuid这个文件内。cat/proc/sys/kernel/random/uuid每次获取到的数据都会不同。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>cat /proc/sys/kernel/random/uuid| cksum | cut -f1 -d" "    #获取不同的随机整数，1675034933
+</span></code></pre><blockquote><p>在UNIX操作系统（包括类UNIX系统）中，<a href=https://zh.wikipedia.org/wiki//dev/random>/dev/random</a> 是一个特殊的设备文件，可以用作随机数发生器或伪随机数发生器。</blockquote><p><code>/dev/urandom</code> 是 <code>/dev/random</code> 一个副本，非阻塞的随机数发生器，它会重复使用熵池中的数据以产生伪随机数据。这表示对 <code>/dev/urandom</code> 的读取操作不会产生阻塞，但其输出的熵可能小于 <code>/dev/random</code> 的。它可以作为生成较低强度密码的伪随机数生成器，不建议用于生成高强度长期密码。<p>常用的生成随机数的方法<pre style=color:#c0c5ce;background-color:#2b303b><code><span>tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 32 | xargs  
+</span></code></pre><p>该命令生成 32 位的带有 <code>A-Za-z0-9_!@#$%^&*()-+=</code> 的随机数，在 MacOS 中需要指定语言环境为 C 语言才行<pre style=color:#c0c5ce;background-color:#2b303b><code><span>LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 32 | xargs
+</span></code></pre><p>方法6：读取linux的uuid码<p>UUID码全称是通用唯一识别码 (Universally Unique Identifier, UUID)，UUID格式是：包含32个16进制数字，以“-”连接号分为五段，形式为8-4-4-4-12的32个字符。linux的uuid码也是有内核提供的，在/proc/sys/kernel/random/uuid这个文件内。cat/proc/sys/kernel/random/uuid每次获取到的数据都会不同。<pre style=color:#c0c5ce;background-color:#2b303b><code><span>cat /proc/sys/kernel/random/uuid| cksum | cut -f1 -d" "    #获取不同的随机整数，1675034933
 </span><span>
 </span><span>cat /proc/sys/kernel/random/uuid| md5sum | cut -c1-8    #数字加字母的随机数，d69a7ebf
-</span></code></pre><p>使用linux uuid 生成100~500随机数：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>    #!/bin/bash  
+</span></code></pre><p>使用linux uuid 生成100~500随机数：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>    #!/bin/bash  
 </span><span>      
 </span><span>    function rand(){  
 </span><span>        min=$1  
@@ -115,12 +115,12 @@
 </span><span>      
 </span><span>    exit 0  
 </span><span> 
-</span></code></pre><p>方法7：从元素池中随机抽取取<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>pool=(a b c d e f g h i j k l m n o p q r s t 1 2 3 4 5 6 7 8 9 10)
+</span></code></pre><p>方法7：从元素池中随机抽取取<pre style=color:#c0c5ce;background-color:#2b303b><code><span>pool=(a b c d e f g h i j k l m n o p q r s t 1 2 3 4 5 6 7 8 9 10)
 </span><span>
 </span><span>num=${#pool[*]}
 </span><span>
 </span><span>result=${pool[$((RANDOM%num))]}
-</span></code></pre><p>用于生成一段特定长度的有数字和字母组成的字符串，字符串中元素来自自定义的池子。<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>#!/bin/bash
+</span></code></pre><p>用于生成一段特定长度的有数字和字母组成的字符串，字符串中元素来自自定义的池子。<pre style=color:#c0c5ce;background-color:#2b303b><code><span>#!/bin/bash
 </span><span>length=8
 </span><span>i=1
 </span><span> 
@@ -140,21 +140,21 @@
 </span><span> echo -n $j
 </span><span>done
 </span><span>echo
-</span></code></pre><h2 id=cshli-sheng-cheng-sui-ji-shu>csh里生成随机数</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span># 通过awk
+</span></code></pre><h2 id=cshli-sheng-cheng-sui-ji-shu>csh里生成随机数</h2><pre style=color:#c0c5ce;background-color:#2b303b><code><span># 通过awk
 </span><span>random=$(awk 'BEGIN{srand();print rand()*1000000}')
 </span><span>random=$(echo $random | cut -d '.' -f 1)
 </span><span>
 </span><span># 通过/dev/urandom
 </span><span>random=$(cat /dev/urandom | sed -e 's/[^0-9]//g' | head -n 1)
 </span><span>random=$(echo $random | cut -c 1-8)
-</span></code></pre><h2 id=shellda-bao-jia-mi-cheng-ke-zhi-xing-wen-jian>shell打包加密成可执行文件</h2><p>sudo apt install shc<p>shc -v -r -f echo1 echo1：源文件，源文件必须指定 <code>#!/bin/bash</code>之类的 echo1.x：目标二进制文件 echo1.x.c：过程C文件 这个工具是将shell脚本转为C语言，然后在打包成二进制文件<p>shc的反编译UnSHc<p>    github上克隆：git clone https://github.com/yanncam/UnSHc.git，文件夹lastest中有个脚本unshc.sh可以完成反编译功能。<p>    ./unshc.sh -h查看使用方法，笔者使用sample里面的例程测试可以。但是笔者觉得这个工具意义不大，除非知道二级制文件是使用shc来编译的，不然反编译出来也不成功。反编译UnSHc对于开发人员来说作用不大。<h2 id=duo-tiao-jian-ifpan-duan-yu-huo>多条件if判断：与 或</h2><pre class=language-bash data-lang=bash style=background-color:#2b303b;color:#c0c5ce;><code class=language-bash data-lang=bash><span style=color:#b48ead;>if </span><span style=color:#96b5b4;>[[ </span><span>$</span><span style=color:#bf616a;>a </span><span>== $</span><span style=color:#bf616a;>b </span><span>|| $</span><span style=color:#bf616a;>c </span><span>== $</span><span style=color:#bf616a;>d </span><span style=color:#96b5b4;>]]</span><span>; </span><span style=color:#b48ead;>then
-</span><span>    </span><span style=color:#96b5b4;>echo</span><span> OR
-</span><span style=color:#b48ead;>fi
+</span></code></pre><h2 id=shellda-bao-jia-mi-cheng-ke-zhi-xing-wen-jian>shell打包加密成可执行文件</h2><p>sudo apt install shc<p>shc -v -r -f echo1 echo1：源文件，源文件必须指定 <code>#!/bin/bash</code>之类的 echo1.x：目标二进制文件 echo1.x.c：过程C文件 这个工具是将shell脚本转为C语言，然后在打包成二进制文件<p>shc的反编译UnSHc<p>    github上克隆：git clone https://github.com/yanncam/UnSHc.git，文件夹lastest中有个脚本unshc.sh可以完成反编译功能。<p>    ./unshc.sh -h查看使用方法，笔者使用sample里面的例程测试可以。但是笔者觉得这个工具意义不大，除非知道二级制文件是使用shc来编译的，不然反编译出来也不成功。反编译UnSHc对于开发人员来说作用不大。<h2 id=duo-tiao-jian-ifpan-duan-yu-huo>多条件if判断：与 或</h2><pre class=language-bash data-lang=bash style=color:#c0c5ce;background-color:#2b303b><code class=language-bash data-lang=bash><span style=color:#b48ead>if </span><span style=color:#96b5b4>[[ </span><span>$</span><span style=color:#bf616a>a </span><span>== $</span><span style=color:#bf616a>b </span><span>|| $</span><span style=color:#bf616a>c </span><span>== $</span><span style=color:#bf616a>d </span><span style=color:#96b5b4>]]</span><span>; </span><span style=color:#b48ead>then
+</span><span>    </span><span style=color:#96b5b4>echo</span><span> OR
+</span><span style=color:#b48ead>fi
 </span><span> 
-</span><span style=color:#b48ead;>if </span><span style=color:#96b5b4;>[[ </span><span>$</span><span style=color:#bf616a;>a </span><span>== $</span><span style=color:#bf616a;>b </span><span>&& $</span><span style=color:#bf616a;>c </span><span>== $</span><span style=color:#bf616a;>d </span><span style=color:#96b5b4;>]]</span><span>; </span><span style=color:#b48ead;>then
-</span><span>    </span><span style=color:#96b5b4;>echo</span><span> AND
-</span><span style=color:#b48ead;>fi
-</span></code></pre><h2 id=shelljiao-ben-zhong-shi-yong-sudomian-shu-mi-ma>shell脚本中使用sudo免输密码</h2><p>方法一：<p>在shell脚本中需要用root用的来执行指令： sudo 自动输入密码<p>echo "password" | sudo -S netstat -tlnp<p>参数 -S：The -S (stdin) option causes sudo to read the password from the standard input instead of the terminal device.<p>方法二：<ol><li>打开sudo的配置文件：vim /etc/sudoers<li>在root ALL下行加入：username ALL=(ALL) NOPASSWD: ALL</ol><h2 id=shellpan-duan-zi-fu-chuan-bao-han-guan-xi-de-ji-chong-fang-fa>Shell判断字符串包含关系的几种方法</h2><p>   Shell中判断字符串包含关系的方法：<br>    1、通过grep来判断：<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>str1="abcdefgh"
+</span><span style=color:#b48ead>if </span><span style=color:#96b5b4>[[ </span><span>$</span><span style=color:#bf616a>a </span><span>== $</span><span style=color:#bf616a>b </span><span>&& $</span><span style=color:#bf616a>c </span><span>== $</span><span style=color:#bf616a>d </span><span style=color:#96b5b4>]]</span><span>; </span><span style=color:#b48ead>then
+</span><span>    </span><span style=color:#96b5b4>echo</span><span> AND
+</span><span style=color:#b48ead>fi
+</span></code></pre><h2 id=shelljiao-ben-zhong-shi-yong-sudomian-shu-mi-ma>shell脚本中使用sudo免输密码</h2><p>方法一：<p>在shell脚本中需要用root用的来执行指令： sudo 自动输入密码<p>echo "password" | sudo -S netstat -tlnp<p>参数 -S：The -S (stdin) option causes sudo to read the password from the standard input instead of the terminal device.<p>方法二：<ol><li>打开sudo的配置文件：vim /etc/sudoers<li>在root ALL下行加入：username ALL=(ALL) NOPASSWD: ALL</ol><h2 id=shellpan-duan-zi-fu-chuan-bao-han-guan-xi-de-ji-chong-fang-fa>Shell判断字符串包含关系的几种方法</h2><p>   Shell中判断字符串包含关系的方法：<br>    1、通过grep来判断：<pre style=color:#c0c5ce;background-color:#2b303b><code><span>str1="abcdefgh"
 </span><span>str2="def"
 </span><span>result=$(echo $str1 | grep "${str2}")
 </span><span>if [[ "$result" != "" ]]
@@ -163,7 +163,7 @@
 </span><span>else
 </span><span>    echo "不包含"
 </span><span>fi
-</span></code></pre><p> 2、字符串运算符<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>str1="abcdefgh"
+</span></code></pre><p> 2、字符串运算符<pre style=color:#c0c5ce;background-color:#2b303b><code><span>str1="abcdefgh"
 </span><span>str2="def"
 </span><span>if [[ $str1 =~ $str2 ]]
 </span><span>then
@@ -171,7 +171,7 @@
 </span><span>else
 </span><span>    echo "不包含"
 </span><span>fi
-</span></code></pre><p>3、利用通配符<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>str1="abcdefgh"
+</span></code></pre><p>3、利用通配符<pre style=color:#c0c5ce;background-color:#2b303b><code><span>str1="abcdefgh"
 </span><span>str2="def"
 </span><span>if [[ $str1 == *$str2* ]]
 </span><span>then
@@ -179,13 +179,13 @@
 </span><span>else
 </span><span>    echo "不包含"
 </span><span>fi
-</span></code></pre><p> 4、利用case in 语句<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>str1="abcdefgh"
+</span></code></pre><p> 4、利用case in 语句<pre style=color:#c0c5ce;background-color:#2b303b><code><span>str1="abcdefgh"
 </span><span>str2="def"
 </span><span>case $str1 in 
 </span><span>    *"$str2"*) echo Enemy Spot ;;
 </span><span>    *) echo nope ;;
 </span><span>esa
-</span></code></pre><p> 5、利用替换<pre style=background-color:#2b303b;color:#c0c5ce;><code><span>str1="abcdefgh"
+</span></code></pre><p> 5、利用替换<pre style=color:#c0c5ce;background-color:#2b303b><code><span>str1="abcdefgh"
 </span><span>str2="def"
 </span><span>if [[ ${str1/${str2}//} == $str1 ]]
 </span><span>    then
@@ -193,19 +193,19 @@
 </span><span>    else
 </span><span>      echo "包含"
 </span><span>fi
-</span></code></pre><h2 id=ifpan-duan-shi-fang-zhi-can-shu-wei-kong>if判断时防止参数为空</h2><pre style=background-color:#2b303b;color:#c0c5ce;><code><span>if[x$1 = x];
+</span></code></pre><h2 id=ifpan-duan-shi-fang-zhi-can-shu-wei-kong>if判断时防止参数为空</h2><pre style=color:#c0c5ce;background-color:#2b303b><code><span>if[x$1 = x];
 </span><span>当$1为a时
 </span><span>if[x$1 = x]; 实际就会判断 xa = x
 </span><span>这样写的主要目的是当如果写成["$1" = "$2" ] 
 </span><span>在 $1,$2为空时会在某些bash版本中出现编译错误所以运用了shell中的字符抵消原则。
-</span></code></pre><h2 id=wen-jian-ming-dai-kong-ge>文件名带空格</h2><ol><li>使用双引号括起来，模糊匹配时可以<code>"*\ *"</code><li>修改IFS，不用空格作为IFS<li>在处理文件名之前，先将空格处理为其它字符，比如<code>_</code></ol><h2 id=zhong-ding-xiang-dao-wen-jian-shi-fa-sheng-dao-zhi-mo-hu-zhong-ding-xiang-xiao-xi>重定向到文件时，发生导致“模糊重定向”消息</h2><p>ambiguous redirect的叫法有： + 模糊重定向 + 歧义重定向<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>echo $AAAA" "$DDDD" "$MOL_TAG >> ${OUPUT_RESULTS}
-</span></code></pre><p>上面的写法可能会报错：<code>${OUPUT_RESULTS}: ambiguous redirect</code>。如果<code>OUPUT_RESULTS</code>碰巧有空格，j就会出现“歧义重定向”。 解决办法是：用引号括起你的变量。<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>$ var="file with spaces" 
+</span></code></pre><h2 id=wen-jian-ming-dai-kong-ge>文件名带空格</h2><ol><li>使用双引号括起来，模糊匹配时可以<code>"*\ *"</code><li>修改IFS，不用空格作为IFS<li>在处理文件名之前，先将空格处理为其它字符，比如<code>_</code></ol><h2 id=zhong-ding-xiang-dao-wen-jian-shi-fa-sheng-dao-zhi-mo-hu-zhong-ding-xiang-xiao-xi>重定向到文件时，发生导致“模糊重定向”消息</h2><p>ambiguous redirect的叫法有：<ul><li>模糊重定向<li>歧义重定向</ul><pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>echo $AAAA" "$DDDD" "$MOL_TAG >> ${OUPUT_RESULTS}
+</span></code></pre><p>上面的写法可能会报错：<code>${OUPUT_RESULTS}: ambiguous redirect</code>。如果<code>OUPUT_RESULTS</code>碰巧有空格，j就会出现“歧义重定向”。 解决办法是：用引号括起你的变量。<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>$ var="file with spaces" 
 </span><span>$ echo $AAAA" "$DDDD" "$MOL_TAG >> ${var} 
 </span><span>bash: ${var}: ambiguous redirect 
 </span><span>$ echo $AAAA" "$DDDD" "$MOL_TAG >> "${var}" 
 </span><span>$ cat file\ with\ spaces
 </span><span>aaaa dddd mol_tag
-</span></code></pre><p>重定向文件名称中的空格会导致“歧义重定向”消息。 例如，如果您重定向到<code>application$(date +%Y%m%d%k%M%S).log</code>并指定了错误的格式字符，则重定向将在上午10点之前失败。但是，如果您使用<code>application$(date +%Y%m%d%H%M%S).log</code>，它将会成功。这是因为<code>%k</code>格式生成上午9点的<code>' 9'</code>，而<code>%H</code>生成上午9点的<code>'09'</code><p><code>echo $(date +%Y%m%d%k%M%S)</code>给了<code>20140626 95138</code><p><code>echo $(date +%Y%m%d%H%M%S)</code>给了<code>20140626095138</code><p>错误的日期可能如下所示：<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>echo "a" > myapp20140626 95138.log
-</span></code></pre><p>其中，以下是所需的：<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>echo "a" > myapp20140626095138.log
-</span></code></pre><p>另一件可能导致“二义性重定向”的事情是您正在编写的变量名中的<code>\t</code> <code>\n</code> <code>\r</code><p>也许不是<code>\n\r</code>？但在谨慎方面犯了错误<p>尝尝这个<pre class=language-shell data-lang=shell style=background-color:#2b303b;color:#c0c5ce;><code class=language-shell data-lang=shell><span>echo "a" > ${output_name//[$'\t\n\r']}
+</span></code></pre><p>重定向文件名称中的空格会导致“歧义重定向”消息。 例如，如果您重定向到<code>application$(date +%Y%m%d%k%M%S).log</code>并指定了错误的格式字符，则重定向将在上午10点之前失败。但是，如果您使用<code>application$(date +%Y%m%d%H%M%S).log</code>，它将会成功。这是因为<code>%k</code>格式生成上午9点的<code>' 9'</code>，而<code>%H</code>生成上午9点的<code>'09'</code><p><code>echo $(date +%Y%m%d%k%M%S)</code>给了<code>20140626 95138</code><p><code>echo $(date +%Y%m%d%H%M%S)</code>给了<code>20140626095138</code><p>错误的日期可能如下所示：<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>echo "a" > myapp20140626 95138.log
+</span></code></pre><p>其中，以下是所需的：<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>echo "a" > myapp20140626095138.log
+</span></code></pre><p>另一件可能导致“二义性重定向”的事情是您正在编写的变量名中的<code>\t</code> <code>\n</code> <code>\r</code><p>也许不是<code>\n\r</code>？但在谨慎方面犯了错误<p>尝尝这个<pre class=language-shell data-lang=shell style=color:#c0c5ce;background-color:#2b303b><code class=language-shell data-lang=shell><span>echo "a" > ${output_name//[$'\t\n\r']}
 </span></code></pre><p>我在分析HTML <code>\t</code>时遇到了这个问题。<p>原文：https://cloud.tencent.com/developer/ask/sof/69279<h2 id=shelljiao-ben-zhong-shi-yong-sudomian-shu-mi-ma-1>shell脚本中使用sudo免输密码</h2><p>方法一：<p>在shell脚本中需要用root用的来执行指令： sudo 自动输入密码<p>echo "password" | sudo -S netstat -tlnp<p>参数 -S：The -S (stdin) option causes sudo to read the password from the standard input instead of the terminal device.<p>方法二：<ol><li>打开sudo的配置文件：vim /etc/sudoers<li>在root ALL下行加入：username ALL=(ALL) NOPASSWD: ALL</ol></div></div></div><footer class=footer__poweredby><p class=caption>© 2025 All Rights Reserved modao::rustacean@aliyun.com<p class=caption>© Powered by <a href=https://www.getzola.org/>Zola</a><p class=caption>© Theme: <a href=https://github.com/pawroman/zola-theme-terminimal/>Terminimal</a> by pawroman<p class=caption><a href=https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh rel=license>自由转载-非商用-非衍生-保持署名</a></footer></div>
